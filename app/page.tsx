@@ -1,10 +1,5 @@
 import UI from './ui';
 
 export default function Home() {
-  return (
-    <main>
-      홈
-      <UI />
-    </main>
-  );
+  return <main>루트</main>;
 }

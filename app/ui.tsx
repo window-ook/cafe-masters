@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function UI() {
-  return <div>홈 화면 UI</div>;
+  return <div>로그인</div>;
 }

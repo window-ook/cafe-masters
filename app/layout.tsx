@@ -1,10 +1,11 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { Sidebar } from 'components/sidebar';
 import { ThemeProvider } from 'config/material-tailwind-theme-provider';
 import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
 
 export const metadata: Metadata = {
-  title: '내 프로젝트',
+  title: '카페 마스터즈',
   description: '개발중인 프로젝트입니다.',
 };
 
@@ -22,7 +23,10 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ReactQueryClientProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <Sidebar />
+            {children}
+          </ThemeProvider>
         </ReactQueryClientProvider>
       </body>
     </html>
