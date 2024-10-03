@@ -45,6 +45,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-next", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:14.2.14"],\
           ["next", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:14.2.14"],\
           ["postcss", "npm:8.4.47"],\
+          ["prettier", "npm:3.3.3"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:18.3.1"],\
           ["react-intersection-observer", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:9.13.1"],\
@@ -1884,6 +1885,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-next", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:14.2.14"],\
           ["next", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:14.2.14"],\
           ["postcss", "npm:8.4.47"],\
+          ["prettier", "npm:3.3.3"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:18.3.1"],\
           ["react-intersection-observer", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:9.13.1"],\
@@ -5066,6 +5068,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/prelude-ls-npm-1.2.1-3e4d272a55-10c0.zip/node_modules/prelude-ls/",\
         "packageDependencies": [\
           ["prelude-ls", "npm:1.2.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["prettier", [\
+      ["npm:3.3.3", {\
+        "packageLocation": "./.yarn/unplugged/prettier-npm-3.3.3-e811f023f3/node_modules/prettier/",\
+        "packageDependencies": [\
+          ["prettier", "npm:3.3.3"]\
         ],\
         "linkType": "HARD"\
       }]\

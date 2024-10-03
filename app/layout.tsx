@@ -3,13 +3,16 @@ import type { Metadata } from 'next';
 import { Sidebar } from 'components/sidebar';
 import { ThemeProvider } from 'config/material-tailwind-theme-provider';
 import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
+import Auth from 'components/auth';
 
 export const metadata: Metadata = {
   title: '카페 마스터즈',
   description: '개발중인 프로젝트입니다.',
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: any) {
+  const loggedIn = false;
+
   return (
     <html lang="en">
       <head>
@@ -24,8 +27,14 @@ export default function RootLayout({ children }) {
       <body>
         <ReactQueryClientProvider>
           <ThemeProvider>
-            <Sidebar />
-            {children}
+            {loggedIn ? (
+              <div className="flex">
+                <Sidebar />
+                {children}
+              </div>
+            ) : (
+              <Auth />
+            )}
           </ThemeProvider>
         </ReactQueryClientProvider>
       </body>
