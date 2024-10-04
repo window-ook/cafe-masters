@@ -1,17 +1,27 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Sidebar } from 'components/sidebar';
+import { createServerSupabaseClient } from 'utils/supabase/server';
 import { ThemeProvider } from 'config/material-tailwind-theme-provider';
 import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
 import Auth from 'components/auth';
+import AuthProvider from 'config/AuthProvider';
+import MainLayout from 'components/layouts/main-layout';
 
 export const metadata: Metadata = {
   title: '카페 마스터즈',
   description: '개발중인 프로젝트입니다.',
 };
 
-export default function RootLayout({ children }: any) {
-  const loggedIn = false;
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const supabase = await createServerSupabaseClient();
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
   return (
     <html lang="en">
@@ -27,14 +37,9 @@ export default function RootLayout({ children }: any) {
       <body>
         <ReactQueryClientProvider>
           <ThemeProvider>
-            {loggedIn ? (
-              <div className="flex">
-                <Sidebar />
-                {children}
-              </div>
-            ) : (
-              <Auth />
-            )}
+            <AuthProvider accessToken={session?.access_token}>
+              {session?.user ? <MainLayout>{children}</MainLayout> : <Auth />}
+            </AuthProvider>
           </ThemeProvider>
         </ReactQueryClientProvider>
       </body>

@@ -2,7 +2,7 @@ import { Sidebar } from 'components/sidebar';
 
 export default function MainLayout({ children }) {
   return (
-    <main className="flex items-center">
+    <main className="flex">
       <Sidebar />
       {children}
     </main>
