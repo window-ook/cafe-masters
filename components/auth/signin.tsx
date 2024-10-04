@@ -1,9 +1,27 @@
+'use client';
+
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { Card, Input, Button, Typography } from '@material-tailwind/react';
+import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
 export default function SignIn({ setView }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const supabase = createBrowserSupabaseClient();
+
+  const signinMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) alert(error.message);
+
+      if (data) console.log(data);
+    },
+  });
 
   return (
     <Card className="p-5 bg-white shadow-mainShadow">
@@ -34,7 +52,15 @@ export default function SignIn({ setView }) {
             }}
           />
         </div>
-        <Button className="mt-6 bg-main" fullWidth>
+        <Button
+          className="mt-6 bg-main"
+          fullWidth
+          onClick={() => {
+            signinMutation.mutate();
+          }}
+          loading={signinMutation.isPending}
+          disabled={signinMutation.isPending}
+        >
           접속하기
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
