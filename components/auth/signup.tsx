@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Card, Input, Button, Typography } from '@material-tailwind/react';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { signInWithKakao } from 'utils/supabase/signinKakao';
 
 export default function Signup({ setView }) {
   const [email, setEmail] = useState('');
@@ -109,6 +110,15 @@ export default function Signup({ setView }) {
           }
         >
           {confirmationRequired ? '인증 코드 확인' : '가입하기'}
+        </Button>
+        <Button
+          className="mt-6 bg-yellow-700"
+          fullWidth
+          onClick={() => {
+            signInWithKakao();
+          }}
+        >
+          카카오 로그인
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
           이미 계정이 있으신가요?{' '}
