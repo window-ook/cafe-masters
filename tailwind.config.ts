@@ -13,12 +13,9 @@ const config: Config = {
       colors: {
         main: '#7c24c9',
         mainShadow: '#875aad',
+        bgDark: '#292825',
         emerald: '#15ed79',
         indigo: '#6366f1',
-      },
-
-      boxShadow: {
-        'right-only': '0.5px 0 5px -1px #875aad',
       },
 
       dropShadow: {
@@ -35,7 +32,7 @@ const config: Config = {
     },
   },
   variants: {},
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
 };
 
 export default withMT(config);

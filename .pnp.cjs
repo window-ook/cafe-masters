@@ -35,6 +35,7 @@ const RAW_RUNTIME_STATE =
           ["@mui/icons-material", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:6.1.1"],\
           ["@supabase/ssr", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.1"],\
           ["@supabase/supabase-js", "npm:2.45.4"],\
+          ["@tailwindcss/forms", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.9"],\
           ["@tailwindcss/typography", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.15"],\
           ["@tanstack/react-query", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.59.0"],\
           ["@types/next", "npm:9.0.0"],\
@@ -1132,6 +1133,29 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@tailwindcss/forms", [\
+      ["npm:0.5.9", {\
+        "packageLocation": "../../../.yarn/berry/cache/@tailwindcss-forms-npm-0.5.9-a168613ca4-10c0.zip/node_modules/@tailwindcss/forms/",\
+        "packageDependencies": [\
+          ["@tailwindcss/forms", "npm:0.5.9"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.9", {\
+        "packageLocation": "./.yarn/__virtual__/@tailwindcss-forms-virtual-b1439c830c/4/.yarn/berry/cache/@tailwindcss-forms-npm-0.5.9-a168613ca4-10c0.zip/node_modules/@tailwindcss/forms/",\
+        "packageDependencies": [\
+          ["@tailwindcss/forms", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.9"],\
+          ["@types/tailwindcss", null],\
+          ["mini-svg-data-uri", "npm:1.4.4"],\
+          ["tailwindcss", "npm:3.4.13"]\
+        ],\
+        "packagePeers": [\
+          "@types/tailwindcss",\
+          "tailwindcss"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@tailwindcss/typography", [\
       ["npm:0.5.15", {\
         "packageLocation": "../../../.yarn/berry/cache/@tailwindcss-typography-npm-0.5.15-9a4acf8b32-10c0.zip/node_modules/@tailwindcss/typography/",\
@@ -1982,6 +2006,7 @@ const RAW_RUNTIME_STATE =
           ["@mui/icons-material", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:6.1.1"],\
           ["@supabase/ssr", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.1"],\
           ["@supabase/supabase-js", "npm:2.45.4"],\
+          ["@tailwindcss/forms", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.9"],\
           ["@tailwindcss/typography", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.15"],\
           ["@tanstack/react-query", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.59.0"],\
           ["@types/next", "npm:9.0.0"],\
@@ -4381,6 +4406,15 @@ const RAW_RUNTIME_STATE =
           ["micromatch", "npm:4.0.8"],\
           ["braces", "npm:3.0.3"],\
           ["picomatch", "npm:2.3.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["mini-svg-data-uri", [\
+      ["npm:1.4.4", {\
+        "packageLocation": "../../../.yarn/berry/cache/mini-svg-data-uri-npm-1.4.4-929f6f1119-10c0.zip/node_modules/mini-svg-data-uri/",\
+        "packageDependencies": [\
+          ["mini-svg-data-uri", "npm:1.4.4"]\
         ],\
         "linkType": "HARD"\
       }]\

@@ -1,9 +1,9 @@
-import { Sidebar } from 'components/sidebar';
+import Sidebar from 'components/sidebar';
 
-export default function MainLayout({ children }) {
+export default function MainLayout({ children, session }) {
   return (
     <main className="flex">
-      <Sidebar />
+      <Sidebar session={session} />
       {children}
     </main>
   );
