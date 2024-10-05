@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useMapStore } from 'utils/store';
 import { usePathname, useRouter } from 'next/navigation';
 import { Card, List, ListItem, ListItemPrefix } from '@material-tailwind/react';
 import Header from './header';
@@ -21,6 +22,7 @@ export default function Sidebar({ session }) {
   const [isSubSidebarOpen, setIsSubSidebarOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const results = useMapStore((state) => state.results);
 
   return (
     <div className="relative flex items-center">
@@ -33,6 +35,7 @@ export default function Sidebar({ session }) {
             }
           />
           <Search />
+
           {/* 홈 */}
           {pathname === '/' && (
             <List className="mt-2 gap-5">
@@ -58,12 +61,36 @@ export default function Sidebar({ session }) {
             </List>
           )}
 
+          {/* 검색 결과 */}
+          {pathname === '/search' && (
+            <div>
+              {results.length > 0 && (
+                <div>
+                  <ul>
+                    {results.slice(0, 6).map(
+                      (
+                        result,
+                        index // 처음 6개의 결과만 표시
+                      ) => (
+                        <li key={index} className="mb-2 p-2 border-b">
+                          <h3 className="text-lg font-semibold">
+                            {result.place_name}
+                          </h3>
+                          <p>{result.address_name}</p>
+                          <p>{result.phone}</p>
+                        </li>
+                      )
+                    )}
+                  </ul>
+                  <button onClick={() => router.push('/')}>홈으로 가기</button>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* 모든 카페 보기 */}
           {pathname === '/cafe/all' && (
             <div>
-              <p>카페1</p>
-              <p>카페2</p>
-              <p>카페3</p>
               <button onClick={() => router.push('/')}>홈으로 가기</button>
             </div>
           )}
@@ -71,9 +98,6 @@ export default function Sidebar({ session }) {
           {/* 수집한 카페 보기 */}
           {pathname === '/cafe/collected' && (
             <div>
-              <p>수집한 카페1</p>
-              <p>수집한 카페2</p>
-              <p>수집한 카페3</p>
               <button onClick={() => router.push('/')}>홈으로 가기</button>
             </div>
           )}
@@ -81,9 +105,6 @@ export default function Sidebar({ session }) {
           {/* 안 가본 카페만 따로 보기 */}
           {pathname === '/cafe/not-collected' && (
             <div>
-              <p>카페1</p>
-              <p>카페2</p>
-              <p>카페3</p>
               <button onClick={() => router.push('/')}>홈으로 가기</button>
             </div>
           )}
