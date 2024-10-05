@@ -8,7 +8,7 @@ export default function LogoutButton() {
 
   return (
     <Button
-      className="bg-main text-white shadow-md"
+      className="bg-main text-white shadow-md w-[10vw]"
       onClick={async () => supabase.auth.signOut()}
     >
       로그아웃

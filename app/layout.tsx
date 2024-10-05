@@ -6,6 +6,7 @@ import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
 import Auth from 'components/auth';
 import AuthProvider from 'config/AuthProvider';
 import MainLayout from 'components/layouts/main-layout';
+import KakaoMap from 'components/map';
 
 export const metadata: Metadata = {
   title: '카페 마스터즈',
@@ -38,7 +39,14 @@ export default async function RootLayout({
         <ReactQueryClientProvider>
           <ThemeProvider>
             <AuthProvider accessToken={session?.access_token}>
-              {session?.user ? <MainLayout>{children}</MainLayout> : <Auth />}
+              {session?.user ? (
+                <MainLayout session={session}>
+                  {children}
+                  <KakaoMap />
+                </MainLayout>
+              ) : (
+                <Auth />
+              )}
             </AuthProvider>
           </ThemeProvider>
         </ReactQueryClientProvider>

@@ -1,14 +1,10 @@
-'use server';
+'use client';
 
-import { createServerSupabaseClient } from 'utils/supabase/server';
+import Badge from './badge';
 
-export default async function profile() {
-  const supabase = await createServerSupabaseClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+export default function Profile({ session }) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex justify-center items-center gap-4">
       <img
         src="https://docs.material-tailwind.com/img/face-2.jpg"
         alt="avatar"
@@ -16,10 +12,10 @@ export default async function profile() {
       />
       <div>
         <h6 className="text-slate-800 font-semibold">
-          {session?.user?.email?.split('@')?.[0]}!
+          {session?.user?.email?.split('@')?.[0]}
         </h6>
-        <p>주니어</p>
       </div>
+      <Badge tier={'expert'} />
     </div>
   );
 }
