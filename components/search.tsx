@@ -9,7 +9,13 @@ export default function Search() {
 
   const handleSearch = () => {
     setKeyword(localKeyword);
-    router.push('/search');
+    router.push('/cafe/all');
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch(); // Enter 키를 눌렀을 때 검색 이벤트 실행
+    }
   };
 
   return (
@@ -21,6 +27,7 @@ export default function Search() {
             placeholder="어떤 카페를 찾을까요?"
             value={localKeyword}
             onChange={(e) => setLocalKeyword(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <button
             className="absolute top-1 right-1 flex items-center gap-1 rounded bg-main py-1 px-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

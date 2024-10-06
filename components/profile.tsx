@@ -10,12 +10,12 @@ export default function Profile({ session }) {
         alt="avatar"
         className="relative inline-block object-cover object-center w-12 h-12 rounded-lg"
       />
-      <div>
+      <div className="flex gap-1">
         <h6 className="text-slate-800 font-semibold">
           {session?.user?.email?.split('@')?.[0]}
         </h6>
+        <Badge tier={'expert'} />
       </div>
-      <Badge tier={'expert'} />
     </div>
   );
 }
