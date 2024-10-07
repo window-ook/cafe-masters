@@ -14,7 +14,7 @@ export default function Profile({ session }) {
         <h6 className="text-slate-800 font-semibold">
           {session?.user?.email?.split('@')?.[0]}
         </h6>
-        <Badge tier={'expert'} />
+        <Badge tier={'MASTER'} />
       </div>
     </div>
   );
