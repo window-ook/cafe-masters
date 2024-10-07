@@ -14,8 +14,18 @@ const config: Config = {
         main: '#7c24c9',
         mainShadow: '#875aad',
         bgDark: '#292825',
-        emerald: '#15ed79',
+        success: '#15ed79',
         indigo: '#6366f1',
+        beginner: '#8a919c',
+        novice: '#d6e884',
+        expert: '#e30b6c',
+        master: '', // 마스터부터는 그라데이션
+        grand_master: '',
+        king: '',
+      },
+
+      backgroundImage: {
+        'master-gradient': 'linear-gradient(90deg, #8a24b9 0%, #f5248c 100%)',
       },
 
       dropShadow: {

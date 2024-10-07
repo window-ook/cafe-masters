@@ -8,7 +8,7 @@ interface MapState {
 }
 
 export const useMapStore = create((set) => ({
-  keyword: '성수동 카페',
+  keyword: '성수',
   results: [],
   setKeyword: (keyword) => set({ keyword }),
   setResults: (results) => set({ results }),

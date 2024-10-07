@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useMapStore } from 'utils/store';
+import { shallow } from 'zustand/shallow';
 import { usePathname, useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -24,26 +25,27 @@ function MainItem({ icon, title, path }) {
 }
 
 export default function Sidebar({ session }) {
+  const results = useMapStore((state) => state.results, shallow);
   const [isSubSidebarOpen, setIsSubSidebarOpen] = useState(false);
-  const { ref, inView } = useInView({ threshold: 0 });
+  const { ref, inView } = useInView({ threshold: 0.5 });
+
   const router = useRouter();
   const pathname = usePathname();
-  const results = useMapStore((state) => state.results);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      initialPageParam: 0,
-      queryKey: ['results'],
-      queryFn: ({ pageParam = 0 }) => {
-        const start = pageParam * 6;
+      initialPageParam: 1,
+      queryKey: ['results', results],
+      queryFn: ({ pageParam = 1 }) => {
+        const start = (pageParam - 1) * 3;
         return {
-          data: results.slice(start, start + 6),
+          data: results.slice(start, start + 3),
           page: pageParam,
         };
       },
       getNextPageParam: (lastPage) => {
         const nextPage = lastPage.page + 1;
-        return lastPage.data.length === 6 ? nextPage : null;
+        return lastPage.data.length === 3 ? nextPage : null;
       },
     });
 
@@ -94,11 +96,11 @@ export default function Sidebar({ session }) {
           {pathname === '/cafe/all' && (
             <div>
               {data?.pages?.map((page, i) => (
-                <div key={i} className="flex flex-col gap-4">
-                  {page.data.map((cafe, index) => (
+                <div key={i} className="flex flex-col gap-4 mb-3">
+                  {page.data.map((cafe) => (
                     <NormalCard
+                      key={cafe.id}
                       name={cafe.place_name}
-                      ratings={10}
                       address={cafe.address_name}
                       phone={cafe.phone}
                     />
@@ -112,7 +114,7 @@ export default function Sidebar({ session }) {
           {pathname === '/cafe/collected' && (
             <CollectedCard
               name={'인더매스'}
-              ratings={10}
+              ratings={5}
               address={'대구 삼덕동'}
               phone={'053-0000-0000'}
             />
