@@ -25,46 +25,60 @@ function MainItem({ icon, title, path }) {
 }
 
 export default function Sidebar({ session }) {
-  const results = useMapStore((state) => state.results, shallow);
   const [isSubSidebarOpen, setIsSubSidebarOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const { ref, inView } = useInView({ threshold: 0.5 });
 
   const router = useRouter();
   const pathname = usePathname();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      initialPageParam: 1,
-      queryKey: ['results', results],
-      queryFn: ({ pageParam = 1 }) => {
-        const start = (pageParam - 1) * 3;
-        return {
-          data: results.slice(start, start + 3),
-          page: pageParam,
-        };
-      },
-      getNextPageParam: (lastPage) => {
-        const nextPage = lastPage.page + 1;
-        return lastPage.data.length === 3 ? nextPage : null;
-      },
-    });
+  const cafeAll = useMapStore((state) => state.results, shallow);
+  const collectedCafes = [];
 
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, hasNextPage, fetchNextPage]);
+  const itemsPerPage = 15;
+  const totalPages = Math.ceil(cafeAll.length / itemsPerPage);
+
+  const paginatedResults = cafeAll.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  // 수집해본 카페 무한스크롤
+  // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  //   useInfiniteQuery({
+  //     initialPageParam: 1,
+  //     queryKey: ['collectedCafes'],
+  //     queryFn: ({ pageParam = 1 }) => {
+  //       const start = (pageParam - 1) * 3;
+  //       return {
+  //         data: collectedCafes.slice(start, start + 3),
+  //         page: pageParam,
+  //       };
+  //     },
+  //     getNextPageParam: (lastPage) => {
+  //       const nextPage = lastPage.page + 1;
+  //       return lastPage.data.length === 3 ? nextPage : null;
+  //     },
+  //   });
+
+  // useEffect(() => {
+  //   if (inView && hasNextPage && !isFetchingNextPage) fetchNextPage();
+  // }, [inView, hasNextPage, fetchNextPage]);
 
   return (
     <div className="relative flex items-center">
       {/* 메인 사이드바 */}
-      <Card className="h-[100vh] max-h-screen w-full max-w-[20rem] p-6 rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll">
+      <Card className="h-[100vh] max-h-screen w-full max-w-[24rem] p-6 rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll">
         <div className="flex flex-col gap-4">
-          <Header
-            img={
-              'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f21a74a1-65e0-4c8b-9b4f-80db3b5bbddb/d4gayid-ebc15d60-9420-4cbc-9680-d57650f89091.png/v1/fill/w_900,h_675/yu_gi_oh_5d_s_logo_render_by_nyaediter_d4gayid-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9Njc1IiwicGF0aCI6IlwvZlwvZjIxYTc0YTEtNjVlMC00YzhiLTliNGYtODBkYjNiNWJiZGRiXC9kNGdheWlkLWViYzE1ZDYwLTk0MjAtNGNiYy05NjgwLWQ1NzY1MGY4OTA5MS5wbmciLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.KFzCdQb27TuUOrcgKc7x28oQM3T7QZ9oihSVWAnxjPc'
-            }
-          />
+          <Header img={'/image/logo.png'} />
           <Search />
 
           {/* 홈 */}
@@ -95,22 +109,51 @@ export default function Sidebar({ session }) {
           {/* 기본 검색 결과 = 모든 카페 보기 */}
           {pathname === '/cafe/all' && (
             <div>
-              {data?.pages?.map((page, i) => (
-                <div key={i} className="flex flex-col gap-4 mb-3">
-                  {page.data.map((cafe) => (
-                    <NormalCard
-                      key={cafe.id}
-                      name={cafe.place_name}
-                      address={cafe.address_name}
-                      phone={cafe.phone}
-                    />
-                  ))}
-                </div>
-              ))}
+              <div className="flex flex-col gap-4 mb-3">
+                {/* {data?.pages?.map((page, i) => (
+                  <div key={i} className="flex flex-col gap-4 mb-3"> */}
+                {paginatedResults.map((cafe) => (
+                  <NormalCard
+                    key={cafe.id}
+                    name={cafe.place_name}
+                    address={cafe.address_name}
+                    phone={cafe.phone}
+                    onClick={() => setIsSubSidebarOpen(true)}
+                  />
+                ))}
+                {/* </div>
+                ))} */}
+              </div>
+              <div className="flex justify-between items-center">
+                <button
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                  className={`px-4 py-2 ${
+                    currentPage === 1 ? 'opacity-50' : 'opacity-100'
+                  }`}
+                >
+                  {'<'}{' '}
+                </button>
+                <span>
+                  {currentPage} / {totalPages}
+                </span>
+                <button
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                  className={`px-4 py-2 ${
+                    currentPage === totalPages ? 'opacity-50' : 'opacity-100'
+                  }`}
+                >
+                  {'>'}
+                </button>
+              </div>
             </div>
           )}
 
           {/* 수집한 카페 보기 */}
+          {/* {isFetchingNextPage && (
+            <div className="text-center py-2">로딩 중...</div>
+          )} */}
           {pathname === '/cafe/collected' && (
             <CollectedCard
               name={'인더매스'}
@@ -123,13 +166,9 @@ export default function Sidebar({ session }) {
           {/* 안 가본 카페만 따로 보기 */}
           {pathname === '/cafe/not-collected' && <div></div>}
 
-          {/* 무한 스크롤 로딩 */}
-          {isFetchingNextPage && (
-            <div className="text-center py-2">로딩 중...</div>
-          )}
           <div ref={ref}></div>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-3">
           <button
             className="w-30 p-1 border-solid border-2 border-main"
             onClick={() => router.push('/')}

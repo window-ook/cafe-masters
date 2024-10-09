@@ -3,7 +3,7 @@ import { Card } from '@material-tailwind/react';
 export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
   return (
     <Card
-      className={`h-[90vh] w-[100vw] max-w-[20rem] p-2 transition-transform duration-500 ease-in-out transform static left-0 ${
+      className={`h-[90vh] w-[100vw] max-w-[24rem] p-2 transition-transform duration-500 ease-in-out transform static left-0 ${
         isSubSidebarOpen ? 'translate-x-[2rem]' : 'translate-x-0 opacity-0'
       } z-1`}
     >
