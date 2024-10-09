@@ -13,8 +13,10 @@ export const useMapStore = create(
     (set) => ({
       keyword: '서울숲',
       results: [],
+      cafeDetail: null,
       setKeyword: (newKeyword) => set({ keyword: newKeyword }),
       setResults: (newResults) => set({ results: newResults }),
+      setCafeDetail: (data) => set({ cafeDetail: data }),
     }),
     {
       name: 'mapStore',

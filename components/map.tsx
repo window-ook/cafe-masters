@@ -44,7 +44,7 @@ export default function KakaoMap() {
 
           window.kakao.maps.event.addListener(marker, 'click', function () {
             infowindow.setContent(
-              `<div style="padding:15px;">${place.place_name}</div>`
+              `<div style="padding:2px; width:20px">${place.place_name}</div>`
             );
             infowindow.open(map, marker);
           });
@@ -78,6 +78,7 @@ export default function KakaoMap() {
                     newPagination.nextPage();
                   else {
                     setResults(results);
+                    console.log(results);
                     removeMarkers();
                     results.forEach((place) => displayMarkers(place));
                   }
@@ -94,14 +95,15 @@ export default function KakaoMap() {
                 results.forEach((place) => displayMarkers(place));
               }
             } else {
-              alert('검색 결과가 없습니다.');
+              alert(`${query}의 결과가 없습니다.`);
             }
           });
         };
 
         if (
           window.location.pathname === '/' ||
-          window.location.pathname === '/cafe/all'
+          window.location.pathname === '/cafe/all' ||
+          window.location.pathname.startsWith('/cafe/detail')
         ) {
           if (keyword.includes('카페')) searchByKeyword(keyword);
           else searchByKeyword(`${keyword} 카페`);
@@ -124,7 +126,7 @@ export default function KakaoMap() {
         height: '100vh',
         position: 'fixed',
         top: 0,
-        left: 320,
+        left: 348,
         zIndex: 0,
       }}
     />

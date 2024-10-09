@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, Typography } from '@material-tailwind/react';
 
 export default function NormalCard({
