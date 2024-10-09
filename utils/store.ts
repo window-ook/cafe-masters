@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface MapState {
   keyword: string;
@@ -7,9 +8,27 @@ interface MapState {
   setResults: (results: any[]) => void;
 }
 
-export const useMapStore = create((set) => ({
-  keyword: '성수',
-  results: [],
-  setKeyword: (keyword) => set({ keyword }),
-  setResults: (results) => set({ results }),
-}));
+export const useMapStore = create(
+  persist(
+    (set) => ({
+      keyword: '서울숲',
+      results: [],
+      cafeDetail: null,
+      setKeyword: (newKeyword) => set({ keyword: newKeyword }),
+      setResults: (newResults) => set({ results: newResults }),
+      setCafeDetail: (data) => set({ cafeDetail: data }),
+    }),
+    {
+      name: 'mapStore',
+      getStorage: () => localStorage,
+      partialize: (state) => ({
+        keyword: state.keyword,
+        results: state.results,
+      }),
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...persistedState,
+      }),
+    }
+  )
+);

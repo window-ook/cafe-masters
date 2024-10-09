@@ -23,19 +23,18 @@ export default function KakaoMap() {
       window.kakao.maps.load(() => {
         const container = document.getElementById('map');
         const options = {
-          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-          level: 4,
+          center: new window.kakao.maps.LatLng(
+            127.04663357436208,
+            37.54715716085294
+          ),
+          level: 5,
         };
         const map = new window.kakao.maps.Map(container, options);
-        const geocoder = new window.kakao.maps.services.Geocoder();
+        const geocoder = new window.kakao.maps.services.Geocoder(); // 주소 -> 좌표 변환
         const ps = new window.kakao.maps.services.Places();
         const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
         let markers: any[] = [];
 
-        const zoomControl = new window.kakao.maps.ZoomControl();
-        map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
-
-        // 마커 표시
         const displayMarkers = (place: any) => {
           const marker = new window.kakao.maps.Marker({
             map: map,
@@ -45,9 +44,9 @@ export default function KakaoMap() {
 
           window.kakao.maps.event.addListener(marker, 'click', function () {
             infowindow.setContent(
-              `<div style="padding:5px;">${place.place_name}</div>`
+              `<div style="padding:2px; width:20px">${place.place_name}</div>`
             );
-            infowindow.open(map, marker); // 마커 클릭시 정보창 표시
+            infowindow.open(map, marker);
           });
         };
 
@@ -56,36 +55,63 @@ export default function KakaoMap() {
           markers = [];
         };
 
-        // 키워드로 카페 검색
         const searchByKeyword = (query) => {
-          ps.keywordSearch(query, (data, status) => {
+          ps.keywordSearch(query, (data, status, pagination) => {
             if (status === window.kakao.maps.services.Status.OK) {
               const coords = new window.kakao.maps.LatLng(data[0].y, data[0].x);
-              map.setCenter(coords); // 중앙 좌표 설정
-              setResults(data);
-              console.log(data);
-              removeMarkers();
-              data.forEach((place) => displayMarkers(place));
+              map.setCenter(coords);
+
+              const filtered_data = data.filter(
+                (item: any) => item['category_group_code'] === 'CE7'
+              );
+
+              const results = [...filtered_data]; // CE7 카페에 해당하는 장소만 결과로
+
+              const handlePagination = (newData, status, newPagination) => {
+                if (status === window.kakao.maps.services.Status.OK) {
+                  const moreFilteredData = newData.filter(
+                    (item) => item['category_group_code'] === 'CE7'
+                  );
+                  results.push(...moreFilteredData);
+
+                  if (newPagination.hasNextPage && results.length < 45)
+                    newPagination.nextPage();
+                  else {
+                    setResults(results);
+                    console.log(results);
+                    removeMarkers();
+                    results.forEach((place) => displayMarkers(place));
+                  }
+                }
+              };
+
+              // 첫 번째 페이지 처리
+              if (pagination.hasNextPage && results.length < 45) {
+                pagination.nextPage();
+                ps.keywordSearch(query, handlePagination, pagination);
+              } else {
+                setResults(results);
+                removeMarkers();
+                results.forEach((place) => displayMarkers(place));
+              }
             } else {
-              alert('검색 결과가 없습니다.');
+              alert(`${query}의 결과가 없습니다.`);
             }
           });
         };
 
-        const handleSearch = (query) => {
-          if (query.includes('카페')) searchByKeyword(query);
-          else searchByKeyword(`${query} 카페`);
-        };
-
         if (
+          window.location.pathname === '/' ||
           window.location.pathname === '/cafe/all' ||
-          window.location.pathname === '/'
+          window.location.pathname.startsWith('/cafe/detail')
         ) {
-          if (keyword) handleSearch(keyword);
-          else alert('검색어를 입력해주세요.');
+          if (keyword.includes('카페')) searchByKeyword(keyword);
+          else searchByKeyword(`${keyword} 카페`);
         }
       });
     };
+
+    // 수집한 카페 버튼을 누르면 수파베이스에서 데이터를 받아오고, 사이드바에서 카페를 클릭하면 맵에 마커로 표시하고 중앙으로 옮겨주는 로직 추가
 
     return () => {
       script.remove();
@@ -100,7 +126,7 @@ export default function KakaoMap() {
         height: '100vh',
         position: 'fixed',
         top: 0,
-        left: 320,
+        left: 348,
         zIndex: 0,
       }}
     />

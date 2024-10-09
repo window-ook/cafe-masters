@@ -8,12 +8,10 @@ import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Card, List, ListItem, ListItemPrefix } from '@material-tailwind/react';
 import Header from './header';
-import Search from './search';
 import Footer from './footer';
 import SubSidebar from './sub-sidebar';
 import NormalCard from './normal-card';
 import CollectedCard from './collected-card';
-import Profile from './profile';
 
 function MainItem({ icon, title, path }) {
   return (
@@ -25,47 +23,69 @@ function MainItem({ icon, title, path }) {
 }
 
 export default function Sidebar({ session }) {
-  const results = useMapStore((state) => state.results, shallow);
   const [isSubSidebarOpen, setIsSubSidebarOpen] = useState(false);
+  const [selectedCafe, setSelectedCafe] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const { ref, inView } = useInView({ threshold: 0.5 });
 
   const router = useRouter();
   const pathname = usePathname();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      initialPageParam: 1,
-      queryKey: ['results', results],
-      queryFn: ({ pageParam = 1 }) => {
-        const start = (pageParam - 1) * 3;
-        return {
-          data: results.slice(start, start + 3),
-          page: pageParam,
-        };
-      },
-      getNextPageParam: (lastPage) => {
-        const nextPage = lastPage.page + 1;
-        return lastPage.data.length === 3 ? nextPage : null;
-      },
-    });
+  const cafeAll = useMapStore((state) => state.results, shallow);
+  const cafeCollected = []; // 수파베이스 DB에서 가져온 수집한 카페 정보
 
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, hasNextPage, fetchNextPage]);
+  const itemsPerPage = 15;
+  const totalPages = Math.ceil(cafeAll.length / itemsPerPage);
+
+  const paginatedResults = cafeAll.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNormalCardClick = (cafe) => {
+    setSelectedCafe(cafe); // 선택된 카페 정보 설정
+    setIsSubSidebarOpen(true); // 서브 사이드바 열기
+    router.push(`/cafe/detail/${cafe.id}`); // 동적 라우팅
+  };
+
+  // 무한스크롤
+  // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  //   useInfiniteQuery({
+  //     initialPageParam: 1,
+  //     queryKey: ['collectedCafes'],
+  //     queryFn: ({ pageParam = 1 }) => {
+  //       const start = (pageParam - 1) * 3;
+  //       return {
+  //         data: collectedCafes.slice(start, start + 3),
+  //         page: pageParam,
+  //       };
+  //     },
+  //     getNextPageParam: (lastPage) => {
+  //       const nextPage = lastPage.page + 1;
+  //       return lastPage.data.length === 3 ? nextPage : null;
+  //     },
+  //   });
+
+  // useEffect(() => {
+  //   if (inView && hasNextPage && !isFetchingNextPage) fetchNextPage();
+  // }, [inView, hasNextPage, fetchNextPage]);
 
   return (
     <div className="relative flex items-center">
       {/* 메인 사이드바 */}
-      <Card className="h-[100vh] max-h-screen w-full max-w-[20rem] p-6 rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll">
+      <Card className="h-[100vh] max-h-screen w-full max-w-[24rem] px-6 rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll">
         <div className="flex flex-col gap-4">
-          <Header
-            img={
-              'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f21a74a1-65e0-4c8b-9b4f-80db3b5bbddb/d4gayid-ebc15d60-9420-4cbc-9680-d57650f89091.png/v1/fill/w_900,h_675/yu_gi_oh_5d_s_logo_render_by_nyaediter_d4gayid-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9Njc1IiwicGF0aCI6IlwvZlwvZjIxYTc0YTEtNjVlMC00YzhiLTliNGYtODBkYjNiNWJiZGRiXC9kNGdheWlkLWViYzE1ZDYwLTk0MjAtNGNiYy05NjgwLWQ1NzY1MGY4OTA5MS5wbmciLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.KFzCdQb27TuUOrcgKc7x28oQM3T7QZ9oihSVWAnxjPc'
-            }
-          />
-          <Search />
+          <div className="sticky top-0 z-10 py-4 bg-white">
+            <Header img={'/image/logo.png'} />
+          </div>
 
           {/* 홈 */}
           {pathname === '/' && (
@@ -78,39 +98,43 @@ export default function Sidebar({ session }) {
                 path={() => router.push('/cafe/all')}
               />
               <MainItem
-                icon={<i className="fa-solid fa-clone text-2xl"></i>}
-                title={'수집한 카페 모아보기'}
+                icon={<i className="fa-solid fa-clone text-main text-2xl"></i>}
+                title={'수집한 카페 보기'}
                 path={() => router.push('/cafe/collected')}
               />
               <MainItem
                 icon={
-                  <i className="fa-solid fa-circle-xmark text-red-500 text-2xl"></i>
+                  <i className="fa-solid fa-star text-yellow-800 text-2xl"></i>
                 }
-                title={'안 가본 카페만 따로 보기'}
-                path={() => router.push('/cafe/not-collected')}
+                title={'가고싶은 카페 보기'}
+                path={() => router.push('/cafe/bookmarked')}
               />
             </List>
           )}
 
-          {/* 기본 검색 결과 = 모든 카페 보기 */}
-          {pathname === '/cafe/all' && (
-            <div>
-              {data?.pages?.map((page, i) => (
-                <div key={i} className="flex flex-col gap-4 mb-3">
-                  {page.data.map((cafe) => (
-                    <NormalCard
-                      key={cafe.id}
-                      name={cafe.place_name}
-                      address={cafe.address_name}
-                      phone={cafe.phone}
-                    />
-                  ))}
-                </div>
+          {/* 검색 결과 = 모든 카페 보기 */}
+          {(pathname === '/cafe/all' ||
+            pathname.startsWith('/cafe/detail')) && (
+            <div className="flex flex-col gap-4 mb-3">
+              {paginatedResults.map((cafe) => (
+                <NormalCard
+                  key={cafe.id}
+                  name={cafe.place_name}
+                  address={cafe.address_name}
+                  phone={cafe.phone}
+                  onClick={() => handleNormalCardClick(cafe)}
+                />
               ))}
             </div>
           )}
 
-          {/* 수집한 카페 보기 */}
+          {/* 수집한 카페 보기(수파 베이스, 무한 스크롤 - 서버 액션 이용하기) */}
+          {/* 새로운 검색 창으로 filter 검색을 따로 하기 */}
+          {/* {isFetchingNextPage && (
+            <div className="text-center py-2">로딩 중...</div>
+          )} */}
+          {/* {data?.pages?.map((page, i) => (
+                  <div key={i} className="flex flex-col gap-4 mb-3"> */}
           {pathname === '/cafe/collected' && (
             <CollectedCard
               name={'인더매스'}
@@ -119,27 +143,43 @@ export default function Sidebar({ session }) {
               phone={'053-0000-0000'}
             />
           )}
+          {/* </div>
+                ))} */}
 
-          {/* 안 가본 카페만 따로 보기 */}
-          {pathname === '/cafe/not-collected' && <div></div>}
-
-          {/* 무한 스크롤 로딩 */}
-          {isFetchingNextPage && (
-            <div className="text-center py-2">로딩 중...</div>
-          )}
           <div ref={ref}></div>
-        </div>
-        <div className="flex flex-col gap-1">
-          <button
-            className="w-30 p-1 border-solid border-2 border-main"
-            onClick={() => router.push('/')}
-          >
-            Home
-          </button>
-          <div className={`${pathname === '/' ? 'opacity-100' : 'opacity-0'}`}>
-            <Profile session={session} />
-          </div>
-          <Footer session={session} />
+
+          {/* 페이지 이동 */}
+          {(pathname === '/cafe/all' ||
+            pathname.startsWith('/cafe/detail')) && (
+            <div className="sticky bottom-0 z-20 bg-white py-1">
+              <div className="flex justify-between items-center">
+                <button
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                  className={`px-4 py-2 ${
+                    currentPage === 1 ? 'opacity-50' : 'opacity-100'
+                  }`}
+                >
+                  {'<'}{' '}
+                </button>
+                <span>
+                  {currentPage} / {totalPages}
+                </span>
+                <button
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                  className={`px-4 py-2 ${
+                    currentPage === totalPages ? 'opacity-50' : 'opacity-100'
+                  }`}
+                >
+                  {'>'}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* 유저 정보, 로그아웃 */}
+          {pathname === '/' && <Footer session={session} />}
         </div>
       </Card>
 
@@ -147,6 +187,7 @@ export default function Sidebar({ session }) {
       <SubSidebar
         isSubSidebarOpen={isSubSidebarOpen}
         setIsSubSidebarOpen={setIsSubSidebarOpen}
+        details={selectedCafe}
       />
     </div>
   );
