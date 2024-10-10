@@ -114,7 +114,8 @@ export default function Sidebar({ session }) {
 
           {/* 검색 결과 = 모든 카페 보기 */}
           {(pathname === '/cafe/all' ||
-            pathname.startsWith('/cafe/detail')) && (
+            pathname.startsWith('/cafe/detail') ||
+            pathname === '/memo') && (
             <div className="flex flex-col gap-4 mb-3">
               {paginatedResults.map((cafe) => (
                 <NormalCard
@@ -150,7 +151,8 @@ export default function Sidebar({ session }) {
 
           {/* 페이지 이동 */}
           {(pathname === '/cafe/all' ||
-            pathname.startsWith('/cafe/detail')) && (
+            pathname.startsWith('/cafe/detail') ||
+            pathname === '/memo') && (
             <div className="sticky bottom-0 z-20 bg-white py-1">
               <div className="flex justify-between items-center">
                 <button
@@ -187,7 +189,6 @@ export default function Sidebar({ session }) {
       <SubSidebar
         isSubSidebarOpen={isSubSidebarOpen}
         setIsSubSidebarOpen={setIsSubSidebarOpen}
-        details={selectedCafe}
       />
     </div>
   );
