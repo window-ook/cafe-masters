@@ -44,7 +44,7 @@ export default function KakaoMap() {
 
           window.kakao.maps.event.addListener(marker, 'click', function () {
             infowindow.setContent(
-              `<div style="padding:2px; width:20px">${place.place_name}</div>`
+              `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${place.place_name}</div>`
             );
             infowindow.open(map, marker);
           });
