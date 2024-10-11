@@ -1,4 +1,5 @@
 'use server';
+
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 
@@ -11,8 +12,8 @@ function handleError(error) {
   throw new Error(error.message);
 }
 
-// GET
-export async function getMemos({}) {
+// GET ALL MEMO
+export async function getAllMemo() {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('memo')
@@ -23,7 +24,8 @@ export async function getMemos({}) {
   return data;
 }
 
-export async function getSpecificMemo({ id }) {
+// GET
+export async function getThisMemo({ id }) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('memo')
@@ -35,7 +37,7 @@ export async function getSpecificMemo({ id }) {
 }
 
 // CREATE
-export async function createMemo({ memo: MemoRowInsert }) {
+export async function createMemo(memo: MemoRowInsert) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.from('memo').insert({
     ...memo,
@@ -47,9 +49,11 @@ export async function createMemo({ memo: MemoRowInsert }) {
 }
 
 // UPDATE
-
-export async function updateMemo({ memo: MemoRowUpdate }) {
+export async function updateMemo(memo: MemoRowUpdate) {
   const supabase = await createServerSupabaseClient();
+
+  if (!memo.id) throw new Error('id가 필요합니다.');
+
   const { data, error } = await supabase
     .from('memo')
     .update({

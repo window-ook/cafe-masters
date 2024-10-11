@@ -1,10 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useMapStore, useUserStore } from 'utils/store';
 import { Card } from '@material-tailwind/react';
 import { Button, IconButton, Rating, TextField } from '@mui/material';
-import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useMapStore } from 'utils/store';
+import { createMemo, getThisMemo } from 'actions/memoActions';
 
 export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,11 +15,12 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
   const [eaten, setEaten] = useState('');
   const [concept, setConcept] = useState('');
   const [rating, setRating] = useState<number | null>(5);
-
   const cafeDetail = useMapStore((state) => state.cafeDetail);
+  const userId = useUserStore((state) => state.userId);
 
   const memo = {
     id: cafeDetail?.basicInfo?.cid,
+    userId: userId,
     placename: cafeDetail?.basicInfo?.placenamefull,
     address:
       cafeDetail?.basicInfo?.address?.region?.newaddrfullname +
@@ -26,9 +28,9 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
       cafeDetail?.basicInfo?.address?.newaddr?.newaddrfull +
       ' ' +
       cafeDetail?.basicInfo?.address?.addrdetail,
-    coordX: cafeDetail?.basicInfo?.mapx,
-    coordY: cafeDetail?.basicInfo?.mapy,
-    photoUrl: cafeDetail?.basicInfo?.mainphotourl,
+    coordX: cafeDetail?.findway?.x,
+    coordY: cafeDetail?.findway?.y,
+    photoUrl: cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumb.webp',
     comment,
     pros,
     cons,
@@ -45,7 +47,15 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
     console.log(menuOpen);
   };
 
-  // 수파베이스 DB에서 수집한 카페인지 확인
+  // 선택 수집 카페의 정보 불러오기
+  const getMemo = () => {};
+
+  // 수집할 카페의 메모 저장하기
+  const submitMemo = (memo) => {
+    createMemo(memo);
+    alert('새로운 카페를 수집했습니다!');
+  };
+
   const isCollected = false;
 
   return (
@@ -66,7 +76,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
           <div className="flex justify-center">
             <img
               src={
-                cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumb.png'
+                cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumb.webp'
               }
               alt="카페 썸네일"
               className="w-[10rem] rounded-md"
@@ -177,16 +187,41 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
       {pathname === '/memo' && (
         <form
           className="flex flex-col p-2 gap-4"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={(e) => {
+            e.preventDefault();
+            submitMemo(memo);
+          }}
         >
           <h2 className="text-xl font-semibold">
             {cafeDetail?.basicInfo?.placenamefull}
           </h2>
-          <TextField required label="코멘트" variant="outlined" />
-          <TextField label="장점" variant="outlined" />
-          <TextField label="단점" variant="outlined" />
-          <TextField required label="먹어본 메뉴" variant="outlined" />
-          <TextField label="카페 컨셉" variant="outlined" />
+          <TextField
+            required
+            label="내 코멘트"
+            variant="outlined"
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <TextField
+            label="장점"
+            variant="outlined"
+            onChange={(e) => setPros(e.target.value)}
+          />
+          <TextField
+            label="단점"
+            variant="outlined"
+            onChange={(e) => setCons(e.target.value)}
+          />
+          <TextField
+            required
+            label="먹어본 메뉴"
+            variant="outlined"
+            onChange={(e) => setEaten(e.target.value)}
+          />
+          <TextField
+            label="카페 컨셉"
+            variant="outlined"
+            onChange={(e) => setConcept(e.target.value)}
+          />
           <div className="flex items-center">
             <span>별점</span>
             <Rating

@@ -32,3 +32,23 @@ export const useMapStore = create(
     }
   )
 );
+
+export const useUserStore = create(
+  persist(
+    (set) => ({
+      userId: '',
+      setUserId: (id) => set({ userId: id }),
+    }),
+    {
+      name: 'userStore',
+      getStorage: () => localStorage,
+      partialize: (state) => ({
+        userId: state.userId,
+      }),
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...persistedState,
+      }),
+    }
+  )
+);

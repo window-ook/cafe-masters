@@ -6,11 +6,13 @@ import { Card, Button, Typography } from '@material-tailwind/react';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import UserForm from './user-form';
+import { useUserStore } from 'utils/store';
 
 export default function SignIn({ setView }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const supabase = createBrowserSupabaseClient();
+  const setUserId = useUserStore((state) => state.setUserId);
 
   const signinMutation = useMutation({
     mutationFn: async () => {
@@ -21,7 +23,9 @@ export default function SignIn({ setView }) {
 
       if (error) alert(error.message);
 
-      if (data) console.log(data);
+      if (data) {
+        setUserId(data?.user?.id);
+      }
     },
   });
 

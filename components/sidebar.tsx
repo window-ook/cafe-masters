@@ -84,7 +84,7 @@ export default function Sidebar({ session }) {
       <Card className="h-[100vh] max-h-screen w-full max-w-[24rem] px-6 rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll">
         <div className="flex flex-col gap-4">
           <div className="sticky top-0 z-10 py-4 bg-white">
-            <Header img={'/image/logo.png'} />
+            <Header img={'/image/logo.webp'} />
           </div>
 
           {/* 홈 */}

@@ -9,7 +9,57 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      memo: {
+        Row: {
+          address: string
+          comment: string
+          concept: string | null
+          cons: string | null
+          coordX: number
+          coordY: number
+          created_at: string
+          eaten: string
+          id: number
+          photoUrl: string | null
+          placename: string
+          pros: string | null
+          rating: number
+          updated_at: string | null
+        }
+        Insert: {
+          address: string
+          comment: string
+          concept?: string | null
+          cons?: string | null
+          coordX: number
+          coordY: number
+          created_at?: string
+          eaten: string
+          id?: number
+          photoUrl?: string | null
+          placename?: string
+          pros?: string | null
+          rating: number
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string
+          comment?: string
+          concept?: string | null
+          cons?: string | null
+          coordX?: number
+          coordY?: number
+          created_at?: string
+          eaten?: string
+          id?: number
+          photoUrl?: string | null
+          placename?: string
+          pros?: string | null
+          rating?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

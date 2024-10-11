@@ -25,7 +25,7 @@ export default function NormalCard({
         {collected ? '✓' : ''}
       </div>
       <div className="flex justify-center">
-        <img src="/image/cafe_thumb.png" alt="cafe_img" width={100} />
+        <img src="/image/cafe_thumb.webp" alt="cafe_img" width={100} />
       </div>
       <div className="flex flex-col shadow-md px-2">
         <Typography className="text-sm">{address}</Typography>
