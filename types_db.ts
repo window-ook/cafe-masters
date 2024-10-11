@@ -9,7 +9,111 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      bookmark: {
+        Row: {
+          address: string
+          coordX: number | null
+          coordY: number | null
+          created_at: string
+          id: number
+          menu: string | null
+          name: string
+          openWeekend: string | null
+          openWeekly: string
+          phoneNum: string | null
+          photoUrl: string | null
+          rating: number | null
+          reviewCount: number | null
+          userId: string
+        }
+        Insert: {
+          address: string
+          coordX?: number | null
+          coordY?: number | null
+          created_at?: string
+          id?: number
+          menu?: string | null
+          name: string
+          openWeekend?: string | null
+          openWeekly: string
+          phoneNum?: string | null
+          photoUrl?: string | null
+          rating?: number | null
+          reviewCount?: number | null
+          userId: string
+        }
+        Update: {
+          address?: string
+          coordX?: number | null
+          coordY?: number | null
+          created_at?: string
+          id?: number
+          menu?: string | null
+          name?: string
+          openWeekend?: string | null
+          openWeekly?: string
+          phoneNum?: string | null
+          photoUrl?: string | null
+          rating?: number | null
+          reviewCount?: number | null
+          userId?: string
+        }
+        Relationships: []
+      }
+      collected: {
+        Row: {
+          address: string
+          comment: string
+          concept: string | null
+          cons: string | null
+          coordX: number
+          coordY: number
+          created_at: string
+          eaten: string
+          id: number
+          photoUrl: string | null
+          placename: string
+          pros: string | null
+          rating: number
+          updated_at: string | null
+          userId: string
+        }
+        Insert: {
+          address: string
+          comment: string
+          concept?: string | null
+          cons?: string | null
+          coordX: number
+          coordY: number
+          created_at?: string
+          eaten: string
+          id?: number
+          photoUrl?: string | null
+          placename?: string
+          pros?: string | null
+          rating: number
+          updated_at?: string | null
+          userId: string
+        }
+        Update: {
+          address?: string
+          comment?: string
+          concept?: string | null
+          cons?: string | null
+          coordX?: number
+          coordY?: number
+          created_at?: string
+          eaten?: string
+          id?: number
+          photoUrl?: string | null
+          placename?: string
+          pros?: string | null
+          rating?: number
+          updated_at?: string | null
+          userId?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

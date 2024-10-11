@@ -2,13 +2,7 @@
 
 import { Card, Typography } from '@material-tailwind/react';
 
-export default function NormalCard({
-  name,
-  address,
-  phone,
-  collected = false, // 수집한 카페는 속성 표시
-  onClick,
-}) {
+export default function BookmarkedCard({ name, address, phone, onClick }) {
   return (
     <Card
       onClick={onClick}
@@ -22,7 +16,6 @@ export default function NormalCard({
         >
           {name}
         </Typography>
-        {collected ? '✓' : ''}
       </div>
       <div className="flex justify-center">
         <img src="/image/cafe_thumb.webp" alt="cafe_img" width={100} />

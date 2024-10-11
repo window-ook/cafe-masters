@@ -32,3 +32,43 @@ export const useMapStore = create(
     }
   )
 );
+
+export const useUserStore = create(
+  persist(
+    (set) => ({
+      userId: '',
+      setUserId: (id) => set({ userId: id }),
+    }),
+    {
+      name: 'userStore',
+      getStorage: () => localStorage,
+      partialize: (state) => ({
+        userId: state.userId,
+      }),
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...persistedState,
+      }),
+    }
+  )
+);
+
+export const useSubSidebarStore = create(
+  persist(
+    (set) => ({
+      isSubSidebarOpen: false,
+      setIsSubSidebarOpen: (prev) => set({ isSubSidebarOpen: prev }),
+    }),
+    {
+      name: 'subSidebarStore',
+      getStorage: () => localStorage,
+      partialize: (state) => ({
+        isSubSidebarOpen: state.isSubSidebarOpen,
+      }),
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...persistedState,
+      }),
+    }
+  )
+);
