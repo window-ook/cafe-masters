@@ -3,20 +3,22 @@
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 
-export type MemoRow = Database['public']['Tables']['memo']['Row'];
-export type MemoRowInsert = Database['public']['Tables']['memo']['Insert'];
-export type MemoRowUpdate = Database['public']['Tables']['memo']['Update'];
+export type CollectedRow = Database['public']['Tables']['collected']['Row'];
+export type CollectedRowInsert =
+  Database['public']['Tables']['collected']['Insert'];
+export type CollectedRowUpdate =
+  Database['public']['Tables']['collected']['Update'];
 
 function handleError(error) {
   console.error(error);
   throw new Error(error.message);
 }
 
-// GET ALL MEMO
-export async function getAllMemo() {
+// GET ALL COLLECTED (메인)
+export async function getAllCollected() {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
-    .from('memo')
+    .from('collected')
     .select('*')
     .order('created_at', { ascending: true });
 
@@ -24,11 +26,11 @@ export async function getAllMemo() {
   return data;
 }
 
-// GET
-export async function getThisMemo({ id }) {
+// GET (서브)
+export async function getCollected(id) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
-    .from('memo')
+    .from('collected')
     .select('*')
     .like('id', id);
 
@@ -37,10 +39,10 @@ export async function getThisMemo({ id }) {
 }
 
 // CREATE
-export async function createMemo(memo: MemoRowInsert) {
+export async function createCollected(collected: CollectedRowInsert) {
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.from('memo').insert({
-    ...memo,
+  const { data, error } = await supabase.from('collected').insert({
+    ...collected,
     created_at: new Date().toISOString(),
   });
 
@@ -49,18 +51,18 @@ export async function createMemo(memo: MemoRowInsert) {
 }
 
 // UPDATE
-export async function updateMemo(memo: MemoRowUpdate) {
+export async function updateCollected(collected: CollectedRowUpdate) {
   const supabase = await createServerSupabaseClient();
 
-  if (!memo.id) throw new Error('id가 필요합니다.');
+  if (!collected.id) throw new Error('id가 필요합니다.');
 
   const { data, error } = await supabase
-    .from('memo')
+    .from('collected')
     .update({
-      ...memo,
+      ...collected,
       updated_at: new Date().toISOString(),
     })
-    .eq('id', memo.id);
+    .eq('id', collected.id);
 
   if (error) handleError(error);
   return data;

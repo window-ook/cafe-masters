@@ -9,7 +9,58 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      memo: {
+      bookmark: {
+        Row: {
+          address: string
+          coordX: number | null
+          coordY: number | null
+          created_at: string
+          id: number
+          menu: string | null
+          name: string
+          openWeekend: string | null
+          openWeekly: string
+          phoneNum: string | null
+          photoUrl: string | null
+          rating: number | null
+          reviewCount: number | null
+          userId: string
+        }
+        Insert: {
+          address: string
+          coordX?: number | null
+          coordY?: number | null
+          created_at?: string
+          id?: number
+          menu?: string | null
+          name: string
+          openWeekend?: string | null
+          openWeekly: string
+          phoneNum?: string | null
+          photoUrl?: string | null
+          rating?: number | null
+          reviewCount?: number | null
+          userId: string
+        }
+        Update: {
+          address?: string
+          coordX?: number | null
+          coordY?: number | null
+          created_at?: string
+          id?: number
+          menu?: string | null
+          name?: string
+          openWeekend?: string | null
+          openWeekly?: string
+          phoneNum?: string | null
+          photoUrl?: string | null
+          rating?: number | null
+          reviewCount?: number | null
+          userId?: string
+        }
+        Relationships: []
+      }
+      collected: {
         Row: {
           address: string
           comment: string
@@ -25,6 +76,7 @@ export type Database = {
           pros: string | null
           rating: number
           updated_at: string | null
+          userId: string
         }
         Insert: {
           address: string
@@ -41,6 +93,7 @@ export type Database = {
           pros?: string | null
           rating: number
           updated_at?: string | null
+          userId: string
         }
         Update: {
           address?: string
@@ -57,6 +110,7 @@ export type Database = {
           pros?: string | null
           rating?: number
           updated_at?: string | null
+          userId?: string
         }
         Relationships: []
       }

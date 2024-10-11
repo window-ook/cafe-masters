@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useMapStore } from 'utils/store';
+import { useMapStore, useSubSidebarStore } from 'utils/store';
 import { shallow } from 'zustand/shallow';
 import { usePathname, useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
@@ -23,7 +23,6 @@ function MainItem({ icon, title, path }) {
 }
 
 export default function Sidebar({ session }) {
-  const [isSubSidebarOpen, setIsSubSidebarOpen] = useState(false);
   const [selectedCafe, setSelectedCafe] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const { ref, inView } = useInView({ threshold: 0.5 });
@@ -31,8 +30,15 @@ export default function Sidebar({ session }) {
   const router = useRouter();
   const pathname = usePathname();
 
+  const isSubSidebarOpen = useSubSidebarStore(
+    (state) => state.isSubSidebarOpen
+  );
+  const setIsSubSidebarOpen = useSubSidebarStore(
+    (state) => state.setIsSubSidebarOpen
+  );
   const cafeAll = useMapStore((state) => state.results, shallow);
-  const cafeCollected = []; // 수파베이스 DB에서 가져온 수집한 카페 정보
+  const cafeCollected = ''; // 수파베이스 DB에서 가져온 수집한 카페 정보
+  const cafeBookmarked = ''; // 수파베이스 DB에서 가져온 북마크 카페 정보
 
   const itemsPerPage = 15;
   const totalPages = Math.ceil(cafeAll.length / itemsPerPage);
@@ -146,6 +152,18 @@ export default function Sidebar({ session }) {
           )}
           {/* </div>
                 ))} */}
+
+          {/* 북마크 카페 보기(수파 베이스, 무한 스크롤 - 서버 액션 이용하기) */}
+          {/* 새로운 검색 창으로 filter 검색을 따로 하기 */}
+          {pathname === '/cafe/bookmarked' && (
+            <NormalCard
+              key={12382716}
+              name={'접속'}
+              address={'대구 동성로'}
+              phone={'053-0000-0000'}
+              onClick={(e) => e.preventDefault()}
+            />
+          )}
 
           <div ref={ref}></div>
 

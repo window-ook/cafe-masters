@@ -1,6 +1,6 @@
 'use client';
 
-import { cafeDatail } from 'actions/detailActions';
+import { cafeDatail } from 'actions/cafeDetailActions';
 import { useEffect } from 'react';
 import { useMapStore } from 'utils/store';
 

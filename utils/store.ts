@@ -52,3 +52,23 @@ export const useUserStore = create(
     }
   )
 );
+
+export const useSubSidebarStore = create(
+  persist(
+    (set) => ({
+      isSubSidebarOpen: false,
+      setIsSubSidebarOpen: (prev) => set({ isSubSidebarOpen: prev }),
+    }),
+    {
+      name: 'subSidebarStore',
+      getStorage: () => localStorage,
+      partialize: (state) => ({
+        isSubSidebarOpen: state.isSubSidebarOpen,
+      }),
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...persistedState,
+      }),
+    }
+  )
+);
