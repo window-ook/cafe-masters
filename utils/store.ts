@@ -72,3 +72,8 @@ export const useSubSidebarStore = create(
     }
   )
 );
+
+export const useBookmarkStore = create((set) => ({
+  isBookmarked: false,
+  setIsBookmarked: (value) => set({ isBookmarked: value }),
+}));

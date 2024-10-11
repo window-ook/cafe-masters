@@ -24,13 +24,13 @@ export async function getAllBookmarked() {
   return data;
 }
 
-// GET (서브)
+// GET BOOKMARKED BY ID (서브)
 export async function getBookmarked(id) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('bookmark')
     .select('*')
-    .like('id', id);
+    .eq('id', id);
 
   if (error) handleError(error);
   return data;

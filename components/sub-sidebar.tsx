@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useMapStore, useUserStore } from 'utils/store';
+import { useBookmarkStore, useMapStore, useUserStore } from 'utils/store';
 import { Card } from '@material-tailwind/react';
 import { createCollected, getCollected } from 'actions/collectedActions';
 import { createBookmarked } from 'actions/bookmarkActions';
@@ -19,6 +19,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
   const [rating, setRating] = useState<number | null>(5);
   const cafeDetail = useMapStore((state) => state.cafeDetail);
   const userId = useUserStore((state) => state.userId);
+  const isBookmarked = useBookmarkStore((state) => state.isBookmarked);
 
   const detail = {
     id: cafeDetail?.basicInfo?.cid,
@@ -106,13 +107,24 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
           <div className="flex justify-between">
             <div className="flex items-center">
               <h2 className="text-xl font-semibold">{detail.name}</h2>
-              <IconButton
-                aria-label="delete"
-                size="large"
-                onClick={() => submitBookmarked(detail)}
-              >
-                <BookmarkIcon className="text-yellow-700" />
-              </IconButton>
+              {isBookmarked ? (
+                <IconButton
+                  aria-label="bookmark"
+                  size="large"
+                  disabled
+                  onClick={() => submitBookmarked(detail)}
+                >
+                  <BookmarkIcon />
+                </IconButton>
+              ) : (
+                <IconButton
+                  aria-label="bookmark"
+                  size="large"
+                  onClick={() => submitBookmarked(detail)}
+                >
+                  <BookmarkIcon className="text-yellow-700" />
+                </IconButton>
+              )}
             </div>
             <button
               onClick={() => setIsSubSidebarOpen(false)}

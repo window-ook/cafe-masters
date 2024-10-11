@@ -26,13 +26,13 @@ export async function getAllCollected() {
   return data;
 }
 
-// GET (서브)
+// GET COLLECTED BY ID (서브)
 export async function getCollected(id) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('collected')
     .select('*')
-    .like('id', id);
+    .eq('id', id);
 
   if (error) handleError(error);
   return data;
