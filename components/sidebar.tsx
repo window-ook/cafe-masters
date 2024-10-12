@@ -15,9 +15,14 @@ import CollectedCard from './collected-card';
 
 function MainItem({ icon, title, path }) {
   return (
-    <ListItem className="flex gap-4" onClick={path}>
+    <ListItem
+      className="grid grid-cols-[40px_auto] items-center gap-4"
+      onClick={path}
+    >
       <ListItemPrefix>{icon}</ListItemPrefix>
-      <span className="text-xl">{title}</span>
+      <span className="text-xl font-dpixel text-black hover:text-opacity-40 transition ease-in-out delay-100">
+        {title}
+      </span>
     </ListItem>
   );
 }
@@ -151,21 +156,21 @@ export default function Sidebar({ session }) {
                 path={() => router.push('/cafe/all')}
               />
               <MainItem
-                icon={<i className="fa-solid fa-clone text-main text-2xl"></i>}
+                icon={<i className="fa-solid fa-mobile text-main text-2xl"></i>}
                 title={'수집한 카페 보기'}
                 path={() => router.push('/cafe/collected')}
               />
               <MainItem
                 icon={
-                  <i className="fa-solid fa-star text-yellow-800 text-2xl"></i>
+                  <i className="fa-solid fa-star text-yellow-800 text-xl"></i>
                 }
-                title={'가고싶은 카페 보기'}
+                title={'가고 싶은 카페 보기'}
                 path={() => router.push('/cafe/bookmarked')}
               />
             </List>
           )}
 
-          {/* 검색 결과 = 모든 카페 보기 */}
+          {/* 모든 카페 보기 */}
           {(pathname === '/cafe/all' ||
             pathname.startsWith('/cafe/detail') ||
             pathname === '/memo') && (
@@ -182,8 +187,7 @@ export default function Sidebar({ session }) {
             </div>
           )}
 
-          {/* 수집한 카페 보기(수파 베이스, 무한 스크롤 - 서버 액션 이용하기) */}
-          {/* 새로운 검색 창으로 filter 검색을 따로 하기 */}
+          {/* 수집한 카페 보기 */}
           {pathname === '/cafe/collected' && (
             <>
               {isFetchingNextCollectedPage && (
@@ -207,7 +211,7 @@ export default function Sidebar({ session }) {
             </>
           )}
 
-          {/* 북마크 카페 보기 */}
+          {/* 가고 싶은 카페 보기 */}
           {pathname === '/cafe/bookmarked' && (
             <>
               {isFetchingNextBookmarkedPage && (

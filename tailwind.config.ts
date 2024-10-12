@@ -17,15 +17,29 @@ const config: Config = {
         success: '#15ed79',
         indigo: '#6366f1',
         beginner: '#8a919c',
-        novice: '#d6e884',
-        expert: '#e30b6c',
-        master: '', // 마스터부터는 그라데이션
-        grand_master: '',
-        king: '',
+        junior: '#030ffc',
+        senior: '#f77a05',
+        'expert-via': '#f5e902',
+        'expert-side': '#bd9b04',
+        'master-via': '#f5248c',
+        'master-side': '#8a24b9',
       },
 
       backgroundImage: {
+        'expert-gradient': 'linear-gradient(90deg, #f5e902 0%, #bd9b04 100%)',
         'master-gradient': 'linear-gradient(90deg, #8a24b9 0%, #f5248c 100%)',
+      },
+
+      keyframes: {
+        gradientMove: {
+          '0%': { 'background-position': '0% 50%' },
+          '50%': { 'background-position': '100% 50%' },
+          '100%': { 'background-position': '0% 50%' },
+        },
+      },
+
+      animation: {
+        gradientMove: 'gradientMove 3s ease infinite',
       },
 
       dropShadow: {
