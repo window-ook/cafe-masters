@@ -1,6 +1,7 @@
 'use server';
 
-export async function cafeDatail(id) {
+// GET DE
+export async function cafeDetail(id) {
   const response = await fetch(`https://place.map.kakao.com/main/v/${id}`, {
     method: 'GET',
   });

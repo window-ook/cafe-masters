@@ -18,7 +18,7 @@ export default function NormalCard({
         <Typography
           variant="h6"
           color="blue-gray"
-          className="shadow-md shadow-gray-700 px-2"
+          className="shadow-md shadow-gray-700 px-2 py-1 font-dpixel"
         >
           {name}
         </Typography>
