@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useMapStore, useSubSidebarStore } from 'utils/store';
+import { useMapStore, useCheckStore } from 'utils/store';
 import { shallow } from 'zustand/shallow';
 import { usePathname, useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
@@ -25,25 +25,28 @@ function MainItem({ icon, title, path }) {
 export default function Sidebar({ session }) {
   const [selectedCafe, setSelectedCafe] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const { ref, inView } = useInView({ threshold: 0.5 });
+  const { ref: collectedRef, inView: collectedInView } = useInView({
+    threshold: 0.5,
+  });
+  const { ref: bookmarkedRef, inView: bookmarkedInView } = useInView({
+    threshold: 0.5,
+  });
 
   const router = useRouter();
   const pathname = usePathname();
 
-  const isSubSidebarOpen = useSubSidebarStore(
-    (state) => state.isSubSidebarOpen
-  );
-  const setIsSubSidebarOpen = useSubSidebarStore(
+  const isSubSidebarOpen = useCheckStore((state) => state.isSubSidebarOpen);
+  const setIsSubSidebarOpen = useCheckStore(
     (state) => state.setIsSubSidebarOpen
   );
-  const cafeAll = useMapStore((state) => state.results, shallow);
-  const cafeCollected = ''; // 수파베이스 DB에서 가져온 수집한 카페 정보
-  const cafeBookmarked = ''; // 수파베이스 DB에서 가져온 북마크 카페 정보
+  const allCafe = useMapStore((state) => state.allCafe, shallow);
+  const collectedCafe = useMapStore((state) => state.collectedCafe, shallow);
+  const bookmarkedCafe = useMapStore((state) => state.bookmarkedCafe, shallow);
 
   const itemsPerPage = 15;
-  const totalPages = Math.ceil(cafeAll.length / itemsPerPage);
+  const totalPages = Math.ceil(allCafe.length / itemsPerPage);
 
-  const paginatedResults = cafeAll.slice(
+  const paginatedResults = allCafe.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -57,32 +60,76 @@ export default function Sidebar({ session }) {
   };
 
   const handleNormalCardClick = (cafe) => {
-    setSelectedCafe(cafe); // 선택된 카페 정보 설정
-    setIsSubSidebarOpen(true); // 서브 사이드바 열기
-    router.push(`/cafe/detail/${cafe.id}`); // 동적 라우팅
+    setSelectedCafe(cafe);
+    setIsSubSidebarOpen(true);
+    router.push(`/cafe/detail/${cafe.id}`);
   };
 
-  // 무한스크롤
-  // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-  //   useInfiniteQuery({
-  //     initialPageParam: 1,
-  //     queryKey: ['collectedCafes'],
-  //     queryFn: ({ pageParam = 1 }) => {
-  //       const start = (pageParam - 1) * 3;
-  //       return {
-  //         data: collectedCafes.slice(start, start + 3),
-  //         page: pageParam,
-  //       };
-  //     },
-  //     getNextPageParam: (lastPage) => {
-  //       const nextPage = lastPage.page + 1;
-  //       return lastPage.data.length === 3 ? nextPage : null;
-  //     },
-  //   });
+  const {
+    data: collectedData,
+    fetchNextPage: fetchNextCollectedPage,
+    hasNextPage: hasNextCollectedPage,
+    isFetchingNextPage: isFetchingNextCollectedPage,
+  } = useInfiniteQuery({
+    initialPageParam: 1,
+    queryKey: ['collectedCafe', collectedCafe],
+    queryFn: ({ pageParam = 1 }) => {
+      const start = (pageParam - 1) * 3;
+      return {
+        data: collectedCafe.slice(start, start + 3),
+        page: pageParam,
+      };
+    },
+    getNextPageParam: (lastPage) => {
+      const nextPage = lastPage.page + 1;
+      return lastPage.data.length === 3 ? nextPage : null;
+    },
+  });
 
-  // useEffect(() => {
-  //   if (inView && hasNextPage && !isFetchingNextPage) fetchNextPage();
-  // }, [inView, hasNextPage, fetchNextPage]);
+  const {
+    data: bookmarkedData,
+    fetchNextPage: fetchNextBookmarkedPage,
+    hasNextPage: hasNextBookmarkedPage,
+    isFetchingNextPage: isFetchingNextBookmarkedPage,
+  } = useInfiniteQuery({
+    initialPageParam: 1,
+    queryKey: ['bookmarkedCafe', bookmarkedCafe],
+    queryFn: ({ pageParam = 1 }) => {
+      const start = (pageParam - 1) * 3;
+      return {
+        data: bookmarkedCafe.slice(start, start + 3),
+        page: pageParam,
+      };
+    },
+    getNextPageParam: (lastPage) => {
+      const nextPage = lastPage.page + 1;
+      return lastPage.data.length === 3 ? nextPage : null;
+    },
+  });
+
+  useEffect(() => {
+    if (pathname === '/') setIsSubSidebarOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (
+      collectedInView &&
+      hasNextCollectedPage &&
+      !isFetchingNextCollectedPage
+    ) {
+      fetchNextCollectedPage();
+    }
+  }, [collectedInView, hasNextCollectedPage, fetchNextCollectedPage]);
+
+  useEffect(() => {
+    if (
+      bookmarkedInView &&
+      hasNextBookmarkedPage &&
+      !isFetchingNextBookmarkedPage
+    ) {
+      fetchNextBookmarkedPage();
+    }
+  }, [bookmarkedInView, hasNextBookmarkedPage, fetchNextBookmarkedPage]);
 
   return (
     <div className="relative flex items-center">
@@ -90,7 +137,7 @@ export default function Sidebar({ session }) {
       <Card className="h-[100vh] max-h-screen w-full max-w-[24rem] px-6 rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll">
         <div className="flex flex-col gap-4">
           <div className="sticky top-0 z-10 py-4 bg-white">
-            <Header img={'/image/logo.webp'} />
+            <Header img={'/image/logo_trans.webp'} />
           </div>
 
           {/* 홈 */}
@@ -137,35 +184,53 @@ export default function Sidebar({ session }) {
 
           {/* 수집한 카페 보기(수파 베이스, 무한 스크롤 - 서버 액션 이용하기) */}
           {/* 새로운 검색 창으로 filter 검색을 따로 하기 */}
-          {/* {isFetchingNextPage && (
-            <div className="text-center py-2">로딩 중...</div>
-          )} */}
-          {/* {data?.pages?.map((page, i) => (
-                  <div key={i} className="flex flex-col gap-4 mb-3"> */}
           {pathname === '/cafe/collected' && (
-            <CollectedCard
-              name={'인더매스'}
-              ratings={5}
-              address={'대구 삼덕동'}
-              phone={'053-0000-0000'}
-            />
+            <>
+              {isFetchingNextCollectedPage && (
+                <div className="text-center py-2">로딩 중...</div>
+              )}
+              {collectedData?.pages?.map((page) => (
+                <div className="flex flex-col gap-4 mb-3">
+                  <div>
+                    {page.data.map((cafe) => (
+                      <CollectedCard
+                        key={cafe.id}
+                        name={cafe.name}
+                        ratings={cafe.rating}
+                        address={cafe.address}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <div ref={collectedRef}></div>
+            </>
           )}
-          {/* </div>
-                ))} */}
 
-          {/* 북마크 카페 보기(수파 베이스, 무한 스크롤 - 서버 액션 이용하기) */}
-          {/* 새로운 검색 창으로 filter 검색을 따로 하기 */}
+          {/* 북마크 카페 보기 */}
           {pathname === '/cafe/bookmarked' && (
-            <NormalCard
-              key={12382716}
-              name={'접속'}
-              address={'대구 동성로'}
-              phone={'053-0000-0000'}
-              onClick={(e) => e.preventDefault()}
-            />
+            <>
+              {isFetchingNextBookmarkedPage && (
+                <div className="text-center py-2">로딩 중...</div>
+              )}
+              {bookmarkedData?.pages?.map((page, i) => (
+                <div key={i} className="flex flex-col gap-4 mb-3">
+                  <div>
+                    {page.data.map((cafe) => (
+                      <NormalCard
+                        key={cafe.id}
+                        name={cafe.name}
+                        address={cafe.address}
+                        phone={cafe.phoneNum}
+                        onClick={(e) => e.preventDefault()}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <div ref={bookmarkedRef}></div>
+            </>
           )}
-
-          <div ref={ref}></div>
 
           {/* 페이지 이동 */}
           {(pathname === '/cafe/all' ||

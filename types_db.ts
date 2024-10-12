@@ -9,7 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      bookmark: {
+      bookmarked: {
         Row: {
           address: string
           coordX: number | null
@@ -71,8 +71,8 @@ export type Database = {
           created_at: string
           eaten: string
           id: number
+          name: string
           photoUrl: string | null
-          placename: string
           pros: string | null
           rating: number
           updated_at: string | null
@@ -88,8 +88,8 @@ export type Database = {
           created_at?: string
           eaten: string
           id?: number
+          name?: string
           photoUrl?: string | null
-          placename?: string
           pros?: string | null
           rating: number
           updated_at?: string | null
@@ -105,8 +105,8 @@ export type Database = {
           created_at?: string
           eaten?: string
           id?: number
+          name?: string
           photoUrl?: string | null
-          placename?: string
           pros?: string | null
           rating?: number
           updated_at?: string | null

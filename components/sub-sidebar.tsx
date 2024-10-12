@@ -1,13 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useBookmarkStore, useMapStore, useUserStore } from 'utils/store';
+import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { Card } from '@material-tailwind/react';
-import { createCollected, getCollected } from 'actions/collectedActions';
+import { createCollected } from 'actions/collectedActions';
 import { createBookmarked } from 'actions/bookmarkActions';
 import { Button, IconButton, Rating, TextField } from '@mui/material';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import CollectedBadge from './collected-badge';
 
 export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,7 +20,8 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
   const [rating, setRating] = useState<number | null>(5);
   const cafeDetail = useMapStore((state) => state.cafeDetail);
   const userId = useUserStore((state) => state.userId);
-  const isBookmarked = useBookmarkStore((state) => state.isBookmarked);
+  const isCollected = useCheckStore((state) => state.isCollected);
+  const isBookmarked = useCheckStore((state) => state.isBookmarked);
 
   const detail = {
     id: cafeDetail?.basicInfo?.cid,
@@ -77,7 +79,6 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
   };
 
   // 수집한 카페의 상세정보 불러오기
-  const fetchCollectedCafe = () => {};
 
   // 수집하기
   const submitCollected = (collected) => {
@@ -90,8 +91,6 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
     createBookmarked(bookmarked);
     alert('북마크에 저장했습니다!');
   };
-
-  const isCollected = false;
 
   return (
     <Card
@@ -114,7 +113,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                   disabled
                   onClick={() => submitBookmarked(detail)}
                 >
-                  <BookmarkIcon />
+                  <BookmarkIcon className="text-yellow-700" />
                 </IconButton>
               ) : (
                 <IconButton
@@ -122,7 +121,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                   size="large"
                   onClick={() => submitBookmarked(detail)}
                 >
-                  <BookmarkIcon className="text-yellow-700" />
+                  <BookmarkIcon />
                 </IconButton>
               )}
             </div>
@@ -149,7 +148,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                 className={`${isCollected ? `text-main` : 'text-black'} text-lg`}
               >
                 {isCollected ? (
-                  'COLLECTED'
+                  <CollectedBadge />
                 ) : (
                   <Button
                     variant="contained"
@@ -222,7 +221,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
         </div>
       )}
 
-      {/* 메모 */}
+      {/* 수집 메모 */}
       {pathname === '/memo' && (
         <form
           className="flex flex-col p-2 gap-4"

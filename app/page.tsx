@@ -3,6 +3,6 @@ export const metadata = {
   description: '카페를 수집하고 다니세요!',
 };
 
-export default async function Home() {
-  return <main></main>;
+export default function Home() {
+  return;
 }

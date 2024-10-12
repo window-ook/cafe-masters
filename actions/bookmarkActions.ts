@@ -3,32 +3,33 @@
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 
-export type BookmarkRow = Database['public']['Tables']['bookmark']['Row'];
-export type BookmarkRowInsert =
-  Database['public']['Tables']['bookmark']['Insert'];
+export type BookmarkedRow = Database['public']['Tables']['bookmarked']['Row'];
+export type BookmarkedRowInsert =
+  Database['public']['Tables']['bookmarked']['Insert'];
 
 function handleError(error) {
   console.error(error);
   throw new Error(error.message);
 }
 
-// GET ALL BOOKMARKED (메인)
-export async function getAllBookmarked() {
+// GET ALL BOOKMARKED By userId (메인)
+export async function getAllBookmarked(userId) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
-    .from('bookmark')
+    .from('bookmarked')
     .select('*')
+    .eq('userId', userId)
     .order('created_at', { ascending: true });
 
   if (error) handleError(error);
   return data;
 }
 
-// GET BOOKMARKED BY ID (서브)
+// GET BOOKMARKED By id (서브)
 export async function getBookmarked(id) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
-    .from('bookmark')
+    .from('bookmarked')
     .select('*')
     .eq('id', id);
 
@@ -37,9 +38,9 @@ export async function getBookmarked(id) {
 }
 
 // CREATE
-export async function createBookmarked(bookmarked: BookmarkRowInsert) {
+export async function createBookmarked(bookmarked: BookmarkedRowInsert) {
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.from('bookmark').insert({
+  const { data, error } = await supabase.from('bookmarked').insert({
     ...bookmarked,
     created_at: new Date().toISOString(),
   });
@@ -51,7 +52,10 @@ export async function createBookmarked(bookmarked: BookmarkRowInsert) {
 // DELETE
 export async function deleteBookmarked(id) {
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.from('bookmark').delete().eq('id', id);
+  const { data, error } = await supabase
+    .from('bookmarked')
+    .delete()
+    .eq('id', id);
 
   if (error) handleError(error);
   return data;

@@ -1,4 +1,4 @@
-export default function Badge({ tier }) {
+export default function TierBadge({ tier }) {
   // beginner, novice, expert, master, grand master, king
   return (
     <div

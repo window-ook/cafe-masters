@@ -3,19 +3,27 @@ import { persist } from 'zustand/middleware';
 
 interface MapState {
   keyword: string;
-  results: any[];
+  allCafe: any[];
+  collectedCafe: any[];
+  bookmarkedCafe: any[];
   setKeyword: (keyword: string) => void;
-  setResults: (results: any[]) => void;
+  setAllCafe: (allCafe: any[]) => void;
 }
 
 export const useMapStore = create(
   persist(
     (set) => ({
       keyword: '서울숲',
-      results: [],
+      allCafe: [],
+      collectedCafe: [],
+      bookmarkedCafe: [],
       cafeDetail: null,
       setKeyword: (newKeyword) => set({ keyword: newKeyword }),
-      setResults: (newResults) => set({ results: newResults }),
+      setAllCafe: (newAllCafe) => set({ allCafe: newAllCafe }),
+      setCollectedCafe: (newCollectedCafe) =>
+        set({ collectedCafe: newCollectedCafe }),
+      setBookmarkedCafe: (newBookmarkedCafe) =>
+        set({ bookmarkedCafe: newBookmarkedCafe }),
       setCafeDetail: (data) => set({ cafeDetail: data }),
     }),
     {
@@ -23,7 +31,7 @@ export const useMapStore = create(
       getStorage: () => localStorage,
       partialize: (state) => ({
         keyword: state.keyword,
-        results: state.results,
+        allCafe: state.allCafe,
       }),
       merge: (persistedState, currentState) => ({
         ...currentState,
@@ -53,14 +61,19 @@ export const useUserStore = create(
   )
 );
 
-export const useSubSidebarStore = create(
+export const useCheckStore = create(
   persist(
     (set) => ({
       isSubSidebarOpen: false,
       setIsSubSidebarOpen: (prev) => set({ isSubSidebarOpen: prev }),
+
+      isCollected: false,
+      isBookmarked: false,
+      setIsCollected: (value) => set({ isCollected: value }),
+      setIsBookmarked: (value) => set({ isBookmarked: value }),
     }),
     {
-      name: 'subSidebarStore',
+      name: 'checkStore',
       getStorage: () => localStorage,
       partialize: (state) => ({
         isSubSidebarOpen: state.isSubSidebarOpen,
@@ -72,8 +85,3 @@ export const useSubSidebarStore = create(
     }
   )
 );
-
-export const useBookmarkStore = create((set) => ({
-  isBookmarked: false,
-  setIsBookmarked: (value) => set({ isBookmarked: value }),
-}));

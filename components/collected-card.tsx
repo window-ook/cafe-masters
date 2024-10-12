@@ -1,6 +1,6 @@
 import { Card, Typography } from '@material-tailwind/react';
 
-export default function CollectedCard({ name, address, phone, ratings }) {
+export default function CollectedCard({ name, address, ratings }) {
   // 별 갯수에 따른 bg-color 적용시키기
   return (
     <Card
@@ -36,7 +36,6 @@ export default function CollectedCard({ name, address, phone, ratings }) {
       </div>
       <div className="flex flex-col shadow-md px-2">
         <Typography className="text-sm">{address}</Typography>
-        <Typography>{phone}</Typography>
       </div>
     </Card>
   );

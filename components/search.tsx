@@ -2,17 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useMapStore } from 'utils/store';
+import { useMapStore, useCheckStore } from 'utils/store';
 
 export default function Search() {
   const keyword = useMapStore((state) => state.keyword);
   const setKeyword = useMapStore((state) => state.setKeyword);
+  const setIsSubSidebarOpen = useCheckStore(
+    (state) => state.setIsSubSidebarOpen
+  );
   const [localKeyword, setLocalKeyword] = useState(keyword);
 
   const router = useRouter();
 
   const handleSearch = () => {
     setKeyword(localKeyword);
+    setIsSubSidebarOpen(false);
     router.push('/cafe/all');
   };
 

@@ -11,7 +11,7 @@ declare global {
 
 export default function KakaoMap() {
   const keyword = useMapStore((state) => state.keyword);
-  const setResults = useMapStore((state) => state.setResults);
+  const setAllCafe = useMapStore((state) => state.setAllCafe);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -77,7 +77,7 @@ export default function KakaoMap() {
                   if (newPagination.hasNextPage && results.length < 45)
                     newPagination.nextPage();
                   else {
-                    setResults(results);
+                    setAllCafe(results);
                     console.log(results);
                     removeMarkers();
                     results.forEach((place) => displayMarkers(place));
@@ -90,7 +90,7 @@ export default function KakaoMap() {
                 pagination.nextPage();
                 ps.keywordSearch(query, handlePagination, pagination);
               } else {
-                setResults(results);
+                setAllCafe(results);
                 removeMarkers();
                 results.forEach((place) => displayMarkers(place));
               }

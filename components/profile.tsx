@@ -1,6 +1,6 @@
 'use client';
 
-import Badge from './badge';
+import TierBadge from './tier-badge';
 
 export default function Profile({ session }) {
   return (
@@ -16,7 +16,7 @@ export default function Profile({ session }) {
         <h6 className="font-bold text-xl">
           {session?.user?.email?.split('@')?.[0]}
         </h6>
-        <Badge tier={'MASTER'} />
+        <TierBadge tier={'MASTER'} />
       </div>
     </div>
   );

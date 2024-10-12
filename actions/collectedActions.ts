@@ -14,19 +14,20 @@ function handleError(error) {
   throw new Error(error.message);
 }
 
-// GET ALL COLLECTED (메인)
-export async function getAllCollected() {
+// GET ALL COLLECTED By userId (메인)
+export async function getAllCollected(userId) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('collected')
     .select('*')
+    .eq('userId', userId)
     .order('created_at', { ascending: true });
 
   if (error) handleError(error);
   return data;
 }
 
-// GET COLLECTED BY ID (서브)
+// GET COLLECTED By id (서브)
 export async function getCollected(id) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
