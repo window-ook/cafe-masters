@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Typography } from '@material-tailwind/react';
+import { Card, Typography } from '@mui/material';
 
 export default function NormalCard({
   name,
@@ -12,7 +12,7 @@ export default function NormalCard({
   return (
     <Card
       onClick={onClick}
-      className="h-50 p-4 flex flex-col gap-2 border-4 border-gray-700 drop-shadow-3xl cursor-pointer"
+      className="h-50 p-4 border-4 border-gray-700 rounded-2xl drop-shadow-3xl flex flex-col gap-2 cursor-pointer"
     >
       <div>
         <Typography

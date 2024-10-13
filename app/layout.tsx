@@ -1,7 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { createServerSupabaseClient } from 'utils/supabase/server';
-import { ThemeProvider } from 'config/material-tailwind-theme-provider';
 import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
 import Auth from 'components/auth';
 import AuthProvider from 'config/AuthProvider';
@@ -37,18 +36,16 @@ export default async function RootLayout({
       </head>
       <body>
         <ReactQueryClientProvider>
-          <ThemeProvider>
-            <AuthProvider accessToken={session?.access_token}>
-              {session?.user ? (
-                <MainLayout session={session}>
-                  {children}
-                  <KakaoMap />
-                </MainLayout>
-              ) : (
-                <Auth />
-              )}
-            </AuthProvider>
-          </ThemeProvider>
+          <AuthProvider accessToken={session?.access_token}>
+            {session?.user ? (
+              <MainLayout session={session}>
+                {children}
+                <KakaoMap />
+              </MainLayout>
+            ) : (
+              <Auth />
+            )}
+          </AuthProvider>
         </ReactQueryClientProvider>
       </body>
     </html>

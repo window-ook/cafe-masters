@@ -6,7 +6,7 @@ import { shallow } from 'zustand/shallow';
 import { usePathname, useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Card, List, ListItem, ListItemPrefix } from '@material-tailwind/react';
+import { Card, List, ListItem } from '@mui/material';
 import Header from './header';
 import Footer from './footer';
 import SubSidebar from './sub-sidebar';
@@ -16,10 +16,10 @@ import CollectedCard from './collected-card';
 function MainItem({ icon, title, path }) {
   return (
     <ListItem
-      className="grid grid-cols-[40px_auto] items-center gap-4"
+      className="grid grid-cols-[40px_auto] items-center gap-4 cursor-pointer"
       onClick={path}
     >
-      <ListItemPrefix>{icon}</ListItemPrefix>
+      <span>{icon}</span>
       <span className="text-xl font-dpixel text-black hover:text-opacity-40 transition ease-in-out delay-100">
         {title}
       </span>
@@ -46,6 +46,7 @@ export default function Sidebar({ session }) {
   );
   const allCafe = useMapStore((state) => state.allCafe, shallow);
   const collectedCafe = useMapStore((state) => state.collectedCafe, shallow);
+  const collectedCount = useMapStore((state) => state.collectedCafeCount);
   const bookmarkedCafe = useMapStore((state) => state.bookmarkedCafe, shallow);
 
   const itemsPerPage = 15;
@@ -150,7 +151,7 @@ export default function Sidebar({ session }) {
             <List className="mt-2 gap-5">
               <MainItem
                 icon={
-                  <i className="fa-solid fa-mug-hot text-brown-600 text-2xl"></i>
+                  <i className="fa-solid fa-mug-hot text-orange-900 text-2xl"></i>
                 }
                 title={'모든 카페 보기'}
                 path={() => router.push('/cafe/all')}
@@ -162,7 +163,7 @@ export default function Sidebar({ session }) {
               />
               <MainItem
                 icon={
-                  <i className="fa-solid fa-star text-yellow-800 text-xl"></i>
+                  <i className="fa-solid fa-star text-yellow-500 text-xl"></i>
                 }
                 title={'가고 싶은 카페 보기'}
                 path={() => router.push('/cafe/bookmarked')}
@@ -190,6 +191,9 @@ export default function Sidebar({ session }) {
           {/* 수집한 카페 보기 */}
           {pathname === '/cafe/collected' && (
             <>
+              <div className="flex justify-center sticky">
+                <span>수집한 카페 : {collectedCount}장</span>
+              </div>
               {isFetchingNextCollectedPage && (
                 <div className="text-center py-2">로딩 중...</div>
               )}

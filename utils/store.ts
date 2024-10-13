@@ -16,12 +16,15 @@ export const useMapStore = create(
       keyword: '서울숲',
       allCafe: [],
       collectedCafe: [],
+      collectedCafeCount: 0,
       bookmarkedCafe: [],
       cafeDetail: null,
       setKeyword: (newKeyword) => set({ keyword: newKeyword }),
       setAllCafe: (newAllCafe) => set({ allCafe: newAllCafe }),
       setCollectedCafe: (newCollectedCafe) =>
         set({ collectedCafe: newCollectedCafe }),
+      setCollectedCafeCount: (newCount) =>
+        set({ collectedCafeCount: newCount }),
       setBookmarkedCafe: (newBookmarkedCafe) =>
         set({ bookmarkedCafe: newBookmarkedCafe }),
       setCafeDetail: (data) => set({ cafeDetail: data }),

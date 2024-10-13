@@ -13,11 +13,11 @@ export default function Profile({ session }) {
         alt="avatar"
         className="relative inline-block object-cover object-center w-12 h-12 rounded-lg"
       />
-      <div className="flex gap-1 items-center">
+      <div className="flex gap-4 items-center">
         <h6 className="font-bold text-2xl font-dpixel">
           {session?.user?.email?.split('@')?.[0]}
         </h6>
-        <TierBadge tier={'SENIOR'} />
+        <TierBadge tier={'EXPERT'} />
       </div>
     </div>
   );
