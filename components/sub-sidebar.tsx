@@ -36,13 +36,14 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
     openWeekly:
       cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
     openWeekend:
-      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[1]?.timeSE,
+      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[1]?.timeSE ||
+      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
     address:
       cafeDetail?.basicInfo?.address?.region?.newaddrfullname +
       ' ' +
       cafeDetail?.basicInfo?.address?.newaddr?.newaddrfull +
       ' ' +
-      cafeDetail?.basicInfo?.address?.addrdetail,
+      (cafeDetail?.basicInfo?.address?.addrdetail || ''),
     phoneNum: cafeDetail?.basicInfo?.phonenum,
     menu: cafeDetail?.menuInfo?.menuList,
     coordX: cafeDetail?.findway?.x,
@@ -98,14 +99,13 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
         isSubSidebarOpen
           ? 'translate-x-[2rem] opacity-100'
           : 'translate-x-0 opacity-0'
-      } z-10 overflow-y-scroll`}
+      } z-10 overflow-y-scroll font-dpixel`}
     >
       {/* 상세 정보 */}
       {isSubSidebarOpen && pathname.startsWith('/cafe/detail') && (
         <div className="flex flex-col p-2 gap-4">
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center shadow-md rounded-md">
             <div className="flex items-center">
-              <h2 className="text-xl font-semibold">{detail.name}</h2>
               {isBookmarked ? (
                 <IconButton
                   aria-label="bookmark"
@@ -113,7 +113,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                   disabled
                   onClick={() => submitBookmarked(detail)}
                 >
-                  <BookmarkIcon className="text-yellow-700" />
+                  <BookmarkIcon className="text-yellow-500" />
                 </IconButton>
               ) : (
                 <IconButton
@@ -124,14 +124,19 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                   <BookmarkIcon />
                 </IconButton>
               )}
+              <h2 className="text-2xl font-semibold font-dpixel">
+                {detail.name}
+              </h2>
             </div>
             <button
               onClick={() => setIsSubSidebarOpen(false)}
               className="px-2 right-2"
             >
-              <i className="fa-solid fa-circle-xmark text-main text-2xl"></i>
+              <i className="fa-solid fa-circle-xmark text-main text-2xl hover:text-opacity-70"></i>
             </button>
           </div>
+
+          {/* <div className="w-full h-0.5 bg-gray-300"></div> */}
 
           <div className="flex justify-center">
             <img
@@ -141,9 +146,22 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
             />
           </div>
 
-          <div className="flex flex-col gap-4">
-            <div className="flex justify-between">
-              <span className="text-2xl">CAFE INFO</span>
+          {/* 그리드로 변경 */}
+          <div className="flex flex-col gap-4 p-2 shadow-md rounded-md">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <span className="text-xl font-dpixel">
+                  리뷰 {detail.reviewCount}
+                </span>
+                <span className="text-xl flex gap-1 items-center">
+                  <i className="fa-solid fa-star text-yellow-500 text-lg"></i>
+                  <span className="font-dpixel">
+                    {cafeDetail?.basicInfo?.feedback?.scorecnt > 0
+                      ? detail.rating
+                      : ''}
+                  </span>
+                </span>
+              </div>
               <span
                 className={`${isCollected ? `text-main` : 'text-black'} text-lg`}
               >
@@ -151,6 +169,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                   <CollectedBadge />
                 ) : (
                   <Button
+                    className="bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl"
                     variant="contained"
                     onClick={() => router.push('/memo')}
                   >
@@ -160,46 +179,49 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
               </span>
             </div>
 
-            <div className="flex items-center gap-4">
-              <span className="text-xl">리뷰 {detail.reviewCount}</span>
-              <span className="text-xl">
-                {cafeDetail?.basicInfo?.feedback?.scorecnt > 0
-                  ? detail.rating
-                  : ''}
-                <i className="fa-solid fa-star text-yellow-800 text-lg"></i>
-              </span>
-            </div>
-
-            <div className="flex flex-col gap-6">
-              <div className="flex gap-6">
-                <span className="flex items-center gap-1 text-xl">
+            <div className="grid grid-cols-2 gap-6">
+              {/* 영업시간 */}
+              <div className="col-span-2 flex items-center justify-between">
+                <div className="flex gap-1 items-center">
                   <i className="fa-solid fa-clock"></i>
-                  영업시간
-                </span>
-                <div className="flex flex-col">
-                  <span className="text-lg">평일</span>
-                  <span>{detail.openWeekly}</span>
+                  <span className="font-dpixel">영업시간</span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-lg">주말</span>
-                  {detail.openWeekly || detail.openWeekend}
+
+                <div>
+                  <span className="">평일</span>
+                </div>
+                <div>
+                  <span className="">주말</span>
                 </div>
               </div>
-
-              <div className="flex justify-between items-center">
-                <span className="text-xl">위치</span>
-                <span className="text-lg">{detail.address}</span>
+              <div className="col-span-2 col-start-2">
+                <span className="">{detail.openWeekly}</span>
+                <span className="">{detail.openWeekend}</span>
               </div>
 
-              <div className="flex justify-between items-center">
-                <span className="text-xl">전화번호</span>
+              {/* 위치 */}
+              <div className="col-span-2 flex justify-between items-center">
+                <div className="flex gap-1 items-center">
+                  <i className="fa-solid fa-location-dot"></i>
+                  <span className="font-dpixel">위치</span>
+                </div>
+                <span className="">{detail.address}</span>
+              </div>
+
+              {/* 전화번호 */}
+              <div className="col-span-2 flex justify-between items-center">
+                <div className="flex gap-1 items-center">
+                  <i className="fa-solid fa-phone"></i>
+                  <span className="font-dpixel">전화번호</span>
+                </div>
                 <span className="text-lg">{detail.phoneNum}</span>
               </div>
 
-              <div className="flex flex-col">
+              {/* 메뉴 */}
+              <div className="flex flex-col col-span-2">
                 <div>
                   <div className="flex items-center">
-                    <span className="text-xl">메뉴</span>
+                    <span className="text-lg">메뉴</span>
                     <IconButton onClick={handleMenu}>
                       <i className="fa-solid fa-angle-down text-md" />
                     </IconButton>
@@ -210,7 +232,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                         <li key={index} className="flex flex-col gap-1 mb-2">
                           <div className="w-30 border-t border-solid border-gray-400"></div>
                           <span className="font-bold text-lg">{item.menu}</span>
-                          <span>{item.price}</span>
+                          <span className="text-lg">{item.price}</span>
                         </li>
                       ))}
                   </ul>
