@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Card, Button, Typography } from '@material-tailwind/react';
-import { createBrowserSupabaseClient } from 'utils/supabase/client';
-import { signInWithKakao } from 'utils/supabase/signinKakao';
-import UserForm from './user-form';
 import { useUserStore } from 'utils/store';
+import { signInWithKakao } from 'utils/supabase/signinKakao';
+import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { Card, Button, Typography } from '@mui/material';
+import UserForm from './user-form';
 
 export default function SignIn({ setView }) {
   const [email, setEmail] = useState('');
@@ -30,9 +30,11 @@ export default function SignIn({ setView }) {
   });
 
   return (
-    <Card className="p-5 bg-white shadow-mainShadow">
-      <Typography className="text-xl font-semibold">로그인</Typography>
-      <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+    <Card className="p-5 rounded-xl bg-white shadow-mainShadow">
+      <Typography className="text-center text-3xl font-bold font-dpixel">
+        로그인
+      </Typography>
+      <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
         <UserForm
           email={email}
           password={password}
@@ -40,32 +42,30 @@ export default function SignIn({ setView }) {
           setPassword={setPassword}
         />
         <Button
-          className="mt-6 bg-main"
+          className="bg-main font-dpixel text-white hover:bg-opacity-70"
           fullWidth
           onClick={() => {
             signinMutation.mutate();
           }}
-          loading={signinMutation.isPending}
+          onLoad={signinMutation.isPending}
           disabled={signinMutation.isPending}
         >
           접속하기
         </Button>
         <Button
-          className="mt-6 bg-yellow-700"
+          className="bg-yellow-500 font-dpixel text-white hover:bg-opacity-70"
           fullWidth
-          onClick={() => {
-            signInWithKakao();
-          }}
+          onClick={() => signInWithKakao()}
         >
           카카오 로그인
         </Button>
-        <Typography color="gray" className="mt-4 text-center font-normal">
+        <Typography
+          color="gray"
+          className="text-center font-dpixel flex items-center justify-center"
+        >
           계정이 없으신가요?{' '}
-          <Button
-            onClick={() => setView('SIGNUP')}
-            className="font-bold text-gray-900 shadow-none"
-          >
-            회원가입하기
+          <Button onClick={() => setView('SIGNUP')}>
+            <span className="font-bold font-dpixel">회원가입</span>
           </Button>
         </Typography>
       </form>

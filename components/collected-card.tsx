@@ -1,10 +1,10 @@
-import { Card, Typography } from '@material-tailwind/react';
+import { Card, Typography } from '@mui/material';
 
 export default function CollectedCard({ name, address, ratings }) {
   // 별 갯수에 따른 bg-color 적용시키기
   return (
     <Card
-      className={`h-50 p-4 flex flex-col gap-2 border-4 border-gray-700 drop-shadow-3xl ${ratings >= 5 ? 'bg-success' : 'bg-white'} cursor-pointer`}
+      className={`h-50 p-4 border-4 border-gray-700 rounded-2xl flex flex-col gap-2  drop-shadow-3xl ${ratings >= 5 ? 'bg-success' : 'bg-white'} cursor-pointer`}
     >
       <div>
         <Typography

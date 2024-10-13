@@ -39,6 +39,18 @@ export async function getCollected(id) {
   return data;
 }
 
+// COUNT COLLECTED
+export async function countCollected(userId) {
+  const supabase = await createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from('collected')
+    .select('*', { count: 'exact' })
+    .eq('userId', userId);
+
+  if (error) handleError(error);
+  return data;
+}
+
 // CREATE
 export async function createCollected(collected: CollectedRowInsert) {
   const supabase = await createServerSupabaseClient();

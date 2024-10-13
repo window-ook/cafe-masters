@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Card, Input, Button, Typography } from '@material-tailwind/react';
+import { Card, Input, Button, Typography, TextField } from '@mui/material';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import UserForm from './user-form';
@@ -46,22 +46,21 @@ export default function Signup({ setView }) {
   });
 
   return (
-    <Card className="p-5 bg-white shadow-mainShadow">
-      <Typography className="text-xl font-semibold">회원가입</Typography>
-      <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+    <Card className="p-5 rounded-xl bg-white shadow-mainShadow">
+      <Typography className="text-center text-3xl font-bold font-dpixel">
+        회원가입
+      </Typography>
+      <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
         {confirmationRequired ? (
-          <div className="mb-1 flex flex-col gap-6">
-            <Typography className="-mb-3 text-lg">인증 코드</Typography>
-            <Input
+          <div className="flex flex-col gap-6">
+            <Typography className="text-xl font-dpixel">인증 코드</Typography>
+            <TextField
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              size="lg"
-              placeholder="6자리 인증 코드를 입력하세요"
+              label="6자리 인증 코드를 입력하세요"
+              variant="outlined"
               type="text"
-              className="border-gray-400 active:border-main p-2"
-              labelProps={{
-                className: 'before:content-none after:content-none',
-              }}
+              className="p-2"
             />
           </div>
         ) : (
@@ -72,15 +71,14 @@ export default function Signup({ setView }) {
             setPassword={setPassword}
           />
         )}
-
         <Button
-          className="mt-6 bg-main"
+          className="bg-main font-dpixel text-white hover:bg-opacity-70"
           fullWidth
           onClick={() => {
             if (confirmationRequired) verifyOtpMutation.mutate();
             else signupMutation.mutate();
           }}
-          loading={
+          onLoad={
             confirmationRequired
               ? verifyOtpMutation.isPending
               : signupMutation.isPending
@@ -94,19 +92,20 @@ export default function Signup({ setView }) {
           {confirmationRequired ? '인증 코드 확인' : '가입하기'}
         </Button>
         <Button
-          className="mt-6 bg-yellow-700"
+          className="bg-yellow-500 font-dpixel text-white hover:bg-opacity-70"
           fullWidth
-          onClick={() => {
-            signInWithKakao();
-          }}
+          onClick={() => signInWithKakao()}
         >
           카카오 로그인
         </Button>
-        <Typography color="gray" className="mt-4 text-center font-normal">
+        <Typography
+          color="gray"
+          className="text-center font-dpixel flex items-center justify-center"
+        >
           이미 계정이 있으신가요?{' '}
           <Button
             onClick={() => setView('SIGNIN')}
-            className="font-bold text-gray-900 shadow-none"
+            className="font-bold font-dpixel"
           >
             로그인하기
           </Button>

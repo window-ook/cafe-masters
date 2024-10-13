@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-import { Card } from '@material-tailwind/react';
+import { Card } from '@mui/material';
 import { createCollected } from 'actions/collectedActions';
 import { createBookmarked } from 'actions/bookmarkActions';
 import { Button, IconButton, Rating, TextField } from '@mui/material';
