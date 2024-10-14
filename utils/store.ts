@@ -19,6 +19,7 @@ export const useMapStore = create(
       collectedCafeCount: 0,
       bookmarkedCafe: [],
       cafeDetail: null,
+      collectedDetail: null,
       setKeyword: (newKeyword) => set({ keyword: newKeyword }),
       setAllCafe: (newAllCafe) => set({ allCafe: newAllCafe }),
       setCollectedCafe: (newCollectedCafe) =>
@@ -28,6 +29,7 @@ export const useMapStore = create(
       setBookmarkedCafe: (newBookmarkedCafe) =>
         set({ bookmarkedCafe: newBookmarkedCafe }),
       setCafeDetail: (data) => set({ cafeDetail: data }),
+      setCollectedDetail: (data) => set({ collectedDetail: data }),
     }),
     {
       name: 'mapStore',
@@ -35,6 +37,8 @@ export const useMapStore = create(
       partialize: (state) => ({
         keyword: state.keyword,
         allCafe: state.allCafe,
+        collectedCafe: state.collectedCafe,
+        collectedCafeCount: state.collectedCafeCount,
       }),
       merge: (persistedState, currentState) => ({
         ...currentState,
@@ -70,6 +74,11 @@ export const useCheckStore = create(
       isSubSidebarOpen: false,
       setIsSubSidebarOpen: (prev) => set({ isSubSidebarOpen: prev }),
 
+      isDarkTheme: false,
+      setIsDarkTheme: () =>
+        set((state) => ({ isDarkTheme: !state.isDarkTheme })),
+
+      // 디테일에서 수집, 북마크 여부 표시
       isCollected: false,
       isBookmarked: false,
       setIsCollected: (value) => set({ isCollected: value }),
@@ -80,6 +89,7 @@ export const useCheckStore = create(
       getStorage: () => localStorage,
       partialize: (state) => ({
         isSubSidebarOpen: state.isSubSidebarOpen,
+        isDarkTheme: state.isDarkTheme,
       }),
       merge: (persistedState, currentState) => ({
         ...currentState,

@@ -29,10 +29,13 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
     name: cafeDetail?.basicInfo?.placenamefull,
     photoUrl: cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumb.webp',
     reviewCount: cafeDetail?.comment?.kamapComntcnt,
-    rating: (
-      cafeDetail?.basicInfo?.feedback?.scoresum /
-      cafeDetail?.basicInfo?.feedback?.scorecnt
-    ).toFixed(2),
+    rating:
+      cafeDetail?.basicInfo?.feedback?.scorecnt > 0
+        ? (
+            cafeDetail?.basicInfo?.feedback?.scoresum /
+            cafeDetail?.basicInfo?.feedback?.scorecnt
+          ).toFixed(2)
+        : 'X',
     openWeekly:
       cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
     openWeekend:
@@ -61,6 +64,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
       cafeDetail?.basicInfo?.address?.newaddr?.newaddrfull +
       ' ' +
       cafeDetail?.basicInfo?.address?.addrdetail,
+    phoneNum: cafeDetail?.basicInfo?.phonenum,
     coordX: cafeDetail?.findway?.x,
     coordY: cafeDetail?.findway?.y,
     comment,
@@ -101,7 +105,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
           : 'translate-x-0 opacity-0'
       } z-10 overflow-y-scroll font-dpixel`}
     >
-      {/* 상세 정보 */}
+      {/* 일반 카드 상세 정보 */}
       {isSubSidebarOpen && pathname.startsWith('/cafe/detail') && (
         <div className="flex flex-col p-2 gap-4">
           <div className="flex justify-between items-center shadow-md rounded-md">
@@ -124,9 +128,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                   <BookmarkIcon />
                 </IconButton>
               )}
-              <h2 className="text-2xl font-semibold font-dpixel">
-                {detail.name}
-              </h2>
+              <h2 className="text-2xl font-semibold">{detail.name}</h2>
             </div>
             <button
               onClick={() => setIsSubSidebarOpen(false)}
@@ -136,30 +138,24 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
             </button>
           </div>
 
-          {/* <div className="w-full h-0.5 bg-gray-300"></div> */}
-
-          <div className="flex justify-center">
-            <img
-              src={detail.photoUrl || '/image/cafe_thumb.webp'}
-              alt="카페 썸네일"
-              className="w-[10rem] rounded-md"
-            />
-          </div>
-
           {/* 그리드로 변경 */}
           <div className="flex flex-col gap-4 p-2 shadow-md rounded-md">
+            <div className="flex flex-col items-center">
+              <img
+                src={detail.photoUrl || '/image/cafe_thumb.webp'}
+                alt="카페 썸네일"
+                className="w-[10rem] rounded-md"
+              />
+            </div>
+
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-4">
-                <span className="text-xl font-dpixel">
-                  리뷰 {detail.reviewCount}
-                </span>
+                <span className="text-xl">리뷰 {detail.reviewCount}</span>
                 <span className="text-xl flex gap-1 items-center">
-                  <i className="fa-solid fa-star text-yellow-500 text-lg"></i>
-                  <span className="font-dpixel">
-                    {cafeDetail?.basicInfo?.feedback?.scorecnt > 0
-                      ? detail.rating
-                      : ''}
-                  </span>
+                  <div className="relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500">
+                    <i className="fa-solid fa-star absolute text-yellow-300 text-xs"></i>
+                  </div>
+                  <span>{detail.rating || ''}</span>
                 </span>
               </div>
               <span
@@ -181,49 +177,56 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
 
             <div className="grid grid-cols-2 gap-6">
               {/* 영업시간 */}
-              <div className="col-span-2 flex items-center justify-between">
-                <div className="flex gap-1 items-center">
+              <div className="col-span-2 grid grid-cols-3">
+                <div className="col-span-1 flex gap-1 items-center">
                   <i className="fa-solid fa-clock"></i>
-                  <span className="font-dpixel">영업시간</span>
+                  <span>영업시간</span>
                 </div>
-
-                <div>
-                  <span className="">평일</span>
+                <div className="col-span-1 text-left">
+                  <span>평일</span>
                 </div>
-                <div>
-                  <span className="">주말</span>
+                <div className="col-span-1 text-center ">
+                  <span>{detail.openWeekly}</span>
                 </div>
-              </div>
-              <div className="col-span-2 col-start-2">
-                <span className="">{detail.openWeekly}</span>
-                <span className="">{detail.openWeekend}</span>
+                {/* 두 번째 행: "평일 시간"과 "주말 시간" */}
+                <div className="col-span-1"></div> {/* 빈 공간 */}
+                <div className="col-span-1 text-left">
+                  <span>주말</span>
+                </div>
+                <div className="col-span-1 text-center">
+                  <span>{detail.openWeekend}</span>
+                </div>
               </div>
 
               {/* 위치 */}
-              <div className="col-span-2 flex justify-between items-center">
-                <div className="flex gap-1 items-center">
+              <div className="col-span-2 grid grid-cols-3">
+                <div className="col-span-1 flex gap-1 items-center">
                   <i className="fa-solid fa-location-dot"></i>
-                  <span className="font-dpixel">위치</span>
+                  <span>위치</span>
                 </div>
-                <span className="">{detail.address}</span>
+                <div className="col-span-2 text-sm">{detail.address}</div>
               </div>
 
               {/* 전화번호 */}
-              <div className="col-span-2 flex justify-between items-center">
-                <div className="flex gap-1 items-center">
+              <div className="col-span-2 grid grid-cols-3">
+                <div className="col-span-1 flex gap-1 items-center">
                   <i className="fa-solid fa-phone"></i>
-                  <span className="font-dpixel">전화번호</span>
+                  <span>전화번호</span>
                 </div>
-                <span className="text-lg">{detail.phoneNum}</span>
+                <div className="col-span-2 text-lg">{detail.phoneNum}</div>
               </div>
 
               {/* 메뉴 */}
-              <div className="flex flex-col col-span-2">
+              <div className="col-span-2">
                 <div>
                   <div className="flex items-center">
                     <span className="text-lg">메뉴</span>
                     <IconButton onClick={handleMenu}>
-                      <i className="fa-solid fa-angle-down text-md" />
+                      {menuOpen ? (
+                        <i className="fa-solid fa-angle-up text-md" />
+                      ) : (
+                        <i className="fa-solid fa-angle-down text-md" />
+                      )}
                     </IconButton>
                   </div>
                   <ul>
@@ -243,6 +246,15 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
         </div>
       )}
 
+      {/* 수집한 카드 상세 정보 */}
+      {isSubSidebarOpen && pathname.startsWith('/cafe/collected/detail') && (
+        <div>수집한 카페</div>
+      )}
+
+      {isSubSidebarOpen && pathname.startsWith('/cafe/bookmarked/detail') && (
+        <div>북마크 카페</div>
+      )}
+
       {/* 수집 메모 */}
       {pathname === '/memo' && (
         <form
@@ -253,9 +265,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
           }}
         >
           <div className="flex justify-between">
-            <h2 className="text-xl font-semibold">
-              {cafeDetail?.basicInfo?.placenamefull}
-            </h2>
+            <h2 className="text-xl font-semibold">{detail.name}</h2>
             <Button variant="contained" onClick={() => router.back()}>
               Back
             </Button>

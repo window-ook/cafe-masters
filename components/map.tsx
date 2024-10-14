@@ -111,7 +111,7 @@ export default function KakaoMap() {
       });
     };
 
-    // 수집한 카페 버튼을 누르면 수파베이스에서 데이터를 받아오고, 사이드바에서 카페를 클릭하면 맵에 마커로 표시하고 중앙으로 옮겨주는 로직 추가
+    // /cafe/collected 페이지로 이동하면 맵에 마커로 표시하고 중앙으로 옮겨주는 로직 추가
 
     return () => {
       script.remove();

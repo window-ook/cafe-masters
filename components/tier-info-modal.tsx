@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import { useCheckStore } from 'utils/store';
 
 const style = {
   position: 'absolute',
@@ -14,6 +15,8 @@ const style = {
 };
 
 export default function TierInfoModal({ open, handleClose }) {
+  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+
   return (
     <div>
       <Modal
@@ -23,7 +26,10 @@ export default function TierInfoModal({ open, handleClose }) {
         aria-describedby="modal-modal-description"
         sx={{ backdropFilter: 'blur(5px)' }}
       >
-        <Box sx={style} className="flex flex-col gap-4 justify-center">
+        <Box
+          sx={style}
+          className={`flex flex-col gap-4 justify-center ${isDarkTheme ? 'bg-darkbg text-white border-darkaccent border-4' : 'bg-white border-mainShadow border-4'}`}
+        >
           <div className="flex flex-col">
             <span className="text-3xl font-dpixel">TIER INFORMATION</span>
             <span className="text-lg font-dpixel">
