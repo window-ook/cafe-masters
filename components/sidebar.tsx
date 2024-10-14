@@ -13,14 +13,16 @@ import SubSidebar from './sub-sidebar';
 import NormalCard from './normal-card';
 import CollectedCard from './collected-card';
 
-function MainItem({ icon, title, path }) {
+function MainItem({ icon, title, path, isDarkTheme }) {
   return (
     <ListItem
       className="grid grid-cols-[40px_auto] items-center gap-4 cursor-pointer"
       onClick={path}
     >
       <span>{icon}</span>
-      <span className="text-xl font-dpixel text-black hover:text-opacity-40 transition ease-in-out delay-100">
+      <span
+        className={`text-xl font-dpixel hover:text-opacity-30 ${isDarkTheme ? 'text-white' : 'text-black'} transition ease-in-out delay-100`}
+      >
         {title}
       </span>
     </ListItem>
@@ -28,7 +30,6 @@ function MainItem({ icon, title, path }) {
 }
 
 export default function Sidebar({ session }) {
-  const [selectedCafe, setSelectedCafe] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const { ref: collectedRef, inView: collectedInView } = useInView({
     threshold: 0.5,
@@ -44,6 +45,8 @@ export default function Sidebar({ session }) {
   const setIsSubSidebarOpen = useCheckStore(
     (state) => state.setIsSubSidebarOpen
   );
+  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+
   const allCafe = useMapStore((state) => state.allCafe, shallow);
   const collectedCafe = useMapStore((state) => state.collectedCafe, shallow);
   const collectedCount = useMapStore((state) => state.collectedCafeCount);
@@ -66,9 +69,18 @@ export default function Sidebar({ session }) {
   };
 
   const handleNormalCardClick = (cafe) => {
-    setSelectedCafe(cafe);
     setIsSubSidebarOpen(true);
     router.push(`/cafe/detail/${cafe.id}`);
+  };
+
+  const handleCollectedCardClick = (cafe) => {
+    setIsSubSidebarOpen(true);
+    router.push(`/cafe/collected/detail/${cafe.id}`);
+  };
+
+  const handleBookmarkedCardClick = (cafe) => {
+    setIsSubSidebarOpen(true);
+    router.push(`/cafe/bookmarked/detail/${cafe.id}`);
   };
 
   const {
@@ -140,11 +152,11 @@ export default function Sidebar({ session }) {
   return (
     <div className="relative flex items-center">
       {/* 메인 사이드바 */}
-      <Card className="h-[100vh] max-h-screen w-full max-w-[24rem] px-6 rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll">
+      <Card
+        className={`h-[100vh] max-h-screen w-full max-w-[22rem] px-6 rounded-none ${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll`}
+      >
         <div className="flex flex-col gap-4">
-          <div className="sticky top-0 z-10 py-4 bg-white">
-            <Header img={'/image/logo_trans.webp'} />
-          </div>
+          <Header img={'/image/logo_trans.webp'} />
 
           {/* 홈 */}
           {pathname === '/' && (
@@ -155,11 +167,13 @@ export default function Sidebar({ session }) {
                 }
                 title={'모든 카페 보기'}
                 path={() => router.push('/cafe/all')}
+                isDarkTheme={isDarkTheme}
               />
               <MainItem
                 icon={<i className="fa-solid fa-mobile text-main text-2xl"></i>}
                 title={'수집한 카페 보기'}
                 path={() => router.push('/cafe/collected')}
+                isDarkTheme={isDarkTheme}
               />
               <MainItem
                 icon={
@@ -167,6 +181,7 @@ export default function Sidebar({ session }) {
                 }
                 title={'가고 싶은 카페 보기'}
                 path={() => router.push('/cafe/bookmarked')}
+                isDarkTheme={isDarkTheme}
               />
             </List>
           )}
@@ -189,23 +204,29 @@ export default function Sidebar({ session }) {
           )}
 
           {/* 수집한 카페 보기 */}
-          {pathname === '/cafe/collected' && (
+          {(pathname === '/cafe/collected' ||
+            pathname.startsWith('/cafe/collected')) && (
             <>
               <div className="flex justify-center sticky">
-                <span>수집한 카페 : {collectedCount}장</span>
+                <span className="font-dpixel">
+                  내가 수집한 카페 : {collectedCount}장
+                </span>
               </div>
               {isFetchingNextCollectedPage && (
                 <div className="text-center py-2">로딩 중...</div>
               )}
-              {collectedData?.pages?.map((page) => (
+              {collectedData?.pages?.map((page, i) => (
                 <div className="flex flex-col gap-4 mb-3">
-                  <div>
+                  <div key={i}>
                     {page.data.map((cafe) => (
                       <CollectedCard
                         key={cafe.id}
                         name={cafe.name}
                         ratings={cafe.rating}
+                        photoUrl={cafe.photoUrl}
                         address={cafe.address}
+                        phone={cafe.phoneNum}
+                        onClick={() => handleCollectedCardClick(cafe)}
                       />
                     ))}
                   </div>
@@ -216,7 +237,8 @@ export default function Sidebar({ session }) {
           )}
 
           {/* 가고 싶은 카페 보기 */}
-          {pathname === '/cafe/bookmarked' && (
+          {(pathname === '/cafe/bookmarked' ||
+            pathname.startsWith('/cafe/bookmarked')) && (
             <>
               {isFetchingNextBookmarkedPage && (
                 <div className="text-center py-2">로딩 중...</div>
@@ -230,7 +252,7 @@ export default function Sidebar({ session }) {
                         name={cafe.name}
                         address={cafe.address}
                         phone={cafe.phoneNum}
-                        onClick={(e) => e.preventDefault()}
+                        onClick={() => handleBookmarkedCardClick(cafe)}
                       />
                     ))}
                   </div>
@@ -244,7 +266,9 @@ export default function Sidebar({ session }) {
           {(pathname === '/cafe/all' ||
             pathname.startsWith('/cafe/detail') ||
             pathname === '/memo') && (
-            <div className="sticky bottom-0 z-20 bg-white py-1">
+            <div
+              className={`sticky bottom-0 z-20 ${isDarkTheme ? 'bg-darkbg' : 'bg-white'} py-1 font-dpixel`}
+            >
               <div className="flex justify-between items-center">
                 <button
                   onClick={handlePreviousPage}

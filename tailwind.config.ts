@@ -12,9 +12,13 @@ const config: Config = {
       colors: {
         main: '#7c24c9',
         mainShadow: '#875aad',
-        bgDark: '#292825',
+
+        darkbg: '#1f1926',
+        darkaccent: '#5f018a',
+
         success: '#15ed79',
         indigo: '#6366f1',
+
         beginner: '#8a919c',
         junior: '#030ffc',
         senior: '#f77a05',
@@ -22,6 +26,11 @@ const config: Config = {
         'expert-side': '#bd9b04',
         'master-via': '#f5248c',
         'master-side': '#8a24b9',
+
+        'silver-via': '#fff',
+        'silver-side': '#cacccb',
+        'gold-via': '#f5e902',
+        'gold-side': '#bd9b04',
       },
 
       backgroundImage: {

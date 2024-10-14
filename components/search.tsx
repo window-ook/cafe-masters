@@ -10,6 +10,8 @@ export default function Search() {
   const setIsSubSidebarOpen = useCheckStore(
     (state) => state.setIsSubSidebarOpen
   );
+  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+
   const [localKeyword, setLocalKeyword] = useState(keyword);
 
   const router = useRouter();
@@ -35,7 +37,7 @@ export default function Search() {
       <div className="w-full max-w-sm min-w-[200px]">
         <div className="relative">
           <input
-            className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-2 transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 shadow-sm focus:shadow"
+            className={`w-full bg-transparent ${isDarkTheme ? 'placeholder:text-gray-200 text-white' : 'placeholder:text-slate-400 text-slate-700'} text-sm border border-slate-200 rounded-md pl-3 pr-28 py-2 transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 shadow-sm focus:shadow`}
             placeholder="찾으시는 곳"
             value={localKeyword}
             onChange={(e) => setLocalKeyword(e.target.value)}

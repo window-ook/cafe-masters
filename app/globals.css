@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  width: 10px; /* 스크롤바 너비 */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #875aad; /* 스크롤바 색상 */
+  border-radius: 10px; /* 스크롤바 모서리 둥글게 */
+  border: 2px solid transparent; /* 스크롤바 외부 여백 */
+}
+
 @font-face {
   font-family: 'DungGeunMo';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')

@@ -1,41 +1,45 @@
-import { Card, Typography } from '@mui/material';
+import { Card } from '@mui/material';
 
-export default function CollectedCard({ name, address, ratings }) {
-  // 별 갯수에 따른 bg-color 적용시키기
+export default function CollectedCard({
+  name,
+  photoUrl,
+  address,
+  phone,
+  ratings,
+  onClick,
+}) {
+  const bgRatings =
+    ratings >= 5
+      ? 'bg-gradient-to-r from-gold-side via-gold-via to-gold-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700'
+      : ratings >= 3
+        ? 'bg-gradient-to-r from-silver-side via-silver-via to-silver-side bg-[length:200%_200%] animate-gradient shadow-md text-gray-600 shadow-gray-700'
+        : '';
   return (
     <Card
-      className={`h-50 p-4 border-4 border-gray-700 rounded-2xl flex flex-col gap-2  drop-shadow-3xl ${ratings >= 5 ? 'bg-success' : 'bg-white'} cursor-pointer`}
+      onClick={onClick}
+      className={`h-50 p-4 border-4 border-gray-700 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel ${bgRatings}`}
     >
-      <div>
-        <Typography
-          variant="h5"
-          color="blue-gray"
-          className="shadow-md shadow-gray-700 px-2"
-        >
-          {name}
-        </Typography>
+      <div className="shadow-md shadow-gray-500 px-2">
+        <span className="">{name}</span>
       </div>
-      <div className="flex justify-end gap-0.5">
+      <div className="flex justify-start gap-0.5">
         {Array(ratings)
           .fill(0)
           .map((_, index) => (
             <div
               key={index}
-              className="relative flex items-center justify-center w-5 h-5 rounded-full bg-red-600"
+              className="relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500 shadow-md shadow-yellow-100"
             >
-              <i className="fa-solid fa-star absolute text-yellow-700 text-xs"></i>
+              <i className="fa-solid fa-star absolute text-yellow-300 text-xs"></i>
             </div>
           ))}
       </div>
-      <div className="flex justify-center">
-        <img
-          src="https://cdn.gukjenews.com/news/photo/202404/2977498_3052518_4331.png"
-          alt="cafe_img"
-          width={100}
-        />
+      <div className="flex justify-center rounded-xl">
+        <img src={photoUrl} alt="cafe_img" className="h-20" />
       </div>
-      <div className="flex flex-col shadow-md px-2">
-        <Typography className="text-sm">{address}</Typography>
+      <div className="flex flex-col shadow-gray-500 shadow-md px-2">
+        <span className="text-sm">{address}</span>
+        <span>{phone}</span>
       </div>
     </Card>
   );
