@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
 import Auth from 'components/auth';
-import AuthProvider from 'config/AuthProvider';
+import AuthProvider from 'config/auth-provider';
 import MainLayout from 'components/layouts/main-layout';
 import KakaoMap from 'components/map';
 

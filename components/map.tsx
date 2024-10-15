@@ -30,7 +30,6 @@ export default function KakaoMap() {
           level: 5,
         };
         const map = new window.kakao.maps.Map(container, options);
-        const geocoder = new window.kakao.maps.services.Geocoder(); // 주소 -> 좌표 변환
         const ps = new window.kakao.maps.services.Places();
         const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
         let markers: any[] = [];
@@ -103,7 +102,9 @@ export default function KakaoMap() {
         if (
           window.location.pathname === '/' ||
           window.location.pathname === '/cafe/all' ||
-          window.location.pathname.startsWith('/cafe/detail')
+          window.location.pathname.startsWith('/cafe/detail') ||
+          window.location.pathname.startsWith('/cafe/collected') ||
+          window.location.pathname.startsWith('/cafe/bookmarked')
         ) {
           if (keyword.includes('카페')) searchByKeyword(keyword);
           else searchByKeyword(`${keyword} 카페`);

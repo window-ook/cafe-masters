@@ -14,12 +14,13 @@ export const useMapStore = create(
   persist(
     (set) => ({
       keyword: '서울숲',
-      allCafe: [],
-      collectedCafe: [],
+      allCafe: [], // 모든 카페
+      collectedCafe: [], // 수집한 카드들
       collectedCafeCount: 0,
-      bookmarkedCafe: [],
-      cafeDetail: null,
-      collectedDetail: null,
+      bookmarkedCafe: [], // 북마크 해 둔 카페들
+      cafeDetail: [], // 모든 카페 중 선택한 카페의 상세 정보
+      collectedCafeDetail: [], // 수집한 카드 중 선택한 카페의 상세 정보
+      bookmarkedCafeDetail: [], // 북마크한 카페 중 선택한 카페의 상세 정보
       setKeyword: (newKeyword) => set({ keyword: newKeyword }),
       setAllCafe: (newAllCafe) => set({ allCafe: newAllCafe }),
       setCollectedCafe: (newCollectedCafe) =>
@@ -29,7 +30,8 @@ export const useMapStore = create(
       setBookmarkedCafe: (newBookmarkedCafe) =>
         set({ bookmarkedCafe: newBookmarkedCafe }),
       setCafeDetail: (data) => set({ cafeDetail: data }),
-      setCollectedDetail: (data) => set({ collectedDetail: data }),
+      setCollectedCafeDetail: (data) => set({ collectedCafeDetail: data }),
+      setBookmarkedCafeDetail: (data) => set({ bookmarkedCafeDetail: data }),
     }),
     {
       name: 'mapStore',
@@ -39,6 +41,9 @@ export const useMapStore = create(
         allCafe: state.allCafe,
         collectedCafe: state.collectedCafe,
         collectedCafeCount: state.collectedCafeCount,
+        collectedCafeDetail: state.collectedCafeDetail,
+        bookmarkedCafe: state.bookmarkedCafe,
+        bookmarkedCafeDetail: state.bookmarkedCafeDetail,
       }),
       merge: (persistedState, currentState) => ({
         ...currentState,

@@ -205,7 +205,7 @@ export default function Sidebar({ session }) {
 
           {/* 수집한 카페 보기 */}
           {(pathname === '/cafe/collected' ||
-            pathname.startsWith('/cafe/collected')) && (
+            pathname.startsWith('/cafe/collected/detail')) && (
             <>
               <div className="flex justify-center sticky">
                 <span className="font-dpixel">
@@ -238,7 +238,7 @@ export default function Sidebar({ session }) {
 
           {/* 가고 싶은 카페 보기 */}
           {(pathname === '/cafe/bookmarked' ||
-            pathname.startsWith('/cafe/bookmarked')) && (
+            pathname.startsWith('/cafe/bookmarked/detail')) && (
             <>
               {isFetchingNextBookmarkedPage && (
                 <div className="text-center py-2">로딩 중...</div>

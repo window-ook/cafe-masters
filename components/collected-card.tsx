@@ -35,7 +35,7 @@ export default function CollectedCard({
           ))}
       </div>
       <div className="flex justify-center rounded-xl">
-        <img src={photoUrl} alt="cafe_img" className="h-20" />
+        <img src={photoUrl} alt="cafe_img" className="h-20 rounded-lg" />
       </div>
       <div className="flex flex-col shadow-gray-500 shadow-md px-2">
         <span className="text-sm">{address}</span>
