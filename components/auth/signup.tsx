@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Card, Input, Button, Typography, TextField } from '@mui/material';
+import { Card, Button, Typography, TextField } from '@mui/material';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import UserForm from './user-form';

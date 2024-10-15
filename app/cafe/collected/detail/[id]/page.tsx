@@ -11,7 +11,7 @@ export default function CollectedDetailPage({ params }) {
   );
 
   useEffect(() => {
-    const fetchCollectedDetail = async () => {
+    const fetchCollectedCafeDetail = async () => {
       try {
         const response = await getCollected(id);
         console.log(response);
@@ -21,7 +21,7 @@ export default function CollectedDetailPage({ params }) {
       }
     };
 
-    fetchCollectedDetail();
+    fetchCollectedCafeDetail();
   }, [id]);
 
   return null;

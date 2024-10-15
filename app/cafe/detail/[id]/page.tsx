@@ -34,8 +34,7 @@ export default function CafeDetailPage({ params }) {
     const fetchBookmarked = async () => {
       try {
         const response = await getBookmarked(id);
-        const bookmarked = response && response.length > 0;
-        setIsBookmarked(bookmarked);
+        if (response && response.length > 0) setIsBookmarked(true);
       } catch (error) {
         console.log(error);
       }
