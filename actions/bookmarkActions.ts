@@ -12,7 +12,9 @@ function handleError(error) {
   throw new Error(error.message);
 }
 
-// GET ALL BOOKMARKED By userId (메인)
+/**
+ * GET ALL BOOKMARKED By userId (메인)
+ */
 export async function getAllBookmarked(userId) {
   if (!userId) throw new Error('유효하지 않은 userId');
 
@@ -27,7 +29,9 @@ export async function getAllBookmarked(userId) {
   return data;
 }
 
-// GET BOOKMARKED By id, userId (서브)
+/**
+ * GET BOOKMARKED By id, userId (서브)
+ */
 export async function getBookmarked(id, userId) {
   if (!userId) throw new Error('유효하지 않은 userId');
 
@@ -42,7 +46,9 @@ export async function getBookmarked(id, userId) {
   return data;
 }
 
-// CREATE
+/**
+ * CREATE BOOKMARKED
+ */
 export async function createBookmarked(bookmarked: BookmarkedRowInsert) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.from('bookmarked').insert({
@@ -54,7 +60,9 @@ export async function createBookmarked(bookmarked: BookmarkedRowInsert) {
   return data;
 }
 
-// DELETE
+/**
+ * DELETE BOOKMARKED
+ */
 export async function deleteBookmarked(id, userId) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase

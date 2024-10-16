@@ -2,6 +2,9 @@
 
 import { createServerSupabaseClient } from 'utils/supabase/server';
 
+/**
+ * GET userID
+ */
 export async function getCurrentUserId() {
   const supabase = await createServerSupabaseClient();
 

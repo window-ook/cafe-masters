@@ -1,5 +1,8 @@
 'use server';
 
+/**
+ * GET CAFE'S DETAIL
+ */
 export async function cafeDetail(id) {
   const response = await fetch(`https://place.map.kakao.com/main/v/${id}`, {
     method: 'GET',
