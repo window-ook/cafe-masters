@@ -90,13 +90,15 @@ export async function createCollected(collected: CollectedRowInsert) {
 /**
  * UPDATE COLLECTED
  */
-export async function updateCollected(collected: CollectedRowUpdate, userId) {
-  if (!userId) {
-    console.error('유효하지 않은 userId');
+export async function updateCollected(
+  collected: CollectedRowUpdate,
+  id,
+  userId
+) {
+  if (!userId || !id) {
+    console.error('유효하지 않은 userId or id');
     return;
   }
-
-  if (!collected.id) throw new Error('id가 필요합니다.');
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
@@ -105,7 +107,7 @@ export async function updateCollected(collected: CollectedRowUpdate, userId) {
       ...collected,
       updated_at: new Date().toISOString(),
     })
-    .eq('id', collected.id)
+    .eq('id', id)
     .eq('userId', userId);
 
   if (error) handleError(error);
