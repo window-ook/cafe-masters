@@ -16,7 +16,7 @@ export const useMapStore = create(
       keyword: '서울숲',
       allCafe: [], // 모든 카페
       collectedCafe: [], // 수집한 카드들
-      collectedCafeCount: 0,
+      collectedCafeCount: 0, // 수집한 카드의 개수
       bookmarkedCafe: [], // 북마크 해 둔 카페들
       cafeDetail: [], // 모든 카페 중 선택한 카페의 상세 정보
       collectedCafeDetail: [], // 수집한 카드 중 선택한 카페의 상세 정보
@@ -76,14 +76,16 @@ export const useUserStore = create(
 export const useCheckStore = create(
   persist(
     (set) => ({
+      // 서브 사이드바 활성화 여부
       isSubSidebarOpen: false,
       setIsSubSidebarOpen: (prev) => set({ isSubSidebarOpen: prev }),
 
+      // 다크 테마 여부
       isDarkTheme: false,
       setIsDarkTheme: () =>
         set((state) => ({ isDarkTheme: !state.isDarkTheme })),
 
-      // 디테일에서 수집, 북마크 여부 표시
+      // 디테일에서 수집, 북마크 여부
       isCollected: false,
       isBookmarked: false,
       setIsCollected: (value) => set({ isCollected: value }),

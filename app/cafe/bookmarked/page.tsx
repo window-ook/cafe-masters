@@ -13,7 +13,7 @@ export default function BookmarkedPage() {
       try {
         const response = await getAllBookmarked(userId);
         console.log(response);
-        setBookmarkedCafe(response);
+        if (response && response.length > 0) setBookmarkedCafe(response);
       } catch (error) {
         console.error(error);
       }

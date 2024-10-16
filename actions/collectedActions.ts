@@ -16,6 +16,8 @@ function handleError(error) {
 
 // GET ALL COLLECTED By userId (메인)
 export async function getAllCollected(userId) {
+  if (!userId) throw new Error('유효하지 않은 userId');
+
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('collected')
@@ -27,12 +29,15 @@ export async function getAllCollected(userId) {
   return data;
 }
 
-// GET COLLECTED By id (서브)
-export async function getCollected(id) {
+// GET COLLECTED By id, userId (서브)
+export async function getCollected(id, userId) {
+  if (!userId) throw new Error('유효하지 않은 userId');
+
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('collected')
     .select('*')
+    .eq('userId', userId)
     .eq('id', id);
 
   if (error) handleError(error);
@@ -42,13 +47,13 @@ export async function getCollected(id) {
 // COUNT COLLECTED
 export async function countCollected(userId) {
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase
+  const { data, count, error } = await supabase
     .from('collected')
     .select('*', { count: 'exact' })
     .eq('userId', userId);
 
   if (error) handleError(error);
-  return data;
+  return { data, count };
 }
 
 // CREATE
@@ -64,7 +69,7 @@ export async function createCollected(collected: CollectedRowInsert) {
 }
 
 // UPDATE
-export async function updateCollected(collected: CollectedRowUpdate) {
+export async function updateCollected(collected: CollectedRowUpdate, userId) {
   const supabase = await createServerSupabaseClient();
 
   if (!collected.id) throw new Error('id가 필요합니다.');
@@ -75,7 +80,8 @@ export async function updateCollected(collected: CollectedRowUpdate) {
       ...collected,
       updated_at: new Date().toISOString(),
     })
-    .eq('id', collected.id);
+    .eq('id', collected.id)
+    .eq('userId', userId);
 
   if (error) handleError(error);
   return data;

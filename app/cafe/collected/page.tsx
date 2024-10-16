@@ -12,26 +12,26 @@ export default function CollectedPage() {
   );
 
   useEffect(() => {
-    const fetchCollected = async () => {
+    if (!userId) {
+      console.error('User ID is not loaded yet');
+      return;
+    }
+
+    const fetchData = async () => {
       try {
-        const response = await getAllCollected(userId);
-        setCollectedCafe(response);
+        const collectedResponse = await getAllCollected(userId);
+        console.log(collectedResponse);
+        if (collectedResponse && collectedResponse.length > 0)
+          setCollectedCafe(collectedResponse);
+
+        const countResponse = await countCollected(userId);
+        if (collectedResponse) setCollectedCafeCount(countResponse?.count);
       } catch (error) {
         console.error(error);
       }
     };
 
-    const fetchCount = async () => {
-      try {
-        const response = await countCollected(userId);
-        setCollectedCafeCount(response?.length);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchCollected();
-    fetchCount();
+    fetchData();
   }, [userId]);
   return;
 }

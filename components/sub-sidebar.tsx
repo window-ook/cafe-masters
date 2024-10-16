@@ -10,7 +10,7 @@ import { Button, IconButton, Rating } from '@mui/material';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import CollectedBadge from './collected-badge';
 
-export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
+export default function SubSidebar({ setIsSubSidebarOpen }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [comment, setComment] = useState('');
   const [pros, setPros] = useState('');
@@ -28,6 +28,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
     (state) => state.bookmarkedCafeDetail[0]
   );
 
+  const isSubSidebarOpen = useCheckStore((state) => state.isSubSidebarOpen);
   const isCollected = useCheckStore((state) => state.isCollected);
   const isBookmarked = useCheckStore((state) => state.isBookmarked);
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
@@ -88,26 +89,6 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
     concept,
     rating,
   };
-
-  // const memoFromBookmarked = {
-  //   id: bookmarkedCafeDetail.id,
-  //   userId,
-  //   name: bookmarkedCafeDetail.name,
-  //   photoUrl: bookmarkedCafeDetail.photoUrl,
-  //   address: bookmarkedCafeDetail.address,
-  //   openWeekly: bookmarkedCafeDetail.openWeekly,
-  //   openWeekend:
-  //     bookmarkedCafeDetail.openWeekend || bookmarkedCafeDetail.openWeekly,
-  //   phoneNum: bookmarkedCafeDetail.phoneNum,
-  //   coordX: bookmarkedCafeDetail.coordX,
-  //   coordY: bookmarkedCafeDetail.coordY,
-  //   comment,
-  //   pros,
-  //   cons,
-  //   eaten,
-  //   concept,
-  //   rating,
-  // };
 
   const router = useRouter();
   const pathname = usePathname();

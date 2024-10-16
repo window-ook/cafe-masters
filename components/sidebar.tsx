@@ -41,11 +41,10 @@ export default function Sidebar({ session }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isSubSidebarOpen = useCheckStore((state) => state.isSubSidebarOpen);
+  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
   const setIsSubSidebarOpen = useCheckStore(
     (state) => state.setIsSubSidebarOpen
   );
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
 
   const allCafe = useMapStore((state) => state.allCafe, shallow);
   const collectedCafe = useMapStore((state) => state.collectedCafe, shallow);
@@ -217,7 +216,7 @@ export default function Sidebar({ session }) {
               )}
               {collectedData?.pages?.map((page, i) => (
                 <div className="flex flex-col gap-4 mb-3">
-                  <div key={i}>
+                  <div key={`page-${i}`}>
                     {page.data.map((cafe) => (
                       <CollectedCard
                         key={cafe.id}
@@ -301,10 +300,7 @@ export default function Sidebar({ session }) {
       </Card>
 
       {/* 서브 사이드바 */}
-      <SubSidebar
-        isSubSidebarOpen={isSubSidebarOpen}
-        setIsSubSidebarOpen={setIsSubSidebarOpen}
-      />
+      <SubSidebar setIsSubSidebarOpen={setIsSubSidebarOpen} />
     </div>
   );
 }
