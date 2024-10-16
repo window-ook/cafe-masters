@@ -18,7 +18,10 @@ function handleError(error) {
  * GET ALL COLLECTED By userId (메인)
  */
 export async function getAllCollected(userId) {
-  if (!userId) throw new Error('유효하지 않은 userId');
+  if (!userId) {
+    console.error('유효하지 않은 userId');
+    return;
+  }
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
@@ -35,7 +38,10 @@ export async function getAllCollected(userId) {
  * GET COLLECTED By id, userId (서브)
  */
 export async function getCollected(id, userId) {
-  if (!userId) throw new Error('유효하지 않은 userId');
+  if (!userId) {
+    console.error('유효하지 않은 userId');
+    return;
+  }
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
@@ -52,6 +58,11 @@ export async function getCollected(id, userId) {
  * COUNT COLLECTED
  */
 export async function countCollected(userId) {
+  if (!userId) {
+    console.error('유효하지 않은 userId');
+    return;
+  }
+
   const supabase = await createServerSupabaseClient();
   const { data, count, error } = await supabase
     .from('collected')
@@ -80,10 +91,14 @@ export async function createCollected(collected: CollectedRowInsert) {
  * UPDATE COLLECTED
  */
 export async function updateCollected(collected: CollectedRowUpdate, userId) {
-  const supabase = await createServerSupabaseClient();
+  if (!userId) {
+    console.error('유효하지 않은 userId');
+    return;
+  }
 
   if (!collected.id) throw new Error('id가 필요합니다.');
 
+  const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('collected')
     .update({

@@ -14,13 +14,18 @@ export const useMapStore = create(
   persist(
     (set) => ({
       keyword: '서울숲',
-      allCafe: [], // 모든 카페
-      collectedCafe: [], // 수집한 카드들
-      collectedCafeCount: 0, // 수집한 카드의 개수
-      bookmarkedCafe: [], // 북마크 해 둔 카페들
-      cafeDetail: [], // 모든 카페 중 선택한 카페의 상세 정보
-      collectedCafeDetail: [], // 수집한 카드 중 선택한 카페의 상세 정보
-      bookmarkedCafeDetail: [], // 북마크한 카페 중 선택한 카페의 상세 정보
+      // 사이드바에 매핑되는 데이터들
+      allCafe: [],
+      collectedCafe: [],
+      collectedCafeCount: 0,
+      bookmarkedCafe: [],
+
+      // 서브 사이드바에 매핑되는 데이터들
+      cafeDetail: {},
+      collectedCafeDetail: [],
+      bookmarkedCafeDetail: [],
+
+      // set 함수
       setKeyword: (newKeyword) => set({ keyword: newKeyword }),
       setAllCafe: (newAllCafe) => set({ allCafe: newAllCafe }),
       setCollectedCafe: (newCollectedCafe) =>
@@ -56,7 +61,7 @@ export const useMapStore = create(
 export const useUserStore = create(
   persist(
     (set) => ({
-      userId: '',
+      userId: null,
       setUserId: (id) => set({ userId: id }),
     }),
     {

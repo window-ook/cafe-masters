@@ -14,11 +14,18 @@ export default function BookmarkedDetailpage({ params }) {
 
   useEffect(() => {
     const fetchBookmarkedCafeDetail = async () => {
+      if (!userId) {
+        console.error('유효하지 않은 userId');
+        return;
+      }
+
       try {
         const response = await getBookmarked(id, userId);
         console.log(response);
-        if (response && response.length > 0) setIsBookmarked(true);
-        setBookmarkedCafeDetail(response);
+        if (response && response.length >= 0) {
+          setIsBookmarked(true);
+          setBookmarkedCafeDetail(response);
+        }
       } catch (error) {
         console.error(error);
       }

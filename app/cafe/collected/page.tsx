@@ -12,16 +12,11 @@ export default function CollectedPage() {
   );
 
   useEffect(() => {
-    if (!userId) {
-      console.error('User ID is not loaded yet');
-      return;
-    }
-
     const fetchData = async () => {
       try {
         const collectedResponse = await getAllCollected(userId);
         console.log(collectedResponse);
-        if (collectedResponse && collectedResponse.length > 0)
+        if (collectedResponse && collectedResponse.length >= 0)
           setCollectedCafe(collectedResponse);
 
         const countResponse = await countCollected(userId);
@@ -32,6 +27,6 @@ export default function CollectedPage() {
     };
 
     fetchData();
-  }, [userId]);
+  }, []);
   return;
 }

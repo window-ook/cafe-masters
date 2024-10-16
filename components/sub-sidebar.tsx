@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { Card } from '@mui/material';
 import { createCollected } from 'actions/collectedActions';
-import { createBookmarked } from 'actions/bookmarkActions';
+import { createBookmarked, deleteBookmarked } from 'actions/bookmarkActions';
 import { Button, IconButton, Rating } from '@mui/material';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import CollectedBadge from './collected-badge';
@@ -20,6 +20,10 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
   const [rating, setRating] = useState<number | null>(5);
 
   const userId = useUserStore((state) => state.userId);
+
+  const setCollectedCafe = useMapStore((state) => state.setCollectedCafe);
+  const setBookmarkedCafe = useMapStore((state) => state.setBookmarkedCafe);
+
   const cafeDetail = useMapStore((state) => state.cafeDetail);
   const collectedCafeDetail = useMapStore(
     (state) => state.collectedCafeDetail[0]
@@ -93,21 +97,57 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleMenuOpen = () => {
-    setMenuOpen((prev) => !prev);
-  };
+  const handleMenuOpen = () => setMenuOpen((prev) => !prev);
 
   // 수집하기
-  const submitCollected = (memo) => {
-    createCollected(memo);
-    alert('새로운 카페를 수집했습니다!');
+  const submitCollected = async (memo) => {
+    try {
+      await createCollected(memo);
+      alert('새로운 카페를 수집했습니다!');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // 다음에 가 볼 카페 북마크하기
-  const submitBookmarked = (bookmarked) => {
-    createBookmarked(bookmarked);
-    alert('북마크에 저장했습니다!');
+  const submitBookmarked = async (bookmarked) => {
+    try {
+      await createBookmarked(bookmarked);
+      alert('북마크에 저장했습니다!');
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // 북마크 삭제하기
+  const cancelBookmarked = async () => {
+    try {
+      await deleteBookmarked(bookmarkedCafeDetail.id, userId);
+      setBookmarkedCafe((prevBookmarkedCafe) =>
+        prevBookmarkedCafe.filter((cafe) => cafe.id !== bookmarkedCafeDetail.id)
+      );
+      alert('북마크에서 제거했습니다!');
+      router.push('/cafe/bookmarked');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if ((pathname.startsWith('/cafe/detail') && !cafeDetail) || !userId)
+    return null;
+
+  if (
+    (pathname.startsWith('/cafe/collected/detail') && !collectedCafeDetail) ||
+    !userId
+  )
+    return null;
+
+  if (
+    (pathname.startsWith('/cafe/bookmarked/detail') && !bookmarkedCafeDetail) ||
+    !userId
+  )
+    return null;
 
   return (
     <Card
@@ -128,8 +168,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                 <IconButton
                   aria-label="bookmark"
                   size="large"
-                  disabled
-                  onClick={() => submitBookmarked(detail)}
+                  onClick={() => cancelBookmarked()}
                 >
                   <BookmarkIcon className="text-yellow-500" />
                 </IconButton>
@@ -276,7 +315,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
           >
             <div className="flex items-center">
               <h2 className="text-2xl font-semibold p-2">
-                {bookmarkedCafeDetail.name}
+                {collectedCafeDetail.name}
               </h2>
             </div>
             <button
@@ -435,8 +474,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                 <IconButton
                   aria-label="bookmark"
                   size="large"
-                  disabled
-                  onClick={() => submitBookmarked(detail)}
+                  onClick={() => cancelBookmarked()}
                 >
                   <BookmarkIcon className="text-yellow-500" />
                 </IconButton>

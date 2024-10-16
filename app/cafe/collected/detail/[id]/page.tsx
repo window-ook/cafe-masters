@@ -13,11 +13,6 @@ export default function CollectedDetailPage({ params }) {
 
   useEffect(() => {
     const fetchCollectedCafeDetail = async () => {
-      if (!userId || !id) {
-        console.error('Invalid userId or id');
-        return;
-      }
-
       try {
         const response = await getCollected(id, userId);
         console.log(response);
