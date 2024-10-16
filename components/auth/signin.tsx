@@ -24,7 +24,7 @@ export default function SignIn({ setView }) {
       if (error) alert(error.message);
 
       if (data) {
-        setUserId(data?.user?.id);
+        setUserId(data?.user?.id); // uuid
       }
     },
   });

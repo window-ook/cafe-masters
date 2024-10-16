@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useMapStore } from 'utils/store';
+import { useMapStore, useUserStore } from 'utils/store';
 import { getCollected } from 'actions/collectedActions';
 
 export default function CollectedDetailPage({ params }) {
   const { id } = params;
+  const userId = useUserStore((state) => state.userId);
   const setCollectedCafeDetail = useMapStore(
     (state) => state.setCollectedCafeDetail
   );
@@ -13,9 +14,9 @@ export default function CollectedDetailPage({ params }) {
   useEffect(() => {
     const fetchCollectedCafeDetail = async () => {
       try {
-        const response = await getCollected(id);
+        const response = await getCollected(id, userId);
         console.log(response);
-        setCollectedCafeDetail(response);
+        if (response && response.length > 0) setCollectedCafeDetail(response);
       } catch (error) {
         console.error(error);
       }

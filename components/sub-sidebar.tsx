@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { Card } from '@mui/material';
-import { createCollected } from 'actions/collectedActions';
-import { createBookmarked } from 'actions/bookmarkActions';
+import { createCollected, updateCollected } from 'actions/collectedActions';
+import { createBookmarked, deleteBookmarked } from 'actions/bookmarkActions';
 import { Button, IconButton, Rating } from '@mui/material';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import CollectedBadge from './collected-badge';
 
-export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
+export default function SubSidebar({ setIsSubSidebarOpen }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [comment, setComment] = useState('');
   const [pros, setPros] = useState('');
@@ -20,6 +20,9 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
   const [rating, setRating] = useState<number | null>(5);
 
   const userId = useUserStore((state) => state.userId);
+
+  const setBookmarkedCafe = useMapStore((state) => state.setBookmarkedCafe);
+
   const cafeDetail = useMapStore((state) => state.cafeDetail);
   const collectedCafeDetail = useMapStore(
     (state) => state.collectedCafeDetail[0]
@@ -28,9 +31,13 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
     (state) => state.bookmarkedCafeDetail[0]
   );
 
+  const isSubSidebarOpen = useCheckStore((state) => state.isSubSidebarOpen);
   const isCollected = useCheckStore((state) => state.isCollected);
   const isBookmarked = useCheckStore((state) => state.isBookmarked);
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   const detail = {
     id: cafeDetail?.basicInfo?.cid,
@@ -62,6 +69,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
     coordY: cafeDetail?.findway?.y,
   };
 
+  // 모든 카페의 상세 페이지에서 작성한 메모
   const memoFromDetail = {
     id: detail.id,
     userId,
@@ -89,44 +97,88 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
     rating,
   };
 
-  // const memoFromBookmarked = {
-  //   id: bookmarkedCafeDetail.id,
-  //   userId,
-  //   name: bookmarkedCafeDetail.name,
-  //   photoUrl: bookmarkedCafeDetail.photoUrl,
-  //   address: bookmarkedCafeDetail.address,
-  //   openWeekly: bookmarkedCafeDetail.openWeekly,
-  //   openWeekend:
-  //     bookmarkedCafeDetail.openWeekend || bookmarkedCafeDetail.openWeekly,
-  //   phoneNum: bookmarkedCafeDetail.phoneNum,
-  //   coordX: bookmarkedCafeDetail.coordX,
-  //   coordY: bookmarkedCafeDetail.coordY,
-  //   comment,
-  //   pros,
-  //   cons,
-  //   eaten,
-  //   concept,
-  //   rating,
-  // };
-
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const handleMenuOpen = () => {
-    setMenuOpen((prev) => !prev);
+  // 수집한 카드 수정 메모
+  const memoFromCollectedDetail = {
+    comment,
+    pros,
+    cons,
+    eaten,
+    concept,
   };
 
+  // 북마크한 카페에서 작성한 메모
+  const memoFromBookmarkedDetail = {
+    ...bookmarkedCafeDetail,
+    comment,
+    pros,
+    cons,
+    eaten,
+    concept,
+  };
+
+  // 메뉴 오픈
+  const handleMenuOpen = () => setMenuOpen((prev) => !prev);
+
   // 수집하기
-  const submitCollected = (memo) => {
-    createCollected(memo);
-    alert('새로운 카페를 수집했습니다!');
+  const submitCollected = async (memo) => {
+    try {
+      await createCollected(memo);
+      alert('새로운 카페를 수집했습니다!');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 수집한 카드의 메모 수정하기
+  const submitUpdate = async (memo) => {
+    try {
+      await updateCollected(memo, collectedCafeDetail.id, userId);
+      alert('수집 정보를 수정했습니다!');
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // 다음에 가 볼 카페 북마크하기
-  const submitBookmarked = (bookmarked) => {
-    createBookmarked(bookmarked);
-    alert('북마크에 저장했습니다!');
+  const submitBookmarked = async (bookmarked) => {
+    try {
+      await createBookmarked(bookmarked);
+      alert('북마크에 저장했습니다!');
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // 북마크 삭제하기
+  const cancelBookmarked = async () => {
+    try {
+      await deleteBookmarked(bookmarkedCafeDetail.id, userId);
+      setBookmarkedCafe((prevBookmarkedCafe) =>
+        prevBookmarkedCafe.filter((cafe) => cafe.id !== bookmarkedCafeDetail.id)
+      );
+      alert('북마크에서 제거했습니다!');
+      router.push('/cafe/bookmarked');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if ((pathname.startsWith('/cafe/all/detail') && !cafeDetail) || !userId)
+    return null;
+
+  if (
+    (pathname.startsWith('/cafe/collected/detail') && !collectedCafeDetail) ||
+    !userId
+  )
+    return null;
+
+  if (
+    (pathname.startsWith('/cafe/bookmarked/detail') && !bookmarkedCafeDetail) ||
+    !userId
+  )
+    return null;
 
   return (
     <Card
@@ -147,8 +199,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                 <IconButton
                   aria-label="bookmark"
                   size="large"
-                  disabled
-                  onClick={() => submitBookmarked(detail)}
+                  onClick={() => cancelBookmarked()}
                 >
                   <BookmarkIcon className="text-yellow-500" />
                 </IconButton>
@@ -196,21 +247,18 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                   <span>{detail.rating || ''}</span>
                 </span>
               </div>
-              <span
-                className={`${isCollected ? `text-main` : 'text-black'} text-lg`}
-              >
-                {isCollected ? (
-                  <CollectedBadge />
-                ) : (
-                  <Button
-                    className="bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl"
-                    variant="contained"
-                    onClick={() => router.push('/memo')}
-                  >
-                    수집하기
-                  </Button>
-                )}
-              </span>
+
+              {isCollected ? (
+                <CollectedBadge />
+              ) : (
+                <Button
+                  className="bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl"
+                  variant="contained"
+                  onClick={() => router.push('/cafe/all/memo')}
+                >
+                  수집하기
+                </Button>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-6">
@@ -295,7 +343,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
           >
             <div className="flex items-center">
               <h2 className="text-2xl font-semibold p-2">
-                {bookmarkedCafeDetail.name}
+                {collectedCafeDetail.name}
               </h2>
             </div>
             <button
@@ -306,7 +354,6 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
             </button>
           </div>
 
-          {/* 그리드로 변경 */}
           <div
             className={`flex flex-col gap-4 p-2 shadow-md ${isDarkTheme ? 'shadow-mainShadow' : ''} rounded-md`}
           >
@@ -319,16 +366,21 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
             </div>
 
             <div className="flex justify-between items-center">
-              <div className="flex items-center gap-4">
-                <span className="text-xl flex gap-1 items-center">
-                  <div className="flex justify-start items-center gap-1">
-                    <div className="relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500 shadow-md shadow-yellow-100">
-                      <i className="fa-solid fa-star absolute text-yellow-300 text-xs"></i>
-                    </div>
-                    {collectedCafeDetail.rating}
+              <span className="text-xl flex gap-1 items-center">
+                <div className="flex justify-start items-center gap-1">
+                  <div className="relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500 shadow-md shadow-yellow-100">
+                    <i className="fa-solid fa-star absolute text-yellow-300 text-xs"></i>
                   </div>
-                </span>
-              </div>
+                  {collectedCafeDetail.rating}
+                </div>
+              </span>
+              <Button
+                className="bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl"
+                variant="contained"
+                onClick={() => router.push('/cafe/collected/memo')}
+              >
+                수정하기
+              </Button>
             </div>
 
             <div className="grid grid-cols-2 gap-6">
@@ -454,8 +506,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                 <IconButton
                   aria-label="bookmark"
                   size="large"
-                  disabled
-                  onClick={() => submitBookmarked(detail)}
+                  onClick={() => cancelBookmarked()}
                 >
                   <BookmarkIcon className="text-yellow-500" />
                 </IconButton>
@@ -513,7 +564,7 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
                   <Button
                     className="bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl"
                     variant="contained"
-                    onClick={() => router.push('/memo')}
+                    onClick={() => router.push('/cafe/bookmarked/memo')}
                   >
                     수집하기
                   </Button>
@@ -605,21 +656,34 @@ export default function SubSidebar({ isSubSidebarOpen, setIsSubSidebarOpen }) {
       )}
 
       {/* 수집 메모 */}
-      {pathname === '/memo' && (
+      {pathname.includes('/memo') && (
         <form
           className="flex flex-col p-2 gap-4"
           onSubmit={(e) => {
             e.preventDefault();
-            submitCollected(memoFromDetail);
+            if (pathname.startsWith('/cafe/all'))
+              submitCollected(memoFromDetail);
+
+            if (pathname.startsWith('/cafe/collected'))
+              submitUpdate(memoFromCollectedDetail);
+
+            if (pathname.startsWith('/cafe/bookmarked'))
+              submitCollected(memoFromBookmarkedDetail);
           }}
         >
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-semibold">{detail.name}</h2>
+            <h2 className="text-2xl font-semibold">
+              {pathname.startsWith('/cafe/all') && detail.name}
+              {pathname.startsWith('/cafe/collected') &&
+                collectedCafeDetail.name}
+              {pathname.startsWith('/cafe/bookmarked') &&
+                bookmarkedCafeDetail.name}
+            </h2>
             <button
               onClick={() => router.back()}
               className={`${isDarkTheme ? 'shadow-mainShadow' : ''} shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70 py-2 px-6`}
             >
-              Back
+              <i className="fa-solid fa-rotate-left"></i>
             </button>
           </div>
           <input

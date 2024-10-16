@@ -14,8 +14,15 @@ function handleError(error) {
   throw new Error(error.message);
 }
 
-// GET ALL COLLECTED By userId (메인)
+/**
+ * GET ALL COLLECTED By userId (메인)
+ */
 export async function getAllCollected(userId) {
+  if (!userId) {
+    console.error('유효하지 않은 userId');
+    return;
+  }
+
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('collected')
@@ -27,31 +34,48 @@ export async function getAllCollected(userId) {
   return data;
 }
 
-// GET COLLECTED By id (서브)
-export async function getCollected(id) {
+/**
+ * GET COLLECTED By id, userId (서브)
+ */
+export async function getCollected(id, userId) {
+  if (!userId) {
+    console.error('유효하지 않은 userId');
+    return;
+  }
+
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('collected')
     .select('*')
+    .eq('userId', userId)
     .eq('id', id);
 
   if (error) handleError(error);
   return data;
 }
 
-// COUNT COLLECTED
+/**
+ * COUNT COLLECTED
+ */
 export async function countCollected(userId) {
+  if (!userId) {
+    console.error('유효하지 않은 userId');
+    return;
+  }
+
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase
+  const { data, count, error } = await supabase
     .from('collected')
     .select('*', { count: 'exact' })
     .eq('userId', userId);
 
   if (error) handleError(error);
-  return data;
+  return { data, count };
 }
 
-// CREATE
+/**
+ * CREATE COLLECTED
+ */
 export async function createCollected(collected: CollectedRowInsert) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.from('collected').insert({
@@ -63,19 +87,28 @@ export async function createCollected(collected: CollectedRowInsert) {
   return data;
 }
 
-// UPDATE
-export async function updateCollected(collected: CollectedRowUpdate) {
+/**
+ * UPDATE COLLECTED
+ */
+export async function updateCollected(
+  collected: CollectedRowUpdate,
+  id,
+  userId
+) {
+  if (!userId || !id) {
+    console.error('유효하지 않은 userId or id');
+    return;
+  }
+
   const supabase = await createServerSupabaseClient();
-
-  if (!collected.id) throw new Error('id가 필요합니다.');
-
   const { data, error } = await supabase
     .from('collected')
     .update({
       ...collected,
       updated_at: new Date().toISOString(),
     })
-    .eq('id', collected.id);
+    .eq('id', id)
+    .eq('userId', userId);
 
   if (error) handleError(error);
   return data;

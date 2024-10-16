@@ -41,11 +41,10 @@ export default function Sidebar({ session }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isSubSidebarOpen = useCheckStore((state) => state.isSubSidebarOpen);
+  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
   const setIsSubSidebarOpen = useCheckStore(
     (state) => state.setIsSubSidebarOpen
   );
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
 
   const allCafe = useMapStore((state) => state.allCafe, shallow);
   const collectedCafe = useMapStore((state) => state.collectedCafe, shallow);
@@ -70,7 +69,7 @@ export default function Sidebar({ session }) {
 
   const handleNormalCardClick = (cafe) => {
     setIsSubSidebarOpen(true);
-    router.push(`/cafe/detail/${cafe.id}`);
+    router.push(`/cafe/all/detail/${cafe.id}`);
   };
 
   const handleCollectedCardClick = (cafe) => {
@@ -187,9 +186,7 @@ export default function Sidebar({ session }) {
           )}
 
           {/* 모든 카페 보기 */}
-          {(pathname === '/cafe/all' ||
-            pathname.startsWith('/cafe/detail') ||
-            pathname === '/memo') && (
+          {pathname.startsWith('/cafe/all') && (
             <div className="flex flex-col gap-4 mb-3">
               {paginatedResults.map((cafe) => (
                 <NormalCard
@@ -204,8 +201,7 @@ export default function Sidebar({ session }) {
           )}
 
           {/* 수집한 카페 보기 */}
-          {(pathname === '/cafe/collected' ||
-            pathname.startsWith('/cafe/collected/detail')) && (
+          {pathname.startsWith('/cafe/collected') && (
             <>
               <div className="flex justify-center sticky">
                 <span className="font-dpixel">
@@ -217,7 +213,7 @@ export default function Sidebar({ session }) {
               )}
               {collectedData?.pages?.map((page, i) => (
                 <div className="flex flex-col gap-4 mb-3">
-                  <div key={i}>
+                  <div key={`page-${i}`}>
                     {page.data.map((cafe) => (
                       <CollectedCard
                         key={cafe.id}
@@ -237,8 +233,7 @@ export default function Sidebar({ session }) {
           )}
 
           {/* 가고 싶은 카페 보기 */}
-          {(pathname === '/cafe/bookmarked' ||
-            pathname.startsWith('/cafe/bookmarked/detail')) && (
+          {pathname.startsWith('/cafe/bookmarked') && (
             <>
               {isFetchingNextBookmarkedPage && (
                 <div className="text-center py-2">로딩 중...</div>
@@ -263,9 +258,7 @@ export default function Sidebar({ session }) {
           )}
 
           {/* 페이지 이동 */}
-          {(pathname === '/cafe/all' ||
-            pathname.startsWith('/cafe/detail') ||
-            pathname === '/memo') && (
+          {pathname.startsWith('/cafe/all') && (
             <div
               className={`sticky bottom-0 z-20 ${isDarkTheme ? 'bg-darkbg' : 'bg-white'} py-1 font-dpixel`}
             >
@@ -301,10 +294,7 @@ export default function Sidebar({ session }) {
       </Card>
 
       {/* 서브 사이드바 */}
-      <SubSidebar
-        isSubSidebarOpen={isSubSidebarOpen}
-        setIsSubSidebarOpen={setIsSubSidebarOpen}
-      />
+      <SubSidebar setIsSubSidebarOpen={setIsSubSidebarOpen} />
     </div>
   );
 }
