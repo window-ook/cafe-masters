@@ -39,6 +39,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
   const router = useRouter();
   const pathname = usePathname();
 
+  // 선택한 카페의 상세 정보
   const detail = {
     id: cafeDetail?.basicInfo?.cid,
     userId,
@@ -69,26 +70,18 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
     coordY: cafeDetail?.findway?.y,
   };
 
-  // 모든 카페의 상세 페이지에서 작성한 메모
+  // 선택한 카페의 상세 정보로부터 작성한 메모
   const memoFromDetail = {
-    id: detail.id,
+    id: detail?.id,
     userId,
-    name: cafeDetail?.basicInfo?.placenamefull,
-    photoUrl: cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumb.webp',
-    address:
-      cafeDetail?.basicInfo?.address?.region?.newaddrfullname +
-      ' ' +
-      cafeDetail?.basicInfo?.address?.newaddr?.newaddrfull +
-      ' ' +
-      cafeDetail?.basicInfo?.address?.addrdetail,
-    openWeekly:
-      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
-    openWeekend:
-      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[1]?.timeSE ||
-      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
-    phoneNum: cafeDetail?.basicInfo?.phonenum,
-    coordX: cafeDetail?.findway?.x,
-    coordY: cafeDetail?.findway?.y,
+    name: detail?.name,
+    photoUrl: detail?.photoUrl,
+    address: detail?.address,
+    openWeekly: detail?.openWeekly,
+    openWeekend: detail?.openWeekend || detail?.openWeekly,
+    phoneNum: detail?.phoneNum,
+    coordX: detail?.coordX,
+    coordY: detail?.coordY,
     comment,
     pros,
     cons,
@@ -108,12 +101,23 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
 
   // 북마크한 카페에서 작성한 메모
   const memoFromBookmarkedDetail = {
-    ...bookmarkedCafeDetail,
+    id: bookmarkedCafeDetail?.id,
+    userId,
+    name: bookmarkedCafeDetail?.name,
+    photoUrl: bookmarkedCafeDetail?.photoUrl,
+    address: bookmarkedCafeDetail?.address,
+    openWeekly: bookmarkedCafeDetail?.openWeekly,
+    openWeekend:
+      bookmarkedCafeDetail?.openWeekend || bookmarkedCafeDetail?.openWeekly,
+    phoneNum: bookmarkedCafeDetail?.phoneNum,
+    coordX: bookmarkedCafeDetail?.coordX,
+    coordY: bookmarkedCafeDetail?.coordY,
     comment,
     pros,
     cons,
     eaten,
     concept,
+    rating,
   };
 
   // 메뉴 오픈
@@ -124,6 +128,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
     try {
       await createCollected(memo);
       alert('새로운 카페를 수집했습니다!');
+      router.refresh();
     } catch (error) {
       console.error(error);
     }
@@ -189,7 +194,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
       } z-10 overflow-y-scroll font-dpixel ${isDarkTheme ? 'bg-darkbg text-white' : ''} shadow-md`}
     >
       {/* 일반 카드 상세 정보 */}
-      {isSubSidebarOpen && pathname.startsWith('/cafe/detail') && (
+      {isSubSidebarOpen && pathname.startsWith('/cafe/all/detail') && (
         <div className={`flex flex-col p-2 gap-4 `}>
           <div
             className={`flex justify-between items-center shadow-md ${isDarkTheme ? 'shadow-mainShadow' : ''} rounded-md`}

@@ -101,8 +101,7 @@ export default function KakaoMap() {
 
         if (
           window.location.pathname === '/' ||
-          window.location.pathname === '/cafe/all' ||
-          window.location.pathname.startsWith('/cafe/detail') ||
+          window.location.pathname.startsWith('/cafe/all') ||
           window.location.pathname.startsWith('/cafe/collected') ||
           window.location.pathname.startsWith('/cafe/bookmarked')
         ) {
@@ -112,7 +111,13 @@ export default function KakaoMap() {
       });
     };
 
-    // /cafe/collected 페이지로 이동하면 맵에 마커로 표시하고 중앙으로 옮겨주는 로직 추가
+    // /cafe/collected 페이지로 이동하면 맵에 마커로 표시하고 중앙으로 옮겨주는 로직
+
+    // /cafe/collected/detail로 이동시 상세 정보 표시중인 카페를 마커로 표시 하는 로직
+
+    // /cafe/bookmarked 페이지로 이동하면 맵에 마커로 표시하고 중앙으로 옮겨주는 로직
+
+    // /cafe/bookmarked/detail로 이동시 상세 정보 표시중인 카페를 마커로 표시 하는 로직
 
     return () => {
       script.remove();
