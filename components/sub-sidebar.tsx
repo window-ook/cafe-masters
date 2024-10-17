@@ -30,6 +30,8 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
   const bookmarkedCafeDetail = useMapStore(
     (state) => state.bookmarkedCafeDetail[0]
   );
+  const thisX = useMapStore((state) => state.thisX);
+  const thisY = useMapStore((state) => state.thisY);
 
   const isSubSidebarOpen = useCheckStore((state) => state.isSubSidebarOpen);
   const isCollected = useCheckStore((state) => state.isCollected);
@@ -39,6 +41,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
   const router = useRouter();
   const pathname = usePathname();
 
+  // 선택한 카페의 상세 정보
   const detail = {
     id: cafeDetail?.basicInfo?.cid,
     userId,
@@ -51,7 +54,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
             cafeDetail?.basicInfo?.feedback?.scoresum /
             cafeDetail?.basicInfo?.feedback?.scorecnt
           ).toFixed(2)
-        : 'X',
+        : null,
     openWeekly:
       cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
     openWeekend:
@@ -65,30 +68,22 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
       (cafeDetail?.basicInfo?.address?.addrdetail || ''),
     phoneNum: cafeDetail?.basicInfo?.phonenum,
     menu: cafeDetail?.menuInfo?.menuList,
-    coordX: cafeDetail?.findway?.x,
-    coordY: cafeDetail?.findway?.y,
+    coordX: thisX,
+    coordY: thisY,
   };
 
-  // 모든 카페의 상세 페이지에서 작성한 메모
+  // 선택한 카페의 상세 정보로부터 작성한 메모
   const memoFromDetail = {
-    id: detail.id,
+    id: detail?.id,
     userId,
-    name: cafeDetail?.basicInfo?.placenamefull,
-    photoUrl: cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumb.webp',
-    address:
-      cafeDetail?.basicInfo?.address?.region?.newaddrfullname +
-      ' ' +
-      cafeDetail?.basicInfo?.address?.newaddr?.newaddrfull +
-      ' ' +
-      cafeDetail?.basicInfo?.address?.addrdetail,
-    openWeekly:
-      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
-    openWeekend:
-      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[1]?.timeSE ||
-      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
-    phoneNum: cafeDetail?.basicInfo?.phonenum,
-    coordX: cafeDetail?.findway?.x,
-    coordY: cafeDetail?.findway?.y,
+    name: detail?.name,
+    photoUrl: detail?.photoUrl,
+    address: detail?.address,
+    openWeekly: detail?.openWeekly,
+    openWeekend: detail?.openWeekend || detail?.openWeekly,
+    phoneNum: detail?.phoneNum,
+    coordX: thisX,
+    coordY: thisY,
     comment,
     pros,
     cons,
@@ -108,12 +103,23 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
 
   // 북마크한 카페에서 작성한 메모
   const memoFromBookmarkedDetail = {
-    ...bookmarkedCafeDetail,
+    id: bookmarkedCafeDetail?.id,
+    userId,
+    name: bookmarkedCafeDetail?.name,
+    photoUrl: bookmarkedCafeDetail?.photoUrl,
+    address: bookmarkedCafeDetail?.address,
+    openWeekly: bookmarkedCafeDetail?.openWeekly,
+    openWeekend:
+      bookmarkedCafeDetail?.openWeekend || bookmarkedCafeDetail?.openWeekly,
+    phoneNum: bookmarkedCafeDetail?.phoneNum,
+    coordX: bookmarkedCafeDetail?.coordX,
+    coordY: bookmarkedCafeDetail?.coordY,
     comment,
     pros,
     cons,
     eaten,
     concept,
+    rating,
   };
 
   // 메뉴 오픈
@@ -124,6 +130,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
     try {
       await createCollected(memo);
       alert('새로운 카페를 수집했습니다!');
+      router.refresh();
     } catch (error) {
       console.error(error);
     }
@@ -189,7 +196,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
       } z-10 overflow-y-scroll font-dpixel ${isDarkTheme ? 'bg-darkbg text-white' : ''} shadow-md`}
     >
       {/* 일반 카드 상세 정보 */}
-      {isSubSidebarOpen && pathname.startsWith('/cafe/detail') && (
+      {isSubSidebarOpen && pathname.startsWith('/cafe/all/detail') && (
         <div className={`flex flex-col p-2 gap-4 `}>
           <div
             className={`flex justify-between items-center shadow-md ${isDarkTheme ? 'shadow-mainShadow' : ''} rounded-md`}
@@ -214,7 +221,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                   />
                 </IconButton>
               )}
-              <h2 className="text-2xl font-semibold">{detail.name}</h2>
+              <h2 className="text-2xl font-semibold">{detail?.name}</h2>
             </div>
             <button
               onClick={() => setIsSubSidebarOpen(false)}
@@ -230,7 +237,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
             {/* 썸네일 */}
             <div className="flex flex-col items-center">
               <img
-                src={detail.photoUrl || '/image/cafe_thumb.webp'}
+                src={detail?.photoUrl || '/image/cafe_thumb.webp'}
                 alt="카페 썸네일"
                 className="w-[10rem] rounded-md"
               />
@@ -239,12 +246,12 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
             {/* 썸네일 */}
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-4">
-                <span className="text-xl">리뷰 {detail.reviewCount}</span>
+                <span className="text-xl">리뷰 {detail?.reviewCount}</span>
                 <span className="text-xl flex gap-1 items-center">
                   <div className="relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500">
                     <i className="fa-solid fa-star absolute text-yellow-300 text-xs"></i>
                   </div>
-                  <span>{detail.rating || ''}</span>
+                  <span>{detail?.rating || ''}</span>
                 </span>
               </div>
 
@@ -272,14 +279,14 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                   <span>평일</span>
                 </div>
                 <div className="col-span-1 text-center ">
-                  <span>{detail.openWeekly}</span>
+                  <span>{detail?.openWeekly}</span>
                 </div>
                 <div className="col-span-1"></div>
                 <div className="col-span-1 text-left">
                   <span>주말</span>
                 </div>
                 <div className="col-span-1 text-center">
-                  <span>{detail.openWeekend}</span>
+                  <span>{detail?.openWeekend}</span>
                 </div>
               </div>
 
@@ -289,7 +296,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                   <i className="fa-solid fa-location-dot pt-1"></i>
                   <span>위치</span>
                 </div>
-                <div className="col-span-2 text-sm">{detail.address}</div>
+                <div className="col-span-2 text-sm">{detail?.address}</div>
               </div>
 
               {/* 전화번호 */}
@@ -298,7 +305,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                   <i className="fa-solid fa-phone pt-1"></i>
                   <span>전화번호</span>
                 </div>
-                <div className="col-span-2 text-lg">{detail.phoneNum}</div>
+                <div className="col-span-2 text-lg">{detail?.phoneNum}</div>
               </div>
 
               {/* 메뉴 */}
@@ -320,11 +327,13 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                   </div>
                   <ul>
                     {menuOpen &&
-                      detail.menu.map((item, index) => (
+                      detail?.menu?.map((item, index) => (
                         <li key={index} className="flex flex-col gap-1 mb-2">
                           <div className="w-30 border-t border-solid border-gray-400"></div>
-                          <span className="font-bold text-lg">{item.menu}</span>
-                          <span className="text-lg">{item.price}</span>
+                          <span className="font-bold text-lg">
+                            {item?.menu}
+                          </span>
+                          <span className="text-lg">{item?.price}</span>
                         </li>
                       ))}
                   </ul>

@@ -51,6 +51,9 @@ export default function Sidebar({ session }) {
   const collectedCount = useMapStore((state) => state.collectedCafeCount);
   const bookmarkedCafe = useMapStore((state) => state.bookmarkedCafe, shallow);
 
+  const setThisX = useMapStore((state) => state.setThisX);
+  const setThisY = useMapStore((state) => state.setThisY);
+
   const itemsPerPage = 15;
   const totalPages = Math.ceil(allCafe.length / itemsPerPage);
 
@@ -70,6 +73,9 @@ export default function Sidebar({ session }) {
   const handleNormalCardClick = (cafe) => {
     setIsSubSidebarOpen(true);
     router.push(`/cafe/all/detail/${cafe.id}`);
+    // x, y 좌표를 넘겨야함
+    setThisX(cafe?.x);
+    setThisY(cafe?.y);
   };
 
   const handleCollectedCardClick = (cafe) => {
@@ -162,21 +168,29 @@ export default function Sidebar({ session }) {
             <List className="mt-2 gap-5">
               <MainItem
                 icon={
-                  <i className="fa-solid fa-mug-hot text-orange-900 text-2xl"></i>
+                  <i
+                    className={`fa-solid fa-bars ${isDarkTheme ? 'text-white' : ''} text-2xl`}
+                  ></i>
                 }
                 title={'모든 카페 보기'}
                 path={() => router.push('/cafe/all')}
                 isDarkTheme={isDarkTheme}
               />
               <MainItem
-                icon={<i className="fa-solid fa-mobile text-main text-2xl"></i>}
+                icon={
+                  <i
+                    className={`fa-solid fa-film ${isDarkTheme ? 'text-white' : 'text-main'} text-2xl`}
+                  ></i>
+                }
                 title={'수집한 카페 보기'}
                 path={() => router.push('/cafe/collected')}
                 isDarkTheme={isDarkTheme}
               />
               <MainItem
                 icon={
-                  <i className="fa-solid fa-star text-yellow-500 text-xl"></i>
+                  <i
+                    className={`fa-solid fa-bookmark ${isDarkTheme ? 'text-white' : 'text-yellow-500'} text-xl`}
+                  ></i>
                 }
                 title={'가고 싶은 카페 보기'}
                 path={() => router.push('/cafe/bookmarked')}
@@ -212,20 +226,18 @@ export default function Sidebar({ session }) {
                 <div className="text-center py-2">로딩 중...</div>
               )}
               {collectedData?.pages?.map((page, i) => (
-                <div className="flex flex-col gap-4 mb-3">
-                  <div key={`page-${i}`}>
-                    {page.data.map((cafe) => (
-                      <CollectedCard
-                        key={cafe.id}
-                        name={cafe.name}
-                        ratings={cafe.rating}
-                        photoUrl={cafe.photoUrl}
-                        address={cafe.address}
-                        phone={cafe.phoneNum}
-                        onClick={() => handleCollectedCardClick(cafe)}
-                      />
-                    ))}
-                  </div>
+                <div key={`page-${i}`} className="flex flex-col gap-4 mb-3">
+                  {page.data.map((cafe) => (
+                    <CollectedCard
+                      key={cafe.id}
+                      name={cafe.name}
+                      ratings={cafe.rating}
+                      photoUrl={cafe.photoUrl}
+                      address={cafe.address}
+                      phone={cafe.phoneNum}
+                      onClick={() => handleCollectedCardClick(cafe)}
+                    />
+                  ))}
                 </div>
               ))}
               <div ref={collectedRef}></div>

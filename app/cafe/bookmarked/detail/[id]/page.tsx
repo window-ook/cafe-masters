@@ -14,11 +14,6 @@ export default function BookmarkedDetailpage({ params }) {
 
   useEffect(() => {
     const fetchBookmarkedCafeDetail = async () => {
-      if (!userId) {
-        console.error('유효하지 않은 userId');
-        return;
-      }
-
       try {
         const response = await getBookmarked(id, userId);
         console.log(response);

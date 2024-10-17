@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { useMapStore } from 'utils/store';
 
@@ -10,8 +11,11 @@ declare global {
 }
 
 export default function KakaoMap() {
+  const pathname = usePathname();
   const keyword = useMapStore((state) => state.keyword);
   const setAllCafe = useMapStore((state) => state.setAllCafe);
+  const collectedCafe = useMapStore((state) => state.collectedCafe);
+  const bookmarkedCafe = useMapStore((state) => state.bookmarkedCafe);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -34,7 +38,7 @@ export default function KakaoMap() {
         const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
         let markers: any[] = [];
 
-        const displayMarkers = (place: any) => {
+        const displayResults = (place: any) => {
           const marker = new window.kakao.maps.Marker({
             map: map,
             position: new window.kakao.maps.LatLng(place.y, place.x),
@@ -49,12 +53,40 @@ export default function KakaoMap() {
           });
         };
 
+        const displayCollected = (place) => {
+          if (!place.coordX || !place.coordY) {
+            console.error('Invalid coordinates:', place.coordX, place.coordY);
+            return;
+          }
+
+          // 지도에 표시하고 센터로 위치시키기
+          const latlng = new window.kakao.maps.LatLng(
+            place.coordY,
+            place.coordX
+          );
+          map.setCenter(latlng);
+
+          // 마커를 만들어서 배열에 넣음
+          const marker = new window.kakao.maps.Marker({
+            map: map,
+            position: new window.kakao.maps.LatLng(place.coordY, place.coordX),
+          });
+          markers.push(marker);
+
+          window.kakao.maps.event.addListener(marker, 'click', function () {
+            infowindow.setContent(
+              `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${place.name}</div>`
+            );
+            infowindow.open(map, marker);
+          });
+        };
+
         const removeMarkers = () => {
           markers.forEach((marker) => marker.setMap(null));
           markers = [];
         };
 
-        const searchByKeyword = (query) => {
+        const searchResults = (query) => {
           ps.keywordSearch(query, (data, status, pagination) => {
             if (status === window.kakao.maps.services.Status.OK) {
               const coords = new window.kakao.maps.LatLng(data[0].y, data[0].x);
@@ -64,7 +96,7 @@ export default function KakaoMap() {
                 (item: any) => item['category_group_code'] === 'CE7'
               );
 
-              const results = [...filtered_data]; // CE7 카페에 해당하는 장소만 결과로
+              const results = [...filtered_data];
 
               const handlePagination = (newData, status, newPagination) => {
                 if (status === window.kakao.maps.services.Status.OK) {
@@ -79,19 +111,18 @@ export default function KakaoMap() {
                     setAllCafe(results);
                     console.log(results);
                     removeMarkers();
-                    results.forEach((place) => displayMarkers(place));
+                    results.forEach((place) => displayResults(place));
                   }
                 }
               };
 
-              // 첫 번째 페이지 처리
               if (pagination.hasNextPage && results.length < 45) {
                 pagination.nextPage();
                 ps.keywordSearch(query, handlePagination, pagination);
               } else {
                 setAllCafe(results);
                 removeMarkers();
-                results.forEach((place) => displayMarkers(place));
+                results.forEach((place) => displayResults(place));
               }
             } else {
               alert(`${query}의 결과가 없습니다.`);
@@ -99,25 +130,27 @@ export default function KakaoMap() {
           });
         };
 
-        if (
-          window.location.pathname === '/' ||
-          window.location.pathname === '/cafe/all' ||
-          window.location.pathname.startsWith('/cafe/detail') ||
-          window.location.pathname.startsWith('/cafe/collected') ||
-          window.location.pathname.startsWith('/cafe/bookmarked')
-        ) {
-          if (keyword.includes('카페')) searchByKeyword(keyword);
-          else searchByKeyword(`${keyword} 카페`);
+        if (pathname === '/' || pathname.startsWith('/cafe/all')) {
+          if (keyword.includes('카페')) searchResults(keyword);
+          else searchResults(`${keyword} 카페`);
+        }
+
+        if (pathname.startsWith('/cafe/collected')) {
+          removeMarkers();
+          collectedCafe.forEach((cafe) => displayCollected(cafe));
+        }
+
+        if (pathname.startsWith('/cafe/bookmarked')) {
+          removeMarkers();
+          bookmarkedCafe.forEach((cafe) => displayCollected(cafe));
         }
       });
     };
 
-    // /cafe/collected 페이지로 이동하면 맵에 마커로 표시하고 중앙으로 옮겨주는 로직 추가
-
     return () => {
       script.remove();
     };
-  }, [keyword]);
+  }, [keyword, collectedCafe, bookmarkedCafe]);
 
   return (
     <div
