@@ -14,6 +14,7 @@ export const useMapStore = create(
   persist(
     (set) => ({
       keyword: '서울숲',
+
       // 사이드바에 매핑되는 데이터들
       allCafe: [],
       collectedCafe: [],
@@ -21,11 +22,12 @@ export const useMapStore = create(
       bookmarkedCafe: [],
 
       // 서브 사이드바에 매핑되는 데이터들
+      thisX: '',
+      thisY: '',
       cafeDetail: {},
       collectedCafeDetail: [],
       bookmarkedCafeDetail: [],
 
-      // set 함수
       setKeyword: (newKeyword) => set({ keyword: newKeyword }),
       setAllCafe: (newAllCafe) => set({ allCafe: newAllCafe }),
       setCollectedCafe: (newCollectedCafe) =>
@@ -34,6 +36,8 @@ export const useMapStore = create(
         set({ collectedCafeCount: newCount }),
       setBookmarkedCafe: (newBookmarkedCafe) =>
         set({ bookmarkedCafe: newBookmarkedCafe }),
+      setThisX: (x) => set({ thisX: x }),
+      setThisY: (y) => set({ thisY: y }),
       setCafeDetail: (data) => set({ cafeDetail: data }),
       setCollectedCafeDetail: (data) => set({ collectedCafeDetail: data }),
       setBookmarkedCafeDetail: (data) => set({ bookmarkedCafeDetail: data }),
@@ -43,7 +47,8 @@ export const useMapStore = create(
       getStorage: () => localStorage,
       partialize: (state) => ({
         keyword: state.keyword,
-        allCafe: state.allCafe,
+        thisX: state.thisX,
+        thisY: state.thisY,
         collectedCafe: state.collectedCafe,
         collectedCafeCount: state.collectedCafeCount,
         collectedCafeDetail: state.collectedCafeDetail,
