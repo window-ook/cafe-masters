@@ -179,10 +179,10 @@ export default function Sidebar({ session }) {
               <MainItem
                 icon={
                   <i
-                    className={`fa-solid fa-film ${isDarkTheme ? 'text-white' : 'text-main'} text-2xl`}
+                    className={`fa-solid fa-file ${isDarkTheme ? 'text-white' : 'text-main'} text-2xl`}
                   ></i>
                 }
-                title={'수집한 카페 보기'}
+                title={'수집한 카드 보기'}
                 path={() => router.push('/cafe/collected')}
                 isDarkTheme={isDarkTheme}
               />
@@ -219,7 +219,7 @@ export default function Sidebar({ session }) {
             <>
               <div className="flex justify-center sticky">
                 <span className="font-dpixel">
-                  내가 수집한 카페 : {collectedCount}장
+                  내가 수집한 카드 : {collectedCount}장
                 </span>
               </div>
               {isFetchingNextCollectedPage && (

@@ -23,14 +23,14 @@ const config: Config = {
         junior: '#030ffc',
         senior: '#f77a05',
         'expert-via': '#f5e902',
-        'expert-side': '#bd9b04',
+        'expert-side': '#8c6a01',
         'master-via': '#f5248c',
         'master-side': '#8a24b9',
 
         'silver-via': '#fff',
-        'silver-side': '#cacccb',
+        'silver-side': '#8c8c8c',
         'gold-via': '#f5e902',
-        'gold-side': '#bd9b04',
+        'gold-side': '#8c6a01',
       },
 
       backgroundImage: {

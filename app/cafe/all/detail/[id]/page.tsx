@@ -48,5 +48,5 @@ export default function CafeDetailPage({ params }) {
     fetchCollected();
   }, [id]);
 
-  return null;
+  return;
 }

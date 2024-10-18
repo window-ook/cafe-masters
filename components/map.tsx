@@ -14,6 +14,7 @@ export default function KakaoMap() {
   const pathname = usePathname();
   const keyword = useMapStore((state) => state.keyword);
   const setAllCafe = useMapStore((state) => state.setAllCafe);
+  const allCafe = useMapStore((state) => state.allCafe);
   const collectedCafe = useMapStore((state) => state.collectedCafe);
   const bookmarkedCafe = useMapStore((state) => state.bookmarkedCafe);
 
@@ -38,7 +39,14 @@ export default function KakaoMap() {
         const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
         let markers: any[] = [];
 
-        const displayResults = (place: any) => {
+        // 검색 결과 = cafeAll의 마커 표시
+        const displayResults = (place) => {
+          if (!place.x || !place.y) return;
+
+          // 지도에 표시하고 센터로 위치시키기
+          const latlng = new window.kakao.maps.LatLng(place.y, place.x);
+          map.setCenter(latlng);
+
           const marker = new window.kakao.maps.Marker({
             map: map,
             position: new window.kakao.maps.LatLng(place.y, place.x),
@@ -53,11 +61,9 @@ export default function KakaoMap() {
           });
         };
 
+        // 수집한 카드, 북마크 카페의 마커 표시
         const displayCollected = (place) => {
-          if (!place.coordX || !place.coordY) {
-            console.error('Invalid coordinates:', place.coordX, place.coordY);
-            return;
-          }
+          if (!place.coordX || !place.coordY) return;
 
           // 지도에 표시하고 센터로 위치시키기
           const latlng = new window.kakao.maps.LatLng(
@@ -66,7 +72,6 @@ export default function KakaoMap() {
           );
           map.setCenter(latlng);
 
-          // 마커를 만들어서 배열에 넣음
           const marker = new window.kakao.maps.Marker({
             map: map,
             position: new window.kakao.maps.LatLng(place.coordY, place.coordX),
@@ -130,9 +135,14 @@ export default function KakaoMap() {
           });
         };
 
-        if (pathname === '/' || pathname.startsWith('/cafe/all')) {
+        if (pathname === '/cafe/all') {
           if (keyword.includes('카페')) searchResults(keyword);
           else searchResults(`${keyword} 카페`);
+        }
+
+        if (pathname === '/' || pathname.startsWith('/cafe/all/detail')) {
+          removeMarkers();
+          allCafe.forEach((cafe) => displayResults(cafe));
         }
 
         if (pathname.startsWith('/cafe/collected')) {
@@ -150,7 +160,7 @@ export default function KakaoMap() {
     return () => {
       script.remove();
     };
-  }, [keyword, collectedCafe, bookmarkedCafe]);
+  }, [keyword, pathname]);
 
   return (
     <div

@@ -2,7 +2,7 @@ import { TextField, Typography } from '@mui/material';
 
 export default function UserForm({ email, password, setEmail, setPassword }) {
   return (
-    <div className="mb-1 flex flex-col gap-6">
+    <div className="mb-1 flex flex-col gap-6 z-10">
       <Typography className="text-lg font-dpixel">이메일</Typography>
       <TextField
         variant="outlined"

@@ -1,25 +1,20 @@
 'use client';
 
-import { getAllBookmarked } from 'actions/bookmarkActions';
-import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
+import { getAllBookmarked } from 'actions/bookmarkActions';
 
 export default function BookmarkedPage() {
   const userId = useUserStore((state) => state.userId);
   const setBookmarkedCafe = useMapStore((state) => state.setBookmarkedCafe);
 
-  useEffect(() => {
-    const fetchBookmarked = async () => {
-      try {
-        const response = await getAllBookmarked(userId);
-        console.log(response);
-        if (response && response.length >= 0) setBookmarkedCafe(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const { data, isLoading } = useQuery({
+    queryKey: ['bookmarkedCafe', userId],
+    queryFn: async () => await getAllBookmarked(userId),
+    onSuccess: (data) => setBookmarkedCafe(data),
+    enabled: !!userId,
+    staleTime: 1000 * 6 * 5,
+  });
 
-    fetchBookmarked();
-  }, [userId]);
   return;
 }

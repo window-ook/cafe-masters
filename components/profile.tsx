@@ -1,9 +1,25 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useMapStore, useUserStore } from 'utils/store';
 import TierBadge from './tier-badge';
 
 export default function Profile({ session }) {
-  // collected 테이블에서 개수를 조회하여 티어 정하기
+  const collectedCafeCount = useMapStore((state) => state.collectedCafeCount);
+  const userTier = useUserStore((state) => state.userTier);
+  const setUserTier = useUserStore((state) => state.setUserTier);
+
+  useEffect(() => {
+    if (collectedCafeCount === 50) setUserTier('MASTER');
+    else if (collectedCafeCount < 50 && collectedCafeCount >= 30)
+      setUserTier('EXPERT');
+    else if (collectedCafeCount < 30 && collectedCafeCount >= 16)
+      setUserTier('SENIOR');
+    else if (collectedCafeCount < 16 && collectedCafeCount >= 6)
+      setUserTier('JUNIOR');
+    else if (collectedCafeCount < 6) setUserTier('BEGINNER');
+  }, [collectedCafeCount]);
+
   return (
     <div className="flex justify-center items-center gap-4">
       <img
@@ -17,7 +33,7 @@ export default function Profile({ session }) {
         <h6 className="font-bold text-2xl font-dpixel">
           {session?.user?.email?.split('@')?.[0]}
         </h6>
-        <TierBadge tier={'EXPERT'} />
+        <TierBadge tier={userTier} />
       </div>
     </div>
   );

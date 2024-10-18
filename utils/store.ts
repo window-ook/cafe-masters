@@ -13,15 +13,15 @@ interface MapState {
 export const useMapStore = create(
   persist(
     (set) => ({
-      keyword: '서울숲',
+      keyword: '성수',
 
-      // 사이드바에 매핑되는 데이터들
+      // 사이드바 매핑 데이터
       allCafe: [],
       collectedCafe: [],
       collectedCafeCount: 0,
       bookmarkedCafe: [],
 
-      // 서브 사이드바에 매핑되는 데이터들
+      // 서브 사이드바 매핑 데이터
       thisX: '',
       thisY: '',
       cafeDetail: {},
@@ -49,6 +49,7 @@ export const useMapStore = create(
         keyword: state.keyword,
         thisX: state.thisX,
         thisY: state.thisY,
+        allCafe: state.allCafe,
         collectedCafe: state.collectedCafe,
         collectedCafeCount: state.collectedCafeCount,
         collectedCafeDetail: state.collectedCafeDetail,
@@ -67,13 +68,16 @@ export const useUserStore = create(
   persist(
     (set) => ({
       userId: null,
+      userTier: null,
       setUserId: (id) => set({ userId: id }),
+      setUserTier: (tier) => set({ userTier: tier }),
     }),
     {
       name: 'userStore',
       getStorage: () => localStorage,
       partialize: (state) => ({
         userId: state.userId,
+        userTier: state.userTier,
       }),
       merge: (persistedState, currentState) => ({
         ...currentState,
