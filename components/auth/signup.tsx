@@ -46,7 +46,7 @@ export default function Signup({ setView }) {
   });
 
   return (
-    <Card className="p-5 rounded-xl bg-white shadow-mainShadow">
+    <Card className="p-5 rounded-xl bg-white shadow-mainShadow z-10">
       <Typography className="text-center text-3xl font-bold font-dpixel">
         회원가입
       </Typography>

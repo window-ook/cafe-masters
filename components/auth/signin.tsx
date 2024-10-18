@@ -30,7 +30,7 @@ export default function SignIn({ setView }) {
   });
 
   return (
-    <Card className="p-5 rounded-xl bg-white shadow-mainShadow">
+    <Card className="p-5 rounded-xl bg-white shadow-mainShadow z-10">
       <Typography className="text-center text-3xl font-bold font-dpixel">
         로그인
       </Typography>
