@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .bg-tilted-image {
+    background-image: url('/image/bgrepeat.png'); /* 이미지 경로 */
+    background-size: 300px 300px; /* 이미지 크기 */
+    background-repeat: repeat;
+    transform-origin: center;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 10px; /* 스크롤바 너비 */
 }

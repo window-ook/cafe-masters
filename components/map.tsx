@@ -14,6 +14,7 @@ export default function KakaoMap() {
   const pathname = usePathname();
   const keyword = useMapStore((state) => state.keyword);
   const setAllCafe = useMapStore((state) => state.setAllCafe);
+  const allCafe = useMapStore((state) => state.allCafe);
   const collectedCafe = useMapStore((state) => state.collectedCafe);
   const bookmarkedCafe = useMapStore((state) => state.bookmarkedCafe);
 
@@ -130,7 +131,7 @@ export default function KakaoMap() {
           });
         };
 
-        if (pathname === '/' || pathname.startsWith('/cafe/all')) {
+        if (pathname === '/' || pathname === '/cafe/all') {
           if (keyword.includes('카페')) searchResults(keyword);
           else searchResults(`${keyword} 카페`);
         }
@@ -150,7 +151,7 @@ export default function KakaoMap() {
     return () => {
       script.remove();
     };
-  }, [keyword, collectedCafe, bookmarkedCafe]);
+  }, [keyword, pathname]);
 
   return (
     <div

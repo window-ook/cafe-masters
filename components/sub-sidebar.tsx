@@ -129,7 +129,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
   const submitCollected = async (memo) => {
     try {
       await createCollected(memo);
-      alert('새로운 카페를 수집했습니다!');
+      alert('새로운 카드를 수집했습니다!');
       router.refresh();
     } catch (error) {
       console.error(error);
@@ -140,7 +140,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
   const submitUpdate = async (memo) => {
     try {
       await updateCollected(memo, collectedCafeDetail.id, userId);
-      alert('수집 정보를 수정했습니다!');
+      alert('카드 내용을 수정했습니다!');
       router.refresh();
     } catch (error) {
       console.error(error);
@@ -221,7 +221,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                   />
                 </IconButton>
               )}
-              <h2 className="text-2xl font-semibold">{detail?.name}</h2>
+              <span className="text-2xl font-semibold">{detail?.name}</span>
             </div>
             <button
               onClick={() => setIsSubSidebarOpen(false)}
@@ -351,9 +351,9 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
             className={`flex justify-between items-center shadow-md ${isDarkTheme ? 'shadow-mainShadow' : ''} rounded-md`}
           >
             <div className="flex items-center">
-              <h2 className="text-2xl font-semibold p-2">
+              <span className="text-2xl font-semibold p-2">
                 {collectedCafeDetail.name}
-              </h2>
+              </span>
             </div>
             <button
               onClick={() => setIsSubSidebarOpen(false)}
@@ -442,7 +442,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
               </div>
 
               <div className="col-span-2 grid grid-cols-3">
-                <div className="col-span-2 text-2xl">CARD SPEC</div>
+                <div className="col-span-2 text-2xl">CAFE SPEC</div>
               </div>
 
               {/* 내 코멘트 */}
@@ -667,6 +667,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
       {/* 수집 메모 */}
       {pathname.includes('/memo') && (
         <form
+          id="memo"
           className="flex flex-col p-2 gap-4"
           onSubmit={(e) => {
             e.preventDefault();
