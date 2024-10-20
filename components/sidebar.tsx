@@ -73,7 +73,6 @@ export default function Sidebar({ session }) {
   const handleNormalCardClick = (cafe) => {
     setIsSubSidebarOpen(true);
     router.push(`/cafe/all/detail/${cafe.id}`);
-    // x, y 좌표를 넘겨야함
     setThisX(cafe?.x);
     setThisY(cafe?.y);
   };
@@ -81,11 +80,15 @@ export default function Sidebar({ session }) {
   const handleCollectedCardClick = (cafe) => {
     setIsSubSidebarOpen(true);
     router.push(`/cafe/collected/detail/${cafe.id}`);
+    setThisX(cafe?.coordX);
+    setThisY(cafe?.coordY);
   };
 
   const handleBookmarkedCardClick = (cafe) => {
     setIsSubSidebarOpen(true);
     router.push(`/cafe/bookmarked/detail/${cafe.id}`);
+    setThisX(cafe?.coordX);
+    setThisY(cafe?.coordY);
   };
 
   const {
@@ -226,7 +229,7 @@ export default function Sidebar({ session }) {
                 <div className="text-center py-2">로딩 중...</div>
               )}
               {collectedData?.pages?.map((page, i) => (
-                <div key={`page-${i}`} className="flex flex-col gap-4 mb-3">
+                <div key={`page-${i}`} className="flex flex-col gap-4">
                   {page.data.map((cafe) => (
                     <CollectedCard
                       key={cafe.id}
