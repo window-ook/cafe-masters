@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { createServerSupabaseClient } from 'utils/supabase/server';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
 import Auth from 'components/auth';
 import AuthProvider from 'config/auth-provider';
@@ -41,6 +42,7 @@ export default async function RootLayout({
               <MainLayout session={session}>
                 {children}
                 <KakaoMap />
+                <ReactQueryDevtools initialIsOpen={false} />
               </MainLayout>
             ) : (
               <Auth />

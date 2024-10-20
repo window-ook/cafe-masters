@@ -251,18 +251,16 @@ export default function Sidebar({ session }) {
                 <div className="text-center py-2">로딩 중...</div>
               )}
               {bookmarkedData?.pages?.map((page, i) => (
-                <div key={i} className="flex flex-col gap-4 mb-3">
-                  <div>
-                    {page.data.map((cafe) => (
-                      <NormalCard
-                        key={cafe.id}
-                        name={cafe.name}
-                        address={cafe.address}
-                        phone={cafe.phoneNum}
-                        onClick={() => handleBookmarkedCardClick(cafe)}
-                      />
-                    ))}
-                  </div>
+                <div key={`page-${i}`} className="flex flex-col gap-4 mb-3">
+                  {page.data.map((cafe) => (
+                    <NormalCard
+                      key={cafe.id}
+                      name={cafe.name}
+                      address={cafe.address}
+                      phone={cafe.phoneNum}
+                      onClick={() => handleBookmarkedCardClick(cafe)}
+                    />
+                  ))}
                 </div>
               ))}
               <div ref={bookmarkedRef}></div>

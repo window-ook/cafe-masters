@@ -38,6 +38,7 @@ const RAW_RUNTIME_STATE =
           ["@tailwindcss/forms", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.9"],\
           ["@tailwindcss/typography", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.15"],\
           ["@tanstack/react-query", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.59.0"],\
+          ["@tanstack/react-query-devtools", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.59.15"],\
           ["@types/next", "npm:9.0.0"],\
           ["@types/node", "npm:20.16.10"],\
           ["@types/react", "npm:18.3.10"],\
@@ -1238,6 +1239,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@tanstack/query-devtools", [\
+      ["npm:5.58.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/@tanstack-query-devtools-npm-5.58.0-7c6cb7a798-10c0.zip/node_modules/@tanstack/query-devtools/",\
+        "packageDependencies": [\
+          ["@tanstack/query-devtools", "npm:5.58.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@tanstack/react-query", [\
       ["npm:5.59.0", {\
         "packageLocation": "../../../.yarn/berry/cache/@tanstack-react-query-npm-5.59.0-4fd85dc5e2-10c0.zip/node_modules/@tanstack/react-query/",\
@@ -1256,6 +1266,33 @@ const RAW_RUNTIME_STATE =
         ],\
         "packagePeers": [\
           "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@tanstack/react-query-devtools", [\
+      ["npm:5.59.15", {\
+        "packageLocation": "../../../.yarn/berry/cache/@tanstack-react-query-devtools-npm-5.59.15-72e815ac81-10c0.zip/node_modules/@tanstack/react-query-devtools/",\
+        "packageDependencies": [\
+          ["@tanstack/react-query-devtools", "npm:5.59.15"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.59.15", {\
+        "packageLocation": "./.yarn/__virtual__/@tanstack-react-query-devtools-virtual-9b5dfb2786/4/.yarn/berry/cache/@tanstack-react-query-devtools-npm-5.59.15-72e815ac81-10c0.zip/node_modules/@tanstack/react-query-devtools/",\
+        "packageDependencies": [\
+          ["@tanstack/react-query-devtools", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.59.15"],\
+          ["@tanstack/query-devtools", "npm:5.58.0"],\
+          ["@tanstack/react-query", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.59.0"],\
+          ["@types/react", "npm:18.3.10"],\
+          ["@types/tanstack__react-query", null],\
+          ["react", "npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@tanstack/react-query",\
+          "@types/react",\
+          "@types/tanstack__react-query",\
           "react"\
         ],\
         "linkType": "HARD"\
@@ -2056,6 +2093,7 @@ const RAW_RUNTIME_STATE =
           ["@tailwindcss/forms", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.9"],\
           ["@tailwindcss/typography", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:0.5.15"],\
           ["@tanstack/react-query", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.59.0"],\
+          ["@tanstack/react-query-devtools", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.59.15"],\
           ["@types/next", "npm:9.0.0"],\
           ["@types/node", "npm:20.16.10"],\
           ["@types/react", "npm:18.3.10"],\
