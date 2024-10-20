@@ -1,5 +1,5 @@
-import { Card } from '@mui/material';
 import { useCheckStore } from 'utils/store';
+import { Card } from '@mui/material';
 
 export default function CollectedCard({
   name,
@@ -15,7 +15,7 @@ export default function CollectedCard({
       ? 'bg-gradient-to-tl from-gold-side via-gold-via to-gold-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700'
       : ratings >= 3
         ? 'bg-gradient-to-tl from-silver-side via-silver-via to-silver-side bg-[length:200%_200%] animate-gradient shadow-md text-gray-600 shadow-gray-300'
-        : 'bg-gray-400 text-white';
+        : 'text-main';
   return (
     <Card
       onClick={onClick}

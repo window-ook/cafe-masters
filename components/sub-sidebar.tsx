@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-import { Card } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { createCollected, updateCollected } from 'actions/collectedActions';
 import { createBookmarked, deleteBookmarked } from 'actions/bookmarkActions';
 import { Button, IconButton, Rating } from '@mui/material';
+import { Card } from '@mui/material';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import CollectedBadge from './collected-badge';
 
@@ -41,6 +43,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
 
   const router = useRouter();
   const pathname = usePathname();
+  const queryClient = useQueryClient();
 
   // 선택한 카페의 상세 정보
   const detail = {
@@ -127,51 +130,66 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
   const handleMenuOpen = () => setMenuOpen((prev) => !prev);
 
   // 수집하기
-  const submitCollected = async (memo) => {
-    try {
+  const collectMutation = useMutation({
+    mutationFn: async (memo) => {
       await createCollected(memo);
-      alert('새로운 카드를 수집했습니다!');
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
+      queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
+      alert(`새롭게 카드를 수집했습니다!`);
       router.refresh();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    },
+    onError: (error) => console.error(error),
+  });
 
   // 수집한 카드의 메모 수정하기
-  const submitUpdate = async (memo) => {
-    try {
+  const updateMutation = useMutation({
+    mutationFn: async (memo) => {
       await updateCollected(memo, collectedCafeDetail.id, userId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
+      queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
       alert('카드 내용을 수정했습니다!');
       router.refresh();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    },
+    onError: (error) => console.error(error),
+  });
 
   // 다음에 가 볼 카페 북마크하기
-  const submitBookmarked = async (bookmarked) => {
-    try {
+  const bookmarkMutation = useMutation({
+    mutationFn: async (bookmarked) => {
       await createBookmarked(bookmarked);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
+      queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
       alert('북마크에 저장했습니다!');
       router.refresh();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    },
+    onError: (error) => console.error(error),
+  });
 
-  // 북마크 삭제하기
-  const cancelBookmarked = async () => {
-    try {
+  // 북마크 취소하기
+  const cancelMutation = useMutation({
+    mutationFn: async () => {
       await deleteBookmarked(bookmarkedCafeDetail.id, userId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
+      queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
       setBookmarkedCafe((prevBookmarkedCafe) =>
         prevBookmarkedCafe.filter((cafe) => cafe.id !== bookmarkedCafeDetail.id)
       );
       alert('북마크에서 제거했습니다!');
       router.push('/cafe/bookmarked');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    },
+    onError: (error) => {
+      console.error('북마크 제거 중 오류 발생:', error);
+      alert('북마크에서 제거하는 도중 문제가 발생했습니다.');
+    },
+  });
 
   if ((pathname.startsWith('/cafe/all/detail') && !cafeDetail) || !userId)
     return null;
@@ -209,7 +227,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                     <IconButton
                       aria-label="bookmark"
                       size="large"
-                      onClick={() => cancelBookmarked()}
+                      onClick={() => cancelMutation.mutate()}
                     >
                       <BookmarkIcon className="text-yellow-500" />
                     </IconButton>
@@ -217,7 +235,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                     <IconButton
                       aria-label="bookmark"
                       size="large"
-                      onClick={() => submitBookmarked(detail)}
+                      onClick={() => bookmarkMutation.mutate(detail)}
                     >
                       <BookmarkIcon
                         className={`hover:scale-110 ${isDarkTheme ? 'text-white' : ''}`}
@@ -516,7 +534,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
           {/* 북마크 카페 상세 정보 */}
           {isSubSidebarOpen &&
             pathname.startsWith('/cafe/bookmarked/detail') && (
-              <div className={`flex flex-col p-2 gap-4 `}>
+              <div className={`flex flex-col p-2 gap-4`}>
                 <div
                   className={`flex justify-between items-center shadow-md ${isDarkTheme ? 'shadow-mainShadow' : ''} rounded-md`}
                 >
@@ -525,7 +543,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                       <IconButton
                         aria-label="bookmark"
                         size="large"
-                        onClick={() => cancelBookmarked()}
+                        onClick={() => cancelMutation.mutate()}
                       >
                         <BookmarkIcon className="text-yellow-500" />
                       </IconButton>
@@ -533,7 +551,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
                       <IconButton
                         aria-label="bookmark"
                         size="large"
-                        onClick={() => submitBookmarked(detail)}
+                        onClick={() => bookmarkMutation.mutate(detail)}
                       >
                         <BookmarkIcon
                           className={`hover:scale-110 ${isDarkTheme ? 'text-white' : ''}`}
@@ -690,22 +708,22 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
           onSubmit={(e) => {
             e.preventDefault();
             if (pathname.startsWith('/cafe/all'))
-              submitCollected(memoFromDetail);
+              collectMutation.mutate(memoFromDetail);
 
             if (pathname.startsWith('/cafe/collected'))
-              submitUpdate(memoFromCollectedDetail);
+              updateMutation.mutate(memoFromCollectedDetail);
 
             if (pathname.startsWith('/cafe/bookmarked'))
-              submitCollected(memoFromBookmarkedDetail);
+              collectMutation.mutate(memoFromBookmarkedDetail);
           }}
         >
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-semibold">
               {pathname.startsWith('/cafe/all') && detail.name}
               {pathname.startsWith('/cafe/collected') &&
-                collectedCafeDetail.name}
+                collectedCafeDetail?.name}
               {pathname.startsWith('/cafe/bookmarked') &&
-                bookmarkedCafeDetail.name}
+                bookmarkedCafeDetail?.name}
             </h2>
             <button
               onClick={() => setMemoOpen(false)}

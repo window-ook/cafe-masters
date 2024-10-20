@@ -29,13 +29,13 @@ export const useMapStore = create(
       bookmarkedCafeDetail: [],
 
       setKeyword: (newKeyword) => set({ keyword: newKeyword }),
-      setAllCafe: (newAllCafe) => set({ allCafe: newAllCafe }),
+      setAllCafe: (newAllCafe) => set({ allCafe: newAllCafe ?? [] }),
       setCollectedCafe: (newCollectedCafe) =>
-        set({ collectedCafe: newCollectedCafe }),
+        set({ collectedCafe: newCollectedCafe ?? [] }),
       setCollectedCafeCount: (newCount) =>
         set({ collectedCafeCount: newCount }),
       setBookmarkedCafe: (newBookmarkedCafe) =>
-        set({ bookmarkedCafe: newBookmarkedCafe }),
+        set({ bookmarkedCafe: newBookmarkedCafe ?? [] }),
       setThisX: (x) => set({ thisX: x }),
       setThisY: (y) => set({ thisY: y }),
       setCafeDetail: (data) => set({ cafeDetail: data }),
