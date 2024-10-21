@@ -1,6 +1,5 @@
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
 import { useCheckStore } from 'utils/store';
+import { Box, Modal } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -13,6 +12,17 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
+function Badge({ tier, range, color }) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="bg-beginner text-white rounded-xl w-20 h-6 py-2 flex items-center justify-center">
+        <span className="text-sm font-dpixel">{tier}</span>
+      </div>
+      <span className="text-xl font-dpixel">{range}</span>
+    </div>
+  );
+}
 
 export default function TierInfoModal({ open, handleClose }) {
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);

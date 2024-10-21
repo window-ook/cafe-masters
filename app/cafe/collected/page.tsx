@@ -47,8 +47,8 @@ export default function CollectedPage() {
     onError: (error) =>
       console.error('수집한 카드 데이터 다운로드 에러: ', error),
     enabled: !!userId,
-    staleTime: 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 10,
+    staleTime: 1000 * 60 * 3,
+    cacheTime: 1000 * 60 * 5,
   });
 
   const collectedCountResult = useQuery({
@@ -64,12 +64,12 @@ export default function CollectedPage() {
     onError: (error) =>
       console.error('수집한 카드 수 데이터 다운로드 에러: ', error),
     enabled: !!userId,
-    staleTime: 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 10,
+    staleTime: 1000 * 60 * 3,
+    cacheTime: 1000 * 60 * 5,
   });
 
   if (collectedResult && collectedCountResult)
-    console.log('Collected : SUCCESS');
+    console.log('수집한 카드 : SUCCESS');
 
   return null;
 }

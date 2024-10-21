@@ -2,6 +2,7 @@
 
 import { useCheckStore } from 'utils/store';
 import { Card } from '@mui/material';
+import Image from 'next/image';
 
 export default function NormalCard({ name, address, phone, onClick }) {
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
@@ -17,7 +18,12 @@ export default function NormalCard({ name, address, phone, onClick }) {
         {name}
       </span>
       <div className="flex justify-center">
-        <img src="/image/cafe_thumb.webp" alt="cafe_img" className="h-20" />
+        <Image
+          src="/image/cafe_thumb.webp"
+          alt="cafe_img"
+          width={80}
+          height={40}
+        />
       </div>
       <div
         className={`flex flex-col px-2 shadow-md ${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'}`}
