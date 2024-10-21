@@ -6,7 +6,7 @@ import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
 import Auth from 'components/auth';
 import AuthProvider from 'config/auth-provider';
 import MainLayout from 'components/layouts/main-layout';
-import KakaoMap from 'components/map';
+import KakaoMap from 'components/layouts/map';
 
 export const metadata: Metadata = {
   title: '카페 마스터즈',

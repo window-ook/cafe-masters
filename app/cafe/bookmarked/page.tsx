@@ -39,7 +39,7 @@ export default function BookmarkedPage() {
     cacheTime: 1000 * 60 * 10,
   });
 
-  if (bookmarkedResult) console.log('Collected : SUCCESS');
+  if (bookmarkedResult) console.log('북마크 카페 : SUCCESS');
 
   return null;
 }

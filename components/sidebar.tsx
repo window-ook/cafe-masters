@@ -1,33 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useMapStore, useCheckStore } from 'utils/store';
-import { shallow } from 'zustand/shallow';
+import { useMapStore, useCheckStore, useUserStore } from 'utils/store';
 import { usePathname, useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Card, List, ListItem } from '@mui/material';
+import { getSidebarStyle } from 'utils/styles';
+import { shallow } from 'zustand/shallow';
+import { Card, CircularProgress } from '@mui/material';
 import Header from './header';
 import Footer from './footer';
 import SubSidebar from './sub-sidebar';
 import NormalCard from './normal-card';
 import CollectedCard from './collected-card';
-
-function MainItem({ icon, title, path, isDarkTheme }) {
-  return (
-    <ListItem
-      className="grid grid-cols-[40px_auto] items-center gap-4 cursor-pointer"
-      onClick={path}
-    >
-      <span>{icon}</span>
-      <span
-        className={`text-xl font-dpixel hover:text-opacity-30 ${isDarkTheme ? 'text-white' : 'text-black'} transition ease-in-out delay-100`}
-      >
-        {title}
-      </span>
-    </ListItem>
-  );
-}
+import PageConverter from './page-converter';
+import SidebarList from './sidebar-tab-list';
 
 export default function Sidebar({ session }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -159,50 +146,12 @@ export default function Sidebar({ session }) {
 
   return (
     <div className="relative flex items-center">
-      {/* 메인 사이드바 */}
-      <Card
-        className={`h-[100vh] max-h-screen w-full max-w-[22rem] px-6 rounded-none ${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll`}
-      >
+      <Card className={getSidebarStyle(isDarkTheme)}>
         <div className="flex flex-col gap-4">
           <Header img={'/image/logo_trans.webp'} />
 
-          {/* 홈 */}
-          {pathname === '/' && (
-            <List className="mt-2 gap-5">
-              <MainItem
-                icon={
-                  <i
-                    className={`fa-solid fa-bars ${isDarkTheme ? 'text-white' : ''} text-2xl`}
-                  ></i>
-                }
-                title={'모든 카페 보기'}
-                path={() => router.push('/cafe/all')}
-                isDarkTheme={isDarkTheme}
-              />
-              <MainItem
-                icon={
-                  <i
-                    className={`fa-solid fa-file ${isDarkTheme ? 'text-white' : 'text-main'} text-2xl`}
-                  ></i>
-                }
-                title={'수집한 카드 보기'}
-                path={() => router.push('/cafe/collected')}
-                isDarkTheme={isDarkTheme}
-              />
-              <MainItem
-                icon={
-                  <i
-                    className={`fa-solid fa-bookmark ${isDarkTheme ? 'text-white' : 'text-yellow-500'} text-xl`}
-                  ></i>
-                }
-                title={'가고 싶은 카페 보기'}
-                path={() => router.push('/cafe/bookmarked')}
-                isDarkTheme={isDarkTheme}
-              />
-            </List>
-          )}
+          {pathname === '/' && <SidebarList />}
 
-          {/* 모든 카페 보기 */}
           {pathname.startsWith('/cafe/all') && (
             <div className="flex flex-col gap-4 mb-3">
               {paginatedResults.map((cafe) => (
@@ -217,19 +166,22 @@ export default function Sidebar({ session }) {
             </div>
           )}
 
-          {/* 수집한 카페 보기 */}
           {pathname.startsWith('/cafe/collected') && (
-            <>
+            <div>
               <div className="flex justify-center sticky">
                 <span className="font-dpixel">
                   내가 수집한 카드 : {collectedCount}장
                 </span>
               </div>
+
               {isFetchingNextCollectedPage && (
-                <div className="text-center py-2">로딩 중...</div>
+                <div className="text-center py-2">
+                  <CircularProgress color="secondary" />
+                </div>
               )}
+
               {collectedData?.pages?.map((page, i) => (
-                <div key={`page-${i}`} className="flex flex-col gap-4">
+                <div key={`page-${i}`} className="flex flex-col gap-4 my-4">
                   {page.data.map((cafe) => (
                     <CollectedCard
                       key={cafe.id}
@@ -244,15 +196,17 @@ export default function Sidebar({ session }) {
                 </div>
               ))}
               <div ref={collectedRef}></div>
-            </>
+            </div>
           )}
 
-          {/* 가고 싶은 카페 보기 */}
           {pathname.startsWith('/cafe/bookmarked') && (
-            <>
+            <div>
               {isFetchingNextBookmarkedPage && (
-                <div className="text-center py-2">로딩 중...</div>
+                <div className="text-center py-2">
+                  <CircularProgress color="secondary" />
+                </div>
               )}
+
               {bookmarkedData?.pages?.map((page, i) => (
                 <div key={`page-${i}`} className="flex flex-col gap-4 mb-3">
                   {page.data.map((cafe) => (
@@ -267,46 +221,23 @@ export default function Sidebar({ session }) {
                 </div>
               ))}
               <div ref={bookmarkedRef}></div>
-            </>
-          )}
-
-          {/* 페이지 이동 */}
-          {pathname.startsWith('/cafe/all') && (
-            <div
-              className={`sticky bottom-0 z-20 ${isDarkTheme ? 'bg-darkbg' : 'bg-white'} py-1 font-dpixel`}
-            >
-              <div className="flex justify-between items-center">
-                <button
-                  onClick={handlePreviousPage}
-                  disabled={currentPage === 1}
-                  className={`px-4 py-2 ${
-                    currentPage === 1 ? 'opacity-50' : 'opacity-100'
-                  }`}
-                >
-                  {'<'}{' '}
-                </button>
-                <span>
-                  {currentPage} / {totalPages}
-                </span>
-                <button
-                  onClick={handleNextPage}
-                  disabled={currentPage === totalPages}
-                  className={`px-4 py-2 ${
-                    currentPage === totalPages ? 'opacity-50' : 'opacity-100'
-                  }`}
-                >
-                  {'>'}
-                </button>
-              </div>
             </div>
           )}
 
-          {/* 유저 정보, 로그아웃 */}
+          {pathname.startsWith('/cafe/all') && (
+            <PageConverter
+              isDarkTheme={isDarkTheme}
+              handlePreviousPage={handlePreviousPage}
+              handleNextPage={handleNextPage}
+              currentPage={currentPage}
+              totalPages={totalPages}
+            />
+          )}
+
           {pathname === '/' && <Footer session={session} />}
         </div>
       </Card>
 
-      {/* 서브 사이드바 */}
       <SubSidebar setIsSubSidebarOpen={setIsSubSidebarOpen} />
     </div>
   );
