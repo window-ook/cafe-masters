@@ -1,5 +1,10 @@
 import { useState } from 'react';
 import { Tooltip } from '@mui/material';
+import {
+  getExpertTierStyle,
+  getMasterEffectStyle,
+  getMasterTierStyle,
+} from 'utils/styles';
 import TierInfoModal from './tier-info-modal';
 
 export default function TierBadge({ tier }) {
@@ -11,10 +16,8 @@ export default function TierBadge({ tier }) {
     BEGINNER: 'bg-beginner text-white',
     JUNIOR: 'bg-junior text-white',
     SENIOR: 'bg-senior text-white',
-    EXPERT:
-      'bg-gradient-to-r from-expert-side via-expert-via to-expert-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700',
-    MASTER:
-      'relative z-10 bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md',
+    EXPERT: getExpertTierStyle(),
+    MASTER: getMasterTierStyle(),
   };
 
   return (
@@ -22,7 +25,7 @@ export default function TierBadge({ tier }) {
       <Tooltip title="티어 정보" placement="right-end">
         <div className="relative flex items-center">
           {tier === 'MASTER' && (
-            <div className="absolute inset-0 w-[100%] h-7 bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-sm animate-tilt z-0"></div>
+            <div className={getMasterEffectStyle('w-[100%]')}></div>
           )}
           <div
             onClick={() => handleOpen()}

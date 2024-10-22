@@ -24,7 +24,6 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
 
   const userId = useUserStore((state) => state.userId);
 
-  const setBookmarkedCafe = useMapStore((state) => state.setBookmarkedCafe);
   const cafeDetail = useMapStore((state) => state.cafeDetail);
   const collectedCafeDetail = useMapStore(
     (state) => state.collectedCafeDetail[0]
@@ -163,7 +162,6 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
 
   return (
     <Card className={getSubSidebarStyle(isSubSidebarOpen, isDarkTheme)}>
-      {/* 일반 카드 상세 정보 */}
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/all/detail') && (
@@ -176,7 +174,6 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
           />
         )}
 
-      {/* 수집한 카드 상세 정보 */}
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/collected/detail') && (
@@ -186,7 +183,6 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
           />
         )}
 
-      {/* 북마크 카페 상세 정보 */}
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/bookmarked/detail') && (
@@ -199,7 +195,6 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
           />
         )}
 
-      {/* 수집 메모 */}
       {memoOpen && (
         <form
           id="memo"

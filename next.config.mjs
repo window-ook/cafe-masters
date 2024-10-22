@@ -14,6 +14,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'keybay.tech',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

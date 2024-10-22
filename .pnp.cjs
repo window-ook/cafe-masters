@@ -52,6 +52,7 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:18.3.1"],\
           ["react-intersection-observer", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:9.13.1"],\
+          ["react-toastify", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:10.0.6"],\
           ["tailwindcss", "npm:3.4.13"],\
           ["typescript", "patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>::version=5.6.2&hash=8c6c40"],\
           ["zustand", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.0.0-rc.2"]\
@@ -2107,6 +2108,7 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:18.3.1"],\
           ["react-intersection-observer", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:9.13.1"],\
+          ["react-toastify", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:10.0.6"],\
           ["tailwindcss", "npm:3.4.13"],\
           ["typescript", "patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>::version=5.6.2&hash=8c6c40"],\
           ["zustand", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:5.0.0-rc.2"]\
@@ -5359,6 +5361,33 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/react-is-npm-18.3.1-370a81e1e9-10c0.zip/node_modules/react-is/",\
         "packageDependencies": [\
           ["react-is", "npm:18.3.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-toastify", [\
+      ["npm:10.0.6", {\
+        "packageLocation": "../../../.yarn/berry/cache/react-toastify-npm-10.0.6-1b9fd56423-10c0.zip/node_modules/react-toastify/",\
+        "packageDependencies": [\
+          ["react-toastify", "npm:10.0.6"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:10.0.6", {\
+        "packageLocation": "./.yarn/__virtual__/react-toastify-virtual-7d81513301/4/.yarn/berry/cache/react-toastify-npm-10.0.6-1b9fd56423-10c0.zip/node_modules/react-toastify/",\
+        "packageDependencies": [\
+          ["react-toastify", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:10.0.6"],\
+          ["@types/react", "npm:18.3.10"],\
+          ["@types/react-dom", "npm:18.3.0"],\
+          ["clsx", "npm:2.1.1"],\
+          ["react", "npm:18.3.1"],\
+          ["react-dom", "virtual:d5c20527120c16eb8c49acaab7ed61c52daa4f5dd06b166efc043c789c68ec7609418f9c65e0d2803f0192f92072b103acd3546bbcebeebdec2e4ea90fe86281#npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\

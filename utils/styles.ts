@@ -1,22 +1,21 @@
 export const getListTabStyle = (isDarkTheme) => {
-  return `text-xl font-dpixel transition ease-in-out delay-100 hover:text-opacity-30 ${isDarkTheme ? 'text-white' : 'text-black'}`;
+  return `${isDarkTheme ? 'text-white' : 'text-black'} text-xl font-dpixel transition ease-in-out delay-100 hover:text-opacity-30`;
 };
 
 export const getSidebarStyle = (isDarkTheme) => {
-  return `h-[100vh] max-h-screen w-full max-w-[22rem] px-6 rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll ${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'}`;
+  return `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} h-[100vh] max-h-screen w-full max-w-[22rem] px-6 rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll`;
 };
 
 export const getPageConverterStyle = (isDarkTheme) => {
-  return `sticky bottom-0 z-20 py-1 font-dpixel ${isDarkTheme ? 'bg-darkbg' : 'bg-white'}`;
+  return `${isDarkTheme ? 'bg-darkbg' : 'bg-white'} sticky bottom-0 z-20 py-1 font-dpixel`;
 };
 
 export const getSubSidebarStyle = (isSubSidebarOpen, isDarkTheme) => {
-  return `h-[90vh] w-[100vw] max-w-[24rem] p-2 transition-transform duration-500 ease-in-out transform static left-0 z-10 overflow-y-scroll font-dpixel shadow-md
-  ${isSubSidebarOpen ? 'translate-x-[2rem] opacity-100' : 'translate-x-0 opacity-0'} ${isDarkTheme ? 'bg-darkbg text-white' : ''}`;
+  return `${isSubSidebarOpen ? 'translate-x-[2rem] opacity-100' : 'translate-x-0 opacity-0'} ${isDarkTheme ? 'bg-darkbg text-white' : ''} h-[90vh] w-[100vw] max-w-[24rem] p-2 transition-transform duration-500 ease-in-out transform static left-0 z-10 overflow-y-scroll font-dpixel shadow-md`;
 };
 
 export const getMemoInputStyle = (isDarkTheme) => {
-  return `rounded-lg ${isDarkTheme ? 'text-black' : ''}`;
+  return `${isDarkTheme ? 'text-black' : ''} rounded-lg`;
 };
 
 export const getMemoSubmitStyle = (isDarkTheme) => {
@@ -32,5 +31,57 @@ export const getSubsidebarCloseIconStyle = () => {
 };
 
 export const getDetailHeaderStyle = (isDarkTheme) => {
-  return `flex justify-between items-center shadow-md rounded-md ${isDarkTheme ? 'shadow-mainShadow' : ''}`;
+  return `${isDarkTheme ? 'shadow-mainShadow' : ''} flex justify-between items-center shadow-md rounded-md`;
+};
+
+export const getExpertTierStyle = (addOn = '') => {
+  return `${addOn} bg-gradient-to-r from-expert-side via-expert-via to-expert-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700`;
+};
+
+export const getMasterEffectStyle = (width) => {
+  return `${width} absolute inset-0 h-7 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt z-0`;
+};
+
+export const getMasterTierStyle = (addOn = '') => {
+  return `${addOn} relative z-10 bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md`;
+};
+
+export const getSearchInputStyle = (isDarkTheme) => {
+  return `${isDarkTheme ? 'placeholder:text-gray-200 text-white' : 'placeholder:text-slate-400 text-slate-700'} w-full bg-transparent text-md border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 shadow-sm focus:shadow`;
+};
+
+export const getSearchButtonStyle = () => {
+  return 'absolute top-1 right-1 flex items-center gap-2 rounded bg-main py-3.5 px-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
+};
+
+export const getNormalCardStyle = (isDarkTheme) => {
+  return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-50 p-4 border-4 rounded-2xl shadow-md flex flex-col gap-2 cursor-pointer font-dpixel`;
+};
+
+export const getCollectedCardStyle = (bgRatings, isDarkTheme) => {
+  return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel`;
+};
+
+export const getCollectedBadgeStyle = () => {
+  return 'bg-gradient-to-r from-success via-indigo to-success bg-[length:200%_200%] animate-gradient text-white shadow-md';
+};
+
+export const getUniqueCardStyle = () => {
+  return 'bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient text-white shadow-md border-main h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel';
+};
+
+export const getUniqueCardEffectStyle = () => {
+  return `-z-10 absolute inset-0 w-[100%] h-[100%] bg-gradient-to-r from-unique-effect-left via-unique-effect-mid to-unique-effect-right rounded-xl blur-sm animate-tilt`;
+};
+
+export const getOverThreeRatingStyle = () => {
+  return 'bg-gradient-to-tl from-silver-side via-silver-via to-silver-side bg-[length:200%_200%] animate-gradient shadow-md text-gray-600 shadow-gray-300';
+};
+
+export const getOverFiveRatingStyle = () => {
+  return 'bg-gradient-to-tl from-gold-side via-gold-via to-gold-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700';
+};
+
+export const getRatingStarsStyle = () => {
+  return 'relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500 shadow-md shadow-yellow-100';
 };

@@ -1,10 +1,6 @@
 import Chip from '@mui/material/Chip';
+import { getCollectedBadgeStyle } from 'utils/styles';
 
 export default function CollectedBadge() {
-  return (
-    <Chip
-      label="COLLECTED"
-      className="bg-gradient-to-r from-success via-indigo to-success bg-[length:200%_200%] animate-gradient text-white shadow-md"
-    />
-  );
+  return <Chip label="COLLECTED" className={getCollectedBadgeStyle()} />;
 }
