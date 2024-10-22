@@ -16,9 +16,9 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'keybay.tech',
+        hostname: 'vsemazasjbizehcambul.supabase.co',
         port: '',
-        pathname: '/**',
+        pathname: '/storage/v1/object/public/cafe%20masters/**',
       },
     ],
   },

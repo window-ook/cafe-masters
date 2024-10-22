@@ -25,7 +25,7 @@ export default function Profile({ session }) {
     <div className="flex justify-center items-center gap-4">
       <Image
         src={
-          'https://keybay.tech/cdn/shop/files/DSC00444.jpg?crop=center&height=2048&v=1722648109&width=2048'
+          'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/profile_image.webp'
         }
         alt="프로필 이미지"
         width={48}

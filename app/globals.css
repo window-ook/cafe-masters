@@ -5,7 +5,7 @@
 /* 배경 - 틸트 */
 @layer utilities {
   .bg-tilted-image {
-    background-image: url('/image/bgrepeat.png'); /* 이미지 경로 */
+    background-image: url('https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp'); /* 이미지 경로 */
     background-size: 300px 300px; /* 이미지 크기 */
     background-repeat: repeat;
     transform-origin: center;
@@ -80,7 +80,7 @@
   list-style: none;
   width: 20px;
   height: 20px;
-  background-image: url('/image/logo_trans.webp');
+  background-image: url('https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp'); /* 이미지 경로 */
   background-size: cover; /* 이미지가 전체 영역을 채우도록 설정 */
   background-position: center; /* 이미지가 중앙에 오도록 설정 */
   animation: animate 25s linear infinite;

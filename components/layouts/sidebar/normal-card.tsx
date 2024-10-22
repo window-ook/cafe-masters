@@ -17,10 +17,10 @@ export default function NormalCard({ name, address, phone, onClick }) {
       </span>
       <div className="flex justify-center">
         <Image
-          src="/image/cafe_thumb.webp"
+          src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/search_thumbnail.webp"
           alt="cafe_img"
-          width={80}
-          height={40}
+          width={100}
+          height={50}
         />
       </div>
       <div
