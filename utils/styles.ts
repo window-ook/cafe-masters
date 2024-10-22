@@ -14,6 +14,10 @@ export const getSubSidebarStyle = (isSubSidebarOpen, isDarkTheme) => {
   return `${isSubSidebarOpen ? 'translate-x-[2rem] opacity-100' : 'translate-x-0 opacity-0'} ${isDarkTheme ? 'bg-darkbg text-white' : ''} h-[90vh] w-[100vw] max-w-[24rem] p-2 transition-transform duration-500 ease-in-out transform static left-0 z-10 overflow-y-scroll font-dpixel shadow-md`;
 };
 
+export const getSubsidebarCloseIconStyle = () => {
+  return 'fa-solid fa-circle-xmark text-main text-2xl hover:text-opacity-70';
+};
+
 export const getMemoInputStyle = (isDarkTheme) => {
   return `${isDarkTheme ? 'text-black' : ''} rounded-lg`;
 };
@@ -26,12 +30,16 @@ export const getMemoBackStyle = (isDarkTheme) => {
   return `${isDarkTheme ? 'shadow-mainShadow' : ''} shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70 py-2 px-6`;
 };
 
-export const getSubsidebarCloseIconStyle = () => {
-  return 'fa-solid fa-circle-xmark text-main text-2xl hover:text-opacity-70';
-};
-
 export const getDetailHeaderStyle = (isDarkTheme) => {
   return `${isDarkTheme ? 'shadow-mainShadow' : ''} flex justify-between items-center shadow-md rounded-md`;
+};
+
+export const getDetailBodyStyle = (isDarkTheme) => {
+  return `${isDarkTheme ? 'shadow-mainShadow' : ''} flex flex-col gap-4 p-2 shadow-md rounded-md`;
+};
+
+export const getDetailCollectButtonStyle = () => {
+  return 'bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl';
 };
 
 export const getExpertTierStyle = (addOn = '') => {
@@ -67,7 +75,7 @@ export const getCollectedBadgeStyle = () => {
 };
 
 export const getUniqueCardStyle = () => {
-  return 'bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient text-white shadow-md border-main h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel';
+  return 'bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient text-white shadow-md border-gray-400 h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel';
 };
 
 export const getUniqueCardEffectStyle = () => {
@@ -82,6 +90,14 @@ export const getOverFiveRatingStyle = () => {
   return 'bg-gradient-to-tl from-gold-side via-gold-via to-gold-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700';
 };
 
-export const getRatingStarsStyle = () => {
+export const getRatingCircleStyle = () => {
   return 'relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500 shadow-md shadow-yellow-100';
+};
+
+export const getRatingStarStyle = () => {
+  return 'fa-solid fa-star absolute text-yellow-300 text-xs';
+};
+
+export const getLogoutButtonStyle = () => {
+  return 'bg-main rounded-xl shadow-md w-[10vw] py-2 hover:bg-opacity-70 transition duration-300 ease-in';
 };

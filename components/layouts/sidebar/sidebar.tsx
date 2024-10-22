@@ -8,12 +8,12 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getSidebarStyle } from 'utils/styles';
 import { shallow } from 'zustand/shallow';
 import { Card, CircularProgress } from '@mui/material';
-import Header from './header';
-import Footer from './footer';
-import SubSidebar from './sub-sidebar';
+import Header from './header/header';
+import Footer from './footer/footer';
+import SubSidebar from '../sub-sidebar/sub-sidebar';
 import NormalCard from './normal-card';
 import CollectedCard from './collected-card';
-import PageConverter from './page-converter';
+import PageConverter from './footer/page-converter';
 import SidebarList from './sidebar-tab-list';
 
 export default function Sidebar({ session }) {

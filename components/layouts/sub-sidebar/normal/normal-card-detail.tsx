@@ -4,16 +4,18 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { createBookmarked, deleteBookmarked } from 'actions/bookmarkActions';
 import {
+  getDetailBodyStyle,
+  getDetailCollectButtonStyle,
   getDetailHeaderStyle,
   getSubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { Button, IconButton } from '@mui/material';
-import CollectedBadge from 'components/collected-badge';
+import CollectedBadge from 'components/layouts/sub-sidebar/normal/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
-import OpenTimeGrid from './open-time-grid';
-import LocationGrid from './location-grid';
-import PhoneGrid from './phone-grid';
+import OpenTimeGrid from '../open-time-grid';
+import LocationGrid from '../location-grid';
+import PhoneGrid from '../phone-grid';
 import MenuGrid from './menu-grid';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 
@@ -73,7 +75,7 @@ export default function NormalCardDetail({
   });
 
   return (
-    <div className={`flex flex-col p-2 gap-4 `}>
+    <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
           {isBookmarked ? (
@@ -105,9 +107,7 @@ export default function NormalCardDetail({
         </button>
       </div>
 
-      <div
-        className={`flex flex-col gap-4 p-2 shadow-md ${isDarkTheme ? 'shadow-mainShadow' : ''} rounded-md`}
-      >
+      <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
           <Image
             src={detail?.photoUrl}
@@ -127,7 +127,7 @@ export default function NormalCardDetail({
             <CollectedBadge />
           ) : (
             <Button
-              className="bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl"
+              className={getDetailCollectButtonStyle()}
               variant="contained"
               onClick={() => setMemoOpen(true)}
             >

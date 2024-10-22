@@ -8,9 +8,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { getSubSidebarStyle } from 'utils/styles';
 import { createCollected, updateCollected } from 'actions/collectedActions';
 import { Card } from '@mui/material';
-import Memo from './layouts/sub-sidebar/memo';
-import NormalCardDetail from './layouts/sub-sidebar/normal-card-detail';
-import CollectedCardDetail from './layouts/sub-sidebar/collected-card-detail';
+import Memo from './memo/memo';
+import NormalCardDetail from './normal/normal-card-detail';
+import CollectedCardDetail from './collected/collected-card-detail';
 
 export default function SubSidebar({ setIsSubSidebarOpen }) {
   const [menuOpen, setMenuOpen] = useState(false);
