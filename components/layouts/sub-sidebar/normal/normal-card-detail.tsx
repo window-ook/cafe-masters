@@ -52,7 +52,7 @@ export default function NormalCardDetail({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
-      toast.success('북마크에 저장했습니다!');
+      toast.success('새로운 카페를 북마크에 저장했습니다!');
       router.refresh();
     },
     onError: (error) => console.error(error),
@@ -68,8 +68,8 @@ export default function NormalCardDetail({
       router.push('/cafe/bookmarked');
     },
     onError: (error) => {
-      console.error('북마크 제거 중 오류 발생:', error);
-      toast.error('북마크에서 제거하는 도중 문제가 발생했습니다.');
+      console.error(error);
+      toast.error('북마크에서 제거하는데 문제가 발생했습니다');
     },
   });
 

@@ -134,7 +134,9 @@ export default function KakaoMap() {
                 results.forEach((cafe) => displayResults(cafe));
               }
             } else {
-              toast.warning(`${query}의 결과가 없습니다.`);
+              toast.warning(
+                `${query.replace('카페', '').trim()}의 검색 결과가 없습니다`
+              );
               const defaultLatLng = new window.kakao.maps.LatLng(
                 37.54715716085294,
                 127.04663357436208

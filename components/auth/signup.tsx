@@ -26,7 +26,10 @@ export default function Signup({ setView }) {
         },
       });
 
-      if (error) toast.error(error.message);
+      if (error) {
+        console.error(error.message);
+        toast.error('가입정보 전송 중 에러 발생');
+      }
 
       if (data) setConfirmationRequired(true);
     },
@@ -40,7 +43,7 @@ export default function Signup({ setView }) {
         token: otp,
       });
 
-      if (error) toast.error(error.message);
+      if (error) console.error(error.message);
 
       if (data) setConfirmationRequired(true);
     },

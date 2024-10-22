@@ -22,7 +22,10 @@ export default function SignIn({ setView }) {
         password,
       });
 
-      if (error) toast.error(error.message);
+      if (error) {
+        console.error(error.message);
+        toast.error('로그인 중 에러 발생');
+      }
 
       if (data) {
         setUserId(data?.user?.id); // type : uuid

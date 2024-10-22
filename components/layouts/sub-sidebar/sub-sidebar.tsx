@@ -127,7 +127,7 @@ export default function SubSidebar() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
-      toast.success(`새롭게 카드를 수집했습니다!`);
+      toast.success(`새로운 카드를 수집했습니다!`);
       setMemoOpen(false);
       router.refresh();
     },
@@ -140,7 +140,7 @@ export default function SubSidebar() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
-      toast.success('카드 내용을 수정했습니다!');
+      toast.success('카드의 스펙을 수정했습니다!');
       setMemoOpen(false);
       router.refresh();
     },

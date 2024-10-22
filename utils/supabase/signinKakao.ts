@@ -1,6 +1,5 @@
 'use client';
 
-import { toast } from 'react-toastify';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
 export const signInWithKakao = async () => {
@@ -15,7 +14,7 @@ export const signInWithKakao = async () => {
     },
   });
 
-  if (error) toast.error(error.message);
+  if (error) console.error(error.message);
 
   if (data) console.log(data);
 };
