@@ -11,29 +11,6 @@ export default function CollectedPage() {
     (state) => state.setCollectedCafeCount
   );
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const collectedResponse = await getAllCollected(userId);
-  //       console.log(collectedResponse);
-  //       if (collectedResponse && collectedResponse.length >= 0) {
-  //         console.log('수집한 카드: ', collectedResponse);
-  //         setCollectedCafe(collectedResponse);
-  //       }
-
-  //       const countResponse = await countCollected(userId);
-  //       if (collectedResponse) {
-  //         console.log('수집한 카드 수: ', countResponse);
-  //         setCollectedCafeCount(countResponse?.count);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   const collectedResult = useQuery({
     queryKey: ['collectedCafe', userId],
     queryFn: async () => {
