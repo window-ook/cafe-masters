@@ -26,6 +26,16 @@ const config: Config = {
         'expert-side': '#8c6a01',
         'master-via': '#f5248c',
         'master-side': '#8a24b9',
+        'master-effect-left': '#44BCFF',
+        'master-effect-mid': '#FF44EC',
+        'master-effect-right': '#FF675E',
+
+        'unique-card-left': '#5f018a',
+        'unique-card-mid': '#8a24b9',
+        'unique-card-right': '#f5248c',
+        'unique-effect-left': '#44BCFF',
+        'unique-effect-mid': '#FF44EC',
+        'unique-effect-right': '#FF675E',
 
         'silver-via': '#fff',
         'silver-side': '#8c8c8c',

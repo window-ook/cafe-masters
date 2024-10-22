@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { useMapStore } from 'utils/store';
 
 declare global {
@@ -83,7 +84,7 @@ export default function KakaoMap() {
           });
         };
 
-        // 상세 정보에 표시된 카페를 센터로
+        // 상세 정보에 표시된 카페의 마커를 맵의 센터에 표시
         const displayDetailCenter = (x, y) => {
           const latlng = new window.kakao.maps.LatLng(y, x);
           map.setCenter(latlng);
@@ -133,7 +134,14 @@ export default function KakaoMap() {
                 results.forEach((cafe) => displayResults(cafe));
               }
             } else {
-              alert(`${query}의 결과가 없습니다.`);
+              toast.warning(
+                `${query.replace('카페', '').trim()}의 검색 결과가 없습니다`
+              );
+              const defaultLatLng = new window.kakao.maps.LatLng(
+                37.54715716085294,
+                127.04663357436208
+              );
+              map.setCenter(defaultLatLng);
             }
           });
         };
@@ -150,12 +158,28 @@ export default function KakaoMap() {
 
         if (pathname.startsWith('/cafe/collected')) {
           removeMarkers();
-          collectedCafe.forEach((cafe) => displayCollected(cafe));
+          if (collectedCafe && collectedCafe.length > 0) {
+            collectedCafe.forEach((cafe) => displayCollected(cafe));
+          } else {
+            const defaultLatLng = new window.kakao.maps.LatLng(
+              37.54715716085294,
+              127.04663357436208
+            );
+            map.setCenter(defaultLatLng);
+          }
         }
 
         if (pathname.startsWith('/cafe/bookmarked')) {
           removeMarkers();
-          bookmarkedCafe.forEach((cafe) => displayCollected(cafe));
+          if (bookmarkedCafe && bookmarkedCafe.length > 0) {
+            bookmarkedCafe.forEach((cafe) => displayCollected(cafe));
+          } else {
+            const defaultLatLng = new window.kakao.maps.LatLng(
+              37.54715716085294,
+              127.04663357436208
+            );
+            map.setCenter(defaultLatLng);
+          }
         }
 
         if (

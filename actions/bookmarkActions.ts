@@ -7,15 +7,17 @@ export type BookmarkedRow = Database['public']['Tables']['bookmarked']['Row'];
 export type BookmarkedRowInsert =
   Database['public']['Tables']['bookmarked']['Insert'];
 
-function handleError(error) {
+function handleError(error): void {
   console.error(error);
   throw new Error(error.message);
 }
 
 /**
- * GET ALL BOOKMARKED By userId (메인)
+ * GET all bookmarkedCafe
  */
-export async function getAllBookmarked(userId) {
+export async function getAllBookmarked(
+  userId: string
+): Promise<any[] | undefined> {
   if (!userId) {
     console.error('유효하지 않은 userId');
     return;
@@ -29,13 +31,16 @@ export async function getAllBookmarked(userId) {
     .order('created_at', { ascending: true });
 
   if (error) handleError(error);
-  return data;
+  return data ?? [];
 }
 
 /**
- * GET BOOKMARKED By id, userId (서브)
+ * GET 1 bookmarkedCafe
  */
-export async function getBookmarked(id, userId) {
+export async function getBookmarked(
+  id: string,
+  userId: string
+): Promise<any[] | undefined> {
   if (!userId) {
     console.error('유효하지 않은 userId');
     return;
@@ -49,13 +54,15 @@ export async function getBookmarked(id, userId) {
     .eq('id', id);
 
   if (error) handleError(error);
-  return data;
+  return data ?? [];
 }
 
 /**
  * CREATE BOOKMARKED
  */
-export async function createBookmarked(bookmarked: BookmarkedRowInsert) {
+export async function createBookmarked(
+  bookmarked: BookmarkedRowInsert
+): Promise<void> {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.from('bookmarked').insert({
     ...bookmarked,
@@ -63,13 +70,15 @@ export async function createBookmarked(bookmarked: BookmarkedRowInsert) {
   });
 
   if (error) handleError(error);
-  return data;
 }
 
 /**
  * DELETE BOOKMARKED
  */
-export async function deleteBookmarked(id, userId) {
+export async function deleteBookmarked(
+  id: string,
+  userId: string
+): Promise<void> {
   if (!userId) {
     console.error('유효하지 않은 userId');
     return;
@@ -83,5 +92,4 @@ export async function deleteBookmarked(id, userId) {
     .eq('userId', userId);
 
   if (error) handleError(error);
-  return data;
 }

@@ -1,12 +1,14 @@
 import { useCheckStore, useMapStore } from 'utils/store';
 import {
+  getDetailBodyStyle,
+  getDetailCollectButtonStyle,
   getDetailHeaderStyle,
   getSubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { Button } from '@mui/material';
-import OpenTimeGrid from './open-time-grid';
-import LocationGrid from './location-grid';
-import PhoneGrid from './phone-grid';
+import OpenTimeGrid from '../open-time-grid';
+import LocationGrid from '../location-grid';
+import PhoneGrid from '../phone-grid';
 import Image from 'next/image';
 import ConceptGrid from './concept-grid';
 import EatenGrid from './eaten-grid';
@@ -15,15 +17,17 @@ import ConsGrid from './cons-grid';
 import CommentGrid from './comment-grid';
 import RatingGrid from './rating-grid';
 
-export default function CollectedCardDetail({
-  setIsSubSidebarOpen,
-  setMemoOpen,
-}) {
+export default function CollectedCardDetail({ setMemoOpen }) {
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
-  const collectedCafeDetail = useMapStore((state) => state.collectedCafeDetail);
+  const setIsSubSidebarOpen = useCheckStore(
+    (state) => state.setIsSubSidebarOpen
+  );
+  const collectedCafeDetail = useMapStore(
+    (state) => state.collectedCafeDetail[0]
+  );
 
   return (
-    <div className={`flex flex-col p-2 gap-4 `}>
+    <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
           <span className="text-2xl font-semibold p-2">
@@ -38,9 +42,7 @@ export default function CollectedCardDetail({
         </button>
       </div>
 
-      <div
-        className={`flex flex-col gap-4 p-2 shadow-md ${isDarkTheme ? 'shadow-mainShadow' : ''} rounded-md`}
-      >
+      <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
           <Image
             src={collectedCafeDetail?.photoUrl}
@@ -54,7 +56,7 @@ export default function CollectedCardDetail({
         <div className="flex justify-between items-center">
           <RatingGrid rating={collectedCafeDetail?.rating} />
           <Button
-            className="bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl"
+            className={getDetailCollectButtonStyle()}
             variant="contained"
             onClick={() => setMemoOpen(true)}
           >

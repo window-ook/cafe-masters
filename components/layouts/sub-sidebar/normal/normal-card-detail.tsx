@@ -4,16 +4,19 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { createBookmarked, deleteBookmarked } from 'actions/bookmarkActions';
 import {
+  getDetailBodyStyle,
+  getDetailCollectButtonStyle,
   getDetailHeaderStyle,
   getSubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { Button, IconButton } from '@mui/material';
-import CollectedBadge from 'components/collected-badge';
+import { toast } from 'react-toastify';
+import CollectedBadge from 'components/layouts/sub-sidebar/normal/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
-import OpenTimeGrid from './open-time-grid';
-import LocationGrid from './location-grid';
-import PhoneGrid from './phone-grid';
+import OpenTimeGrid from '../open-time-grid';
+import LocationGrid from '../location-grid';
+import PhoneGrid from '../phone-grid';
 import MenuGrid from './menu-grid';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 
@@ -22,7 +25,6 @@ export default function NormalCardDetail({
   handleMenuOpen,
   setMemoOpen,
   menuOpen,
-  setIsSubSidebarOpen,
 }) {
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -30,12 +32,14 @@ export default function NormalCardDetail({
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
   const isCollected = useCheckStore((state) => state.isCollected);
   const isBookmarked = useCheckStore((state) => state.isBookmarked);
+  const setIsSubSidebarOpen = useCheckStore(
+    (state) => state.setIsSubSidebarOpen
+  );
 
   const userId = useUserStore((state) => state.userId);
 
-  const setBookmarkedCafe = useMapStore((state) => state.setBookmarkedCafe);
   const bookmarkedCafeDetail = useMapStore(
-    (state) => state.bookmarkedCafeDetail
+    (state) => state.bookmarkedCafeDetail[0]
   );
 
   const parsedMenu =
@@ -48,39 +52,36 @@ export default function NormalCardDetail({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
-      alert('북마크에 저장했습니다!');
+      toast.success('새로운 카페를 북마크에 저장했습니다!');
       router.refresh();
     },
     onError: (error) => console.error(error),
   });
 
-  const cancelMutation = useMutation({
+  const bookmarkCancelMutation = useMutation({
     mutationFn: async () =>
-      await deleteBookmarked(bookmarkedCafeDetail.id, userId),
+      await deleteBookmarked(bookmarkedCafeDetail?.id, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
-      setBookmarkedCafe((prevBookmarkedCafe) =>
-        prevBookmarkedCafe.filter((cafe) => cafe.id !== bookmarkedCafeDetail.id)
-      );
-      alert('북마크에서 제거했습니다!');
+      toast.success('북마크에서 제거했습니다!');
       router.push('/cafe/bookmarked');
     },
     onError: (error) => {
-      console.error('북마크 제거 중 오류 발생:', error);
-      alert('북마크에서 제거하는 도중 문제가 발생했습니다.');
+      console.error(error);
+      toast.error('북마크에서 제거하는데 문제가 발생했습니다');
     },
   });
 
   return (
-    <div className={`flex flex-col p-2 gap-4 `}>
+    <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
           {isBookmarked ? (
             <IconButton
               aria-label="bookmark"
               size="large"
-              onClick={() => cancelMutation.mutate()}
+              onClick={() => bookmarkCancelMutation.mutate()}
             >
               <BookmarkIcon className="text-yellow-500" />
             </IconButton>
@@ -105,9 +106,7 @@ export default function NormalCardDetail({
         </button>
       </div>
 
-      <div
-        className={`flex flex-col gap-4 p-2 shadow-md ${isDarkTheme ? 'shadow-mainShadow' : ''} rounded-md`}
-      >
+      <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
           <Image
             src={detail?.photoUrl}
@@ -127,7 +126,7 @@ export default function NormalCardDetail({
             <CollectedBadge />
           ) : (
             <Button
-              className="bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl"
+              className={getDetailCollectButtonStyle()}
               variant="contained"
               onClick={() => setMemoOpen(true)}
             >

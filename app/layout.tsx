@@ -1,7 +1,9 @@
 import './globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 import type { Metadata } from 'next';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ToastContainer } from 'react-toastify';
 import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
 import Auth from 'components/auth';
 import AuthProvider from 'config/auth-provider';
@@ -42,6 +44,14 @@ export default async function RootLayout({
               <MainLayout session={session}>
                 {children}
                 <KakaoMap />
+                <ToastContainer
+                  position="top-center"
+                  autoClose={2000}
+                  newestOnTop={false}
+                  draggable
+                  theme="light"
+                  limit={1}
+                />
                 <ReactQueryDevtools initialIsOpen={false} />
               </MainLayout>
             ) : (

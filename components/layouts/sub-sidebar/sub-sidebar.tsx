@@ -8,11 +8,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { getSubSidebarStyle } from 'utils/styles';
 import { createCollected, updateCollected } from 'actions/collectedActions';
 import { Card } from '@mui/material';
-import Memo from './layouts/sub-sidebar/memo';
-import NormalCardDetail from './layouts/sub-sidebar/normal-card-detail';
-import CollectedCardDetail from './layouts/sub-sidebar/collected-card-detail';
+import Memo from './memo/memo';
+import NormalCardDetail from './normal/normal-card-detail';
+import CollectedCardDetail from './collected/collected-card-detail';
+import { toast } from 'react-toastify';
 
-export default function SubSidebar({ setIsSubSidebarOpen }) {
+export default function SubSidebar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [memoOpen, setMemoOpen] = useState(false);
   const [comment, setComment] = useState('');
@@ -24,7 +25,6 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
 
   const userId = useUserStore((state) => state.userId);
 
-  const setBookmarkedCafe = useMapStore((state) => state.setBookmarkedCafe);
   const cafeDetail = useMapStore((state) => state.cafeDetail);
   const collectedCafeDetail = useMapStore(
     (state) => state.collectedCafeDetail[0]
@@ -35,6 +35,9 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
   const thisX = useMapStore((state) => state.thisX);
   const thisY = useMapStore((state) => state.thisY);
 
+  const setIsSubSidebarOpen = useCheckStore(
+    (state) => state.setIsSubSidebarOpen
+  );
   const isSubSidebarOpen = useCheckStore((state) => state.isSubSidebarOpen);
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
 
@@ -124,7 +127,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
-      alert(`새롭게 카드를 수집했습니다!`);
+      toast.success(`새로운 카드를 수집했습니다!`);
       setMemoOpen(false);
       router.refresh();
     },
@@ -137,7 +140,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
-      alert('카드 내용을 수정했습니다!');
+      toast.success('카드의 스펙을 수정했습니다!');
       setMemoOpen(false);
       router.refresh();
     },
@@ -163,7 +166,6 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
 
   return (
     <Card className={getSubSidebarStyle(isSubSidebarOpen, isDarkTheme)}>
-      {/* 일반 카드 상세 정보 */}
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/all/detail') && (
@@ -172,21 +174,15 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}
             menuOpen={menuOpen}
-            setIsSubSidebarOpen={setIsSubSidebarOpen}
           />
         )}
 
-      {/* 수집한 카드 상세 정보 */}
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/collected/detail') && (
-          <CollectedCardDetail
-            setIsSubSidebarOpen={setIsSubSidebarOpen}
-            setMemoOpen={setMemoOpen}
-          />
+          <CollectedCardDetail setMemoOpen={setMemoOpen} />
         )}
 
-      {/* 북마크 카페 상세 정보 */}
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/bookmarked/detail') && (
@@ -195,11 +191,9 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}
             menuOpen={menuOpen}
-            setIsSubSidebarOpen={setIsSubSidebarOpen}
           />
         )}
 
-      {/* 수집 메모 */}
       {memoOpen && (
         <form
           id="memo"

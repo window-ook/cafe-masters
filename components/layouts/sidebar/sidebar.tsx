@@ -1,19 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useMapStore, useCheckStore, useUserStore } from 'utils/store';
+import { useEffect, useRef, useState } from 'react';
+import { useMapStore, useCheckStore } from 'utils/store';
 import { usePathname, useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getSidebarStyle } from 'utils/styles';
 import { shallow } from 'zustand/shallow';
 import { Card, CircularProgress } from '@mui/material';
-import Header from './header';
-import Footer from './footer';
-import SubSidebar from './sub-sidebar';
+import Header from './header/header';
+import Footer from './footer/footer';
+import SubSidebar from '../sub-sidebar/sub-sidebar';
 import NormalCard from './normal-card';
 import CollectedCard from './collected-card';
-import PageConverter from './page-converter';
+import PageConverter from './footer/page-converter';
 import SidebarList from './sidebar-tab-list';
 
 export default function Sidebar({ session }) {
@@ -24,6 +24,7 @@ export default function Sidebar({ session }) {
   const { ref: bookmarkedRef, inView: bookmarkedInView } = useInView({
     threshold: 0.5,
   });
+  const containerRef = useRef(null);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -121,6 +122,10 @@ export default function Sidebar({ session }) {
   });
 
   useEffect(() => {
+    containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
+  useEffect(() => {
     if (pathname === '/') setIsSubSidebarOpen(false);
   }, [pathname]);
 
@@ -146,14 +151,14 @@ export default function Sidebar({ session }) {
 
   return (
     <div className="relative flex items-center">
-      <Card className={getSidebarStyle(isDarkTheme)}>
+      <Card className={getSidebarStyle(isDarkTheme)} ref={containerRef}>
         <div className="flex flex-col gap-4">
           <Header img={'/image/logo_trans.webp'} />
 
           {pathname === '/' && <SidebarList />}
 
           {pathname.startsWith('/cafe/all') && (
-            <div className="flex flex-col gap-4 mb-3">
+            <div className="flex flex-col gap-4 my-4">
               {paginatedResults.map((cafe) => (
                 <NormalCard
                   key={cafe.id}
@@ -208,7 +213,7 @@ export default function Sidebar({ session }) {
               )}
 
               {bookmarkedData?.pages?.map((page, i) => (
-                <div key={`page-${i}`} className="flex flex-col gap-4 mb-3">
+                <div key={`page-${i}`} className="flex flex-col gap-4 my-4">
                   {page.data.map((cafe) => (
                     <NormalCard
                       key={cafe.id}
@@ -238,7 +243,7 @@ export default function Sidebar({ session }) {
         </div>
       </Card>
 
-      <SubSidebar setIsSubSidebarOpen={setIsSubSidebarOpen} />
+      <SubSidebar />
     </div>
   );
 }

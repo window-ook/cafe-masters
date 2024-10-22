@@ -26,7 +26,7 @@ export default function Auth() {
       <div className="flex flex-col items-center gap-4">
         <Image
           alt="텍스트 로고"
-          src={'/image/logo.webp'}
+          src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/logo_text.webp"
           width={200}
           height={200}
         />

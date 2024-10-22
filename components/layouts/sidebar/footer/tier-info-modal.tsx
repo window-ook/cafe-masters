@@ -1,4 +1,9 @@
 import { useCheckStore } from 'utils/store';
+import {
+  getExpertTierStyle,
+  getMasterEffectStyle,
+  getMasterTierStyle,
+} from 'utils/styles';
 import { Box, Modal } from '@mui/material';
 
 const style = {
@@ -16,7 +21,7 @@ const style = {
 function Badge({ tier, range, color }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="bg-beginner text-white rounded-xl w-20 h-6 py-2 flex items-center justify-center">
+      <div className={color}>
         <span className="text-sm font-dpixel">{tier}</span>
       </div>
       <span className="text-xl font-dpixel">{range}</span>
@@ -26,6 +31,7 @@ function Badge({ tier, range, color }) {
 
 export default function TierInfoModal({ open, handleClose }) {
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+  const common = 'rounded-xl w-20 h-6 py-2 flex items-center justify-center';
 
   return (
     <div>
@@ -46,45 +52,41 @@ export default function TierInfoModal({ open, handleClose }) {
               수집한 카드의 개수에 따라 티어가 부여됩니다
             </span>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="bg-beginner text-white rounded-xl w-20 h-6 py-2 flex items-center justify-center">
-              <span className="text-sm font-dpixel">BEGINNER</span>
-            </div>
-            <span className="text-xl font-dpixel">0 ~ 5</span>
-          </div>
+          <Badge
+            tier={'BEGINNER'}
+            range={'0 ~ 5'}
+            color={`bg-beginner text-white ${common}`}
+          />
           <span className="font-dpixel">
             당신은 카페 월드의 초보! 갈 길이 멉니다ㅜㅜ
           </span>
-          <div className="flex items-center gap-3">
-            <div className="bg-junior text-white rounded-xl w-20 h-6 py-2 flex items-center justify-center">
-              <span className="text-sm font-dpixel">JUNIOR</span>
-            </div>
-            <span className="text-xl font-dpixel">6 ~ 15</span>
-          </div>
+          <Badge
+            tier={'JUNIOR'}
+            range={'6 ~ 15'}
+            color={`bg-junior text-white ${common}`}
+          />
           <span className="font-dpixel">
             열심히 카페를 다니고 있는 주니어에요
           </span>
-          <div className="flex items-center gap-3">
-            <div className="bg-senior text-white rounded-xl w-20 h-6 py-2 flex items-center justify-center">
-              <span className="text-sm font-dpixel">SENIOR</span>
-            </div>
-            <span className="text-xl font-dpixel">16 ~ 29</span>
-          </div>
+          <Badge
+            tier={'SENIOR'}
+            range={'16 ~ 29'}
+            color={`bg-senior text-white ${common}`}
+          />
           <span className="font-dpixel">
             커피 좀 마셔봤다는 시니어가 되셨네요 후훗
           </span>
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-r from-expert-side via-expert-via to-expert-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700 rounded-xl w-20 h-6 py-2 flex items-center justify-center">
-              <span className="text-sm font-dpixel">EXPERT</span>
-            </div>
-            <span className="text-xl font-dpixel">30 ~ 49</span>
-          </div>
+          <Badge
+            tier={'EXPERT'}
+            range={'30 ~ 49'}
+            color={getExpertTierStyle(common)}
+          />
           <span className="font-dpixel">
             어엿한 카페 고수입니다 뿌듯하셔도 좋아요!!
           </span>
           <div className="flex items-center gap-3 relative">
-            <div className="absolute inset-0 w-[16%] h-7 bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-sm animate-tilt z-0"></div>
-            <div className="relative z-10 bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white rounded-xl w-20 h-6 py-2 flex items-center justify-center">
+            <div className={getMasterEffectStyle('w-[18%]')}></div>
+            <div className={getMasterTierStyle(common)}>
               <span className="text-sm font-dpixel">MASTER</span>
             </div>
             <span className="relative z-10 text-xl font-dpixel">50</span>

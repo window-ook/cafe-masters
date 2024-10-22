@@ -6,6 +6,7 @@ import { Card, Button, Typography, TextField } from '@mui/material';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import UserForm from './user-form';
+import { toast } from 'react-toastify';
 
 export default function Signup({ setView }) {
   const [email, setEmail] = useState('');
@@ -25,7 +26,10 @@ export default function Signup({ setView }) {
         },
       });
 
-      if (error) alert(error.message);
+      if (error) {
+        console.error(error.message);
+        toast.error('가입정보 전송 중 에러 발생');
+      }
 
       if (data) setConfirmationRequired(true);
     },
@@ -39,7 +43,7 @@ export default function Signup({ setView }) {
         token: otp,
       });
 
-      if (error) alert(error.message);
+      if (error) console.error(error.message);
 
       if (data) setConfirmationRequired(true);
     },

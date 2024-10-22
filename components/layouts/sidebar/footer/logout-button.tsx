@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@mui/material';
+import { getLogoutButtonStyle } from 'utils/styles';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
 export default function LogoutButton() {
@@ -15,10 +16,7 @@ export default function LogoutButton() {
   };
 
   return (
-    <Button
-      className="bg-main rounded-xl shadow-md w-[10vw] py-2 hover:bg-opacity-70 transition duration-300 ease-in"
-      onClick={handleLogout}
-    >
+    <Button className={getLogoutButtonStyle()} onClick={handleLogout}>
       <span className="text-white text-lg font-dpixel">로그아웃</span>
     </Button>
   );

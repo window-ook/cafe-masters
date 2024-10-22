@@ -16,9 +16,9 @@ export default function Header({ img }) {
     >
       <div className="mb-2 flex justify-between items-center">
         <Image
-          src={img}
+          src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp"
           alt="brand"
-          height={1}
+          height={70}
           width={70}
           style={{ height: 'auto' }}
         />
@@ -27,7 +27,11 @@ export default function Header({ img }) {
             className="cursor-pointer flex items-center hover:opacity-70 transition ease duration-300"
             onClick={() => router.push('/')}
           >
-            <img src="/image/logo.webp" alt="텍스트 로고" className="h-14" />
+            <img
+              src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/logo_text.webp"
+              alt="텍스트 로고"
+              className="h-14"
+            />
           </button>
         </Tooltip>
         <LightDarkToggle />

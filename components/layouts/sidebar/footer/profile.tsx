@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useMapStore, useUserStore } from 'utils/store';
 import TierBadge from './tier-badge';
+import Image from 'next/image';
 
 export default function Profile({ session }) {
   const collectedCafeCount = useMapStore((state) => state.collectedCafeCount);
@@ -22,12 +23,14 @@ export default function Profile({ session }) {
 
   return (
     <div className="flex justify-center items-center gap-4">
-      <img
+      <Image
         src={
-          'https://keybay.tech/cdn/shop/files/DSC00444.jpg?crop=center&height=2048&v=1722648109&width=2048'
+          'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/profile_image.webp'
         }
-        alt="avatar"
-        className="relative inline-block object-cover object-center w-12 h-12 rounded-lg"
+        alt="프로필 이미지"
+        width={48}
+        height={48}
+        className="relative inline-block object-cover object-center rounded-lg"
       />
       <div className="flex gap-4 items-center">
         <h6 className="font-bold text-2xl font-dpixel">
