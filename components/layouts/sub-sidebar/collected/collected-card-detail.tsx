@@ -17,12 +17,14 @@ import ConsGrid from './cons-grid';
 import CommentGrid from './comment-grid';
 import RatingGrid from './rating-grid';
 
-export default function CollectedCardDetail({
-  setIsSubSidebarOpen,
-  setMemoOpen,
-}) {
+export default function CollectedCardDetail({ setMemoOpen }) {
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
-  const collectedCafeDetail = useMapStore((state) => state.collectedCafeDetail);
+  const setIsSubSidebarOpen = useCheckStore(
+    (state) => state.setIsSubSidebarOpen
+  );
+  const collectedCafeDetail = useMapStore(
+    (state) => state.collectedCafeDetail[0]
+  );
 
   return (
     <div className={`flex flex-col p-2 gap-4`}>

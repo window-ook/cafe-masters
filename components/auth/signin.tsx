@@ -6,6 +6,7 @@ import { useUserStore } from 'utils/store';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { Card, Button, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
 import UserForm from './user-form';
 
 export default function SignIn({ setView }) {
@@ -21,10 +22,10 @@ export default function SignIn({ setView }) {
         password,
       });
 
-      if (error) alert(error.message);
+      if (error) toast.error(error.message);
 
       if (data) {
-        setUserId(data?.user?.id); // uuid
+        setUserId(data?.user?.id); // type : uuid
       }
     },
   });

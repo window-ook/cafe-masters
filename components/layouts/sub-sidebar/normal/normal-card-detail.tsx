@@ -10,6 +10,7 @@ import {
   getSubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { Button, IconButton } from '@mui/material';
+import { toast } from 'react-toastify';
 import CollectedBadge from 'components/layouts/sub-sidebar/normal/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
@@ -24,7 +25,6 @@ export default function NormalCardDetail({
   handleMenuOpen,
   setMemoOpen,
   menuOpen,
-  setIsSubSidebarOpen,
 }) {
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -32,12 +32,14 @@ export default function NormalCardDetail({
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
   const isCollected = useCheckStore((state) => state.isCollected);
   const isBookmarked = useCheckStore((state) => state.isBookmarked);
+  const setIsSubSidebarOpen = useCheckStore(
+    (state) => state.setIsSubSidebarOpen
+  );
 
   const userId = useUserStore((state) => state.userId);
 
-  const setBookmarkedCafe = useMapStore((state) => state.setBookmarkedCafe);
   const bookmarkedCafeDetail = useMapStore(
-    (state) => state.bookmarkedCafeDetail
+    (state) => state.bookmarkedCafeDetail[0]
   );
 
   const parsedMenu =
@@ -50,27 +52,24 @@ export default function NormalCardDetail({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
-      alert('북마크에 저장했습니다!');
+      toast.success('북마크에 저장했습니다!');
       router.refresh();
     },
     onError: (error) => console.error(error),
   });
 
-  const cancelMutation = useMutation({
+  const bookmarkCancelMutation = useMutation({
     mutationFn: async () =>
-      await deleteBookmarked(bookmarkedCafeDetail.id, userId),
+      await deleteBookmarked(bookmarkedCafeDetail?.id, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
-      setBookmarkedCafe((prevBookmarkedCafe) =>
-        prevBookmarkedCafe.filter((cafe) => cafe.id !== bookmarkedCafeDetail.id)
-      );
-      alert('북마크에서 제거했습니다!');
+      toast.success('북마크에서 제거했습니다!');
       router.push('/cafe/bookmarked');
     },
     onError: (error) => {
       console.error('북마크 제거 중 오류 발생:', error);
-      alert('북마크에서 제거하는 도중 문제가 발생했습니다.');
+      toast.error('북마크에서 제거하는 도중 문제가 발생했습니다.');
     },
   });
 
@@ -82,7 +81,7 @@ export default function NormalCardDetail({
             <IconButton
               aria-label="bookmark"
               size="large"
-              onClick={() => cancelMutation.mutate()}
+              onClick={() => bookmarkCancelMutation.mutate()}
             >
               <BookmarkIcon className="text-yellow-500" />
             </IconButton>

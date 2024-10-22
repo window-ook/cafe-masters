@@ -11,8 +11,9 @@ import { Card } from '@mui/material';
 import Memo from './memo/memo';
 import NormalCardDetail from './normal/normal-card-detail';
 import CollectedCardDetail from './collected/collected-card-detail';
+import { toast } from 'react-toastify';
 
-export default function SubSidebar({ setIsSubSidebarOpen }) {
+export default function SubSidebar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [memoOpen, setMemoOpen] = useState(false);
   const [comment, setComment] = useState('');
@@ -34,6 +35,9 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
   const thisX = useMapStore((state) => state.thisX);
   const thisY = useMapStore((state) => state.thisY);
 
+  const setIsSubSidebarOpen = useCheckStore(
+    (state) => state.setIsSubSidebarOpen
+  );
   const isSubSidebarOpen = useCheckStore((state) => state.isSubSidebarOpen);
   const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
 
@@ -123,7 +127,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
-      alert(`새롭게 카드를 수집했습니다!`);
+      toast.success(`새롭게 카드를 수집했습니다!`);
       setMemoOpen(false);
       router.refresh();
     },
@@ -136,7 +140,7 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
-      alert('카드 내용을 수정했습니다!');
+      toast.success('카드 내용을 수정했습니다!');
       setMemoOpen(false);
       router.refresh();
     },
@@ -170,17 +174,13 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}
             menuOpen={menuOpen}
-            setIsSubSidebarOpen={setIsSubSidebarOpen}
           />
         )}
 
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/collected/detail') && (
-          <CollectedCardDetail
-            setIsSubSidebarOpen={setIsSubSidebarOpen}
-            setMemoOpen={setMemoOpen}
-          />
+          <CollectedCardDetail setMemoOpen={setMemoOpen} />
         )}
 
       {!memoOpen &&
@@ -191,7 +191,6 @@ export default function SubSidebar({ setIsSubSidebarOpen }) {
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}
             menuOpen={menuOpen}
-            setIsSubSidebarOpen={setIsSubSidebarOpen}
           />
         )}
 

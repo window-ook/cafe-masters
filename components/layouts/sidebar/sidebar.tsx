@@ -243,7 +243,7 @@ export default function Sidebar({ session }) {
         </div>
       </Card>
 
-      <SubSidebar setIsSubSidebarOpen={setIsSubSidebarOpen} />
+      <SubSidebar />
     </div>
   );
 }
