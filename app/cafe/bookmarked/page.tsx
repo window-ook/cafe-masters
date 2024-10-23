@@ -3,43 +3,34 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
 import { getAllBookmarked } from 'actions/bookmarkActions';
+import { BookmarkedCafe } from 'types/types';
 
 export default function BookmarkedPage() {
   const userId = useUserStore((state) => state.userId);
   const setBookmarkedCafe = useMapStore((state) => state.setBookmarkedCafe);
 
-  // useEffect(() => {
-  //   const fetchBookmarked = async () => {
-  //     try {
-  //       const response = await getAllBookmarked(userId);
-  //       console.log('북마크 카페:', response);
-  //       if (response && response.length >= 0) setBookmarkedCafe(response);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
+  const queryFn = async () => {
+    const response = await getAllBookmarked(userId);
+    setBookmarkedCafe(response);
+    return response;
+  };
 
-  //   fetchBookmarked();
-  // }, [userId]);
-
-  const bookmarkedResult = useQuery({
+  const options = {
     queryKey: ['bookmarkedCafe', userId],
-    queryFn: async () => {
-      const response = await getAllBookmarked(userId);
-      setBookmarkedCafe(response);
-      return response;
-    },
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) =>
-      console.error('북마크 카페 데이터 다운로드 에러: ', error),
+    queryFn,
     enabled: !!userId,
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 10,
-  });
+    onSuccess: (data: BookmarkedCafe[]) => console.log('북마크 카페: ', data),
+    onError: (error: Error) =>
+      console.error('북마크 카페 데이터 다운로드 에러: ', error),
+  };
 
-  if (bookmarkedResult) console.log('북마크 카페 : SUCCESS');
+  const bookmarkedCafe = useQuery<BookmarkedCafe[], Error, [string, string]>(
+    options
+  );
+
+  if (bookmarkedCafe) console.log('북마크 카페 : SUCCESS');
 
   return null;
 }

@@ -2,6 +2,7 @@
 
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
+import { CollectedCafe, CollectedCount } from 'types/types';
 
 export type CollectedRow = Database['public']['Tables']['collected']['Row'];
 export type CollectedRowInsert =
@@ -15,13 +16,12 @@ function handleError(error) {
 }
 
 /**
- * GET ALL COLLECTED By userId (메인)
+ * GET all collectedCafe
  */
-export async function getAllCollected(userId) {
-  if (!userId) {
-    console.error('유효하지 않은 userId');
-    return;
-  }
+export async function getAllCollected(
+  userId: string
+): Promise<CollectedCafe[]> {
+  if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
@@ -31,17 +31,18 @@ export async function getAllCollected(userId) {
     .order('created_at', { ascending: true });
 
   if (error) handleError(error);
-  return data;
+  return data ?? [];
 }
 
 /**
- * GET COLLECTED By id, userId (서브)
+ * GET 1 collectedCafe (서브)
  */
-export async function getCollected(id, userId) {
-  if (!userId) {
-    console.error('유효하지 않은 userId');
-    return;
-  }
+export async function getCollected(
+  id: string,
+  userId: string
+): Promise<CollectedCafe[]> {
+  if (!id) throw new Error('유효하지 않은 북마크 카페 id');
+  if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
@@ -51,17 +52,14 @@ export async function getCollected(id, userId) {
     .eq('id', id);
 
   if (error) handleError(error);
-  return data;
+  return data ?? [];
 }
 
 /**
- * COUNT COLLECTED
+ * GET collected count
  */
-export async function countCollected(userId) {
-  if (!userId) {
-    console.error('유효하지 않은 userId');
-    return;
-  }
+export async function countCollected(userId: string): Promise<CollectedCount> {
+  if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
   const { data, count, error } = await supabase
@@ -74,9 +72,14 @@ export async function countCollected(userId) {
 }
 
 /**
- * CREATE COLLECTED
+ * CREATE
  */
-export async function createCollected(collected: CollectedRowInsert) {
+export async function createCollected(
+  collected: CollectedRowInsert
+): Promise<void> {
+  if (!collected)
+    throw new Error('수집한 카드 테이블에 전달하는 데이터가 유효하지 않습니다');
+
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.from('collected').insert({
     ...collected,
@@ -84,21 +87,20 @@ export async function createCollected(collected: CollectedRowInsert) {
   });
 
   if (error) handleError(error);
-  return data;
 }
 
 /**
- * UPDATE COLLECTED
+ * UPDATE
  */
 export async function updateCollected(
   collected: CollectedRowUpdate,
   id,
   userId
-) {
-  if (!userId || !id) {
-    console.error('유효하지 않은 userId or id');
-    return;
-  }
+): Promise<void> {
+  if (!collected)
+    throw new Error('수집한 카드 테이블에 전달하는 데이터가 유효하지 않습니다');
+  if (!id) throw new Error('유효하지 않은 북마크 카페 id');
+  if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
@@ -111,5 +113,4 @@ export async function updateCollected(
     .eq('userId', userId);
 
   if (error) handleError(error);
-  return data;
 }

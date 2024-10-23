@@ -16,8 +16,8 @@ export default function CollectedCard({
   phone,
   ratings,
   onClick,
-}) {
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+}: any) {
+  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const isUnique = name === '탐앤탐스 대구강북점';
 
   const bgRatings =

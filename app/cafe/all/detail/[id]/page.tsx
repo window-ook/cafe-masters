@@ -5,8 +5,9 @@ import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { cafeDetail } from 'actions/cafeDetailActions';
 import { getBookmarked } from 'actions/bookmarkActions';
 import { getCollected } from 'actions/collectedActions';
+import { PageProps } from 'types/types';
 
-export default function CafeDetailPage({ params }) {
+export default function CafeDetailPage({ params }: PageProps) {
   const { id } = params;
   const userId = useUserStore((state) => state.userId);
   const setCafeDetail = useMapStore((state) => state.setCafeDetail);
@@ -48,5 +49,5 @@ export default function CafeDetailPage({ params }) {
     fetchCollected();
   }, [id]);
 
-  return;
+  return null;
 }

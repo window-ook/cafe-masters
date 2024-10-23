@@ -1,5 +1,6 @@
 'use server';
 
+import { BookmarkedCafe } from 'types/types';
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 
@@ -17,11 +18,8 @@ function handleError(error): void {
  */
 export async function getAllBookmarked(
   userId: string
-): Promise<any[] | undefined> {
-  if (!userId) {
-    console.error('유효하지 않은 userId');
-    return;
-  }
+): Promise<BookmarkedCafe[]> {
+  if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
@@ -40,11 +38,9 @@ export async function getAllBookmarked(
 export async function getBookmarked(
   id: string,
   userId: string
-): Promise<any[] | undefined> {
-  if (!userId) {
-    console.error('유효하지 않은 userId');
-    return;
-  }
+): Promise<BookmarkedCafe[]> {
+  if (!id) throw new Error('유효하지 않은 북마크 카페 id');
+  if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
@@ -58,11 +54,14 @@ export async function getBookmarked(
 }
 
 /**
- * CREATE BOOKMARKED
+ * CREATE
  */
 export async function createBookmarked(
   bookmarked: BookmarkedRowInsert
 ): Promise<void> {
+  if (!bookmarked)
+    throw new Error('북마크 테이블에 전달하는 데이터가 유효하지 않습니다');
+
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.from('bookmarked').insert({
     ...bookmarked,
@@ -73,16 +72,14 @@ export async function createBookmarked(
 }
 
 /**
- * DELETE BOOKMARKED
+ * DELETE
  */
 export async function deleteBookmarked(
   id: string,
   userId: string
 ): Promise<void> {
-  if (!userId) {
-    console.error('유효하지 않은 userId');
-    return;
-  }
+  if (!id) throw new Error('유효하지 않은 북마크 카페 id');
+  if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase

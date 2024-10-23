@@ -3,8 +3,9 @@
 import { useEffect } from 'react';
 import { useMapStore, useCheckStore, useUserStore } from 'utils/store';
 import { getBookmarked } from 'actions/bookmarkActions';
+import { PageProps } from 'types/types';
 
-export default function BookmarkedDetailpage({ params }) {
+export default function BookmarkedDetailpage({ params }: PageProps) {
   const { id } = params;
   const userId = useUserStore((state) => state.userId);
   const setIsBookmarked = useCheckStore((state) => state.setIsBookmarked);

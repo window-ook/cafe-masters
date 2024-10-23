@@ -5,10 +5,12 @@ import { useMapStore, useUserStore } from 'utils/store';
 import TierBadge from './tier-badge';
 import Image from 'next/image';
 
-export default function Profile({ session }) {
-  const collectedCafeCount = useMapStore((state) => state.collectedCafeCount);
-  const userTier = useUserStore((state) => state.userTier);
-  const setUserTier = useUserStore((state) => state.setUserTier);
+export default function Profile({ session }: any) {
+  const collectedCafeCount = useMapStore(
+    (state: any) => state.collectedCafeCount
+  );
+  const userTier = useUserStore((state: any) => state.userTier);
+  const setUserTier = useUserStore((state: any) => state.setUserTier);
 
   useEffect(() => {
     if (collectedCafeCount === 50) setUserTier('MASTER');

@@ -1,4 +1,11 @@
 import { getPageConverterStyle } from 'utils/styles';
+interface PageConverterProps {
+  isDarkTheme: boolean;
+  handlePreviousPage: () => void;
+  currentPage: number;
+  totalPages: number;
+  handleNextPage: () => void;
+}
 
 export default function PageConverter({
   isDarkTheme,
@@ -6,7 +13,7 @@ export default function PageConverter({
   currentPage,
   totalPages,
   handleNextPage,
-}) {
+}: PageConverterProps) {
   return (
     <div className={getPageConverterStyle(isDarkTheme)}>
       <div className="flex justify-between items-center">
