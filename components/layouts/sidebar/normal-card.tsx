@@ -5,8 +5,8 @@ import { getNormalCardStyle } from 'utils/styles';
 import { Card } from '@mui/material';
 import Image from 'next/image';
 
-export default function NormalCard({ name, address, phone, onClick }) {
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+export default function NormalCard({ name, address, phone, onClick }: any) {
+  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
 
   return (
     <Card onClick={onClick} className={getNormalCardStyle(isDarkTheme)}>

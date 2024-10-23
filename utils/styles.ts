@@ -70,7 +70,7 @@ export const getNormalCardStyle = (isDarkTheme: boolean) => {
 };
 
 export const getCollectedCardStyle = (
-  bgRatings: number,
+  bgRatings: string,
   isDarkTheme: boolean
 ) => {
   return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel`;

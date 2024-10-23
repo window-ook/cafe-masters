@@ -6,6 +6,18 @@ import {
 } from 'utils/styles';
 import { Box, Modal } from '@mui/material';
 
+type Tier = 'BEGINNER' | 'JUNIOR' | 'SENIOR' | 'EXPERT' | 'MASTER';
+interface BadgeProps {
+  tier: Tier;
+  range: string;
+  color: string;
+}
+
+interface TierInfoModalProps {
+  open: boolean;
+  handleClose: () => void;
+}
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -18,7 +30,7 @@ const style = {
   p: 4,
 };
 
-function Badge({ tier, range, color }) {
+function Badge({ tier, range, color }: BadgeProps) {
   return (
     <div className="flex items-center gap-3">
       <div className={color}>
@@ -29,8 +41,11 @@ function Badge({ tier, range, color }) {
   );
 }
 
-export default function TierInfoModal({ open, handleClose }) {
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+export default function TierInfoModal({
+  open,
+  handleClose,
+}: TierInfoModalProps) {
+  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const common = 'rounded-xl w-20 h-6 py-2 flex items-center justify-center';
 
   return (

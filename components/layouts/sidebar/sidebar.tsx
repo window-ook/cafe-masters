@@ -16,7 +16,7 @@ import CollectedCard from './collected-card';
 import PageConverter from './footer/page-converter';
 import SidebarList from './sidebar-tab-list';
 
-export default function Sidebar({ session }) {
+export default function Sidebar({ session }: any) {
   const [currentPage, setCurrentPage] = useState(1);
   const { ref: collectedRef, inView: collectedInView } = useInView({
     threshold: 0.5,
@@ -24,23 +24,29 @@ export default function Sidebar({ session }) {
   const { ref: bookmarkedRef, inView: bookmarkedInView } = useInView({
     threshold: 0.5,
   });
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const router = useRouter();
   const pathname = usePathname();
 
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const setIsSubSidebarOpen = useCheckStore(
-    (state) => state.setIsSubSidebarOpen
+    (state: any) => state.setIsSubSidebarOpen
   );
 
-  const allCafe = useMapStore((state) => state.allCafe, shallow);
-  const collectedCafe = useMapStore((state) => state.collectedCafe, shallow);
-  const collectedCount = useMapStore((state) => state.collectedCafeCount);
-  const bookmarkedCafe = useMapStore((state) => state.bookmarkedCafe, shallow);
+  const allCafe = useMapStore((state: any) => state.allCafe, shallow);
+  const collectedCafe = useMapStore(
+    (state: any) => state.collectedCafe,
+    shallow
+  );
+  const collectedCount = useMapStore((state: any) => state.collectedCafeCount);
+  const bookmarkedCafe = useMapStore(
+    (state: any) => state.bookmarkedCafe,
+    shallow
+  );
 
-  const setThisX = useMapStore((state) => state.setThisX);
-  const setThisY = useMapStore((state) => state.setThisY);
+  const setThisX = useMapStore((state: any) => state.setThisX);
+  const setThisY = useMapStore((state: any) => state.setThisY);
 
   const itemsPerPage = 15;
   const totalPages = Math.ceil(allCafe.length / itemsPerPage);
@@ -58,21 +64,21 @@ export default function Sidebar({ session }) {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleNormalCardClick = (cafe) => {
+  const handleNormalCardClick = (cafe: any) => {
     setIsSubSidebarOpen(true);
     router.push(`/cafe/all/detail/${cafe.id}`);
     setThisX(cafe?.x);
     setThisY(cafe?.y);
   };
 
-  const handleCollectedCardClick = (cafe) => {
+  const handleCollectedCardClick = (cafe: any) => {
     setIsSubSidebarOpen(true);
     router.push(`/cafe/collected/detail/${cafe.id}`);
     setThisX(cafe?.coordX);
     setThisY(cafe?.coordY);
   };
 
-  const handleBookmarkedCardClick = (cafe) => {
+  const handleBookmarkedCardClick = (cafe: any) => {
     setIsSubSidebarOpen(true);
     router.push(`/cafe/bookmarked/detail/${cafe.id}`);
     setThisX(cafe?.coordX);
@@ -122,7 +128,8 @@ export default function Sidebar({ session }) {
   });
 
   useEffect(() => {
-    containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    if (containerRef.current)
+      containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);
 
   useEffect(() => {
@@ -159,7 +166,7 @@ export default function Sidebar({ session }) {
 
           {pathname.startsWith('/cafe/all') && (
             <div className="flex flex-col gap-4 my-4">
-              {paginatedResults.map((cafe) => (
+              {paginatedResults.map((cafe: any) => (
                 <NormalCard
                   key={cafe.id}
                   name={cafe.place_name}
@@ -187,7 +194,7 @@ export default function Sidebar({ session }) {
 
               {collectedData?.pages?.map((page, i) => (
                 <div key={`page-${i}`} className="flex flex-col gap-4 my-4">
-                  {page.data.map((cafe) => (
+                  {page.data.map((cafe: any) => (
                     <CollectedCard
                       key={cafe.id}
                       name={cafe.name}
@@ -214,7 +221,7 @@ export default function Sidebar({ session }) {
 
               {bookmarkedData?.pages?.map((page, i) => (
                 <div key={`page-${i}`} className="flex flex-col gap-4 my-4">
-                  {page.data.map((cafe) => (
+                  {page.data.map((cafe: any) => (
                     <NormalCard
                       key={cafe.id}
                       name={cafe.name}

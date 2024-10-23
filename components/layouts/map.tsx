@@ -13,13 +13,13 @@ declare global {
 
 export default function KakaoMap() {
   const pathname = usePathname();
-  const keyword = useMapStore((state) => state.keyword);
-  const setAllCafe = useMapStore((state) => state.setAllCafe);
-  const allCafe = useMapStore((state) => state.allCafe);
-  const collectedCafe = useMapStore((state) => state.collectedCafe);
-  const bookmarkedCafe = useMapStore((state) => state.bookmarkedCafe);
-  const thisX = useMapStore((state) => state.thisX);
-  const thisY = useMapStore((state) => state.thisY);
+  const keyword = useMapStore((state: any) => state.keyword);
+  const setAllCafe = useMapStore((state: any) => state.setAllCafe);
+  const allCafe = useMapStore((state: any) => state.allCafe);
+  const collectedCafe = useMapStore((state: any) => state.collectedCafe);
+  const bookmarkedCafe = useMapStore((state: any) => state.bookmarkedCafe);
+  const thisX = useMapStore((state: any) => state.thisX);
+  const thisY = useMapStore((state: any) => state.thisY);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -43,7 +43,7 @@ export default function KakaoMap() {
         let markers: any[] = [];
 
         // 검색 결과 = cafeAll의 마커 표시
-        const displayResults = (cafe) => {
+        const displayResults = (cafe: any) => {
           if (!cafe.x || !cafe.y) return;
 
           const latlng = new window.kakao.maps.LatLng(cafe.y, cafe.x);
@@ -64,7 +64,7 @@ export default function KakaoMap() {
         };
 
         // 수집한 카드, 북마크 카페의 마커 표시
-        const displayCollected = (cafe) => {
+        const displayCollected = (cafe: any) => {
           if (!cafe.coordX || !cafe.coordY) return;
 
           const latlng = new window.kakao.maps.LatLng(cafe.coordY, cafe.coordX);
@@ -85,7 +85,7 @@ export default function KakaoMap() {
         };
 
         // 상세 정보에 표시된 카페의 마커를 맵의 센터에 표시
-        const displayDetailCenter = (x, y) => {
+        const displayDetailCenter = (x: number, y: number) => {
           const latlng = new window.kakao.maps.LatLng(y, x);
           map.setCenter(latlng);
         };
@@ -95,8 +95,8 @@ export default function KakaoMap() {
           markers = [];
         };
 
-        const searchResults = (query) => {
-          ps.keywordSearch(query, (data, status, pagination) => {
+        const searchResults = (query: any) => {
+          ps.keywordSearch(query, (data: any, status: any, pagination: any) => {
             if (status === window.kakao.maps.services.Status.OK) {
               const coords = new window.kakao.maps.LatLng(data[0].y, data[0].x);
               map.setCenter(coords);
@@ -107,10 +107,14 @@ export default function KakaoMap() {
 
               const results = [...filtered_data];
 
-              const handlePagination = (newData, status, newPagination) => {
+              const handlePagination = (
+                newData: any,
+                status: any,
+                newPagination: any
+              ) => {
                 if (status === window.kakao.maps.services.Status.OK) {
                   const moreFilteredData = newData.filter(
-                    (item) => item['category_group_code'] === 'CE7'
+                    (item: any) => item['category_group_code'] === 'CE7'
                   );
                   results.push(...moreFilteredData);
 
@@ -148,7 +152,7 @@ export default function KakaoMap() {
 
         if (pathname === '/' || pathname.startsWith('/cafe/all/detail')) {
           removeMarkers();
-          allCafe.forEach((cafe) => displayResults(cafe));
+          allCafe.forEach((cafe: any) => displayResults(cafe));
         }
 
         if (pathname === '/cafe/all') {
@@ -159,7 +163,7 @@ export default function KakaoMap() {
         if (pathname.startsWith('/cafe/collected')) {
           removeMarkers();
           if (collectedCafe && collectedCafe.length > 0) {
-            collectedCafe.forEach((cafe) => displayCollected(cafe));
+            collectedCafe.forEach((cafe: any) => displayCollected(cafe));
           } else {
             const defaultLatLng = new window.kakao.maps.LatLng(
               37.54715716085294,
@@ -172,7 +176,7 @@ export default function KakaoMap() {
         if (pathname.startsWith('/cafe/bookmarked')) {
           removeMarkers();
           if (bookmarkedCafe && bookmarkedCafe.length > 0) {
-            bookmarkedCafe.forEach((cafe) => displayCollected(cafe));
+            bookmarkedCafe.forEach((cafe: any) => displayCollected(cafe));
           } else {
             const defaultLatLng = new window.kakao.maps.LatLng(
               37.54715716085294,

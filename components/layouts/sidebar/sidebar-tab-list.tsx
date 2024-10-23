@@ -4,7 +4,7 @@ import { getListTabStyle } from 'utils/styles';
 import { ListItem } from '@mui/material';
 import { List } from '@mui/material';
 
-function SidebarTab({ icon, title, path, isDarkTheme }) {
+function SidebarTab({ icon, title, path, isDarkTheme }: any) {
   return (
     <ListItem
       className="grid grid-cols-[40px_auto] items-center gap-4 cursor-pointer"
@@ -17,7 +17,7 @@ function SidebarTab({ icon, title, path, isDarkTheme }) {
 }
 
 export default function SidebarList() {
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const router = useRouter();
 
   return (

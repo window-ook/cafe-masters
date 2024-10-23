@@ -7,7 +7,12 @@ import {
 } from 'utils/styles';
 import TierInfoModal from './tier-info-modal';
 
-export default function TierBadge({ tier }) {
+type Tier = 'BEGINNER' | 'JUNIOR' | 'SENIOR' | 'EXPERT' | 'MASTER';
+interface TierProps {
+  tier: Tier;
+}
+
+export default function TierBadge({ tier }: TierProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
