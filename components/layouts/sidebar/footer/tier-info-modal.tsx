@@ -7,6 +7,7 @@ import {
 import { Box, Modal } from '@mui/material';
 
 type Tier = 'BEGINNER' | 'JUNIOR' | 'SENIOR' | 'EXPERT' | 'MASTER';
+
 interface BadgeProps {
   tier: Tier;
   range: string;

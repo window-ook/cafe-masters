@@ -5,10 +5,10 @@ import { countCollected, getAllCollected } from 'actions/collectedActions';
 import { CollectedCafe, CollectedCount } from 'types/types';
 
 export default function CollectedPage() {
-  const userId = useUserStore((state) => state.userId);
-  const setCollectedCafe = useMapStore((state) => state.setCollectedCafe);
+  const userId = useUserStore((state: any) => state.userId);
+  const setCollectedCafe = useMapStore((state: any) => state.setCollectedCafe);
   const setCollectedCafeCount = useMapStore(
-    (state) => state.setCollectedCafeCount
+    (state: any) => state.setCollectedCafeCount
   );
 
   const queryFnData = async () => {

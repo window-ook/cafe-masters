@@ -5,8 +5,8 @@ import { useMutation } from '@tanstack/react-query';
 import { Card, Button, Typography, TextField } from '@mui/material';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
-import UserForm from './user-form';
 import { toast } from 'react-toastify';
+import UserForm from './user-form';
 
 export default function Signup({ setView }: any) {
   const [email, setEmail] = useState('');

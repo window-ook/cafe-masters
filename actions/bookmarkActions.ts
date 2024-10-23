@@ -1,5 +1,6 @@
 'use server';
 
+import { PostgrestError } from '@supabase/supabase-js';
 import { BookmarkedCafe } from 'types/types';
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
@@ -8,7 +9,7 @@ export type BookmarkedRow = Database['public']['Tables']['bookmarked']['Row'];
 export type BookmarkedRowInsert =
   Database['public']['Tables']['bookmarked']['Insert'];
 
-function handleError(error): void {
+function handleError(error: PostgrestError): void {
   console.error(error);
   throw new Error(error.message);
 }

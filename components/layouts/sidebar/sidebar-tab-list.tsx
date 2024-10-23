@@ -3,8 +3,16 @@ import { useCheckStore } from 'utils/store';
 import { getListTabStyle } from 'utils/styles';
 import { ListItem } from '@mui/material';
 import { List } from '@mui/material';
+import { ReactNode } from 'react';
 
-function SidebarTab({ icon, title, path, isDarkTheme }: any) {
+interface SidebarTabProps {
+  icon: ReactNode;
+  title: string;
+  path: () => void;
+  isDarkTheme: boolean;
+}
+
+function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
   return (
     <ListItem
       className="grid grid-cols-[40px_auto] items-center gap-4 cursor-pointer"

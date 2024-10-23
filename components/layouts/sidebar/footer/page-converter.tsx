@@ -1,4 +1,5 @@
 import { getPageConverterStyle } from 'utils/styles';
+
 interface PageConverterProps {
   isDarkTheme: boolean;
   handlePreviousPage: () => void;

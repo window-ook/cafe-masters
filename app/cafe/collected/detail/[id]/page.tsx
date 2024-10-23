@@ -7,9 +7,9 @@ import { PageProps } from 'types/types';
 
 export default function CollectedDetailPage({ params }: PageProps) {
   const { id } = params;
-  const userId = useUserStore((state) => state.userId);
+  const userId = useUserStore((state: any) => state.userId);
   const setCollectedCafeDetail = useMapStore(
-    (state) => state.setCollectedCafeDetail
+    (state: any) => state.setCollectedCafeDetail
   );
 
   useEffect(() => {

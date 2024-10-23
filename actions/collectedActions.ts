@@ -3,6 +3,7 @@
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 import { CollectedCafe, CollectedCount } from 'types/types';
+import { PostgrestError } from '@supabase/supabase-js';
 
 export type CollectedRow = Database['public']['Tables']['collected']['Row'];
 export type CollectedRowInsert =
@@ -10,7 +11,7 @@ export type CollectedRowInsert =
 export type CollectedRowUpdate =
   Database['public']['Tables']['collected']['Update'];
 
-function handleError(error) {
+function handleError(error: PostgrestError) {
   console.error(error);
   throw new Error(error.message);
 }
@@ -94,8 +95,8 @@ export async function createCollected(
  */
 export async function updateCollected(
   collected: CollectedRowUpdate,
-  id,
-  userId
+  id: string,
+  userId: string
 ): Promise<void> {
   if (!collected)
     throw new Error('수집한 카드 테이블에 전달하는 데이터가 유효하지 않습니다');

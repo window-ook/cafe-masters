@@ -6,8 +6,10 @@ import { getAllBookmarked } from 'actions/bookmarkActions';
 import { BookmarkedCafe } from 'types/types';
 
 export default function BookmarkedPage() {
-  const userId = useUserStore((state) => state.userId);
-  const setBookmarkedCafe = useMapStore((state) => state.setBookmarkedCafe);
+  const userId = useUserStore((state: any) => state.userId);
+  const setBookmarkedCafe = useMapStore(
+    (state: any) => state.setBookmarkedCafe
+  );
 
   const queryFn = async () => {
     const response = await getAllBookmarked(userId);

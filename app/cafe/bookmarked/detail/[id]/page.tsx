@@ -7,10 +7,10 @@ import { PageProps } from 'types/types';
 
 export default function BookmarkedDetailpage({ params }: PageProps) {
   const { id } = params;
-  const userId = useUserStore((state) => state.userId);
-  const setIsBookmarked = useCheckStore((state) => state.setIsBookmarked);
+  const userId = useUserStore((state: any) => state.userId);
+  const setIsBookmarked = useCheckStore((state: any) => state.setIsBookmarked);
   const setBookmarkedCafeDetail = useMapStore(
-    (state) => state.setBookmarkedCafeDetail
+    (state: any) => state.setBookmarkedCafeDetail
   );
 
   useEffect(() => {
