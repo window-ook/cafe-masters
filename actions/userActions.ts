@@ -3,7 +3,7 @@
 import { createServerSupabaseClient } from 'utils/supabase/server';
 
 /**
- * GET userID
+ * GET userId
  */
 export async function getCurrentUserId() {
   const supabase = await createServerSupabaseClient();
@@ -13,6 +13,6 @@ export async function getCurrentUserId() {
     error,
   } = await supabase.auth.getUser();
 
-  if (error || !user) throw new Error('유저 아이디 요청 에러');
+  if (error || !user) throw new Error('userId 조회 에러');
   return user.id;
 }

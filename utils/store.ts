@@ -1,46 +1,36 @@
+import { BookmarkedCafe, CollectedCafe } from 'types/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-interface MapState {
-  keyword: string;
-  allCafe: any[];
-  collectedCafe: any[];
-  bookmarkedCafe: any[];
-  setKeyword: (keyword: string) => void;
-  setAllCafe: (allCafe: any[]) => void;
-}
 
 export const useMapStore = create(
   persist(
     (set) => ({
       keyword: '성수',
-
-      // 사이드바 매핑 데이터
       allCafe: [],
       collectedCafe: [],
       collectedCafeCount: 0,
       bookmarkedCafe: [],
-
-      // 서브 사이드바 매핑 데이터
       thisX: '',
       thisY: '',
       cafeDetail: {},
       collectedCafeDetail: [],
       bookmarkedCafeDetail: [],
 
-      setKeyword: (newKeyword) => set({ keyword: newKeyword }),
-      setAllCafe: (newAllCafe) => set({ allCafe: newAllCafe ?? [] }),
-      setCollectedCafe: (newCollectedCafe) =>
-        set({ collectedCafe: newCollectedCafe ?? [] }),
-      setCollectedCafeCount: (newCount) =>
-        set({ collectedCafeCount: newCount }),
-      setBookmarkedCafe: (newBookmarkedCafe) =>
-        set({ bookmarkedCafe: newBookmarkedCafe ?? [] }),
-      setThisX: (x) => set({ thisX: x }),
-      setThisY: (y) => set({ thisY: y }),
-      setCafeDetail: (data) => set({ cafeDetail: data }),
-      setCollectedCafeDetail: (data) => set({ collectedCafeDetail: data }),
-      setBookmarkedCafeDetail: (data) => set({ bookmarkedCafeDetail: data }),
+      setKeyword: (data: string) => set({ keyword: data }),
+      setAllCafe: (data: any[]) => set({ allCafe: data ?? [] }),
+      setCollectedCafe: (data: CollectedCafe[]) =>
+        set({ collectedCafe: data ?? [] }),
+      setCollectedCafeCount: (data: number) =>
+        set({ collectedCafeCount: data }),
+      setBookmarkedCafe: (data: BookmarkedCafe[]) =>
+        set({ bookmarkedCafe: data ?? [] }),
+      setThisX: (x: string) => set({ thisX: x }),
+      setThisY: (y: string) => set({ thisY: y }),
+      setCafeDetail: (data: object) => set({ cafeDetail: data }),
+      setCollectedCafeDetail: (data: CollectedCafe[]) =>
+        set({ collectedCafeDetail: data }),
+      setBookmarkedCafeDetail: (data: BookmarkedCafe[]) =>
+        set({ bookmarkedCafeDetail: data }),
     }),
     {
       name: 'mapStore',
@@ -67,10 +57,10 @@ export const useMapStore = create(
 export const useUserStore = create(
   persist(
     (set) => ({
-      userId: null,
-      userTier: null,
-      setUserId: (id) => set({ userId: id }),
-      setUserTier: (tier) => set({ userTier: tier }),
+      userId: 'userId',
+      userTier: 'BEGINNER',
+      setUserId: (user: string) => set({ userId: user }),
+      setUserTier: (tier: string) => set({ userTier: tier }),
     }),
     {
       name: 'userStore',
@@ -90,20 +80,17 @@ export const useUserStore = create(
 export const useCheckStore = create(
   persist(
     (set) => ({
-      // 서브 사이드바 활성화 여부
       isSubSidebarOpen: false,
-      setIsSubSidebarOpen: (prev) => set({ isSubSidebarOpen: prev }),
+      setIsSubSidebarOpen: (prev: boolean) => set({ isSubSidebarOpen: prev }),
 
-      // 다크 테마 여부
       isDarkTheme: false,
       setIsDarkTheme: () =>
         set((state) => ({ isDarkTheme: !state.isDarkTheme })),
 
-      // 디테일에서 수집, 북마크 여부
       isCollected: false,
       isBookmarked: false,
-      setIsCollected: (value) => set({ isCollected: value }),
-      setIsBookmarked: (value) => set({ isBookmarked: value }),
+      setIsCollected: (prev: boolean) => set({ isCollected: prev }),
+      setIsBookmarked: (prev: boolean) => set({ isBookmarked: prev }),
     }),
     {
       name: 'checkStore',
