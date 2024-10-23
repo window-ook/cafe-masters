@@ -9,11 +9,11 @@ import { Card, Button, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 import UserForm from './user-form';
 
-export default function SignIn({ setView }) {
+export default function SignIn({ setView }: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const supabase = createBrowserSupabaseClient();
-  const setUserId = useUserStore((state) => state.setUserId);
+  const setUserId = useUserStore((state: any) => state.setUserId);
 
   const signinMutation = useMutation({
     mutationFn: async () => {
@@ -48,7 +48,7 @@ export default function SignIn({ setView }) {
         <Button
           className="bg-main font-dpixel text-white hover:bg-opacity-70"
           fullWidth
-          onClick={() => {
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             signinMutation.mutate();
           }}
           onLoad={signinMutation.isPending}

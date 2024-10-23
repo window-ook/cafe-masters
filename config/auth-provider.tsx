@@ -4,7 +4,15 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
-export default function AuthProvider({ accessToken, children }) {
+interface AuthProviderProps {
+  accessToken: string;
+  children: React.PropsWithChildren;
+}
+
+export default function AuthProvider({
+  accessToken,
+  children,
+}: AuthProviderProps) {
   const supabase = createBrowserSupabaseClient();
   const router = useRouter();
 

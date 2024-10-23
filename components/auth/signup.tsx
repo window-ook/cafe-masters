@@ -8,7 +8,7 @@ import { signInWithKakao } from 'utils/supabase/signinKakao';
 import UserForm from './user-form';
 import { toast } from 'react-toastify';
 
-export default function Signup({ setView }) {
+export default function Signup({ setView }: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');

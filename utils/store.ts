@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 
 export const useMapStore = create(
   persist(
-    (set) => ({
+    (set: any) => ({
       keyword: '성수',
       allCafe: [],
       collectedCafe: [],
@@ -35,7 +35,7 @@ export const useMapStore = create(
     {
       name: 'mapStore',
       getStorage: () => localStorage,
-      partialize: (state) => ({
+      partialize: (state: any) => ({
         keyword: state.keyword,
         thisX: state.thisX,
         thisY: state.thisY,
@@ -46,7 +46,7 @@ export const useMapStore = create(
         bookmarkedCafe: state.bookmarkedCafe,
         bookmarkedCafeDetail: state.bookmarkedCafeDetail,
       }),
-      merge: (persistedState, currentState) => ({
+      merge: (persistedState: any, currentState: any) => ({
         ...currentState,
         ...persistedState,
       }),
@@ -56,7 +56,7 @@ export const useMapStore = create(
 
 export const useUserStore = create(
   persist(
-    (set) => ({
+    (set: any) => ({
       userId: 'userId',
       userTier: 'BEGINNER',
       setUserId: (user: string) => set({ userId: user }),
@@ -65,11 +65,11 @@ export const useUserStore = create(
     {
       name: 'userStore',
       getStorage: () => localStorage,
-      partialize: (state) => ({
+      partialize: (state: any) => ({
         userId: state.userId,
         userTier: state.userTier,
       }),
-      merge: (persistedState, currentState) => ({
+      merge: (persistedState: any, currentState: any) => ({
         ...currentState,
         ...persistedState,
       }),
@@ -79,13 +79,13 @@ export const useUserStore = create(
 
 export const useCheckStore = create(
   persist(
-    (set) => ({
+    (set: any) => ({
       isSubSidebarOpen: false,
       setIsSubSidebarOpen: (prev: boolean) => set({ isSubSidebarOpen: prev }),
 
       isDarkTheme: false,
       setIsDarkTheme: () =>
-        set((state) => ({ isDarkTheme: !state.isDarkTheme })),
+        set((state: any) => ({ isDarkTheme: !state.isDarkTheme })),
 
       isCollected: false,
       isBookmarked: false,
@@ -95,11 +95,11 @@ export const useCheckStore = create(
     {
       name: 'checkStore',
       getStorage: () => localStorage,
-      partialize: (state) => ({
+      partialize: (state: any) => ({
         isSubSidebarOpen: state.isSubSidebarOpen,
         isDarkTheme: state.isDarkTheme,
       }),
-      merge: (persistedState, currentState) => ({
+      merge: (persistedState: any, currentState: any) => ({
         ...currentState,
         ...persistedState,
       }),
