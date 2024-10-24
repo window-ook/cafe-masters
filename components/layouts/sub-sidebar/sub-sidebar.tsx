@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-import { useMutation } from '@tanstack/react-query';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { getSubSidebarStyle } from 'utils/styles';
 import {
   CollectedRowInsert,
@@ -15,8 +14,8 @@ import {
 import { Card } from '@mui/material';
 import { toast } from 'react-toastify';
 import Memo from './memo/memo';
-import NormalCardDetail from './normal/normal-card-detail';
-import CollectedCardDetail from './collected/collected-card-detail';
+import NormalCafeDetail from './normal-cafe-detail';
+import CollectedCafeDetail from './collected-cafe-detail';
 
 export default function SubSidebar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -176,7 +175,7 @@ export default function SubSidebar() {
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/all/detail') && (
-          <NormalCardDetail
+          <NormalCafeDetail
             detail={detail}
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}
@@ -187,13 +186,13 @@ export default function SubSidebar() {
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/collected/detail') && (
-          <CollectedCardDetail setMemoOpen={setMemoOpen} />
+          <CollectedCafeDetail setMemoOpen={setMemoOpen} />
         )}
 
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/bookmarked/detail') && (
-          <NormalCardDetail
+          <NormalCafeDetail
             detail={bookmarkedCafeDetail}
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}

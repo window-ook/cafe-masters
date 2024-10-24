@@ -1,4 +1,7 @@
-import { OpenTimeGridProps } from 'types/types';
+interface OpenTimeGridProps {
+  openWeekly: string | null | undefined;
+  openWeekend: string | null | undefined;
+}
 
 export default function OpenTimeGrid({
   openWeekly,

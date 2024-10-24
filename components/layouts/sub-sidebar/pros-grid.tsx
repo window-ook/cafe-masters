@@ -1,4 +1,6 @@
-import { ProsGridProps } from 'types/types';
+interface ProsGridProps {
+  pros: string;
+}
 
 export default function ProsGrid({ pros }: ProsGridProps) {
   return (

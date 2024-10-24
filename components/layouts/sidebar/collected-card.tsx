@@ -8,15 +8,7 @@ import {
   getUniqueCardStyle,
   getUniqueCardEffectStyle,
 } from 'utils/styles';
-
-interface CollectedCardProps {
-  name: string;
-  photoUrl: string;
-  address: string;
-  phoneNum: string;
-  ratings: number;
-  onClick: () => void;
-}
+import { CollectedCardProps } from 'types/types';
 
 export default function CollectedCard({
   name,

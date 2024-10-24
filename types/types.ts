@@ -1,37 +1,24 @@
-export interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
+// Detail
 export interface CafeDetail {
   id: number;
   userId: string;
   name: string;
   photoUrl?: string | null;
-  reviewCount?: number | null;
   rating?: number | null;
   openWeekly?: string | null;
   openWeekend?: string | null;
   address: string;
   phoneNum?: string | null;
-  menu?: string | null;
   coordX: number | null;
   coordY: number | null;
 }
 
-export interface CollectedCafeDetail {
-  id: number;
-  userId: string;
-  name: string;
-  photoUrl?: string | null;
-  rating: number;
-  openWeekly?: string | null;
-  openWeekend?: string | null;
-  address: string;
-  phoneNum?: string | null;
-  coordX: number | null;
-  coordY: number | null;
+export interface NormalCafeDetail extends CafeDetail {
+  reviewCount?: number | null;
+  menu?: string | null;
+}
+
+export interface CollectedCafeDetail extends CafeDetail {
   comment: string;
   pros?: string | null;
   cons?: string | null;
@@ -39,17 +26,31 @@ export interface CollectedCafeDetail {
   concept?: string | null;
 }
 
-export interface NormalCardDetailProps {
-  detail: CafeDetail;
-  handleMenuOpen: () => void;
-  setMemoOpen: (open: boolean) => void;
-  menuOpen: boolean;
+// From Supabase
+export interface CollectedCafeFromSupabase extends CafeDetail {
+  comment: string;
+  pros?: string | null;
+  cons?: string | null;
+  eaten: string;
+  concept?: string | null;
+  created_at: string;
+  updated_at?: string | null;
 }
 
+export interface CollectedCountFromSupabase {
+  data: CollectedCafeFromSupabase[] | null;
+  count: number | null;
+}
+
+export interface BookmarkedCafeFromSupabase extends NormalCafeDetail {
+  created_at: string;
+}
+
+// Props
 export interface MemoProps {
-  detail: CafeDetail;
+  detail: NormalCafeDetail;
   collectedCafeDetail: CollectedCafeDetail;
-  bookmarkedCafeDetail: CafeDetail;
+  bookmarkedCafeDetail: NormalCafeDetail;
   setComment: (comment: string) => void;
   setPros: (pros: string) => void;
   setCons: (cons: string) => void;
@@ -61,102 +62,44 @@ export interface MemoProps {
   rating: number;
 }
 
-// 액션 함수
-export interface BookmarkedCafe {
-  id: number;
-  userId: string;
+export interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+export interface CardProps {
   name: string;
-  photoUrl?: string | null;
-  reviewCount?: number | null;
-  rating?: number | null;
-  openWeekly?: string | null;
-  openWeekend?: string | null;
   address: string;
-  phoneNum?: string | null;
-  menu?: string | null;
-  coordX: number | null;
-  coordY: number | null;
-  created_at: string;
-}
-export interface CollectedCafe {
-  id: number;
-  userId: string;
-  name: string;
-  photoUrl?: string | null;
-  address: string;
-  openWeekly?: string | null;
-  openWeekend?: string | null;
-  phoneNum?: string | null;
-  coordX: number | null;
-  coordY: number | null;
-  comment: string;
-  pros?: string | null;
-  cons?: string | null;
-  eaten: string;
-  concept?: string | null;
-  rating: number;
-  created_at: string;
-  updated_at?: string | null;
+  phoneNum: string;
+  onClick: () => void;
 }
 
-export interface CollectedCount {
-  data: CollectedCafe[] | null;
-  count: number | null;
+export interface NormalCardProps extends CardProps {}
+
+export interface CollectedCardProps extends CardProps {
+  photoUrl: string;
+  ratings: number;
 }
 
-export interface CollectedCardDetailProps {
-  setMemoOpen: (boolean: boolean) => void;
+export interface CafeDetailProps {
+  setMemoOpen: (open: boolean) => void;
 }
 
-export interface CommentGridProps {
-  comment: string;
-}
+export interface CollectedCafeDetailProps extends CafeDetailProps {}
 
-export interface ConceptGridProps {
-  concept: string;
-}
-
-export interface RatingGridProps {
-  rating: number;
-}
-
-export interface ConsGridProps {
-  cons: string;
-}
-export interface ProsGridProps {
-  pros: string;
-}
-
-export interface EatenGridProps {
-  eaten: string;
-}
-
-export interface LocationGridProps {
-  address: string;
-}
-
-interface MenuItem {
-  menu: string;
-  price: string;
-}
-
-export interface MenuGridProps {
-  isDarkTheme: boolean;
-  handleMenuOpen: () => void;
+export interface NormalCafeDetailProps extends CafeDetailProps {
+  detail: NormalCafeDetail;
   menuOpen: boolean;
-  menu: MenuItem[];
+  handleMenuOpen: () => void;
 }
 
-export interface PhoneNumGridProps {
-  phoneNum: string | null | undefined;
+export type Tier = 'BEGINNER' | 'JUNIOR' | 'SENIOR' | 'EXPERT' | 'MASTER';
+export interface TierBadgeProps {
+  tier: Tier;
 }
 
-export interface OpenTimeGridProps {
-  openWeekly: string | null | undefined;
-  openWeekend: string | null | undefined;
-}
-
-export interface ReviewAndRatingGridProps {
-  reviewCount: number | null | undefined;
-  rating: number | null | undefined;
+export interface BadgeProps extends TierBadgeProps {
+  range: string;
+  color: string;
 }

@@ -1,14 +1,8 @@
 import { useCheckStore } from 'utils/store';
 import { getNormalCardStyle } from 'utils/styles';
 import { Card } from '@mui/material';
+import { NormalCardProps } from 'types/types';
 import Image from 'next/image';
-
-interface NormalCardProps {
-  name: string;
-  address: string;
-  phoneNum: string;
-  onClick: () => void;
-}
 
 export default function NormalCard({
   name,

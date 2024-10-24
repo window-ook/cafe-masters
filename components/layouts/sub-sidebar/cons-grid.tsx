@@ -1,4 +1,6 @@
-import { ConsGridProps } from 'types/types';
+interface ConsGridProps {
+  cons: string;
+}
 
 export default function ConsGrid({ cons }: ConsGridProps) {
   return (

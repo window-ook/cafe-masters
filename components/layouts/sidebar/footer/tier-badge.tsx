@@ -5,13 +5,8 @@ import {
   getMasterEffectStyle,
   getMasterTierStyle,
 } from 'utils/styles';
+import { TierBadgeProps } from 'types/types';
 import TierInfoModal from './tier-info-modal';
-
-type Tier = 'BEGINNER' | 'JUNIOR' | 'SENIOR' | 'EXPERT' | 'MASTER';
-
-interface TierBadgeProps {
-  tier: Tier;
-}
 
 export default function TierBadge({ tier }: TierBadgeProps) {
   const [open, setOpen] = useState(false);

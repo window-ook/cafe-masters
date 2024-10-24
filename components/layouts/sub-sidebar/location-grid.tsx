@@ -1,4 +1,6 @@
-import { LocationGridProps } from 'types/types';
+interface LocationGridProps {
+  address: string;
+}
 
 export default function LocationGrid({ address }: LocationGridProps) {
   return (

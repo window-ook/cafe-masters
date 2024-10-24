@@ -6,10 +6,10 @@ import {
   getSubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { Button } from '@mui/material';
-import { CollectedCardDetailProps } from 'types/types';
-import OpenTimeGrid from '../open-time-grid';
-import LocationGrid from '../location-grid';
-import PhoneGrid from '../phone-grid';
+import { CollectedCafeDetailProps } from 'types/types';
+import OpenTimeGrid from './open-time-grid';
+import LocationGrid from './location-grid';
+import PhoneGrid from './phone-grid';
 import Image from 'next/image';
 import ConceptGrid from './concept-grid';
 import EatenGrid from './eaten-grid';
@@ -18,9 +18,9 @@ import ConsGrid from './cons-grid';
 import CommentGrid from './comment-grid';
 import RatingGrid from './rating-grid';
 
-export default function CollectedCardDetail({
+export default function CollectedCafeDetail({
   setMemoOpen,
-}: CollectedCardDetailProps) {
+}: CollectedCafeDetailProps) {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const setIsSubSidebarOpen = useCheckStore(
     (state: any) => state.setIsSubSidebarOpen

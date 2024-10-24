@@ -1,4 +1,6 @@
-import { ConceptGridProps } from 'types/types';
+interface ConceptGridProps {
+  concept: string;
+}
 
 export default function ConceptGrid({ concept }: ConceptGridProps) {
   return (

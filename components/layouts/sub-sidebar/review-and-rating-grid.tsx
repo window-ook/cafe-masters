@@ -1,5 +1,8 @@
-import { ReviewAndRatingGridProps } from 'types/types';
 import { getRatingCircleStyle, getRatingStarStyle } from 'utils/styles';
+interface ReviewAndRatingGridProps {
+  reviewCount: number | null | undefined;
+  rating: number | null | undefined;
+}
 
 export default function ReviewAndRatingGrid({
   reviewCount,

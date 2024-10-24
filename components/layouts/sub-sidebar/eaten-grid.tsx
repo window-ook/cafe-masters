@@ -1,4 +1,6 @@
-import { EatenGridProps } from 'types/types';
+interface EatenGridProps {
+  eaten: string;
+}
 
 export default function EatenGrid({ eaten }: EatenGridProps) {
   return (

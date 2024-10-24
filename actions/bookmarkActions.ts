@@ -1,7 +1,7 @@
 'use server';
 
 import { PostgrestError } from '@supabase/supabase-js';
-import { BookmarkedCafe } from 'types/types';
+import { BookmarkedCafeFromSupabase } from 'types/types';
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 
@@ -19,7 +19,7 @@ function handleError(error: PostgrestError): void {
  */
 export async function getAllBookmarked(
   userId: string
-): Promise<BookmarkedCafe[]> {
+): Promise<BookmarkedCafeFromSupabase[]> {
   if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
@@ -39,7 +39,7 @@ export async function getAllBookmarked(
 export async function getBookmarked(
   id: string,
   userId: string
-): Promise<BookmarkedCafe[]> {
+): Promise<BookmarkedCafeFromSupabase[]> {
   if (!id) throw new Error('유효하지 않은 북마크 카페 id');
   if (!userId) throw new Error('유효하지 않은 userId');
 

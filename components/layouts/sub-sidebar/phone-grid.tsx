@@ -1,4 +1,6 @@
-import { PhoneNumGridProps } from 'types/types';
+interface PhoneNumGridProps {
+  phoneNum: string | null | undefined;
+}
 
 export default function PhoneGrid({ phoneNum }: PhoneNumGridProps) {
   return (

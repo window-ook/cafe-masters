@@ -1,4 +1,6 @@
-import { CommentGridProps } from 'types/types';
+interface CommentGridProps {
+  comment: string;
+}
 
 export default function CommentGrid({ comment }: CommentGridProps) {
   return (

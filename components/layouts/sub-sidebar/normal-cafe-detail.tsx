@@ -15,22 +15,22 @@ import {
 } from 'utils/styles';
 import { Button, IconButton } from '@mui/material';
 import { toast } from 'react-toastify';
-import { NormalCardDetailProps } from 'types/types';
-import CollectedBadge from 'components/layouts/sub-sidebar/normal/collected-badge';
+import { NormalCafeDetailProps } from 'types/types';
+import CollectedBadge from 'components/layouts/sub-sidebar/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
-import OpenTimeGrid from '../open-time-grid';
-import LocationGrid from '../location-grid';
-import PhoneGrid from '../phone-grid';
+import OpenTimeGrid from './open-time-grid';
+import LocationGrid from './location-grid';
+import PhoneGrid from './phone-grid';
 import MenuGrid from './menu-grid';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 
-export default function NormalCardDetail({
+export default function NormalCafeDetail({
   detail,
   handleMenuOpen,
   setMemoOpen,
   menuOpen,
-}: NormalCardDetailProps) {
+}: NormalCafeDetailProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
 

@@ -1,5 +1,14 @@
 import { IconButton } from '@mui/material';
-import { MenuGridProps } from 'types/types';
+interface MenuItem {
+  menu: string;
+  price: string;
+}
+interface MenuGridProps {
+  isDarkTheme: boolean;
+  handleMenuOpen: () => void;
+  menuOpen: boolean;
+  menu: MenuItem[];
+}
 
 export default function MenuGrid({
   isDarkTheme,

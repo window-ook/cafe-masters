@@ -5,14 +5,7 @@ import {
   getMasterTierStyle,
 } from 'utils/styles';
 import { Box, Modal } from '@mui/material';
-
-type Tier = 'BEGINNER' | 'JUNIOR' | 'SENIOR' | 'EXPERT' | 'MASTER';
-
-interface BadgeProps {
-  tier: Tier;
-  range: string;
-  color: string;
-}
+import { BadgeProps } from 'types/types';
 
 interface TierInfoModalProps {
   open: boolean;

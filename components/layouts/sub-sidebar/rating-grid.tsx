@@ -1,5 +1,8 @@
-import { RatingGridProps } from 'types/types';
 import { getRatingCircleStyle, getRatingStarStyle } from 'utils/styles';
+
+interface RatingGridProps {
+  rating: number;
+}
 
 export default function RatingGrid({ rating }: RatingGridProps) {
   return (
