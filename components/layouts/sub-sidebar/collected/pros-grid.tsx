@@ -1,4 +1,6 @@
-export default function ProsGrid({ pros }) {
+import { ProsGridProps } from 'types/types';
+
+export default function ProsGrid({ pros }: ProsGridProps) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1">

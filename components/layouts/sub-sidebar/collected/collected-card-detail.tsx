@@ -6,6 +6,7 @@ import {
   getSubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { Button } from '@mui/material';
+import { CollectedCardDetailProps } from 'types/types';
 import OpenTimeGrid from '../open-time-grid';
 import LocationGrid from '../location-grid';
 import PhoneGrid from '../phone-grid';
@@ -17,13 +18,15 @@ import ConsGrid from './cons-grid';
 import CommentGrid from './comment-grid';
 import RatingGrid from './rating-grid';
 
-export default function CollectedCardDetail({ setMemoOpen }) {
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+export default function CollectedCardDetail({
+  setMemoOpen,
+}: CollectedCardDetailProps) {
+  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const setIsSubSidebarOpen = useCheckStore(
-    (state) => state.setIsSubSidebarOpen
+    (state: any) => state.setIsSubSidebarOpen
   );
   const collectedCafeDetail = useMapStore(
-    (state) => state.collectedCafeDetail[0]
+    (state: any) => state.collectedCafeDetail[0]
   );
 
   return (

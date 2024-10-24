@@ -1,11 +1,12 @@
 import { IconButton } from '@mui/material';
+import { MenuGridProps } from 'types/types';
 
 export default function MenuGrid({
   isDarkTheme,
   handleMenuOpen,
   menuOpen,
   menu,
-}) {
+}: MenuGridProps) {
   return (
     <div className="col-span-2">
       <div>

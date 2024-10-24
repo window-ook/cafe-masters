@@ -1,6 +1,10 @@
+import { ReviewAndRatingGridProps } from 'types/types';
 import { getRatingCircleStyle, getRatingStarStyle } from 'utils/styles';
 
-export default function ReviewAndRatingGrid({ reviewCount, rating }) {
+export default function ReviewAndRatingGrid({
+  reviewCount,
+  rating,
+}: ReviewAndRatingGridProps) {
   return (
     <div className="flex items-center gap-4">
       <span className="text-xl">리뷰 {reviewCount}</span>

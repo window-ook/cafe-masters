@@ -1,4 +1,6 @@
-export default function ConsGrid({ cons }) {
+import { ConsGridProps } from 'types/types';
+
+export default function ConsGrid({ cons }: ConsGridProps) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1">

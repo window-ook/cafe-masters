@@ -5,6 +5,7 @@ import {
   getMemoInputStyle,
   getMemoSubmitStyle,
 } from 'utils/styles';
+import { MemoProps } from 'types/types';
 
 export default function Memo({
   detail,
@@ -19,7 +20,7 @@ export default function Memo({
   setMemoOpen,
   setRating,
   rating,
-}) {
+}: MemoProps) {
   const pathname = usePathname();
 
   return (
@@ -71,7 +72,7 @@ export default function Memo({
           name="simple-controlled"
           value={rating}
           onChange={(event, newValue) => {
-            setRating(newValue);
+            setRating(newValue ?? 5);
           }}
         />
       </div>
