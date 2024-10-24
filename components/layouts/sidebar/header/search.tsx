@@ -7,12 +7,12 @@ import { getSearchButtonStyle, getSearchInputStyle } from 'utils/styles';
 
 export default function Search() {
   const router = useRouter();
-  const keyword = useMapStore((state) => state.keyword);
-  const setKeyword = useMapStore((state) => state.setKeyword);
+  const keyword = useMapStore((state: any) => state.keyword);
+  const setKeyword = useMapStore((state: any) => state.setKeyword);
   const setIsSubSidebarOpen = useCheckStore(
-    (state) => state.setIsSubSidebarOpen
+    (state: any) => state.setIsSubSidebarOpen
   );
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
 
   const [localKeyword, setLocalKeyword] = useState(keyword);
 

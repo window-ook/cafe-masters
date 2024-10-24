@@ -7,8 +7,8 @@ import Image from 'next/image';
 import Search from './search';
 import LightDarkToggle from './light-dark-toggle';
 
-export default function Header({ img }) {
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+export default function Header() {
+  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const router = useRouter();
   return (
     <div

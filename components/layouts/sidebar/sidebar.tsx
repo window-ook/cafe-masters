@@ -160,7 +160,7 @@ export default function Sidebar({ session }: any) {
     <div className="relative flex items-center">
       <Card className={getSidebarStyle(isDarkTheme)} ref={containerRef}>
         <div className="flex flex-col gap-4">
-          <Header img={'/image/logo_trans.webp'} />
+          <Header />
 
           {pathname === '/' && <SidebarList />}
 
@@ -171,7 +171,7 @@ export default function Sidebar({ session }: any) {
                   key={cafe.id}
                   name={cafe.place_name}
                   address={cafe.address_name}
-                  phone={cafe.phone}
+                  phoneNum={cafe.phone}
                   onClick={() => handleNormalCardClick(cafe)}
                 />
               ))}
@@ -201,7 +201,7 @@ export default function Sidebar({ session }: any) {
                       ratings={cafe.rating}
                       photoUrl={cafe.photoUrl}
                       address={cafe.address}
-                      phone={cafe.phoneNum}
+                      phoneNum={cafe.phoneNum}
                       onClick={() => handleCollectedCardClick(cafe)}
                     />
                   ))}
@@ -226,7 +226,7 @@ export default function Sidebar({ session }: any) {
                       key={cafe.id}
                       name={cafe.name}
                       address={cafe.address}
-                      phone={cafe.phoneNum}
+                      phoneNum={cafe.phoneNum}
                       onClick={() => handleBookmarkedCardClick(cafe)}
                     />
                   ))}

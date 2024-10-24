@@ -48,7 +48,7 @@ export default function SignIn({ setView }: any) {
         <Button
           className="bg-main font-dpixel text-white hover:bg-opacity-70"
           fullWidth
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+          onClick={() => {
             signinMutation.mutate();
           }}
           onLoad={signinMutation.isPending}

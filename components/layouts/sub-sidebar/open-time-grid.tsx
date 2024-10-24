@@ -1,4 +1,12 @@
-export default function OpenTimeGrid({ openWeekly, openWeekend }) {
+interface OpenTimeGridProps {
+  openWeekly: string | null | undefined;
+  openWeekend: string | null | undefined;
+}
+
+export default function OpenTimeGrid({
+  openWeekly,
+  openWeekend,
+}: OpenTimeGridProps) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 items-center">

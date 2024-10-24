@@ -1,4 +1,8 @@
-export default function PhoneGrid({ phoneNum }) {
+interface PhoneNumGridProps {
+  phoneNum: string | null | undefined;
+}
+
+export default function PhoneGrid({ phoneNum }: PhoneNumGridProps) {
   return (
     <div className="col-span-2 grid grid-cols-3 items-center">
       <div className="col-span-1 flex gap-1">

@@ -1,4 +1,8 @@
-export default function CommentGrid({ comment }) {
+interface CommentGridProps {
+  comment: string;
+}
+
+export default function CommentGrid({ comment }: CommentGridProps) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1">

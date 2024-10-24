@@ -1,4 +1,8 @@
-export default function ConceptGrid({ concept }) {
+interface ConceptGridProps {
+  concept: string;
+}
+
+export default function ConceptGrid({ concept }: ConceptGridProps) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 pt-0.5">

@@ -8,15 +8,16 @@ import {
   getUniqueCardStyle,
   getUniqueCardEffectStyle,
 } from 'utils/styles';
+import { CollectedCardProps } from 'types/types';
 
 export default function CollectedCard({
   name,
   photoUrl,
   address,
-  phone,
+  phoneNum,
   ratings,
   onClick,
-}: any) {
+}: CollectedCardProps) {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const isUnique = name === '탐앤탐스 대구강북점';
 
@@ -55,7 +56,7 @@ export default function CollectedCard({
         </div>
         <div className="flex flex-col shadow-gray-500 shadow-md px-2">
           <span className="text-sm">{address}</span>
-          <span>{phone}</span>
+          <span>{phoneNum}</span>
         </div>
       </Card>
     </div>

@@ -1,4 +1,8 @@
-export default function ProsGrid({ pros }) {
+interface ProsGridProps {
+  pros: string;
+}
+
+export default function ProsGrid({ pros }: ProsGridProps) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1">

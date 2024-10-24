@@ -3,15 +3,19 @@
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-import { useMutation } from '@tanstack/react-query';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { getSubSidebarStyle } from 'utils/styles';
-import { createCollected, updateCollected } from 'actions/collectedActions';
+import {
+  CollectedRowInsert,
+  CollectedRowUpdate,
+  createCollected,
+  updateCollected,
+} from 'actions/collectedActions';
 import { Card } from '@mui/material';
-import Memo from './memo/memo';
-import NormalCardDetail from './normal/normal-card-detail';
-import CollectedCardDetail from './collected/collected-card-detail';
 import { toast } from 'react-toastify';
+import Memo from './memo/memo';
+import NormalCafeDetail from './normal-cafe-detail';
+import CollectedCafeDetail from './collected-cafe-detail';
 
 export default function SubSidebar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,25 +25,24 @@ export default function SubSidebar() {
   const [cons, setCons] = useState('');
   const [eaten, setEaten] = useState('');
   const [concept, setConcept] = useState('');
-  const [rating, setRating] = useState<number | null>(5);
+  const [rating, setRating] = useState(5);
 
-  const userId = useUserStore((state) => state.userId);
+  const userId = useUserStore((state: any) => state.userId);
 
-  const cafeDetail = useMapStore((state) => state.cafeDetail);
+  const cafeDetail = useMapStore((state: any) => state.cafeDetail);
   const collectedCafeDetail = useMapStore(
-    (state) => state.collectedCafeDetail[0]
+    (state: any) => state.collectedCafeDetail[0]
   );
   const bookmarkedCafeDetail = useMapStore(
-    (state) => state.bookmarkedCafeDetail[0]
+    (state: any) => state.bookmarkedCafeDetail[0]
   );
-  const thisX = useMapStore((state) => state.thisX);
-  const thisY = useMapStore((state) => state.thisY);
+  const thisX = useMapStore((state: any) => state.thisX);
+  const thisY = useMapStore((state: any) => state.thisY);
 
-  const setIsSubSidebarOpen = useCheckStore(
-    (state) => state.setIsSubSidebarOpen
+  const isSubSidebarOpen = useCheckStore(
+    (state: any) => state.isSubSidebarOpen
   );
-  const isSubSidebarOpen = useCheckStore((state) => state.isSubSidebarOpen);
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -49,14 +52,17 @@ export default function SubSidebar() {
     id: cafeDetail?.basicInfo?.cid,
     userId,
     name: cafeDetail?.basicInfo?.placenamefull,
-    photoUrl: cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumb.webp',
+    photoUrl:
+      cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumbnail.webp',
     reviewCount: cafeDetail?.comment?.kamapComntcnt,
     rating:
       cafeDetail?.basicInfo?.feedback?.scorecnt > 0
-        ? (
-            cafeDetail?.basicInfo?.feedback?.scoresum /
-            cafeDetail?.basicInfo?.feedback?.scorecnt
-          ).toFixed(2)
+        ? parseFloat(
+            (
+              cafeDetail?.basicInfo?.feedback?.scoresum /
+              cafeDetail?.basicInfo?.feedback?.scorecnt
+            ).toFixed(2)
+          )
         : null,
     openWeekly:
       cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
@@ -91,7 +97,7 @@ export default function SubSidebar() {
     cons,
     eaten,
     concept,
-    rating,
+    rating: rating,
   };
 
   const memoFromCollectedDetail = {
@@ -119,11 +125,11 @@ export default function SubSidebar() {
     cons,
     eaten,
     concept,
-    rating,
+    rating: rating,
   };
 
   const collectMutation = useMutation({
-    mutationFn: async (memo) => await createCollected(memo),
+    mutationFn: async (memo: CollectedRowInsert) => await createCollected(memo),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
@@ -135,7 +141,7 @@ export default function SubSidebar() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async (memo) =>
+    mutationFn: async (memo: CollectedRowUpdate) =>
       await updateCollected(memo, collectedCafeDetail.id, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
@@ -169,7 +175,7 @@ export default function SubSidebar() {
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/all/detail') && (
-          <NormalCardDetail
+          <NormalCafeDetail
             detail={detail}
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}
@@ -180,13 +186,13 @@ export default function SubSidebar() {
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/collected/detail') && (
-          <CollectedCardDetail setMemoOpen={setMemoOpen} />
+          <CollectedCafeDetail setMemoOpen={setMemoOpen} />
         )}
 
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/bookmarked/detail') && (
-          <NormalCardDetail
+          <NormalCafeDetail
             detail={bookmarkedCafeDetail}
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}

@@ -9,10 +9,10 @@ import { PageProps } from 'types/types';
 
 export default function CafeDetailPage({ params }: PageProps) {
   const { id } = params;
-  const userId = useUserStore((state) => state.userId);
-  const setCafeDetail = useMapStore((state) => state.setCafeDetail);
-  const setIsBookmarked = useCheckStore((state) => state.setIsBookmarked);
-  const setIsCollected = useCheckStore((state) => state.setIsCollected);
+  const userId = useUserStore((state: any) => state.userId);
+  const setCafeDetail = useMapStore((state: any) => state.setCafeDetail);
+  const setIsBookmarked = useCheckStore((state: any) => state.setIsBookmarked);
+  const setIsCollected = useCheckStore((state: any) => state.setIsCollected);
 
   useEffect(() => {
     setIsBookmarked(false);

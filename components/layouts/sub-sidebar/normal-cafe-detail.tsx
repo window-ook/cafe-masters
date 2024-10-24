@@ -2,7 +2,11 @@ import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { useMutation } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { createBookmarked, deleteBookmarked } from 'actions/bookmarkActions';
+import {
+  BookmarkedRowInsert,
+  createBookmarked,
+  deleteBookmarked,
+} from 'actions/bookmarkActions';
 import {
   getDetailBodyStyle,
   getDetailCollectButtonStyle,
@@ -11,35 +15,36 @@ import {
 } from 'utils/styles';
 import { Button, IconButton } from '@mui/material';
 import { toast } from 'react-toastify';
-import CollectedBadge from 'components/layouts/sub-sidebar/normal/collected-badge';
+import { NormalCafeDetailProps } from 'types/types';
+import CollectedBadge from 'components/layouts/sub-sidebar/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
-import OpenTimeGrid from '../open-time-grid';
-import LocationGrid from '../location-grid';
-import PhoneGrid from '../phone-grid';
+import OpenTimeGrid from './open-time-grid';
+import LocationGrid from './location-grid';
+import PhoneGrid from './phone-grid';
 import MenuGrid from './menu-grid';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 
-export default function NormalCardDetail({
+export default function NormalCafeDetail({
   detail,
   handleMenuOpen,
   setMemoOpen,
   menuOpen,
-}) {
+}: NormalCafeDetailProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const isDarkTheme = useCheckStore((state) => state.isDarkTheme);
-  const isCollected = useCheckStore((state) => state.isCollected);
-  const isBookmarked = useCheckStore((state) => state.isBookmarked);
+  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
+  const isCollected = useCheckStore((state: any) => state.isCollected);
+  const isBookmarked = useCheckStore((state: any) => state.isBookmarked);
   const setIsSubSidebarOpen = useCheckStore(
-    (state) => state.setIsSubSidebarOpen
+    (state: any) => state.setIsSubSidebarOpen
   );
 
-  const userId = useUserStore((state) => state.userId);
+  const userId = useUserStore((state: any) => state.userId);
 
   const bookmarkedCafeDetail = useMapStore(
-    (state) => state.bookmarkedCafeDetail[0]
+    (state: any) => state.bookmarkedCafeDetail[0]
   );
 
   const parsedMenu =
@@ -48,7 +53,8 @@ export default function NormalCardDetail({
       : detail?.menu;
 
   const bookmarkMutation = useMutation({
-    mutationFn: async (bookmarked) => await createBookmarked(bookmarked),
+    mutationFn: async (detail: BookmarkedRowInsert) =>
+      await createBookmarked(detail),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
@@ -109,7 +115,7 @@ export default function NormalCardDetail({
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
           <Image
-            src={detail?.photoUrl}
+            src={detail?.photoUrl || '/image/cafe_thumbnail.webp'}
             alt="카페 썸네일"
             className="rounded-md"
             width={160}

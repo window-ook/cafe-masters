@@ -2,7 +2,11 @@
 
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
-import { CollectedCafe, CollectedCount } from 'types/types';
+import {
+  CollectedCafeFromSupabase,
+  CollectedCountFromSupabase,
+} from 'types/types';
+import { PostgrestError } from '@supabase/supabase-js';
 
 export type CollectedRow = Database['public']['Tables']['collected']['Row'];
 export type CollectedRowInsert =
@@ -10,7 +14,7 @@ export type CollectedRowInsert =
 export type CollectedRowUpdate =
   Database['public']['Tables']['collected']['Update'];
 
-function handleError(error) {
+function handleError(error: PostgrestError) {
   console.error(error);
   throw new Error(error.message);
 }
@@ -20,7 +24,7 @@ function handleError(error) {
  */
 export async function getAllCollected(
   userId: string
-): Promise<CollectedCafe[]> {
+): Promise<CollectedCafeFromSupabase[]> {
   if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
@@ -40,7 +44,7 @@ export async function getAllCollected(
 export async function getCollected(
   id: string,
   userId: string
-): Promise<CollectedCafe[]> {
+): Promise<CollectedCafeFromSupabase[]> {
   if (!id) throw new Error('유효하지 않은 북마크 카페 id');
   if (!userId) throw new Error('유효하지 않은 userId');
 
@@ -58,7 +62,9 @@ export async function getCollected(
 /**
  * GET collected count
  */
-export async function countCollected(userId: string): Promise<CollectedCount> {
+export async function countCollected(
+  userId: string
+): Promise<CollectedCountFromSupabase> {
   if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
@@ -94,8 +100,8 @@ export async function createCollected(
  */
 export async function updateCollected(
   collected: CollectedRowUpdate,
-  id,
-  userId
+  id: string,
+  userId: string
 ): Promise<void> {
   if (!collected)
     throw new Error('수집한 카드 테이블에 전달하는 데이터가 유효하지 않습니다');

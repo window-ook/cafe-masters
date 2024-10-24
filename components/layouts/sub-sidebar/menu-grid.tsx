@@ -1,11 +1,21 @@
 import { IconButton } from '@mui/material';
+interface MenuItem {
+  menu: string;
+  price: string;
+}
+interface MenuGridProps {
+  isDarkTheme: boolean;
+  handleMenuOpen: () => void;
+  menuOpen: boolean;
+  menu: MenuItem[];
+}
 
 export default function MenuGrid({
   isDarkTheme,
   handleMenuOpen,
   menuOpen,
   menu,
-}) {
+}: MenuGridProps) {
   return (
     <div className="col-span-2">
       <div>

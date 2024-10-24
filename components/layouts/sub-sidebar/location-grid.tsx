@@ -1,4 +1,8 @@
-export default function LocationGrid({ address }) {
+interface LocationGridProps {
+  address: string;
+}
+
+export default function LocationGrid({ address }: LocationGridProps) {
   return (
     <div className="col-span-2 grid grid-cols-3 items-center">
       <div className="col-span-1 flex gap-1">

@@ -10,7 +10,6 @@ export default function Auth() {
 
   return (
     <main className="area h-screen w-screen flex justify-center items-center">
-      {/* 상승하는 카드 */}
       <ul className="circles z-0">
         <li></li>
         <li></li>

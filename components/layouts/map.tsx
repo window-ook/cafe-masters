@@ -2,8 +2,8 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { useMapStore } from 'utils/store';
+import { toast } from 'react-toastify';
 
 declare global {
   interface Window {
