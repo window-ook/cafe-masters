@@ -1,9 +1,9 @@
+import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckStore } from 'utils/store';
-import { getListTabStyle } from 'utils/styles';
+import { getSidebarTabItemStyle } from 'utils/styles';
 import { ListItem } from '@mui/material';
 import { List } from '@mui/material';
-import { ReactNode } from 'react';
 
 interface SidebarTabProps {
   icon: ReactNode;
@@ -19,17 +19,17 @@ function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
       onClick={path}
     >
       <span>{icon}</span>
-      <span className={getListTabStyle(isDarkTheme)}>{title}</span>
+      <span className={getSidebarTabItemStyle(isDarkTheme)}>{title}</span>
     </ListItem>
   );
 }
 
-export default function SidebarList() {
+export default function SidebarTabList() {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const router = useRouter();
 
   return (
-    <List className="mt-2 gap-5">
+    <List className="mt-2 gap-5 px-4">
       <SidebarTab
         icon={
           <i

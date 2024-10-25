@@ -1,13 +1,13 @@
-export const getListTabStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'text-white' : 'text-black'} text-xl font-dpixel transition ease-in-out delay-100 hover:text-opacity-30`;
+export const getSidebarTabItemStyle = (isDarkTheme: boolean) => {
+  return `${isDarkTheme ? 'text-white' : 'text-black'} text-xl font-dpixel transition ease-in-out delay-100 hover:text-opacity-30 w-[22rem]`;
 };
 
 export const getSidebarStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} h-[100vh] max-h-screen w-full max-w-[22rem] px-6 rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll`;
+  return `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} h-[100vh] max-h-screen w-full max-w-[22rem] rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll`;
 };
 
 export const getPageConverterStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'bg-darkbg' : 'bg-white'} sticky bottom-0 z-20 py-1 font-dpixel`;
+  return `${isDarkTheme ? 'bg-darkbg' : 'bg-white'} sticky bottom-0 z-20 py-1 font-dpixel w-[22rem]`;
 };
 
 export const getSubSidebarStyle = (
@@ -42,7 +42,7 @@ export const getDetailBodyStyle = (isDarkTheme: boolean) => {
 };
 
 export const getDetailCollectButtonStyle = () => {
-  return 'bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl';
+  return 'bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl hover:scale-105 transition duration-200 ease';
 };
 
 export const getExpertTierStyle = (addOn: string = '') => {
@@ -66,14 +66,14 @@ export const getSearchButtonStyle = () => {
 };
 
 export const getNormalCardStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-50 p-4 border-4 rounded-2xl shadow-md flex flex-col gap-2 cursor-pointer font-dpixel`;
+  return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-50 p-4 border-4 rounded-2xl shadow-md flex flex-col gap-2 cursor-pointer font-dpixel hover:scale-105 transition duration-300 ease`;
 };
 
 export const getCollectedCardStyle = (
   bgRatings: string,
   isDarkTheme: boolean
 ) => {
-  return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel`;
+  return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel hover:scale-105 transition duration-300 ease`;
 };
 
 export const getCollectedBadgeStyle = () => {
@@ -81,11 +81,11 @@ export const getCollectedBadgeStyle = () => {
 };
 
 export const getUniqueCardStyle = () => {
-  return 'bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient text-white shadow-md border-gray-400 h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel';
+  return 'bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient text-white shadow-md border-red-300 h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel font-bold transition duration-300 ease hover:scale-105 hover:bg-gradient-to-tr ';
 };
 
 export const getUniqueCardEffectStyle = () => {
-  return `-z-10 absolute inset-0 w-[100%] h-[100%] bg-gradient-to-r from-unique-effect-left via-unique-effect-mid to-unique-effect-right rounded-xl blur-sm animate-tilt`;
+  return `-z-10 absolute inset-0 w-[100%] h-[100%] bg-gradient-to-r from-unique-effect-left via-unique-effect-mid to-unique-effect-right rounded-xl blur-md animate-tilt`;
 };
 
 export const getOverThreeRatingStyle = () => {

@@ -1,4 +1,7 @@
-import { BookmarkedCafe, CollectedCafe } from 'types/types';
+import {
+  BookmarkedCafeFromSupabase,
+  CollectedCafeFromSupabase,
+} from 'types/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -10,26 +13,26 @@ export const useMapStore = create(
       collectedCafe: [],
       collectedCafeCount: 0,
       bookmarkedCafe: [],
-      thisX: '',
-      thisY: '',
+      thisX: 127.04663357436208,
+      thisY: 37.54715716085294,
       cafeDetail: {},
       collectedCafeDetail: [],
       bookmarkedCafeDetail: [],
 
       setKeyword: (data: string) => set({ keyword: data }),
       setAllCafe: (data: any[]) => set({ allCafe: data ?? [] }),
-      setCollectedCafe: (data: CollectedCafe[]) =>
+      setCollectedCafe: (data: CollectedCafeFromSupabase[]) =>
         set({ collectedCafe: data ?? [] }),
       setCollectedCafeCount: (data: number) =>
         set({ collectedCafeCount: data }),
-      setBookmarkedCafe: (data: BookmarkedCafe[]) =>
+      setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) =>
         set({ bookmarkedCafe: data ?? [] }),
       setThisX: (x: string) => set({ thisX: x }),
       setThisY: (y: string) => set({ thisY: y }),
       setCafeDetail: (data: object) => set({ cafeDetail: data }),
-      setCollectedCafeDetail: (data: CollectedCafe[]) =>
+      setCollectedCafeDetail: (data: CollectedCafeFromSupabase[]) =>
         set({ collectedCafeDetail: data }),
-      setBookmarkedCafeDetail: (data: BookmarkedCafe[]) =>
+      setBookmarkedCafeDetail: (data: BookmarkedCafeFromSupabase[]) =>
         set({ bookmarkedCafeDetail: data }),
     }),
     {

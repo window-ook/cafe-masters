@@ -1,9 +1,9 @@
 import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
-import type { Metadata } from 'next';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ToastContainer } from 'react-toastify';
+import { Metadata } from 'next';
 import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
 import Auth from 'components/auth';
 import AuthProvider from 'config/auth-provider';
@@ -11,8 +11,29 @@ import MainLayout from 'components/layouts/main-layout';
 import KakaoMap from 'components/layouts/map';
 
 export const metadata: Metadata = {
-  title: '카페 마스터즈',
-  description: '개발중인 프로젝트입니다.',
+  title: 'Cafe Masters',
+  description: '카드를 수집하고 카페 마스터가 되어보세요!',
+  keywords: [
+    '카페 마스터즈',
+    '카페 마스터',
+    '카페 추천',
+    '카페 수집',
+    '카페 카드',
+  ],
+  openGraph: {
+    type: 'website',
+    locale: 'ko_KR',
+    title: '카페 마스터즈 Cafe Masters',
+    description: '카드를 수집하고 카페 마스터가 되어보세요!',
+    images: [
+      {
+        url: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/og_image.webp',
+        width: 2000,
+        height: 1500,
+        alt: 'OG image Alt 2000*1500(4:3)',
+      },
+    ],
+  },
 };
 
 export default async function RootLayout({

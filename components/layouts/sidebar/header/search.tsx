@@ -35,7 +35,9 @@ export default function Search() {
   return (
     <div className="p-2">
       <div className="w-full max-w-sm min-w-[200px]">
-        <div className="relative">
+        <div
+          className={`${isDarkTheme && 'shadow-gray-700'} relative shadow-md`}
+        >
           <input
             className={getSearchInputStyle(isDarkTheme)}
             placeholder="ex) 성수, 동성로"

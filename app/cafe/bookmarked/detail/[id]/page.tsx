@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useMapStore, useCheckStore, useUserStore } from 'utils/store';
 import { getBookmarked } from 'actions/bookmarkActions';
 import { PageProps } from 'types/types';
+import Head from 'next/head';
 
 export default function BookmarkedDetailpage({ params }: PageProps) {
   const { id } = params;
@@ -30,5 +31,13 @@ export default function BookmarkedDetailpage({ params }: PageProps) {
     fetchBookmarkedCafeDetail();
   }, [id, userId]);
 
-  return null;
+  return (
+    <Head>
+      <title>북마크 카페의 상세 정보 | 카페 마스터즈 Cafe Masters</title>
+      <meta
+        name="description"
+        content={`선택한 북마크 카페의 상세 정보를 볼 수 있어요.`}
+      />
+    </Head>
+  );
 }

@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useMapStore, useUserStore } from 'utils/store';
 import { getCollected } from 'actions/collectedActions';
 import { PageProps } from 'types/types';
+import Head from 'next/head';
 
 export default function CollectedDetailPage({ params }: PageProps) {
   const { id } = params;
@@ -26,5 +27,13 @@ export default function CollectedDetailPage({ params }: PageProps) {
     fetchCollectedCafeDetail();
   }, [id]);
 
-  return null;
+  return (
+    <Head>
+      <title>수집한 카드의 상세 정보 | Cafe Masters</title>
+      <meta
+        name="description"
+        content={`선택한 카드의 상세 정보를 볼 수 있어요.`}
+      />
+    </Head>
+  );
 }
