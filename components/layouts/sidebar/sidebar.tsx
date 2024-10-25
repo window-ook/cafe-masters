@@ -14,7 +14,7 @@ import SubSidebar from '../sub-sidebar/sub-sidebar';
 import NormalCard from './normal-card';
 import CollectedCard from './collected-card';
 import PageConverter from './footer/page-converter';
-import SidebarList from './sidebar-tab-list';
+import SidebarTabList from './sidebar-tab-list';
 
 export default function Sidebar({ session }: any) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -161,80 +161,81 @@ export default function Sidebar({ session }: any) {
       <Card className={getSidebarStyle(isDarkTheme)} ref={containerRef}>
         <div className="flex flex-col gap-4">
           <Header />
+          {pathname === '/' && <SidebarTabList />}
 
-          {pathname === '/' && <SidebarList />}
-
-          {pathname.startsWith('/cafe/all') && (
-            <div className="flex flex-col gap-4 my-4">
-              {paginatedResults.map((cafe: any) => (
-                <NormalCard
-                  key={cafe.id}
-                  name={cafe.place_name}
-                  address={cafe.address_name}
-                  phoneNum={cafe.phone}
-                  onClick={() => handleNormalCardClick(cafe)}
-                />
-              ))}
-            </div>
-          )}
-
-          {pathname.startsWith('/cafe/collected') && (
-            <div>
-              <div className="flex justify-center sticky">
-                <span className="font-dpixel">
-                  내가 수집한 카드 : {collectedCount}장
-                </span>
+          <div className="px-4">
+            {pathname.startsWith('/cafe/all') && (
+              <div className="flex flex-col gap-4 my-4">
+                {paginatedResults.map((cafe: any) => (
+                  <NormalCard
+                    key={cafe.id}
+                    name={cafe.place_name}
+                    address={cafe.address_name}
+                    phoneNum={cafe.phone}
+                    onClick={() => handleNormalCardClick(cafe)}
+                  />
+                ))}
               </div>
+            )}
 
-              {isFetchingNextCollectedPage && (
-                <div className="text-center py-2">
-                  <CircularProgress color="secondary" />
+            {pathname.startsWith('/cafe/collected') && (
+              <div>
+                <div className="flex justify-center sticky">
+                  <span className="font-dpixel">
+                    내가 수집한 카드 : {collectedCount}장
+                  </span>
                 </div>
-              )}
 
-              {collectedData?.pages?.map((page, i) => (
-                <div key={`page-${i}`} className="flex flex-col gap-4 my-4">
-                  {page.data.map((cafe: any) => (
-                    <CollectedCard
-                      key={cafe.id}
-                      name={cafe.name}
-                      ratings={cafe.rating}
-                      photoUrl={cafe.photoUrl}
-                      address={cafe.address}
-                      phoneNum={cafe.phoneNum}
-                      onClick={() => handleCollectedCardClick(cafe)}
-                    />
-                  ))}
-                </div>
-              ))}
-              <div ref={collectedRef}></div>
-            </div>
-          )}
+                {isFetchingNextCollectedPage && (
+                  <div className="text-center py-2">
+                    <CircularProgress color="secondary" />
+                  </div>
+                )}
 
-          {pathname.startsWith('/cafe/bookmarked') && (
-            <div>
-              {isFetchingNextBookmarkedPage && (
-                <div className="text-center py-2">
-                  <CircularProgress color="secondary" />
-                </div>
-              )}
+                {collectedData?.pages?.map((page, i) => (
+                  <div key={`page-${i}`} className="flex flex-col gap-4 my-4">
+                    {page.data.map((cafe: any) => (
+                      <CollectedCard
+                        key={cafe.id}
+                        name={cafe.name}
+                        ratings={cafe.rating}
+                        photoUrl={cafe.photoUrl}
+                        address={cafe.address}
+                        phoneNum={cafe.phoneNum}
+                        onClick={() => handleCollectedCardClick(cafe)}
+                      />
+                    ))}
+                  </div>
+                ))}
+                <div ref={collectedRef} className="w-[22rem]"></div>
+              </div>
+            )}
 
-              {bookmarkedData?.pages?.map((page, i) => (
-                <div key={`page-${i}`} className="flex flex-col gap-4 my-4">
-                  {page.data.map((cafe: any) => (
-                    <NormalCard
-                      key={cafe.id}
-                      name={cafe.name}
-                      address={cafe.address}
-                      phoneNum={cafe.phoneNum}
-                      onClick={() => handleBookmarkedCardClick(cafe)}
-                    />
-                  ))}
-                </div>
-              ))}
-              <div ref={bookmarkedRef}></div>
-            </div>
-          )}
+            {pathname.startsWith('/cafe/bookmarked') && (
+              <div>
+                {isFetchingNextBookmarkedPage && (
+                  <div className="text-center py-2">
+                    <CircularProgress color="secondary" />
+                  </div>
+                )}
+
+                {bookmarkedData?.pages?.map((page, i) => (
+                  <div key={`page-${i}`} className="flex flex-col gap-4 my-4">
+                    {page.data.map((cafe: any) => (
+                      <NormalCard
+                        key={cafe.id}
+                        name={cafe.name}
+                        address={cafe.address}
+                        phoneNum={cafe.phoneNum}
+                        onClick={() => handleBookmarkedCardClick(cafe)}
+                      />
+                    ))}
+                  </div>
+                ))}
+                <div ref={bookmarkedRef} className="w-[22rem]"></div>
+              </div>
+            )}
+          </div>
 
           {pathname.startsWith('/cafe/all') && (
             <PageConverter

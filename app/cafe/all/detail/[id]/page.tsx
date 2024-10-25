@@ -6,6 +6,7 @@ import { cafeDetail } from 'actions/cafeDetailActions';
 import { getBookmarked } from 'actions/bookmarkActions';
 import { getCollected } from 'actions/collectedActions';
 import { PageProps } from 'types/types';
+import Head from 'next/head';
 
 export default function CafeDetailPage({ params }: PageProps) {
   const { id } = params;
@@ -49,5 +50,13 @@ export default function CafeDetailPage({ params }: PageProps) {
     fetchCollected();
   }, [id]);
 
-  return null;
+  return (
+    <Head>
+      <title>카페 검색 결과 상세 정보 | 카페 마스터즈 Cafe Masters</title>
+      <meta
+        name="description"
+        content={`선택한 카페의 상세 정보를 확인하세요.`}
+      />
+    </Head>
+  );
 }

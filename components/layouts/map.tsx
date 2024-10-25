@@ -32,8 +32,8 @@ export default function KakaoMap() {
         const container = document.getElementById('map');
         const options = {
           center: new window.kakao.maps.LatLng(
-            127.04663357436208,
-            37.54715716085294
+            37.54715716085294,
+            127.04663357436208
           ),
           level: 5,
         };
