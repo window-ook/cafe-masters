@@ -24,18 +24,18 @@ export default function Profile({ session }: any) {
   }, [collectedCafeCount]);
 
   return (
-    <div className="flex justify-center items-center gap-4">
+    <div className="flex justify-center items-center gap-8 sm:gap-6">
       <Image
         src={
           'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/profile_image.webp'
         }
         alt="프로필 이미지"
-        width={48}
-        height={48}
+        width={60}
+        height={60}
         className="relative inline-block object-cover object-center rounded-lg"
       />
       <div className="flex gap-4 items-center">
-        <h6 className="font-bold text-2xl font-dpixel">
+        <h6 className="font-bold text-3xl sm:text-2xl font-dpixel">
           {session?.user?.email?.split('@')?.[0]}
         </h6>
         <TierBadge tier={userTier} />

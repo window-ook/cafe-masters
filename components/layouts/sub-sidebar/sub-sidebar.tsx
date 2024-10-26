@@ -26,6 +26,7 @@ export default function SubSidebar() {
   const [eaten, setEaten] = useState('');
   const [concept, setConcept] = useState('');
   const [rating, setRating] = useState(5);
+  const [after500, setAfter500] = useState(false);
 
   const userId = useUserStore((state: any) => state.userId);
 
@@ -43,6 +44,8 @@ export default function SubSidebar() {
     (state: any) => state.isSubSidebarOpen
   );
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
+  const setIsExtend = useCheckStore((state: any) => state.setIsExtend);
+  const isExtend = useCheckStore((state: any) => state.isExtend);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -171,7 +174,20 @@ export default function SubSidebar() {
     return null;
 
   return (
-    <Card className={getSubSidebarStyle(isSubSidebarOpen, isDarkTheme)}>
+    <Card
+      className={getSubSidebarStyle(
+        isSubSidebarOpen,
+        isDarkTheme,
+        isExtend,
+        after500
+      )}
+    >
+      <div className="flex justify-center">
+        <div
+          className={`${isDarkTheme ? 'bg-gray-300' : 'bg-mainShadow'} w-16 h-2 sm:hidden rounded-2xl`}
+          onClick={setIsExtend}
+        />
+      </div>
       {!memoOpen &&
         isSubSidebarOpen &&
         pathname.startsWith('/cafe/all/detail') && (

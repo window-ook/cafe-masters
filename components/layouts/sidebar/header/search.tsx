@@ -34,7 +34,7 @@ export default function Search() {
 
   return (
     <div className="p-2">
-      <div className="w-full max-w-sm min-w-[200px]">
+      <div className="w-full min-w-[200px]">
         <div
           className={`${isDarkTheme && 'shadow-gray-700'} relative shadow-md`}
         >

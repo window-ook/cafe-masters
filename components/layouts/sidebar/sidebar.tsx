@@ -30,6 +30,9 @@ export default function Sidebar({ session }: any) {
   const pathname = usePathname();
 
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
+  const isSubSidebarOpen = useCheckStore(
+    (state: any) => state.isSubSidebarOpen
+  );
   const setIsSubSidebarOpen = useCheckStore(
     (state: any) => state.setIsSubSidebarOpen
   );
@@ -158,14 +161,17 @@ export default function Sidebar({ session }: any) {
 
   return (
     <div className="relative flex items-center">
-      <Card className={getSidebarStyle(isDarkTheme)} ref={containerRef}>
-        <div className="flex flex-col gap-4">
+      <Card
+        className={getSidebarStyle(isDarkTheme, isSubSidebarOpen)}
+        ref={containerRef}
+      >
+        <div className="flex flex-col gap-12 sm:gap-4">
           <Header />
           {pathname === '/' && <SidebarTabList />}
 
-          <div className="px-4">
+          <div className="px-8 sm:px-4">
             {pathname.startsWith('/cafe/all') && (
-              <div className="flex flex-col gap-4 my-4">
+              <div className="flex flex-col gap-8 my-4">
                 {paginatedResults.map((cafe: any) => (
                   <NormalCard
                     key={cafe.id}
@@ -193,7 +199,7 @@ export default function Sidebar({ session }: any) {
                 )}
 
                 {collectedData?.pages?.map((page, i) => (
-                  <div key={`page-${i}`} className="flex flex-col gap-4 my-4">
+                  <div key={`page-${i}`} className="flex flex-col gap-8 my-4">
                     {page.data.map((cafe: any) => (
                       <CollectedCard
                         key={cafe.id}
@@ -220,7 +226,7 @@ export default function Sidebar({ session }: any) {
                 )}
 
                 {bookmarkedData?.pages?.map((page, i) => (
-                  <div key={`page-${i}`} className="flex flex-col gap-4 my-4">
+                  <div key={`page-${i}`} className="flex flex-col gap-8 my-4">
                     {page.data.map((cafe: any) => (
                       <NormalCard
                         key={cafe.id}

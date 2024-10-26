@@ -86,6 +86,12 @@ export const useCheckStore = create(
       isSubSidebarOpen: false,
       setIsSubSidebarOpen: (prev: boolean) => set({ isSubSidebarOpen: prev }),
 
+      isExtend: false,
+      isExtendComplete: false,
+      setIsExtend: () => set((state: any) => ({ isExtend: !state.isExtend })),
+      setIsExtendComplete: () =>
+        set((state: any) => ({ isExtendComplete: !state.isExtendComplete })),
+
       isDarkTheme: false,
       setIsDarkTheme: () =>
         set((state: any) => ({ isDarkTheme: !state.isDarkTheme })),

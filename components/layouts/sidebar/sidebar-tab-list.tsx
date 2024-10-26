@@ -15,7 +15,7 @@ interface SidebarTabProps {
 function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
   return (
     <ListItem
-      className="grid grid-cols-[40px_auto] items-center gap-4 cursor-pointer"
+      className="grid grid-cols-[40px_auto] items-center gap-6 sm:gap-4 cursor-pointer"
       onClick={path}
     >
       <span>{icon}</span>
@@ -29,11 +29,11 @@ export default function SidebarTabList() {
   const router = useRouter();
 
   return (
-    <List className="mt-2 gap-5 px-4">
+    <List className="mt-2 flex flex-col gap-10 sm:gap-5 px-10 sm:px-4">
       <SidebarTab
         icon={
           <i
-            className={`fa-solid fa-bars text-2xl ${isDarkTheme ? 'text-white' : ''}`}
+            className={`fa-solid fa-bars text-3xl sm:text-2xl ${isDarkTheme ? 'text-white' : ''}`}
           ></i>
         }
         title={'모든 카페 보기'}
@@ -43,7 +43,7 @@ export default function SidebarTabList() {
       <SidebarTab
         icon={
           <i
-            className={`fa-solid fa-file text-2xl ${isDarkTheme ? 'text-white' : 'text-main'}`}
+            className={`fa-solid fa-file text-3xl sm:text-2xl ${isDarkTheme ? 'text-white' : 'text-main'}`}
           ></i>
         }
         title={'수집한 카드 보기'}
@@ -53,7 +53,7 @@ export default function SidebarTabList() {
       <SidebarTab
         icon={
           <i
-            className={`fa-solid fa-bookmark text-xl ${isDarkTheme ? 'text-white' : 'text-yellow-500'}`}
+            className={`fa-solid fa-bookmark text-3xl sm:text-xl ${isDarkTheme ? 'text-white' : 'text-yellow-500'}`}
           ></i>
         }
         title={'가고 싶은 카페 보기'}

@@ -1,24 +1,46 @@
-export const getSidebarTabItemStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'text-white' : 'text-black'} text-xl font-dpixel transition ease-in-out delay-100 hover:text-opacity-30 w-[22rem]`;
+export const getMapStyle = () => {
+  return 'z-0 fixed top-0 sm:translate-x-[22rem] sm:w-[calc(100vw-22rem)] w-screen h-screen';
 };
 
-export const getSidebarStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} h-[100vh] max-h-screen w-full max-w-[22rem] rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between z-10 relative overflow-y-scroll`;
+export const getBarContainerStyle = () => {
+  return 'w-screen h-screen flex items-center';
+};
+
+export const getSidebarStyle = (
+  isDarkTheme: boolean,
+  isSubSidebarOpen: boolean
+) => {
+  return `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} ${isSubSidebarOpen ? 'hidden sm:block' : ''} z-10 relative w-screen h-screen sm:max-w-[22rem] rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between overflow-y-scroll`;
+};
+
+export const getSidebarTabItemStyle = (isDarkTheme: boolean) => {
+  return `${isDarkTheme ? 'text-white' : 'text-black'} w-[22rem] text-2xl sm:text-xl font-dpixel transition ease-in-out delay-100 hover:text-opacity-30`;
 };
 
 export const getPageConverterStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'bg-darkbg' : 'bg-white'} sticky bottom-0 z-20 py-1 font-dpixel w-[22rem]`;
+  return `${isDarkTheme ? 'bg-darkbg' : 'bg-white'} z-20 w-full sticky bottom-0 py-4 font-dpixel`;
 };
 
 export const getSubSidebarStyle = (
   isSubSidebarOpen: boolean,
-  isDarkTheme: boolean
+  isDarkTheme: boolean,
+  isExtend: boolean
 ) => {
-  return `${isSubSidebarOpen ? 'translate-x-[2rem] opacity-100' : 'translate-x-0 opacity-0'} ${isDarkTheme ? 'bg-darkbg text-white' : ''} h-[90vh] w-[100vw] max-w-[24rem] p-2 transition-transform duration-500 ease-in-out transform static left-0 z-10 overflow-y-scroll font-dpixel shadow-md`;
+  const baseStyle = `${isDarkTheme ? 'bg-darkbg text-white' : ''} 
+   static left-0 z-10 w-[100vw] max-w-[28rem] p-2 
+   transition-transform duration-500 ease-in-out 
+   overflow-y-scroll font-dpixel shadow-md`;
+
+  const openStyle = isSubSidebarOpen
+    ? `${isExtend ? 'translate-y-[13rem] h-[calc(100vh-13rem)]' : 'translate-y-[35rem]'} 
+      rounded-t-3xl sm:translate-y-0 sm:h-[90vh] sm:translate-x-[2rem] sm:rounded-md opacity-100`
+    : 'hidden sm:block opacity-0';
+
+  return `${baseStyle} ${openStyle}`;
 };
 
 export const getSubsidebarCloseIconStyle = () => {
-  return 'fa-solid fa-circle-xmark text-main text-2xl hover:text-opacity-70';
+  return 'fa-solid fa-circle-xmark text-main text-3xl hover:text-opacity-70';
 };
 
 export const getMemoInputStyle = (isDarkTheme: boolean) => {
@@ -26,11 +48,11 @@ export const getMemoInputStyle = (isDarkTheme: boolean) => {
 };
 
 export const getMemoSubmitStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'shadow-mainShadow' : ''} shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70 p-4`;
+  return `${isDarkTheme ? 'shadow-mainShadow' : ''} p-4 shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70`;
 };
 
 export const getMemoBackStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'shadow-mainShadow' : ''} shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70 py-2 px-6`;
+  return `${isDarkTheme ? 'shadow-mainShadow' : ''} py-2 px-6 shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70`;
 };
 
 export const getDetailHeaderStyle = (isDarkTheme: boolean) => {
@@ -38,31 +60,11 @@ export const getDetailHeaderStyle = (isDarkTheme: boolean) => {
 };
 
 export const getDetailBodyStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'shadow-mainShadow' : ''} flex flex-col gap-4 p-2 shadow-md rounded-md`;
+  return `${isDarkTheme ? 'shadow-mainShadow' : ''} p-2 flex flex-col gap-4 shadow-md rounded-md`;
 };
 
 export const getDetailCollectButtonStyle = () => {
   return 'bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl hover:scale-105 transition duration-200 ease';
-};
-
-export const getExpertTierStyle = (addOn: string = '') => {
-  return `${addOn} bg-gradient-to-r from-expert-side via-expert-via to-expert-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700`;
-};
-
-export const getMasterEffectStyle = (width: string) => {
-  return `${width} absolute inset-0 h-7 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt z-0`;
-};
-
-export const getMasterTierStyle = (addOn: string = '') => {
-  return `${addOn} relative z-10 bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md`;
-};
-
-export const getSearchInputStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'placeholder:text-gray-200 text-white' : 'placeholder:text-slate-400 text-slate-700'} w-full bg-transparent text-md border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 shadow-sm focus:shadow`;
-};
-
-export const getSearchButtonStyle = () => {
-  return 'absolute top-1 right-1 flex items-center gap-2 rounded bg-main py-3.5 px-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
 };
 
 export const getNormalCardStyle = (isDarkTheme: boolean) => {
@@ -76,9 +78,32 @@ export const getCollectedCardStyle = (
   return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel hover:scale-105 transition duration-300 ease`;
 };
 
+export const getExpertTierStyle = (addOn: string = '') => {
+  return `${addOn} bg-gradient-to-r from-expert-side via-expert-via to-expert-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700`;
+};
+
+export const getMasterEffectStyle = (width: string) => {
+  return `${width} z-0 absolute inset-0 h-8 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
+};
+
+export const getMasterTierStyle = (addOn: string = '') => {
+  return `${addOn} z-10 relative bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md`;
+};
+
+export const getSearchInputStyle = (isDarkTheme: boolean) => {
+  return `${isDarkTheme ? 'placeholder:text-gray-200 text-white' : 'placeholder:text-slate-400 text-slate-700'} w-full pl-3 pr-28 py-4 bg-transparent text-xl sm:text-md border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 shadow-sm focus:shadow`;
+};
+
+export const getSearchButtonStyle = () => {
+  return 'absolute top-1 right-1 py-4 px-2.5 flex items-center gap-2 rounded bg-main border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
+};
+
 export const getCollectedBadgeStyle = () => {
   return 'bg-gradient-to-r from-success via-indigo to-success bg-[length:200%_200%] animate-gradient text-white shadow-md';
 };
+
+export const getBadgeCommon =
+  'rounded-xl w-20 h-6 py-4 flex items-center justify-center';
 
 export const getUniqueCardStyle = () => {
   return 'bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient text-white shadow-md border-red-300 h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel font-bold transition duration-300 ease hover:scale-105 hover:bg-gradient-to-tr ';
@@ -105,5 +130,5 @@ export const getRatingStarStyle = () => {
 };
 
 export const getLogoutButtonStyle = () => {
-  return 'bg-main rounded-xl shadow-md w-[10vw] py-2 hover:bg-opacity-70 transition duration-300 ease-in';
+  return 'bg-main rounded-xl shadow-md w-[12rem] sm:w-[10rem] py-4 sm:py-2 hover:bg-opacity-70 transition duration-300 ease-in';
 };
