@@ -24,8 +24,7 @@ export const getPageConverterStyle = (isDarkTheme: boolean) => {
 export const getSubSidebarStyle = (
   isSubSidebarOpen: boolean,
   isDarkTheme: boolean,
-  isExtend: boolean,
-  after500: boolean
+  isExtend: boolean
 ) => {
   const baseStyle = `${isDarkTheme ? 'bg-darkbg text-white' : ''} 
    static left-0 z-10 w-[100vw] max-w-[28rem] p-2 

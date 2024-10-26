@@ -45,10 +45,6 @@ export default function SubSidebar() {
   );
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const setIsExtend = useCheckStore((state: any) => state.setIsExtend);
-  const isExtendComplete = useCheckStore((state: any) => state.isExtendComplte);
-  const setIsExtendComplete = useCheckStore(
-    (state: any) => state.setIsExtendComplete
-  );
   const isExtend = useCheckStore((state: any) => state.isExtend);
 
   const router = useRouter();
@@ -161,12 +157,6 @@ export default function SubSidebar() {
   });
 
   const handleMenuOpen = () => setMenuOpen((prev) => !prev);
-  const handleExtend = () => {
-    setIsExtend();
-    setTimeout(() => {
-      setAfter500(true);
-    }, 500);
-  };
 
   if ((pathname.startsWith('/cafe/all/detail') && !cafeDetail) || !userId)
     return null;
@@ -195,7 +185,7 @@ export default function SubSidebar() {
       <div className="flex justify-center">
         <div
           className={`${isDarkTheme ? 'bg-gray-300' : 'bg-mainShadow'} w-16 h-2 sm:hidden rounded-2xl`}
-          onClick={handleExtend}
+          onClick={setIsExtend}
         />
       </div>
       {!memoOpen &&

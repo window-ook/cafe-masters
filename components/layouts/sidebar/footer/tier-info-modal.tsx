@@ -42,7 +42,7 @@ export default function TierInfoModal({
 }: TierInfoModalProps) {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
 
-  const tierDescStyle = 'sm:text-md text-sm font-dpixel';
+  const tierDescStyle = 'sm:text-md text-xs font-dpixel';
 
   return (
     <div>
@@ -55,13 +55,13 @@ export default function TierInfoModal({
       >
         <Box
           className={`${isDarkTheme ? 'bg-darkbg text-white border-darkaccent border-4' : 'bg-white border-mainShadow border-4'}
-          absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] w-[80%] sm:h-[65%] h-[60%] shadow-md p-4 flex flex-col gap-4 justify-center`}
+          absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center`}
         >
           <div className="flex flex-col">
             <span className="text-2xl sm:text-3xl font-dpixel">
               TIER INFORMATION
             </span>
-            <span className="text-sm sm:text-lg font-dpixel">
+            <span className={tierDescStyle}>
               수집한 카드의 개수에 따라 티어가 부여됩니다
             </span>
           </div>
