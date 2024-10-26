@@ -12,25 +12,27 @@ export default function Header() {
   const router = useRouter();
   return (
     <div
-      className={`sticky top-0 z-10 py-4 ${isDarkTheme ? 'bg-darkbg' : 'bg-white'}`}
+      className={`${isDarkTheme ? 'bg-darkbg' : 'bg-white'} z-10 sticky top-0 py-4 flex flex-col gap-6`}
     >
-      <div className="mb-2 flex justify-between items-center">
+      <div className="flex justify-between items-center mb-2">
         <Image
           src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp"
-          alt="brand"
-          height={70}
-          width={70}
-          style={{ height: 'auto' }}
+          alt="logo image"
+          height={80}
+          width={80}
+          className="sm:h-auto"
         />
         <Tooltip title="홈으로" placement="right-end">
           <button
             className="cursor-pointer flex items-center hover:opacity-70 transition ease duration-300"
             onClick={() => router.push('/')}
           >
-            <img
+            <Image
               src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/logo_text.webp"
-              alt="텍스트 로고"
-              className="h-14"
+              alt="logo text"
+              height={140}
+              width={140}
+              className="sm:h-auto"
             />
           </button>
         </Tooltip>

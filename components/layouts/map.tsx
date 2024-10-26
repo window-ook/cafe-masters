@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { useMapStore } from 'utils/store';
 import { toast } from 'react-toastify';
+import { getMapStyle } from 'utils/styles';
 
 declare global {
   interface Window {
@@ -36,10 +37,13 @@ export default function KakaoMap() {
             127.04663357436208
           ),
           level: 5,
+          clickable: true,
         };
         const map = new window.kakao.maps.Map(container, options);
         const ps = new window.kakao.maps.services.Places();
         const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
+        const zoomControl = new window.kakao.maps.ZoomControl();
+        map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
         let markers: any[] = [];
 
         // 검색 결과 = cafeAll의 마커 표시
@@ -55,12 +59,38 @@ export default function KakaoMap() {
           });
           markers.push(marker);
 
-          window.kakao.maps.event.addListener(marker, 'click', function () {
-            infowindow.setContent(
-              `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.place_name}</div>`
+          // PC / 모바일
+          if (window.innerWidth > 768) {
+            window.kakao.maps.event.addListener(
+              marker,
+              'mouseover',
+              function () {
+                infowindow.setContent(
+                  `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.place_name}</div>`
+                );
+                infowindow.open(map, marker);
+              }
             );
-            infowindow.open(map, marker);
-          });
+
+            window.kakao.maps.event.addListener(
+              marker,
+              'mouseout',
+              function () {
+                infowindow.close();
+              }
+            );
+          } else {
+            window.kakao.maps.event.addListener(marker, 'click', function () {
+              infowindow.setContent(
+                `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`
+              );
+              infowindow.open(map, marker);
+            });
+
+            window.kakao.maps.event.addListener(map, 'click', function () {
+              infowindow.close();
+            });
+          }
         };
 
         // 수집한 카드, 북마크 카페의 마커 표시
@@ -76,12 +106,38 @@ export default function KakaoMap() {
           });
           markers.push(marker);
 
-          window.kakao.maps.event.addListener(marker, 'click', function () {
-            infowindow.setContent(
-              `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`
+          // PC / 모바일
+          if (window.innerWidth > 768) {
+            window.kakao.maps.event.addListener(
+              marker,
+              'mouseover',
+              function () {
+                infowindow.setContent(
+                  `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`
+                );
+                infowindow.open(map, marker);
+              }
             );
-            infowindow.open(map, marker);
-          });
+
+            window.kakao.maps.event.addListener(
+              marker,
+              'mouseout',
+              function () {
+                infowindow.close();
+              }
+            );
+          } else {
+            window.kakao.maps.event.addListener(marker, 'click', function () {
+              infowindow.setContent(
+                `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`
+              );
+              infowindow.open(map, marker);
+            });
+
+            window.kakao.maps.event.addListener(map, 'click', function () {
+              infowindow.close();
+            });
+          }
         };
 
         // 상세 정보에 표시된 카페의 마커를 맵의 센터에 표시
@@ -201,17 +257,5 @@ export default function KakaoMap() {
     };
   }, [keyword, pathname]);
 
-  return (
-    <div
-      id="map"
-      style={{
-        width: '100vw',
-        height: '100vh',
-        position: 'fixed',
-        top: 0,
-        left: 348,
-        zIndex: 0,
-      }}
-    />
-  );
+  return <div id="map" className={getMapStyle()} />;
 }

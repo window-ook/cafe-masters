@@ -9,9 +9,9 @@ export default function LightDarkToggle() {
   return (
     <button onClick={handleToggle} className="w-14 h-14">
       {isDarkTheme ? (
-        <i className="fa-regular fa-sun text-white text-2xl"></i>
+        <i className="fa-regular fa-sun text-white text-3xl"></i>
       ) : (
-        <i className="fa-solid fa-moon text-main text-2xl"></i>
+        <i className="fa-solid fa-moon text-main text-3xl"></i>
       )}
     </button>
   );

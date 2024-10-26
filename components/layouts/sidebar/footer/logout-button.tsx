@@ -17,7 +17,9 @@ export default function LogoutButton() {
 
   return (
     <Button className={getLogoutButtonStyle()} onClick={handleLogout}>
-      <span className="text-white text-lg font-dpixel">로그아웃</span>
+      <span className="text-white text-2xl sm:text-lg font-dpixel">
+        로그아웃
+      </span>
     </Button>
   );
 }

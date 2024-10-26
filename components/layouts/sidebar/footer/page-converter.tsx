@@ -21,19 +21,19 @@ export default function PageConverter({
         <button
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
-          className={`px-4 py-2 ${
+          className={`px-4 py-2 text-3xl ${
             currentPage === 1 ? 'opacity-50' : 'opacity-100'
           }`}
         >
           {'<'}{' '}
         </button>
-        <span>
+        <span className="text-2xl">
           {currentPage} / {totalPages}
         </span>
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
-          className={`px-4 py-2 ${
+          className={`px-4 py-2 text-3xl ${
             currentPage === totalPages ? 'opacity-50' : 'opacity-100'
           }`}
         >
