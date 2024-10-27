@@ -1,5 +1,3 @@
-import { TextField, Typography } from '@mui/material';
-
 interface UserForm {
   email: string;
   password: string;
@@ -14,25 +12,21 @@ export default function UserForm({
   setPassword,
 }: UserForm) {
   return (
-    <div className="mb-1 flex flex-col gap-6 z-10">
-      <Typography className="text-lg font-dpixel">이메일</Typography>
-      <TextField
-        variant="outlined"
+    <div className="mb-1 flex flex-col gap-4 z-10">
+      <span className="text-xl font-dpixel">이메일</span>
+      <input
         value={email}
-        color="secondary"
         onChange={(e) => setEmail(e.target.value)}
-        label="아이디@주소"
-        className="border-gray-400 active:border-main p-2"
+        placeholder="아이디@주소"
+        className="border-gray-400"
       />
-      <Typography className="text-lg font-dpixel">비밀번호</Typography>
-      <TextField
-        variant="outlined"
+      <span className="text-xl font-dpixel">비밀번호</span>
+      <input
         value={password}
-        color="secondary"
         onChange={(e) => setPassword(e.target.value)}
         type="password"
-        label="********"
-        className="border-gray-400 active:border-main p-2"
+        placeholder="********"
+        className="border-gray-400"
       />
     </div>
   );
