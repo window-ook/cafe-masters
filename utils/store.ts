@@ -60,7 +60,7 @@ export const useMapStore = create(
 export const useUserStore = create(
   persist(
     (set: any) => ({
-      userId: 'userId',
+      userId: null,
       userTier: 'BEGINNER',
       setUserId: (user: string) => set({ userId: user }),
       setUserTier: (tier: string) => set({ userTier: tier }),

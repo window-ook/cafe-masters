@@ -159,6 +159,8 @@ export default function Sidebar({ session }: any) {
     }
   }, [bookmarkedInView, hasNextBookmarkedPage, fetchNextBookmarkedPage]);
 
+  if (pathname.startsWith('/auth')) return null;
+
   return (
     <div className="relative flex items-center">
       <Card
