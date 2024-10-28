@@ -51,9 +51,15 @@ export default function CollectedCafeDetail({
           <Image
             src={collectedCafeDetail?.photoUrl}
             alt="카페 썸네일"
-            className="w-auto h-auto rounded-md"
+            className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-70 hover:cursor-pointer"
             width={160}
             height={30}
+            onClick={() =>
+              window.open(
+                `http://place.map.kakao.com/${collectedCafeDetail?.id}`,
+                '_blank'
+              )
+            }
           />
         </div>
 

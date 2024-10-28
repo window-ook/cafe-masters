@@ -26,7 +26,6 @@ export default function SubSidebar() {
   const [eaten, setEaten] = useState('');
   const [concept, setConcept] = useState('');
   const [rating, setRating] = useState(5);
-  const [after500, setAfter500] = useState(false);
 
   const userId = useUserStore((state: any) => state.userId);
 

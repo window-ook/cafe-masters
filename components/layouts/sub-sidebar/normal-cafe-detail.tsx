@@ -118,9 +118,12 @@ export default function NormalCafeDetail({
           <Image
             src={detail?.photoUrl || '/image/cafe_thumbnail.webp'}
             alt="카페 썸네일"
-            className="rounded-md w-auto h-auto"
+            className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-70 hover:cursor-pointer"
             width={160}
             height={30}
+            onClick={() =>
+              window.open(`http://place.map.kakao.com/${detail?.id}`, '_blank')
+            }
           />
         </div>
 
