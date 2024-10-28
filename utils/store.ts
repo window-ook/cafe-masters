@@ -61,8 +61,10 @@ export const useUserStore = create(
   persist(
     (set: any) => ({
       userId: null,
+      userEmail: '새로고침 하기',
       userTier: 'BEGINNER',
       setUserId: (user: string) => set({ userId: user }),
+      setUserEmail: (user: string) => set({ userEmail: user }),
       setUserTier: (tier: string) => set({ userTier: tier }),
     }),
     {
@@ -70,6 +72,7 @@ export const useUserStore = create(
       getStorage: () => localStorage,
       partialize: (state: any) => ({
         userId: state.userId,
+        userEmail: state.userEmail,
         userTier: state.userTier,
       }),
       merge: (persistedState: any, currentState: any) => ({

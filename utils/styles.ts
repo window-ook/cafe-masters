@@ -83,7 +83,7 @@ export const getExpertTierStyle = (addOn: string = '') => {
 };
 
 export const getMasterEffectStyle = (width: string) => {
-  return `${width} z-0 absolute inset-0 h-8 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
+  return `${width} z-0 absolute inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 };
 
 export const getMasterTierStyle = (addOn: string = '') => {

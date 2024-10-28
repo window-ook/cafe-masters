@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Signup from './signup';
-import SignIn from './signin';
+import Signin from './signin';
 import Image from 'next/image';
 
 export default function Auth() {
@@ -39,7 +39,7 @@ export default function Auth() {
         {view === 'SIGNUP' ? (
           <Signup setView={setView} checkEmailVaild={checkEmailVaild} />
         ) : (
-          <SignIn setView={setView} checkEmailVaild={checkEmailVaild} />
+          <Signin setView={setView} checkEmailVaild={checkEmailVaild} />
         )}
       </div>
     </main>

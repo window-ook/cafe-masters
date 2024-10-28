@@ -8,7 +8,7 @@ import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { Card, Button } from '@mui/material';
 import UserForm from './user-form';
 
-export default function SignIn({ setView, checkEmailVaild }: any) {
+export default function Signin({ setView, checkEmailVaild }: any) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState('');
@@ -16,6 +16,7 @@ export default function SignIn({ setView, checkEmailVaild }: any) {
   const [resetRequested, setResetRequested] = useState('');
   const supabase = createBrowserSupabaseClient();
   const setUserId = useUserStore((state: any) => state.setUserId);
+  const setUserEmail = useUserStore((state: any) => state.setUserEmail);
 
   const signinMutation = useMutation({
     mutationFn: async () => {
@@ -25,8 +26,12 @@ export default function SignIn({ setView, checkEmailVaild }: any) {
       });
 
       if (error) throw new Error(error.message);
-      if (data) setUserId(data?.user?.id);
+      if (data) {
+        setUserId(data?.user?.id);
+        setUserEmail(data?.user?.email?.split('@')?.[0]);
+      }
     },
+
     onError: (error: Error) => {
       if (error.message === 'Invalid login credentials')
         alert('이메일 또는 비밀번호를 잘못 입력했습니다.');
@@ -37,7 +42,7 @@ export default function SignIn({ setView, checkEmailVaild }: any) {
   const resetPasswordMutation = useMutation({
     mutationFn: async () => {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'http://localhost:3000/auth/resetpassword',
+        redirectTo: `${process.env.NEXT_PUBLIC_API_REQUEST_URI}/resetpassword`,
       });
       if (error) throw new Error(error.message);
     },
@@ -72,7 +77,7 @@ export default function SignIn({ setView, checkEmailVaild }: any) {
           <div className="flex gap-4 justify-between items-center">
             <span className="w-20 font-dpixel text-lg">이메일</span>
             <input
-              value={email}
+              value={email.trim()}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="아이디@주소"
               className="border-gray-400 w-full"
@@ -129,7 +134,7 @@ export default function SignIn({ setView, checkEmailVaild }: any) {
               계정이 없으신가요?{' '}
               <Button
                 onClick={() => setView('SIGNUP')}
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer hover:bg-gray-100"
               >
                 <span className="font-bold font-dpixel text-main">
                   회원가입

@@ -23,6 +23,10 @@ export default function AuthProvider({
       if (session?.access_token !== accessToken) {
         router.refresh();
       }
+
+      if (event === 'SIGNED_OUT' || session?.access_token !== accessToken) {
+        router.refresh();
+      }
     });
 
     return () => {

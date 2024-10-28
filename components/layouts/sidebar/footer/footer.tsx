@@ -3,10 +3,10 @@
 import LogoutButton from './logout-button';
 import Profile from './profile';
 
-export default function Footer({ session }: any) {
+export default function Footer() {
   return (
     <div className={`flex flex-col gap-10 items-center`}>
-      <Profile session={session} />
+      <Profile />
       <LogoutButton />
     </div>
   );

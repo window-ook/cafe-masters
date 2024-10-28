@@ -22,8 +22,6 @@ export default function KakaoMap() {
   const thisX = useMapStore((state: any) => state.thisX);
   const thisY = useMapStore((state: any) => state.thisY);
 
-  if (pathname.startsWith('/auth')) return null;
-
   useEffect(() => {
     const script = document.createElement('script');
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false`;
@@ -251,6 +249,8 @@ export default function KakaoMap() {
         ) {
           displayDetailCenter(thisX, thisY);
         }
+
+        if (pathname.startsWith('/resetpassword')) return null;
       });
     };
 
@@ -258,6 +258,8 @@ export default function KakaoMap() {
       script.remove();
     };
   }, [keyword, pathname]);
+
+  if (pathname.startsWith('/resetpassword')) return null;
 
   return <div id="map" className={getMapStyle()} />;
 }

@@ -26,9 +26,10 @@ export default function ResetpasswordPage() {
       console.error(error);
       alert('기존 비밀번호와 다른 비밀번호를 입력해주세요.');
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await supabase.auth.signOut();
       alert('비밀번호를 재설정했습니다!');
-      router.push('/');
+      router.push('/resetpassword/complete');
     },
   });
 

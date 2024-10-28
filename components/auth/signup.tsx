@@ -22,13 +22,14 @@ export default function Signup({ setView, checkEmailVaild }: any) {
         email,
         password,
         options: {
-          emailRedirectTo: 'http://localhost:3000/signup/confirm',
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_API_REQUEST_URI}/signup/confirm`,
         },
       });
 
       if (error) throw new Error(error.message);
       if (data) setConfirmationRequired(true);
     },
+
     onError: (error: Error) => console.error(error),
   });
 
@@ -43,6 +44,7 @@ export default function Signup({ setView, checkEmailVaild }: any) {
       if (error) throw new Error(error.message);
       if (data) setConfirmationRequired(true);
     },
+
     onError: (error: Error) => console.error(error),
   });
 
@@ -113,7 +115,7 @@ export default function Signup({ setView, checkEmailVaild }: any) {
           이미 계정이 있으신가요?{' '}
           <Button
             onClick={() => setView('SIGNIN')}
-            className="hover:cursor-pointer hover:bg-gray-300 hover:opcity-70"
+            className="hover:cursor-pointer hover:bg-gray-100"
           >
             <span className="font-bold font-dpixel text-main">로그인 하기</span>
           </Button>

@@ -42,7 +42,7 @@ export default function TierInfoModal({
 }: TierInfoModalProps) {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
 
-  const tierDescStyle = 'sm:text-md text-xs font-dpixel';
+  const tierDescStyle = 'sm:text-lg text-xs font-dpixel';
 
   return (
     <div>
@@ -98,7 +98,7 @@ export default function TierInfoModal({
             어엿한 카페 고수입니다 뿌듯하셔도 좋아요!!
           </span>
           <div className="flex items-center gap-3 relative">
-            <div className={getMasterEffectStyle('w-[16%]')}></div>
+            <div className={getMasterEffectStyle('w-[15%]')}></div>
             <div className={getMasterTierStyle(getBadgeCommon)}>
               <span className="text-sm font-dpixel">MASTER</span>
             </div>

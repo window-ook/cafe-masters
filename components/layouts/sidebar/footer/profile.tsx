@@ -5,10 +5,11 @@ import { useMapStore, useUserStore } from 'utils/store';
 import TierBadge from './tier-badge';
 import Image from 'next/image';
 
-export default function Profile({ session }: any) {
+export default function Profile() {
   const collectedCafeCount = useMapStore(
     (state: any) => state.collectedCafeCount
   );
+  const userEmail = useUserStore((state: any) => state.userEmail);
   const userTier = useUserStore((state: any) => state.userTier);
   const setUserTier = useUserStore((state: any) => state.setUserTier);
 
@@ -36,7 +37,7 @@ export default function Profile({ session }: any) {
       />
       <div className="flex gap-4 items-center">
         <h6 className="font-bold text-3xl sm:text-2xl font-dpixel">
-          {session?.user?.email?.split('@')?.[0]}
+          {userEmail}
         </h6>
         <TierBadge tier={userTier} />
       </div>

@@ -16,7 +16,7 @@ import CollectedCard from './collected-card';
 import PageConverter from './footer/page-converter';
 import SidebarTabList from './sidebar-tab-list';
 
-export default function Sidebar({ session }: any) {
+export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);
   const { ref: collectedRef, inView: collectedInView } = useInView({
     threshold: 0.5,
@@ -159,7 +159,7 @@ export default function Sidebar({ session }: any) {
     }
   }, [bookmarkedInView, hasNextBookmarkedPage, fetchNextBookmarkedPage]);
 
-  if (pathname.startsWith('/auth')) return null;
+  if (pathname.startsWith('/resetpassword')) return null;
 
   return (
     <div className="relative flex items-center">
@@ -255,7 +255,7 @@ export default function Sidebar({ session }: any) {
             />
           )}
 
-          {pathname === '/' && <Footer session={session} />}
+          {pathname === '/' && <Footer />}
         </div>
       </Card>
 
