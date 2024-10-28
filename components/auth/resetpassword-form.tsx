@@ -1,5 +1,3 @@
-import { Button } from '@mui/material';
-
 interface ResetpasswordFormProps {
   email: string;
   setEmail: (state: any) => void;
@@ -30,20 +28,20 @@ export default function ResetpasswordForm({
         />
       </div>
       <span className="text-success font-bold">{resetRequested}</span>
-      <Button
+      <button
         aria-label="비밀번호 재설정 링크 메일 요청 버튼"
-        className="bg-main w-full hover:bg-opacity-70 hover:cursor-pointer"
+        className="bg-main w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
         onClick={resetFn}
       >
         <span className="font-dpixel text-lg text-white">재설정하기</span>
-      </Button>
-      <Button
+      </button>
+      <button
         aria-label="비밀번호 재설정 취소 버튼"
         onClick={cancelFn}
-        className="bg-blue-500 w-full hover:bg-opacity-70 hover:cursor-pointer"
+        className="bg-blue-500 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
       >
         <span className="font-dpixel text-lg text-white">취소</span>
-      </Button>
+      </button>
     </div>
   );
 }

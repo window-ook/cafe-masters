@@ -1,7 +1,6 @@
 'use client';
 
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
-import { Card } from '@mui/material';
 import Image from 'next/image';
 import Head from 'next/head';
 import AuthBackgroundCards from 'components/auth/auth-background-cards';
@@ -33,7 +32,7 @@ export default function ResetPasswordCompletePage() {
             height={180}
             className="w-auto h-auto"
           />
-          <Card className="z-10 p-5 rounded-xl bg-white shadow-mainShadow">
+          <div className="z-10 p-5 rounded-xl bg-white shadow-mainShadow">
             <div className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
               <p className="text-center text-3xl font-bold font-dpixel">
                 비밀번호 재설정 완료
@@ -49,7 +48,7 @@ export default function ResetPasswordCompletePage() {
                 <span className="text-white font-dpixel">돌아가기</span>
               </button>
             </div>
-          </Card>
+          </div>
         </div>
       </main>
     </>
