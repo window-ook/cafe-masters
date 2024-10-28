@@ -85,7 +85,7 @@ export default function NormalCafeDetail({
         <div className="flex items-center">
           {isBookmarked ? (
             <IconButton
-              aria-label="bookmark"
+              aria-label="북마크 취소 버튼"
               size="large"
               onClick={() => bookmarkCancelMutation.mutate()}
             >
@@ -93,7 +93,7 @@ export default function NormalCafeDetail({
             </IconButton>
           ) : (
             <IconButton
-              aria-label="bookmark"
+              aria-label="북마크 저장 버튼"
               size="large"
               onClick={() => bookmarkMutation.mutate(detail)}
             >
@@ -105,6 +105,7 @@ export default function NormalCafeDetail({
           <span className="text-2xl font-semibold">{detail?.name}</span>
         </div>
         <button
+          aria-label="카페 상세 정보 보기 취소 버튼"
           onClick={() => setIsSubSidebarOpen(false)}
           className="px-2 right-2"
         >
@@ -117,9 +118,12 @@ export default function NormalCafeDetail({
           <Image
             src={detail?.photoUrl || '/image/cafe_thumbnail.webp'}
             alt="카페 썸네일"
-            className="rounded-md"
+            className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
             width={160}
             height={30}
+            onClick={() =>
+              window.open(`http://place.map.kakao.com/${detail?.id}`, '_blank')
+            }
           />
         </div>
 
@@ -132,6 +136,7 @@ export default function NormalCafeDetail({
             <CollectedBadge />
           ) : (
             <Button
+              aria-label="수집하기 버튼"
               className={getDetailCollectButtonStyle()}
               variant="contained"
               onClick={() => setMemoOpen(true)}

@@ -16,8 +16,12 @@ export default function LogoutButton() {
   };
 
   return (
-    <Button className={getLogoutButtonStyle()} onClick={handleLogout}>
-      <span className="text-white text-2xl sm:text-lg font-dpixel">
+    <Button
+      aria-label="로그아웃 버튼"
+      className={getLogoutButtonStyle()}
+      onClick={handleLogout}
+    >
+      <span className="text-white font-dpixel text-2xl sm:text-lg">
         로그아웃
       </span>
     </Button>

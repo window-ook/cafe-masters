@@ -62,7 +62,7 @@ export default async function RootLayout({
         <ReactQueryClientProvider>
           <AuthProvider accessToken={session?.access_token}>
             {session?.user ? (
-              <MainLayout session={session}>
+              <MainLayout>
                 {children}
                 <KakaoMap />
                 <ToastContainer

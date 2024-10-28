@@ -27,13 +27,14 @@ function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
 export default function SidebarTabList() {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const router = useRouter();
+  const iconStyle = 'fa-solid text-3xl sm:text-2xl';
 
   return (
     <List className="mt-2 flex flex-col gap-10 sm:gap-5 px-10 sm:px-4">
       <SidebarTab
         icon={
           <i
-            className={`fa-solid fa-bars text-3xl sm:text-2xl ${isDarkTheme ? 'text-white' : ''}`}
+            className={`${isDarkTheme ? 'text-white' : ''} ${iconStyle} fa-bars`}
           ></i>
         }
         title={'모든 카페 보기'}
@@ -43,7 +44,7 @@ export default function SidebarTabList() {
       <SidebarTab
         icon={
           <i
-            className={`fa-solid fa-file text-3xl sm:text-2xl ${isDarkTheme ? 'text-white' : 'text-main'}`}
+            className={`${isDarkTheme ? 'text-white' : 'text-main'} ${iconStyle} fa-file`}
           ></i>
         }
         title={'수집한 카드 보기'}
@@ -53,7 +54,7 @@ export default function SidebarTabList() {
       <SidebarTab
         icon={
           <i
-            className={`fa-solid fa-bookmark text-3xl sm:text-xl ${isDarkTheme ? 'text-white' : 'text-yellow-500'}`}
+            className={`${isDarkTheme ? 'text-white' : 'text-yellow-500'} ${iconStyle} fa-bookmark`}
           ></i>
         }
         title={'가고 싶은 카페 보기'}

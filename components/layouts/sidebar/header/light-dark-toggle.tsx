@@ -7,7 +7,11 @@ export default function LightDarkToggle() {
   const handleToggle = () => setIsDarkTheme();
 
   return (
-    <button onClick={handleToggle} className="w-14 h-14">
+    <button
+      aria-label="라이트/다크 테마 토글 버튼"
+      onClick={handleToggle}
+      className="w-14 h-14 hover:opacity-70 transform duration-300 ease-out"
+    >
       {isDarkTheme ? (
         <i className="fa-regular fa-sun text-white text-3xl"></i>
       ) : (

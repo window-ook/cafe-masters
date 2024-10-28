@@ -21,7 +21,7 @@ export default function MenuGrid({
       <div>
         <div className="flex items-center">
           <span className="text-lg">메뉴</span>
-          <IconButton onClick={handleMenuOpen}>
+          <IconButton aria-label="메뉴 보기 버튼" onClick={handleMenuOpen}>
             {menuOpen ? (
               <i
                 className={`fa-solid fa-angle-up text-md ${isDarkTheme ? 'text-white' : ''}`}

@@ -16,7 +16,7 @@ const config: Config = {
         darkbg: '#1f1926',
         darkaccent: '#5f018a',
 
-        success: '#15ed79',
+        success: '#09d665',
         indigo: '#6366f1',
 
         beginner: '#8a919c',

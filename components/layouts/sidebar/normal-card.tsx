@@ -15,20 +15,21 @@ export default function NormalCard({
   return (
     <Card onClick={onClick} className={getNormalCardStyle(isDarkTheme)}>
       <span
-        className={`px-2 py-1 shadow-md ${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'}`}
+        className={`${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'} px-2 py-1 shadow-md`}
       >
         {name}
       </span>
       <div className="flex justify-center">
         <Image
           src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/search_thumbnail.webp"
-          alt="cafe_img"
+          alt="카페 썸네일 이미지"
           width={100}
           height={50}
+          className="w-auto h-auto"
         />
       </div>
       <div
-        className={`flex flex-col px-2 shadow-md ${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'}`}
+        className={`${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'} flex flex-col px-2 shadow-md`}
       >
         <span className="text-sm">{address}</span>
         <span>{phoneNum}</span>

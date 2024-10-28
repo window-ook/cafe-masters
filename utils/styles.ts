@@ -83,7 +83,7 @@ export const getExpertTierStyle = (addOn: string = '') => {
 };
 
 export const getMasterEffectStyle = (width: string) => {
-  return `${width} z-0 absolute inset-0 h-8 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
+  return `${width} z-0 absolute inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 };
 
 export const getMasterTierStyle = (addOn: string = '') => {
@@ -131,4 +131,19 @@ export const getRatingStarStyle = () => {
 
 export const getLogoutButtonStyle = () => {
   return 'bg-main rounded-xl shadow-md w-[12rem] sm:w-[10rem] py-4 sm:py-2 hover:bg-opacity-70 transition duration-300 ease-in';
+};
+
+export const getAuthFormCardStyle = () => {
+  return 'p-5 rounded-xl bg-white shadow-mainShadow z-10';
+};
+
+export const getAuthFormTitleStyle = () => {
+  return 'text-center text-3xl font-bold font-dpixel';
+};
+export const getAuthFormMentionStyle = () => {
+  return 'flex items-center justify-center gap-4 text-center font-dpixel';
+};
+
+export const getKakaoButtonStyle = () => {
+  return 'bg-yellow-500 w-full hover:bg-opacity-70 hover:cursor-pointer';
 };

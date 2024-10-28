@@ -9,7 +9,7 @@ export const signInWithKakao = async () => {
     provider: 'kakao',
     options: {
       redirectTo: process.env.NEXT_PUBLIC_API_REQUEST_URI
-        ? `https://${process.env.NEXT_PUBLIC_API_REQUEST_URI}/auth/callback`
+        ? `${process.env.NEXT_PUBLIC_API_REQUEST_URI}/auth/callback`
         : 'http://localhost:3000/auth/callback',
     },
   });

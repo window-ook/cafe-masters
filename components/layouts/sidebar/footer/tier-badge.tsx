@@ -23,9 +23,9 @@ export default function TierBadge({ tier }: TierBadgeProps) {
   };
 
   return (
-    <div>
+    <div className="hover:opacity-70 transform duration-500 ease-in">
       <Tooltip title="티어 정보" placement="right-end">
-        <div className="relative flex items-center">
+        <div className="relative flex items-center justify-center">
           {tier === 'MASTER' && (
             <div className={getMasterEffectStyle('w-[100%]')}></div>
           )}

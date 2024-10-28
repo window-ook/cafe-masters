@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import Signup from './signup';
-import SignIn from './signin';
+import Signin from './signin';
 import Image from 'next/image';
+import AuthBackgroundCards from './auth-background-cards';
 
 export default function Auth() {
   const [view, setView] = useState('SIGNIN');
@@ -16,18 +17,7 @@ export default function Auth() {
 
   return (
     <main className="area h-screen w-screen flex justify-center items-center">
-      <ul className="circles z-0">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
+      <AuthBackgroundCards />
       <div className="flex flex-col items-center gap-4">
         <Image
           alt="텍스트 로고"
@@ -39,7 +29,7 @@ export default function Auth() {
         {view === 'SIGNUP' ? (
           <Signup setView={setView} checkEmailVaild={checkEmailVaild} />
         ) : (
-          <SignIn setView={setView} checkEmailVaild={checkEmailVaild} />
+          <Signin setView={setView} checkEmailVaild={checkEmailVaild} />
         )}
       </div>
     </main>

@@ -1,3 +1,6 @@
+import { handleCopyClick } from 'utils/common';
+import { Tooltip } from '@mui/material';
+
 interface LocationGridProps {
   address: string;
 }
@@ -9,7 +12,17 @@ export default function LocationGrid({ address }: LocationGridProps) {
         <i className="fa-solid fa-location-dot pt-1"></i>
         <span>위치</span>
       </div>
-      <div className="col-span-2 text-sm">{address}</div>
+      <div className="col-span-2 flex gap-4">
+        <span className="text-sm">{address}</span>
+        <Tooltip title="복사" placement="right-end">
+          <button
+            onClick={() => handleCopyClick(address)}
+            className="hover:opacity-70"
+          >
+            <i className="fa-solid fa-copy"></i>
+          </button>
+        </Tooltip>
+      </div>
     </div>
   );
 }

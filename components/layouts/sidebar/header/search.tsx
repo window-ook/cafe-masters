@@ -46,6 +46,7 @@ export default function Search() {
             onKeyDown={handleKeyDown}
           />
           <button
+            aria-label="검색 버튼"
             className={getSearchButtonStyle()}
             type="button"
             onClick={handleSearch}
