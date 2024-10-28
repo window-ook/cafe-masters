@@ -1,4 +1,5 @@
 import { useCheckStore } from 'utils/store';
+import { Card } from '@mui/material';
 import {
   getOverThreeRatingStyle,
   getOverFiveRatingStyle,
@@ -31,7 +32,7 @@ export default function CollectedCard({
   return (
     <div className="relative">
       {isUnique && <div className={getUniqueCardEffectStyle()}></div>}
-      <div
+      <Card
         onClick={onClick}
         className={
           isUnique
@@ -64,7 +65,7 @@ export default function CollectedCard({
           <span className="text-sm">{address}</span>
           <span>{phoneNum}</span>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

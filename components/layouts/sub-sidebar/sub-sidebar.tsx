@@ -11,6 +11,7 @@ import {
   createCollected,
   updateCollected,
 } from 'actions/collectedActions';
+import { Card } from '@mui/material';
 import { toast } from 'react-toastify';
 import Memo from './memo/memo';
 import NormalCafeDetail from './normal-cafe-detail';
@@ -172,7 +173,7 @@ export default function SubSidebar() {
     return null;
 
   return (
-    <div
+    <Card
       className={getSubSidebarStyle(isSubSidebarOpen, isDarkTheme, isExtend)}
     >
       <div className="flex justify-center">
@@ -240,6 +241,6 @@ export default function SubSidebar() {
           />
         </form>
       )}
-    </div>
+    </Card>
   );
 }
