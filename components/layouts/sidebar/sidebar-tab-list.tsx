@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckStore } from 'utils/store';
 import { getSidebarTabItemStyle } from 'utils/styles';
+import { ListItem } from '@mui/material';
+import { List } from '@mui/material';
 
 interface SidebarTabProps {
   icon: ReactNode;
@@ -12,13 +14,13 @@ interface SidebarTabProps {
 
 function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
   return (
-    <li
+    <ListItem
       className="grid grid-cols-[40px_auto] items-center gap-6 sm:gap-4 cursor-pointer"
       onClick={path}
     >
       <span>{icon}</span>
       <span className={getSidebarTabItemStyle(isDarkTheme)}>{title}</span>
-    </li>
+    </ListItem>
   );
 }
 
@@ -28,7 +30,7 @@ export default function SidebarTabList() {
   const iconStyle = 'fa-solid text-3xl sm:text-2xl';
 
   return (
-    <ul className="mt-2 flex flex-col gap-10 sm:gap-5 px-10 sm:px-4">
+    <List className="mt-2 flex flex-col gap-10 sm:gap-5 px-10 sm:px-4">
       <SidebarTab
         icon={
           <i
@@ -59,6 +61,6 @@ export default function SidebarTabList() {
         path={() => router.push('/cafe/bookmarked')}
         isDarkTheme={isDarkTheme}
       />
-    </ul>
+    </List>
   );
 }

@@ -13,6 +13,7 @@ import {
   getDetailHeaderStyle,
   getSubsidebarCloseIconStyle,
 } from 'utils/styles';
+import { Button, IconButton } from '@mui/material';
 import { toast } from 'react-toastify';
 import { NormalCafeDetailProps } from 'types/types';
 import CollectedBadge from 'components/layouts/sub-sidebar/collected-badge';
@@ -83,21 +84,23 @@ export default function NormalCafeDetail({
       <div className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
           {isBookmarked ? (
-            <button
+            <IconButton
               aria-label="북마크 취소 버튼"
+              size="large"
               onClick={() => bookmarkCancelMutation.mutate()}
             >
               <BookmarkIcon className="text-yellow-500" />
-            </button>
+            </IconButton>
           ) : (
-            <button
+            <IconButton
               aria-label="북마크 저장 버튼"
+              size="large"
               onClick={() => bookmarkMutation.mutate(detail)}
             >
               <BookmarkIcon
                 className={`hover:scale-110 ${isDarkTheme ? 'text-white' : ''}`}
               />
-            </button>
+            </IconButton>
           )}
           <span className="text-2xl font-semibold">{detail?.name}</span>
         </div>
@@ -132,13 +135,14 @@ export default function NormalCafeDetail({
           {isCollected ? (
             <CollectedBadge />
           ) : (
-            <button
+            <Button
               aria-label="수집하기 버튼"
               className={getDetailCollectButtonStyle()}
+              variant="contained"
               onClick={() => setMemoOpen(true)}
             >
               수집하기
-            </button>
+            </Button>
           )}
         </div>
 

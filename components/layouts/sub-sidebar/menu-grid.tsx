@@ -1,3 +1,4 @@
+import { IconButton } from '@mui/material';
 interface MenuItem {
   menu: string;
   price: string;
@@ -18,19 +19,19 @@ export default function MenuGrid({
   return (
     <div className="col-span-2">
       <div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           <span className="text-lg">메뉴</span>
-          <button aria-label="메뉴 보기 버튼" onClick={handleMenuOpen}>
+          <IconButton aria-label="메뉴 보기 버튼" onClick={handleMenuOpen}>
             {menuOpen ? (
               <i
-                className={`fa-solid fa-angle-up text-lg ${isDarkTheme ? 'text-white' : ''}`}
+                className={`fa-solid fa-angle-up text-md ${isDarkTheme ? 'text-white' : ''}`}
               />
             ) : (
               <i
-                className={`fa-solid fa-angle-down text-lg ${isDarkTheme ? 'text-white' : ''}`}
+                className={`fa-solid fa-angle-down text-md ${isDarkTheme ? 'text-white' : ''}`}
               />
             )}
-          </button>
+          </IconButton>
         </div>
         <ul>
           {menuOpen &&

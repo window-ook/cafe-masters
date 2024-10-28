@@ -1,5 +1,6 @@
 import { useCheckStore } from 'utils/store';
 import { getNormalCardStyle } from 'utils/styles';
+import { Card } from '@mui/material';
 import { NormalCardProps } from 'types/types';
 import Image from 'next/image';
 
@@ -12,7 +13,7 @@ export default function NormalCard({
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
 
   return (
-    <div onClick={onClick} className={getNormalCardStyle(isDarkTheme)}>
+    <Card onClick={onClick} className={getNormalCardStyle(isDarkTheme)}>
       <span
         className={`${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'} px-2 py-1 shadow-md`}
       >
@@ -33,6 +34,6 @@ export default function NormalCard({
         <span className="text-sm">{address}</span>
         <span>{phoneNum}</span>
       </div>
-    </div>
+    </Card>
   );
 }
