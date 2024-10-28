@@ -35,6 +35,8 @@ export default function ResetpasswordPage() {
     },
   });
 
+  const textStyle = `font-dpixel text-lg`;
+
   return (
     <>
       <Head>
@@ -57,7 +59,7 @@ export default function ResetpasswordPage() {
                 비밀번호 재설정
               </p>
               <div className="flex gap-4 justify-between items-center">
-                <span className="font-dpixel text-lg">새 비밀번호</span>
+                <span className={textStyle}>새 비밀번호</span>
                 <input
                   type="password"
                   value={newPassword}
@@ -67,7 +69,7 @@ export default function ResetpasswordPage() {
                 />
               </div>
               <div className="flex gap-4 justify-between items-center">
-                <span className="font-dpixel text-lg">비밀번호 확인</span>
+                <span className={textStyle}>비밀번호 확인</span>
                 <input
                   type="password"
                   value={newPasswordConfirm}
@@ -82,14 +84,14 @@ export default function ResetpasswordPage() {
                 onClick={() => finishResetMutation.mutate()}
                 aria-label="완료 버튼, 재설정 완료 화면으로 이동합니다."
               >
-                <span className="font-dpixel text-lg text-white">완료</span>
+                <span className={`${textStyle} text-white`}>완료</span>
               </Button>
               <Button
                 onClick={() => router.push('/')}
                 className="bg-blue-500 w-full hover:bg-opacity-70 hover:cursor-pointer"
                 aria-label="취소 버튼, 초기 화면으로 돌아갑니다."
               >
-                <span className="font-dpixel text-lg text-white">취소</span>
+                <span className={`${textStyle} text-white`}>취소</span>
               </Button>
             </form>
           </Card>

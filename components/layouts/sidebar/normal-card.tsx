@@ -15,7 +15,7 @@ export default function NormalCard({
   return (
     <Card onClick={onClick} className={getNormalCardStyle(isDarkTheme)}>
       <span
-        className={`px-2 py-1 shadow-md ${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'}`}
+        className={`${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'} px-2 py-1 shadow-md`}
       >
         {name}
       </span>
@@ -29,7 +29,7 @@ export default function NormalCard({
         />
       </div>
       <div
-        className={`flex flex-col px-2 shadow-md ${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'}`}
+        className={`${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'} flex flex-col px-2 shadow-md`}
       >
         <span className="text-sm">{address}</span>
         <span>{phoneNum}</span>

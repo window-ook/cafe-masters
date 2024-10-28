@@ -6,6 +6,12 @@ import { useUserStore } from 'utils/store';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { Card, Button } from '@mui/material';
+import {
+  getAuthFormCardStyle,
+  getAuthFormMentionStyle,
+  getAuthFormTitleStyle,
+  getKakaoButtonStyle,
+} from 'utils/styles';
 import UserForm from './user-form';
 import ResetpasswordForm from './resetpassword-form';
 
@@ -50,7 +56,10 @@ export default function Signin({ setView, checkEmailVaild }: any) {
     onSuccess: () => {
       setResetRequested('이메일의 보관함을 확인해주세요.');
     },
-    onError: (error: Error) => console.error(error),
+    onError: (error: Error) => {
+      console.error(error);
+      alert('재요청은 60초가 지나야 가능합니다.');
+    },
   });
 
   const checkEmail = () => {
@@ -69,7 +78,7 @@ export default function Signin({ setView, checkEmailVaild }: any) {
   };
 
   return (
-    <Card className="p-5 rounded-xl bg-white shadow-mainShadow z-10">
+    <Card className={getAuthFormCardStyle()}>
       {resetRequired ? (
         <ResetpasswordForm
           email={email}
@@ -80,7 +89,7 @@ export default function Signin({ setView, checkEmailVaild }: any) {
         />
       ) : (
         <div>
-          <p className="text-center text-3xl font-bold font-dpixel">로그인</p>
+          <p className={getAuthFormTitleStyle()}>로그인</p>
           <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
             <UserForm
               email={email}
@@ -111,15 +120,12 @@ export default function Signin({ setView, checkEmailVaild }: any) {
             </Button>
             <Button
               aria-label="카카오 로그인 버튼"
-              className="bg-yellow-500 w-full hover:bg-opacity-70 hover:cursor-pointer"
+              className={getKakaoButtonStyle()}
               onClick={() => signInWithKakao()}
             >
               <span className="font-dpixel text-white">카카오 로그인</span>
             </Button>
-            <span
-              color="gray"
-              className="flex items-center justify-center gap-4 text-center font-dpixel"
-            >
+            <span color="gray" className={getAuthFormMentionStyle()}>
               계정이 없으신가요?{' '}
               <Button
                 aria-label="회원가입 폼 열기 버튼"

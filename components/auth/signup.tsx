@@ -5,6 +5,12 @@ import { useMutation } from '@tanstack/react-query';
 import { Card, Button } from '@mui/material';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
+import {
+  getAuthFormCardStyle,
+  getAuthFormMentionStyle,
+  getAuthFormTitleStyle,
+  getKakaoButtonStyle,
+} from 'utils/styles';
 import UserForm from './user-form';
 import OtpForm from './otp-form';
 
@@ -65,8 +71,8 @@ export default function Signup({ setView, checkEmailVaild }: any) {
   };
 
   return (
-    <Card className="p-5 rounded-xl bg-white shadow-mainShadow z-10">
-      <p className="text-center text-3xl font-bold font-dpixel">회원가입</p>
+    <Card className={getAuthFormCardStyle()}>
+      <p className={getAuthFormTitleStyle()}>회원가입</p>
       <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
         {confirmationRequired ? (
           <OtpForm otp={otp} setOtp={setOtp} />
@@ -104,17 +110,14 @@ export default function Signup({ setView, checkEmailVaild }: any) {
         </Button>
         <Button
           aria-label="카카오 로그인 버튼"
-          className="w-full bg-yellow-500 hover:bg-opacity-70 hover:cursor-pointer"
+          className={getKakaoButtonStyle()}
           onClick={() => signInWithKakao()}
         >
           <span className="font-dpixel text-lg text-white">
             카카오로 회원가입
           </span>
         </Button>
-        <span
-          color="gray"
-          className="flex items-center justify-center gap-4 text-center font-dpixel hover:cursor-pointer"
-        >
+        <span color="gray" className={getAuthFormMentionStyle()}>
           이미 계정이 있으신가요?{' '}
           <Button
             aria-label="로그인 폼 열기 버튼"

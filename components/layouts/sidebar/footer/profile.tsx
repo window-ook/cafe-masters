@@ -36,7 +36,7 @@ export default function Profile() {
         className="relative inline-block object-cover object-center rounded-lg w-auto h-auto"
       />
       <div className="flex gap-4 items-center">
-        <h6 className="font-bold text-3xl sm:text-2xl font-dpixel">
+        <h6 className="font-bold font-dpixel text-3xl sm:text-2xl">
           {userEmail}
         </h6>
         <TierBadge tier={userTier} />

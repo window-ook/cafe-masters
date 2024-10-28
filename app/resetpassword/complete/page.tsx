@@ -9,7 +9,7 @@ import AuthBackgroundCards from 'components/auth/auth-background-cards';
 export default function ResetPasswordCompletePage() {
   const supabase = createBrowserSupabaseClient();
 
-  const handleRoute = async () => {
+  const handleWindow = async () => {
     await supabase.auth.signOut();
     window.close();
   };
@@ -43,7 +43,7 @@ export default function ResetPasswordCompletePage() {
               </span>
               <button
                 className="bg-main w-full hover:bg-opacity-70 hover:cursor-pointer"
-                onClick={handleRoute}
+                onClick={handleWindow}
                 aria-label="돌아가기 버튼, 초기 화면으로 돌아갑니다."
               >
                 <span className="text-white font-dpixel">돌아가기</span>

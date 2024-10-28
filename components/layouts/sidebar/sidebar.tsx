@@ -173,7 +173,7 @@ export default function Sidebar() {
 
           <div className="px-8 sm:px-4">
             {pathname.startsWith('/cafe/all') && (
-              <div className="flex flex-col gap-8 my-4">
+              <div className="flex flex-col gap-8 my-8">
                 {paginatedResults.map((cafe: any) => (
                   <NormalCard
                     key={cafe.id}
@@ -201,7 +201,7 @@ export default function Sidebar() {
                 )}
 
                 {collectedData?.pages?.map((page, i) => (
-                  <div key={`page-${i}`} className="flex flex-col gap-8 my-4">
+                  <div key={`page-${i}`} className="flex flex-col gap-8 my-8">
                     {page.data.map((cafe: any) => (
                       <CollectedCard
                         key={cafe.id}
@@ -228,7 +228,7 @@ export default function Sidebar() {
                 )}
 
                 {bookmarkedData?.pages?.map((page, i) => (
-                  <div key={`page-${i}`} className="flex flex-col gap-8 my-4">
+                  <div key={`page-${i}`} className="flex flex-col gap-8 my-8">
                     {page.data.map((cafe: any) => (
                       <NormalCard
                         key={cafe.id}

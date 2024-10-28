@@ -42,7 +42,7 @@ export default function TierInfoModal({
 }: TierInfoModalProps) {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
 
-  const tierDescStyle = 'sm:text-lg text-xs font-dpixel';
+  const tierDescStyle = 'font-dpixel lg:text-lg text-xs';
 
   return (
     <div>
@@ -55,10 +55,10 @@ export default function TierInfoModal({
       >
         <Box
           className={`${isDarkTheme ? 'bg-darkbg text-white border-darkaccent border-4' : 'bg-white border-mainShadow border-4'}
-          absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center`}
+          absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center`}
         >
           <div className="flex flex-col">
-            <span className="text-2xl sm:text-3xl font-dpixel">
+            <span className="font-dpixel text-2xl md:text-3xl">
               TIER INFORMATION
             </span>
             <span className={tierDescStyle}>
@@ -97,12 +97,12 @@ export default function TierInfoModal({
           <span className={tierDescStyle}>
             어엿한 카페 고수입니다 뿌듯하셔도 좋아요!!
           </span>
-          <div className="flex items-center gap-3 relative">
-            <div className={getMasterEffectStyle('w-[15%]')}></div>
+          <div className="relative flex items-center gap-3">
+            <div className={getMasterEffectStyle('w-[11%]')}></div>
             <div className={getMasterTierStyle(getBadgeCommon)}>
               <span className="text-sm font-dpixel">MASTER</span>
             </div>
-            <span className="relative z-10 text-xl font-dpixel">50</span>
+            <span className="z-10 relative text-xl font-dpixel">50</span>
           </div>
           <span className={tierDescStyle}>
             마스터여, 당신은 월드의 주인입니다

@@ -51,7 +51,7 @@ export default function CollectedCafeDetail({
           <Image
             src={collectedCafeDetail?.photoUrl}
             alt="카페 썸네일"
-            className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-70 hover:cursor-pointer"
+            className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
             width={160}
             height={30}
             onClick={() =>

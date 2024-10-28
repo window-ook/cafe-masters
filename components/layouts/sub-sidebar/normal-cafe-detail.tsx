@@ -118,7 +118,7 @@ export default function NormalCafeDetail({
           <Image
             src={detail?.photoUrl || '/image/cafe_thumbnail.webp'}
             alt="카페 썸네일"
-            className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-70 hover:cursor-pointer"
+            className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
             width={160}
             height={30}
             onClick={() =>
