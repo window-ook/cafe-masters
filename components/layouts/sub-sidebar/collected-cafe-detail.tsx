@@ -5,7 +5,6 @@ import {
   getDetailHeaderStyle,
   getSubsidebarCloseIconStyle,
 } from 'utils/styles';
-import { Button } from '@mui/material';
 import { CollectedCafeDetailProps } from 'types/types';
 import OpenTimeGrid from './open-time-grid';
 import LocationGrid from './location-grid';
@@ -65,13 +64,12 @@ export default function CollectedCafeDetail({
 
         <div className="flex justify-between items-center">
           <RatingGrid rating={collectedCafeDetail?.rating} />
-          <Button
+          <button
             className={getDetailCollectButtonStyle()}
-            variant="contained"
             onClick={() => setMemoOpen(true)}
           >
             수정하기
-          </Button>
+          </button>
         </div>
 
         <div className="grid grid-cols-2 gap-6">

@@ -5,7 +5,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useUserStore } from 'utils/store';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
-import { Card, Button } from '@mui/material';
 import {
   getAuthFormCardStyle,
   getAuthFormMentionStyle,
@@ -78,7 +77,7 @@ export default function Signin({ setView, checkEmailVaild }: any) {
   };
 
   return (
-    <Card className={getAuthFormCardStyle()}>
+    <div className={getAuthFormCardStyle()}>
       {resetRequired ? (
         <ResetpasswordForm
           email={email}
@@ -98,36 +97,31 @@ export default function Signin({ setView, checkEmailVaild }: any) {
               setPassword={setPassword}
             />
             <span className="text-red-500">{emailError}</span>
-            <Button
+            <button
               aria-label="로그인 버튼"
-              className="bg-main w-full hover:bg-opacity-70 hover:cursor-pointer"
+              className="w-full py-1 bg-main hover:bg-opacity-70 hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
               onClick={handleSignIn}
               disabled={signinMutation.isPending || password.length < 6}
-              sx={{
-                '&.Mui-disabled': {
-                  backgroundColor: '#ccc',
-                },
-              }}
             >
               <span className="font-dpixel text-white">접속하기</span>
-            </Button>
-            <Button
+            </button>
+            <button
               aria-label="비밀번호 재설정 폼 열기 버튼"
-              className="bg-blue-600 w-full hover:bg-opacity-70 hover:cursor-pointer"
+              className="bg-blue-600 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
               onClick={() => setResetRequired(true)}
             >
               <span className="font-dpixel text-white">비밀번호 재설정</span>
-            </Button>
-            <Button
+            </button>
+            <button
               aria-label="카카오 로그인 버튼"
               className={getKakaoButtonStyle()}
               onClick={() => signInWithKakao()}
             >
               <span className="font-dpixel text-white">카카오 로그인</span>
-            </Button>
+            </button>
             <span color="gray" className={getAuthFormMentionStyle()}>
               계정이 없으신가요?{' '}
-              <Button
+              <button
                 aria-label="회원가입 폼 열기 버튼"
                 onClick={() => setView('SIGNUP')}
                 className="hover:cursor-pointer hover:bg-gray-100"
@@ -135,11 +129,11 @@ export default function Signin({ setView, checkEmailVaild }: any) {
                 <span className="font-bold font-dpixel text-main">
                   회원가입
                 </span>
-              </Button>
+              </button>
             </span>
           </form>
         </div>
       )}
-    </Card>
+    </div>
   );
 }

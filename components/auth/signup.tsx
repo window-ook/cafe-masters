@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Card, Button } from '@mui/material';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import {
@@ -71,7 +70,7 @@ export default function Signup({ setView, checkEmailVaild }: any) {
   };
 
   return (
-    <Card className={getAuthFormCardStyle()}>
+    <div className={getAuthFormCardStyle()}>
       <p className={getAuthFormTitleStyle()}>회원가입</p>
       <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
         {confirmationRequired ? (
@@ -86,9 +85,9 @@ export default function Signup({ setView, checkEmailVaild }: any) {
         )}
         <span className="text-red-500">{emailError}</span>
         <span>*비밀번호는 최소 6자 이상 입력해야 합니다.</span>
-        <Button
+        <button
           aria-label="인증 코드 확인 버튼 | 회원가입 요청 버튼"
-          className="w-full bg-main hover:bg-opacity-70 hover:cursor-pointer"
+          className="w-full py-1 bg-main hover:bg-opacity-70 hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
           onClick={() => {
             if (confirmationRequired) verifyOtpMutation.mutate();
             else handleSignUp();
@@ -98,17 +97,12 @@ export default function Signup({ setView, checkEmailVaild }: any) {
               ? verifyOtpMutation.isPending || otp.length < 6
               : signupMutation.isPending || password.length < 6
           }
-          sx={{
-            '&.Mui-disabled': {
-              backgroundColor: '#ccc',
-            },
-          }}
         >
           <span className="font-dpixel text-lg text-white">
             {confirmationRequired ? '인증 코드 확인' : '가입하기'}
           </span>
-        </Button>
-        <Button
+        </button>
+        <button
           aria-label="카카오 로그인 버튼"
           className={getKakaoButtonStyle()}
           onClick={() => signInWithKakao()}
@@ -116,18 +110,18 @@ export default function Signup({ setView, checkEmailVaild }: any) {
           <span className="font-dpixel text-lg text-white">
             카카오로 회원가입
           </span>
-        </Button>
+        </button>
         <span color="gray" className={getAuthFormMentionStyle()}>
           이미 계정이 있으신가요?{' '}
-          <Button
+          <button
             aria-label="로그인 폼 열기 버튼"
             onClick={() => setView('SIGNIN')}
             className="hover:cursor-pointer hover:bg-gray-100"
           >
             <span className="font-bold font-dpixel text-main">로그인 하기</span>
-          </Button>
+          </button>
         </span>
       </form>
-    </Card>
+    </div>
   );
 }
