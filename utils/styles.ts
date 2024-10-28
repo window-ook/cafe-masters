@@ -27,7 +27,7 @@ export const getSubSidebarStyle = (
   isExtend: boolean
 ) => {
   const baseStyle = `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white text-black'} 
-   static left-0 z-10 w-[100vw] max-w-[28rem] p-2 
+   static left-0 z-10 w-[100vw] max-w-[27rem] p-2 
    transition-transform duration-500 ease-in-out 
    overflow-y-scroll font-dpixel shadow-md`;
 
