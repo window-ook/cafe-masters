@@ -10,7 +10,7 @@ export const getSidebarStyle = (
   isDarkTheme: boolean,
   isSubSidebarOpen: boolean
 ) => {
-  return `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} ${isSubSidebarOpen ? 'hidden sm:block' : ''} z-10 relative w-screen h-screen sm:max-w-[22rem] rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between overflow-y-scroll`;
+  return `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} ${isSubSidebarOpen ? 'hidden sm:block' : ''} z-10 relative w-screen h-screen max-w-[27rem] rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between overflow-y-scroll overflow-x-hidden`;
 };
 
 export const getSidebarTabItemStyle = (isDarkTheme: boolean) => {
@@ -26,7 +26,7 @@ export const getSubSidebarStyle = (
   isDarkTheme: boolean,
   isExtend: boolean
 ) => {
-  const baseStyle = `${isDarkTheme ? 'bg-darkbg text-white' : ''} 
+  const baseStyle = `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white text-black'} 
    static left-0 z-10 w-[100vw] max-w-[28rem] p-2 
    transition-transform duration-500 ease-in-out 
    overflow-y-scroll font-dpixel shadow-md`;
@@ -64,7 +64,7 @@ export const getDetailBodyStyle = (isDarkTheme: boolean) => {
 };
 
 export const getDetailCollectButtonStyle = () => {
-  return 'bg-red-400 hover:bg-opacity-70 text-white font-paperexbold rounded-2xl hover:scale-105 transition duration-200 ease';
+  return 'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-paperexbold';
 };
 
 export const getNormalCardStyle = (isDarkTheme: boolean) => {
@@ -99,7 +99,7 @@ export const getSearchButtonStyle = () => {
 };
 
 export const getCollectedBadgeStyle = () => {
-  return 'bg-gradient-to-r from-success via-indigo to-success bg-[length:200%_200%] animate-gradient text-white shadow-md';
+  return 'bg-gradient-to-r from-success via-indigo to-success bg-[length:200%_200%] animate-gradient shadow-md';
 };
 
 export const getBadgeCommon =
@@ -145,5 +145,5 @@ export const getAuthFormMentionStyle = () => {
 };
 
 export const getKakaoButtonStyle = () => {
-  return 'bg-yellow-500 w-full hover:bg-opacity-70 hover:cursor-pointer';
+  return 'bg-yellow-500 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer';
 };
