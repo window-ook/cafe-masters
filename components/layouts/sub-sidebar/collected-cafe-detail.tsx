@@ -38,6 +38,7 @@ export default function CollectedCafeDetail({
           </span>
         </div>
         <button
+          aria-label="수집한 카드 상세 정보 보기 취소 버튼"
           onClick={() => setIsSubSidebarOpen(false)}
           className="px-2 right-2"
         >
@@ -50,7 +51,7 @@ export default function CollectedCafeDetail({
           <Image
             src={collectedCafeDetail?.photoUrl}
             alt="카페 썸네일"
-            className="rounded-md"
+            className="w-auto h-auto rounded-md"
             width={160}
             height={30}
           />

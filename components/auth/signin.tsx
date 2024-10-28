@@ -7,6 +7,7 @@ import { signInWithKakao } from 'utils/supabase/signinKakao';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { Card, Button } from '@mui/material';
 import UserForm from './user-form';
+import ResetpasswordForm from './resetpassword-form';
 
 export default function Signin({ setView, checkEmailVaild }: any) {
   const [email, setEmail] = useState('');
@@ -70,33 +71,13 @@ export default function Signin({ setView, checkEmailVaild }: any) {
   return (
     <Card className="p-5 rounded-xl bg-white shadow-mainShadow z-10">
       {resetRequired ? (
-        <div className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
-          <p className="text-center text-3xl font-bold font-dpixel">
-            비밀번호 재설정
-          </p>
-          <div className="flex gap-4 justify-between items-center">
-            <span className="w-20 font-dpixel text-lg">이메일</span>
-            <input
-              value={email.trim()}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="아이디@주소"
-              className="border-gray-400 w-full"
-            />
-          </div>
-          <span className="text-success">{resetRequested}</span>
-          <Button
-            className="bg-main w-full hover:bg-opacity-70 hover:cursor-pointer"
-            onClick={() => resetPasswordMutation.mutate()}
-          >
-            <span className="font-dpixel text-lg text-white">재설정하기</span>
-          </Button>
-          <Button
-            onClick={() => setResetRequired(false)}
-            className="bg-blue-500 w-full hover:bg-opacity-70 hover:cursor-pointer"
-          >
-            <span className="font-dpixel text-lg text-white">취소</span>
-          </Button>
-        </div>
+        <ResetpasswordForm
+          email={email}
+          setEmail={setEmail}
+          resetRequested={resetRequested}
+          resetFn={() => resetPasswordMutation.mutate()}
+          cancelFn={() => setResetRequired(false)}
+        />
       ) : (
         <div>
           <p className="text-center text-3xl font-bold font-dpixel">로그인</p>
@@ -109,23 +90,31 @@ export default function Signin({ setView, checkEmailVaild }: any) {
             />
             <span className="text-red-500">{emailError}</span>
             <Button
-              className="bg-main w-full font-dpixel text-white hover:bg-opacity-70 hover:cursor-pointer"
+              aria-label="로그인 버튼"
+              className="bg-main w-full hover:bg-opacity-70 hover:cursor-pointer"
               onClick={handleSignIn}
               disabled={signinMutation.isPending || password.length < 6}
+              sx={{
+                '&.Mui-disabled': {
+                  backgroundColor: '#ccc',
+                },
+              }}
             >
-              접속하기
+              <span className="font-dpixel text-white">접속하기</span>
             </Button>
             <Button
-              className="bg-blue-600 w-full font-dpixel text-white hover:bg-opacity-70 hover:cursor-pointer"
+              aria-label="비밀번호 재설정 폼 열기 버튼"
+              className="bg-blue-600 w-full hover:bg-opacity-70 hover:cursor-pointer"
               onClick={() => setResetRequired(true)}
             >
-              비밀번호 재설정
+              <span className="font-dpixel text-white">비밀번호 재설정</span>
             </Button>
             <Button
-              className="bg-yellow-500 w-full text-white font-dpixel hover:bg-opacity-70 hover:cursor-pointer"
+              aria-label="카카오 로그인 버튼"
+              className="bg-yellow-500 w-full hover:bg-opacity-70 hover:cursor-pointer"
               onClick={() => signInWithKakao()}
             >
-              카카오 로그인
+              <span className="font-dpixel text-white">카카오 로그인</span>
             </Button>
             <span
               color="gray"
@@ -133,6 +122,7 @@ export default function Signin({ setView, checkEmailVaild }: any) {
             >
               계정이 없으신가요?{' '}
               <Button
+                aria-label="회원가입 폼 열기 버튼"
                 onClick={() => setView('SIGNUP')}
                 className="hover:cursor-pointer hover:bg-gray-100"
               >

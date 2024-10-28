@@ -19,6 +19,7 @@ export default function PageConverter({
     <div className={getPageConverterStyle(isDarkTheme)}>
       <div className="flex justify-between items-center">
         <button
+          aria-label="이전 페이지 번호"
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
           className={`px-4 py-2 text-3xl ${
@@ -31,6 +32,7 @@ export default function PageConverter({
           {currentPage} / {totalPages}
         </span>
         <button
+          aria-label="다음 페이지 번호"
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
           className={`px-4 py-2 text-3xl ${

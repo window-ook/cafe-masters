@@ -22,9 +22,10 @@ export default function NormalCard({
       <div className="flex justify-center">
         <Image
           src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/search_thumbnail.webp"
-          alt="cafe_img"
+          alt="카페 썸네일 이미지"
           width={100}
           height={50}
+          className="w-auto h-auto"
         />
       </div>
       <div

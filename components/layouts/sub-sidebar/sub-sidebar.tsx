@@ -175,12 +175,7 @@ export default function SubSidebar() {
 
   return (
     <Card
-      className={getSubSidebarStyle(
-        isSubSidebarOpen,
-        isDarkTheme,
-        isExtend,
-        after500
-      )}
+      className={getSubSidebarStyle(isSubSidebarOpen, isDarkTheme, isExtend)}
     >
       <div className="flex justify-center">
         <div

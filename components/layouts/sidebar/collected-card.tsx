@@ -9,6 +9,7 @@ import {
   getUniqueCardEffectStyle,
 } from 'utils/styles';
 import { CollectedCardProps } from 'types/types';
+import Image from 'next/image';
 
 export default function CollectedCard({
   name,
@@ -52,7 +53,13 @@ export default function CollectedCard({
             ))}
         </div>
         <div className="flex justify-center rounded-xl">
-          <img src={photoUrl} alt="cafe_img" className="h-20 rounded-lg" />
+          <Image
+            src={photoUrl}
+            alt="카페 썸네일 이미지"
+            width={100}
+            height={50}
+            className="w-auto h-auto"
+          />
         </div>
         <div className="flex flex-col shadow-gray-500 shadow-md px-2">
           <span className="text-sm">{address}</span>

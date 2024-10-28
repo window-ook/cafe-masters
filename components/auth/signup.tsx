@@ -6,11 +6,12 @@ import { Card, Button } from '@mui/material';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import UserForm from './user-form';
+import OtpForm from './otp-form';
 
 export default function Signup({ setView, checkEmailVaild }: any) {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [password, setPassword] = useState('');
   const [confirmationRequired, setConfirmationRequired] = useState(false);
   const [otp, setOtp] = useState('');
 
@@ -68,16 +69,7 @@ export default function Signup({ setView, checkEmailVaild }: any) {
       <p className="text-center text-3xl font-bold font-dpixel">회원가입</p>
       <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
         {confirmationRequired ? (
-          <div className="flex flex-col gap-6">
-            <span className="text-xl font-dpixel">인증 코드</span>
-            <input
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              placeholder="6자리 인증 코드를 입력하세요"
-              type="text"
-              className="p-2"
-            />
-          </div>
+          <OtpForm otp={otp} setOtp={setOtp} />
         ) : (
           <UserForm
             email={email}
@@ -89,7 +81,8 @@ export default function Signup({ setView, checkEmailVaild }: any) {
         <span className="text-red-500">{emailError}</span>
         <span>*비밀번호는 최소 6자 이상 입력해야 합니다.</span>
         <Button
-          className="w-full bg-main font-dpixel text-white hover:bg-opacity-70 hover:cursor-pointer"
+          aria-label="인증 코드 확인 버튼 | 회원가입 요청 버튼"
+          className="w-full bg-main hover:bg-opacity-70 hover:cursor-pointer"
           onClick={() => {
             if (confirmationRequired) verifyOtpMutation.mutate();
             else handleSignUp();
@@ -99,14 +92,24 @@ export default function Signup({ setView, checkEmailVaild }: any) {
               ? verifyOtpMutation.isPending || otp.length < 6
               : signupMutation.isPending || password.length < 6
           }
+          sx={{
+            '&.Mui-disabled': {
+              backgroundColor: '#ccc',
+            },
+          }}
         >
-          {confirmationRequired ? '인증 코드 확인' : '가입하기'}
+          <span className="font-dpixel text-lg text-white">
+            {confirmationRequired ? '인증 코드 확인' : '가입하기'}
+          </span>
         </Button>
         <Button
-          className="w-full bg-yellow-500 font-dpixel text-white hover:bg-opacity-70 hover:cursor-pointer"
+          aria-label="카카오 로그인 버튼"
+          className="w-full bg-yellow-500 hover:bg-opacity-70 hover:cursor-pointer"
           onClick={() => signInWithKakao()}
         >
-          카카오로 회원가입
+          <span className="font-dpixel text-lg text-white">
+            카카오로 회원가입
+          </span>
         </Button>
         <span
           color="gray"
@@ -114,6 +117,7 @@ export default function Signup({ setView, checkEmailVaild }: any) {
         >
           이미 계정이 있으신가요?{' '}
           <Button
+            aria-label="로그인 폼 열기 버튼"
             onClick={() => setView('SIGNIN')}
             className="hover:cursor-pointer hover:bg-gray-100"
           >

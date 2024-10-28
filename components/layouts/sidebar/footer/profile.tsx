@@ -30,7 +30,7 @@ export default function Profile() {
         src={
           'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/profile_image.webp'
         }
-        alt="프로필 이미지"
+        alt="유저 프로필 이미지"
         width={60}
         height={60}
         className="relative inline-block object-cover object-center rounded-lg w-auto h-auto"

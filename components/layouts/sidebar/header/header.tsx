@@ -22,8 +22,9 @@ export default function Header() {
           width={60}
           className="w-auto h-auto"
         />
-        <Tooltip title="홈으로" placement="right-end">
+        <Tooltip title="홈페이지" placement="right-end">
           <button
+            aria-label="홈페이지 이동 버튼"
             className="cursor-pointer flex items-center hover:opacity-70 transition ease duration-300"
             onClick={() => router.push('/')}
           >
