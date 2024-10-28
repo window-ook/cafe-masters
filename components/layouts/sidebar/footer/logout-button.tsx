@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@mui/material';
 import { getLogoutButtonStyle } from 'utils/styles';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
@@ -16,7 +15,7 @@ export default function LogoutButton() {
   };
 
   return (
-    <Button
+    <button
       aria-label="로그아웃 버튼"
       className={getLogoutButtonStyle()}
       onClick={handleLogout}
@@ -24,6 +23,6 @@ export default function LogoutButton() {
       <span className="text-white font-dpixel text-2xl sm:text-lg">
         로그아웃
       </span>
-    </Button>
+    </button>
   );
 }

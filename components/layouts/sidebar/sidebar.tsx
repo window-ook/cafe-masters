@@ -7,7 +7,6 @@ import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getSidebarStyle } from 'utils/styles';
 import { shallow } from 'zustand/shallow';
-import { Card, CircularProgress } from '@mui/material';
 import Header from './header/header';
 import Footer from './footer/footer';
 import SubSidebar from '../sub-sidebar/sub-sidebar';
@@ -163,7 +162,7 @@ export default function Sidebar() {
 
   return (
     <div className="relative flex items-center">
-      <Card
+      <div
         className={getSidebarStyle(isDarkTheme, isSubSidebarOpen)}
         ref={containerRef}
       >
@@ -195,9 +194,7 @@ export default function Sidebar() {
                 </div>
 
                 {isFetchingNextCollectedPage && (
-                  <div className="text-center py-2">
-                    <CircularProgress color="secondary" />
-                  </div>
+                  <div className="text-center py-2">Loading...</div>
                 )}
 
                 {collectedData?.pages?.map((page, i) => (
@@ -222,9 +219,7 @@ export default function Sidebar() {
             {pathname.startsWith('/cafe/bookmarked') && (
               <div>
                 {isFetchingNextBookmarkedPage && (
-                  <div className="text-center py-2">
-                    <CircularProgress color="secondary" />
-                  </div>
+                  <div className="text-center py-2">Loading...</div>
                 )}
 
                 {bookmarkedData?.pages?.map((page, i) => (
@@ -257,7 +252,7 @@ export default function Sidebar() {
 
           {pathname === '/' && <Footer />}
         </div>
-      </Card>
+      </div>
 
       <SubSidebar />
     </div>
