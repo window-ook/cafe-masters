@@ -102,6 +102,10 @@ https://github.com/user-attachments/assets/f6e292ed-8b35-4135-bee3-4e14855191fd
 
 검색 결과에서 선택한 카페의 다양한 정보를 확인할 수 있어요.<br/>
 
+https://github.com/user-attachments/assets/aab81c79-3676-460c-be0f-ff6ab1da2a43
+
+썸네일 이미지를 클릭하면 카카오 플레이스에서 제공하는 페이지로 이동할 수 있어요.<br/>
+
 <!-- 북마크 하는 장면 gif -->
 
 https://github.com/user-attachments/assets/0374072c-3c07-4427-8c9b-ac5912936d30
