@@ -50,10 +50,10 @@ https://app.cafe-masters.co
 ### 1. 접속 초기 화면 - 로그인 / 회원가입 / 비밀번호 재설정
 
 <!-- 로그인 / 회원가입 전환 mp4 -->
-https://github.com/user-attachments/assets/37118328-81da-43b8-adb2-28cf8e557cfe
+https://github.com/user-attachments/assets/d35d8a58-df1f-458e-96ff-b9542894161b
 
 <!-- 로그인 화면 png -->
-![로그인](https://github.com/user-attachments/assets/69d6ad6b-2cc3-4e42-8be1-9077f0cb777c)
+![로그인 화면](https://github.com/user-attachments/assets/0324e281-43ee-4410-850c-a99eef10c8ab)
 
 카페 마스터즈를 이용하기 위해서는 로그인을 해야합니다!<br/>
 이메일로 새로운 계정을 생성하거나 카카오 계정으로 소셜 로그인을 하시면 됩니다.<br/>
@@ -61,24 +61,23 @@ https://github.com/user-attachments/assets/37118328-81da-43b8-adb2-28cf8e557cfe
 <!-- 이메일 회원가입 시 정보 입력 png -->
 <!-- 인증번호 입력 png -->
 
-![회원가입](https://github.com/user-attachments/assets/7276946e-848c-4625-a4ae-f5074f0aaced)
+이메일로 가입시 연결할 이메일과 계정 로그인시 사용할 비밀번호를 입력하고 회원가입 버튼을 눌러주세요.<br/>
+해당 이메일로 발송된 인증번호 6자리를 확인한 뒤 돌아와 입력해주세요.<br/>
+회원가입이 정상적으로 이루어지면 자동으로 로그인 됩니다.<br/>
 
-이메일로 가입시 해당 이메일로 발송된 인증번호 6자리를 확인하고 똑같이 입력해주세요.<br/>
-가입이 정상적으로 이루어지면 자동으로 로그인 상태가 됩니다.<br/>
-
-![비밀번호 재설정](https://github.com/user-attachments/assets/db82397a-6ed2-41d1-9f76-879ca8f1f03c)
+![비밀번호 재설정 이메일 입력 화면](https://github.com/user-attachments/assets/1c69171d-3639-4989-b916-ddee56c95295)
 
 혹시 비밀번호를 깜빡하셨나요? 걱정하지 않으셔도 됩니다😄<br/>
-계정과 연결된 이메일을 입력하고 재설정하기를 누르면, 이메일로 비밀번호 재설정 링크가 담긴 메일이 발송됩니다.<br/>
+계정과 연결된 이메일을 입력하고 재설정하기를 누르면, 이메일로 비밀번호 재설정 링크가 담긴 메일이 전송됩니다.<br/>
 
-![비밀번호 재설정중](https://github.com/user-attachments/assets/0ab44b19-6d27-49ee-9d05-8fecb7461b2b)
+![비밀번호 재설정  ](https://github.com/user-attachments/assets/35721313-2e7c-4d64-a1f2-f8495fecad24)
 
-링크를 클릭하면 이렇게 새로운 비밀번호를 입력할 수 있는 탭이 열립니다.<br/>
+전송된 링크를 클릭하면 이렇게 새로운 비밀번호를 입력할 수 있는 탭이 열립니다.<br/>
 비밀번호를 재설정하고 다시 로그인을 해보세요.<br/>
 
 <!-- 루트 페이지 화면 png-->
 
-![로그인 후 초기화면](https://github.com/user-attachments/assets/32b5ae36-7f61-4452-8687-cfc6c1a711f9)
+![로그인 후 초기 화면](https://github.com/user-attachments/assets/e6a1d722-9072-4caa-aa29-75c5fdf33000)
 
 로그인을 했다면 이제 마음껏 사용해보실 차례네요😊
 
@@ -86,64 +85,86 @@ https://github.com/user-attachments/assets/37118328-81da-43b8-adb2-28cf8e557cfe
 
 <!-- 검색하는 장면 gif -->
 
+https://github.com/user-attachments/assets/09ab9555-3fef-4191-8c44-414ba9513e02
+
 친구와 만날 곳을, 연인과 데이트 할 곳을, 혹은 분위기 좋은 곳을 찾고 계신가요?<br/>
 동네를 검색해보세요! 당연히 이름을 검색해도 됩니다ㅎㅎ<br/>
 
 <!-- 상세 정보를 띄우는 장면 gif -->
 
+https://github.com/user-attachments/assets/f6e292ed-8b35-4135-bee3-4e14855191fd
+
 검색 결과에서 선택한 카페의 다양한 정보를 확인할 수 있어요.<br/>
 
 <!-- 북마크 하는 장면 gif -->
+
+https://github.com/user-attachments/assets/0374072c-3c07-4427-8c9b-ac5912936d30
 
 가봐야겠다고 찜해놓고 싶으면 북마크 버튼을 눌러서 찜해두세요!<br/>
 
 <!-- 수집하기를 눌러 메모를 키는 장면 gif -->
 <!-- 메모장에 내용을 채운 webp -->
 
+https://github.com/user-attachments/assets/d9b4fe64-040c-46ba-ace1-dd2493f88a27
+
+![수집 내용](https://github.com/user-attachments/assets/ec2ea73f-7271-470b-8ac5-1bd094a6959c)
+
 카페를 갔다오셨나요? 당신의 카드로 수집할 차례입니다...<br/>
 간단한 코멘트와 좋은 점, 안 좋은 점, 컨셉과 같은 메모를 저장해보세요.<br/>
 별점을 매겨주시면 별점에 따라 카드의 등급이 적용됩니다.<br/>
-(1~2점: 언더 카드 / 3~4점: 실버 카드 / 5점: 골드 카드 / 한정 유니크 카드)
+(1~2점: 언더 카드 / 3~4점: 실버 카드 / 5점: 골드 카드 / 한정 유니크 카드)<br/>
 
 ### 3. 수집한 카드 보기
 
 <!-- 사이드바에서 눌러 접속하는 장면 gif -->
+
+https://github.com/user-attachments/assets/adc22bc9-b071-40c8-9e38-923e027506d7
 
 내가 여태 수집한 카드를 볼 수 있어요.<br/>
 수집한 카드는 설명했던 것처럼 등급에 따라 컬러가 달라요.<br/>
 
 <!-- 상세 정보 포함 webp -->
 
+![수집한 카드 상세 정보](https://github.com/user-attachments/assets/19a1c11f-f01d-4823-a600-6958672a682a)
+
 수집하면서 저장했던 메모의 내용이 담겨있으니, 필요할 때 기억해내기 좋겠죠?<br/>
 
 <!-- 유니크 카드 소개 webp -->
 
+![유니크 카드](https://github.com/user-attachments/assets/aeea5e50-1897-4c8f-b370-044753869e31)
+
 유니크 카드는 일종의 이스터 에그입니다😊<br/>
-혹시 유니크 카드를 찾으셨나요..? 개발자에게 알려주시면 작은 선물을 드립니다!
+혹시 유니크 카드를 찾으셨나요..? 개발자에게 알려주시면 작은 선물을 드립니다!<br/>
+유니크 카드는 다른 카드들과 완전히 다른 컬러입니다!<br/>
 
 ### 4. 가고 싶은 카페 보기
 
 <!-- 사이드바에서 눌러 접속하는 장면 gif -->
 
+https://github.com/user-attachments/assets/d774ee84-055d-444a-b968-43653ea0f5bb
+
 북마크 해뒀던 카페를 확인할 수 있어요.<br/>
+만약 마음이 바뀌어서 별로 가고싶지 않아진 카페는 주저없이 삭제해버리세요.<br/>
 
 <!-- 수집하기를 눌러 메모를 키는 장면 gif -->
 
+https://github.com/user-attachments/assets/af243d77-9fad-4d03-a40c-a1e8fe3494bf
+
 당연히 여기서도 카드를 수집할 수 있습니다!<br/>
 가보고 싶었던 카페를 갔다왔다면 카드로 수집해야겠죠?
-
-<!-- 북마크 버튼을 눌러 삭제하는 장면 gif -->
-
-마음이 바뀌어서 별로 가고싶지 않아졌다면, 주저없이 삭제해버리세요.<br/>
 
 ### 5. 티어 시스템
 
 <!-- 프로필 클로즈업 webp -->
 
+![프로필 티어](https://github.com/user-attachments/assets/17fb91b1-977a-4970-97a8-a610c7f5aff5)
+
 여러분의 프로필은 이렇게 보입니다.<br/>
 아이디 옆 뱃지는 여러분의 티어를 나타낸답니다.<br/>
 
 <!-- 모달창 webp -->
+
+https://github.com/user-attachments/assets/9757b6a1-fbe4-4c18-940f-cb4d37f97bc7
 
 티어는 여러분이 모은 카드의 수에 따라 달라져요.<br/>
 마스터가 되고 싶지 않으신가요??<br/>
