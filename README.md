@@ -172,6 +172,8 @@ https://github.com/user-attachments/assets/9757b6a1-fbe4-4c18-940f-cb4d37f97bc7
 
 ## 🧱 아키텍처
 
+![카페 마스터즈 아키텍처](https://github.com/user-attachments/assets/172cb841-3124-4334-9a10-b6768d560ff3)
+
 ## 🌱 업데이트 예정
 
 ### ver 1.1
