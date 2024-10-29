@@ -63,7 +63,9 @@ https://github.com/user-attachments/assets/d35d8a58-df1f-458e-96ff-b9542894161b
 <!-- 이메일 회원가입 시 정보 입력 png -->
 <!-- 인증번호 입력 png -->
 
-!! 현재 SMTP 센더 관련 인증 진행중이라 한시적으로 카카오로만 회원가입 가능(10.29) !!
+![인증코드 메일](https://github.com/user-attachments/assets/bf6574fd-1880-4b8e-8129-28be2ae484a8)
+
+![인증코드 입력](https://github.com/user-attachments/assets/a9959337-4603-49c7-a53d-ceb43c46b206)
 
 이메일로 가입시 연결할 이메일과 계정 로그인시 사용할 비밀번호를 입력하고 회원가입 버튼을 눌러주세요.<br/>
 해당 이메일로 발송된 인증번호 6자리를 확인한 뒤 돌아와 입력해주세요.<br/>
@@ -176,7 +178,7 @@ https://github.com/user-attachments/assets/9757b6a1-fbe4-4c18-940f-cb4d37f97bc7
 
 ## 🧱 아키텍처
 
-![카페 마스터즈 아키텍처](https://github.com/user-attachments/assets/172cb841-3124-4334-9a10-b6768d560ff3)
+![아키텍처](https://github.com/user-attachments/assets/229f6819-9845-4e12-b5fd-ca9d05a9ad06)
 
 ## 🌱 업데이트 예정
 
