@@ -18,7 +18,7 @@ export default function Header() {
         <Image
           src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp"
           alt="logo image"
-          height={60}
+          height={10}
           width={60}
           className="w-auto h-auto"
         />

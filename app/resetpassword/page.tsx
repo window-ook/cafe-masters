@@ -12,6 +12,8 @@ export default function ResetpasswordPage() {
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
 
+  const textStyle = `font-dpixel text-lg`;
+
   const router = useRouter();
   const supabase = createBrowserSupabaseClient();
 
@@ -25,6 +27,7 @@ export default function ResetpasswordPage() {
     },
     onError: (error: Error) => {
       console.error(error);
+      alert('새로운 비밀번호는 기존 비밀번호와 달라야합니다.');
     },
     onSuccess: async () => {
       await supabase.auth.signOut();
@@ -33,7 +36,16 @@ export default function ResetpasswordPage() {
     },
   });
 
-  const textStyle = `font-dpixel text-lg`;
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    finishResetMutation.mutate();
+  };
+
+  const handleCancel = async (e: any) => {
+    e.preventDefault();
+    await supabase.auth.signOut();
+    router.push('/');
+  };
 
   return (
     <>
@@ -79,13 +91,13 @@ export default function ResetpasswordPage() {
               <button
                 className="bg-main w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
                 disabled={newPassword !== newPasswordConfirm}
-                onClick={() => finishResetMutation.mutate()}
+                onClick={handleSubmit}
                 aria-label="완료 버튼, 재설정 완료 화면으로 이동합니다."
               >
                 <span className={`${textStyle} text-white`}>완료</span>
               </button>
               <button
-                onClick={() => router.push('/')}
+                onClick={handleCancel}
                 className="bg-blue-500 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
                 aria-label="취소 버튼, 초기 화면으로 돌아갑니다."
               >
