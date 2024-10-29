@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckStore } from 'utils/store';
-import { getSidebarTabItemStyle } from 'utils/styles';
+import { getSidebarTabTextStyle } from 'utils/styles';
 
 interface SidebarTabProps {
   icon: ReactNode;
@@ -12,12 +12,9 @@ interface SidebarTabProps {
 
 function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
   return (
-    <li
-      className="grid grid-cols-[40px_auto] items-center gap-6 sm:gap-4 cursor-pointer"
-      onClick={path}
-    >
+    <li className="flex items-center gap-6 cursor-pointer" onClick={path}>
       <span>{icon}</span>
-      <span className={getSidebarTabItemStyle(isDarkTheme)}>{title}</span>
+      <span className={getSidebarTabTextStyle(isDarkTheme)}>{title}</span>
     </li>
   );
 }
@@ -25,10 +22,10 @@ function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
 export default function SidebarTabList() {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const router = useRouter();
-  const iconStyle = 'fa-solid text-3xl sm:text-2xl';
+  const iconStyle = 'fa-solid text-3xl';
 
   return (
-    <ul className="mt-2 flex flex-col gap-10 sm:gap-5 px-10 sm:px-4">
+    <ul className="flex flex-col items-center gap-10 sm:gap-8 pl-32">
       <SidebarTab
         icon={
           <i

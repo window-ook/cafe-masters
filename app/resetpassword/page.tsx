@@ -25,6 +25,7 @@ export default function ResetpasswordPage() {
     },
     onError: (error: Error) => {
       console.error(error);
+      alert('새로운 비밀번호는 기존 비밀번호와 달라야합니다.');
     },
     onSuccess: async () => {
       await supabase.auth.signOut();
@@ -79,7 +80,10 @@ export default function ResetpasswordPage() {
               <button
                 className="bg-main w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
                 disabled={newPassword !== newPasswordConfirm}
-                onClick={() => finishResetMutation.mutate()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  finishResetMutation.mutate();
+                }}
                 aria-label="완료 버튼, 재설정 완료 화면으로 이동합니다."
               >
                 <span className={`${textStyle} text-white`}>완료</span>

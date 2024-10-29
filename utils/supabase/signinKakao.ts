@@ -14,7 +14,6 @@ export const signInWithKakao = async () => {
     },
   });
 
-  if (error) console.error(error.message);
-
   if (data) console.log(data);
+  if (error) console.error(error.message);
 };

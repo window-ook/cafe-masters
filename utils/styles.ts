@@ -1,5 +1,5 @@
 export const getMapStyle = () => {
-  return 'z-0 fixed top-0 sm:translate-x-[22rem] sm:w-[calc(100vw-22rem)] w-screen h-screen';
+  return 'z-0 fixed top-0 sm:translate-x-[27rem] sm:w-[calc(100vw-27rem)] w-screen h-screen';
 };
 
 export const getBarContainerStyle = () => {
@@ -13,8 +13,8 @@ export const getSidebarStyle = (
   return `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} ${isSubSidebarOpen ? 'hidden sm:block' : ''} z-10 relative w-screen h-screen max-w-[27rem] rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between overflow-y-scroll overflow-x-hidden`;
 };
 
-export const getSidebarTabItemStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'text-white' : 'text-black'} w-[22rem] text-2xl sm:text-xl font-dpixel transition ease-in-out delay-100 hover:text-opacity-30`;
+export const getSidebarTabTextStyle = (isDarkTheme: boolean) => {
+  return `${isDarkTheme ? 'text-white' : 'text-black'} w-[22rem] text-2xl font-dpixel transition ease-in-out delay-100 hover:text-opacity-30`;
 };
 
 export const getPageConverterStyle = (isDarkTheme: boolean) => {
@@ -56,7 +56,7 @@ export const getMemoBackStyle = (isDarkTheme: boolean) => {
 };
 
 export const getDetailHeaderStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'shadow-mainShadow' : ''} flex justify-between items-center shadow-md rounded-md`;
+  return `${isDarkTheme ? 'shadow-mainShadow' : ''} flex justify-between items-center shadow-md rounded-md p-2`;
 };
 
 export const getDetailBodyStyle = (isDarkTheme: boolean) => {

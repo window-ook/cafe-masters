@@ -58,6 +58,8 @@ export default function Sidebar() {
     currentPage * itemsPerPage
   );
 
+  const cardDivStyle = 'flex flex-col gap-8 my-8 px-8';
+
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
@@ -166,13 +168,13 @@ export default function Sidebar() {
         className={getSidebarStyle(isDarkTheme, isSubSidebarOpen)}
         ref={containerRef}
       >
-        <div className="flex flex-col gap-12 sm:gap-4">
+        <div className="flex flex-col gap-12 sm:gap-10">
           <Header />
           {pathname === '/' && <SidebarTabList />}
 
           <div className="px-8 sm:px-4">
             {pathname.startsWith('/cafe/all') && (
-              <div className="flex flex-col gap-8 my-8">
+              <div className={cardDivStyle}>
                 {paginatedResults.map((cafe: any) => (
                   <NormalCard
                     key={cafe.id}
@@ -198,7 +200,7 @@ export default function Sidebar() {
                 )}
 
                 {collectedData?.pages?.map((page, i) => (
-                  <div key={`page-${i}`} className="flex flex-col gap-8 my-8">
+                  <div key={`page-${i}`} className={cardDivStyle}>
                     {page.data.map((cafe: any) => (
                       <CollectedCard
                         key={cafe.id}
@@ -223,7 +225,7 @@ export default function Sidebar() {
                 )}
 
                 {bookmarkedData?.pages?.map((page, i) => (
-                  <div key={`page-${i}`} className="flex flex-col gap-8 my-8">
+                  <div key={`page-${i}`} className={cardDivStyle}>
                     {page.data.map((cafe: any) => (
                       <NormalCard
                         key={cafe.id}

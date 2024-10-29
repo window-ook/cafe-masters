@@ -32,7 +32,7 @@ export default function CollectedCafeDetail({
     <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
-          <span className="text-2xl font-semibold p-2">
+          <span className="text-2xl font-semibold">
             {collectedCafeDetail?.name}
           </span>
         </div>
