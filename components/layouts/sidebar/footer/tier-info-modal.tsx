@@ -2,8 +2,8 @@ import { useCheckStore } from 'utils/store';
 import {
   getBadgeCommon,
   getExpertTierStyle,
-  getMasterEffectStyle,
   getMasterTierStyle,
+  getModalMasterEffectStyle,
 } from 'utils/styles';
 import { Box, Modal } from '@mui/material';
 import { BadgeProps } from 'types/types';
@@ -98,7 +98,7 @@ export default function TierInfoModal({
             어엿한 카페 고수입니다 뿌듯하셔도 좋아요!!
           </span>
           <div className="relative flex items-center gap-3">
-            <div className={getMasterEffectStyle('w-[11%]')}></div>
+            <div className={getModalMasterEffectStyle()}></div>
             <div className={getMasterTierStyle(getBadgeCommon)}>
               <span className="text-sm font-dpixel">MASTER</span>
             </div>

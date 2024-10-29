@@ -86,6 +86,10 @@ export const getMasterEffectStyle = (width: string) => {
   return `${width} z-0 absolute inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 };
 
+export const getModalMasterEffectStyle = () => {
+  return `w-[27%] sm:w-[9%] z-0 absolute -top-0.5 inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
+};
+
 export const getMasterTierStyle = (addOn: string = '') => {
   return `${addOn} z-10 relative bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md`;
 };
