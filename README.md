@@ -102,7 +102,7 @@ https://github.com/user-attachments/assets/f6e292ed-8b35-4135-bee3-4e14855191fd
 
 검색 결과에서 선택한 카페의 다양한 정보를 확인할 수 있어요.<br/>
 
-https://github.com/user-attachments/assets/aab81c79-3676-460c-be0f-ff6ab1da2a43
+https://github.com/user-attachments/assets/378670d0-ea3f-41b5-bef3-39885516929c
 
 썸네일 이미지를 클릭하면 카카오 플레이스에서 제공하는 페이지로 이동할 수 있어요.<br/>
 
@@ -128,7 +128,7 @@ https://github.com/user-attachments/assets/d9b4fe64-040c-46ba-ace1-dd2493f88a27
 
 <!-- 사이드바에서 눌러 접속하는 장면 gif -->
 
-https://github.com/user-attachments/assets/ac7d0753-cce0-48fd-96fd-5a9e0d0b1f04
+https://github.com/user-attachments/assets/75bc1c05-eb2e-4388-98a4-e7197bbc4d35
 
 내가 여태 수집한 카드를 볼 수 있어요.<br/>
 수집한 카드는 설명했던 것처럼 등급에 따라 컬러가 달라요.<br/>
