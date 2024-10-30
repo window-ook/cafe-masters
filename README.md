@@ -128,7 +128,7 @@ https://github.com/user-attachments/assets/d9b4fe64-040c-46ba-ace1-dd2493f88a27
 
 <!-- 사이드바에서 눌러 접속하는 장면 gif -->
 
-https://github.com/user-attachments/assets/adc22bc9-b071-40c8-9e38-923e027506d7
+https://github.com/user-attachments/assets/ac7d0753-cce0-48fd-96fd-5a9e0d0b1f04
 
 내가 여태 수집한 카드를 볼 수 있어요.<br/>
 수집한 카드는 설명했던 것처럼 등급에 따라 컬러가 달라요.<br/>
