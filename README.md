@@ -1,6 +1,5 @@
 # Cafe Masters (ver 1.0)
 
-<!-- 썸네일 넣어야함-->
 ![썸네일](https://github.com/user-attachments/assets/e042eb80-164e-4031-ba76-b3c129eea431)
 
 ## 목차
@@ -22,7 +21,6 @@
 
 ## 🔗 접속 링크
 
-<!-- 도메인 넣기 -->
 https://app.cafe-masters.co
 
 ## ✅ 스택
@@ -52,9 +50,11 @@ https://app.cafe-masters.co
 ### 1. 접속 초기 화면 - 로그인 / 회원가입 / 비밀번호 재설정
 
 <!-- 로그인 / 회원가입 전환 mp4 -->
+
 https://github.com/user-attachments/assets/d35d8a58-df1f-458e-96ff-b9542894161b
 
 <!-- 로그인 화면 png -->
+
 ![로그인 화면](https://github.com/user-attachments/assets/0324e281-43ee-4410-850c-a99eef10c8ab)
 
 카페 마스터즈를 이용하기 위해서는 로그인을 해야합니다!<br/>
@@ -182,7 +182,7 @@ https://github.com/user-attachments/assets/9757b6a1-fbe4-4c18-940f-cb4d37f97bc7
 
 ## 🧱 아키텍처
 
-![아키텍처](https://github.com/user-attachments/assets/229f6819-9845-4e12-b5fd-ca9d05a9ad06)
+![아키텍처](https://github.com/user-attachments/assets/a3c1fab9-2700-4795-8cdc-b6a74e8aad82)
 
 ## 🌱 업데이트 예정
 
