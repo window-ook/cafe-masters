@@ -43,6 +43,8 @@ export default async function RootLayout({
 }>) {
   const supabase = await createServerSupabaseClient();
 
+  const allowPublicAccess = process.env.ALLOW_PUBLIC_ACCESS === 'true';
+
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -61,7 +63,7 @@ export default async function RootLayout({
       <body>
         <ReactQueryClientProvider>
           <AuthProvider accessToken={session?.access_token}>
-            {session?.user ? (
+            {session?.user || allowPublicAccess ? (
               <MainLayout>
                 {children}
                 <KakaoMap />
