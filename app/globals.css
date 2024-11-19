@@ -89,53 +89,53 @@
 
 .circles li:nth-child(1) {
   left: 25%;
-  width: 12.5rem;
-  height: 12.5rem;
+  width: 10rem;
+  height: 10rem;
   animation-delay: 0s;
 }
 
 .circles li:nth-child(2) {
   left: 10%;
-  width: 7rem;
-  height: 7rem;
+  width: 6.5rem;
+  height: 6.5rem;
   animation-delay: 2s;
   animation-duration: 12s;
 }
 
 .circles li:nth-child(3) {
   left: 70%;
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   animation-delay: 6s;
 }
 
 .circles li:nth-child(4) {
   left: 40%;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   animation-delay: 2s;
   animation-duration: 8s;
 }
 
 .circles li:nth-child(5) {
   left: 65%;
-  width: 7rem;
+  width: 6rem;
   height: 7rem;
   animation-delay: 0s;
 }
 
 .circles li:nth-child(6) {
   left: 75%;
-  width: 7rem;
-  height: 7rem;
+  width: 6.5rem;
+  height: 6.5rem;
   animation-delay: 3s;
   animation-duration: 8s;
 }
 
 .circles li:nth-child(7) {
   left: 35%;
-  width: 9.5rem;
-  height: 9.5rem;
+  width: 9rem;
+  height: 9rem;
   animation-delay: 7s;
 }
 
@@ -157,8 +157,8 @@
 
 .circles li:nth-child(10) {
   left: 85%;
-  width: 11rem;
-  height: 11rem;
+  width: 9.5rem;
+  height: 9.5rem;
   animation-delay: 0s;
   animation-duration: 11s;
 }

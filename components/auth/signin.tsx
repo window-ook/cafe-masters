@@ -5,10 +5,10 @@ import { useMutation } from '@tanstack/react-query';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import {
-  getAuthFormCardStyle,
-  getAuthFormMentionStyle,
-  getAuthFormTitleStyle,
-  getKakaoButtonStyle,
+  AuthFormCardStyle,
+  AuthFormMentionStyle,
+  AuthFormTitleStyle,
+  KakaoButtonStyle,
 } from 'utils/styles';
 import UserForm from './user-form';
 import ResetpasswordForm from './resetpassword-form';
@@ -69,7 +69,7 @@ export default function Signin({ setView, checkEmailVaild }: any) {
   };
 
   return (
-    <div className={getAuthFormCardStyle()}>
+    <div className={AuthFormCardStyle}>
       {resetRequired ? (
         <ResetpasswordForm
           email={email}
@@ -80,7 +80,7 @@ export default function Signin({ setView, checkEmailVaild }: any) {
         />
       ) : (
         <div>
-          <p className={getAuthFormTitleStyle()}>로그인</p>
+          <p className={AuthFormTitleStyle}>로그인</p>
           <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
             <UserForm
               email={email}
@@ -106,12 +106,12 @@ export default function Signin({ setView, checkEmailVaild }: any) {
             </button>
             <button
               aria-label="카카오 로그인 버튼"
-              className={getKakaoButtonStyle()}
+              className={KakaoButtonStyle}
               onClick={() => signInWithKakao()}
             >
               <span className="font-dpixel text-white">카카오 로그인</span>
             </button>
-            <span color="gray" className={getAuthFormMentionStyle()}>
+            <span color="gray" className={AuthFormMentionStyle}>
               계정이 없으신가요?{' '}
               <button
                 aria-label="회원가입 폼 열기 버튼"

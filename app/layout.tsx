@@ -1,14 +1,22 @@
 import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { createServerSupabaseClient } from 'utils/supabase/server';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ToastContainer } from 'react-toastify';
 import { Metadata } from 'next';
 import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
+import dynamic from 'next/dynamic';
 import Auth from 'components/auth';
 import AuthProvider from 'config/auth-provider';
 import MainLayout from 'components/layouts/main-layout';
 import KakaoMap from 'components/layouts/map';
+
+const ReactQueryDevtools = dynamic(
+  () =>
+    import('@tanstack/react-query-devtools').then(
+      (mod) => mod.ReactQueryDevtools
+    ),
+  { ssr: false }
+);
 
 export const metadata: Metadata = {
   title: 'Cafe Masters',
@@ -44,6 +52,7 @@ export default async function RootLayout({
   const supabase = await createServerSupabaseClient();
 
   const allowPublicAccess = process.env.NEXT_ALLOW_PUBLIC_ACCESS === 'true';
+  const isDev = process.env.NODE_ENV === 'development';
 
   const {
     data: { session },
@@ -75,7 +84,7 @@ export default async function RootLayout({
                   theme="light"
                   limit={1}
                 />
-                <ReactQueryDevtools initialIsOpen={false} />
+                {isDev && <ReactQueryDevtools initialIsOpen={false} />}
               </MainLayout>
             ) : (
               <Auth />

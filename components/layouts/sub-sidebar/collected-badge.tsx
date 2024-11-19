@@ -1,11 +1,11 @@
-import { getCollectedBadgeStyle } from 'utils/styles';
+import { CollectedBadgeStyle } from 'utils/styles';
 import { Chip } from '@mui/material';
 
 export default function CollectedBadge() {
   return (
     <Chip
       label="COLLECTED"
-      className={getCollectedBadgeStyle()}
+      className={CollectedBadgeStyle}
       sx={{ color: 'white' }}
     />
   );

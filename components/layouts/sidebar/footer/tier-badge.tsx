@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Tooltip } from '@mui/material';
 import {
-  getBadgeCommon,
+  BadgeCommon,
   getExpertTierStyle,
   getMasterEffectStyle,
   getMasterTierStyle,
@@ -31,7 +31,7 @@ export default function TierBadge({ tier }: TierBadgeProps) {
           )}
           <div
             onClick={() => handleOpen()}
-            className={`${tierStyles[tier]} ${getBadgeCommon} hover:cursor-pointer`}
+            className={`${tierStyles[tier]} ${BadgeCommon} hover:cursor-pointer`}
           >
             <span className="text-md font-dpixel">{tier}</span>
           </div>

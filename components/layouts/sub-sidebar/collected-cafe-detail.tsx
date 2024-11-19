@@ -1,9 +1,9 @@
 import { useCheckStore, useMapStore } from 'utils/store';
 import {
   getDetailBodyStyle,
-  getDetailCollectButtonStyle,
+  DetailCollectButtonStyle,
   getDetailHeaderStyle,
-  getSubsidebarCloseIconStyle,
+  SubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { CollectedCafeDetailProps } from 'types/types';
 import OpenTimeGrid from './open-time-grid';
@@ -41,7 +41,7 @@ export default function CollectedCafeDetail({
           onClick={() => setIsSubSidebarOpen(false)}
           className="px-2 right-2"
         >
-          <i className={getSubsidebarCloseIconStyle()}></i>
+          <i className={SubsidebarCloseIconStyle}></i>
         </button>
       </div>
 
@@ -65,7 +65,7 @@ export default function CollectedCafeDetail({
         <div className="flex justify-between items-center">
           <RatingGrid rating={collectedCafeDetail?.rating} />
           <button
-            className={getDetailCollectButtonStyle()}
+            className={DetailCollectButtonStyle}
             onClick={() => setMemoOpen(true)}
           >
             수정하기

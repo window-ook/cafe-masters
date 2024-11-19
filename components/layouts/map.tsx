@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { useMapStore } from 'utils/store';
 import { toast } from 'react-toastify';
-import { getMapStyle } from 'utils/styles';
+import { KakaoMapStyle } from 'utils/styles';
 
 declare global {
   interface Window {
@@ -261,5 +261,5 @@ export default function KakaoMap() {
 
   if (pathname.startsWith('/resetpassword')) return null;
 
-  return <div id="map" className={getMapStyle()} />;
+  return <div id="map" className={KakaoMapStyle} />;
 }
