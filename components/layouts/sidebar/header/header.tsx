@@ -6,6 +6,7 @@ import { Tooltip } from '@mui/material';
 import Image from 'next/image';
 import Search from './search';
 import LightDarkToggle from './light-dark-toggle';
+import LogoImage from 'components/auth/logo-image';
 
 export default function Header() {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
@@ -28,13 +29,7 @@ export default function Header() {
             className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-300"
             onClick={() => router.push('/')}
           >
-            <Image
-              src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/logo_text.webp"
-              alt="logo text"
-              height={120}
-              width={120}
-              className="w-auto h-auto"
-            />
+            <LogoImage size={100} />
           </button>
         </Tooltip>
         <LightDarkToggle />

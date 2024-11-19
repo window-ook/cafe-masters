@@ -36,7 +36,7 @@ export default function KakaoMap() {
             37.54715716085294,
             127.04663357436208
           ),
-          level: 5,
+          level: 7,
           clickable: true,
         };
         const map = new window.kakao.maps.Map(container, options);
