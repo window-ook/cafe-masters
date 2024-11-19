@@ -61,7 +61,7 @@ export default function CollectedPage() {
     string[]
   >(optionsCount);
 
-  if (collectedCafe && collectedCafeCount) console.log('수집한 카드 : SUCCESS');
+  // if (collectedCafe && collectedCafeCount) console.log('수집한 카드 : SUCCESS');
 
   return (
     <Head>

@@ -18,7 +18,7 @@ export default function BookmarkedDetailpage({ params }: PageProps) {
     const fetchBookmarkedCafeDetail = async () => {
       try {
         const response = await getBookmarked(id, userId);
-        console.log(response);
+        // console.log(response);
         if (response && response.length >= 0) {
           setIsBookmarked(true);
           setBookmarkedCafeDetail(response);

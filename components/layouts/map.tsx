@@ -178,7 +178,6 @@ export default function KakaoMap() {
                     newPagination.nextPage();
                   else {
                     setAllCafe(results);
-                    console.log(results);
                     removeMarkers();
                     results.forEach((cafe) => displayResults(cafe));
                   }

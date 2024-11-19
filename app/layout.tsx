@@ -52,7 +52,7 @@ export default async function RootLayout({
   const supabase = await createServerSupabaseClient();
 
   const allowPublicAccess = process.env.NEXT_ALLOW_PUBLIC_ACCESS === 'true';
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDev = process.env.NEXT_THIS_ENV === 'develope';
 
   const {
     data: { session },
