@@ -9,8 +9,6 @@ export default function AuthBackgroundCards() {
       <li></li>
       <li></li>
       <li></li>
-      <li></li>
-      <li></li>
     </ul>
   );
 }
