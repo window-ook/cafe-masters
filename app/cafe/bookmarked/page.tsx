@@ -36,7 +36,7 @@ export default function BookmarkedPage() {
     [string, string]
   >(options);
 
-  if (bookmarkedCafe) console.log('북마크 카페 : SUCCESS');
+  // if (bookmarkedCafe) console.log('북마크 카페 : SUCCESS');
 
   return (
     <Head>

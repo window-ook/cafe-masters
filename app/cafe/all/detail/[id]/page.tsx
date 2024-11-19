@@ -22,7 +22,7 @@ export default function CafeDetailPage({ params }: PageProps) {
     const fetchDetail = async () => {
       try {
         const response = await cafeDetail(id);
-        console.log(response);
+        // console.log(response);
         setCafeDetail(response);
       } catch (error) {
         console.error(error);
