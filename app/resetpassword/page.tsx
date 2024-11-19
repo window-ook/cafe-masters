@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
-import Image from 'next/image';
 import Head from 'next/head';
 import AuthBackgroundCards from 'components/auth/auth-background-cards';
+import LogoImage from 'components/auth/logo-image';
 
 export default function ResetpasswordPage() {
   const [newPassword, setNewPassword] = useState('');
@@ -56,13 +56,7 @@ export default function ResetpasswordPage() {
       <main className="area h-screen w-screen flex justify-center items-center">
         <AuthBackgroundCards />
         <div className="flex flex-col items-center gap-4">
-          <Image
-            alt="텍스트 로고 이미지"
-            src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/logo_text.webp"
-            width={180}
-            height={180}
-            className="w-auto h-auto"
-          />
+          <LogoImage size={120} />
           <div className="z-10 p-5 rounded-xl bg-white shadow-mainShadow">
             <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
               <p className="text-center text-3xl font-bold font-dpixel">

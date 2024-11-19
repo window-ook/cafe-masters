@@ -6,7 +6,7 @@
 @layer utilities {
   .bg-tilted-image {
     background-image: url('https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp'); /* 이미지 경로 */
-    background-size: 300px 300px; /* 이미지 크기 */
+    background-size: 18.75rem 18.75rem; /* 이미지 크기 */
     background-repeat: repeat;
     transform-origin: center;
   }
@@ -15,7 +15,7 @@
 /* 배경 - bottom to top */
 @-webkit-keyframes animatetop {
   from {
-    top: -300px;
+    top: -18.75rem;
     opacity: 0;
   }
   to {
@@ -25,7 +25,7 @@
 }
 @keyframes animatetop {
   from {
-    top: -300px;
+    top: -18.75rem;
     opacity: 0;
   }
   to {
@@ -78,86 +78,87 @@
   position: absolute;
   display: block;
   list-style: none;
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   background-image: url('https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp'); /* 이미지 경로 */
   background-size: cover; /* 이미지가 전체 영역을 채우도록 설정 */
   background-position: center; /* 이미지가 중앙에 오도록 설정 */
   animation: animate 25s linear infinite;
-  bottom: -150px;
+  bottom: -9.375rem;
 }
 
 .circles li:nth-child(1) {
   left: 25%;
-  width: 300px;
-  height: 300px;
+  width: 12.5rem;
+  height: 12.5rem;
   animation-delay: 0s;
 }
 
 .circles li:nth-child(2) {
   left: 10%;
-  width: 120px;
-  height: 120px;
+  width: 7rem;
+  height: 7rem;
   animation-delay: 2s;
   animation-duration: 12s;
 }
 
 .circles li:nth-child(3) {
   left: 70%;
-  width: 80px;
-  height: 80px;
-  animation-delay: 4s;
+  width: 4rem;
+  height: 4rem;
+  animation-delay: 6s;
 }
 
 .circles li:nth-child(4) {
   left: 40%;
-  width: 60px;
-  height: 60px;
-  animation-delay: 0s;
-  animation-duration: 18s;
+  width: 3rem;
+  height: 3rem;
+  animation-delay: 2s;
+  animation-duration: 8s;
 }
 
 .circles li:nth-child(5) {
   left: 65%;
-  width: 20px;
-  height: 20px;
+  width: 7rem;
+  height: 7rem;
   animation-delay: 0s;
 }
 
 .circles li:nth-child(6) {
   left: 75%;
-  width: 110px;
-  height: 110px;
+  width: 7rem;
+  height: 7rem;
   animation-delay: 3s;
+  animation-duration: 8s;
 }
 
 .circles li:nth-child(7) {
   left: 35%;
-  width: 150px;
-  height: 150px;
+  width: 9.5rem;
+  height: 9.5rem;
   animation-delay: 7s;
 }
 
 .circles li:nth-child(8) {
   left: 50%;
-  width: 25px;
-  height: 25px;
+  width: 1.5rem;
+  height: 1.5rem;
   animation-delay: 15s;
   animation-duration: 45s;
 }
 
 .circles li:nth-child(9) {
   left: 20%;
-  width: 100px;
-  height: 100px;
+  width: 5rem;
+  height: 5rem;
   animation-delay: 2s;
   animation-duration: 35s;
 }
 
 .circles li:nth-child(10) {
   left: 85%;
-  width: 300px;
-  height: 300px;
+  width: 11rem;
+  height: 11rem;
   animation-delay: 0s;
   animation-duration: 11s;
 }
@@ -192,6 +193,7 @@
     format('woff');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -200,4 +202,5 @@
     format('woff2');
   font-weight: 800;
   font-style: normal;
+  font-display: swap;
 }
