@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMapStore, useCheckStore } from 'utils/store';
-import { getSearchButtonStyle, getSearchInputStyle } from 'utils/styles';
+import { SearchButtonStyle, getSearchInputStyle } from 'utils/styles';
 
 export default function Search() {
   const router = useRouter();
@@ -47,7 +47,7 @@ export default function Search() {
           />
           <button
             aria-label="검색 버튼"
-            className={getSearchButtonStyle()}
+            className={SearchButtonStyle}
             type="button"
             onClick={handleSearch}
           >

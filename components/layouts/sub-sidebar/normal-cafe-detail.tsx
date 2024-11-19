@@ -9,9 +9,9 @@ import {
 } from 'actions/bookmarkActions';
 import {
   getDetailBodyStyle,
-  getDetailCollectButtonStyle,
+  DetailCollectButtonStyle,
   getDetailHeaderStyle,
-  getSubsidebarCloseIconStyle,
+  SubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { toast } from 'react-toastify';
 import { NormalCafeDetailProps } from 'types/types';
@@ -106,7 +106,7 @@ export default function NormalCafeDetail({
           onClick={() => setIsSubSidebarOpen(false)}
           className="px-2 right-2"
         >
-          <i className={getSubsidebarCloseIconStyle()}></i>
+          <i className={SubsidebarCloseIconStyle}></i>
         </button>
       </div>
 
@@ -134,7 +134,7 @@ export default function NormalCafeDetail({
           ) : (
             <button
               aria-label="수집하기 버튼"
-              className={getDetailCollectButtonStyle()}
+              className={DetailCollectButtonStyle}
               onClick={() => setMemoOpen(true)}
             >
               수집하기

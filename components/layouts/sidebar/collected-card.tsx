@@ -1,11 +1,11 @@
 import { useCheckStore } from 'utils/store';
 import {
-  getOverThreeRatingStyle,
-  getOverFiveRatingStyle,
-  getRatingCircleStyle,
+  OverThreeRatingStyle,
+  OverFiveRatingStyle,
+  RatingCircleStyle,
   getCollectedCardStyle,
-  getUniqueCardStyle,
-  getUniqueCardEffectStyle,
+  UniqueCardStyle,
+  UniqueCardEffectStyle,
 } from 'utils/styles';
 import { CollectedCardProps } from 'types/types';
 import Image from 'next/image';
@@ -23,19 +23,19 @@ export default function CollectedCard({
 
   const bgRatings =
     ratings >= 5
-      ? getOverFiveRatingStyle()
+      ? OverFiveRatingStyle
       : ratings >= 3
-        ? getOverThreeRatingStyle()
+        ? OverThreeRatingStyle
         : 'text-white bg-black';
 
   return (
     <div className="relative">
-      {isUnique && <div className={getUniqueCardEffectStyle()}></div>}
+      {isUnique && <div className={UniqueCardEffectStyle}></div>}
       <div
         onClick={onClick}
         className={
           isUnique
-            ? getUniqueCardStyle()
+            ? UniqueCardStyle
             : getCollectedCardStyle(bgRatings, isDarkTheme)
         }
       >
@@ -46,7 +46,7 @@ export default function CollectedCard({
           {Array(ratings)
             .fill(0)
             .map((_, index) => (
-              <div key={index} className={getRatingCircleStyle()}>
+              <div key={index} className={RatingCircleStyle}>
                 <i className="fa-solid fa-star absolute text-yellow-300 text-xs"></i>
               </div>
             ))}

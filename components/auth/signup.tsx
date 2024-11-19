@@ -5,10 +5,10 @@ import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import {
-  getAuthFormCardStyle,
-  getAuthFormMentionStyle,
-  getAuthFormTitleStyle,
-  getKakaoButtonStyle,
+  AuthFormCardStyle,
+  AuthFormMentionStyle,
+  AuthFormTitleStyle,
+  KakaoButtonStyle,
 } from 'utils/styles';
 import UserForm from './user-form';
 import OtpForm from './otp-form';
@@ -70,8 +70,8 @@ export default function Signup({ setView, checkEmailVaild }: any) {
   };
 
   return (
-    <div className={getAuthFormCardStyle()}>
-      <p className={getAuthFormTitleStyle()}>회원가입</p>
+    <div className={AuthFormCardStyle}>
+      <p className={AuthFormTitleStyle}>회원가입</p>
       <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
         {confirmationRequired ? (
           <OtpForm otp={otp} setOtp={setOtp} />
@@ -104,14 +104,14 @@ export default function Signup({ setView, checkEmailVaild }: any) {
         </button>
         <button
           aria-label="카카오 로그인 버튼"
-          className={getKakaoButtonStyle()}
+          className={KakaoButtonStyle}
           onClick={() => signInWithKakao()}
         >
           <span className="font-dpixel text-lg text-white">
             카카오로 회원가입
           </span>
         </button>
-        <span color="gray" className={getAuthFormMentionStyle()}>
+        <span color="gray" className={AuthFormMentionStyle}>
           이미 계정이 있으신가요?{' '}
           <button
             aria-label="로그인 폼 열기 버튼"

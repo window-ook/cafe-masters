@@ -1,9 +1,9 @@
 import { useCheckStore } from 'utils/store';
 import {
-  getBadgeCommon,
+  BadgeCommon,
   getExpertTierStyle,
   getMasterTierStyle,
-  getModalMasterEffectStyle,
+  ModalMasterEffectStyle,
 } from 'utils/styles';
 import { Box, Modal } from '@mui/material';
 import { BadgeProps } from 'types/types';
@@ -68,7 +68,7 @@ export default function TierInfoModal({
           <Badge
             tier={'BEGINNER'}
             range={'0 ~ 5'}
-            color={`bg-beginner text-white ${getBadgeCommon}`}
+            color={`bg-beginner text-white ${BadgeCommon}`}
           />
           <span className={tierDescStyle}>
             당신은 카페 월드의 초보! 갈 길이 멉니다ㅜㅜ
@@ -76,7 +76,7 @@ export default function TierInfoModal({
           <Badge
             tier={'JUNIOR'}
             range={'6 ~ 15'}
-            color={`bg-junior text-white ${getBadgeCommon}`}
+            color={`bg-junior text-white ${BadgeCommon}`}
           />
           <span className={tierDescStyle}>
             열심히 카페를 다니고 있는 주니어에요
@@ -84,7 +84,7 @@ export default function TierInfoModal({
           <Badge
             tier={'SENIOR'}
             range={'16 ~ 29'}
-            color={`bg-senior text-white ${getBadgeCommon}`}
+            color={`bg-senior text-white ${BadgeCommon}`}
           />
           <span className={tierDescStyle}>
             커피 좀 마셔봤다는 시니어가 되셨네요 후훗
@@ -92,14 +92,14 @@ export default function TierInfoModal({
           <Badge
             tier={'EXPERT'}
             range={'30 ~ 49'}
-            color={getExpertTierStyle(getBadgeCommon)}
+            color={getExpertTierStyle(BadgeCommon)}
           />
           <span className={tierDescStyle}>
             어엿한 카페 고수입니다 뿌듯하셔도 좋아요!!
           </span>
           <div className="relative flex items-center gap-3">
-            <div className={getModalMasterEffectStyle()}></div>
-            <div className={getMasterTierStyle(getBadgeCommon)}>
+            <div className={ModalMasterEffectStyle}></div>
+            <div className={getMasterTierStyle(BadgeCommon)}>
               <span className="text-sm font-dpixel">MASTER</span>
             </div>
             <span className="z-10 relative text-xl font-dpixel">50</span>

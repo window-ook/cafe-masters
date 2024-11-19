@@ -1,6 +1,5 @@
 'use client';
 
-import { getLogoutButtonStyle } from 'utils/styles';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
 export default function LogoutButton() {
@@ -17,7 +16,7 @@ export default function LogoutButton() {
   return (
     <button
       aria-label="로그아웃 버튼"
-      className={getLogoutButtonStyle()}
+      className="bg-main rounded-xl shadow-md w-[12rem] sm:w-[10rem] py-4 sm:py-2 hover:bg-opacity-70 transition duration-300 ease-in"
       onClick={handleLogout}
     >
       <span className="text-white font-dpixel text-2xl sm:text-lg">

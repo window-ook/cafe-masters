@@ -1,11 +1,3 @@
-export const getMapStyle = () => {
-  return 'z-0 fixed top-0 sm:translate-x-[27rem] sm:w-[calc(100vw-27rem)] w-screen h-screen';
-};
-
-export const getBarContainerStyle = () => {
-  return 'w-screen h-screen flex items-center';
-};
-
 export const getSidebarStyle = (
   isDarkTheme: boolean,
   isSubSidebarOpen: boolean
@@ -39,9 +31,11 @@ export const getSubSidebarStyle = (
   return `${baseStyle} ${openStyle}`;
 };
 
-export const getSubsidebarCloseIconStyle = () => {
-  return 'fa-solid fa-circle-xmark text-main text-3xl hover:text-opacity-70';
-};
+export const SubsidebarCloseIconStyle =
+  'fa-solid fa-circle-xmark text-main text-3xl hover:text-opacity-70';
+
+export const KakaoMapStyle =
+  'z-0 fixed top-0 sm:translate-x-[27rem] sm:w-[calc(100vw-27rem)] w-screen h-screen';
 
 export const getMemoInputStyle = (isDarkTheme: boolean) => {
   return `${isDarkTheme ? 'text-black' : ''} rounded-lg`;
@@ -63,9 +57,8 @@ export const getDetailBodyStyle = (isDarkTheme: boolean) => {
   return `${isDarkTheme ? 'shadow-mainShadow' : ''} p-2 flex flex-col gap-4 shadow-md rounded-md`;
 };
 
-export const getDetailCollectButtonStyle = () => {
-  return 'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-paperexbold';
-};
+export const DetailCollectButtonStyle =
+  'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-paperexbold';
 
 export const getNormalCardStyle = (isDarkTheme: boolean) => {
   return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-50 p-4 border-4 rounded-2xl shadow-md flex flex-col gap-2 cursor-pointer font-dpixel hover:scale-105 transition duration-300 ease`;
@@ -86,9 +79,7 @@ export const getMasterEffectStyle = (width: string) => {
   return `${width} z-0 absolute inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 };
 
-export const getModalMasterEffectStyle = () => {
-  return `w-[27%] sm:w-[9%] z-0 absolute -top-0.5 inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
-};
+export const ModalMasterEffectStyle = `w-[27%] sm:w-[9%] z-0 absolute -top-0.5 inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 
 export const getMasterTierStyle = (addOn: string = '') => {
   return `${addOn} z-10 relative bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md`;
@@ -98,56 +89,39 @@ export const getSearchInputStyle = (isDarkTheme: boolean) => {
   return `${isDarkTheme ? 'placeholder:text-gray-200 text-white' : 'placeholder:text-slate-400 text-slate-700'} w-full pl-3 pr-28 py-4 bg-transparent text-xl sm:text-md border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 shadow-sm focus:shadow`;
 };
 
-export const getSearchButtonStyle = () => {
-  return 'absolute top-1 right-1 py-4 px-2.5 flex items-center gap-2 rounded bg-main border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
-};
+export const SearchButtonStyle =
+  'absolute top-1 right-1 py-4 px-2.5 flex items-center gap-2 rounded bg-main border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
 
-export const getCollectedBadgeStyle = () => {
-  return 'bg-gradient-to-r from-success via-indigo to-success bg-[length:200%_200%] animate-gradient shadow-md';
-};
+export const CollectedBadgeStyle =
+  'bg-gradient-to-r from-success via-indigo to-success bg-[length:200%_200%] animate-gradient shadow-md';
 
-export const getBadgeCommon =
+export const BadgeCommon =
   'rounded-xl w-20 h-6 py-4 flex items-center justify-center';
 
-export const getUniqueCardStyle = () => {
-  return 'bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient text-white shadow-md border-red-300 h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel font-bold transition duration-300 ease hover:scale-105 hover:bg-gradient-to-tr ';
-};
+export const UniqueCardStyle =
+  'bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient text-white shadow-md border-red-300 h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel font-bold transition duration-300 ease hover:scale-105 hover:bg-gradient-to-tr ';
 
-export const getUniqueCardEffectStyle = () => {
-  return `-z-10 absolute inset-0 w-[100%] h-[100%] bg-gradient-to-r from-unique-effect-left via-unique-effect-mid to-unique-effect-right rounded-xl blur-md animate-tilt`;
-};
+export const UniqueCardEffectStyle = `-z-10 absolute inset-0 w-[100%] h-[100%] bg-gradient-to-r from-unique-effect-left via-unique-effect-mid to-unique-effect-right rounded-xl blur-md animate-tilt`;
 
-export const getOverThreeRatingStyle = () => {
-  return 'bg-gradient-to-tl from-silver-side via-silver-via to-silver-side bg-[length:200%_200%] animate-gradient shadow-md text-gray-600 shadow-gray-300';
-};
+export const OverThreeRatingStyle =
+  'bg-gradient-to-tl from-silver-side via-silver-via to-silver-side bg-[length:200%_200%] animate-gradient shadow-md text-gray-600 shadow-gray-300';
 
-export const getOverFiveRatingStyle = () => {
-  return 'bg-gradient-to-tl from-gold-side via-gold-via to-gold-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700';
-};
+export const OverFiveRatingStyle =
+  'bg-gradient-to-tl from-gold-side via-gold-via to-gold-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700';
 
-export const getRatingCircleStyle = () => {
-  return 'relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500 shadow-md shadow-yellow-100';
-};
+export const RatingCircleStyle =
+  'relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500 shadow-md shadow-yellow-100';
 
-export const getRatingStarStyle = () => {
-  return 'fa-solid fa-star absolute text-yellow-300 text-xs';
-};
+export const RatingStarStyle =
+  'fa-solid fa-star absolute text-yellow-300 text-xs';
 
-export const getLogoutButtonStyle = () => {
-  return 'bg-main rounded-xl shadow-md w-[12rem] sm:w-[10rem] py-4 sm:py-2 hover:bg-opacity-70 transition duration-300 ease-in';
-};
+export const AuthFormCardStyle =
+  'p-5 rounded-xl bg-white shadow-mainShadow z-10';
 
-export const getAuthFormCardStyle = () => {
-  return 'p-5 rounded-xl bg-white shadow-mainShadow z-10';
-};
+export const AuthFormTitleStyle = 'text-center text-3xl font-bold font-dpixel';
 
-export const getAuthFormTitleStyle = () => {
-  return 'text-center text-3xl font-bold font-dpixel';
-};
-export const getAuthFormMentionStyle = () => {
-  return 'flex items-center justify-center gap-4 text-center font-dpixel';
-};
+export const AuthFormMentionStyle =
+  'flex items-center justify-center gap-4 text-center font-dpixel';
 
-export const getKakaoButtonStyle = () => {
-  return 'bg-yellow-500 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer';
-};
+export const KakaoButtonStyle =
+  'bg-yellow-500 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer';
