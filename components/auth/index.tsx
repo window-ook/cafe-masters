@@ -19,7 +19,7 @@ export default function Auth() {
     <main className="area h-screen w-screen flex justify-center items-center">
       <AuthBackgroundCards />
       <div className="flex flex-col items-center gap-4">
-        <LogoImage size={120} />
+        <LogoImage size={140} />
         {view === 'SIGNUP' ? (
           <Signup setView={setView} checkEmailVaild={checkEmailVaild} />
         ) : (
