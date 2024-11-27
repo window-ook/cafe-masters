@@ -3,7 +3,7 @@
 /**
  * GET cafeDetail by KAKAO MAP searching
  */
-export async function cafeDetail(id: string): Promise<unknown> {
+export async function getCafeDetail(id: string): Promise<unknown> {
   if (!id)
     throw new Error('해당 카페의 id (basicinfo.cid)가 유효하지 않습니다');
 

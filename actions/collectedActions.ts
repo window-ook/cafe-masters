@@ -19,10 +19,7 @@ function handleError(error: PostgrestError) {
   throw new Error(error.message);
 }
 
-/**
- * GET all collectedCafe
- */
-export async function getAllCollected(
+export async function getAllCollectedCafes(
   userId: string
 ): Promise<CollectedCafeFromSupabase[]> {
   if (!userId) throw new Error('유효하지 않은 userId');
@@ -38,10 +35,7 @@ export async function getAllCollected(
   return data ?? [];
 }
 
-/**
- * GET 1 collectedCafe (서브)
- */
-export async function getCollected(
+export async function getCollectedCafe(
   id: string,
   userId: string
 ): Promise<CollectedCafeFromSupabase[]> {
@@ -59,10 +53,7 @@ export async function getCollected(
   return data ?? [];
 }
 
-/**
- * GET collected count
- */
-export async function countCollected(
+export async function countCollectedCafes(
   userId: string
 ): Promise<CollectedCountFromSupabase> {
   if (!userId) throw new Error('유효하지 않은 userId');
@@ -77,10 +68,7 @@ export async function countCollected(
   return { data, count };
 }
 
-/**
- * CREATE
- */
-export async function createCollected(
+export async function createCollectedCafe(
   collected: CollectedRowInsert
 ): Promise<void> {
   if (!collected)
@@ -95,17 +83,14 @@ export async function createCollected(
   if (error) handleError(error);
 }
 
-/**
- * UPDATE
- */
-export async function updateCollected(
+export async function updateCollectedCafe(
   collected: CollectedRowUpdate,
   id: string,
   userId: string
 ): Promise<void> {
   if (!collected)
     throw new Error('수집한 카드 테이블에 전달하는 데이터가 유효하지 않습니다');
-  if (!id) throw new Error('유효하지 않은 북마크 카페 id');
+  if (!id) throw new Error('유효하지 않은 카페 id');
   if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();

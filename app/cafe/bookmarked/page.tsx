@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
-import { getAllBookmarked } from 'actions/bookmarkActions';
+import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
 import { BookmarkedCafeFromSupabase } from 'types/types';
 import Head from 'next/head';
 
@@ -13,7 +13,7 @@ export default function BookmarkedPage() {
   );
 
   const queryFn = async () => {
-    const response = await getAllBookmarked(userId);
+    const response = await getAllBookmarkedCafes(userId);
     setBookmarkedCafe(response);
     return response;
   };
@@ -36,11 +36,11 @@ export default function BookmarkedPage() {
     [string, string]
   >(options);
 
-  // if (bookmarkedCafe) console.log('북마크 카페 : SUCCESS');
+  if (bookmarkedCafe) console.log('가고 싶은 카페 확인');
 
   return (
     <Head>
-      <title>북마크 카페 | 카페 마스터즈 Cafe Masters</title>
+      <title>가고 싶은 카페 | 카페 마스터즈 Cafe Masters</title>
       <meta name="description" content={`북마크 해둔 카페를 볼 수 있어요.`} />
     </Head>
   );

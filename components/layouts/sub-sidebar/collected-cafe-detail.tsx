@@ -28,6 +28,8 @@ export default function CollectedCafeDetail({
     (state: any) => state.collectedCafeDetail[0]
   );
 
+  // 서브 사이드바에서 넘겨준 set 함수들로 메모 인풋의 값들 설정하기
+
   return (
     <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>

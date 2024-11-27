@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useMapStore, useCheckStore, useUserStore } from 'utils/store';
-import { getBookmarked } from 'actions/bookmarkActions';
+import { getBookmarkedCafe } from 'actions/bookmarkActions';
 import { PageProps } from 'types/types';
 import Head from 'next/head';
 
@@ -15,11 +15,10 @@ export default function BookmarkedDetailpage({ params }: PageProps) {
   );
 
   useEffect(() => {
-    const fetchBookmarkedCafeDetail = async () => {
+    const fetchBookmarkedCafe = async () => {
       try {
-        const response = await getBookmarked(id, userId);
-        // console.log(response);
-        if (response && response.length >= 0) {
+        const response = await getBookmarkedCafe(id, userId);
+        if (response?.length) {
           setIsBookmarked(true);
           setBookmarkedCafeDetail(response);
         }
@@ -28,7 +27,7 @@ export default function BookmarkedDetailpage({ params }: PageProps) {
       }
     };
 
-    fetchBookmarkedCafeDetail();
+    fetchBookmarkedCafe();
   }, [id, userId]);
 
   return (
