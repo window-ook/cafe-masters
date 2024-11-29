@@ -10,7 +10,7 @@ import {
   AuthFormTitleStyle,
   KakaoButtonStyle,
 } from 'utils/styles';
-import UserForm from './user-form';
+import UserForm from '../common/user-form';
 import ResetpasswordForm from './resetpassword-form';
 
 export default function Signin({ setView, checkEmailVaild }: any) {

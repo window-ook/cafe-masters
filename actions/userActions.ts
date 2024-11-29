@@ -2,10 +2,7 @@
 
 import { createServerSupabaseClient } from 'utils/supabase/server';
 
-/**
- * GET userId
- */
-export async function getCurrentUserId() {
+export async function getCurrentUserId(): Promise<string> {
   const supabase = await createServerSupabaseClient();
 
   const {

@@ -8,8 +8,8 @@ import { getSubSidebarStyle } from 'utils/styles';
 import {
   CollectedRowInsert,
   CollectedRowUpdate,
-  createCollected,
-  updateCollected,
+  createCollectedCafe,
+  updateCollectedCafe,
 } from 'actions/collectedActions';
 import { toast } from 'react-toastify';
 import Memo from './memo/memo';
@@ -130,7 +130,8 @@ export default function SubSidebar() {
   };
 
   const collectMutation = useMutation({
-    mutationFn: async (memo: CollectedRowInsert) => await createCollected(memo),
+    mutationFn: async (memo: CollectedRowInsert) =>
+      await createCollectedCafe(memo),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
@@ -143,7 +144,7 @@ export default function SubSidebar() {
 
   const updateMutation = useMutation({
     mutationFn: async (memo: CollectedRowUpdate) =>
-      await updateCollected(memo, collectedCafeDetail.id, userId),
+      await updateCollectedCafe(memo, collectedCafeDetail.id, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });

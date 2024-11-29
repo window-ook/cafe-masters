@@ -2,13 +2,13 @@
 
 import { useEffect } from 'react';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-import { cafeDetail } from 'actions/cafeDetailActions';
-import { getBookmarked } from 'actions/bookmarkActions';
-import { getCollected } from 'actions/collectedActions';
+import { getCafeDetail } from 'actions/cafeDetailActions';
+import { getBookmarkedCafe } from 'actions/bookmarkActions';
+import { getCollectedCafe } from 'actions/collectedActions';
 import { PageProps } from 'types/types';
 import Head from 'next/head';
 
-export default function CafeDetailPage({ params }: PageProps) {
+export default function AllDetailPage({ params }: PageProps) {
   const { id } = params;
   const userId = useUserStore((state: any) => state.userId);
   const setCafeDetail = useMapStore((state: any) => state.setCafeDetail);
@@ -19,35 +19,36 @@ export default function CafeDetailPage({ params }: PageProps) {
     setIsBookmarked(false);
     setIsCollected(false);
 
-    const fetchDetail = async () => {
+    const fetchCafeDetail = async () => {
       try {
-        const response = await cafeDetail(id);
-        // console.log(response);
+        const response = await getCafeDetail(id);
         setCafeDetail(response);
       } catch (error) {
         console.error(error);
       }
     };
 
-    const fetchCollected = async () => {
+    const checkCollectedCafe = async () => {
       try {
-        const response = await getCollected(id, userId);
-        if (response && response.length > 0) setIsCollected(true);
-      } catch (error) {}
+        const response = await getCollectedCafe(id, userId);
+        if (response?.length) setIsCollected(true);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
-    const fetchBookmarked = async () => {
+    const checkBookmarkedCafe = async () => {
       try {
-        const response = await getBookmarked(id, userId);
-        if (response && response.length > 0) setIsBookmarked(true);
+        const response = await getBookmarkedCafe(id, userId);
+        if (response?.length) setIsBookmarked(true);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchDetail();
-    fetchBookmarked();
-    fetchCollected();
+    fetchCafeDetail();
+    checkBookmarkedCafe();
+    checkCollectedCafe();
   }, [id]);
 
   return (

@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import Sidebar from 'components/layouts/sidebar/sidebar';
+import Sidebar from 'components/layouts/sidebar/container';
 
 interface MainLayout {
   children: ReactNode;

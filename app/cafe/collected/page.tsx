@@ -2,7 +2,10 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
-import { countCollected, getAllCollected } from 'actions/collectedActions';
+import {
+  countCollectedCafes,
+  getAllCollectedCafes,
+} from 'actions/collectedActions';
 import {
   CollectedCafeFromSupabase,
   CollectedCountFromSupabase,
@@ -17,13 +20,13 @@ export default function CollectedPage() {
   );
 
   const queryFnData = async () => {
-    const response = await getAllCollected(userId);
+    const response = await getAllCollectedCafes(userId);
     setCollectedCafe(response);
     return response;
   };
 
   const queryFnCount = async () => {
-    const response = await countCollected(userId);
+    const response = await countCollectedCafes(userId);
     setCollectedCafeCount(response?.count || 0);
     return response;
   };
@@ -61,11 +64,11 @@ export default function CollectedPage() {
     string[]
   >(optionsCount);
 
-  // if (collectedCafe && collectedCafeCount) console.log('수집한 카드 : SUCCESS');
+  if (collectedCafe && collectedCafeCount) console.log('수집한 카드 확인');
 
   return (
     <Head>
-      <title>수집한 카드 정보 | Cafe Masters</title>
+      <title>수집한 카드 | Cafe Masters</title>
       <meta name="description" content={`내가 수집한 카드들을 볼 수 있어요.`} />
     </Head>
   );

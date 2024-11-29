@@ -189,4 +189,5 @@ https://github.com/user-attachments/assets/9757b6a1-fbe4-4c18-940f-cb4d37f97bc7
 ### ver 1.1
 
 <span>- 유저 프로필 이미지 및 닉네임 설정 기능 추가</span><br/>
-<span>- 출발지↔목적지 길찾기 기능</span>
+<span>- 출발지↔목적지 길찾기 기능</span><br/>
+<span>- 존재하는 카페인데 검색 결과에 나오지 않는 카페 해결</span>

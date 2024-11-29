@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import Signup from './signup';
-import Signin from './signin';
+import Signup from '../signup';
+import Signin from '../signin';
 import AuthBackgroundCards from './auth-background-cards';
 import LogoImage from './logo-image';
 

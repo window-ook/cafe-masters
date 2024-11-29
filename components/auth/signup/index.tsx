@@ -10,7 +10,7 @@ import {
   AuthFormTitleStyle,
   KakaoButtonStyle,
 } from 'utils/styles';
-import UserForm from './user-form';
+import UserForm from '../common/user-form';
 import OtpForm from './otp-form';
 
 export default function Signup({ setView, checkEmailVaild }: any) {

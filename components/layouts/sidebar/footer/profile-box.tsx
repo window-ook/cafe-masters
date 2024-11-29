@@ -6,7 +6,7 @@ import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import TierBadge from './tier-badge';
 import Image from 'next/image';
 
-export default function Profile() {
+export default function ProfileBox() {
   const collectedCafeCount = useMapStore(
     (state: any) => state.collectedCafeCount
   );

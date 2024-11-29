@@ -7,13 +7,13 @@ import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getSidebarStyle } from 'utils/styles';
 import { shallow } from 'zustand/shallow';
-import Header from './header/header';
-import Footer from './footer/footer';
-import SubSidebar from '../sub-sidebar/sub-sidebar';
-import NormalCard from './normal-card';
-import CollectedCard from './collected-card';
+import Header from './header';
+import Footer from './footer';
+import SubSidebar from './sub-sidebar/container';
+import NormalCard from './main/normal-card';
+import CollectedCard from './main/collected-card';
 import PageConverter from './footer/page-converter';
-import SidebarTabList from './sidebar-tab-list';
+import SidebarTabList from './main/sidebar-tab-list';
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);

@@ -4,8 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import {
   BookmarkedRowInsert,
-  createBookmarked,
-  deleteBookmarked,
+  createBookmarkedCafe,
+  deleteBookmarkedCafe,
 } from 'actions/bookmarkActions';
 import {
   getDetailBodyStyle,
@@ -15,7 +15,7 @@ import {
 } from 'utils/styles';
 import { toast } from 'react-toastify';
 import { NormalCafeDetailProps } from 'types/types';
-import CollectedBadge from 'components/layouts/sub-sidebar/collected-badge';
+import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
 import OpenTimeGrid from './open-time-grid';
@@ -53,7 +53,7 @@ export default function NormalCafeDetail({
 
   const bookmarkMutation = useMutation({
     mutationFn: async (detail: BookmarkedRowInsert) =>
-      await createBookmarked(detail),
+      await createBookmarkedCafe(detail),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
@@ -65,7 +65,7 @@ export default function NormalCafeDetail({
 
   const bookmarkCancelMutation = useMutation({
     mutationFn: async () =>
-      await deleteBookmarked(bookmarkedCafeDetail?.id, userId),
+      await deleteBookmarkedCafe(bookmarkedCafeDetail?.id, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });

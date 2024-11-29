@@ -14,10 +14,7 @@ function handleError(error: PostgrestError): void {
   throw new Error(error.message);
 }
 
-/**
- * GET all bookmarkedCafe
- */
-export async function getAllBookmarked(
+export async function getAllBookmarkedCafes(
   userId: string
 ): Promise<BookmarkedCafeFromSupabase[]> {
   if (!userId) throw new Error('유효하지 않은 userId');
@@ -33,10 +30,7 @@ export async function getAllBookmarked(
   return data ?? [];
 }
 
-/**
- * GET 1 bookmarkedCafe
- */
-export async function getBookmarked(
+export async function getBookmarkedCafe(
   id: string,
   userId: string
 ): Promise<BookmarkedCafeFromSupabase[]> {
@@ -54,10 +48,7 @@ export async function getBookmarked(
   return data ?? [];
 }
 
-/**
- * CREATE
- */
-export async function createBookmarked(
+export async function createBookmarkedCafe(
   bookmarked: BookmarkedRowInsert
 ): Promise<void> {
   if (!bookmarked)
@@ -72,14 +63,11 @@ export async function createBookmarked(
   if (error) handleError(error);
 }
 
-/**
- * DELETE
- */
-export async function deleteBookmarked(
+export async function deleteBookmarkedCafe(
   id: string,
   userId: string
 ): Promise<void> {
-  if (!id) throw new Error('유효하지 않은 북마크 카페 id');
+  if (!id) throw new Error('유효하지 않은 카페 id');
   if (!userId) throw new Error('유효하지 않은 userId');
 
   const supabase = await createServerSupabaseClient();
