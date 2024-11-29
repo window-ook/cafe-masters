@@ -8,7 +8,7 @@ import { getCollectedCafe } from 'actions/collectedActions';
 import { PageProps } from 'types/types';
 import Head from 'next/head';
 
-export default function CafeDetailPage({ params }: PageProps) {
+export default function AllDetailPage({ params }: PageProps) {
   const { id } = params;
   const userId = useUserStore((state: any) => state.userId);
   const setCafeDetail = useMapStore((state: any) => state.setCafeDetail);

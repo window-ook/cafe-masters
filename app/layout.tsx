@@ -5,10 +5,10 @@ import { ToastContainer } from 'react-toastify';
 import { Metadata } from 'next';
 import ReactQueryClientProvider from 'config/ReactQueryClientProvider';
 import dynamic from 'next/dynamic';
-import Auth from 'components/auth';
+import Auth from 'components/auth/common';
 import AuthProvider from 'config/auth-provider';
 import MainLayout from 'components/layouts/main-layout';
-import KakaoMap from 'components/layouts/map';
+import KakaoMap from 'components/layouts/kakaomap';
 
 const ReactQueryDevtools = dynamic(
   () =>
@@ -51,7 +51,6 @@ export default async function RootLayout({
 }>) {
   const supabase = await createServerSupabaseClient();
 
-  const allowPublicAccess = process.env.NEXT_ALLOW_PUBLIC_ACCESS === 'true';
   const isDev = process.env.NEXT_THIS_ENV === 'develope';
 
   const {
@@ -72,7 +71,7 @@ export default async function RootLayout({
       <body>
         <ReactQueryClientProvider>
           <AuthProvider accessToken={session?.access_token}>
-            {session?.user || allowPublicAccess ? (
+            {session?.user ? (
               <MainLayout>
                 {children}
                 <KakaoMap />

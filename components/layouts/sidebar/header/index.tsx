@@ -6,7 +6,7 @@ import { Tooltip } from '@mui/material';
 import Image from 'next/image';
 import Search from './search';
 import LightDarkToggle from './light-dark-toggle';
-import LogoImage from 'components/auth/logo-image';
+import LogoImage from 'components/auth/common/logo-image';
 
 export default function Header() {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);

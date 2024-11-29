@@ -68,7 +68,7 @@ export default function CollectedPage() {
 
   return (
     <Head>
-      <title>수집한 카드 정보 | Cafe Masters</title>
+      <title>수집한 카드 | Cafe Masters</title>
       <meta name="description" content={`내가 수집한 카드들을 볼 수 있어요.`} />
     </Head>
   );

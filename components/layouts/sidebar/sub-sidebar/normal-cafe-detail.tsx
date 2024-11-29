@@ -15,7 +15,7 @@ import {
 } from 'utils/styles';
 import { toast } from 'react-toastify';
 import { NormalCafeDetailProps } from 'types/types';
-import CollectedBadge from 'components/layouts/sub-sidebar/collected-badge';
+import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
 import OpenTimeGrid from './open-time-grid';
