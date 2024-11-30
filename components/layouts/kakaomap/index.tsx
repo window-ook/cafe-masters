@@ -106,7 +106,7 @@ export default function KakaoMap() {
           });
           markers.push(marker);
 
-          // PC / 모바일
+          // PC, 모바일 레이아웃
           if (window.innerWidth > 768) {
             window.kakao.maps.event.addListener(
               marker,

@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
-import AuthBackgroundCards from 'components/auth/common/auth-background-cards';
+import AuthBackgroundCards from 'components/auth/common/background-cards';
 import LogoImage from 'components/auth/common/logo-image';
 
 export default function ResetpasswordPage() {
@@ -36,12 +36,12 @@ export default function ResetpasswordPage() {
     },
   });
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     finishResetMutation.mutate();
   };
 
-  const handleCancel = async (e: any) => {
+  const handleCancel = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     await supabase.auth.signOut();
     router.push('/');

@@ -2,6 +2,7 @@ interface MenuItem {
   menu: string;
   price: string;
 }
+
 interface MenuGridProps {
   isDarkTheme: boolean;
   handleMenuOpen: () => void;

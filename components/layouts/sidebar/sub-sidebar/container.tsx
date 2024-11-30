@@ -12,9 +12,9 @@ import {
   updateCollectedCafe,
 } from 'actions/collectedActions';
 import { toast } from 'react-toastify';
-import Memo from './memo/memo';
-import NormalCafeDetail from './normal-cafe-detail';
-import CollectedCafeDetail from './collected-cafe-detail';
+import Memo from './memo';
+import NormalCafeDetail from './normal-card/detail';
+import CollectedCafeDetail from './collected-card/detail';
 
 export default function SubSidebar() {
   const [menuOpen, setMenuOpen] = useState(false);

@@ -2,7 +2,7 @@
 
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
-import AuthBackgroundCards from 'components/auth/common/auth-background-cards';
+import AuthBackgroundCards from 'components/auth/common/background-cards';
 import LogoImage from 'components/auth/common/logo-image';
 
 export default function ResetPasswordCompletePage() {

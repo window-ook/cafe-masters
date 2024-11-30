@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Signup from '../signup';
 import Signin from '../signin';
-import AuthBackgroundCards from './auth-background-cards';
+import AuthBackgroundCards from './background-cards';
 import LogoImage from './logo-image';
 
 export default function Auth() {
