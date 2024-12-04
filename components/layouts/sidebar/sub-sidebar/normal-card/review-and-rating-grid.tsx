@@ -1,4 +1,5 @@
 import { RatingCircleStyle, RatingStarStyle } from 'utils/styles';
+
 interface ReviewAndRatingGridProps {
   reviewCount: number | null | undefined;
   rating: number | null | undefined;
