@@ -5,8 +5,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
-import AuthBackgroundCards from 'components/auth/common/background-cards';
-import LogoImage from 'components/auth/common/logo-image';
+import AuthBackgroundCards from 'components/auth/shared/background-cards';
+import LogoImage from 'components/auth/shared/logo-image';
 
 export default function ResetpasswordPage() {
   const [newPassword, setNewPassword] = useState('');
