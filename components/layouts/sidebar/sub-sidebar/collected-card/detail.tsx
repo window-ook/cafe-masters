@@ -6,9 +6,9 @@ import {
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { CollectedCafeDetailProps } from 'types/types';
-import OpenTimeGrid from '../common/open-time-grid';
-import LocationGrid from '../common/location-grid';
-import PhoneGrid from '../common/phone-grid';
+import OpenTimeGrid from '../shared/open-time-grid';
+import LocationGrid from '../shared/location-grid';
+import PhoneGrid from '../shared/phone-grid';
 import Image from 'next/image';
 import ConceptGrid from './concept-grid';
 import EatenGrid from './eaten-grid';

@@ -18,9 +18,9 @@ import { NormalCafeDetailProps } from 'types/types';
 import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-card/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
-import OpenTimeGrid from '../common/open-time-grid';
-import LocationGrid from '../common/location-grid';
-import PhoneGrid from '../common/phone-grid';
+import OpenTimeGrid from '../shared/open-time-grid';
+import LocationGrid from '../shared/location-grid';
+import PhoneGrid from '../shared/phone-grid';
 import MenuGrid from './menu-grid';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 
