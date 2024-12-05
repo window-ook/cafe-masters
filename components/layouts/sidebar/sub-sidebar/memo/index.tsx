@@ -5,7 +5,7 @@ import {
   getMemoInputStyle,
   getMemoSubmitStyle,
 } from 'utils/styles';
-import { MemoProps } from 'types/types';
+import { MemoProps } from 'types/common';
 
 export default function Memo({
   detail,

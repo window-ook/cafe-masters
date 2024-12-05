@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
 import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
-import { BookmarkedCafeFromSupabase } from 'types/types';
+import { BookmarkedCafeFromSupabase } from 'types/common';
 import Head from 'next/head';
 
 export default function BookmarkedPage() {

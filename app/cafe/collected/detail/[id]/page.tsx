@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useMapStore, useUserStore } from 'utils/store';
 import { getCollectedCafe } from 'actions/collectedActions';
-import { PageProps } from 'types/types';
+import { PageProps } from 'types/common';
 import Head from 'next/head';
 
 export default function CollectedDetailPage({ params }: PageProps) {

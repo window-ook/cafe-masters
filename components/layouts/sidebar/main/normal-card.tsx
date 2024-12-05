@@ -1,6 +1,6 @@
 import { useCheckStore } from 'utils/store';
 import { getNormalCardStyle } from 'utils/styles';
-import { NormalCardProps } from 'types/types';
+import { CardProps } from 'types/common';
 import Image from 'next/image';
 
 export default function NormalCard({
@@ -8,7 +8,7 @@ export default function NormalCard({
   address,
   phoneNum,
   onClick,
-}: NormalCardProps) {
+}: CardProps) {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
 
   return (

@@ -5,7 +5,7 @@ import {
   getDetailHeaderStyle,
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
-import { CollectedCafeDetailProps } from 'types/types';
+import { CafeDetailProps } from 'types/common';
 import OpenTimeGrid from '../shared/open-time-grid';
 import LocationGrid from '../shared/location-grid';
 import PhoneGrid from '../shared/phone-grid';
@@ -17,15 +17,13 @@ import ConsGrid from './cons-grid';
 import CommentGrid from './comment-grid';
 import RatingGrid from './rating-grid';
 
-export default function CollectedCafeDetail({
-  setMemoOpen,
-}: CollectedCafeDetailProps) {
+export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
   const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
   const setIsSubSidebarOpen = useCheckStore(
-    (state: any) => state.setIsSubSidebarOpen
+    (state: any) => state.setIsSubSidebarOpen,
   );
   const collectedCafeDetail = useMapStore(
-    (state: any) => state.collectedCafeDetail[0]
+    (state: any) => state.collectedCafeDetail[0],
   );
 
   // 서브 사이드바에서 넘겨준 set 함수들로 메모 인풋의 value로 설정하기
@@ -58,7 +56,7 @@ export default function CollectedCafeDetail({
             onClick={() =>
               window.open(
                 `http://place.map.kakao.com/${collectedCafeDetail?.id}`,
-                '_blank'
+                '_blank',
               )
             }
           />

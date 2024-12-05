@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useMapStore, useCheckStore, useUserStore } from 'utils/store';
 import { getBookmarkedCafe } from 'actions/bookmarkActions';
-import { PageProps } from 'types/types';
+import { PageProps } from 'types/common';
 import Head from 'next/head';
 
 export default function BookmarkedDetailpage({ params }: PageProps) {

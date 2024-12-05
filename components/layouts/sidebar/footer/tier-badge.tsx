@@ -6,7 +6,7 @@ import {
   getMasterEffectStyle,
   getMasterTierStyle,
 } from 'utils/styles';
-import { TierBadgeProps } from 'types/types';
+import { TierBadgeProps } from 'types/common';
 import TierInfoModal from './tier-info-modal';
 
 export default function TierBadge({ tier }: TierBadgeProps) {

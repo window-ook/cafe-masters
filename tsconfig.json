@@ -1,28 +1,25 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
+    "module": "esnext",
+    "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "noImplicitAny": true,
     "skipLibCheck": true,
-    "strictNullChecks": true,
-    "allowSyntheticDefaultImports": true,
     "strict": true,
+    "noImplicitAny": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": false,
     "noEmit": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "moduleDetection": "force",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "module": "esnext",
     "incremental": true,
     "baseUrl": ".",
     "paths": {
       "*": ["./*"],
-      "@components/*": ["components/*"],
-      "@utils/*": ["utils/*"],
-      "@styles/*": ["styles/*"]
     },
     "plugins": [
       {
@@ -31,7 +28,7 @@
     ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", ".next"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

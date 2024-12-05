@@ -7,7 +7,7 @@ import {
   UniqueCardStyle,
   UniqueCardEffectStyle,
 } from 'utils/styles';
-import { CollectedCardProps } from 'types/types';
+import { CollectedCardProps } from 'types/common';
 import Image from 'next/image';
 
 export default function CollectedCard({

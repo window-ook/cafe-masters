@@ -1,4 +1,4 @@
-// Detail
+// 카페 상세 정보
 export interface CafeDetail {
   id: number;
   userId: string;
@@ -26,7 +26,7 @@ export interface CollectedCafeDetail extends CafeDetail {
   concept?: string | null;
 }
 
-// From Supabase
+// 수파베이스 데이터
 export interface CollectedCafeFromSupabase extends CafeDetail {
   comment: string;
   pros?: string | null;
@@ -75,8 +75,6 @@ export interface CardProps {
   onClick: () => void;
 }
 
-export interface NormalCardProps extends CardProps {}
-
 export interface CollectedCardProps extends CardProps {
   photoUrl: string;
   ratings: number;
@@ -85,8 +83,6 @@ export interface CollectedCardProps extends CardProps {
 export interface CafeDetailProps {
   setMemoOpen: (open: boolean) => void;
 }
-
-export interface CollectedCafeDetailProps extends CafeDetailProps {}
 
 export interface NormalCafeDetailProps extends CafeDetailProps {
   detail: NormalCafeDetail;

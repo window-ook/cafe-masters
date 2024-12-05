@@ -9,7 +9,7 @@ import {
 import {
   CollectedCafeFromSupabase,
   CollectedCountFromSupabase,
-} from 'types/types';
+} from 'types/common';
 import Head from 'next/head';
 
 export default function CollectedPage() {

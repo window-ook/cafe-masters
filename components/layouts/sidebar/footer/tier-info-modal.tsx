@@ -6,7 +6,7 @@ import {
   ModalMasterEffectStyle,
 } from 'utils/styles';
 import { Box, Modal } from '@mui/material';
-import { BadgeProps } from 'types/types';
+import { BadgeProps } from 'types/common';
 
 interface TierInfoModalProps {
   open: boolean;
