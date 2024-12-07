@@ -1,7 +1,9 @@
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
+import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { CheckStore, MapStore, UserStore } from 'types/store';
+import { NormalCafeDetailForUpload } from 'types/common';
 import {
   BookmarkedRowInsert,
   createBookmarkedCafe,
@@ -14,8 +16,7 @@ import {
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { toast } from 'react-toastify';
-import { NormalCafeDetailProps } from 'types/types';
-import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-card/collected-badge';
+import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-cafe/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
 import OpenTimeGrid from '../shared/open-time-grid';
@@ -23,6 +24,13 @@ import LocationGrid from '../shared/location-grid';
 import PhoneGrid from '../shared/phone-grid';
 import MenuGrid from './menu-grid';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+
+interface NormalCafeDetailProps {
+  setMemoOpen: (open: boolean) => void;
+  detail: NormalCafeDetailForUpload;
+  menuOpen: boolean;
+  handleMenuOpen: () => void;
+}
 
 export default function NormalCafeDetail({
   detail,
@@ -33,17 +41,17 @@ export default function NormalCafeDetail({
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
-  const isCollected = useCheckStore((state: any) => state.isCollected);
-  const isBookmarked = useCheckStore((state: any) => state.isBookmarked);
+  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
+  const isCollected = useCheckStore((state: CheckStore) => state.isCollected);
+  const isBookmarked = useCheckStore((state: CheckStore) => state.isBookmarked);
   const setIsSubSidebarOpen = useCheckStore(
-    (state: any) => state.setIsSubSidebarOpen
+    (state: CheckStore) => state.setIsSubSidebarOpen,
   );
 
-  const userId = useUserStore((state: any) => state.userId);
+  const userId = useUserStore((state: UserStore) => state.userId);
 
   const bookmarkedCafeDetail = useMapStore(
-    (state: any) => state.bookmarkedCafeDetail[0]
+    (state: MapStore) => state.bookmarkedCafeDetail[0],
   );
 
   const parsedMenu =
@@ -60,7 +68,7 @@ export default function NormalCafeDetail({
       toast.success('새로운 카페를 북마크에 저장했습니다!');
       router.refresh();
     },
-    onError: (error) => console.error(error),
+    onError: error => console.error(error),
   });
 
   const bookmarkCancelMutation = useMutation({
@@ -72,7 +80,7 @@ export default function NormalCafeDetail({
       toast.success('북마크에서 제거했습니다!');
       router.push('/cafe/bookmarked');
     },
-    onError: (error) => {
+    onError: error => {
       console.error(error);
       toast.error('북마크에서 제거하는데 문제가 발생했습니다');
     },

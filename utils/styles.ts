@@ -1,6 +1,6 @@
 export const getSidebarStyle = (
   isDarkTheme: boolean,
-  isSubSidebarOpen: boolean
+  isSubSidebarOpen: boolean,
 ) => {
   return `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} ${isSubSidebarOpen ? 'hidden sm:block' : ''} z-10 relative w-screen h-screen max-w-[27rem] rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between overflow-y-scroll overflow-x-hidden`;
 };
@@ -16,7 +16,7 @@ export const getPageConverterStyle = (isDarkTheme: boolean) => {
 export const getSubSidebarStyle = (
   isSubSidebarOpen: boolean,
   isDarkTheme: boolean,
-  isExtend: boolean
+  isExtend: boolean,
 ) => {
   const baseStyle = `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white text-black'} 
    static left-0 z-10 w-[100vw] max-w-[27rem] p-2 
@@ -66,7 +66,7 @@ export const getNormalCardStyle = (isDarkTheme: boolean) => {
 
 export const getCollectedCardStyle = (
   bgRatings: string,
-  isDarkTheme: boolean
+  isDarkTheme: boolean,
 ) => {
   return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel hover:scale-105 transition duration-300 ease`;
 };

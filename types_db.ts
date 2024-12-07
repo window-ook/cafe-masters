@@ -12,8 +12,8 @@ export type Database = {
       bookmarked: {
         Row: {
           address: string;
-          coordX: number | null;
-          coordY: number | null;
+          coordX: number;
+          coordY: number;
           created_at: string;
           id: number;
           menu: string | null;
@@ -28,8 +28,8 @@ export type Database = {
         };
         Insert: {
           address: string;
-          coordX?: number | null;
-          coordY?: number | null;
+          coordX: number;
+          coordY: number;
           created_at?: string;
           id?: number;
           menu?: string | null;
@@ -40,18 +40,18 @@ export type Database = {
           photoUrl?: string | null;
           rating?: number | null;
           reviewCount?: number | null;
-          userId: string;
+          userId?: string;
         };
         Update: {
           address?: string;
-          coordX?: number | null;
-          coordY?: number | null;
+          coordX?: number;
+          coordY?: number;
           created_at?: string;
           id?: number;
           menu?: string | null;
           name?: string;
           openWeekend?: string | null;
-          openWeekly?: string;
+          openWeekly?: string | null;
           phoneNum?: string | null;
           photoUrl?: string | null;
           rating?: number | null;
@@ -99,7 +99,7 @@ export type Database = {
           pros?: string | null;
           rating: number;
           updated_at?: string | null;
-          userId: string;
+          userId?: string;
         };
         Update: {
           address?: string;

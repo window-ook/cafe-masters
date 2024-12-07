@@ -9,14 +9,17 @@ import {
 import {
   CollectedCafeFromSupabase,
   CollectedCountFromSupabase,
-} from 'types/types';
+} from 'types/common';
+import { MapStore, UserStore } from 'types/store';
 import Head from 'next/head';
 
 export default function CollectedPage() {
-  const userId = useUserStore((state: any) => state.userId);
-  const setCollectedCafe = useMapStore((state: any) => state.setCollectedCafe);
+  const userId = useUserStore((state: UserStore) => state.userId);
+  const setCollectedCafe = useMapStore(
+    (state: MapStore) => state.setCollectedCafe,
+  );
   const setCollectedCafeCount = useMapStore(
-    (state: any) => state.setCollectedCafeCount
+    (state: MapStore) => state.setCollectedCafeCount,
   );
 
   const queryFnData = async () => {
@@ -56,7 +59,7 @@ export default function CollectedPage() {
   };
 
   const collectedCafe = useQuery<CollectedCafeFromSupabase[], Error, string[]>(
-    optionsData
+    optionsData,
   );
   const collectedCafeCount = useQuery<
     CollectedCountFromSupabase,

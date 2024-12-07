@@ -4,10 +4,10 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { Database } from 'types_db';
 
-// 서버 컴포넌트에서만 사용해줘야 한다
+// 오로지 서버 컴포넌트에서만 사용 가능하다
 export const createServerSupabaseClient = async (
   cookieStore: ReturnType<typeof cookies> = cookies(),
-  admin: boolean = false
+  admin: boolean = false,
 ) => {
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -23,6 +23,7 @@ export const createServerSupabaseClient = async (
           try {
             cookieStore.set({ name, value, ...options });
           } catch (error) {
+            console.error(error);
             // The `set` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing
             // user sessions.
@@ -32,18 +33,19 @@ export const createServerSupabaseClient = async (
           try {
             cookieStore.set({ name, value: '', ...options });
           } catch (error) {
+            console.error(error);
             // The `delete` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing
             // user sessions.
           }
         },
       },
-    }
+    },
   );
 };
 
 export const createServerSupabaseAdminClient = async (
-  cookieStore: ReturnType<typeof cookies> = cookies()
+  cookieStore: ReturnType<typeof cookies> = cookies(),
 ) => {
   return createServerSupabaseClient(cookieStore, true);
 };

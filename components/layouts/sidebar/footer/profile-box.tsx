@@ -2,19 +2,20 @@
 
 import { useEffect } from 'react';
 import { useMapStore, useUserStore } from 'utils/store';
+import { MapStore, UserStore } from 'types/store';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import TierBadge from './tier-badge';
 import Image from 'next/image';
 
 export default function ProfileBox() {
   const collectedCafeCount = useMapStore(
-    (state: any) => state.collectedCafeCount
+    (state: MapStore) => state.collectedCafeCount,
   );
-  const userEmail = useUserStore((state: any) => state.userEmail);
-  const userTier = useUserStore((state: any) => state.userTier);
-  const setUserTier = useUserStore((state: any) => state.setUserTier);
-  const setUserEmail = useUserStore((state: any) => state.setUserEmail);
-  const setUserId = useUserStore((state: any) => state.setUserId);
+  const userEmail = useUserStore((state: UserStore) => state.userEmail);
+  const userTier = useUserStore((state: UserStore) => state.userTier);
+  const setUserTier = useUserStore((state: UserStore) => state.setUserTier);
+  const setUserEmail = useUserStore((state: UserStore) => state.setUserEmail);
+  const setUserId = useUserStore((state: UserStore) => state.setUserId);
 
   const supabase = createBrowserSupabaseClient();
 
@@ -30,7 +31,7 @@ export default function ProfileBox() {
     };
 
     fetchUserSession();
-  }, [supabase, setUserEmail]);
+  }, [supabase, setUserEmail, setUserId]);
 
   useEffect(() => {
     if (collectedCafeCount === 50) setUserTier('MASTER');
@@ -41,7 +42,7 @@ export default function ProfileBox() {
     else if (collectedCafeCount < 16 && collectedCafeCount >= 6)
       setUserTier('JUNIOR');
     else if (collectedCafeCount < 6) setUserTier('BEGINNER');
-  }, [collectedCafeCount]);
+  }, [collectedCafeCount, setUserTier]);
 
   return (
     <div className="flex justify-center items-center gap-8 sm:gap-6">

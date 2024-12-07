@@ -1,8 +1,11 @@
 import { useCheckStore } from 'utils/store';
+import { CheckStore } from 'types/store';
 
 export default function LightDarkToggle() {
-  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
-  const setIsDarkTheme = useCheckStore((state: any) => state.setIsDarkTheme);
+  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
+  const setIsDarkTheme = useCheckStore(
+    (state: CheckStore) => state.setIsDarkTheme,
+  );
 
   const handleToggle = () => setIsDarkTheme();
 

@@ -1,6 +1,6 @@
 interface ResetpasswordFormProps {
   email: string;
-  setEmail: (state: any) => void;
+  setEmail: (state: string) => void;
   resetRequested: string;
   resetFn: () => void;
   cancelFn: () => void;
@@ -22,7 +22,7 @@ export default function ResetpasswordForm({
         <span className="w-20 font-dpixel text-lg">이메일</span>
         <input
           value={email}
-          onChange={(e) => setEmail(e.target.value.trim())}
+          onChange={e => setEmail(e.target.value.trim())}
           placeholder="아이디@주소"
           className="border-gray-400 w-full"
         />

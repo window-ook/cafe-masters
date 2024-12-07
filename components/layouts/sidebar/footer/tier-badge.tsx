@@ -1,13 +1,17 @@
 import { useState } from 'react';
-import { Tooltip } from '@mui/material';
 import {
   BadgeCommon,
   getExpertTierStyle,
   getMasterEffectStyle,
   getMasterTierStyle,
 } from 'utils/styles';
-import { TierBadgeProps } from 'types/types';
+import { Tier } from 'types/common';
+import { Tooltip } from '@mui/material';
 import TierInfoModal from './tier-info-modal';
+
+interface TierBadgeProps {
+  tier: Tier;
+}
 
 export default function TierBadge({ tier }: TierBadgeProps) {
   const [open, setOpen] = useState(false);

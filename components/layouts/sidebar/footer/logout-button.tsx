@@ -10,7 +10,7 @@ export default function LogoutButton() {
     localStorage.removeItem('mapStore');
     localStorage.removeItem('subSidebarStore');
     localStorage.removeItem('userStore');
-    supabase.auth.signOut();
+    await supabase.auth.signOut();
   };
 
   return (

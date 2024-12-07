@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
+import { CheckStore, MapStore, UserStore } from 'types/store';
 import { getSubSidebarStyle } from 'utils/styles';
 import {
   CollectedRowInsert,
@@ -13,8 +14,8 @@ import {
 } from 'actions/collectedActions';
 import { toast } from 'react-toastify';
 import Memo from './memo';
-import NormalCafeDetail from './normal-card/detail';
-import CollectedCafeDetail from './collected-card/detail';
+import NormalCafeDetail from './normal-cafe/detail';
+import CollectedCafeDetail from './collected-cafe/detail';
 
 export default function SubSidebar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,43 +27,46 @@ export default function SubSidebar() {
   const [concept, setConcept] = useState('');
   const [rating, setRating] = useState(5);
 
-  const userId = useUserStore((state: any) => state.userId);
+  const userId = useUserStore((state: UserStore) => state.userId);
 
-  const cafeDetail = useMapStore((state: any) => state.cafeDetail);
+  const cafeDetail = useMapStore((state: MapStore) => state.cafeDetail);
   const collectedCafeDetail = useMapStore(
-    (state: any) => state.collectedCafeDetail[0]
+    (state: MapStore) => state.collectedCafeDetail[0],
   );
   const bookmarkedCafeDetail = useMapStore(
-    (state: any) => state.bookmarkedCafeDetail[0]
+    (state: MapStore) => state.bookmarkedCafeDetail[0],
   );
-  const thisX = useMapStore((state: any) => state.thisX);
-  const thisY = useMapStore((state: any) => state.thisY);
+  const thisX = useMapStore((state: MapStore) => state.thisX);
+  const thisY = useMapStore((state: MapStore) => state.thisY);
 
   const isSubSidebarOpen = useCheckStore(
-    (state: any) => state.isSubSidebarOpen
+    (state: CheckStore) => state.isSubSidebarOpen,
   );
-  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
-  const setIsExtend = useCheckStore((state: any) => state.setIsExtend);
-  const isExtend = useCheckStore((state: any) => state.isExtend);
+  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
+  const setIsExtend = useCheckStore((state: CheckStore) => state.setIsExtend);
+  const isExtend = useCheckStore((state: CheckStore) => state.isExtend);
 
   const router = useRouter();
   const pathname = usePathname();
   const queryClient = useQueryClient();
 
   const detail = {
-    id: cafeDetail?.basicInfo?.cid,
+    id: cafeDetail?.basicInfo?.cid ?? 0,
     userId,
-    name: cafeDetail?.basicInfo?.placenamefull,
+    name: cafeDetail?.basicInfo?.placenamefull ?? 'no-name',
     photoUrl:
       cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumbnail.webp',
     reviewCount: cafeDetail?.comment?.kamapComntcnt,
     rating:
-      cafeDetail?.basicInfo?.feedback?.scorecnt > 0
+      cafeDetail?.basicInfo?.feedback?.scorecnt &&
+      cafeDetail?.basicInfo?.feedback?.scorecnt > 0 &&
+      cafeDetail?.basicInfo?.feedback?.scoresum &&
+      cafeDetail?.basicInfo?.feedback?.scoresum > 0
         ? parseFloat(
             (
               cafeDetail?.basicInfo?.feedback?.scoresum /
               cafeDetail?.basicInfo?.feedback?.scorecnt
-            ).toFixed(2)
+            ).toFixed(2),
           )
         : null,
     openWeekly:
@@ -77,7 +81,11 @@ export default function SubSidebar() {
       ' ' +
       (cafeDetail?.basicInfo?.address?.addrdetail || ''),
     phoneNum: cafeDetail?.basicInfo?.phonenum,
-    menu: cafeDetail?.menuInfo?.menuList,
+    menu:
+      Array.isArray(cafeDetail?.menuInfo?.menuList) &&
+      cafeDetail?.menuInfo?.menuList.length > 0
+        ? JSON.stringify(cafeDetail.menuInfo.menuList)
+        : null,
     coordX: thisX,
     coordY: thisY,
   };
@@ -139,7 +147,7 @@ export default function SubSidebar() {
       setMemoOpen(false);
       router.refresh();
     },
-    onError: (error) => console.error(error),
+    onError: error => console.error(error),
   });
 
   const updateMutation = useMutation({
@@ -152,10 +160,10 @@ export default function SubSidebar() {
       setMemoOpen(false);
       router.refresh();
     },
-    onError: (error) => console.error(error),
+    onError: error => console.error(error),
   });
 
-  const handleMenuOpen = () => setMenuOpen((prev) => !prev);
+  const handleMenuOpen = () => setMenuOpen(prev => !prev);
 
   if ((pathname.startsWith('/cafe/all/detail') && !cafeDetail) || !userId)
     return null;
@@ -213,7 +221,7 @@ export default function SubSidebar() {
       {memoOpen && (
         <form
           id="memo"
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault();
             if (pathname.startsWith('/cafe/all'))
               collectMutation.mutate(memoFromDetail);

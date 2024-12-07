@@ -1,4 +1,5 @@
 import { useCheckStore } from 'utils/store';
+import { CheckStore } from 'types/store';
 import {
   OverThreeRatingStyle,
   OverFiveRatingStyle,
@@ -7,26 +8,36 @@ import {
   UniqueCardStyle,
   UniqueCardEffectStyle,
 } from 'utils/styles';
-import { CollectedCardProps } from 'types/types';
 import Image from 'next/image';
 
-export default function CollectedCard({
+interface CollectedCafeProps {
+  name: string | undefined;
+  address: string;
+  phoneNum: string | null | undefined;
+  onClick: () => void;
+  photoUrl: string | null | undefined;
+  ratings: number | null | undefined;
+}
+
+export default function CollectedCafe({
   name,
   photoUrl,
   address,
   phoneNum,
   ratings,
   onClick,
-}: CollectedCardProps) {
-  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
+}: CollectedCafeProps) {
+  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const isUnique = name === '탐앤탐스 대구강북점';
 
   const bgRatings =
-    ratings >= 5
-      ? OverFiveRatingStyle
-      : ratings >= 3
-        ? OverThreeRatingStyle
-        : 'text-white bg-black';
+    ratings != null
+      ? ratings >= 5
+        ? OverFiveRatingStyle
+        : ratings >= 3
+          ? OverThreeRatingStyle
+          : 'text-white bg-black'
+      : 'text-white bg-black';
 
   return (
     <div className="relative">
@@ -53,7 +64,7 @@ export default function CollectedCard({
         </div>
         <div className="flex justify-center rounded-xl">
           <Image
-            src={photoUrl}
+            src={photoUrl ?? ''}
             alt="카페 썸네일 이미지"
             width={100}
             height={50}

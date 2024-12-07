@@ -21,7 +21,7 @@
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.4",
     "@tailwindcss/forms": "^0.5.9",
-    "@tanstack/react-query": "^5.56.2",
+    "@tanstack/react-query": "5.60.6",
     "compression-webpack-plugin": "^11.1.0",
     "next": "^14.2.14",
     "next-compose-plugins": "^2.2.1",
@@ -29,17 +29,18 @@
     "react-dom": "^18.3.1",
     "react-intersection-observer": "^9.13.1",
     "react-toastify": "^10.0.6",
-    "zustand": "^5.0.0-rc.2"
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.15",
     "@tanstack/react-query-devtools": "^5.60.6",
     "@types/next": "^9.0.0",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/node": "^22.10.1",
+    "@types/react": "^18.3.13",
+    "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
+    "@yarnpkg/sdks": "^3.2.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "14.2.14",
@@ -48,7 +49,7 @@
     "postcss": "^8",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   },
   "packageManager": "yarn@4.5.0"
 }

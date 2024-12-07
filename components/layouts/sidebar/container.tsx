@@ -1,17 +1,22 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useMapStore, useCheckStore } from 'utils/store';
 import { usePathname, useRouter } from 'next/navigation';
+import { useMapStore, useCheckStore } from 'utils/store';
+import { CheckStore, MapStore } from 'types/store';
+import {
+  AllCafe,
+  BookmarkedCafeFromSupabase,
+  CollectedCafeFromSupabase,
+} from 'types/common';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getSidebarStyle } from 'utils/styles';
-import { shallow } from 'zustand/shallow';
 import Header from './header';
 import Footer from './footer';
 import SubSidebar from './sub-sidebar/container';
-import NormalCard from './main/normal-card';
-import CollectedCard from './main/collected-card';
+import NormalCafe from './main/normal-cafe';
+import CollectedCafe from './main/collected-cafe';
 import PageConverter from './footer/page-converter';
 import SidebarTabList from './main/sidebar-tab-list';
 
@@ -28,34 +33,30 @@ export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const isSubSidebarOpen = useCheckStore(
-    (state: any) => state.isSubSidebarOpen
+    (state: CheckStore) => state.isSubSidebarOpen,
   );
   const setIsSubSidebarOpen = useCheckStore(
-    (state: any) => state.setIsSubSidebarOpen
+    (state: CheckStore) => state.setIsSubSidebarOpen,
   );
 
-  const allCafe = useMapStore((state: any) => state.allCafe, shallow);
-  const collectedCafe = useMapStore(
-    (state: any) => state.collectedCafe,
-    shallow
+  const allCafe = useMapStore((state: MapStore) => state.allCafe);
+  const collectedCafe = useMapStore((state: MapStore) => state.collectedCafe);
+  const collectedCount = useMapStore(
+    (state: MapStore) => state.collectedCafeCount,
   );
-  const collectedCount = useMapStore((state: any) => state.collectedCafeCount);
-  const bookmarkedCafe = useMapStore(
-    (state: any) => state.bookmarkedCafe,
-    shallow
-  );
+  const bookmarkedCafe = useMapStore((state: MapStore) => state.bookmarkedCafe);
 
-  const setThisX = useMapStore((state: any) => state.setThisX);
-  const setThisY = useMapStore((state: any) => state.setThisY);
+  const setThisX = useMapStore((state: MapStore) => state.setThisX);
+  const setThisY = useMapStore((state: MapStore) => state.setThisY);
 
   const itemsPerPage = 15;
   const totalPages = Math.ceil(allCafe.length / itemsPerPage);
 
   const paginatedResults = allCafe.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
 
   const cardDivStyle = 'flex flex-col gap-8 my-8 px-8';
@@ -68,21 +69,21 @@ export default function Sidebar() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleNormalCardClick = (cafe: any) => {
+  const handleNormalCafeClick = (cafe: AllCafe) => {
     setIsSubSidebarOpen(true);
     router.push(`/cafe/all/detail/${cafe.id}`);
     setThisX(cafe?.x);
     setThisY(cafe?.y);
   };
 
-  const handleCollectedCardClick = (cafe: any) => {
+  const handleCollectedCafeClick = (cafe: CollectedCafeFromSupabase) => {
     setIsSubSidebarOpen(true);
     router.push(`/cafe/collected/detail/${cafe.id}`);
     setThisX(cafe?.coordX);
     setThisY(cafe?.coordY);
   };
 
-  const handleBookmarkedCardClick = (cafe: any) => {
+  const handleBookmarkedCafeClick = (cafe: BookmarkedCafeFromSupabase) => {
     setIsSubSidebarOpen(true);
     router.push(`/cafe/bookmarked/detail/${cafe.id}`);
     setThisX(cafe?.coordX);
@@ -104,7 +105,7 @@ export default function Sidebar() {
         page: pageParam,
       };
     },
-    getNextPageParam: (lastPage) => {
+    getNextPageParam: lastPage => {
       const nextPage = lastPage.page + 1;
       return lastPage.data.length === 3 ? nextPage : null;
     },
@@ -125,7 +126,7 @@ export default function Sidebar() {
         page: pageParam,
       };
     },
-    getNextPageParam: (lastPage) => {
+    getNextPageParam: lastPage => {
       const nextPage = lastPage.page + 1;
       return lastPage.data.length === 3 ? nextPage : null;
     },
@@ -138,7 +139,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     if (pathname === '/') setIsSubSidebarOpen(false);
-  }, [pathname]);
+  }, [pathname, setIsSubSidebarOpen]);
 
   useEffect(() => {
     if (
@@ -148,7 +149,12 @@ export default function Sidebar() {
     ) {
       fetchNextCollectedPage();
     }
-  }, [collectedInView, hasNextCollectedPage, fetchNextCollectedPage]);
+  }, [
+    collectedInView,
+    hasNextCollectedPage,
+    fetchNextCollectedPage,
+    isFetchingNextCollectedPage,
+  ]);
 
   useEffect(() => {
     if (
@@ -158,7 +164,12 @@ export default function Sidebar() {
     ) {
       fetchNextBookmarkedPage();
     }
-  }, [bookmarkedInView, hasNextBookmarkedPage, fetchNextBookmarkedPage]);
+  }, [
+    bookmarkedInView,
+    hasNextBookmarkedPage,
+    fetchNextBookmarkedPage,
+    isFetchingNextBookmarkedPage,
+  ]);
 
   if (pathname.startsWith('/resetpassword')) return null;
 
@@ -173,20 +184,22 @@ export default function Sidebar() {
           {pathname === '/' && <SidebarTabList />}
 
           <div className="px-8 sm:px-4">
+            {/* 모든 카페 */}
             {pathname.startsWith('/cafe/all') && (
               <div className={cardDivStyle}>
-                {paginatedResults.map((cafe: any) => (
-                  <NormalCard
+                {paginatedResults.map((cafe: AllCafe) => (
+                  <NormalCafe
                     key={cafe.id}
                     name={cafe.place_name}
                     address={cafe.address_name}
                     phoneNum={cafe.phone}
-                    onClick={() => handleNormalCardClick(cafe)}
+                    onClick={() => handleNormalCafeClick(cafe)}
                   />
                 ))}
               </div>
             )}
 
+            {/* 수집한 카드 */}
             {pathname.startsWith('/cafe/collected') && (
               <div>
                 <div className="flex justify-center sticky">
@@ -201,15 +214,15 @@ export default function Sidebar() {
 
                 {collectedData?.pages?.map((page, i) => (
                   <div key={`page-${i}`} className={cardDivStyle}>
-                    {page.data.map((cafe: any) => (
-                      <CollectedCard
+                    {page.data.map((cafe: CollectedCafeFromSupabase) => (
+                      <CollectedCafe
                         key={cafe.id}
                         name={cafe.name}
                         ratings={cafe.rating}
                         photoUrl={cafe.photoUrl}
                         address={cafe.address}
                         phoneNum={cafe.phoneNum}
-                        onClick={() => handleCollectedCardClick(cafe)}
+                        onClick={() => handleCollectedCafeClick(cafe)}
                       />
                     ))}
                   </div>
@@ -218,6 +231,7 @@ export default function Sidebar() {
               </div>
             )}
 
+            {/* 가고 싶은 카페(북마크) */}
             {pathname.startsWith('/cafe/bookmarked') && (
               <div>
                 {isFetchingNextBookmarkedPage && (
@@ -226,13 +240,13 @@ export default function Sidebar() {
 
                 {bookmarkedData?.pages?.map((page, i) => (
                   <div key={`page-${i}`} className={cardDivStyle}>
-                    {page.data.map((cafe: any) => (
-                      <NormalCard
+                    {page.data.map((cafe: BookmarkedCafeFromSupabase) => (
+                      <NormalCafe
                         key={cafe.id}
                         name={cafe.name}
                         address={cafe.address}
                         phoneNum={cafe.phoneNum}
-                        onClick={() => handleBookmarkedCardClick(cafe)}
+                        onClick={() => handleBookmarkedCafeClick(cafe)}
                       />
                     ))}
                   </div>

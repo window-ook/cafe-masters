@@ -10,6 +10,6 @@ export async function getCurrentUserId(): Promise<string> {
     error,
   } = await supabase.auth.getUser();
 
-  if (error || !user) throw new Error('userId 조회 에러');
+  if (error || !user) throw new Error('유저 ID가 존재하지 않음');
   return user.id;
 }

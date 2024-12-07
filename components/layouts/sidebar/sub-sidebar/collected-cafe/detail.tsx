@@ -1,11 +1,11 @@
 import { useCheckStore, useMapStore } from 'utils/store';
+import { CheckStore, MapStore } from 'types/store';
 import {
   getDetailBodyStyle,
   DetailCollectButtonStyle,
   getDetailHeaderStyle,
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
-import { CollectedCafeDetailProps } from 'types/types';
 import OpenTimeGrid from '../shared/open-time-grid';
 import LocationGrid from '../shared/location-grid';
 import PhoneGrid from '../shared/phone-grid';
@@ -17,15 +17,17 @@ import ConsGrid from './cons-grid';
 import CommentGrid from './comment-grid';
 import RatingGrid from './rating-grid';
 
-export default function CollectedCafeDetail({
-  setMemoOpen,
-}: CollectedCafeDetailProps) {
-  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
+interface CafeDetailProps {
+  setMemoOpen: (open: boolean) => void;
+}
+
+export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
+  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const setIsSubSidebarOpen = useCheckStore(
-    (state: any) => state.setIsSubSidebarOpen
+    (state: CheckStore) => state.setIsSubSidebarOpen,
   );
   const collectedCafeDetail = useMapStore(
-    (state: any) => state.collectedCafeDetail[0]
+    (state: MapStore) => state.collectedCafeDetail[0],
   );
 
   // 서브 사이드바에서 넘겨준 set 함수들로 메모 인풋의 value로 설정하기
@@ -50,7 +52,7 @@ export default function CollectedCafeDetail({
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
           <Image
-            src={collectedCafeDetail?.photoUrl}
+            src={collectedCafeDetail?.photoUrl ?? 'image/cafe_thumbnail.webp'}
             alt="카페 썸네일"
             className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
             width={160}
@@ -58,14 +60,14 @@ export default function CollectedCafeDetail({
             onClick={() =>
               window.open(
                 `http://place.map.kakao.com/${collectedCafeDetail?.id}`,
-                '_blank'
+                '_blank',
               )
             }
           />
         </div>
 
         <div className="flex justify-between items-center">
-          <RatingGrid rating={collectedCafeDetail?.rating} />
+          <RatingGrid rating={collectedCafeDetail?.rating ?? 0} />
           <button
             className={DetailCollectButtonStyle}
             onClick={() => setMemoOpen(true)}
@@ -90,10 +92,10 @@ export default function CollectedCafeDetail({
           </div>
 
           <CommentGrid comment={collectedCafeDetail?.comment} />
-          <ProsGrid pros={collectedCafeDetail?.pros} />
-          <ConsGrid cons={collectedCafeDetail?.cons} />
-          <EatenGrid eaten={collectedCafeDetail?.eaten} />
-          <ConceptGrid concept={collectedCafeDetail?.concept} />
+          <ProsGrid pros={collectedCafeDetail?.pros ?? ''} />
+          <ConsGrid cons={collectedCafeDetail?.cons ?? ''} />
+          <EatenGrid eaten={collectedCafeDetail?.eaten ?? ''} />
+          <ConceptGrid concept={collectedCafeDetail?.concept ?? ''} />
         </div>
       </div>
     </div>

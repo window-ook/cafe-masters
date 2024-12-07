@@ -1,11 +1,11 @@
 import { usePathname } from 'next/navigation';
-import { Rating } from '@mui/material';
 import {
   getMemoBackStyle,
   getMemoInputStyle,
   getMemoSubmitStyle,
 } from 'utils/styles';
-import { MemoProps } from 'types/types';
+import { MemoProps } from 'types/common';
+import { Rating } from '@mui/material';
 
 export default function Memo({
   detail,
@@ -43,28 +43,28 @@ export default function Memo({
       <input
         required
         placeholder="내 코멘트(필수)"
-        onChange={(e) => setComment(e.target.value)}
+        onChange={e => setComment(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
         placeholder="좋은 점"
-        onChange={(e) => setPros(e.target.value)}
+        onChange={e => setPros(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
         placeholder="별로인 점"
-        onChange={(e) => setCons(e.target.value)}
+        onChange={e => setCons(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
         required
         placeholder="먹어본 메뉴(필수)"
-        onChange={(e) => setEaten(e.target.value)}
+        onChange={e => setEaten(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
         placeholder="카페의 컨셉"
-        onChange={(e) => setConcept(e.target.value)}
+        onChange={e => setConcept(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <div className="flex items-center gap-2">

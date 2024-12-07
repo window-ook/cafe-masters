@@ -1,10 +1,12 @@
-import './globals.css';
-import 'react-toastify/dist/ReactToastify.css';
 import { createServerSupabaseClient } from 'utils/supabase/server';
+import { AuthViewProvider } from 'config/auth-view-provider';
 import { ToastContainer } from 'react-toastify';
 import { Metadata } from 'next';
 import ReactQueryClientProvider from 'config/react-query-client-provider';
 import AuthProvider from 'config/auth-provider';
+import './globals.css';
+import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
 import dynamic from 'next/dynamic';
 import Auth from 'components/auth/shared';
 import MainLayout from 'components/layouts/main-layout';
@@ -13,9 +15,9 @@ import KakaoMap from 'components/layouts/kakaomap';
 const ReactQueryDevtools = dynamic(
   () =>
     import('@tanstack/react-query-devtools').then(
-      (mod) => mod.ReactQueryDevtools
+      mod => mod.ReactQueryDevtools,
     ),
-  { ssr: false }
+  { ssr: false },
 );
 
 export const metadata: Metadata = {
@@ -70,7 +72,7 @@ export default async function RootLayout({
       </head>
       <body>
         <ReactQueryClientProvider>
-          <AuthProvider accessToken={session?.access_token}>
+          <AuthProvider accessToken={session?.access_token ?? 'no-user'}>
             {session?.user ? (
               <MainLayout>
                 {children}
@@ -86,7 +88,9 @@ export default async function RootLayout({
                 {isDev && <ReactQueryDevtools initialIsOpen={false} />}
               </MainLayout>
             ) : (
-              <Auth />
+              <AuthViewProvider>
+                <Auth />
+              </AuthViewProvider>
             )}
           </AuthProvider>
         </ReactQueryClientProvider>

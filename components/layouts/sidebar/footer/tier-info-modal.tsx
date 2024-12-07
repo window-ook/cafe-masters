@@ -1,4 +1,6 @@
 import { useCheckStore } from 'utils/store';
+import { CheckStore } from 'types/store';
+import { BadgeProps } from 'types/common';
 import {
   BadgeCommon,
   getExpertTierStyle,
@@ -6,7 +8,6 @@ import {
   ModalMasterEffectStyle,
 } from 'utils/styles';
 import { Box, Modal } from '@mui/material';
-import { BadgeProps } from 'types/types';
 
 interface TierInfoModalProps {
   open: boolean;
@@ -28,7 +29,7 @@ export default function TierInfoModal({
   open,
   handleClose,
 }: TierInfoModalProps) {
-  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
 
   const tierDescStyle = 'font-dpixel lg:text-lg text-xs';
 
