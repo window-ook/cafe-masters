@@ -1,11 +1,10 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 interface AuthProviderProps {
-  accessToken: any;
+  accessToken: string;
   children: ReactNode;
 }
 

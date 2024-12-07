@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { useAuthView } from 'config/auth-view-provider';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import {
   AuthFormCardStyle,
@@ -10,15 +11,18 @@ import {
   AuthFormTitleStyle,
   KakaoButtonStyle,
 } from 'utils/styles';
+import { checkEmailValid } from 'utils/common';
 import UserForm from '../shared/user-form';
 import OtpForm from './otp-form';
 
-export default function Signup({ setView, checkEmailVaild }: any) {
+export default function Signup() {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState('');
   const [confirmationRequired, setConfirmationRequired] = useState(false);
   const [otp, setOtp] = useState('');
+
+  const { setView } = useAuthView();
 
   const supabase = createBrowserSupabaseClient();
 
@@ -57,7 +61,7 @@ export default function Signup({ setView, checkEmailVaild }: any) {
   const checkEmail = () => {
     let isValid = true;
 
-    if (!checkEmailVaild(email)) {
+    if (!checkEmailValid(email)) {
       setEmailError('유효하지 않은 이메일 형식입니다.');
       isValid = false;
     } else setEmailError(null);

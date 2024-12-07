@@ -1,15 +1,22 @@
 import { useCheckStore } from 'utils/store';
+import { CheckStore } from 'types/store';
 import { getNormalCardStyle } from 'utils/styles';
-import { CardProps } from 'types/common';
 import Image from 'next/image';
 
-export default function NormalCard({
+interface NormalCafeProps {
+  name: string | undefined;
+  address: string;
+  phoneNum: string | null | undefined;
+  onClick: () => void;
+}
+
+export default function NormalCafe({
   name,
   address,
   phoneNum,
   onClick,
-}: CardProps) {
-  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
+}: NormalCafeProps) {
+  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
 
   return (
     <div onClick={onClick} className={getNormalCardStyle(isDarkTheme)}>

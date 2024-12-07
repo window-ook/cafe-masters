@@ -1,22 +1,25 @@
 import {
+  AllCafe,
   BookmarkedCafeFromSupabase,
   CollectedCafeFromSupabase,
+  FetchedCafeDetail,
+  Tier,
 } from './common';
 
 export interface MapStore {
   keyword: string;
-  allCafe: Record<string, string>[];
+  allCafe: AllCafe[];
   collectedCafe: CollectedCafeFromSupabase[];
   collectedCafeCount: number;
   bookmarkedCafe: BookmarkedCafeFromSupabase[];
   thisX: number;
   thisY: number;
-  cafeDetail: object;
+  cafeDetail: FetchedCafeDetail;
   collectedCafeDetail: CollectedCafeFromSupabase[];
   bookmarkedCafeDetail: BookmarkedCafeFromSupabase[];
 
   setKeyword: (data: string) => void;
-  setAllCafe: (data: Record<string, string>[]) => void;
+  setAllCafe: (data: AllCafe[]) => void;
   setCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
   setCollectedCafeCount: (data: number) => void;
   setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) => void;
@@ -28,13 +31,13 @@ export interface MapStore {
 }
 
 export interface UserStore {
-  userId: string | null;
+  userId: string;
   userEmail: string;
-  userTier: string;
+  userTier: Tier;
 
   setUserId: (user: string) => void;
   setUserEmail: (user: string) => void;
-  setUserTier: (user: string) => void;
+  setUserTier: (user: Tier) => void;
 }
 
 export interface CheckStore {

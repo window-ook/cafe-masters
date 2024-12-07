@@ -2,8 +2,10 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { MapStore, UserStore, CheckStore } from 'types/store';
 import {
+  AllCafe,
   BookmarkedCafeFromSupabase,
   CollectedCafeFromSupabase,
+  Tier,
 } from 'types/common';
 
 export const useMapStore = create<MapStore>()(
@@ -21,8 +23,7 @@ export const useMapStore = create<MapStore>()(
       bookmarkedCafeDetail: [],
 
       setKeyword: (data: string) => set({ keyword: data }),
-      setAllCafe: (data: Record<string, string>[]) =>
-        set({ allCafe: data ?? [] }),
+      setAllCafe: (data: AllCafe[]) => set({ allCafe: data }),
       setCollectedCafe: (data: CollectedCafeFromSupabase[]) =>
         set({ collectedCafe: data ?? [] }),
       setCollectedCafeCount: (data: number) =>
@@ -43,17 +44,18 @@ export const useMapStore = create<MapStore>()(
   ),
 );
 
-// UserStore
+const NO_USER = 'no-user';
+
 export const useUserStore = create<UserStore>()(
   persist(
     set => ({
-      userId: null,
+      userId: NO_USER,
       userEmail: '새로고침 하기',
       userTier: 'BEGINNER',
 
       setUserId: (user: string) => set({ userId: user }),
       setUserEmail: (user: string) => set({ userEmail: user }),
-      setUserTier: (user: string) => set({ userTier: user }),
+      setUserTier: (user: Tier) => set({ userTier: user }),
     }),
     {
       name: 'userStore',
@@ -61,7 +63,6 @@ export const useUserStore = create<UserStore>()(
   ),
 );
 
-// CheckStore
 export const useCheckStore = create<CheckStore>()(
   persist(
     set => ({
@@ -70,13 +71,12 @@ export const useCheckStore = create<CheckStore>()(
 
       isExtend: false,
       isExtendComplete: false,
-      setIsExtend: () => set((prev: boolean) => ({ isExtend: !prev.isExtend })),
+      setIsExtend: () => set(prev => ({ isExtend: !prev.isExtend })),
       setIsExtendComplete: () =>
-        set((prev: boolean) => ({ isExtendComplete: !state.isExtendComplete })),
+        set(prev => ({ isExtendComplete: !prev.isExtendComplete })),
 
       isDarkTheme: false,
-      setIsDarkTheme: () =>
-        set((prev: boolean) => ({ isDarkTheme: !prev.isDarkTheme })),
+      setIsDarkTheme: () => set(prev => ({ isDarkTheme: !prev.isDarkTheme })),
 
       isCollected: false,
       isBookmarked: false,

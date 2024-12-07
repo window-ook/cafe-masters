@@ -1,26 +1,39 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { useMapStore } from 'utils/store';
-import { toast } from 'react-toastify';
+import { MapStore } from 'types/store';
+import {
+  AllCafe,
+  CollectedCafeDetailForUpload,
+  NormalCafeDetailForUpload,
+} from 'types/common';
 import { KakaoMapStyle } from 'utils/styles';
+import { toast } from 'react-toastify';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
   interface Window {
     kakao: any;
   }
 }
 
+interface KakaoPagination {
+  current: number;
+  hasNextPage: boolean;
+  nextPage: () => void;
+}
+
 export default function KakaoMap() {
   const pathname = usePathname();
-  const keyword = useMapStore((state: any) => state.keyword);
-  const setAllCafe = useMapStore((state: any) => state.setAllCafe);
-  const allCafe = useMapStore((state: any) => state.allCafe);
-  const collectedCafe = useMapStore((state: any) => state.collectedCafe);
-  const bookmarkedCafe = useMapStore((state: any) => state.bookmarkedCafe);
-  const thisX = useMapStore((state: any) => state.thisX);
-  const thisY = useMapStore((state: any) => state.thisY);
+  const keyword = useMapStore((state: MapStore) => state.keyword);
+  const setAllCafe = useMapStore((state: MapStore) => state.setAllCafe);
+  const allCafe = useMapStore((state: MapStore) => state.allCafe);
+  const collectedCafe = useMapStore((state: MapStore) => state.collectedCafe);
+  const bookmarkedCafe = useMapStore((state: MapStore) => state.bookmarkedCafe);
+  const thisX = useMapStore((state: MapStore) => state.thisX);
+  const thisY = useMapStore((state: MapStore) => state.thisY);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -34,7 +47,7 @@ export default function KakaoMap() {
         const options = {
           center: new window.kakao.maps.LatLng(
             37.54715716085294,
-            127.04663357436208
+            127.04663357436208,
           ),
           level: 5,
           clickable: true,
@@ -47,7 +60,7 @@ export default function KakaoMap() {
         let markers: any[] = [];
 
         // 검색 결과 = cafeAll의 마커 표시
-        const displayResults = (cafe: any) => {
+        const displayResults = (cafe: AllCafe) => {
           if (!cafe.x || !cafe.y) return;
 
           const latlng = new window.kakao.maps.LatLng(cafe.y, cafe.x);
@@ -59,17 +72,17 @@ export default function KakaoMap() {
           });
           markers.push(marker);
 
-          // PC / 모바일
+          // PC / 모바일 뷰 구분
           if (window.innerWidth > 768) {
             window.kakao.maps.event.addListener(
               marker,
               'mouseover',
               function () {
                 infowindow.setContent(
-                  `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.place_name}</div>`
+                  `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.place_name}</div>`,
                 );
                 infowindow.open(map, marker);
-              }
+              },
             );
 
             window.kakao.maps.event.addListener(
@@ -77,12 +90,12 @@ export default function KakaoMap() {
               'mouseout',
               function () {
                 infowindow.close();
-              }
+              },
             );
           } else {
             window.kakao.maps.event.addListener(marker, 'click', function () {
               infowindow.setContent(
-                `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`
+                `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.place_name}</div>`,
               );
               infowindow.open(map, marker);
             });
@@ -93,8 +106,8 @@ export default function KakaoMap() {
           }
         };
 
-        // 수집한 카드, 북마크 카페의 마커 표시
-        const displayCollected = (cafe: any) => {
+        // 수집한 카드
+        const displayCollected = (cafe: CollectedCafeDetailForUpload) => {
           if (!cafe.coordX || !cafe.coordY) return;
 
           const latlng = new window.kakao.maps.LatLng(cafe.coordY, cafe.coordX);
@@ -106,17 +119,17 @@ export default function KakaoMap() {
           });
           markers.push(marker);
 
-          // PC, 모바일 레이아웃
+          // PC / 모바일 뷰 구분
           if (window.innerWidth > 768) {
             window.kakao.maps.event.addListener(
               marker,
               'mouseover',
               function () {
                 infowindow.setContent(
-                  `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`
+                  `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`,
                 );
                 infowindow.open(map, marker);
-              }
+              },
             );
 
             window.kakao.maps.event.addListener(
@@ -124,12 +137,59 @@ export default function KakaoMap() {
               'mouseout',
               function () {
                 infowindow.close();
-              }
+              },
             );
           } else {
             window.kakao.maps.event.addListener(marker, 'click', function () {
               infowindow.setContent(
-                `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`
+                `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`,
+              );
+              infowindow.open(map, marker);
+            });
+
+            window.kakao.maps.event.addListener(map, 'click', function () {
+              infowindow.close();
+            });
+          }
+        };
+
+        // 북마크 카페
+        const displayBookmarked = (cafe: NormalCafeDetailForUpload) => {
+          if (!cafe.coordX || !cafe.coordY) return;
+
+          const latlng = new window.kakao.maps.LatLng(cafe.coordY, cafe.coordX);
+          map.setCenter(latlng);
+
+          const marker = new window.kakao.maps.Marker({
+            map: map,
+            position: new window.kakao.maps.LatLng(cafe.coordY, cafe.coordX),
+          });
+          markers.push(marker);
+
+          // PC / 모바일 뷰 구분
+          if (window.innerWidth > 768) {
+            window.kakao.maps.event.addListener(
+              marker,
+              'mouseover',
+              function () {
+                infowindow.setContent(
+                  `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`,
+                );
+                infowindow.open(map, marker);
+              },
+            );
+
+            window.kakao.maps.event.addListener(
+              marker,
+              'mouseout',
+              function () {
+                infowindow.close();
+              },
+            );
+          } else {
+            window.kakao.maps.event.addListener(marker, 'click', function () {
+              infowindow.setContent(
+                `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${cafe.name}</div>`,
               );
               infowindow.open(map, marker);
             });
@@ -147,67 +207,73 @@ export default function KakaoMap() {
         };
 
         const removeMarkers = () => {
-          markers.forEach((marker) => marker.setMap(null));
+          markers.forEach(marker => marker.setMap(null));
           markers = [];
         };
 
-        const searchResults = (query: any) => {
-          ps.keywordSearch(query, (data: any, status: any, pagination: any) => {
-            if (status === window.kakao.maps.services.Status.OK) {
-              const coords = new window.kakao.maps.LatLng(data[0].y, data[0].x);
-              map.setCenter(coords);
+        const searchResults = (query: string) => {
+          ps.keywordSearch(
+            query,
+            (data: AllCafe[], status: string, pagination: KakaoPagination) => {
+              if (status === window.kakao.maps.services.Status.OK) {
+                const coords = new window.kakao.maps.LatLng(
+                  data[0].y,
+                  data[0].x,
+                );
+                map.setCenter(coords);
 
-              const filtered_data = data.filter(
-                (item: any) => item['category_group_code'] === 'CE7'
-              );
+                const filtered_data = data.filter(
+                  (item: AllCafe) => item['category_group_code'] === 'CE7',
+                );
 
-              const results = [...filtered_data];
+                const results = [...filtered_data];
 
-              const handlePagination = (
-                newData: any,
-                status: any,
-                newPagination: any
-              ) => {
-                if (status === window.kakao.maps.services.Status.OK) {
-                  const moreFilteredData = newData.filter(
-                    (item: any) => item['category_group_code'] === 'CE7'
-                  );
-                  results.push(...moreFilteredData);
+                const handlePagination = (
+                  newData: AllCafe[],
+                  status: string,
+                  newPagination: KakaoPagination,
+                ) => {
+                  if (status === window.kakao.maps.services.Status.OK) {
+                    const moreFilteredData = newData.filter(
+                      (item: AllCafe) => item['category_group_code'] === 'CE7',
+                    );
+                    results.push(...moreFilteredData);
 
-                  if (newPagination.hasNextPage && results.length < 45)
-                    newPagination.nextPage();
-                  else {
-                    setAllCafe(results);
-                    removeMarkers();
-                    results.forEach((cafe) => displayResults(cafe));
+                    if (newPagination.hasNextPage && results.length < 45)
+                      newPagination.nextPage();
+                    else {
+                      setAllCafe(results);
+                      removeMarkers();
+                      results.forEach(cafe => displayResults(cafe));
+                    }
                   }
-                }
-              };
+                };
 
-              if (pagination.hasNextPage && results.length < 45) {
-                pagination.nextPage();
-                ps.keywordSearch(query, handlePagination, pagination);
+                if (pagination.hasNextPage && results.length < 45) {
+                  pagination.nextPage();
+                  ps.keywordSearch(query, handlePagination, pagination);
+                } else {
+                  setAllCafe(results);
+                  removeMarkers();
+                  results.forEach(cafe => displayResults(cafe));
+                }
               } else {
-                setAllCafe(results);
-                removeMarkers();
-                results.forEach((cafe) => displayResults(cafe));
+                toast.warning(
+                  `${query.replace('카페', '').trim()}의 검색 결과가 없습니다`,
+                );
+                const defaultLatLng = new window.kakao.maps.LatLng(
+                  37.54715716085294,
+                  127.04663357436208,
+                );
+                map.setCenter(defaultLatLng);
               }
-            } else {
-              toast.warning(
-                `${query.replace('카페', '').trim()}의 검색 결과가 없습니다`
-              );
-              const defaultLatLng = new window.kakao.maps.LatLng(
-                37.54715716085294,
-                127.04663357436208
-              );
-              map.setCenter(defaultLatLng);
-            }
-          });
+            },
+          );
         };
 
         if (pathname === '/' || pathname.startsWith('/cafe/all/detail')) {
           removeMarkers();
-          allCafe.forEach((cafe: any) => displayResults(cafe));
+          allCafe.forEach((cafe: AllCafe) => displayResults(cafe));
         }
 
         if (pathname === '/cafe/all') {
@@ -218,11 +284,13 @@ export default function KakaoMap() {
         if (pathname.startsWith('/cafe/collected')) {
           removeMarkers();
           if (collectedCafe && collectedCafe.length > 0) {
-            collectedCafe.forEach((cafe: any) => displayCollected(cafe));
+            collectedCafe.forEach((cafe: CollectedCafeDetailForUpload) =>
+              displayCollected(cafe),
+            );
           } else {
             const defaultLatLng = new window.kakao.maps.LatLng(
               37.54715716085294,
-              127.04663357436208
+              127.04663357436208,
             );
             map.setCenter(defaultLatLng);
           }
@@ -231,11 +299,13 @@ export default function KakaoMap() {
         if (pathname.startsWith('/cafe/bookmarked')) {
           removeMarkers();
           if (bookmarkedCafe && bookmarkedCafe.length > 0) {
-            bookmarkedCafe.forEach((cafe: any) => displayCollected(cafe));
+            bookmarkedCafe.forEach((cafe: NormalCafeDetailForUpload) =>
+              displayBookmarked(cafe),
+            );
           } else {
             const defaultLatLng = new window.kakao.maps.LatLng(
               37.54715716085294,
-              127.04663357436208
+              127.04663357436208,
             );
             map.setCenter(defaultLatLng);
           }
@@ -256,6 +326,7 @@ export default function KakaoMap() {
     return () => {
       script.remove();
     };
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [keyword, pathname]);
 
   if (pathname.startsWith('/resetpassword')) return null;

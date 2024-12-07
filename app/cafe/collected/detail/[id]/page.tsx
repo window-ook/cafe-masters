@@ -2,21 +2,23 @@
 
 import { useEffect } from 'react';
 import { useMapStore, useUserStore } from 'utils/store';
+import { MapStore, UserStore } from 'types/store';
 import { getCollectedCafe } from 'actions/collectedActions';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
 
 export default function CollectedDetailPage({ params }: PageProps) {
   const { id } = params;
-  const userId = useUserStore((state: any) => state.userId);
+  const userId = useUserStore((state: UserStore) => state.userId);
   const setCollectedCafeDetail = useMapStore(
-    (state: any) => state.setCollectedCafeDetail
+    (state: MapStore) => state.setCollectedCafeDetail,
   );
 
   useEffect(() => {
     const fetchCollectedCafeDetail = async () => {
       try {
-        const response = await getCollectedCafe(id, userId);
+        const numericId = parseFloat(id);
+        const response = await getCollectedCafe(numericId, userId);
         if (response?.length) setCollectedCafeDetail(response);
       } catch (error) {
         console.error(error);
@@ -24,7 +26,7 @@ export default function CollectedDetailPage({ params }: PageProps) {
     };
 
     fetchCollectedCafeDetail();
-  }, [id]);
+  }, [id, userId, setCollectedCafeDetail]);
 
   return (
     <Head>

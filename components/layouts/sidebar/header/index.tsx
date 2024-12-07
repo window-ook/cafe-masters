@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useCheckStore } from 'utils/store';
+import { CheckStore } from 'types/store';
 import { Tooltip } from '@mui/material';
 import Image from 'next/image';
 import Search from './search';
@@ -9,7 +10,7 @@ import LightDarkToggle from './light-dark-toggle';
 import LogoImage from 'components/auth/shared/logo-image';
 
 export default function Header() {
-  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const router = useRouter();
   return (
     <div

@@ -1,8 +1,8 @@
 'use server';
 
-import { PostgrestError } from '@supabase/supabase-js';
-import { BookmarkedCafeFromSupabase } from 'types/types';
 import { Database } from 'types_db';
+import { PostgrestError } from '@supabase/supabase-js';
+import { BookmarkedCafeFromSupabase } from 'types/common';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 
 export type BookmarkedRow = Database['public']['Tables']['bookmarked']['Row'];
@@ -15,9 +15,9 @@ function handleError(error: PostgrestError): void {
 }
 
 export async function getAllBookmarkedCafes(
-  userId: string
+  userId: string,
 ): Promise<BookmarkedCafeFromSupabase[]> {
-  if (!userId) throw new Error('유효하지 않은 userId');
+  if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
@@ -31,11 +31,11 @@ export async function getAllBookmarkedCafes(
 }
 
 export async function getBookmarkedCafe(
-  id: string,
-  userId: string
+  id: number,
+  userId: string,
 ): Promise<BookmarkedCafeFromSupabase[]> {
-  if (!id) throw new Error('유효하지 않은 북마크 카페 id');
-  if (!userId) throw new Error('유효하지 않은 userId');
+  if (!id || id === 0) throw new Error('유효하지 않은 카페 ID');
+  if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
@@ -49,13 +49,12 @@ export async function getBookmarkedCafe(
 }
 
 export async function createBookmarkedCafe(
-  bookmarked: BookmarkedRowInsert
+  bookmarked: BookmarkedRowInsert,
 ): Promise<void> {
-  if (!bookmarked)
-    throw new Error('북마크 테이블에 전달하는 데이터가 유효하지 않습니다');
+  if (!bookmarked) throw new Error('유효하지 않은 카페 데이터 전송');
 
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.from('bookmarked').insert({
+  const { error } = await supabase.from('bookmarked').insert({
     ...bookmarked,
     created_at: new Date().toISOString(),
   });
@@ -64,14 +63,14 @@ export async function createBookmarkedCafe(
 }
 
 export async function deleteBookmarkedCafe(
-  id: string,
-  userId: string
+  id: number | undefined,
+  userId: string,
 ): Promise<void> {
-  if (!id) throw new Error('유효하지 않은 카페 id');
-  if (!userId) throw new Error('유효하지 않은 userId');
+  if (!id) throw new Error('유효하지 않은 카페 ID');
+  if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('bookmarked')
     .delete()
     .eq('id', id)

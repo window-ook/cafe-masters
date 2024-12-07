@@ -6,14 +6,19 @@ import { getCafeDetail } from 'actions/cafeDetailActions';
 import { getBookmarkedCafe } from 'actions/bookmarkActions';
 import { getCollectedCafe } from 'actions/collectedActions';
 import { PageProps } from 'types/common';
+import { CheckStore, MapStore, UserStore } from 'types/store';
 import Head from 'next/head';
 
 export default function AllDetailPage({ params }: PageProps) {
   const { id } = params;
-  const userId = useUserStore(state => state.userId);
-  const setCafeDetail = useMapStore(state => state.setCafeDetail);
-  const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
-  const setIsCollected = useCheckStore(state => state.setIsCollected);
+  const userId = useUserStore((state: UserStore) => state.userId);
+  const setCafeDetail = useMapStore((state: MapStore) => state.setCafeDetail);
+  const setIsBookmarked = useCheckStore(
+    (state: CheckStore) => state.setIsBookmarked,
+  );
+  const setIsCollected = useCheckStore(
+    (state: CheckStore) => state.setIsCollected,
+  );
 
   useEffect(() => {
     setIsBookmarked(false);
@@ -28,9 +33,11 @@ export default function AllDetailPage({ params }: PageProps) {
       }
     };
 
+    const numericId = parseFloat(id);
+
     const checkCollectedCafe = async () => {
       try {
-        const response = await getCollectedCafe(id, userId);
+        const response = await getCollectedCafe(numericId, userId);
         if (response?.length) setIsCollected(true);
       } catch (error) {
         console.error(error);
@@ -39,17 +46,17 @@ export default function AllDetailPage({ params }: PageProps) {
 
     const checkBookmarkedCafe = async () => {
       try {
-        const response = await getBookmarkedCafe(id, userId);
+        const response = await getBookmarkedCafe(numericId, userId);
         if (response?.length) setIsBookmarked(true);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
     fetchCafeDetail();
     checkBookmarkedCafe();
     checkCollectedCafe();
-  }, [id]);
+  }, [id, setCafeDetail, setIsBookmarked, setIsCollected, userId]);
 
   return (
     <Head>

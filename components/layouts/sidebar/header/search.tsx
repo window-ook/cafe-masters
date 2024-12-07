@@ -1,18 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMapStore, useCheckStore } from 'utils/store';
+import { CheckStore, MapStore } from 'types/store';
 import { SearchButtonStyle, getSearchInputStyle } from 'utils/styles';
 
 export default function Search() {
   const router = useRouter();
-  const keyword = useMapStore((state: any) => state.keyword);
-  const setKeyword = useMapStore((state: any) => state.setKeyword);
+  const keyword = useMapStore((state: MapStore) => state.keyword);
+  const setKeyword = useMapStore((state: MapStore) => state.setKeyword);
   const setIsSubSidebarOpen = useCheckStore(
-    (state: any) => state.setIsSubSidebarOpen
+    (state: CheckStore) => state.setIsSubSidebarOpen,
   );
-  const isDarkTheme = useCheckStore((state: any) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
 
   const [localKeyword, setLocalKeyword] = useState(keyword);
 
@@ -42,7 +43,7 @@ export default function Search() {
             className={getSearchInputStyle(isDarkTheme)}
             placeholder="ex) 성수, 동성로"
             value={localKeyword}
-            onChange={(e) => setLocalKeyword(e.target.value)}
+            onChange={e => setLocalKeyword(e.target.value)}
             onKeyDown={handleKeyDown}
           />
           <button

@@ -1,5 +1,3 @@
-import { cookies } from 'next/headers';
-import { type CookieOptions, createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 

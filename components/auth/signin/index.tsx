@@ -4,16 +4,18 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { signInWithKakao } from 'utils/supabase/signinKakao';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { useAuthView } from 'config/auth-view-provider';
 import {
   AuthFormCardStyle,
   AuthFormMentionStyle,
   AuthFormTitleStyle,
   KakaoButtonStyle,
 } from 'utils/styles';
+import { checkEmailValid } from 'utils/common';
 import UserForm from '../shared/user-form';
 import ResetpasswordForm from './resetpassword-form';
 
-export default function Signin({ setView, checkEmailVaild }: any) {
+export default function Signin() {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState('');
@@ -21,9 +23,11 @@ export default function Signin({ setView, checkEmailVaild }: any) {
   const [resetRequested, setResetRequested] = useState('');
   const supabase = createBrowserSupabaseClient();
 
+  const { setView } = useAuthView();
+
   const signinMutation = useMutation({
     mutationFn: async () => {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -56,7 +60,7 @@ export default function Signin({ setView, checkEmailVaild }: any) {
   const checkEmail = () => {
     let isValid = true;
 
-    if (!checkEmailVaild(email)) {
+    if (!checkEmailValid(email)) {
       setEmailError('유효하지 않은 이메일 형식입니다.');
       isValid = false;
     } else setEmailError(null);

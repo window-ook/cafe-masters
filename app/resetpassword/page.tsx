@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
@@ -69,7 +69,7 @@ export default function ResetpasswordPage() {
                   value={newPassword}
                   placeholder="******"
                   className="border-gray-400"
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  onChange={e => setNewPassword(e.target.value)}
                 />
               </div>
               <div className="flex gap-4 justify-between items-center">
@@ -79,7 +79,7 @@ export default function ResetpasswordPage() {
                   value={newPasswordConfirm}
                   placeholder="******"
                   className="border-gray-400"
-                  onChange={(e) => setNewPasswordConfirm(e.target.value)}
+                  onChange={e => setNewPasswordConfirm(e.target.value)}
                 />
               </div>
               <button

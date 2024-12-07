@@ -4,12 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
 import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
 import { BookmarkedCafeFromSupabase } from 'types/common';
+import { MapStore, UserStore } from 'types/store';
 import Head from 'next/head';
 
 export default function BookmarkedPage() {
-  const userId = useUserStore((state: any) => state.userId);
+  const userId = useUserStore((state: UserStore) => state.userId);
   const setBookmarkedCafe = useMapStore(
-    (state: any) => state.setBookmarkedCafe
+    (state: MapStore) => state.setBookmarkedCafe,
   );
 
   const queryFn = async () => {
@@ -41,7 +42,7 @@ export default function BookmarkedPage() {
   return (
     <Head>
       <title>가고 싶은 카페 | 카페 마스터즈 Cafe Masters</title>
-      <meta name="description" content={`북마크 해둔 카페를 볼 수 있어요.`} />
+      <meta name="description" content={`가고 싶은 카페를 볼 수 있어요.`} />
     </Head>
   );
 }
