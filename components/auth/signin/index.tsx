@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { signInWithKakao } from 'utils/supabase/signinKakao';
-import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useAuthView } from 'config/auth-view-provider';
+import { useSigninMutation } from 'hooks/useSigninMutation';
+import { useResetPasswordMutation } from 'hooks/useResetPasswordMutation';
+import { signinWithKakao } from 'utils/supabase/signinWithKakao';
 import {
   AuthFormCardStyle,
   AuthFormMentionStyle,
@@ -21,41 +21,12 @@ export default function Signin() {
   const [password, setPassword] = useState('');
   const [resetRequired, setResetRequired] = useState(false);
   const [resetRequested, setResetRequested] = useState('');
-  const supabase = createBrowserSupabaseClient();
 
   const { setView } = useAuthView();
 
-  const signinMutation = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+  const signinMutation = useSigninMutation();
 
-      if (error) throw new Error(error.message);
-    },
-
-    onError: (error: Error) => {
-      if (error.message) alert('이메일 또는 비밀번호를 잘못 입력했습니다.');
-      else alert('알 수 없는 에러가 발생했습니다.');
-    },
-  });
-
-  const resetPasswordMutation = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.NEXT_PUBLIC_API_REQUEST_URI}/resetpassword`,
-      });
-      if (error) throw new Error(error.message);
-    },
-    onSuccess: () => {
-      setResetRequested('이메일의 보관함을 확인해주세요.');
-    },
-    onError: (error: Error) => {
-      console.error(error);
-      alert('재요청은 60초가 지나야 가능합니다.');
-    },
-  });
+  const resetPasswordMutation = useResetPasswordMutation();
 
   const checkEmail = () => {
     let isValid = true;
@@ -69,7 +40,16 @@ export default function Signin() {
   };
 
   const handleSignIn = () => {
-    if (checkEmail()) signinMutation.mutate();
+    if (checkEmail()) signinMutation.mutate({ email, password });
+  };
+
+  const handleResetPassword = async () => {
+    try {
+      const message = await resetPasswordMutation.mutateAsync(email);
+      setResetRequested(message);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -79,7 +59,7 @@ export default function Signin() {
           email={email}
           setEmail={setEmail}
           resetRequested={resetRequested}
-          resetFn={() => resetPasswordMutation.mutate()}
+          resetFn={handleResetPassword}
           cancelFn={() => setResetRequired(false)}
         />
       ) : (
@@ -111,7 +91,7 @@ export default function Signin() {
             <button
               aria-label="카카오 로그인 버튼"
               className={KakaoButtonStyle}
-              onClick={() => signInWithKakao()}
+              onClick={() => signinWithKakao()}
             >
               <span className="font-dpixel text-white">카카오 로그인</span>
             </button>

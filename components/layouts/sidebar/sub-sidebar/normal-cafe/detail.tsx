@@ -1,21 +1,14 @@
-import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-import { useRouter } from 'next/navigation';
-import { useMutation } from '@tanstack/react-query';
-import { useQueryClient } from '@tanstack/react-query';
-import { CheckStore, MapStore, UserStore } from 'types/store';
+import { useUploadBookmarkMutation } from 'hooks/useUploadBookmarkMutation';
+import { useCancelBookmarkMutation } from 'hooks/useCancelBookmarkMutation';
+import { useCheckStore } from 'utils/store';
+import { CheckStore } from 'types/store';
 import { NormalCafeDetailForUpload } from 'types/common';
-import {
-  BookmarkedRowInsert,
-  createBookmarkedCafe,
-  deleteBookmarkedCafe,
-} from 'actions/bookmarkActions';
 import {
   getDetailBodyStyle,
   DetailCollectButtonStyle,
   getDetailHeaderStyle,
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
-import { toast } from 'react-toastify';
 import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-cafe/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
@@ -28,7 +21,6 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 interface NormalCafeDetailProps {
   setMemoOpen: (open: boolean) => void;
   detail: NormalCafeDetailForUpload;
-  menuOpen: boolean;
   handleMenuOpen: () => void;
 }
 
@@ -36,11 +28,7 @@ export default function NormalCafeDetail({
   detail,
   handleMenuOpen,
   setMemoOpen,
-  menuOpen,
 }: NormalCafeDetailProps) {
-  const queryClient = useQueryClient();
-  const router = useRouter();
-
   const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const isCollected = useCheckStore((state: CheckStore) => state.isCollected);
   const isBookmarked = useCheckStore((state: CheckStore) => state.isBookmarked);
@@ -48,43 +36,19 @@ export default function NormalCafeDetail({
     (state: CheckStore) => state.setIsSubSidebarOpen,
   );
 
-  const userId = useUserStore((state: UserStore) => state.userId);
-
-  const bookmarkedCafeDetail = useMapStore(
-    (state: MapStore) => state.bookmarkedCafeDetail[0],
-  );
-
   const parsedMenu =
     !Array.isArray(detail?.menu) && detail?.menu
       ? JSON.parse(detail?.menu)
       : detail?.menu;
 
-  const bookmarkMutation = useMutation({
-    mutationFn: async (detail: BookmarkedRowInsert) =>
-      await createBookmarkedCafe(detail),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
-      queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
-      toast.success('새로운 카페를 북마크에 저장했습니다!');
-      router.refresh();
-    },
-    onError: error => console.error(error),
-  });
+  const uploadBookmarkMutation = useUploadBookmarkMutation();
 
-  const bookmarkCancelMutation = useMutation({
-    mutationFn: async () =>
-      await deleteBookmarkedCafe(bookmarkedCafeDetail?.id, userId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
-      queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
-      toast.success('북마크에서 제거했습니다!');
-      router.push('/cafe/bookmarked');
-    },
-    onError: error => {
-      console.error(error);
-      toast.error('북마크에서 제거하는데 문제가 발생했습니다');
-    },
-  });
+  const cancelBookmarkMutation = useCancelBookmarkMutation();
+
+  const handleCancelBookmark = () => {
+    cancelBookmarkMutation.mutate();
+    setIsSubSidebarOpen(false);
+  };
 
   return (
     <div className={`flex flex-col p-2 gap-4`}>
@@ -93,14 +57,14 @@ export default function NormalCafeDetail({
           {isBookmarked ? (
             <button
               aria-label="북마크 취소 버튼"
-              onClick={() => bookmarkCancelMutation.mutate()}
+              onClick={handleCancelBookmark}
             >
               <BookmarkIcon className="text-yellow-500" />
             </button>
           ) : (
             <button
               aria-label="북마크 저장 버튼"
-              onClick={() => bookmarkMutation.mutate(detail)}
+              onClick={() => uploadBookmarkMutation.mutate(detail)}
             >
               <BookmarkIcon
                 className={`hover:scale-110 ${isDarkTheme ? 'text-white' : ''}`}
@@ -159,7 +123,6 @@ export default function NormalCafeDetail({
           <PhoneGrid phoneNum={detail?.phoneNum} />
           <MenuGrid
             handleMenuOpen={handleMenuOpen}
-            menuOpen={menuOpen}
             isDarkTheme={isDarkTheme}
             menu={parsedMenu}
           />

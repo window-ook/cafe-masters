@@ -1,24 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { usePathname } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
+import { useUploadCollectMutation } from 'hooks/useUploadCollectMutation';
+import { useUpdateCollectMutation } from 'hooks/useUpdateCollectMutation';
 import { CheckStore, MapStore, UserStore } from 'types/store';
 import { getSubSidebarStyle } from 'utils/styles';
 import {
   CollectedRowInsert,
   CollectedRowUpdate,
-  createCollectedCafe,
-  updateCollectedCafe,
 } from 'actions/collectedActions';
-import { toast } from 'react-toastify';
 import Memo from './memo';
 import NormalCafeDetail from './normal-cafe/detail';
 import CollectedCafeDetail from './collected-cafe/detail';
 
 export default function SubSidebar() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [memoOpen, setMemoOpen] = useState(false);
   const [comment, setComment] = useState('');
   const [pros, setPros] = useState('');
@@ -36,19 +33,22 @@ export default function SubSidebar() {
   const bookmarkedCafeDetail = useMapStore(
     (state: MapStore) => state.bookmarkedCafeDetail[0],
   );
+
   const thisX = useMapStore((state: MapStore) => state.thisX);
   const thisY = useMapStore((state: MapStore) => state.thisY);
 
   const isSubSidebarOpen = useCheckStore(
     (state: CheckStore) => state.isSubSidebarOpen,
   );
+
+  const isMenuOpen = useCheckStore((state: CheckStore) => state.isMenuOpen);
+  const setIsMenuOpen = useCheckStore(
+    (state: CheckStore) => state.setIsMenuOpen,
+  );
   const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const setIsExtend = useCheckStore((state: CheckStore) => state.setIsExtend);
   const isExtend = useCheckStore((state: CheckStore) => state.isExtend);
-
-  const router = useRouter();
   const pathname = usePathname();
-  const queryClient = useQueryClient();
 
   const detail = {
     id: cafeDetail?.basicInfo?.cid ?? 0,
@@ -74,13 +74,14 @@ export default function SubSidebar() {
     openWeekend:
       cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[1]?.timeSE ||
       cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
-    address:
-      cafeDetail?.basicInfo?.address?.region?.newaddrfullname +
-      ' ' +
-      cafeDetail?.basicInfo?.address?.newaddr?.newaddrfull +
-      ' ' +
-      (cafeDetail?.basicInfo?.address?.addrdetail || ''),
-    phoneNum: cafeDetail?.basicInfo?.phonenum,
+    address: cafeDetail?.basicInfo?.address
+      ? cafeDetail.basicInfo.address.region?.newaddrfullname +
+        ' ' +
+        cafeDetail.basicInfo.address.newaddr?.newaddrfull +
+        ' ' +
+        (cafeDetail.basicInfo.address.addrdetail || '')
+      : 'no-address',
+    phoneNum: cafeDetail?.basicInfo?.phonenum ?? 'no-phoneNum',
     menu:
       Array.isArray(cafeDetail?.menuInfo?.menuList) &&
       cafeDetail?.menuInfo?.menuList.length > 0
@@ -137,33 +138,24 @@ export default function SubSidebar() {
     rating: rating,
   };
 
-  const collectMutation = useMutation({
-    mutationFn: async (memo: CollectedRowInsert) =>
-      await createCollectedCafe(memo),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
-      queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
-      toast.success(`새로운 카드를 수집했습니다!`);
-      setMemoOpen(false);
-      router.refresh();
-    },
-    onError: error => console.error(error),
-  });
+  const uploadCollectMutation = useUploadCollectMutation();
 
-  const updateMutation = useMutation({
-    mutationFn: async (memo: CollectedRowUpdate) =>
-      await updateCollectedCafe(memo, collectedCafeDetail.id, userId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
-      queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
-      toast.success('카드의 스펙을 수정했습니다!');
-      setMemoOpen(false);
-      router.refresh();
-    },
-    onError: error => console.error(error),
-  });
+  const updateCollectMutation = useUpdateCollectMutation();
 
-  const handleMenuOpen = () => setMenuOpen(prev => !prev);
+  const handleUploadCollect = (newMemo: CollectedRowInsert) => {
+    setMemoOpen(false);
+    uploadCollectMutation.mutate(newMemo);
+  };
+
+  const handleUpdateCollect = (memo: CollectedRowUpdate) => {
+    setMemoOpen(false);
+    updateCollectMutation.mutate(memo);
+  };
+
+  const handleMenuOpen = () => {
+    if (isMenuOpen === false) setIsMenuOpen(true);
+    else setIsMenuOpen(false);
+  };
 
   if ((pathname.startsWith('/cafe/all/detail') && !cafeDetail) || !userId)
     return null;
@@ -197,7 +189,6 @@ export default function SubSidebar() {
             detail={detail}
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}
-            menuOpen={menuOpen}
           />
         )}
 
@@ -214,7 +205,6 @@ export default function SubSidebar() {
             detail={bookmarkedCafeDetail}
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}
-            menuOpen={menuOpen}
           />
         )}
 
@@ -224,13 +214,13 @@ export default function SubSidebar() {
           onSubmit={e => {
             e.preventDefault();
             if (pathname.startsWith('/cafe/all'))
-              collectMutation.mutate(memoFromDetail);
+              handleUploadCollect(memoFromDetail);
 
             if (pathname.startsWith('/cafe/collected'))
-              updateMutation.mutate(memoFromCollectedDetail);
+              handleUpdateCollect(memoFromCollectedDetail);
 
             if (pathname.startsWith('/cafe/bookmarked'))
-              collectMutation.mutate(memoFromBookmarkedDetail);
+              handleUploadCollect(memoFromBookmarkedDetail);
           }}
         >
           <Memo

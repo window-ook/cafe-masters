@@ -62,10 +62,10 @@ export interface OpenHour {
 
 export interface Address {
   region: {
-    newaddrfullname: string;
+    newaddrfullname?: string;
   };
   newaddr: {
-    newaddrfull: string;
+    newaddrfull?: string;
   };
   addrdetail?: string;
 }

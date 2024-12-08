@@ -40,6 +40,9 @@ export default function Sidebar() {
   const setIsSubSidebarOpen = useCheckStore(
     (state: CheckStore) => state.setIsSubSidebarOpen,
   );
+  const setIsMenuOpen = useCheckStore(
+    (state: CheckStore) => state.setIsMenuOpen,
+  );
 
   const allCafe = useMapStore((state: MapStore) => state.allCafe);
   const collectedCafe = useMapStore((state: MapStore) => state.collectedCafe);
@@ -71,6 +74,7 @@ export default function Sidebar() {
 
   const handleNormalCafeClick = (cafe: AllCafe) => {
     setIsSubSidebarOpen(true);
+    setIsMenuOpen(false);
     router.push(`/cafe/all/detail/${cafe.id}`);
     setThisX(cafe?.x);
     setThisY(cafe?.y);
@@ -78,6 +82,7 @@ export default function Sidebar() {
 
   const handleCollectedCafeClick = (cafe: CollectedCafeFromSupabase) => {
     setIsSubSidebarOpen(true);
+    setIsMenuOpen(false);
     router.push(`/cafe/collected/detail/${cafe.id}`);
     setThisX(cafe?.coordX);
     setThisY(cafe?.coordY);
@@ -85,6 +90,7 @@ export default function Sidebar() {
 
   const handleBookmarkedCafeClick = (cafe: BookmarkedCafeFromSupabase) => {
     setIsSubSidebarOpen(true);
+    setIsMenuOpen(false);
     router.push(`/cafe/bookmarked/detail/${cafe.id}`);
     setThisX(cafe?.coordX);
     setThisY(cafe?.coordY);
