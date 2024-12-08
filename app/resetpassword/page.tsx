@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useFinishResetMutation } from 'hooks/useFinishResetMutation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
 import AuthBackgroundCards from 'components/auth/shared/background-cards';
@@ -17,28 +17,11 @@ export default function ResetpasswordPage() {
   const router = useRouter();
   const supabase = createBrowserSupabaseClient();
 
-  const finishResetMutation = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.auth.updateUser({
-        password: newPassword,
-      });
-
-      if (error) throw new Error(error.message);
-    },
-    onError: (error: Error) => {
-      console.error(error);
-      alert('새로운 비밀번호는 기존 비밀번호와 달라야합니다.');
-    },
-    onSuccess: async () => {
-      await supabase.auth.signOut();
-      alert('비밀번호를 재설정했습니다!');
-      router.push('/resetpassword/complete');
-    },
-  });
+  const finishResetMutation = useFinishResetMutation();
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    finishResetMutation.mutate();
+    finishResetMutation.mutate(newPassword);
   };
 
   const handleCancel = async (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { useSignupMutation } from 'hooks/useSignupMutation';
 import { useAuthView } from 'config/auth-view-provider';
-import { signInWithKakao } from 'utils/supabase/signinKakao';
+import { signinWithKakao } from 'utils/supabase/signinWithKakao';
 import {
   AuthFormCardStyle,
   AuthFormMentionStyle,
@@ -14,6 +13,7 @@ import {
 import { checkEmailValid } from 'utils/common';
 import UserForm from '../shared/user-form';
 import OtpForm from './otp-form';
+import useVerifyOtpMutation from 'hooks/useVerifyOtpMutation';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -24,39 +24,9 @@ export default function Signup() {
 
   const { setView } = useAuthView();
 
-  const supabase = createBrowserSupabaseClient();
+  const signupMutation = useSignupMutation();
 
-  const signupMutation = useMutation({
-    mutationFn: async () => {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_API_REQUEST_URI}/signup/confirm`,
-        },
-      });
-
-      if (error) throw new Error(error.message);
-      if (data) setConfirmationRequired(true);
-    },
-
-    onError: (error: Error) => console.error(error),
-  });
-
-  const verifyOtpMutation = useMutation({
-    mutationFn: async () => {
-      const { data, error } = await supabase.auth.verifyOtp({
-        type: 'signup',
-        email,
-        token: otp,
-      });
-
-      if (error) throw new Error(error.message);
-      if (data) setConfirmationRequired(true);
-    },
-
-    onError: (error: Error) => console.error(error),
-  });
+  const verifyOtpMutation = useVerifyOtpMutation();
 
   const checkEmail = () => {
     let isValid = true;
@@ -70,7 +40,17 @@ export default function Signup() {
   };
 
   const handleSignUp = () => {
-    if (checkEmail()) signupMutation.mutate();
+    if (checkEmail()) {
+      signupMutation.mutate({ email, password });
+      setConfirmationRequired(true);
+    }
+  };
+
+  const handleVerifyOtp = () => {
+    if (confirmationRequired) {
+      verifyOtpMutation.mutate({ email, otp });
+      setConfirmationRequired(true);
+    } else handleSignUp();
   };
 
   return (
@@ -92,10 +72,7 @@ export default function Signup() {
         <button
           aria-label="인증 코드 확인 버튼 | 회원가입 요청 버튼"
           className="w-full py-1 bg-main hover:bg-opacity-70 hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
-          onClick={() => {
-            if (confirmationRequired) verifyOtpMutation.mutate();
-            else handleSignUp();
-          }}
+          onClick={handleVerifyOtp}
           disabled={
             confirmationRequired
               ? verifyOtpMutation.isPending || otp.length < 6
@@ -109,7 +86,7 @@ export default function Signup() {
         <button
           aria-label="카카오 로그인 버튼"
           className={KakaoButtonStyle}
-          onClick={() => signInWithKakao()}
+          onClick={() => signinWithKakao()}
         >
           <span className="font-dpixel text-lg text-white">
             카카오로 회원가입

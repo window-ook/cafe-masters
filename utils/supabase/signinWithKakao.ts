@@ -2,7 +2,7 @@
 
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
-export const signInWithKakao = async () => {
+export const signinWithKakao = async () => {
   const supabase = createBrowserSupabaseClient();
 
   const { data, error } = await supabase.auth.signInWithOAuth({
