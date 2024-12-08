@@ -4,20 +4,18 @@ import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { useUploadCollectMutation } from 'hooks/useUploadCollectMutation';
+import { useUpdateCollectMutation } from 'hooks/useUpdateCollectMutation';
 import { CheckStore, MapStore, UserStore } from 'types/store';
 import { getSubSidebarStyle } from 'utils/styles';
 import {
   CollectedRowInsert,
   CollectedRowUpdate,
 } from 'actions/collectedActions';
-
 import Memo from './memo';
 import NormalCafeDetail from './normal-cafe/detail';
 import CollectedCafeDetail from './collected-cafe/detail';
-import { useUpdateCollectMutation } from 'hooks/useUpdateCollectMutation';
 
 export default function SubSidebar() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [memoOpen, setMemoOpen] = useState(false);
   const [comment, setComment] = useState('');
   const [pros, setPros] = useState('');
@@ -35,16 +33,21 @@ export default function SubSidebar() {
   const bookmarkedCafeDetail = useMapStore(
     (state: MapStore) => state.bookmarkedCafeDetail[0],
   );
+
   const thisX = useMapStore((state: MapStore) => state.thisX);
   const thisY = useMapStore((state: MapStore) => state.thisY);
 
   const isSubSidebarOpen = useCheckStore(
     (state: CheckStore) => state.isSubSidebarOpen,
   );
+
+  const isMenuOpen = useCheckStore((state: CheckStore) => state.isMenuOpen);
+  const setIsMenuOpen = useCheckStore(
+    (state: CheckStore) => state.setIsMenuOpen,
+  );
   const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const setIsExtend = useCheckStore((state: CheckStore) => state.setIsExtend);
   const isExtend = useCheckStore((state: CheckStore) => state.isExtend);
-
   const pathname = usePathname();
 
   const detail = {
@@ -149,7 +152,10 @@ export default function SubSidebar() {
     updateCollectMutation.mutate(memo);
   };
 
-  const handleMenuOpen = () => setMenuOpen(prev => !prev);
+  const handleMenuOpen = () => {
+    if (isMenuOpen === false) setIsMenuOpen(true);
+    else setIsMenuOpen(false);
+  };
 
   if ((pathname.startsWith('/cafe/all/detail') && !cafeDetail) || !userId)
     return null;
@@ -183,7 +189,6 @@ export default function SubSidebar() {
             detail={detail}
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}
-            menuOpen={menuOpen}
           />
         )}
 
@@ -200,7 +205,6 @@ export default function SubSidebar() {
             detail={bookmarkedCafeDetail}
             handleMenuOpen={handleMenuOpen}
             setMemoOpen={setMemoOpen}
-            menuOpen={menuOpen}
           />
         )}
 

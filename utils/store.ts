@@ -45,12 +45,13 @@ export const useMapStore = create<MapStore>()(
 );
 
 const NO_USER = 'no-user';
+const NO_EMAIL = 'no-email';
 
 export const useUserStore = create<UserStore>()(
   persist(
     set => ({
       userId: NO_USER,
-      userEmail: '새로고침 하기',
+      userEmail: NO_EMAIL,
       userTier: 'BEGINNER',
 
       setUserId: (user: string) => set({ userId: user }),
@@ -68,6 +69,8 @@ export const useCheckStore = create<CheckStore>()(
     set => ({
       isSubSidebarOpen: false,
       setIsSubSidebarOpen: (prev: boolean) => set({ isSubSidebarOpen: prev }),
+      isMenuOpen: false,
+      setIsMenuOpen: (prev: boolean) => set({ isMenuOpen: prev }),
 
       isExtend: false,
       isExtendComplete: false,

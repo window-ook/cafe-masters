@@ -43,6 +43,8 @@ export interface UserStore {
 export interface CheckStore {
   isSubSidebarOpen: boolean;
   setIsSubSidebarOpen: (prev: boolean) => void;
+  isMenuOpen: boolean;
+  setIsMenuOpen: (prev: boolean) => void;
 
   isExtend: boolean;
   isExtendComplete: boolean;

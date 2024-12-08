@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
 import AuthBackgroundCards from 'components/auth/shared/background-cards';
@@ -9,11 +8,9 @@ import LogoImage from 'components/auth/shared/logo-image';
 export default function ResetPasswordCompletePage() {
   const supabase = createBrowserSupabaseClient();
 
-  const router = useRouter();
-
   const handleWindow = async () => {
     await supabase.auth.signOut();
-    router.push('/');
+    window.close();
   };
 
   return (

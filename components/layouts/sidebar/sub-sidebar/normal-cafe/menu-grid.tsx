@@ -1,3 +1,6 @@
+import { CheckStore } from 'types/store';
+import { useCheckStore } from 'utils/store';
+
 interface MenuItem {
   menu: string;
   price: string;
@@ -6,23 +9,23 @@ interface MenuItem {
 interface MenuGridProps {
   isDarkTheme: boolean;
   handleMenuOpen: () => void;
-  menuOpen: boolean;
   menu: MenuItem[];
 }
 
 export default function MenuGrid({
   isDarkTheme,
   handleMenuOpen,
-  menuOpen,
   menu,
 }: MenuGridProps) {
+  const isMenuOpen = useCheckStore((state: CheckStore) => state.isMenuOpen);
+
   return (
     <div className="col-span-2">
       <div>
         <div className="flex items-center gap-2">
           <span className="text-lg">메뉴</span>
           <button aria-label="메뉴 보기 버튼" onClick={handleMenuOpen}>
-            {menuOpen ? (
+            {isMenuOpen ? (
               <i
                 className={`fa-solid fa-angle-up text-lg ${isDarkTheme ? 'text-white' : ''}`}
               />
@@ -34,7 +37,7 @@ export default function MenuGrid({
           </button>
         </div>
         <ul>
-          {menuOpen &&
+          {isMenuOpen &&
             menu.map((item, index) => (
               <li key={index} className="flex flex-col gap-1 mb-2">
                 <div className="w-30 border-t border-solid border-gray-400"></div>

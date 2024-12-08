@@ -41,7 +41,7 @@ export default function Search() {
         >
           <input
             className={getSearchInputStyle(isDarkTheme)}
-            placeholder="ex) 성수, 동성로"
+            placeholder="ex) 성수, 교동, 전포"
             value={localKeyword}
             onChange={e => setLocalKeyword(e.target.value)}
             onKeyDown={handleKeyDown}

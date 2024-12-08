@@ -21,7 +21,6 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 interface NormalCafeDetailProps {
   setMemoOpen: (open: boolean) => void;
   detail: NormalCafeDetailForUpload;
-  menuOpen: boolean;
   handleMenuOpen: () => void;
 }
 
@@ -29,7 +28,6 @@ export default function NormalCafeDetail({
   detail,
   handleMenuOpen,
   setMemoOpen,
-  menuOpen,
 }: NormalCafeDetailProps) {
   const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const isCollected = useCheckStore((state: CheckStore) => state.isCollected);
@@ -45,7 +43,12 @@ export default function NormalCafeDetail({
 
   const uploadBookmarkMutation = useUploadBookmarkMutation();
 
-  const bookmarkCancelMutation = useCancelBookmarkMutation();
+  const cancelBookmarkMutation = useCancelBookmarkMutation();
+
+  const handleCancelBookmark = () => {
+    cancelBookmarkMutation.mutate();
+    setIsSubSidebarOpen(false);
+  };
 
   return (
     <div className={`flex flex-col p-2 gap-4`}>
@@ -54,7 +57,7 @@ export default function NormalCafeDetail({
           {isBookmarked ? (
             <button
               aria-label="북마크 취소 버튼"
-              onClick={() => bookmarkCancelMutation.mutate()}
+              onClick={handleCancelBookmark}
             >
               <BookmarkIcon className="text-yellow-500" />
             </button>
@@ -120,7 +123,6 @@ export default function NormalCafeDetail({
           <PhoneGrid phoneNum={detail?.phoneNum} />
           <MenuGrid
             handleMenuOpen={handleMenuOpen}
-            menuOpen={menuOpen}
             isDarkTheme={isDarkTheme}
             menu={parsedMenu}
           />
