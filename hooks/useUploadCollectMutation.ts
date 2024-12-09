@@ -5,7 +5,7 @@ import { UserStore } from 'types/store';
 import {
   CollectedRowInsert,
   createCollectedCafe,
-} from 'actions/collectedActions';
+} from 'actions/collectActions';
 import { toast } from 'react-toastify';
 
 export function useUploadCollectMutation() {

@@ -5,7 +5,7 @@ import { useMapStore, useUserStore } from 'utils/store';
 import {
   countCollectedCafes,
   getAllCollectedCafes,
-} from 'actions/collectedActions';
+} from 'actions/collectActions';
 import {
   CollectedCafeFromSupabase,
   CollectedCountFromSupabase,
