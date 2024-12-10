@@ -7,7 +7,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config) => {
+  webpack: config => {
     config.plugins.push(new CompressionPlugin());
     return config;
   },
@@ -41,5 +41,5 @@ module.exports = withPlugins(
       compress: true,
     }),
   ],
-  nextConfig
+  nextConfig,
 );

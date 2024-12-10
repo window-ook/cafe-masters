@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { getCafeDetail } from 'actions/cafeDetailActions';
 import { getBookmarkedCafe } from 'actions/bookmarkActions';
-import { getCollectedCafe } from 'actions/collectedActions';
+import { getCollectedCafe } from 'actions/collectActions';
 import { PageProps } from 'types/common';
 import { CheckStore, MapStore, UserStore } from 'types/store';
 import Head from 'next/head';

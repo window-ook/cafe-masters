@@ -39,7 +39,7 @@ export default function Signin() {
     return isValid;
   };
 
-  const handleSignIn = () => {
+  const handleSignin = () => {
     if (checkEmail()) signinMutation.mutate({ email, password });
   };
 
@@ -76,7 +76,7 @@ export default function Signin() {
             <button
               aria-label="로그인 버튼"
               className="w-full py-1 bg-main hover:bg-opacity-70 hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
-              onClick={handleSignIn}
+              onClick={handleSignin}
               disabled={signinMutation.isPending || password.length < 6}
             >
               <span className="font-dpixel text-white">접속하기</span>

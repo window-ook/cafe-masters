@@ -22,12 +22,14 @@ import SidebarTabList from './main/sidebar-tab-list';
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);
+
   const { ref: collectedRef, inView: collectedInView } = useInView({
     threshold: 0.5,
   });
   const { ref: bookmarkedRef, inView: bookmarkedInView } = useInView({
     threshold: 0.5,
   });
+
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const router = useRouter();

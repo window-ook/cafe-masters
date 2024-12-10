@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore } from 'utils/store';
 import { CheckStore, MapStore } from 'types/store';
 import {
@@ -22,13 +23,21 @@ interface CafeDetailProps {
 }
 
 export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
+  const collectedCafeDetail = useMapStore(
+    (state: MapStore) => state.collectedCafeDetail[0],
+  );
+
   const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const setIsSubSidebarOpen = useCheckStore(
     (state: CheckStore) => state.setIsSubSidebarOpen,
   );
-  const collectedCafeDetail = useMapStore(
-    (state: MapStore) => state.collectedCafeDetail[0],
-  );
+
+  const router = useRouter();
+
+  const handleSetIsSubSidebarOpen = () => {
+    setIsSubSidebarOpen(false);
+    router.back();
+  };
 
   // 서브 사이드바에서 넘겨준 set 함수들로 메모 인풋의 value로 설정하기
 
@@ -42,7 +51,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
         </div>
         <button
           aria-label="수집한 카드 상세 정보 보기 취소 버튼"
-          onClick={() => setIsSubSidebarOpen(false)}
+          onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
         >
           <i className={SubsidebarCloseIconStyle}></i>

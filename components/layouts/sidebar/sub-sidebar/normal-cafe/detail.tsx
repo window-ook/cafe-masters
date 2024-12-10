@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import { useUploadBookmarkMutation } from 'hooks/useUploadBookmarkMutation';
 import { useCancelBookmarkMutation } from 'hooks/useCancelBookmarkMutation';
 import { useCheckStore } from 'utils/store';
@@ -36,6 +37,8 @@ export default function NormalCafeDetail({
     (state: CheckStore) => state.setIsSubSidebarOpen,
   );
 
+  const router = useRouter();
+
   const parsedMenu =
     !Array.isArray(detail?.menu) && detail?.menu
       ? JSON.parse(detail?.menu)
@@ -48,6 +51,11 @@ export default function NormalCafeDetail({
   const handleCancelBookmark = () => {
     cancelBookmarkMutation.mutate();
     setIsSubSidebarOpen(false);
+  };
+
+  const handleSetIsSubSidebarOpen = () => {
+    setIsSubSidebarOpen(false);
+    router.back();
   };
 
   return (
@@ -75,7 +83,7 @@ export default function NormalCafeDetail({
         </div>
         <button
           aria-label="카페 상세 정보 보기 취소 버튼"
-          onClick={() => setIsSubSidebarOpen(false)}
+          onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
         >
           <i className={SubsidebarCloseIconStyle}></i>

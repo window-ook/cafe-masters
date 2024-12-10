@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useMapStore, useUserStore } from 'utils/store';
 import { MapStore, UserStore } from 'types/store';
-import { getCollectedCafe } from 'actions/collectedActions';
+import { getCollectedCafe } from 'actions/collectActions';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
 

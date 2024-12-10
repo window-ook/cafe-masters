@@ -39,7 +39,7 @@ export default function Signup() {
     return isValid;
   };
 
-  const handleSignUp = () => {
+  const handleSignup = () => {
     if (checkEmail()) {
       signupMutation.mutate({ email, password });
       setConfirmationRequired(true);
@@ -50,7 +50,7 @@ export default function Signup() {
     if (confirmationRequired) {
       verifyOtpMutation.mutate({ email, otp });
       setConfirmationRequired(true);
-    } else handleSignUp();
+    } else handleSignup();
   };
 
   return (

@@ -5,7 +5,7 @@ import { MapStore, UserStore } from 'types/store';
 import {
   CollectedRowUpdate,
   updateCollectedCafe,
-} from 'actions/collectedActions';
+} from 'actions/collectActions';
 import { toast } from 'react-toastify';
 
 export function useUpdateCollectMutation() {

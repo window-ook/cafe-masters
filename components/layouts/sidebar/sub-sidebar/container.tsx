@@ -7,10 +7,7 @@ import { useUploadCollectMutation } from 'hooks/useUploadCollectMutation';
 import { useUpdateCollectMutation } from 'hooks/useUpdateCollectMutation';
 import { CheckStore, MapStore, UserStore } from 'types/store';
 import { getSubSidebarStyle } from 'utils/styles';
-import {
-  CollectedRowInsert,
-  CollectedRowUpdate,
-} from 'actions/collectedActions';
+import { CollectedRowInsert, CollectedRowUpdate } from 'actions/collectActions';
 import Memo from './memo';
 import NormalCafeDetail from './normal-cafe/detail';
 import CollectedCafeDetail from './collected-cafe/detail';
@@ -48,6 +45,7 @@ export default function SubSidebar() {
   const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const setIsExtend = useCheckStore((state: CheckStore) => state.setIsExtend);
   const isExtend = useCheckStore((state: CheckStore) => state.isExtend);
+
   const pathname = usePathname();
 
   const detail = {
