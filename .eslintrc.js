@@ -7,6 +7,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   rules: {
     'no-undef': 'error',
+    '@typescript-eslint/no-require-imports': 'off',
     'prettier/prettier': [
       'error',
       {

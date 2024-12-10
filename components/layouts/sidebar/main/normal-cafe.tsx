@@ -31,6 +31,7 @@ export default function NormalCafe({
           alt="카페 썸네일 이미지"
           width={100}
           height={50}
+          priority={true}
           className="w-auto h-auto"
         />
       </div>

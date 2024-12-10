@@ -45,6 +45,7 @@ export default function SubSidebar() {
   const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
   const setIsExtend = useCheckStore((state: CheckStore) => state.setIsExtend);
   const isExtend = useCheckStore((state: CheckStore) => state.isExtend);
+
   const pathname = usePathname();
 
   const detail = {
