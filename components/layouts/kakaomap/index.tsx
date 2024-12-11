@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useMapStore } from 'utils/store';
+import { AllCafe } from 'types/common';
 import { KakaoMapStyle } from 'utils/styles';
 import { toast } from 'react-toastify';
-import { AllCafe } from 'types/common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
@@ -21,10 +21,11 @@ interface KakaoPagination {
 }
 
 export default function KakaoMap() {
-  const [mapLoaded, setMapLoaded] = useState(false); // 지도 로드 상태
+  const [mapLoaded, setMapLoaded] = useState(false);
 
-  const mapRef = useRef<any | null>(null); // 지도 객체 저장
-  const markersRef = useRef<any[]>([]); // 마커 관리
+  const mapRef = useRef<any | null>(null);
+  const markersRef = useRef<any[]>([]);
+  const openInfoWindowRef = useRef<any | null>(null);
 
   const keyword = useMapStore(state => state.keyword);
   const setAllCafe = useMapStore(state => state.setAllCafe);
@@ -70,59 +71,69 @@ export default function KakaoMap() {
     };
   }, []);
 
-  // 마커 추가 및 삭제 함수
+  // 마커 업데이트
   const updateMarkers = (
     data: any[],
     getLat: (item: any) => number,
     getLng: (item: any) => number,
   ) => {
     const map = mapRef.current;
-    if (!map) return;
 
-    // 기존 마커 삭제
     markersRef.current.forEach(marker => marker.setMap(null));
     markersRef.current = [];
 
-    // 새로운 마커 추가
     markersRef.current = data.map(item => {
       const position = new window.kakao.maps.LatLng(getLat(item), getLng(item));
       const marker = new window.kakao.maps.Marker({ map, position });
       const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
 
-      // 마커에 이벤트 추가
+      const createInfoWindows = () => {
+        infowindow.setContent(
+          `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${item.place_name || item.name}</div>`,
+        );
+        infowindow.open(map, marker);
+
+        openInfoWindowRef.current = infowindow;
+      };
+
+      const showInfoWindow = () => {
+        removeInfoWindows();
+        createInfoWindows();
+      };
+
+      const hideInfoWindow = () => infowindow.close();
+
       if (window.innerWidth > 768) {
-        window.kakao.maps.event.addListener(marker, 'mouseover', () => {
-          infowindow.setContent(
-            `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${item.place_name || item.name}</div>`,
-          );
-          infowindow.open(map, marker);
-        });
-
-        window.kakao.maps.event.addListener(marker, 'mouseout', () => {
-          infowindow.close();
-        });
+        window.kakao.maps.event.addListener(
+          marker,
+          'mouseover',
+          showInfoWindow,
+        );
+        window.kakao.maps.event.addListener(marker, 'mouseout', hideInfoWindow);
       } else {
-        window.kakao.maps.event.addListener(marker, 'click', function () {
-          infowindow.setContent(
-            `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${item.place_name || item.name}</div>`,
-          );
-          infowindow.open(map, marker);
-        });
-
-        window.kakao.maps.event.addListener(map, 'click', function () {
-          infowindow.close();
-        });
+        window.kakao.maps.event.addListener(marker, 'click', showInfoWindow);
+        window.kakao.maps.event.addListener(map, 'click', hideInfoWindow);
       }
 
       return marker;
     });
   };
 
-  // 상태 기반 마커 처리
+  const removeMarkers = () => {
+    markersRef.current.forEach(marker => marker.setMap(null));
+    markersRef.current = [];
+  };
+
+  const removeInfoWindows = () => {
+    if (openInfoWindowRef.current) {
+      openInfoWindowRef.current.close();
+      openInfoWindowRef.current = null;
+    }
+  };
+
   useEffect(() => {
     if (!mapLoaded || !mapRef.current) return;
 
-    // 카페 검색
     const searchCafes = (query: string) => {
       const map = mapRef.current;
 
@@ -130,7 +141,7 @@ export default function KakaoMap() {
 
       const ps = new window.kakao.maps.services.Places();
 
-      let allResults: any[] = []; // 모든 결과를 저장할 배열
+      let allResults: AllCafe[] = [];
 
       const handleSearch = (
         data: AllCafe[],
@@ -148,13 +159,6 @@ export default function KakaoMap() {
             pagination.nextPage();
           } else {
             setAllCafe(allResults);
-
-            if (allResults.length > 0) {
-              mapRef.current.panTo(
-                new window.kakao.maps.LatLng(allCafe[0].y, allCafe[0].x),
-              );
-            }
-
             updateMarkers(
               allResults,
               item => item.y,
@@ -172,11 +176,8 @@ export default function KakaoMap() {
     };
 
     if (pathname === '/') {
-      updateMarkers(
-        allCafe,
-        cafe => cafe.y,
-        cafe => cafe.x,
-      );
+      removeMarkers();
+      removeInfoWindows();
     }
 
     if (pathname === '/cafe/all') {
@@ -198,6 +199,7 @@ export default function KakaoMap() {
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
+      mapRef.current.setCenter(new window.kakao.maps.LatLng(thisY, thisX));
     }
 
     if (pathname.startsWith('/cafe/bookmarked')) {
@@ -206,6 +208,7 @@ export default function KakaoMap() {
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
+      mapRef.current.setCenter(new window.kakao.maps.LatLng(thisY, thisX));
     }
 
     if (
@@ -215,17 +218,7 @@ export default function KakaoMap() {
     ) {
       mapRef.current.setCenter(new window.kakao.maps.LatLng(thisY, thisX));
     }
-  }, [
-    pathname,
-    keyword,
-    allCafe,
-    setAllCafe,
-    collectedCafe,
-    bookmarkedCafe,
-    thisX,
-    thisY,
-    mapLoaded,
-  ]);
+  });
 
   return <div id="map" className={KakaoMapStyle} />;
 }
