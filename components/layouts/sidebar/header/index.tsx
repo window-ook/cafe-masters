@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useCheckStore } from 'utils/store';
-import { CheckStore } from 'types/store';
 import { Tooltip } from '@mui/material';
 import Image from 'next/image';
 import Search from './search';
@@ -10,8 +9,14 @@ import LightDarkToggle from './light-dark-toggle';
 import LogoImage from 'components/auth/shared/logo-image';
 
 export default function Header() {
-  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+
   const router = useRouter();
+
+  const handleRoute = () => {
+    router.push('/');
+  };
+
   return (
     <div
       className={`${isDarkTheme ? 'bg-darkbg' : 'bg-white'} z-10 sticky top-0 py-4 flex flex-col gap-6`}
@@ -28,7 +33,7 @@ export default function Header() {
           <button
             aria-label="홈페이지 이동 버튼"
             className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-300"
-            onClick={() => router.push('/')}
+            onClick={handleRoute}
           >
             <LogoImage size={100} />
           </button>

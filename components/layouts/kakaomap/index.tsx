@@ -24,8 +24,10 @@ export default function KakaoMap() {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   const mapRef = useRef<any | null>(null);
-  const markersRef = useRef<any[]>([]);
   const openInfoWindowRef = useRef<any | null>(null);
+  const markersRef = useRef<any[]>([]);
+  const prevMarkerDataRef = useRef<any[] | null>(null);
+  const prevKeywordRef = useRef<string | null>(null);
 
   const keyword = useMapStore(state => state.keyword);
   const setAllCafe = useMapStore(state => state.setAllCafe);
@@ -71,54 +73,6 @@ export default function KakaoMap() {
     };
   }, []);
 
-  // 마커 업데이트
-  const updateMarkers = (
-    data: any[],
-    getLat: (item: any) => number,
-    getLng: (item: any) => number,
-  ) => {
-    const map = mapRef.current;
-
-    markersRef.current.forEach(marker => marker.setMap(null));
-    markersRef.current = [];
-
-    markersRef.current = data.map(item => {
-      const position = new window.kakao.maps.LatLng(getLat(item), getLng(item));
-      const marker = new window.kakao.maps.Marker({ map, position });
-      const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
-
-      const createInfoWindows = () => {
-        infowindow.setContent(
-          `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${item.place_name || item.name}</div>`,
-        );
-        infowindow.open(map, marker);
-
-        openInfoWindowRef.current = infowindow;
-      };
-
-      const showInfoWindow = () => {
-        removeInfoWindows();
-        createInfoWindows();
-      };
-
-      const hideInfoWindow = () => infowindow.close();
-
-      if (window.innerWidth > 768) {
-        window.kakao.maps.event.addListener(
-          marker,
-          'mouseover',
-          showInfoWindow,
-        );
-        window.kakao.maps.event.addListener(marker, 'mouseout', hideInfoWindow);
-      } else {
-        window.kakao.maps.event.addListener(marker, 'click', showInfoWindow);
-        window.kakao.maps.event.addListener(map, 'click', hideInfoWindow);
-      }
-
-      return marker;
-    });
-  };
-
   const removeMarkers = () => {
     markersRef.current.forEach(marker => marker.setMap(null));
     markersRef.current = [];
@@ -134,9 +88,69 @@ export default function KakaoMap() {
   useEffect(() => {
     if (!mapLoaded || !mapRef.current) return;
 
-    const searchCafes = (query: string) => {
+    const updateMarkers = (
+      data: any[],
+      getLat: (item: any) => number,
+      getLng: (item: any) => number,
+    ) => {
+      if (prevMarkerDataRef.current === data) return; // 이전 데이터와 동일하면 실행하지 않음
+      prevMarkerDataRef.current = data;
+
       const map = mapRef.current;
 
+      markersRef.current.forEach(marker => marker.setMap(null));
+      markersRef.current = [];
+
+      markersRef.current = data.map(item => {
+        const position = new window.kakao.maps.LatLng(
+          getLat(item),
+          getLng(item),
+        );
+        const marker = new window.kakao.maps.Marker({ map, position });
+        const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
+
+        const createInfoWindows = () => {
+          infowindow.setContent(
+            `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${item.place_name || item.name}</div>`,
+          );
+          infowindow.open(map, marker);
+
+          openInfoWindowRef.current = infowindow;
+        };
+
+        const showInfoWindow = () => {
+          removeInfoWindows();
+          createInfoWindows();
+        };
+
+        const hideInfoWindow = () => infowindow.close();
+
+        if (window.innerWidth > 768) {
+          window.kakao.maps.event.addListener(
+            marker,
+            'mouseover',
+            showInfoWindow,
+          );
+          window.kakao.maps.event.addListener(
+            marker,
+            'mouseout',
+            hideInfoWindow,
+          );
+        } else {
+          window.kakao.maps.event.addListener(marker, 'click', showInfoWindow);
+          window.kakao.maps.event.addListener(map, 'click', hideInfoWindow);
+        }
+
+        return marker;
+      });
+      console.log('마커 업데이트');
+    };
+
+    const searchCafes = (query: string) => {
+      if (prevKeywordRef.current === query) return; // 이전 검색어와 동일하면 실행하지 않음
+      prevKeywordRef.current = query;
+
+      const map = mapRef.current;
       if (!map) return;
 
       const ps = new window.kakao.maps.services.Places();
@@ -164,6 +178,9 @@ export default function KakaoMap() {
               item => item.y,
               item => item.x,
             );
+            mapRef.current.setCenter(
+              new window.kakao.maps.LatLng(allResults[0].y, allResults[0].x),
+            );
           }
         } else {
           toast.warning(
@@ -173,6 +190,7 @@ export default function KakaoMap() {
       };
 
       ps.keywordSearch(query, handleSearch);
+      console.log('검색');
     };
 
     if (pathname === '/') {
@@ -199,7 +217,6 @@ export default function KakaoMap() {
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
-      mapRef.current.setCenter(new window.kakao.maps.LatLng(thisY, thisX));
     }
 
     if (pathname.startsWith('/cafe/bookmarked')) {
@@ -208,7 +225,6 @@ export default function KakaoMap() {
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
-      mapRef.current.setCenter(new window.kakao.maps.LatLng(thisY, thisX));
     }
 
     if (
@@ -218,7 +234,17 @@ export default function KakaoMap() {
     ) {
       mapRef.current.setCenter(new window.kakao.maps.LatLng(thisY, thisX));
     }
-  });
+  }, [
+    mapLoaded,
+    keyword,
+    thisX,
+    thisY,
+    pathname,
+    setAllCafe,
+    allCafe,
+    bookmarkedCafe,
+    collectedCafe,
+  ]);
 
   return <div id="map" className={KakaoMapStyle} />;
 }
