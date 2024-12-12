@@ -19,7 +19,7 @@ const ReactQueryDevtools = dynamic(
   { ssr: false },
 );
 
-const KakaoMap = dynamic(() => import('components/layouts/KakaoMap'), {
+const KakaoMap = dynamic(() => import('components/layouts/kakaomap'), {
   ssr: false,
 });
 
