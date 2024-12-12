@@ -10,7 +10,6 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import Auth from 'components/auth/shared';
 import MainLayout from 'components/layouts/main-layout';
-import KakaoMap from 'components/layouts/kakaomap';
 
 const ReactQueryDevtools = dynamic(
   () =>
@@ -19,6 +18,10 @@ const ReactQueryDevtools = dynamic(
     ),
   { ssr: false },
 );
+
+const KakaoMap = dynamic(() => import('components/layouts/KakaoMap'), {
+  ssr: false,
+});
 
 export const metadata: Metadata = {
   title: 'Cafe Masters',
@@ -61,6 +64,18 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <link rel="dns-prefetch" href="https://fastly.jsdelivr.net" />
+        <link
+          rel="preconnect"
+          href="https://fastly.jsdelivr.net"
+          crossOrigin="anonymous"
+        />
+        <link rel="preconnect" href="https://dapi.kakao.com" />
+        <link rel="dns-prefetch" href="https://dapi.kakao.com" />
+        <link rel="preconnect" href="https://mts.daumcdn.net" />
+        <link rel="dns-prefetch" href="https://mts.daumcdn.net" />
+      </head>
       <body>
         <ReactQueryClientProvider>
           <AuthProvider accessToken={session?.access_token ?? 'no-user'}>

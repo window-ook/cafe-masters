@@ -7,6 +7,8 @@ import {
   UniqueCardStyle,
   UniqueCardEffectStyle,
 } from 'utils/styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 
 interface CollectedCafeProps {
@@ -57,7 +59,10 @@ export default function CollectedCafe({
             .fill(0)
             .map((_, index) => (
               <div key={index} className={RatingCircleStyle}>
-                <i className="fa-solid fa-star absolute text-yellow-300 text-xs"></i>
+                <FontAwesomeIcon
+                  icon={faStar}
+                  className="fa-solid fa-star absolute text-yellow-300 text-xs"
+                />
               </div>
             ))}
         </div>

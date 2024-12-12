@@ -32,7 +32,7 @@ export const getSubSidebarStyle = (
 };
 
 export const SubsidebarCloseIconStyle =
-  'fa-solid fa-circle-xmark text-main text-3xl hover:text-opacity-70';
+  'text-main text-3xl hover:text-opacity-70';
 
 export const KakaoMapStyle =
   'z-0 fixed top-0 sm:translate-x-[27rem] sm:w-[calc(100vw-27rem)] w-screen h-screen';
@@ -112,8 +112,7 @@ export const OverFiveRatingStyle =
 export const RatingCircleStyle =
   'relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500 shadow-md shadow-yellow-100';
 
-export const RatingStarStyle =
-  'fa-solid fa-star absolute text-yellow-300 text-xs';
+export const RatingStarStyle = 'absolute text-yellow-300 text-xs';
 
 export const AuthFormCardStyle =
   'p-5 rounded-xl bg-white shadow-mainShadow z-10';
