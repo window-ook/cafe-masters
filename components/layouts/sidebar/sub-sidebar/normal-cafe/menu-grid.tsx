@@ -1,4 +1,6 @@
 import { useCheckStore } from 'utils/store';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 interface MenuItem {
   menu: string;
@@ -25,11 +27,13 @@ export default function MenuGrid({
           <span className="text-lg">메뉴</span>
           <button aria-label="메뉴 보기 버튼" onClick={handleMenuOpen}>
             {isMenuOpen ? (
-              <i
+              <FontAwesomeIcon
+                icon={faAngleUp}
                 className={`fa-solid fa-angle-up text-lg ${isDarkTheme ? 'text-white' : ''}`}
               />
             ) : (
-              <i
+              <FontAwesomeIcon
+                icon={faAngleDown}
                 className={`fa-solid fa-angle-down text-lg ${isDarkTheme ? 'text-white' : ''}`}
               />
             )}

@@ -9,6 +9,8 @@ import {
   getDetailHeaderStyle,
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-cafe/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
@@ -83,7 +85,10 @@ export default function NormalCafeDetail({
           onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
         >
-          <i className={SubsidebarCloseIconStyle}></i>
+          <FontAwesomeIcon
+            icon={faCircleXmark}
+            className={SubsidebarCloseIconStyle}
+          />
         </button>
       </div>
 

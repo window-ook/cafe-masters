@@ -2,6 +2,12 @@ import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckStore } from 'utils/store';
 import { getSidebarTabTextStyle } from 'utils/styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTableList,
+  faFile,
+  faBookmark,
+} from '@fortawesome/free-solid-svg-icons';
 
 interface SidebarTabProps {
   icon: ReactNode;
@@ -28,9 +34,10 @@ export default function SidebarTabList() {
     <ul className="flex flex-col items-center gap-10 sm:gap-8 pl-32">
       <SidebarTab
         icon={
-          <i
-            className={`${isDarkTheme ? 'text-white' : ''} ${iconStyle} fa-bars`}
-          ></i>
+          <FontAwesomeIcon
+            icon={faTableList}
+            className={`${isDarkTheme ? 'text-white' : ''} ${iconStyle}`}
+          />
         }
         title={'모든 카페 보기'}
         path={() => router.push('/cafe/all')}
@@ -38,9 +45,10 @@ export default function SidebarTabList() {
       />
       <SidebarTab
         icon={
-          <i
-            className={`${isDarkTheme ? 'text-white' : 'text-main'} ${iconStyle} fa-file`}
-          ></i>
+          <FontAwesomeIcon
+            icon={faFile}
+            className={`${isDarkTheme ? 'text-white' : 'text-main'} ${iconStyle}`}
+          />
         }
         title={'수집한 카드 보기'}
         path={() => router.push('/cafe/collected')}
@@ -48,9 +56,10 @@ export default function SidebarTabList() {
       />
       <SidebarTab
         icon={
-          <i
-            className={`${isDarkTheme ? 'text-white' : 'text-yellow-500'} ${iconStyle} fa-bookmark`}
-          ></i>
+          <FontAwesomeIcon
+            icon={faBookmark}
+            className={`${isDarkTheme ? 'text-white' : 'text-yellow-500'} ${iconStyle}`}
+          />
         }
         title={'가고 싶은 카페 보기'}
         path={() => router.push('/cafe/bookmarked')}

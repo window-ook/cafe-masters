@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
+
 interface OpenTimeGridProps {
   openWeekly: string | null | undefined;
   openWeekend: string | null | undefined;
@@ -10,7 +13,7 @@ export default function OpenTimeGrid({
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 items-center">
-        <i className="fa-solid fa-clock"></i>
+        <FontAwesomeIcon icon={faClock} />
         <span>영업시간</span>
       </div>
       <div className="col-span-1 text-left">
