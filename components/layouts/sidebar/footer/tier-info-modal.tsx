@@ -1,5 +1,4 @@
 import { useCheckStore } from 'utils/store';
-import { CheckStore } from 'types/store';
 import { BadgeProps } from 'types/common';
 import {
   BadgeCommon,
@@ -29,7 +28,7 @@ export default function TierInfoModal({
   open,
   handleClose,
 }: TierInfoModalProps) {
-  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
   const tierDescStyle = 'font-dpixel lg:text-lg text-xs';
 

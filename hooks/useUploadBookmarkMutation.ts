@@ -1,7 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserStore } from 'utils/store';
-import { UserStore } from 'types/store';
 import {
   BookmarkedRowInsert,
   createBookmarkedCafe,
@@ -9,7 +8,7 @@ import {
 import { toast } from 'react-toastify';
 
 export function useUploadBookmarkMutation() {
-  const userId = useUserStore((state: UserStore) => state.userId);
+  const userId = useUserStore(state => state.userId);
 
   const router = useRouter();
 

@@ -1,5 +1,4 @@
 import { useCheckStore } from 'utils/store';
-import { CheckStore } from 'types/store';
 import {
   OverThreeRatingStyle,
   OverFiveRatingStyle,
@@ -27,7 +26,7 @@ export default function CollectedCafe({
   ratings,
   onClick,
 }: CollectedCafeProps) {
-  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const isUnique = name === '탐앤탐스 대구강북점';
 
   const bgRatings =

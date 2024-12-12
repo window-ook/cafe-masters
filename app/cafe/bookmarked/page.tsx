@@ -4,14 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
 import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
 import { BookmarkedCafeFromSupabase } from 'types/common';
-import { MapStore, UserStore } from 'types/store';
 import Head from 'next/head';
 
 export default function BookmarkedPage() {
-  const userId = useUserStore((state: UserStore) => state.userId);
-  const setBookmarkedCafe = useMapStore(
-    (state: MapStore) => state.setBookmarkedCafe,
-  );
+  const userId = useUserStore(state => state.userId);
+  const setBookmarkedCafe = useMapStore(state => state.setBookmarkedCafe);
 
   const queryFn = async () => {
     const response = await getAllBookmarkedCafes(userId);

@@ -1,16 +1,15 @@
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
-import { MapStore, UserStore } from 'types/store';
 import { deleteBookmarkedCafe } from 'actions/bookmarkActions';
 import { toast } from 'react-toastify';
 
 export function useCancelBookmarkMutation() {
   const bookmarkedCafeDetail = useMapStore(
-    (state: MapStore) => state.bookmarkedCafeDetail[0],
+    state => state.bookmarkedCafeDetail[0],
   );
 
-  const userId = useUserStore((state: UserStore) => state.userId);
+  const userId = useUserStore(state => state.userId);
 
   const router = useRouter();
 

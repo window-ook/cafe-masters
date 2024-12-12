@@ -1,6 +1,5 @@
 import { useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore } from 'utils/store';
-import { CheckStore, MapStore } from 'types/store';
 import {
   getDetailBodyStyle,
   DetailCollectButtonStyle,
@@ -24,13 +23,11 @@ interface CafeDetailProps {
 
 export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
   const collectedCafeDetail = useMapStore(
-    (state: MapStore) => state.collectedCafeDetail[0],
+    state => state.collectedCafeDetail[0],
   );
 
-  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
-  const setIsSubSidebarOpen = useCheckStore(
-    (state: CheckStore) => state.setIsSubSidebarOpen,
-  );
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
 
   const router = useRouter();
 

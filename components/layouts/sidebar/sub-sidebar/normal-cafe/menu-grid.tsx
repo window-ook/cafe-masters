@@ -1,4 +1,3 @@
-import { CheckStore } from 'types/store';
 import { useCheckStore } from 'utils/store';
 
 interface MenuItem {
@@ -17,7 +16,7 @@ export default function MenuGrid({
   handleMenuOpen,
   menu,
 }: MenuGridProps) {
-  const isMenuOpen = useCheckStore((state: CheckStore) => state.isMenuOpen);
+  const isMenuOpen = useCheckStore(state => state.isMenuOpen);
 
   return (
     <div className="col-span-2">

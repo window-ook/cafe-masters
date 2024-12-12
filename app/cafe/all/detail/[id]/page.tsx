@@ -6,19 +6,14 @@ import { getCafeDetail } from 'actions/cafeDetailActions';
 import { getBookmarkedCafe } from 'actions/bookmarkActions';
 import { getCollectedCafe } from 'actions/collectActions';
 import { PageProps } from 'types/common';
-import { CheckStore, MapStore, UserStore } from 'types/store';
 import Head from 'next/head';
 
 export default function AllDetailPage({ params }: PageProps) {
   const { id } = params;
-  const userId = useUserStore((state: UserStore) => state.userId);
-  const setCafeDetail = useMapStore((state: MapStore) => state.setCafeDetail);
-  const setIsBookmarked = useCheckStore(
-    (state: CheckStore) => state.setIsBookmarked,
-  );
-  const setIsCollected = useCheckStore(
-    (state: CheckStore) => state.setIsCollected,
-  );
+  const userId = useUserStore(state => state.userId);
+  const setCafeDetail = useMapStore(state => state.setCafeDetail);
+  const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
+  const setIsCollected = useCheckStore(state => state.setIsCollected);
 
   useEffect(() => {
     setIsBookmarked(false);
