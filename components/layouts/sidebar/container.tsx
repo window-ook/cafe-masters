@@ -141,6 +141,10 @@ export default function Sidebar() {
   }, [pathname, setIsSubSidebarOpen]);
 
   useEffect(() => {
+    setCurrentPage(1);
+  }, [allCafe]);
+
+  useEffect(() => {
     if (
       collectedInView &&
       hasNextCollectedPage &&
