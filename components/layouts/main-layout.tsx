@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import Sidebar from 'components/layouts/sidebar/container';
 
 interface MainLayout {
@@ -8,6 +8,14 @@ interface MainLayout {
 }
 
 export default function MainLayout({ children }: MainLayout) {
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(registration => {
+        console.log('Service Worker registered:', registration);
+      });
+    }
+  }, []);
+
   return (
     <main className="flex">
       <Sidebar />
