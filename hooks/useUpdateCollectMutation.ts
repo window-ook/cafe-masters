@@ -1,7 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
-import { MapStore, UserStore } from 'types/store';
 import {
   CollectedRowUpdate,
   updateCollectedCafe,
@@ -9,14 +8,14 @@ import {
 import { toast } from 'react-toastify';
 
 export function useUpdateCollectMutation() {
-  const userId = useUserStore((state: UserStore) => state.userId);
+  const userId = useUserStore(state => state.userId);
 
   const queryClient = useQueryClient();
 
   const router = useRouter();
 
   const collectedCafeDetail = useMapStore(
-    (state: MapStore) => state.collectedCafeDetail[0],
+    state => state.collectedCafeDetail[0],
   );
 
   return useMutation({

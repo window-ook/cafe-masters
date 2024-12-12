@@ -2,16 +2,15 @@
 
 import { useEffect } from 'react';
 import { useMapStore, useUserStore } from 'utils/store';
-import { MapStore, UserStore } from 'types/store';
 import { getCollectedCafe } from 'actions/collectActions';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
 
 export default function CollectedDetailPage({ params }: PageProps) {
   const { id } = params;
-  const userId = useUserStore((state: UserStore) => state.userId);
+  const userId = useUserStore(state => state.userId);
   const setCollectedCafeDetail = useMapStore(
-    (state: MapStore) => state.setCollectedCafeDetail,
+    state => state.setCollectedCafeDetail,
   );
 
   useEffect(() => {

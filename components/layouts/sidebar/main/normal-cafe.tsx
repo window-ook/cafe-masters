@@ -1,5 +1,4 @@
 import { useCheckStore } from 'utils/store';
-import { CheckStore } from 'types/store';
 import { getNormalCardStyle } from 'utils/styles';
 import Image from 'next/image';
 
@@ -16,7 +15,7 @@ export default function NormalCafe({
   phoneNum,
   onClick,
 }: NormalCafeProps) {
-  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
   return (
     <div onClick={onClick} className={getNormalCardStyle(isDarkTheme)}>

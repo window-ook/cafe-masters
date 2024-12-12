@@ -3,17 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMapStore, useCheckStore } from 'utils/store';
-import { CheckStore, MapStore } from 'types/store';
 import { SearchButtonStyle, getSearchInputStyle } from 'utils/styles';
 
 export default function Search() {
   const router = useRouter();
-  const keyword = useMapStore((state: MapStore) => state.keyword);
-  const setKeyword = useMapStore((state: MapStore) => state.setKeyword);
-  const setIsSubSidebarOpen = useCheckStore(
-    (state: CheckStore) => state.setIsSubSidebarOpen,
-  );
-  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
+  const keyword = useMapStore(state => state.keyword);
+  const setKeyword = useMapStore(state => state.setKeyword);
+  const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
   const [localKeyword, setLocalKeyword] = useState(keyword);
 

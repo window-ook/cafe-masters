@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { useUploadCollectMutation } from 'hooks/useUploadCollectMutation';
 import { useUpdateCollectMutation } from 'hooks/useUpdateCollectMutation';
-import { CheckStore, MapStore, UserStore } from 'types/store';
 import { getSubSidebarStyle } from 'utils/styles';
 import { CollectedRowInsert, CollectedRowUpdate } from 'actions/collectActions';
 import Memo from './memo';
@@ -21,30 +20,26 @@ export default function SubSidebar() {
   const [concept, setConcept] = useState('');
   const [rating, setRating] = useState(5);
 
-  const userId = useUserStore((state: UserStore) => state.userId);
+  const userId = useUserStore(state => state.userId);
 
-  const cafeDetail = useMapStore((state: MapStore) => state.cafeDetail);
+  const cafeDetail = useMapStore(state => state.cafeDetail);
   const collectedCafeDetail = useMapStore(
-    (state: MapStore) => state.collectedCafeDetail[0],
+    state => state.collectedCafeDetail[0],
   );
   const bookmarkedCafeDetail = useMapStore(
-    (state: MapStore) => state.bookmarkedCafeDetail[0],
+    state => state.bookmarkedCafeDetail[0],
   );
 
-  const thisX = useMapStore((state: MapStore) => state.thisX);
-  const thisY = useMapStore((state: MapStore) => state.thisY);
+  const thisX = useMapStore(state => state.thisX);
+  const thisY = useMapStore(state => state.thisY);
 
-  const isSubSidebarOpen = useCheckStore(
-    (state: CheckStore) => state.isSubSidebarOpen,
-  );
+  const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
 
-  const isMenuOpen = useCheckStore((state: CheckStore) => state.isMenuOpen);
-  const setIsMenuOpen = useCheckStore(
-    (state: CheckStore) => state.setIsMenuOpen,
-  );
-  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
-  const setIsExtend = useCheckStore((state: CheckStore) => state.setIsExtend);
-  const isExtend = useCheckStore((state: CheckStore) => state.isExtend);
+  const isMenuOpen = useCheckStore(state => state.isMenuOpen);
+  const setIsMenuOpen = useCheckStore(state => state.setIsMenuOpen);
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const setIsExtend = useCheckStore(state => state.setIsExtend);
+  const isExtend = useCheckStore(state => state.isExtend);
 
   const pathname = usePathname();
 

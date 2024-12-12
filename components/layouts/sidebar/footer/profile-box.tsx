@@ -2,20 +2,17 @@
 
 import { useEffect } from 'react';
 import { useMapStore, useUserStore } from 'utils/store';
-import { MapStore, UserStore } from 'types/store';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import TierBadge from './tier-badge';
 import Image from 'next/image';
 
 export default function ProfileBox() {
-  const collectedCafeCount = useMapStore(
-    (state: MapStore) => state.collectedCafeCount,
-  );
-  const userEmail = useUserStore((state: UserStore) => state.userEmail);
-  const userTier = useUserStore((state: UserStore) => state.userTier);
-  const setUserTier = useUserStore((state: UserStore) => state.setUserTier);
-  const setUserEmail = useUserStore((state: UserStore) => state.setUserEmail);
-  const setUserId = useUserStore((state: UserStore) => state.setUserId);
+  const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
+  const userEmail = useUserStore(state => state.userEmail);
+  const userTier = useUserStore(state => state.userTier);
+  const setUserTier = useUserStore(state => state.setUserTier);
+  const setUserEmail = useUserStore(state => state.setUserEmail);
+  const setUserId = useUserStore(state => state.setUserId);
 
   const supabase = createBrowserSupabaseClient();
 

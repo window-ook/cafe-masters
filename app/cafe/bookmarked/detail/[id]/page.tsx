@@ -2,19 +2,16 @@
 
 import { useEffect } from 'react';
 import { useMapStore, useCheckStore, useUserStore } from 'utils/store';
-import { CheckStore, MapStore, UserStore } from 'types/store';
 import { getBookmarkedCafe } from 'actions/bookmarkActions';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
 
 export default function BookmarkedDetailpage({ params }: PageProps) {
   const { id } = params;
-  const userId = useUserStore((state: UserStore) => state.userId);
-  const setIsBookmarked = useCheckStore(
-    (state: CheckStore) => state.setIsBookmarked,
-  );
+  const userId = useUserStore(state => state.userId);
+  const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
   const setBookmarkedCafeDetail = useMapStore(
-    (state: MapStore) => state.setBookmarkedCafeDetail,
+    state => state.setBookmarkedCafeDetail,
   );
 
   useEffect(() => {

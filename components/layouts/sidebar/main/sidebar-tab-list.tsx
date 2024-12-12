@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckStore } from 'utils/store';
-import { CheckStore } from 'types/store';
 import { getSidebarTabTextStyle } from 'utils/styles';
 
 interface SidebarTabProps {
@@ -21,7 +20,7 @@ function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
 }
 
 export default function SidebarTabList() {
-  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const router = useRouter();
   const iconStyle = 'fa-solid text-3xl';
 

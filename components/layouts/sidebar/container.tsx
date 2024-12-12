@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMapStore, useCheckStore } from 'utils/store';
-import { CheckStore, MapStore } from 'types/store';
 import {
   AllCafe,
   BookmarkedCafeFromSupabase,
@@ -35,26 +34,18 @@ export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
-  const isSubSidebarOpen = useCheckStore(
-    (state: CheckStore) => state.isSubSidebarOpen,
-  );
-  const setIsSubSidebarOpen = useCheckStore(
-    (state: CheckStore) => state.setIsSubSidebarOpen,
-  );
-  const setIsMenuOpen = useCheckStore(
-    (state: CheckStore) => state.setIsMenuOpen,
-  );
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
+  const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
+  const setIsMenuOpen = useCheckStore(state => state.setIsMenuOpen);
 
-  const allCafe = useMapStore((state: MapStore) => state.allCafe);
-  const collectedCafe = useMapStore((state: MapStore) => state.collectedCafe);
-  const collectedCount = useMapStore(
-    (state: MapStore) => state.collectedCafeCount,
-  );
-  const bookmarkedCafe = useMapStore((state: MapStore) => state.bookmarkedCafe);
+  const allCafe = useMapStore(state => state.allCafe);
+  const collectedCafe = useMapStore(state => state.collectedCafe);
+  const collectedCount = useMapStore(state => state.collectedCafeCount);
+  const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
 
-  const setThisX = useMapStore((state: MapStore) => state.setThisX);
-  const setThisY = useMapStore((state: MapStore) => state.setThisY);
+  const setThisX = useMapStore(state => state.setThisX);
+  const setThisY = useMapStore(state => state.setThisY);
 
   const itemsPerPage = 15;
   const totalPages = Math.ceil(allCafe.length / itemsPerPage);

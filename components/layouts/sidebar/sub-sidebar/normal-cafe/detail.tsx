@@ -2,7 +2,6 @@ import { useRouter } from 'next/navigation';
 import { useUploadBookmarkMutation } from 'hooks/useUploadBookmarkMutation';
 import { useCancelBookmarkMutation } from 'hooks/useCancelBookmarkMutation';
 import { useCheckStore } from 'utils/store';
-import { CheckStore } from 'types/store';
 import { NormalCafeDetailForUpload } from 'types/common';
 import {
   getDetailBodyStyle,
@@ -30,12 +29,10 @@ export default function NormalCafeDetail({
   handleMenuOpen,
   setMemoOpen,
 }: NormalCafeDetailProps) {
-  const isDarkTheme = useCheckStore((state: CheckStore) => state.isDarkTheme);
-  const isCollected = useCheckStore((state: CheckStore) => state.isCollected);
-  const isBookmarked = useCheckStore((state: CheckStore) => state.isBookmarked);
-  const setIsSubSidebarOpen = useCheckStore(
-    (state: CheckStore) => state.setIsSubSidebarOpen,
-  );
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const isCollected = useCheckStore(state => state.isCollected);
+  const isBookmarked = useCheckStore(state => state.isBookmarked);
+  const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
 
   const router = useRouter();
 
