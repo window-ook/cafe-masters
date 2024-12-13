@@ -10,13 +10,13 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
+        protocol: 'https',
         hostname: 't1.kakaocdn.net',
         port: '',
         pathname: '/**',
       },
       {
-        protocol: 'http',
+        protocol: 'https',
         hostname: 't1.daumcdn.net',
         port: '',
         pathname: '/**',
