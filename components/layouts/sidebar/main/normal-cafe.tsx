@@ -27,7 +27,7 @@ export default function NormalCafe({
       <div className="flex justify-center">
         <Image
           src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/search_thumbnail.webp"
-          alt="카페 썸네일 이미지"
+          alt="카페 썸네일"
           width={100}
           height={50}
           priority={true}
