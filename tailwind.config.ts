@@ -66,7 +66,6 @@ const config: Config = {
 
       fontFamily: {
         dpixel: ['DungGeunMo'],
-        paperexbold: ['Paperlogy-8ExtraBold'],
       },
 
       fontSize: {

@@ -2,17 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 배경 - 틸트 */
-@layer utilities {
-  .bg-tilted-image {
-    background-image: url('https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp'); /* 이미지 경로 */
-    background-size: 18.75rem 18.75rem; /* 이미지 크기 */
-    background-repeat: repeat;
-    transform-origin: center;
-  }
-}
-
-/* 배경 - bottom to top */
+/* 배경 */
 @-webkit-keyframes animatetop {
   from {
     top: -18.75rem;
@@ -180,11 +170,4 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Paperlogy-8ExtraBold';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2')
-    format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
+

@@ -58,7 +58,7 @@ export const getDetailBodyStyle = (isDarkTheme: boolean) => {
 };
 
 export const DetailCollectButtonStyle =
-  'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-paperexbold';
+  'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-dpixel';
 
 export const getNormalCardStyle = (isDarkTheme: boolean) => {
   return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-50 p-4 border-4 rounded-2xl shadow-md flex flex-col gap-2 cursor-pointer font-dpixel hover:scale-105 transition duration-300 ease`;
