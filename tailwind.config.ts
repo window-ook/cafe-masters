@@ -65,7 +65,8 @@ const config: Config = {
       },
 
       fontFamily: {
-        dpixel: ['DungGeunMo'],
+        // dpixel: ['DungGeunMo'],
+        dpixel: ['var(--font-dpixel)', 'sans-serif'],
       },
 
       fontSize: {

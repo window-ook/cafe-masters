@@ -11,6 +11,14 @@ import dynamic from 'next/dynamic';
 import Auth from 'components/auth/shared';
 import MainLayout from 'components/layouts/main-layout';
 import KakaoMap from 'components/layouts/kakaomap';
+import localFont from 'next/font/local';
+
+const dungGeunMo = localFont({
+  src: './fonts/DungGeunMo.woff',
+  display: 'swap',
+  style: 'normal',
+  variable: '--font-dpixel',
+});
 
 const ReactQueryDevtools = dynamic(
   () =>
@@ -60,7 +68,7 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="en">
+    <html lang="en" className={dungGeunMo.className}>
       <body>
         <ReactQueryClientProvider>
           <AuthProvider accessToken={session?.access_token ?? 'no-user'}>
