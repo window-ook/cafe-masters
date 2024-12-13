@@ -1,17 +1,13 @@
 import { createServerSupabaseClient } from 'utils/supabase/server';
 import { AuthViewProvider } from 'config/auth-view-provider';
-import { ToastContainer } from 'react-toastify';
 import { Metadata } from 'next';
+import './globals.css';
+import React from 'react';
+import localFont from 'next/font/local';
 import ReactQueryClientProvider from 'config/react-query-client-provider';
 import AuthProvider from 'config/auth-provider';
-import './globals.css';
-import 'react-toastify/dist/ReactToastify.css';
-import React from 'react';
-import dynamic from 'next/dynamic';
-import Auth from 'components/auth/shared';
 import MainLayout from 'components/layouts/main-layout';
-import KakaoMap from 'components/layouts/kakaomap';
-import localFont from 'next/font/local';
+import Auth from 'components/auth/shared';
 
 const dungGeunMo = localFont({
   src: './fonts/DungGeunMo.woff',
@@ -19,14 +15,6 @@ const dungGeunMo = localFont({
   style: 'normal',
   variable: '--font-dpixel',
 });
-
-const ReactQueryDevtools = dynamic(
-  () =>
-    import('@tanstack/react-query-devtools').then(
-      mod => mod.ReactQueryDevtools,
-    ),
-  { ssr: false },
-);
 
 export const metadata: Metadata = {
   title: 'Cafe Masters',
@@ -61,7 +49,6 @@ export default async function RootLayout({
 }>) {
   const supabase = await createServerSupabaseClient();
 
-  const isDev = process.env.NEXT_THIS_ENV === 'develope';
   const isTesting = process.env.NEXT_IS_TESTING === 'test';
 
   const {
@@ -76,19 +63,7 @@ export default async function RootLayout({
             accessToken={session?.access_token ?? 'no-access-token'}
           >
             {session?.user || isTesting ? (
-              <MainLayout>
-                {children}
-                <KakaoMap />
-                <ToastContainer
-                  position="top-center"
-                  autoClose={2000}
-                  newestOnTop={false}
-                  draggable
-                  theme="light"
-                  limit={1}
-                />
-                {isDev && <ReactQueryDevtools initialIsOpen={false} />}
-              </MainLayout>
+              <MainLayout>{children}</MainLayout>
             ) : (
               <AuthViewProvider>
                 <Auth />

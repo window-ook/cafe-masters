@@ -43,6 +43,7 @@ export default function KakaoMap() {
     const script = document.createElement('script');
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false`;
     script.async = true;
+    script.defer = true;
     document.head.appendChild(script);
 
     script.onload = () => {
@@ -53,7 +54,7 @@ export default function KakaoMap() {
             37.54715716085294,
             127.04663357436208,
           ),
-          level: 5,
+          level: 7,
         };
         const zoomControl = new window.kakao.maps.ZoomControl();
 
@@ -246,5 +247,5 @@ export default function KakaoMap() {
     collectedCafe,
   ]);
 
-  return <div id="map" className={KakaoMapStyle} />;
+  return <div id="map" className={KakaoMapStyle}></div>;
 }

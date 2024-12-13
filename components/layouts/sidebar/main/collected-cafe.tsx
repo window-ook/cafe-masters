@@ -68,8 +68,8 @@ export default function CollectedCafe({
         </div>
         <div className="flex justify-center rounded-xl">
           <Image
-            src={photoUrl ?? ''}
-            alt="카페 썸네일 이미지"
+            src={photoUrl ?? '/image/cafe_thumbnail.webp'}
+            alt="카페 썸네일"
             width={100}
             height={50}
             className="w-auto h-auto"
