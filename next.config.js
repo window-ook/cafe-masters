@@ -3,14 +3,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
-const CompressionPlugin = require('compression-webpack-plugin');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: config => {
-    config.plugins.push(new CompressionPlugin());
-    return config;
-  },
+  webpack: config => config,
+
   images: {
     remotePatterns: [
       {
