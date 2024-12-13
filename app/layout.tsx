@@ -62,6 +62,7 @@ export default async function RootLayout({
   const supabase = await createServerSupabaseClient();
 
   const isDev = process.env.NEXT_THIS_ENV === 'develope';
+  const isTesting = process.env.NEXT_IS_TESTING === 'test';
 
   const {
     data: { session },
@@ -71,8 +72,10 @@ export default async function RootLayout({
     <html lang="en" className={dungGeunMo.className}>
       <body>
         <ReactQueryClientProvider>
-          <AuthProvider accessToken={session?.access_token ?? 'no-user'}>
-            {session?.user ? (
+          <AuthProvider
+            accessToken={session?.access_token ?? 'no-access-token'}
+          >
+            {session?.user || isTesting ? (
               <MainLayout>
                 {children}
                 <KakaoMap />
