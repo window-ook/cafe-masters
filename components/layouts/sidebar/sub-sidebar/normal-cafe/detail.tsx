@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useUploadBookmarkMutation } from 'hooks/useUploadBookmarkMutation';
 import { useCancelBookmarkMutation } from 'hooks/useCancelBookmarkMutation';
 import { useCheckStore } from 'utils/store';
@@ -38,6 +38,8 @@ export default function NormalCafeDetail({
 
   const router = useRouter();
 
+  const pathname = usePathname();
+
   const parsedMenu =
     !Array.isArray(detail?.menu) && detail?.menu
       ? JSON.parse(detail?.menu)
@@ -54,7 +56,9 @@ export default function NormalCafeDetail({
 
   const handleSetIsSubSidebarOpen = () => {
     setIsSubSidebarOpen(false);
-    router.back();
+    if (pathname.startsWith('/cafe/all')) router.push('/cafe/all');
+    if (pathname.startsWith('/cafe/bookmarked'))
+      router.push('/cafe/bookmarked');
   };
 
   return (
