@@ -8,13 +8,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 export default function Search() {
-  const router = useRouter();
   const keyword = useMapStore(state => state.keyword);
   const setKeyword = useMapStore(state => state.setKeyword);
   const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
   const [localKeyword, setLocalKeyword] = useState(keyword);
+
+  const router = useRouter();
 
   const handleSearch = () => {
     setKeyword(localKeyword);

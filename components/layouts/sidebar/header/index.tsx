@@ -13,9 +13,7 @@ export default function Header() {
 
   const router = useRouter();
 
-  const handleRoute = () => {
-    router.push('/');
-  };
+  const handleRoute = () => router.push('/');
 
   return (
     <div

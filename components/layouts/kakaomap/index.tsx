@@ -112,7 +112,7 @@ export default function KakaoMap() {
 
         const createInfoWindows = () => {
           infowindow.setContent(
-            `<div style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${item.place_name || item.name}</div>`,
+            `<div aria-label='kakao map marker' style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${item.place_name || item.name}</div>`,
           );
           infowindow.open(map, marker);
 
@@ -247,5 +247,5 @@ export default function KakaoMap() {
     collectedCafe,
   ]);
 
-  return <div id="map" className={KakaoMapStyle}></div>;
+  return <div aria-label="kakao map" id="map" className={KakaoMapStyle}></div>;
 }
