@@ -13,9 +13,9 @@ export function useResetPasswordMutation() {
       return '이메일의 보관함을 확인해주세요.';
     },
 
-    onError: (error: Error) => {
+    onError: error => {
       console.error(error, error.message);
-      alert('재요청은 60초가 지나야 가능합니다.');
+      alert('재요청은 이전 요청 60초 후 가능합니다.');
     },
   });
 }

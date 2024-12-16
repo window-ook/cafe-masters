@@ -50,6 +50,7 @@ export default function Signup() {
     if (confirmationRequired) {
       verifyOtpMutation.mutate({ email, otp });
       setConfirmationRequired(true);
+      alert('회원가입이 완료되었습니다');
     } else handleSignup();
   };
 

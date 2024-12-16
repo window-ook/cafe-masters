@@ -22,6 +22,8 @@ export default function ResetpasswordPage() {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     finishResetMutation.mutate(newPassword);
+    alert('비밀번호를 재설정했습니다!');
+    router.push('/resetpassword/complete');
   };
 
   const handleCancel = async (e: React.MouseEvent<HTMLButtonElement>) => {

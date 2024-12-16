@@ -20,7 +20,6 @@ export default function SubSidebar() {
   const [eaten, setEaten] = useState('');
   const [concept, setConcept] = useState('');
   const [rating, setRating] = useState(5);
-  const [currentName, setCurrentName] = useState('');
 
   const cafeDetail = useMapStore(state => state.cafeDetail);
   const collectedCafeDetail = useMapStore(
@@ -94,17 +93,16 @@ export default function SubSidebar() {
       setConcept(collectedCafeDetail.concept || '');
       setRating(collectedCafeDetail.rating || 5);
     }
+
+    if (!pathname.startsWith('/cafe/collected')) {
+      setComment('');
+      setPros('');
+      setCons('');
+      setEaten('');
+      setConcept('');
+      setRating(5);
+    }
   }, [pathname, collectedCafeDetail]);
-
-  useEffect(() => {
-    setCurrentName(
-      detail?.name || collectedCafeDetail?.name || bookmarkedCafeDetail?.name,
-    );
-  }, [detail?.name, collectedCafeDetail?.name, bookmarkedCafeDetail?.name]);
-
-  useEffect(() => {
-    setMemoOpen(false);
-  }, [currentName]);
 
   const memoFromDetail = {
     id: detail?.id,
@@ -171,6 +169,11 @@ export default function SubSidebar() {
 
   const handleUpdateCollect = (memo: CollectedRowUpdate) => {
     setMemoOpen(false);
+    setComment('');
+    setPros('');
+    setCons('');
+    setEaten('');
+    setConcept('');
     updateCollectMutation.mutate(memo);
     toast.success('카드의 스펙을 수정했습니다!');
     router.refresh();

@@ -20,7 +20,7 @@ export function useSigninMutation() {
       if (error) throw new Error(error.message);
     },
 
-    onError: (error: Error) => {
+    onError: error => {
       if (error.message) alert('이메일 또는 비밀번호를 잘못 입력했습니다.');
       else alert('알 수 없는 에러가 발생했습니다.');
     },

@@ -23,6 +23,6 @@ export function useSignupMutation() {
       if (error) throw new Error(error.message);
     },
 
-    onError: (error: Error) => console.error(error),
+    onError: error => console.error(error),
   });
 }
