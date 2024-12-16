@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Sidebar from 'components/layouts/sidebar/container';
 
@@ -27,14 +27,6 @@ interface MainLayout {
 
 export default function MainLayout({ children }: MainLayout) {
   const isDev = process.env.NEXT_PUBLIC_THIS_ENV === 'develope';
-
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(registration => {
-        console.log('Service Worker registered:', registration);
-      });
-    }
-  }, []);
 
   return (
     <main className="flex">
