@@ -87,7 +87,7 @@ export default function NormalCafeDetail({
               onClick={handleUploadBookmark}
             >
               <BookmarkIcon
-                className={`hover:scale-110 ${isDarkTheme ? 'text-white' : ''}`}
+                className={`hover:scale-105 ${isDarkTheme ? 'text-white' : ''}`}
               />
             </button>
           )}

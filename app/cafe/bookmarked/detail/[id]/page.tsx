@@ -1,37 +1,30 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useMapStore, useCheckStore, useUserStore } from 'utils/store';
-import { getBookmarkedCafe } from 'actions/bookmarkActions';
+import { useMapStore, useCheckStore } from 'utils/store';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
 
 export default function BookmarkedDetailpage({ params }: PageProps) {
   const { id } = params;
-  const userId = useUserStore(state => state.userId);
-  const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
+
+  const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
   const setBookmarkedCafeDetail = useMapStore(
     state => state.setBookmarkedCafeDetail,
   );
 
+  const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
+
   useEffect(() => {
-    if (!userId || userId === 'no-user') return;
+    const numericId = parseFloat(id);
 
-    const fetchBookmarkedCafe = async () => {
-      try {
-        const numericId = parseFloat(id);
-        const response = await getBookmarkedCafe(numericId, userId);
-        if (response?.length) {
-          setIsBookmarked(true);
-          setBookmarkedCafeDetail(response);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    const foundCafe = bookmarkedCafe.find(cafe => cafe.id === numericId);
 
-    fetchBookmarkedCafe();
-  }, [id, userId, setBookmarkedCafeDetail, setIsBookmarked]);
+    if (foundCafe) {
+      setIsBookmarked(true);
+      setBookmarkedCafeDetail([foundCafe]);
+    }
+  }, [bookmarkedCafe, id, setBookmarkedCafeDetail, setIsBookmarked]);
 
   return (
     <Head>

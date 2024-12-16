@@ -1,40 +1,29 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
 import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
-import { BookmarkedCafeFromSupabase } from 'types/common';
 import Head from 'next/head';
 
 export default function BookmarkedPage() {
   const userId = useUserStore(state => state.userId);
   const setBookmarkedCafe = useMapStore(state => state.setBookmarkedCafe);
 
-  const queryFn = async () => {
-    const response = await getAllBookmarkedCafes(userId);
-    setBookmarkedCafe(response);
-    return response;
-  };
-
-  const options = {
+  const bookmarkedCafe = useQuery({
     queryKey: ['bookmarkedCafe', userId],
-    queryFn,
+    queryFn: async () => {
+      const response = await getAllBookmarkedCafes(userId);
+      return response;
+    },
     enabled: !!userId && userId !== 'no-user',
     staleTime: 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 10,
-    onSuccess: (data: BookmarkedCafeFromSupabase[]) =>
-      console.log('북마크 카페: ', data),
-    onError: (error: Error) =>
-      console.error('북마크 카페 데이터 다운로드 에러: ', error),
-  };
+    gcTime: 1000 * 60 * 10,
+  });
 
-  const bookmarkedCafe = useQuery<
-    BookmarkedCafeFromSupabase[],
-    Error,
-    [string, string]
-  >(options);
-
-  if (bookmarkedCafe) console.log('가고 싶은 카페 확인');
+  useEffect(() => {
+    if (bookmarkedCafe.isSuccess) setBookmarkedCafe(bookmarkedCafe.data);
+  }, [bookmarkedCafe.data, bookmarkedCafe.isSuccess, setBookmarkedCafe]);
 
   return (
     <Head>

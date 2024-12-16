@@ -38,16 +38,16 @@ export async function getAllCollectedCafes(
 export async function getCollectedCafe(
   id: number,
   userId: string,
-): Promise<CollectedCafeFromSupabase[]> {
+): Promise<{ id: number; userId: string }[]> {
   if (!id || id === 0) throw new Error('유효하지 않은 카페 ID');
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from('collected')
-    .select('*')
-    .eq('userId', userId)
-    .eq('id', id);
+    .select('id, userId')
+    .eq('id', id)
+    .eq('userId', userId);
 
   if (error) handleError(error);
   return data ?? [];

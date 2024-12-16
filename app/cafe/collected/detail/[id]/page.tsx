@@ -1,33 +1,25 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useMapStore, useUserStore } from 'utils/store';
-import { getCollectedCafe } from 'actions/collectActions';
+import { useMapStore } from 'utils/store';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
 
 export default function CollectedDetailPage({ params }: PageProps) {
   const { id } = params;
-  const userId = useUserStore(state => state.userId);
+
+  const collectedCafe = useMapStore(state => state.collectedCafe);
   const setCollectedCafeDetail = useMapStore(
     state => state.setCollectedCafeDetail,
   );
 
   useEffect(() => {
-    if (!userId || userId === 'no-user') return;
+    const numericId = parseFloat(id);
 
-    const fetchCollectedCafeDetail = async () => {
-      try {
-        const numericId = parseFloat(id);
-        const response = await getCollectedCafe(numericId, userId);
-        if (response?.length) setCollectedCafeDetail(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    const foundCafe = collectedCafe.find(cafe => cafe.id === numericId);
 
-    if (userId) fetchCollectedCafeDetail();
-  }, [id, userId, setCollectedCafeDetail]);
+    if (foundCafe) setCollectedCafeDetail([foundCafe]);
+  }, [id, collectedCafe, setCollectedCafeDetail]);
 
   return (
     <Head>
