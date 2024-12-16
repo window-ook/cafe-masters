@@ -14,6 +14,7 @@ import CollectedCafeDetail from './collected-cafe/detail';
 
 export default function SubSidebar() {
   const [memoOpen, setMemoOpen] = useState(false);
+  const [id, setId] = useState<string | undefined>('');
   const [comment, setComment] = useState('');
   const [pros, setPros] = useState('');
   const [cons, setCons] = useState('');
@@ -103,6 +104,31 @@ export default function SubSidebar() {
       setRating(5);
     }
   }, [pathname, collectedCafeDetail]);
+
+  useEffect(() => {
+    // 새로운 id 값 설정
+    const newId =
+      pathname.startsWith('/cafe/all') && detail?.id
+        ? detail?.id
+        : pathname.startsWith('/cafe/collected') && collectedCafeDetail?.id
+          ? collectedCafeDetail?.id
+          : pathname.startsWith('/cafe/bookmarked') && bookmarkedCafeDetail?.id
+            ? bookmarkedCafeDetail?.id
+            : null;
+
+    const strId = newId?.toString();
+
+    if (strId !== id) {
+      setId(strId); // id 업데이트
+      setMemoOpen(false); // id 변경 시 memoOpen 닫기
+    }
+  }, [
+    pathname,
+    detail?.id,
+    collectedCafeDetail?.id,
+    bookmarkedCafeDetail?.id,
+    id,
+  ]);
 
   const memoFromDetail = {
     id: detail?.id,
