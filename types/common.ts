@@ -117,6 +117,11 @@ export interface MemoProps {
   detail: NormalCafeDetailForUpload;
   collectedCafeDetail: CollectedCafeDetailForUpload;
   bookmarkedCafeDetail: NormalCafeDetailForUpload;
+  comment: string;
+  pros: string;
+  cons: string;
+  eaten: string;
+  concept: string;
   setComment: (comment: string) => void;
   setPros: (pros: string) => void;
   setCons: (cons: string) => void;

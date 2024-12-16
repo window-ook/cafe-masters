@@ -13,6 +13,11 @@ export default function Memo({
   detail,
   collectedCafeDetail,
   bookmarkedCafeDetail,
+  comment,
+  pros,
+  cons,
+  eaten,
+  concept,
   setComment,
   setPros,
   setCons,
@@ -44,28 +49,33 @@ export default function Memo({
       </div>
       <input
         required
+        value={comment}
         placeholder="내 코멘트(필수)"
         onChange={e => setComment(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
+        value={pros}
         placeholder="좋은 점"
         onChange={e => setPros(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
         placeholder="별로인 점"
+        value={cons}
         onChange={e => setCons(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
         required
+        value={eaten}
         placeholder="먹어본 메뉴(필수)"
         onChange={e => setEaten(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
         placeholder="카페의 컨셉"
+        value={concept}
         onChange={e => setConcept(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />

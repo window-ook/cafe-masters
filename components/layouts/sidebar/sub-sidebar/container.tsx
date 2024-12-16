@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { useUploadCollectMutation } from 'hooks/useUploadCollectMutation';
 import { useUpdateCollectMutation } from 'hooks/useUpdateCollectMutation';
 import { getSubSidebarStyle } from 'utils/styles';
 import { CollectedRowInsert, CollectedRowUpdate } from 'actions/collectActions';
+import { toast } from 'react-toastify';
 import Memo from './memo';
 import NormalCafeDetail from './normal-cafe/detail';
 import CollectedCafeDetail from './collected-cafe/detail';
@@ -41,6 +42,7 @@ export default function SubSidebar() {
   const isExtend = useCheckStore(state => state.isExtend);
 
   const pathname = usePathname();
+  const router = useRouter();
 
   const detail = {
     id: cafeDetail?.basicInfo?.cid ?? 0,
@@ -82,6 +84,17 @@ export default function SubSidebar() {
     coordX: thisX,
     coordY: thisY,
   };
+
+  useEffect(() => {
+    if (pathname.startsWith('/cafe/collected') && collectedCafeDetail) {
+      setComment(collectedCafeDetail.comment || '');
+      setPros(collectedCafeDetail.pros || '');
+      setCons(collectedCafeDetail.cons || '');
+      setEaten(collectedCafeDetail.eaten || '');
+      setConcept(collectedCafeDetail.concept || '');
+      setRating(collectedCafeDetail.rating || 5);
+    }
+  }, [pathname, collectedCafeDetail]);
 
   useEffect(() => {
     setCurrentName(
@@ -144,34 +157,31 @@ export default function SubSidebar() {
 
   const updateCollectMutation = useUpdateCollectMutation();
 
-  const handleUploadCollect = (newMemo: CollectedRowInsert) => {
-    setMemoOpen(false);
-    uploadCollectMutation.mutate(newMemo);
-  };
-
-  const handleUpdateCollect = (memo: CollectedRowUpdate) => {
-    setMemoOpen(false);
-    updateCollectMutation.mutate(memo);
-  };
-
   const handleMenuOpen = () => {
     if (isMenuOpen === false) setIsMenuOpen(true);
     else setIsMenuOpen(false);
   };
 
-  if ((pathname.startsWith('/cafe/all/detail') && !cafeDetail) || !userId)
+  const handleUploadCollect = (newMemo: CollectedRowInsert) => {
+    setMemoOpen(false);
+    uploadCollectMutation.mutate(newMemo);
+    toast.success('카드를 수집했습니다!');
+    router.refresh();
+  };
+
+  const handleUpdateCollect = (memo: CollectedRowUpdate) => {
+    setMemoOpen(false);
+    updateCollectMutation.mutate(memo);
+    toast.success('카드의 스펙을 수정했습니다!');
+    router.refresh();
+  };
+
+  if (pathname.startsWith('/cafe/all/detail') && !cafeDetail) return null;
+
+  if (pathname.startsWith('/cafe/collected/detail') && !collectedCafeDetail)
     return null;
 
-  if (
-    (pathname.startsWith('/cafe/collected/detail') && !collectedCafeDetail) ||
-    !userId
-  )
-    return null;
-
-  if (
-    (pathname.startsWith('/cafe/bookmarked/detail') && !bookmarkedCafeDetail) ||
-    !userId
-  )
+  if (pathname.startsWith('/cafe/bookmarked/detail') && !bookmarkedCafeDetail)
     return null;
 
   return (
@@ -229,6 +239,11 @@ export default function SubSidebar() {
             detail={detail}
             collectedCafeDetail={collectedCafeDetail}
             bookmarkedCafeDetail={bookmarkedCafeDetail}
+            comment={comment}
+            pros={pros}
+            cons={cons}
+            eaten={eaten}
+            concept={concept}
             setComment={setComment}
             setPros={setPros}
             setCons={setCons}

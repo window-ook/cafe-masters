@@ -1,18 +1,14 @@
-import { useRouter } from 'next/navigation';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
 import {
   CollectedRowUpdate,
   updateCollectedCafe,
 } from 'actions/collectActions';
-import { toast } from 'react-toastify';
 
 export function useUpdateCollectMutation() {
   const userId = useUserStore(state => state.userId);
 
   const queryClient = useQueryClient();
-
-  const router = useRouter();
 
   const collectedCafeDetail = useMapStore(
     state => state.collectedCafeDetail[0],
@@ -24,8 +20,6 @@ export function useUpdateCollectMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
-      toast.success('카드의 스펙을 수정했습니다!');
-      router.refresh();
     },
     onError: error => console.error(error),
   });
