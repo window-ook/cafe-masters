@@ -13,7 +13,7 @@ export default function Auth() {
     <main className="area h-screen w-screen flex justify-center items-center">
       <AuthBackgroundCards />
       <div className="flex flex-col items-center gap-4">
-        <LogoImage size={140} />
+        <LogoImage size={100} />
         {view === 'SIGNUP' ? <Signup /> : <Signin />}
       </div>
     </main>
