@@ -66,6 +66,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
             className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
             width={160}
             height={30}
+            priority={true}
             onClick={() =>
               window.open(
                 `http://place.map.kakao.com/${collectedCafeDetail?.id}`,

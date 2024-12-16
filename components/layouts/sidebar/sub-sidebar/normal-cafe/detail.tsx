@@ -11,6 +11,7 @@ import {
 } from 'utils/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-cafe/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import Image from 'next/image';
@@ -49,9 +50,17 @@ export default function NormalCafeDetail({
 
   const cancelBookmarkMutation = useCancelBookmarkMutation();
 
+  const handleUploadBookmark = () => {
+    uploadBookmarkMutation.mutate(detail);
+    toast.success('가고 싶은 카페를 북마크했습니다!');
+    router.refresh();
+  };
+
   const handleCancelBookmark = () => {
     cancelBookmarkMutation.mutate();
     setIsSubSidebarOpen(false);
+    toast.success('가고 싶은 카페를 제거했습니다!');
+    router.push('/cafe/bookmarked');
   };
 
   const handleSetIsSubSidebarOpen = () => {
@@ -75,7 +84,7 @@ export default function NormalCafeDetail({
           ) : (
             <button
               aria-label="북마크 저장 버튼"
-              onClick={() => uploadBookmarkMutation.mutate(detail)}
+              onClick={handleUploadBookmark}
             >
               <BookmarkIcon
                 className={`hover:scale-110 ${isDarkTheme ? 'text-white' : ''}`}
