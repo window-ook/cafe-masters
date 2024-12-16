@@ -3,18 +3,10 @@ import { AuthViewProvider } from 'config/auth-view-provider';
 import { Metadata } from 'next';
 import './globals.css';
 import React from 'react';
-import localFont from 'next/font/local';
 import ReactQueryClientProvider from 'config/react-query-client-provider';
 import AuthProvider from 'config/auth-provider';
 import MainLayout from 'components/layouts/main-layout';
 import Auth from 'components/auth/shared';
-
-const dungGeunMo = localFont({
-  src: './fonts/DungGeunMo.woff',
-  display: 'swap',
-  style: 'normal',
-  variable: '--font-dpixel',
-});
 
 export const metadata: Metadata = {
   title: 'Cafe Masters',
@@ -56,7 +48,7 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="en" className={dungGeunMo.className}>
+    <html lang="en">
       <body>
         <ReactQueryClientProvider>
           <AuthProvider
