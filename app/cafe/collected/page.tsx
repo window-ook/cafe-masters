@@ -1,15 +1,12 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
 import {
-  countCollectedCafes,
   getAllCollectedCafes,
+  countCollectedCafes,
 } from 'actions/collectActions';
-import {
-  CollectedCafeFromSupabase,
-  CollectedCountFromSupabase,
-} from 'types/common';
 import Head from 'next/head';
 
 export default function CollectedPage() {
@@ -19,52 +16,58 @@ export default function CollectedPage() {
     state => state.setCollectedCafeCount,
   );
 
-  const dataFn = async () => {
-    const response = await getAllCollectedCafes(userId);
-    setCollectedCafe(response);
-    return response;
-  };
-
-  const countFn = async () => {
-    const response = await countCollectedCafes(userId);
-    setCollectedCafeCount(response?.count || 0);
-    return response;
-  };
-
-  const optionsData = {
+  const collectedCafeQuery = useQuery({
     queryKey: ['collectedCafe', userId],
-    queryFn: dataFn,
+    queryFn: async () => {
+      const response = await getAllCollectedCafes(userId);
+      return response;
+    },
     enabled: !!userId && userId !== 'no-user',
     staleTime: 1000 * 60 * 3,
-    cacheTime: 1000 * 60 * 5,
-    onSuccess: (data: CollectedCafeFromSupabase[]) =>
-      console.log('수집한 카드:', data),
-    onError: (error: Error) =>
-      console.error('수집한 카드 데이터 다운로드 에러: ', error),
-  };
+    gcTime: 1000 * 60 * 5,
+  });
 
-  const optionsCount = {
+  const collectedCafeCountQuery = useQuery({
     queryKey: ['collectedCafeCount', userId],
-    queryFn: countFn,
+    queryFn: async () => {
+      const response = await countCollectedCafes(userId);
+      return response?.count || 0;
+    },
     enabled: !!userId && userId !== 'no-user',
     staleTime: 1000 * 60 * 3,
-    cacheTime: 1000 * 60 * 5,
-    onSuccess: (data: CollectedCountFromSupabase) =>
-      console.log('수집한 카드 수:', data),
-    onError: (error: Error) =>
-      console.error('수집한 카드 수 데이터 다운로드 에러: ', error),
-  };
+    gcTime: 1000 * 60 * 5,
+  });
 
-  const collectedCafe = useQuery<CollectedCafeFromSupabase[], Error, string[]>(
-    optionsData,
-  );
-  const collectedCafeCount = useQuery<
-    CollectedCountFromSupabase,
-    Error,
-    string[]
-  >(optionsCount);
+  useEffect(() => {
+    if (collectedCafeQuery.isSuccess) setCollectedCafe(collectedCafeQuery.data);
+  }, [collectedCafeQuery.isSuccess, collectedCafeQuery.data, setCollectedCafe]);
 
-  if (collectedCafe && collectedCafeCount) console.log('수집한 카드 확인');
+  useEffect(() => {
+    if (collectedCafeCountQuery.isSuccess)
+      setCollectedCafeCount(collectedCafeCountQuery.data);
+  }, [
+    collectedCafeCountQuery.isSuccess,
+    collectedCafeCountQuery.data,
+    setCollectedCafeCount,
+  ]);
+
+  useEffect(() => {
+    if (collectedCafeQuery.isError) {
+      console.error(
+        '수집한 카드 데이터 다운로드 에러: ',
+        collectedCafeQuery.error,
+      );
+    }
+  }, [collectedCafeQuery.isError, collectedCafeQuery.error]);
+
+  useEffect(() => {
+    if (collectedCafeCountQuery.isError) {
+      console.error(
+        '수집한 카드 수 데이터 다운로드 에러: ',
+        collectedCafeCountQuery.error,
+      );
+    }
+  }, [collectedCafeCountQuery.isError, collectedCafeCountQuery.error]);
 
   return (
     <Head>
