@@ -38,8 +38,6 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
     router.push('/cafe/collected');
   };
 
-  // 서브 사이드바에서 넘겨준 set 함수들로 메모 인풋의 value로 설정하기
-
   return (
     <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>
@@ -63,7 +61,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
           <Image
-            src={collectedCafeDetail?.photoUrl ?? 'image/cafe_thumbnail.webp'}
+            src={collectedCafeDetail?.photoUrl ?? '/image/cafe_thumbnail.webp'}
             alt="카페 썸네일"
             className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
             width={160}

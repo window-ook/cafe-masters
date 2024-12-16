@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { useUploadCollectMutation } from 'hooks/useUploadCollectMutation';
@@ -19,8 +19,7 @@ export default function SubSidebar() {
   const [eaten, setEaten] = useState('');
   const [concept, setConcept] = useState('');
   const [rating, setRating] = useState(5);
-
-  const userId = useUserStore(state => state.userId);
+  const [currentName, setCurrentName] = useState('');
 
   const cafeDetail = useMapStore(state => state.cafeDetail);
   const collectedCafeDetail = useMapStore(
@@ -29,12 +28,12 @@ export default function SubSidebar() {
   const bookmarkedCafeDetail = useMapStore(
     state => state.bookmarkedCafeDetail[0],
   );
-
   const thisX = useMapStore(state => state.thisX);
   const thisY = useMapStore(state => state.thisY);
 
-  const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
+  const userId = useUserStore(state => state.userId);
 
+  const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
   const isMenuOpen = useCheckStore(state => state.isMenuOpen);
   const setIsMenuOpen = useCheckStore(state => state.setIsMenuOpen);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
@@ -83,6 +82,16 @@ export default function SubSidebar() {
     coordX: thisX,
     coordY: thisY,
   };
+
+  useEffect(() => {
+    setCurrentName(
+      detail?.name || collectedCafeDetail?.name || bookmarkedCafeDetail?.name,
+    );
+  }, [detail?.name, collectedCafeDetail?.name, bookmarkedCafeDetail?.name]);
+
+  useEffect(() => {
+    setMemoOpen(false);
+  }, [currentName]);
 
   const memoFromDetail = {
     id: detail?.id,

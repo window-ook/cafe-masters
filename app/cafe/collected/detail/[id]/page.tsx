@@ -24,7 +24,7 @@ export default function CollectedDetailPage({ params }: PageProps) {
       }
     };
 
-    fetchCollectedCafeDetail();
+    if (userId) fetchCollectedCafeDetail();
   }, [id, userId, setCollectedCafeDetail]);
 
   return (

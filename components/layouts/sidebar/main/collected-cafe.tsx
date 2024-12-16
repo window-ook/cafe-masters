@@ -70,6 +70,7 @@ export default function CollectedCafe({
           <Image
             src={photoUrl ?? '/image/cafe_thumbnail.webp'}
             alt="카페 썸네일"
+            priority={true}
             width={100}
             height={50}
             className="w-auto h-auto"
