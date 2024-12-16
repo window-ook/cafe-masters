@@ -14,6 +14,8 @@ export default function CollectedDetailPage({ params }: PageProps) {
   );
 
   useEffect(() => {
+    if (!userId || userId === 'no-user') return;
+
     const fetchCollectedCafeDetail = async () => {
       try {
         const numericId = parseFloat(id);
@@ -24,7 +26,7 @@ export default function CollectedDetailPage({ params }: PageProps) {
       }
     };
 
-    fetchCollectedCafeDetail();
+    if (userId) fetchCollectedCafeDetail();
   }, [id, userId, setCollectedCafeDetail]);
 
   return (

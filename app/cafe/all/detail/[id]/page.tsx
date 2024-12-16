@@ -16,41 +16,37 @@ export default function AllDetailPage({ params }: PageProps) {
   const setIsCollected = useCheckStore(state => state.setIsCollected);
 
   useEffect(() => {
+    if (!userId || userId === 'no-user') return;
+
     setIsBookmarked(false);
     setIsCollected(false);
 
-    const fetchCafeDetail = async () => {
-      try {
-        const response = await getCafeDetail(id);
-        setCafeDetail(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     const numericId = parseFloat(id);
 
-    const checkCollectedCafe = async () => {
+    const fetchAllData = async () => {
       try {
-        const response = await getCollectedCafe(numericId, userId);
-        if (response?.length) setIsCollected(true);
+        const [cafeDetailResponse, bookmarkedResponse, collectedResponse] =
+          await Promise.all([
+            getCafeDetail(id),
+            getBookmarkedCafe(numericId, userId),
+            getCollectedCafe(numericId, userId),
+          ]);
+
+        setCafeDetail(cafeDetailResponse);
+
+        if (bookmarkedResponse?.length) {
+          setIsBookmarked(true);
+        }
+
+        if (collectedResponse?.length) {
+          setIsCollected(true);
+        }
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching data:', error);
       }
     };
 
-    const checkBookmarkedCafe = async () => {
-      try {
-        const response = await getBookmarkedCafe(numericId, userId);
-        if (response?.length) setIsBookmarked(true);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchCafeDetail();
-    checkBookmarkedCafe();
-    checkCollectedCafe();
+    fetchAllData();
   }, [id, setCafeDetail, setIsBookmarked, setIsCollected, userId]);
 
   return (

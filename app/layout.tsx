@@ -57,14 +57,6 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={dungGeunMo.className}>
-      <head>
-        <link rel="preconnect" href="https://t1.kakaocdn.net" />
-        <link rel="dns-prefetch" href="https://t1.kakaocdn.net" />
-        <link rel="preconnect" href="https://t1.daumcdn.net" />
-        <link rel="dns-prefetch" href="https://t1.daumcdn.net" />
-        <link rel="preconnect" href="https://vercel.live" />
-        <link rel="dns-prefetch" href="https://vercel.live" />
-      </head>
       <body>
         <ReactQueryClientProvider>
           <AuthProvider

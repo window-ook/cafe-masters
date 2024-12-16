@@ -19,13 +19,13 @@ export default function CollectedPage() {
     state => state.setCollectedCafeCount,
   );
 
-  const queryFnData = async () => {
+  const dataFn = async () => {
     const response = await getAllCollectedCafes(userId);
     setCollectedCafe(response);
     return response;
   };
 
-  const queryFnCount = async () => {
+  const countFn = async () => {
     const response = await countCollectedCafes(userId);
     setCollectedCafeCount(response?.count || 0);
     return response;
@@ -33,8 +33,8 @@ export default function CollectedPage() {
 
   const optionsData = {
     queryKey: ['collectedCafe', userId],
-    queryFn: queryFnData,
-    enabled: !!userId,
+    queryFn: dataFn,
+    enabled: !!userId && userId !== 'no-user',
     staleTime: 1000 * 60 * 3,
     cacheTime: 1000 * 60 * 5,
     onSuccess: (data: CollectedCafeFromSupabase[]) =>
@@ -45,8 +45,8 @@ export default function CollectedPage() {
 
   const optionsCount = {
     queryKey: ['collectedCafeCount', userId],
-    queryFn: queryFnCount,
-    enabled: !!userId,
+    queryFn: countFn,
+    enabled: !!userId && userId !== 'no-user',
     staleTime: 1000 * 60 * 3,
     cacheTime: 1000 * 60 * 5,
     onSuccess: (data: CollectedCountFromSupabase) =>

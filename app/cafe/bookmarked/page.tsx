@@ -19,7 +19,7 @@ export default function BookmarkedPage() {
   const options = {
     queryKey: ['bookmarkedCafe', userId],
     queryFn,
-    enabled: !!userId,
+    enabled: !!userId && userId !== 'no-user',
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 10,
     onSuccess: (data: BookmarkedCafeFromSupabase[]) =>

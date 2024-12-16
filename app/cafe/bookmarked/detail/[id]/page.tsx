@@ -15,6 +15,8 @@ export default function BookmarkedDetailpage({ params }: PageProps) {
   );
 
   useEffect(() => {
+    if (!userId || userId === 'no-user') return;
+
     const fetchBookmarkedCafe = async () => {
       try {
         const numericId = parseFloat(id);
