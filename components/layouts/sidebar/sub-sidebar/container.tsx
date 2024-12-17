@@ -106,7 +106,6 @@ export default function SubSidebar() {
   }, [pathname, collectedCafeDetail]);
 
   useEffect(() => {
-    // 새로운 id 값 설정
     const newId =
       pathname.startsWith('/cafe/all') && detail?.id
         ? detail?.id
@@ -119,8 +118,8 @@ export default function SubSidebar() {
     const strId = newId?.toString();
 
     if (strId !== id) {
-      setId(strId); // id 업데이트
-      setMemoOpen(false); // id 변경 시 memoOpen 닫기
+      setId(strId);
+      setMemoOpen(false);
     }
   }, [
     pathname,

@@ -3,27 +3,34 @@
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
-import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
+import { countBookmarkedCafes } from 'actions/bookmarkActions';
 import Head from 'next/head';
 
 export default function BookmarkedPage() {
   const userId = useUserStore(state => state.userId);
-  const setBookmarkedCafe = useMapStore(state => state.setBookmarkedCafe);
+  const setBookmarkedCafeCount = useMapStore(
+    state => state.setBookmarkedCafeCount,
+  );
 
-  const bookmarkedCafe = useQuery({
-    queryKey: ['bookmarkedCafe', userId],
+  const countBookmarkedCafeQuery = useQuery({
+    queryKey: ['bookmarkedCafeCount', userId],
     queryFn: async () => {
-      const response = await getAllBookmarkedCafes(userId);
-      return response;
+      const response = await countBookmarkedCafes(userId);
+      return response || 0;
     },
     enabled: !!userId && userId !== 'no-user',
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    staleTime: 1000 * 60 * 3,
+    gcTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
-    if (bookmarkedCafe.isSuccess) setBookmarkedCafe(bookmarkedCafe.data);
-  }, [bookmarkedCafe.data, bookmarkedCafe.isSuccess, setBookmarkedCafe]);
+    if (countBookmarkedCafeQuery.isSuccess)
+      setBookmarkedCafeCount(countBookmarkedCafeQuery.data);
+  }, [
+    countBookmarkedCafeQuery.data,
+    countBookmarkedCafeQuery.isSuccess,
+    setBookmarkedCafeCount,
+  ]);
 
   return (
     <Head>

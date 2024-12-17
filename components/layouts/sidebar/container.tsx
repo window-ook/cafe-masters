@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useMapStore, useCheckStore } from 'utils/store';
+import { useMapStore, useCheckStore, useUserStore } from 'utils/store';
 import {
   AllCafe,
   BookmarkedCafeFromSupabase,
@@ -10,6 +10,8 @@ import {
 } from 'types/common';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { getAllCollectedCafes } from 'actions/collectActions';
+import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
 import { getSidebarStyle } from 'utils/styles';
 import Header from './header';
 import Footer from './footer';
@@ -18,9 +20,12 @@ import NormalCafe from './main/normal-cafe';
 import CollectedCafe from './main/collected-cafe';
 import PageConverter from './footer/page-converter';
 import SidebarTabList from './main/sidebar-tab-list';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const { ref: collectedRef, inView: collectedInView } = useInView({
     threshold: 0.5,
@@ -29,23 +34,23 @@ export default function Sidebar() {
     threshold: 0.5,
   });
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const allCafe = useMapStore(state => state.allCafe);
+  const collectedCount = useMapStore(state => state.collectedCafeCount);
+  const bookmarkedCount = useMapStore(state => state.bookmarkedCafeCount);
+  const setCollectedCafe = useMapStore(state => state.setCollectedCafe);
+  const setBookmarkedCafe = useMapStore(state => state.setBookmarkedCafe);
+  const setThisX = useMapStore(state => state.setThisX);
+  const setThisY = useMapStore(state => state.setThisY);
 
-  const router = useRouter();
-  const pathname = usePathname();
+  const userId = useUserStore(state => state.userId);
 
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
   const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
   const setIsMenuOpen = useCheckStore(state => state.setIsMenuOpen);
 
-  const allCafe = useMapStore(state => state.allCafe);
-  const collectedCafe = useMapStore(state => state.collectedCafe);
-  const collectedCount = useMapStore(state => state.collectedCafeCount);
-  const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
-
-  const setThisX = useMapStore(state => state.setThisX);
-  const setThisY = useMapStore(state => state.setThisY);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const itemsPerPage = 15;
   const totalPages = Math.ceil(allCafe.length / itemsPerPage);
@@ -90,46 +95,56 @@ export default function Sidebar() {
   };
 
   const {
-    data: collectedData,
+    data: fetchedCollectedCafe,
     fetchNextPage: fetchNextCollectedPage,
     hasNextPage: hasNextCollectedPage,
     isFetchingNextPage: isFetchingNextCollectedPage,
   } = useInfiniteQuery({
-    initialPageParam: 1,
-    queryKey: ['collectedCafe', collectedCafe],
-    queryFn: ({ pageParam = 1 }) => {
-      const start = (pageParam - 1) * 3;
-      return {
-        data: collectedCafe.slice(start, start + 3),
-        page: pageParam,
-      };
+    enabled: !!userId && userId !== 'no-user',
+    initialPageParam: 0,
+    queryKey: ['collectedCafe', userId],
+    queryFn: async ({ pageParam }) => {
+      const response = await getAllCollectedCafes(userId, pageParam, 4);
+      return response;
     },
-    getNextPageParam: lastPage => {
-      const nextPage = lastPage.page + 1;
-      return lastPage.data.length === 3 ? nextPage : null;
-    },
+    getNextPageParam: lastPage =>
+      lastPage.nextCursor !== null ? lastPage.nextCursor : null,
+    staleTime: 1000 * 60 * 3,
+    gcTime: 1000 * 60 * 5,
   });
 
+  useEffect(() => {
+    if (fetchedCollectedCafe) {
+      const allCafes = fetchedCollectedCafe.pages.flatMap(page => page.data);
+      setCollectedCafe(allCafes);
+    }
+  }, [fetchedCollectedCafe, setCollectedCafe]);
+
   const {
-    data: bookmarkedData,
+    data: fetchedBookmarkedCafe,
     fetchNextPage: fetchNextBookmarkedPage,
     hasNextPage: hasNextBookmarkedPage,
     isFetchingNextPage: isFetchingNextBookmarkedPage,
   } = useInfiniteQuery({
-    initialPageParam: 1,
-    queryKey: ['bookmarkedCafe', bookmarkedCafe],
-    queryFn: ({ pageParam = 1 }) => {
-      const start = (pageParam - 1) * 3;
-      return {
-        data: bookmarkedCafe.slice(start, start + 3),
-        page: pageParam,
-      };
+    enabled: !!userId && userId !== 'no-user',
+    initialPageParam: 0,
+    queryKey: ['bookmarkedCafe', userId],
+    queryFn: async ({ pageParam }) => {
+      const response = await getAllBookmarkedCafes(userId, pageParam, 4);
+      return response;
     },
-    getNextPageParam: lastPage => {
-      const nextPage = lastPage.page + 1;
-      return lastPage.data.length === 3 ? nextPage : null;
-    },
+    getNextPageParam: lastPage =>
+      lastPage.nextCursor !== null ? lastPage.nextCursor : null,
+    staleTime: 1000 * 60 * 3,
+    gcTime: 1000 * 60 * 5,
   });
+
+  useEffect(() => {
+    if (fetchedBookmarkedCafe) {
+      const allCafes = fetchedBookmarkedCafe.pages.flatMap(page => page.data);
+      setBookmarkedCafe(allCafes);
+    }
+  }, [fetchedBookmarkedCafe, setBookmarkedCafe]);
 
   useEffect(() => {
     if (containerRef.current)
@@ -207,15 +222,11 @@ export default function Sidebar() {
               <div>
                 <div className="flex justify-center sticky">
                   <span className="font-dpixel">
-                    내가 수집한 카드 : {collectedCount}장
+                    수집한 카드 수 : {collectedCount}
                   </span>
                 </div>
 
-                {isFetchingNextCollectedPage && (
-                  <div className="text-center py-2">Loading...</div>
-                )}
-
-                {collectedData?.pages?.map((page, i) => (
+                {fetchedCollectedCafe?.pages?.map((page, i) => (
                   <div key={`page-${i}`} className={cardDivStyle}>
                     {page.data.map((cafe: CollectedCafeFromSupabase) => (
                       <CollectedCafe
@@ -230,6 +241,9 @@ export default function Sidebar() {
                     ))}
                   </div>
                 ))}
+
+                {isFetchingNextCollectedPage && <CircularProgress />}
+
                 <div ref={collectedRef} className="w-[22rem]"></div>
               </div>
             )}
@@ -237,11 +251,13 @@ export default function Sidebar() {
             {/* 가고 싶은 카페(북마크) */}
             {pathname.startsWith('/cafe/bookmarked') && (
               <div>
-                {isFetchingNextBookmarkedPage && (
-                  <div className="text-center py-2">Loading...</div>
-                )}
+                <div className="flex justify-center sticky">
+                  <span className="font-dpixel">
+                    북마크한 카페 수 : {bookmarkedCount}
+                  </span>
+                </div>
 
-                {bookmarkedData?.pages?.map((page, i) => (
+                {fetchedBookmarkedCafe?.pages?.map((page, i) => (
                   <div key={`page-${i}`} className={cardDivStyle}>
                     {page.data.map((cafe: BookmarkedCafeFromSupabase) => (
                       <NormalCafe
@@ -254,6 +270,9 @@ export default function Sidebar() {
                     ))}
                   </div>
                 ))}
+
+                {isFetchingNextBookmarkedPage && <CircularProgress />}
+
                 <div ref={bookmarkedRef} className="w-[22rem]"></div>
               </div>
             )}
