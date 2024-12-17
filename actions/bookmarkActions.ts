@@ -32,7 +32,8 @@ export async function getAllBookmarkedCafes(
   if (error) handleError(error);
 
   const safeData = data ?? [];
-  const nextCursor = safeData.length === limit ? offset + limit : null;
+  const nextCursor =
+    safeData.length && safeData.length === limit ? offset + limit : null;
 
   return { data: safeData, nextCursor };
 }
@@ -53,6 +54,19 @@ export async function getBookmarkedCafe(
 
   if (error) handleError(error);
   return data ?? [];
+}
+
+export async function countBookmarkedCafes(userId: string): Promise<number> {
+  if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
+
+  const supabase = await createServerSupabaseClient();
+  const { count, error } = await supabase
+    .from('bookmarked')
+    .select('*', { count: 'exact' })
+    .eq('userId', userId);
+
+  if (error) handleError(error);
+  return count ?? 0;
 }
 
 export async function createBookmarkedCafe(

@@ -11,6 +11,7 @@ import {
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getAllCollectedCafes } from 'actions/collectActions';
+import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
 import { getSidebarStyle } from 'utils/styles';
 import Header from './header';
 import Footer from './footer';
@@ -19,8 +20,7 @@ import NormalCafe from './main/normal-cafe';
 import CollectedCafe from './main/collected-cafe';
 import PageConverter from './footer/page-converter';
 import SidebarTabList from './main/sidebar-tab-list';
-import Skeleton from '@mui/material/Skeleton';
-import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,6 +36,7 @@ export default function Sidebar() {
 
   const allCafe = useMapStore(state => state.allCafe);
   const collectedCount = useMapStore(state => state.collectedCafeCount);
+  const bookmarkedCount = useMapStore(state => state.bookmarkedCafeCount);
   const setCollectedCafe = useMapStore(state => state.setCollectedCafe);
   const setBookmarkedCafe = useMapStore(state => state.setBookmarkedCafe);
   const setThisX = useMapStore(state => state.setThisX);
@@ -101,13 +102,15 @@ export default function Sidebar() {
   } = useInfiniteQuery({
     enabled: !!userId && userId !== 'no-user',
     initialPageParam: 0,
-    queryKey: ['collectedCafe'],
+    queryKey: ['collectedCafe', userId],
     queryFn: async ({ pageParam }) => {
       const response = await getAllCollectedCafes(userId, pageParam, 4);
       return response;
     },
     getNextPageParam: lastPage =>
       lastPage.nextCursor !== null ? lastPage.nextCursor : null,
+    staleTime: 1000 * 60 * 3,
+    gcTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
@@ -125,13 +128,15 @@ export default function Sidebar() {
   } = useInfiniteQuery({
     enabled: !!userId && userId !== 'no-user',
     initialPageParam: 0,
-    queryKey: ['bookmarkedCafe'],
+    queryKey: ['bookmarkedCafe', userId],
     queryFn: async ({ pageParam }) => {
       const response = await getAllBookmarkedCafes(userId, pageParam, 4);
       return response;
     },
     getNextPageParam: lastPage =>
       lastPage.nextCursor !== null ? lastPage.nextCursor : null,
+    staleTime: 1000 * 60 * 3,
+    gcTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
@@ -217,13 +222,9 @@ export default function Sidebar() {
               <div>
                 <div className="flex justify-center sticky">
                   <span className="font-dpixel">
-                    내가 수집한 카드 : {collectedCount}장
+                    수집한 카드 수 : {collectedCount}
                   </span>
                 </div>
-
-                {isFetchingNextCollectedPage && (
-                  <Skeleton variant="rectangular" width={210} height={118} />
-                )}
 
                 {fetchedCollectedCafe?.pages?.map((page, i) => (
                   <div key={`page-${i}`} className={cardDivStyle}>
@@ -240,6 +241,9 @@ export default function Sidebar() {
                     ))}
                   </div>
                 ))}
+
+                {isFetchingNextCollectedPage && <CircularProgress />}
+
                 <div ref={collectedRef} className="w-[22rem]"></div>
               </div>
             )}
@@ -247,9 +251,11 @@ export default function Sidebar() {
             {/* 가고 싶은 카페(북마크) */}
             {pathname.startsWith('/cafe/bookmarked') && (
               <div>
-                {isFetchingNextBookmarkedPage && (
-                  <Skeleton variant="rectangular" width={210} height={118} />
-                )}
+                <div className="flex justify-center sticky">
+                  <span className="font-dpixel">
+                    북마크한 카페 수 : {bookmarkedCount}
+                  </span>
+                </div>
 
                 {fetchedBookmarkedCafe?.pages?.map((page, i) => (
                   <div key={`page-${i}`} className={cardDivStyle}>
@@ -264,6 +270,9 @@ export default function Sidebar() {
                     ))}
                   </div>
                 ))}
+
+                {isFetchingNextBookmarkedPage && <CircularProgress />}
+
                 <div ref={bookmarkedRef} className="w-[22rem]"></div>
               </div>
             )}

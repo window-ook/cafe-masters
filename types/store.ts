@@ -12,6 +12,7 @@ export interface MapStore {
   collectedCafe: CollectedCafeFromSupabase[];
   collectedCafeCount: number;
   bookmarkedCafe: BookmarkedCafeFromSupabase[];
+  bookmarkedCafeCount: number;
   thisX: number;
   thisY: number;
   cafeDetail: FetchedCafeDetail;
@@ -23,6 +24,7 @@ export interface MapStore {
   setCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
   setCollectedCafeCount: (data: number) => void;
   setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) => void;
+  setBookmarkedCafeCount: (data: number) => void;
   setThisX: (x: number) => void;
   setThisY: (y: number) => void;
   setCafeDetail: (data: object) => void;

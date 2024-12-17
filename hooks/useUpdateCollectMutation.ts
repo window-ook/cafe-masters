@@ -18,8 +18,8 @@ export function useUpdateCollectMutation() {
     mutationFn: async (memo: CollectedRowUpdate) =>
       await updateCollectedCafe(memo, collectedCafeDetail.id, userId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['collectedCafe'] });
-      queryClient.refetchQueries({ queryKey: ['collectedCafe'] });
+      queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
+      queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
     },
     onError: error => console.error(error),
   });

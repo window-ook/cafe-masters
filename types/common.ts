@@ -101,12 +101,6 @@ export interface CollectedCafeFromSupabase
   updated_at?: string | null;
 }
 
-// 수파베이스에서 가져온 수집한 카드 개수
-export interface CollectedCountFromSupabase {
-  data: CollectedCafeFromSupabase[] | null;
-  count: number | null;
-}
-
 // 수파베이스에서 가져온 북마크 카페
 export interface BookmarkedCafeFromSupabase extends NormalCafeDetailForUpload {
   created_at: string;

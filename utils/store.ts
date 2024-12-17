@@ -16,6 +16,7 @@ export const useMapStore = create<MapStore>()(
       collectedCafe: [],
       collectedCafeCount: 0,
       bookmarkedCafe: [],
+      bookmarkedCafeCount: 0,
       thisX: 127.04663357436208,
       thisY: 37.54715716085294,
       cafeDetail: {},
@@ -30,6 +31,8 @@ export const useMapStore = create<MapStore>()(
         set({ collectedCafeCount: data }),
       setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) =>
         set({ bookmarkedCafe: data }),
+      setBookmarkedCafeCount: (data: number) =>
+        set({ bookmarkedCafeCount: data }),
       setThisX: (x: number) => set({ thisX: x }),
       setThisY: (y: number) => set({ thisY: y }),
       setCafeDetail: (data: object) => set({ cafeDetail: data }),

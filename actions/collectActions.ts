@@ -3,10 +3,7 @@
 import { PostgrestError } from '@supabase/supabase-js';
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
-import {
-  CollectedCafeFromSupabase,
-  CollectedCountFromSupabase,
-} from 'types/common';
+import { CollectedCafeFromSupabase } from 'types/common';
 
 export type CollectedRow = Database['public']['Tables']['collected']['Row'];
 export type CollectedRowInsert =
@@ -22,7 +19,7 @@ function handleError(error: PostgrestError) {
 export async function getAllCollectedCafes(
   userId: string,
   offset: number = 0,
-  limit: number = 3,
+  limit: number = 4,
 ): Promise<{ data: CollectedCafeFromSupabase[]; nextCursor: number | null }> {
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
@@ -36,7 +33,7 @@ export async function getAllCollectedCafes(
 
   if (error) throw new Error(error.message);
 
-  const nextCursor = data.length === limit ? offset + limit : null;
+  const nextCursor = data && data.length === limit ? offset + limit : null;
 
   return { data: data ?? [], nextCursor };
 }
@@ -59,19 +56,17 @@ export async function getCollectedCafe(
   return data ?? [];
 }
 
-export async function countCollectedCafes(
-  userId: string,
-): Promise<CollectedCountFromSupabase> {
+export async function countCollectedCafes(userId: string): Promise<number> {
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
-  const { data, count, error } = await supabase
+  const { count, error } = await supabase
     .from('collected')
     .select('*', { count: 'exact' })
     .eq('userId', userId);
 
   if (error) handleError(error);
-  return { data, count };
+  return count ?? 0;
 }
 
 export async function createCollectedCafe(
