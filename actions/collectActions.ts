@@ -21,7 +21,9 @@ function handleError(error: PostgrestError) {
 
 export async function getAllCollectedCafes(
   userId: string,
-): Promise<CollectedCafeFromSupabase[]> {
+  offset: number = 0,
+  limit: number = 3,
+): Promise<{ data: CollectedCafeFromSupabase[]; nextCursor: number | null }> {
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
@@ -29,10 +31,14 @@ export async function getAllCollectedCafes(
     .from('collected')
     .select('*')
     .eq('userId', userId)
-    .order('created_at', { ascending: true });
+    .order('created_at', { ascending: true })
+    .range(offset, offset + limit - 1);
 
-  if (error) handleError(error);
-  return data ?? [];
+  if (error) throw new Error(error.message);
+
+  const nextCursor = data.length === limit ? offset + limit : null;
+
+  return { data: data ?? [], nextCursor };
 }
 
 export async function getCollectedCafe(

@@ -94,14 +94,14 @@ export default function KakaoMap() {
       getLat: (item: any) => number,
       getLng: (item: any) => number,
     ) => {
-      if (prevMarkerDataRef.current === data) return; // 이전 데이터와 동일하면 실행하지 않음
+      if (prevMarkerDataRef.current === data) return;
+      if (!data || !Array.isArray(data)) return;
       prevMarkerDataRef.current = data;
 
       const map = mapRef.current;
 
       markersRef.current.forEach(marker => marker.setMap(null));
       markersRef.current = [];
-
       markersRef.current = data.map(item => {
         const position = new window.kakao.maps.LatLng(
           getLat(item),
@@ -148,7 +148,7 @@ export default function KakaoMap() {
     };
 
     const searchCafes = (query: string) => {
-      if (prevKeywordRef.current === query) return; // 이전 검색어와 동일하면 실행하지 않음
+      if (prevKeywordRef.current === query) return;
       prevKeywordRef.current = query;
 
       const map = mapRef.current;

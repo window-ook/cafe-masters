@@ -16,7 +16,9 @@ function handleError(error: PostgrestError): void {
 
 export async function getAllBookmarkedCafes(
   userId: string,
-): Promise<BookmarkedCafeFromSupabase[]> {
+  offset: number = 0,
+  limit: number = 3,
+): Promise<{ data: BookmarkedCafeFromSupabase[]; nextCursor: number | null }> {
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
@@ -24,10 +26,15 @@ export async function getAllBookmarkedCafes(
     .from('bookmarked')
     .select('*')
     .eq('userId', userId)
-    .order('created_at', { ascending: true });
+    .order('created_at', { ascending: true })
+    .range(offset, offset + limit - 1);
 
   if (error) handleError(error);
-  return data ?? [];
+
+  const safeData = data ?? [];
+  const nextCursor = safeData.length === limit ? offset + limit : null;
+
+  return { data: safeData, nextCursor };
 }
 
 export async function getBookmarkedCafe(
