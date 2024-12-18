@@ -42,6 +42,9 @@ https://app.cafe-masters.co
     <img src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white">
 </div>
 <div style='display:flex; align-items:center'>
+    <img src="https://img.shields.io/badge/ESLint-4B32C3?style=flat-square&logo=eslint&logoColor=white">
+</div>
+<div style='display:flex; align-items:center'>
     <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white"> 
 </div>
 
@@ -182,8 +185,9 @@ https://github.com/user-attachments/assets/9757b6a1-fbe4-4c18-940f-cb4d37f97bc7
 
 ## 🧱 아키텍처
 
-![아키텍처](https://github.com/user-attachments/assets/a3c1fab9-2700-4795-8cdc-b6a74e8aad82)
+![아키텍처](https://github.com/user-attachments/assets/a19dff52-1506-4b95-9171-26ee5d270244)
 
 ## 🌱 업데이트 예정
 
-<span>출발지↔목적지 길찾기 기능</span><br/>
+<span>- 상세 정보에서 리뷰 이미지 미리보기</span><br/>
+<span>- 출발지↔목적지 길찾기 기능</span><br/>
