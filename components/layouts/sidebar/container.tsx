@@ -105,6 +105,7 @@ export default function Sidebar() {
     queryKey: ['collectedCafe', userId],
     queryFn: async ({ pageParam }) => {
       const response = await getAllCollectedCafes(userId, pageParam, 4);
+      console.log('수집한 카드:', response.nextCursor);
       return response;
     },
     getNextPageParam: lastPage =>

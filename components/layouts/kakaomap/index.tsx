@@ -144,7 +144,6 @@ export default function KakaoMap() {
 
         return marker;
       });
-      console.log('마커 업데이트');
     };
 
     const searchCafes = (query: string) => {
@@ -191,7 +190,6 @@ export default function KakaoMap() {
       };
 
       ps.keywordSearch(query, handleSearch);
-      console.log('검색');
     };
 
     if (pathname === '/') {
