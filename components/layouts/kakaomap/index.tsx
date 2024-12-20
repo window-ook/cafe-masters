@@ -146,7 +146,7 @@ export default function KakaoMap() {
       });
     };
 
-    const searchCafes = (query: string) => {
+    const searchCafes = async (query: string) => {
       if (prevKeywordRef.current === query) return;
       prevKeywordRef.current = query;
 

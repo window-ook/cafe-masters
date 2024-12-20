@@ -3,8 +3,8 @@
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useMapStore, useUserStore } from 'utils/store';
-import Head from 'next/head';
 import { countCollectedCafes } from 'actions/collectActions';
+import Head from 'next/head';
 
 export default function CollectedPage() {
   const userId = useUserStore(state => state.userId);
