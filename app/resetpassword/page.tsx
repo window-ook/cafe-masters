@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useFinishResetMutation } from 'hooks/useFinishResetMutation';
+import { useFinishResetMutation } from 'hooks/mutation/useFinishResetMutation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
 import AuthBackgroundCards from 'components/auth/shared/background-cards';

@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-import { useUploadCollectMutation } from 'hooks/useUploadCollectMutation';
-import { useUpdateCollectMutation } from 'hooks/useUpdateCollectMutation';
+import { useUploadCollectMutation } from 'hooks/mutation/useUploadCollectMutation';
+import { useUpdateCollectMutation } from 'hooks/mutation/useUpdateCollectMutation';
 import { getSubSidebarStyle } from 'utils/styles';
 import { CollectedRowInsert, CollectedRowUpdate } from 'actions/collectActions';
 import { toast } from 'react-toastify';
