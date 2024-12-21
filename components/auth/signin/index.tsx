@@ -40,7 +40,10 @@ export default function Signin() {
   };
 
   const handleSignin = () => {
-    if (checkEmail()) signinMutation.mutate({ email, password });
+    if (checkEmail()) {
+      const trimmedEmail: string = email.trim();
+      signinMutation.mutate({ email: trimmedEmail, password });
+    }
   };
 
   const handleResetPassword = async () => {

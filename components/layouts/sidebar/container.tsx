@@ -9,9 +9,6 @@ import {
   CollectedCafeFromSupabase,
 } from 'types/common';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { getAllCollectedCafes } from 'actions/collectActions';
-import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
 import { getSidebarStyle } from 'utils/styles';
 import Header from './header';
 import Footer from './footer';
@@ -21,6 +18,8 @@ import CollectedCafe from './main/collected-cafe';
 import PageConverter from './footer/page-converter';
 import SidebarTabList from './main/sidebar-tab-list';
 import CircularProgress from '@mui/material/CircularProgress';
+import useCollectedCafes from 'hooks/useCollectedCafes';
+import useBookmarkedCafes from 'hooks/useBookmarkedCafes';
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,8 +36,6 @@ export default function Sidebar() {
   const allCafe = useMapStore(state => state.allCafe);
   const collectedCount = useMapStore(state => state.collectedCafeCount);
   const bookmarkedCount = useMapStore(state => state.bookmarkedCafeCount);
-  const setCollectedCafe = useMapStore(state => state.setCollectedCafe);
-  const setBookmarkedCafe = useMapStore(state => state.setBookmarkedCafe);
   const setThisX = useMapStore(state => state.setThisX);
   const setThisY = useMapStore(state => state.setThisY);
 
@@ -51,6 +48,9 @@ export default function Sidebar() {
 
   const router = useRouter();
   const pathname = usePathname();
+
+  const isCollectedPage = pathname.startsWith('/cafe/collected');
+  const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
 
   const itemsPerPage = 15;
   const totalPages = Math.ceil(allCafe.length / itemsPerPage);
@@ -95,57 +95,52 @@ export default function Sidebar() {
   };
 
   const {
-    data: fetchedCollectedCafe,
+    fetchedCollectedCafe,
     fetchNextPage: fetchNextCollectedPage,
     hasNextPage: hasNextCollectedPage,
     isFetchingNextPage: isFetchingNextCollectedPage,
-  } = useInfiniteQuery({
-    enabled: !!userId && userId !== 'no-user',
-    initialPageParam: 0,
-    queryKey: ['collectedCafe', userId],
-    queryFn: async ({ pageParam }) => {
-      const response = await getAllCollectedCafes(userId, pageParam, 4);
-      console.log('수집한 카드:', response.nextCursor);
-      return response;
-    },
-    getNextPageParam: lastPage =>
-      lastPage.nextCursor !== null ? lastPage.nextCursor : null,
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 60 * 5,
-  });
-
-  useEffect(() => {
-    if (fetchedCollectedCafe) {
-      const allCafes = fetchedCollectedCafe.pages.flatMap(page => page.data);
-      setCollectedCafe(allCafes);
-    }
-  }, [fetchedCollectedCafe, setCollectedCafe]);
+  } = useCollectedCafes(userId, isCollectedPage);
 
   const {
-    data: fetchedBookmarkedCafe,
+    fetchedBookmarkedCafe,
     fetchNextPage: fetchNextBookmarkedPage,
     hasNextPage: hasNextBookmarkedPage,
     isFetchingNextPage: isFetchingNextBookmarkedPage,
-  } = useInfiniteQuery({
-    enabled: !!userId && userId !== 'no-user',
-    initialPageParam: 0,
-    queryKey: ['bookmarkedCafe', userId],
-    queryFn: async ({ pageParam }) => {
-      const response = await getAllBookmarkedCafes(userId, pageParam, 4);
-      return response;
-    },
-    getNextPageParam: lastPage =>
-      lastPage.nextCursor !== null ? lastPage.nextCursor : null,
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 60 * 5,
-  });
+  } = useBookmarkedCafes(userId, isBookmarkedPage);
 
   useEffect(() => {
-    if (fetchedBookmarkedCafe) {
-      const allCafes = fetchedBookmarkedCafe.pages.flatMap(page => page.data);
-      setBookmarkedCafe(allCafes);
+    if (
+      isCollectedPage &&
+      collectedInView &&
+      hasNextCollectedPage &&
+      !isFetchingNextCollectedPage
+    ) {
+      fetchNextCollectedPage();
     }
-  }, [fetchedBookmarkedCafe, setBookmarkedCafe]);
+  }, [
+    collectedInView,
+    hasNextCollectedPage,
+    fetchNextCollectedPage,
+    isFetchingNextCollectedPage,
+    isCollectedPage,
+  ]);
+
+  useEffect(() => {
+    if (
+      isBookmarkedPage &&
+      bookmarkedInView &&
+      hasNextBookmarkedPage &&
+      !isFetchingNextBookmarkedPage
+    ) {
+      fetchNextBookmarkedPage();
+    }
+  }, [
+    bookmarkedInView,
+    hasNextBookmarkedPage,
+    fetchNextBookmarkedPage,
+    isFetchingNextBookmarkedPage,
+    isBookmarkedPage,
+  ]);
 
   useEffect(() => {
     if (containerRef.current)
@@ -159,36 +154,6 @@ export default function Sidebar() {
   useEffect(() => {
     setCurrentPage(1);
   }, [allCafe]);
-
-  useEffect(() => {
-    if (
-      collectedInView &&
-      hasNextCollectedPage &&
-      !isFetchingNextCollectedPage
-    ) {
-      fetchNextCollectedPage();
-    }
-  }, [
-    collectedInView,
-    hasNextCollectedPage,
-    fetchNextCollectedPage,
-    isFetchingNextCollectedPage,
-  ]);
-
-  useEffect(() => {
-    if (
-      bookmarkedInView &&
-      hasNextBookmarkedPage &&
-      !isFetchingNextBookmarkedPage
-    ) {
-      fetchNextBookmarkedPage();
-    }
-  }, [
-    bookmarkedInView,
-    hasNextBookmarkedPage,
-    fetchNextBookmarkedPage,
-    isFetchingNextBookmarkedPage,
-  ]);
 
   if (pathname.startsWith('/resetpassword')) return null;
 

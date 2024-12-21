@@ -25,7 +25,6 @@
     "@supabase/supabase-js": "^2.45.4",
     "@tailwindcss/forms": "^0.5.9",
     "@tanstack/react-query": "5.60.6",
-    "compression-webpack-plugin": "^11.1.0",
     "next": "^14.2.14",
     "next-compose-plugins": "^2.2.1",
     "react": "^18.3.1",
