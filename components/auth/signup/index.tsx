@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useSignupMutation } from 'hooks/useSignupMutation';
+import { useSignupMutation } from 'hooks/mutation/useSignupMutation';
 import { useAuthView } from 'config/auth-view-provider';
 import { signinWithKakao } from 'utils/supabase/signinWithKakao';
 import {
@@ -13,7 +13,7 @@ import {
 import { checkEmailValid } from 'utils/common';
 import UserForm from '../shared/user-form';
 import OtpForm from './otp-form';
-import useVerifyOtpMutation from 'hooks/useVerifyOtpMutation';
+import useVerifyOtpMutation from 'hooks/mutation/useVerifyOtpMutation';
 
 export default function Signup() {
   const [email, setEmail] = useState('');

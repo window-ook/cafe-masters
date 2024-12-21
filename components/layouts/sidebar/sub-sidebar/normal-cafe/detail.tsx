@@ -1,6 +1,6 @@
 import { usePathname, useRouter } from 'next/navigation';
-import { useUploadBookmarkMutation } from 'hooks/useUploadBookmarkMutation';
-import { useCancelBookmarkMutation } from 'hooks/useCancelBookmarkMutation';
+import { useUploadBookmarkMutation } from 'hooks/mutation/useUploadBookmarkMutation';
+import { useCancelBookmarkMutation } from 'hooks/mutation/useCancelBookmarkMutation';
 import { useCheckStore } from 'utils/store';
 import { NormalCafeDetailForUpload } from 'types/common';
 import {

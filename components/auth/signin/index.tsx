@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useAuthView } from 'config/auth-view-provider';
-import { useSigninMutation } from 'hooks/useSigninMutation';
-import { useResetPasswordMutation } from 'hooks/useResetPasswordMutation';
+import { useSigninMutation } from 'hooks/mutation/useSigninMutation';
+import { useResetPasswordMutation } from 'hooks/mutation/useResetPasswordMutation';
 import { signinWithKakao } from 'utils/supabase/signinWithKakao';
 import {
   AuthFormCardStyle,

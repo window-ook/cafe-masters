@@ -18,8 +18,8 @@ import CollectedCafe from './main/collected-cafe';
 import PageConverter from './footer/page-converter';
 import SidebarTabList from './main/sidebar-tab-list';
 import CircularProgress from '@mui/material/CircularProgress';
-import useCollectedCafes from 'hooks/useCollectedCafes';
-import useBookmarkedCafes from 'hooks/useBookmarkedCafes';
+import useCollectedCafes from 'hooks/query/useCollectedCafes';
+import useBookmarkedCafes from 'hooks/query/useBookmarkedCafes';
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);
