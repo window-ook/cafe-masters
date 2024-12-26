@@ -20,7 +20,6 @@ export default function useBookmarkedCafes(userId: string, isActive: boolean) {
       return response;
     },
     getNextPageParam: lastPage => {
-      console.log('lastPage:', lastPage);
       return lastPage.nextCursor !== null ? lastPage.nextCursor : null;
     },
     staleTime: 1000 * 60 * 3,
