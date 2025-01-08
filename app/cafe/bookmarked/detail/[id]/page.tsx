@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, use } from 'react';
 import { useMapStore, useCheckStore } from 'utils/store';
 import { PageProps } from 'types/common';
+
 import Head from 'next/head';
 
 export default function BookmarkedDetailpage({ params }: PageProps) {
-  const { id } = params;
+  const { id } = use(params);
 
   const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
   const setBookmarkedCafeDetail = useMapStore(

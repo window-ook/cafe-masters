@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, use } from 'react';
 import { useMapStore } from 'utils/store';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
 
 export default function CollectedDetailPage({ params }: PageProps) {
-  const { id } = params;
+  const { id } = use(params);
 
   const collectedCafe = useMapStore(state => state.collectedCafe);
   const setCollectedCafeDetail = useMapStore(

@@ -208,7 +208,11 @@ export default function Sidebar() {
                   </div>
                 ))}
 
-                {isFetchingNextCollectedPage && <CircularProgress />}
+                {isFetchingNextCollectedPage && (
+                  <div className="fixed bottom-4 right-4">
+                    <CircularProgress />
+                  </div>
+                )}
 
                 <div ref={collectedRef} className="w-[22rem]"></div>
               </div>
@@ -237,7 +241,11 @@ export default function Sidebar() {
                   </div>
                 ))}
 
-                {isFetchingNextBookmarkedPage && <CircularProgress />}
+                {isFetchingNextBookmarkedPage && (
+                  <div className="fixed bottom-4 right-4">
+                    <CircularProgress />
+                  </div>
+                )}
 
                 <div ref={bookmarkedRef} className="w-[22rem]"></div>
               </div>
