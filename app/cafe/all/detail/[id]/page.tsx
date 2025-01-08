@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, use } from 'react';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { getCafeDetail } from 'actions/cafeDetailActions';
 import { getBookmarkedCafe } from 'actions/bookmarkActions';
@@ -9,7 +9,7 @@ import { PageProps } from 'types/common';
 import Head from 'next/head';
 
 export default function AllDetailPage({ params }: PageProps) {
-  const { id } = params;
+  const { id } = use(params);
   const userId = useUserStore(state => state.userId);
   const setCafeDetail = useMapStore(state => state.setCafeDetail);
   const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);

@@ -6,9 +6,12 @@ import { Database } from 'types_db';
 
 // 오로지 서버 컴포넌트에서만 사용 가능하다
 export const createServerSupabaseClient = async (
-  cookieStore: ReturnType<typeof cookies> = cookies(),
+  cookieStore?: Awaited<ReturnType<typeof cookies>>,
   admin: boolean = false,
 ) => {
+  // Promise<ReadonlyRequestCookies>를 반환하므로 결과값을 await하여 resolved된 쿠키 스토어를 사용해야한다
+  const resolvedCookieStore = cookieStore || (await cookies());
+
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     admin
@@ -17,11 +20,11 @@ export const createServerSupabaseClient = async (
     {
       cookies: {
         get(name: string) {
-          return cookieStore.get(name)?.value;
+          return resolvedCookieStore.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
           try {
-            cookieStore.set({ name, value, ...options });
+            resolvedCookieStore.set({ name, value, ...options });
           } catch (error) {
             console.error(error);
             // The `set` method was called from a Server Component.
@@ -31,7 +34,7 @@ export const createServerSupabaseClient = async (
         },
         remove(name: string, options: CookieOptions) {
           try {
-            cookieStore.set({ name, value: '', ...options });
+            resolvedCookieStore.set({ name, value: '', ...options });
           } catch (error) {
             console.error(error);
             // The `delete` method was called from a Server Component.
@@ -45,7 +48,8 @@ export const createServerSupabaseClient = async (
 };
 
 export const createServerSupabaseAdminClient = async (
-  cookieStore: ReturnType<typeof cookies> = cookies(),
+  cookieStore?: Awaited<ReturnType<typeof cookies>>,
 ) => {
-  return createServerSupabaseClient(cookieStore, true);
+  const resolvedCookieStore = cookieStore || (await cookies());
+  return createServerSupabaseClient(resolvedCookieStore, true);
 };
