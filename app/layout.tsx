@@ -52,6 +52,10 @@ export default async function RootLayout({
       <head>
         <link rel="preconnect" href="https://fastly.jsdelivr.net" />
         <link rel="dns-prefetch" href="https://fastly.jsdelivr.net" />
+        <meta
+          name="google-site-verification"
+          content="uLLg7r0DwRzwQB1croiSmhHf5Krf4FaxC2Z2t0BX4JM"
+        />
       </head>
       <body>
         <ReactQueryClientProvider>
