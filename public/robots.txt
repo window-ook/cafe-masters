@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://app.cafe-masters.co
+
+# Sitemaps
+Sitemap: https://app.cafe-masters.co/sitemap.xml
