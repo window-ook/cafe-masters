@@ -47,7 +47,7 @@ export default function AuthBackgroundCards() {
         src={imageSrc}
         alt="background card"
         width={96}
-        height={112}
+        height={96}
         priority
       />
       <Image

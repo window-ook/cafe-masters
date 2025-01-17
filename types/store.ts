@@ -60,4 +60,7 @@ export interface CheckStore {
   isBookmarked: boolean;
   setIsCollected: (prev: boolean) => void;
   setIsBookmarked: (prev: boolean) => void;
+
+  isLoading: boolean;
+  setIsLoading: (prev: boolean) => void;
 }

@@ -49,6 +49,7 @@ export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
 
+  const isSearchResultPage = pathname.startsWith('/cafe/all');
   const isCollectedPage = pathname.startsWith('/cafe/collected');
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
 
@@ -169,7 +170,7 @@ export default function Sidebar() {
 
           <div className="px-8 sm:px-4">
             {/* 모든 카페 */}
-            {pathname.startsWith('/cafe/all') && (
+            {isSearchResultPage && (
               <div className={cardDivStyle}>
                 {paginatedResults.map((cafe: AllCafe) => (
                   <NormalCafe
@@ -184,7 +185,7 @@ export default function Sidebar() {
             )}
 
             {/* 수집한 카드 */}
-            {pathname.startsWith('/cafe/collected') && (
+            {isCollectedPage && (
               <div>
                 <div className="flex justify-center sticky">
                   <span className="font-dpixel">
@@ -219,7 +220,7 @@ export default function Sidebar() {
             )}
 
             {/* 가고 싶은 카페(북마크) */}
-            {pathname.startsWith('/cafe/bookmarked') && (
+            {isBookmarkedPage && (
               <div>
                 <div className="flex justify-center sticky">
                   <span className="font-dpixel">
@@ -252,7 +253,7 @@ export default function Sidebar() {
             )}
           </div>
 
-          {pathname.startsWith('/cafe/all') && (
+          {isSearchResultPage && (
             <PageConverter
               isDarkTheme={isDarkTheme}
               handlePreviousPage={handlePreviousPage}

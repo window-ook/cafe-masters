@@ -36,9 +36,9 @@ export default function NormalCafeDetail({
   const isCollected = useCheckStore(state => state.isCollected);
   const isBookmarked = useCheckStore(state => state.isBookmarked);
   const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
+  const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
 
   const router = useRouter();
-
   const pathname = usePathname();
 
   const parsedMenu =
@@ -47,13 +47,12 @@ export default function NormalCafeDetail({
       : detail?.menu;
 
   const uploadBookmarkMutation = useUploadBookmarkMutation();
-
   const cancelBookmarkMutation = useCancelBookmarkMutation();
 
   const handleUploadBookmark = () => {
+    setIsBookmarked(true);
     uploadBookmarkMutation.mutate(detail);
     toast.success('가고 싶은 카페를 북마크했습니다!');
-    router.refresh();
   };
 
   const handleCancelBookmark = () => {
@@ -91,7 +90,7 @@ export default function NormalCafeDetail({
               />
             </button>
           )}
-          <span className="text-2xl font-semibold">{detail?.name}</span>
+          <span className="text-[1.375rem] font-semibold">{detail?.name}</span>
         </div>
         <button
           aria-label="카페 상세 정보 보기 취소 버튼"

@@ -14,12 +14,14 @@ export default function AllDetailPage({ params }: PageProps) {
   const setCafeDetail = useMapStore(state => state.setCafeDetail);
   const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
   const setIsCollected = useCheckStore(state => state.setIsCollected);
+  const setIsLoading = useCheckStore(state => state.setIsLoading);
 
   useEffect(() => {
     if (!userId || userId === 'no-user') return;
 
     setIsBookmarked(false);
     setIsCollected(false);
+    setIsLoading(true);
 
     const numericId = parseFloat(id);
 
@@ -43,11 +45,20 @@ export default function AllDetailPage({ params }: PageProps) {
         }
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchAllData();
-  }, [id, setCafeDetail, setIsBookmarked, setIsCollected, userId]);
+  }, [
+    id,
+    setCafeDetail,
+    setIsBookmarked,
+    setIsCollected,
+    setIsLoading,
+    userId,
+  ]);
 
   return (
     <Head>

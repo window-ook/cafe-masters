@@ -88,6 +88,9 @@ export const useCheckStore = create<CheckStore>()(
       isBookmarked: false,
       setIsCollected: (prev: boolean) => set({ isCollected: prev }),
       setIsBookmarked: (prev: boolean) => set({ isBookmarked: prev }),
+
+      isLoading: false,
+      setIsLoading: (prev: boolean) => set({ isLoading: prev }),
     }),
     {
       name: 'checkStore',

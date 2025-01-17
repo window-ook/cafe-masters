@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import Memo from './memo';
 import NormalCafeDetail from './normal-cafe/detail';
 import CollectedCafeDetail from './collected-cafe/detail';
+import Loading from './shared/loading';
 
 export default function SubSidebar() {
   const [memoOpen, setMemoOpen] = useState(false);
@@ -31,18 +32,20 @@ export default function SubSidebar() {
   );
   const thisX = useMapStore(state => state.thisX);
   const thisY = useMapStore(state => state.thisY);
-
   const userId = useUserStore(state => state.userId);
-
-  const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
   const isMenuOpen = useCheckStore(state => state.isMenuOpen);
   const setIsMenuOpen = useCheckStore(state => state.setIsMenuOpen);
+  const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-  const setIsExtend = useCheckStore(state => state.setIsExtend);
   const isExtend = useCheckStore(state => state.isExtend);
+  const setIsExtend = useCheckStore(state => state.setIsExtend);
+  const isLoading = useCheckStore(state => state.isLoading);
 
   const pathname = usePathname();
   const router = useRouter();
+
+  const uploadCollectMutation = useUploadCollectMutation();
+  const updateCollectMutation = useUpdateCollectMutation();
 
   const detail = {
     id: cafeDetail?.basicInfo?.cid ?? 0,
@@ -84,50 +87,6 @@ export default function SubSidebar() {
     coordX: thisX,
     coordY: thisY,
   };
-
-  useEffect(() => {
-    if (pathname.startsWith('/cafe/collected') && collectedCafeDetail) {
-      setComment(collectedCafeDetail.comment || '');
-      setPros(collectedCafeDetail.pros || '');
-      setCons(collectedCafeDetail.cons || '');
-      setEaten(collectedCafeDetail.eaten || '');
-      setConcept(collectedCafeDetail.concept || '');
-      setRating(collectedCafeDetail.rating || 5);
-    }
-
-    if (!pathname.startsWith('/cafe/collected')) {
-      setComment('');
-      setPros('');
-      setCons('');
-      setEaten('');
-      setConcept('');
-      setRating(5);
-    }
-  }, [pathname, collectedCafeDetail]);
-
-  useEffect(() => {
-    const newId =
-      pathname.startsWith('/cafe/all') && detail?.id
-        ? detail?.id
-        : pathname.startsWith('/cafe/collected') && collectedCafeDetail?.id
-          ? collectedCafeDetail?.id
-          : pathname.startsWith('/cafe/bookmarked') && bookmarkedCafeDetail?.id
-            ? bookmarkedCafeDetail?.id
-            : null;
-
-    const strId = newId?.toString();
-
-    if (strId !== id) {
-      setId(strId);
-      setMemoOpen(false);
-    }
-  }, [
-    pathname,
-    detail?.id,
-    collectedCafeDetail?.id,
-    bookmarkedCafeDetail?.id,
-    id,
-  ]);
 
   const memoFromDetail = {
     id: detail?.id,
@@ -176,9 +135,54 @@ export default function SubSidebar() {
     rating: rating,
   };
 
-  const uploadCollectMutation = useUploadCollectMutation();
+  const isSearchResultPage = pathname.startsWith('/cafe/all');
+  const isCollectedPage = pathname.startsWith('/cafe/collected');
+  const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
 
-  const updateCollectMutation = useUpdateCollectMutation();
+  useEffect(() => {
+    if (isCollectedPage && collectedCafeDetail) {
+      setComment(collectedCafeDetail.comment || '');
+      setPros(collectedCafeDetail.pros || '');
+      setCons(collectedCafeDetail.cons || '');
+      setEaten(collectedCafeDetail.eaten || '');
+      setConcept(collectedCafeDetail.concept || '');
+      setRating(collectedCafeDetail.rating || 5);
+    }
+
+    if (!isCollectedPage) {
+      setComment('');
+      setPros('');
+      setCons('');
+      setEaten('');
+      setConcept('');
+      setRating(5);
+    }
+  }, [pathname, collectedCafeDetail, isCollectedPage]);
+
+  useEffect(() => {
+    const newId =
+      isSearchResultPage && detail?.id
+        ? detail?.id
+        : isCollectedPage && collectedCafeDetail?.id
+          ? collectedCafeDetail?.id
+          : isBookmarkedPage && bookmarkedCafeDetail?.id
+            ? bookmarkedCafeDetail?.id
+            : null;
+    const strId = newId?.toString();
+    if (strId !== id) {
+      setId(strId);
+      setMemoOpen(false); // 메모창 비활성화
+    }
+  }, [
+    pathname,
+    detail?.id,
+    collectedCafeDetail?.id,
+    bookmarkedCafeDetail?.id,
+    id,
+    isSearchResultPage,
+    isCollectedPage,
+    isBookmarkedPage,
+  ]);
 
   const handleMenuOpen = () => {
     if (isMenuOpen === false) setIsMenuOpen(true);
@@ -205,10 +209,8 @@ export default function SubSidebar() {
   };
 
   if (pathname.startsWith('/cafe/all/detail') && !cafeDetail) return null;
-
   if (pathname.startsWith('/cafe/collected/detail') && !collectedCafeDetail)
     return null;
-
   if (pathname.startsWith('/cafe/bookmarked/detail') && !bookmarkedCafeDetail)
     return null;
 
@@ -222,67 +224,70 @@ export default function SubSidebar() {
           onClick={setIsExtend}
         />
       </div>
-      {!memoOpen &&
-        isSubSidebarOpen &&
-        pathname.startsWith('/cafe/all/detail') && (
-          <NormalCafeDetail
-            detail={detail}
-            handleMenuOpen={handleMenuOpen}
-            setMemoOpen={setMemoOpen}
-          />
-        )}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          {!memoOpen &&
+            isSubSidebarOpen &&
+            pathname.startsWith('/cafe/all/detail') && (
+              <NormalCafeDetail
+                detail={detail}
+                handleMenuOpen={handleMenuOpen}
+                setMemoOpen={setMemoOpen}
+              />
+            )}
 
-      {!memoOpen &&
-        isSubSidebarOpen &&
-        pathname.startsWith('/cafe/collected/detail') && (
-          <CollectedCafeDetail setMemoOpen={setMemoOpen} />
-        )}
+          {!memoOpen &&
+            isSubSidebarOpen &&
+            pathname.startsWith('/cafe/collected/detail') && (
+              <CollectedCafeDetail setMemoOpen={setMemoOpen} />
+            )}
 
-      {!memoOpen &&
-        isSubSidebarOpen &&
-        pathname.startsWith('/cafe/bookmarked/detail') && (
-          <NormalCafeDetail
-            detail={bookmarkedCafeDetail}
-            handleMenuOpen={handleMenuOpen}
-            setMemoOpen={setMemoOpen}
-          />
-        )}
+          {!memoOpen &&
+            isSubSidebarOpen &&
+            pathname.startsWith('/cafe/bookmarked/detail') && (
+              <NormalCafeDetail
+                detail={bookmarkedCafeDetail}
+                handleMenuOpen={handleMenuOpen}
+                setMemoOpen={setMemoOpen}
+              />
+            )}
 
-      {memoOpen && (
-        <form
-          id="memo"
-          onSubmit={e => {
-            e.preventDefault();
-            if (pathname.startsWith('/cafe/all'))
-              handleUploadCollect(memoFromDetail);
-
-            if (pathname.startsWith('/cafe/collected'))
-              handleUpdateCollect(memoFromCollectedDetail);
-
-            if (pathname.startsWith('/cafe/bookmarked'))
-              handleUploadCollect(memoFromBookmarkedDetail);
-          }}
-        >
-          <Memo
-            detail={detail}
-            collectedCafeDetail={collectedCafeDetail}
-            bookmarkedCafeDetail={bookmarkedCafeDetail}
-            comment={comment}
-            pros={pros}
-            cons={cons}
-            eaten={eaten}
-            concept={concept}
-            setComment={setComment}
-            setPros={setPros}
-            setCons={setCons}
-            setEaten={setEaten}
-            setConcept={setConcept}
-            setRating={setRating}
-            rating={rating}
-            isDarkTheme={isDarkTheme}
-            setMemoOpen={setMemoOpen}
-          />
-        </form>
+          {memoOpen && (
+            <form
+              id="memo"
+              onSubmit={e => {
+                e.preventDefault();
+                if (isSearchResultPage) handleUploadCollect(memoFromDetail);
+                if (isCollectedPage)
+                  handleUpdateCollect(memoFromCollectedDetail);
+                if (isBookmarkedPage)
+                  handleUploadCollect(memoFromBookmarkedDetail);
+              }}
+            >
+              <Memo
+                detail={detail}
+                collectedCafeDetail={collectedCafeDetail}
+                bookmarkedCafeDetail={bookmarkedCafeDetail}
+                comment={comment}
+                pros={pros}
+                cons={cons}
+                eaten={eaten}
+                concept={concept}
+                setComment={setComment}
+                setPros={setPros}
+                setCons={setCons}
+                setEaten={setEaten}
+                setConcept={setConcept}
+                setRating={setRating}
+                rating={rating}
+                isDarkTheme={isDarkTheme}
+                setMemoOpen={setMemoOpen}
+              />
+            </form>
+          )}
+        </>
       )}
     </div>
   );
