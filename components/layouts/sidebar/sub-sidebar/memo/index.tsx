@@ -6,8 +6,6 @@ import {
 } from 'utils/styles';
 import { MemoProps } from 'types/common';
 import { Rating } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default function Memo({
   detail,
@@ -44,7 +42,7 @@ export default function Memo({
           onClick={() => setMemoOpen(false)}
           className={getMemoBackStyle(isDarkTheme)}
         >
-          <FontAwesomeIcon icon={faRotateLeft} />
+          <span>Back</span>
         </button>
       </div>
       <input

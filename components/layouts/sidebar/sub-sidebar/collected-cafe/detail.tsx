@@ -42,7 +42,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
     <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
-          <span className="text-2xl font-semibold">
+          <span className="text-[1.375rem] font-semibold">
             {collectedCafeDetail?.name}
           </span>
         </div>
