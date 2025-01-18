@@ -59,7 +59,6 @@ export default function KakaoMap() {
         const zoomControl = new window.kakao.maps.ZoomControl();
 
         mapRef.current = new window.kakao.maps.Map(container, options);
-
         mapRef.current.addControl(
           zoomControl,
           window.kakao.maps.ControlPosition.RIGHT,
@@ -190,6 +189,30 @@ export default function KakaoMap() {
       };
 
       ps.keywordSearch(query, handleSearch);
+    };
+
+    // 길찾기 API 요청
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const getWalkingRoute = async (
+      originX: number,
+      originY: number,
+      destX: number,
+      destY: number,
+    ) => {
+      const url = `https://apis-navi.kakaomobility.com/v1/walking?origin=${originX},${originY}&destination=${destX},${destY}`;
+      const headers = {
+        Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
+      };
+
+      const response = await fetch(url, { headers });
+      const data = await response.json();
+
+      if (data?.routes?.length) {
+        const { duration, distance } = data.routes[0].summary;
+        return { duration, distance };
+      }
+
+      return null;
     };
 
     if (pathname === '/') {

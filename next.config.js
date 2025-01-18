@@ -27,6 +27,18 @@ const nextConfig = {
         port: '',
         pathname: '/storage/v1/object/public/cafe%20masters/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'postfiles.pstatic.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'blog.kakaocdn.net',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { useUploadCollectMutation } from 'hooks/mutation/useUploadCollectMutation';
 import { useUpdateCollectMutation } from 'hooks/mutation/useUpdateCollectMutation';
@@ -39,10 +39,10 @@ export default function SubSidebar() {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const isExtend = useCheckStore(state => state.isExtend);
   const setIsExtend = useCheckStore(state => state.setIsExtend);
+  const setIsCollected = useCheckStore(state => state.setIsCollected);
   const isLoading = useCheckStore(state => state.isLoading);
 
   const pathname = usePathname();
-  const router = useRouter();
 
   const uploadCollectMutation = useUploadCollectMutation();
   const updateCollectMutation = useUpdateCollectMutation();
@@ -53,6 +53,7 @@ export default function SubSidebar() {
     name: cafeDetail?.basicInfo?.placenamefull ?? 'no-name',
     photoUrl:
       cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumbnail.webp',
+    photoList: cafeDetail?.photo?.photoList?.[1]?.list, // #음식 해시태그 리뷰사진
     reviewCount: cafeDetail?.comment?.kamapComntcnt,
     rating:
       cafeDetail?.basicInfo?.feedback?.scorecnt &&
@@ -171,7 +172,7 @@ export default function SubSidebar() {
     const strId = newId?.toString();
     if (strId !== id) {
       setId(strId);
-      setMemoOpen(false); // 메모창 비활성화
+      setMemoOpen(false);
     }
   }, [
     pathname,
@@ -190,10 +191,10 @@ export default function SubSidebar() {
   };
 
   const handleUploadCollect = (newMemo: CollectedRowInsert) => {
+    setIsCollected(true);
     setMemoOpen(false);
     uploadCollectMutation.mutate(newMemo);
     toast.success('카드를 수집했습니다!');
-    router.refresh();
   };
 
   const handleUpdateCollect = (memo: CollectedRowUpdate) => {
@@ -205,7 +206,6 @@ export default function SubSidebar() {
     setConcept('');
     updateCollectMutation.mutate(memo);
     toast.success('카드의 스펙을 수정했습니다!');
-    router.refresh();
   };
 
   if (pathname.startsWith('/cafe/all/detail') && !cafeDetail) return null;
@@ -267,9 +267,9 @@ export default function SubSidebar() {
               }}
             >
               <Memo
-                detail={detail}
-                collectedCafeDetail={collectedCafeDetail}
-                bookmarkedCafeDetail={bookmarkedCafeDetail}
+                detailName={detail?.name}
+                collectedCafeDetailName={collectedCafeDetail?.name}
+                bookmarkedCafeDetailName={bookmarkedCafeDetail?.name}
                 comment={comment}
                 pros={pros}
                 cons={cons}
