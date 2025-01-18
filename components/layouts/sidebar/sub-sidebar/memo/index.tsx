@@ -8,9 +8,9 @@ import { MemoProps } from 'types/common';
 import { Rating } from '@mui/material';
 
 export default function Memo({
-  detail,
-  collectedCafeDetail,
-  bookmarkedCafeDetail,
+  detailName,
+  collectedCafeDetailName,
+  bookmarkedCafeDetailName,
   comment,
   pros,
   cons,
@@ -32,10 +32,9 @@ export default function Memo({
     <div className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">
-          {pathname.startsWith('/cafe/all') && detail.name}
-          {pathname.startsWith('/cafe/collected') && collectedCafeDetail?.name}
-          {pathname.startsWith('/cafe/bookmarked') &&
-            bookmarkedCafeDetail?.name}
+          {pathname.startsWith('/cafe/all') && detailName}
+          {pathname.startsWith('/cafe/collected') && collectedCafeDetailName}
+          {pathname.startsWith('/cafe/bookmarked') && bookmarkedCafeDetailName}
         </h2>
         <button
           aria-label="카드 수집 취소 버튼"

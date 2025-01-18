@@ -1,4 +1,4 @@
-// 카카오맵 카페 검색 결과
+// 카카오맵 검색 데이터 JSON
 export interface AllCafe {
   address_name: string;
   category_group_code: string;
@@ -14,35 +14,7 @@ export interface AllCafe {
   y: number;
 }
 
-// sub-sidebar에서 저장을 위한 카페 상세 정보
-export interface CafeDetailForUpload {
-  id: number;
-  userId: string;
-  name: string;
-  photoUrl?: string | null;
-  rating?: number | null;
-  openWeekly?: string | null;
-  openWeekend?: string | null;
-  address: string;
-  phoneNum?: string | null;
-  coordX: number;
-  coordY: number;
-}
-
-export interface NormalCafeDetailForUpload extends CafeDetailForUpload {
-  reviewCount?: number | null;
-  menu?: string | null;
-}
-
-export interface CollectedCafeDetailForUpload extends CafeDetailForUpload {
-  comment: string;
-  pros?: string | null;
-  cons?: string | null;
-  eaten: string;
-  concept?: string | null;
-}
-
-// API 리턴 상세 정보
+// 카카오플레이스 카페 상세 JSON
 export interface Feedback {
   scorecnt: number | undefined;
   scoresum: number | undefined;
@@ -88,29 +60,83 @@ export interface MenuInfo {
   menuList?: string[];
 }
 
+export interface PhotoItem {
+  photoid: string;
+  orgurl: string;
+}
+
+export interface PhotoList {
+  photoCount: number;
+  categoryName: string;
+  list: PhotoItem[];
+}
+
+export interface Photo {
+  photoList?: PhotoList[] | undefined;
+}
+
 export interface FetchedCafeDetail {
   basicInfo?: BasicInfo;
   comment?: Comment;
   menuInfo?: MenuInfo;
+  photo?: Photo;
+}
+
+export interface NormalCafeDetailForBookmark {
+  id: number;
+  userId: string;
+  name: string;
+  photoUrl?: string | null;
+  rating?: number | null;
+  openWeekly?: string | null;
+  openWeekend?: string | null;
+  address: string;
+  phoneNum?: string | null;
+  coordX: number;
+  coordY: number;
+  reviewCount?: number | null;
+  menu?: string | null;
+  photoList?: PhotoItem[] | null;
+}
+
+export interface CollectedCafeDetailForUpdate {
+  id: number;
+  userId: string;
+  name: string;
+  photoUrl?: string | null;
+  rating?: number | null;
+  openWeekly?: string | null;
+  openWeekend?: string | null;
+  address: string;
+  phoneNum?: string | null;
+  coordX: number;
+  coordY: number;
+  comment: string;
+  pros?: string | null;
+  cons?: string | null;
+  eaten: string;
+  concept?: string | null;
 }
 
 // 수파베이스에서 가져온 수집한 카드
 export interface CollectedCafeFromSupabase
-  extends CollectedCafeDetailForUpload {
+  extends CollectedCafeDetailForUpdate {
   created_at: string;
   updated_at?: string | null;
 }
 
 // 수파베이스에서 가져온 북마크 카페
-export interface BookmarkedCafeFromSupabase extends NormalCafeDetailForUpload {
+export interface BookmarkedCafeFromSupabase
+  extends NormalCafeDetailForBookmark {
   created_at: string;
+  photoList?: PhotoItem[];
 }
 
-// 컴포넌트 Props
+// 메모 컴포넌트
 export interface MemoProps {
-  detail: NormalCafeDetailForUpload;
-  collectedCafeDetail: CollectedCafeDetailForUpload;
-  bookmarkedCafeDetail: NormalCafeDetailForUpload;
+  detailName: string;
+  collectedCafeDetailName: string;
+  bookmarkedCafeDetailName: string;
   comment: string;
   pros: string;
   cons: string;
@@ -127,12 +153,15 @@ export interface MemoProps {
   rating: number;
 }
 
+// 페이지 컴포넌트 [id]
 export interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+// 티어 리터럴
 export type Tier = 'BEGINNER' | 'JUNIOR' | 'SENIOR' | 'EXPERT' | 'MASTER';
 
+// 티어 뱃지 컴포넌트
 export interface BadgeProps {
   tier: Tier;
   range: string;

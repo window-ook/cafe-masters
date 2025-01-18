@@ -2,7 +2,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useUploadBookmarkMutation } from 'hooks/mutation/useUploadBookmarkMutation';
 import { useCancelBookmarkMutation } from 'hooks/mutation/useCancelBookmarkMutation';
 import { useCheckStore } from 'utils/store';
-import { NormalCafeDetailForUpload } from 'types/common';
+import { NormalCafeDetailForBookmark } from 'types/common';
 import {
   getDetailBodyStyle,
   DetailCollectButtonStyle,
@@ -12,19 +12,19 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-cafe/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
-import Image from 'next/image';
 import OpenTimeGrid from '../shared/open-time-grid';
 import LocationGrid from '../shared/location-grid';
 import PhoneGrid from '../shared/phone-grid';
 import MenuGrid from './menu-grid';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 interface NormalCafeDetailProps {
-  setMemoOpen: (open: boolean) => void;
-  detail: NormalCafeDetailForUpload;
+  detail: NormalCafeDetailForBookmark;
   handleMenuOpen: () => void;
+  setMemoOpen: (open: boolean) => void;
 }
 
 export default function NormalCafeDetail({
@@ -41,7 +41,7 @@ export default function NormalCafeDetail({
   const router = useRouter();
   const pathname = usePathname();
 
-  const parsedMenu =
+  const menu =
     !Array.isArray(detail?.menu) && detail?.menu
       ? JSON.parse(detail?.menu)
       : detail?.menu;
@@ -51,7 +51,11 @@ export default function NormalCafeDetail({
 
   const handleUploadBookmark = () => {
     setIsBookmarked(true);
-    uploadBookmarkMutation.mutate(detail);
+    const bookmarkData = {
+      ...detail,
+      photoList: detail.photoList ? JSON.stringify(detail.photoList) : null,
+    };
+    uploadBookmarkMutation.mutate(bookmarkData);
     toast.success('가고 싶은 카페를 북마크했습니다!');
   };
 
@@ -104,18 +108,49 @@ export default function NormalCafeDetail({
         </button>
       </div>
 
+      {/* 캐러셀로 하이라이트 가로 슬라이드 구현 */}
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
-          <Image
-            src={detail?.photoUrl || '/image/cafe_thumbnail.webp'}
-            alt="카페 썸네일"
-            className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
-            width={160}
-            height={30}
-            onClick={() =>
-              window.open(`http://place.map.kakao.com/${detail?.id}`, '_blank')
-            }
-          />
+          <div className="flex gap-4 mt-4 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory">
+            <div className="flex-shrink-0 h-[15rem] snap-center">
+              <Image
+                src={detail?.photoUrl || '/image/cafe_thumbnail.webp'}
+                alt="카페 썸네일"
+                className="rounded-md object-cover w-auto h-full transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
+                width={160}
+                height={240}
+                onClick={() =>
+                  window.open(
+                    `http://place.map.kakao.com/${detail?.id}`,
+                    '_blank',
+                  )
+                }
+              />
+            </div>
+            {detail?.photoList?.slice(1).map(photo => {
+              return (
+                <div
+                  key={photo.photoid}
+                  className="flex-shrink-0 h-[15rem] snap-center"
+                >
+                  <Image
+                    alt="review-photo"
+                    key={photo.photoid}
+                    src={photo.orgurl}
+                    className="rounded-md object-cover w-auto h-full transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
+                    width={160}
+                    height={240}
+                    onClick={() =>
+                      window.open(
+                        `http://place.map.kakao.com/${detail?.id}`,
+                        '_blank',
+                      )
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         <div className="flex justify-between items-center">
@@ -146,7 +181,7 @@ export default function NormalCafeDetail({
           <MenuGrid
             handleMenuOpen={handleMenuOpen}
             isDarkTheme={isDarkTheme}
-            menu={parsedMenu}
+            menu={menu}
           />
         </div>
       </div>

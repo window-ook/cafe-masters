@@ -2,7 +2,7 @@
 
 import { Database } from 'types_db';
 import { PostgrestError } from '@supabase/supabase-js';
-import { BookmarkedCafeFromSupabase } from 'types/common';
+import { BookmarkedCafeFromSupabase, PhotoItem } from 'types/common';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 
 export type BookmarkedRow = Database['public']['Tables']['bookmarked']['Row'];
@@ -31,7 +31,12 @@ export async function getAllBookmarkedCafes(
 
   if (error) handleError(error);
 
-  const safeData = data ?? [];
+  const safeData = (data ?? []).map(item => ({
+    ...item,
+    photoList: item.photoList
+      ? (JSON.parse(item.photoList) as PhotoItem[]) // 문자열을 JSON 배열로 변환
+      : undefined,
+  }));
   const nextCursor =
     safeData.length && safeData.length === limit ? offset + limit : null;
 
