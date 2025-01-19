@@ -42,7 +42,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
     <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
-          <span className="text-[1.375rem] font-semibold">
+          <span className="text-[1.375rem] font-dpixel font-semibold">
             {collectedCafeDetail?.name}
           </span>
         </div>
@@ -98,7 +98,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
             <div className="bg-gray-400 bg-opacity-40 h-0.5 col-span-3"></div>
           </div>
           <div className="col-span-2 grid grid-cols-3">
-            <div className="col-span-2 text-2xl">CAFE SPEC</div>
+            <div className="col-span-2 font-dpixel text-2xl">CAFE SPEC</div>
           </div>
 
           <CommentGrid comment={collectedCafeDetail?.comment} />

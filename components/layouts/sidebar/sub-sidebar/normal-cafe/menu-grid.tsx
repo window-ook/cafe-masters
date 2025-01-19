@@ -24,7 +24,7 @@ export default function MenuGrid({
     <div className="col-span-2">
       <div>
         <div className="flex items-center gap-2">
-          <span className="text-lg">메뉴</span>
+          <span className="font-dpixel text-lg">메뉴</span>
           <button aria-label="메뉴 보기 버튼" onClick={handleMenuOpen}>
             {isMenuOpen ? (
               <FontAwesomeIcon

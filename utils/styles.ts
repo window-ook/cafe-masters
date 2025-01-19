@@ -21,7 +21,7 @@ export const getSubSidebarStyle = (
   const baseStyle = `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white text-black'} 
    static left-0 z-10 w-[100vw] max-w-[27rem] p-2 
    transition-transform duration-500 ease-in-out 
-   overflow-y-scroll font-dpixel shadow-md`;
+   overflow-y-scroll shadow-md`;
 
   const openStyle = isSubSidebarOpen
     ? `${isExtend ? 'translate-y-[13rem] h-[calc(100vh-13rem)]' : 'translate-y-[35rem]'} 
@@ -79,7 +79,7 @@ export const getMasterEffectStyle = (width: string) => {
   return `${width} z-0 absolute inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 };
 
-export const ModalMasterEffectStyle = `w-[27%] sm:w-[9%] z-0 absolute -top-0.5 inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
+export const ModalMasterEffectStyle = `w-[27%] sm:w-[9%] z-0 -top-0.5 inset-0 h-9 absolute bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 
 export const getMasterTierStyle = (addOn: string = '') => {
   return `${addOn} z-10 relative bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md`;

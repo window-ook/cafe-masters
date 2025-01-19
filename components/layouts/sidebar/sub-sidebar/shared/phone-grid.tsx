@@ -12,7 +12,7 @@ export default function PhoneGrid({ phoneNum }: PhoneNumGridProps) {
     <div className="col-span-2 grid grid-cols-3 items-center">
       <div className="col-span-1 flex gap-1">
         <FontAwesomeIcon icon={faPhone} />
-        <span>전화번호</span>
+        <span className="font-dpixel">전화번호</span>
       </div>
       <div className="col-span-2 flex gap-4">
         <span className="text-lg">{phoneNum}</span>

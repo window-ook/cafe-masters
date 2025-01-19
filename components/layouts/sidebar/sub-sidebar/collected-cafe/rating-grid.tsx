@@ -13,7 +13,7 @@ export default function RatingGrid({ rating }: RatingGridProps) {
         <div className={RatingCircleStyle}>
           <FontAwesomeIcon icon={faStar} className={RatingStarStyle} />
         </div>
-        {rating}
+        <span className="font-dpixel">{rating}</span>
       </div>
     </span>
   );

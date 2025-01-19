@@ -10,7 +10,7 @@ export default function ConsGrid({ cons }: ConsGridProps) {
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1">
         <FontAwesomeIcon icon={faFaceFrown} className="pt-1" />
-        <span>별로인 점</span>
+        <span className="font-dpixel">별로인 점</span>
       </div>
       <div className="col-span-2 text-md">{cons}</div>
     </div>

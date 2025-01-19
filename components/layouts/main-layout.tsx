@@ -3,7 +3,7 @@
 import { ReactNode } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
-import Sidebar from 'components/layouts/sidebar/container';
+import Sidebar from 'components/layouts/sidebar';
 
 const KakaoMap = dynamic(() => import('components/layouts/kakaomap'), {
   ssr: false,

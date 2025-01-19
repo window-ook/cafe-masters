@@ -12,7 +12,7 @@ export default function LocationGrid({ address }: LocationGridProps) {
     <div className="col-span-2 grid grid-cols-3 items-center">
       <div className="col-span-1 flex gap-1">
         <FontAwesomeIcon icon={faLocationDot} />
-        <span>위치</span>
+        <span className="font-dpixel">위치</span>
       </div>
       <div className="col-span-2 flex gap-4">
         <span className="text-sm">{address}</span>
