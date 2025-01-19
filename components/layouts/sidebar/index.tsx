@@ -18,8 +18,8 @@ import CollectedCafe from './main/collected-cafe';
 import PageConverter from './footer/page-converter';
 import SidebarTabList from './main/sidebar-tab-list';
 import CircularProgress from '@mui/material/CircularProgress';
-import useCollectedCafes from 'hooks/query/useCollectedCafes';
-import useBookmarkedCafes from 'hooks/query/useBookmarkedCafes';
+import useCollectedInfiniteQuery from 'hooks/query/useCollectedInfiniteQuery';
+import useBookmarkedInfiniteQuery from 'hooks/query/useBookmarkedInfiniteQuery';
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -98,14 +98,14 @@ export default function Sidebar() {
     fetchNextPage: fetchNextCollectedPage,
     hasNextPage: hasNextCollectedPage,
     isFetchingNextPage: isFetchingNextCollectedPage,
-  } = useCollectedCafes(userId, isCollectedPage);
+  } = useCollectedInfiniteQuery(userId, isCollectedPage);
 
   const {
     fetchedBookmarkedCafe,
     fetchNextPage: fetchNextBookmarkedPage,
     hasNextPage: hasNextBookmarkedPage,
     isFetchingNextPage: isFetchingNextBookmarkedPage,
-  } = useBookmarkedCafes(userId, isBookmarkedPage);
+  } = useBookmarkedInfiniteQuery(userId, isBookmarkedPage);
 
   useEffect(() => {
     if (

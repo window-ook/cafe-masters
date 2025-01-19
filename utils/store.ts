@@ -71,25 +71,22 @@ export const useCheckStore = create<CheckStore>()(
   persist(
     set => ({
       isSubSidebarOpen: false,
-      setIsSubSidebarOpen: (prev: boolean) => set({ isSubSidebarOpen: prev }),
       isMenuOpen: false,
-      setIsMenuOpen: (prev: boolean) => set({ isMenuOpen: prev }),
-
       isExtend: false,
       isExtendComplete: false,
+      isDarkTheme: false,
+      isCollected: false,
+      isBookmarked: false,
+      isLoading: false,
+
+      setIsSubSidebarOpen: (prev: boolean) => set({ isSubSidebarOpen: prev }),
+      setIsMenuOpen: (prev: boolean) => set({ isMenuOpen: prev }),
       setIsExtend: () => set(prev => ({ isExtend: !prev.isExtend })),
       setIsExtendComplete: () =>
         set(prev => ({ isExtendComplete: !prev.isExtendComplete })),
-
-      isDarkTheme: false,
       setIsDarkTheme: () => set(prev => ({ isDarkTheme: !prev.isDarkTheme })),
-
-      isCollected: false,
-      isBookmarked: false,
       setIsCollected: (prev: boolean) => set({ isCollected: prev }),
       setIsBookmarked: (prev: boolean) => set({ isBookmarked: prev }),
-
-      isLoading: false,
       setIsLoading: (prev: boolean) => set({ isLoading: prev }),
     }),
     {

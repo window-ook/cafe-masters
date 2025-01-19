@@ -13,7 +13,6 @@ export default function BookmarkedDetailpage({ params }: PageProps) {
   const setBookmarkedCafeDetail = useMapStore(
     state => state.setBookmarkedCafeDetail,
   );
-
   const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
 
   useEffect(() => {
@@ -23,7 +22,7 @@ export default function BookmarkedDetailpage({ params }: PageProps) {
       setIsBookmarked(true);
       setBookmarkedCafeDetail([foundCafe]);
     }
-  }, [bookmarkedCafe, id, setBookmarkedCafeDetail, setIsBookmarked]);
+  }, [id, bookmarkedCafe, setBookmarkedCafeDetail, setIsBookmarked]);
 
   return (
     <Head>

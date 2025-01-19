@@ -1,9 +1,12 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useMapStore } from 'utils/store';
 import { getAllBookmarkedCafes } from 'actions/bookmarkActions';
 
-export default function useBookmarkedCafes(userId: string, isActive: boolean) {
+export default function useBookmarkedInfiniteQuery(
+  userId: string,
+  isActive: boolean,
+) {
   const setBookmarkedCafe = useMapStore(state => state.setBookmarkedCafe);
 
   const {

@@ -11,6 +11,8 @@ import Head from 'next/head';
 export default function AllDetailPage({ params }: PageProps) {
   const { id } = use(params);
   const userId = useUserStore(state => state.userId);
+  const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
+  const collectedCafe = useMapStore(state => state.collectedCafe);
   const setCafeDetail = useMapStore(state => state.setCafeDetail);
   const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
   const setIsCollected = useCheckStore(state => state.setIsCollected);
@@ -23,25 +25,38 @@ export default function AllDetailPage({ params }: PageProps) {
     setIsCollected(false);
     setIsLoading(true);
 
-    const numericId = parseFloat(id);
-
     const fetchAllData = async () => {
       try {
-        const [cafeDetailResponse, bookmarkedResponse, collectedResponse] =
-          await Promise.all([
-            getCafeDetail(id),
-            getBookmarkedCafe(numericId, userId),
-            getCollectedCafe(numericId, userId),
-          ]);
+        const numericId = parseFloat(id);
 
+        const cafeDetailResponse = await getCafeDetail(id);
+        const isBookmarkedLocally = bookmarkedCafe.some(
+          cafe => cafe.id === numericId,
+        );
+        const isCollectedLocally = collectedCafe.some(
+          cafe => cafe.id === numericId,
+        );
         setCafeDetail(cafeDetailResponse);
+        setIsBookmarked(isBookmarkedLocally);
+        setIsCollected(isCollectedLocally);
 
-        if (bookmarkedResponse?.length) {
+        const [isBookmarkedResponse, isCollectedResponse] = await Promise.all([
+          !isBookmarkedLocally
+            ? getBookmarkedCafe(numericId, userId)
+            : Promise.resolve(null),
+          !isCollectedLocally
+            ? getCollectedCafe(numericId, userId)
+            : Promise.resolve(null),
+        ]);
+
+        if (isBookmarkedResponse?.length) {
           setIsBookmarked(true);
+          console.log('북마크 확인 요청 발생');
         }
 
-        if (collectedResponse?.length) {
+        if (isCollectedResponse?.length) {
           setIsCollected(true);
+          console.log('수집한 카드 확인 요청 발생');
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -53,11 +68,13 @@ export default function AllDetailPage({ params }: PageProps) {
     fetchAllData();
   }, [
     id,
+    userId,
+    bookmarkedCafe,
+    collectedCafe,
     setCafeDetail,
     setIsBookmarked,
     setIsCollected,
     setIsLoading,
-    userId,
   ]);
 
   return (

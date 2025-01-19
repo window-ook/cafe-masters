@@ -41,13 +41,13 @@ export default function NormalCafeDetail({
   const router = useRouter();
   const pathname = usePathname();
 
+  const uploadBookmarkMutation = useUploadBookmarkMutation();
+  const cancelBookmarkMutation = useCancelBookmarkMutation();
+
   const menu =
     !Array.isArray(detail?.menu) && detail?.menu
       ? JSON.parse(detail?.menu)
       : detail?.menu;
-
-  const uploadBookmarkMutation = useUploadBookmarkMutation();
-  const cancelBookmarkMutation = useCancelBookmarkMutation();
 
   const handleUploadBookmark = () => {
     setIsBookmarked(true);
@@ -121,6 +121,7 @@ export default function NormalCafeDetail({
                 className="rounded-md object-cover w-auto h-full transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
                 width={160}
                 height={240}
+                priority={false}
                 onClick={() =>
                   window.open(
                     `http://place.map.kakao.com/${detail?.id}`,
@@ -142,6 +143,7 @@ export default function NormalCafeDetail({
                     className="rounded-md object-cover w-auto h-full transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
                     width={160}
                     height={240}
+                    priority={false}
                     onClick={() =>
                       window.open(
                         `http://place.map.kakao.com/${detail?.id}`,
