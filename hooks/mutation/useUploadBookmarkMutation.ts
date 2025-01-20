@@ -15,7 +15,11 @@ export function useUploadBookmarkMutation() {
       await createBookmarkedCafe(detail),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
+      queryClient.invalidateQueries({
+        queryKey: ['bookmarkedCafeCount', userId],
+      });
       queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
+      queryClient.refetchQueries({ queryKey: ['bookmarkedCafeCount', userId] });
     },
     onError: error => console.error(error),
   });

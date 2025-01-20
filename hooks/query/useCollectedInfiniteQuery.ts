@@ -1,9 +1,12 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useMapStore } from 'utils/store';
 import { getAllCollectedCafes } from 'actions/collectActions';
 
-export default function useCollectedCafes(userId: string, isActive: boolean) {
+export default function useCollectedInfiniteQuery(
+  userId: string,
+  isActive: boolean,
+) {
   const setCollectedCafe = useMapStore(state => state.setCollectedCafe);
 
   const {

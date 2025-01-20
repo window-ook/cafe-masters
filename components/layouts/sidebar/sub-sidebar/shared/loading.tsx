@@ -70,7 +70,7 @@ export default function Loading() {
           <div className="col-span-2 grid grid-cols-3">
             <div className="col-span-1 flex gap-1 items-center">
               <FontAwesomeIcon icon={faClock} />
-              <span>영업시간</span>
+              <span className="font-dpixel">영업시간</span>
             </div>
             <div className="col-span-1 text-left">
               <span>평일</span>
@@ -89,7 +89,7 @@ export default function Loading() {
           <div className="col-span-2 grid grid-cols-3 items-center">
             <div className="col-span-1 flex gap-1">
               <FontAwesomeIcon icon={faLocationDot} />
-              <span>위치</span>
+              <span className="font-dpixel">위치</span>
             </div>
             <div className="col-span-2 flex gap-4">
               <span className="text-sm">?? ??구 ??로</span>
@@ -103,7 +103,7 @@ export default function Loading() {
           <div className="col-span-2 grid grid-cols-3 items-center">
             <div className="col-span-1 flex gap-1">
               <FontAwesomeIcon icon={faPhone} />
-              <span>전화번호</span>
+              <span className="font-dpixel">전화번호</span>
             </div>
             <div className="col-span-2 flex gap-4">
               <span className="text-lg">???-????-????</span>

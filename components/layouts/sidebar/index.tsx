@@ -12,14 +12,14 @@ import { useInView } from 'react-intersection-observer';
 import { getSidebarStyle } from 'utils/styles';
 import Header from './header';
 import Footer from './footer';
-import SubSidebar from './sub-sidebar/container';
+import SubSidebar from './sub-sidebar';
 import NormalCafe from './main/normal-cafe';
 import CollectedCafe from './main/collected-cafe';
 import PageConverter from './footer/page-converter';
 import SidebarTabList from './main/sidebar-tab-list';
 import CircularProgress from '@mui/material/CircularProgress';
-import useCollectedCafes from 'hooks/query/useCollectedCafes';
-import useBookmarkedCafes from 'hooks/query/useBookmarkedCafes';
+import useCollectedInfiniteQuery from 'hooks/query/useCollectedInfiniteQuery';
+import useBookmarkedInfiniteQuery from 'hooks/query/useBookmarkedInfiniteQuery';
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,8 +34,6 @@ export default function Sidebar() {
   });
 
   const allCafe = useMapStore(state => state.allCafe);
-  const collectedCount = useMapStore(state => state.collectedCafeCount);
-  const bookmarkedCount = useMapStore(state => state.bookmarkedCafeCount);
   const setThisX = useMapStore(state => state.setThisX);
   const setThisY = useMapStore(state => state.setThisY);
 
@@ -100,14 +98,14 @@ export default function Sidebar() {
     fetchNextPage: fetchNextCollectedPage,
     hasNextPage: hasNextCollectedPage,
     isFetchingNextPage: isFetchingNextCollectedPage,
-  } = useCollectedCafes(userId, isCollectedPage);
+  } = useCollectedInfiniteQuery(userId, isCollectedPage);
 
   const {
     fetchedBookmarkedCafe,
     fetchNextPage: fetchNextBookmarkedPage,
     hasNextPage: hasNextBookmarkedPage,
     isFetchingNextPage: isFetchingNextBookmarkedPage,
-  } = useBookmarkedCafes(userId, isBookmarkedPage);
+  } = useBookmarkedInfiniteQuery(userId, isBookmarkedPage);
 
   useEffect(() => {
     if (
@@ -159,7 +157,7 @@ export default function Sidebar() {
   if (pathname.startsWith('/resetpassword')) return null;
 
   return (
-    <div className="relative flex items-center">
+    <nav className="relative flex items-center">
       <div
         className={getSidebarStyle(isDarkTheme, isSubSidebarOpen)}
         ref={containerRef}
@@ -168,8 +166,8 @@ export default function Sidebar() {
           <Header />
           {pathname === '/' && <SidebarTabList />}
 
-          <div className="px-8 sm:px-4">
-            {/* 모든 카페 */}
+          {/* 사이드바 Body */}
+          <section className="px-8 sm:px-4">
             {isSearchResultPage && (
               <div className={cardDivStyle}>
                 {paginatedResults.map((cafe: AllCafe) => (
@@ -184,15 +182,8 @@ export default function Sidebar() {
               </div>
             )}
 
-            {/* 수집한 카드 */}
             {isCollectedPage && (
               <div>
-                <div className="flex justify-center sticky">
-                  <span className="font-dpixel">
-                    수집한 카드 수 : {collectedCount}
-                  </span>
-                </div>
-
                 {fetchedCollectedCafe?.pages?.map((page, i) => (
                   <div key={`page-${i}`} className={cardDivStyle}>
                     {page.data.map((cafe: CollectedCafeFromSupabase) => (
@@ -219,15 +210,8 @@ export default function Sidebar() {
               </div>
             )}
 
-            {/* 가고 싶은 카페(북마크) */}
             {isBookmarkedPage && (
               <div>
-                <div className="flex justify-center sticky">
-                  <span className="font-dpixel">
-                    북마크한 카페 수 : {bookmarkedCount}
-                  </span>
-                </div>
-
                 {fetchedBookmarkedCafe?.pages?.map((page, i) => (
                   <div key={`page-${i}`} className={cardDivStyle}>
                     {page.data.map((cafe: BookmarkedCafeFromSupabase) => (
@@ -236,6 +220,7 @@ export default function Sidebar() {
                         name={cafe.name}
                         address={cafe.address}
                         phoneNum={cafe.phoneNum}
+                        photoUrl={cafe.photoUrl}
                         onClick={() => handleBookmarkedCafeClick(cafe)}
                       />
                     ))}
@@ -251,7 +236,7 @@ export default function Sidebar() {
                 <div ref={bookmarkedRef} className="w-[22rem]"></div>
               </div>
             )}
-          </div>
+          </section>
 
           {isSearchResultPage && (
             <PageConverter
@@ -268,6 +253,6 @@ export default function Sidebar() {
       </div>
 
       <SubSidebar />
-    </div>
+    </nav>
   );
 }

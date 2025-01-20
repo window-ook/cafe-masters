@@ -215,7 +215,7 @@ export default function SubSidebar() {
     return null;
 
   return (
-    <div
+    <aside
       className={getSubSidebarStyle(isSubSidebarOpen, isDarkTheme, isExtend)}
     >
       <div className="flex justify-center">
@@ -289,6 +289,6 @@ export default function SubSidebar() {
           )}
         </>
       )}
-    </div>
+    </aside>
   );
 }

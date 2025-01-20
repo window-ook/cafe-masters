@@ -52,7 +52,7 @@ export default function CollectedCafe({
         }
       >
         <div className="shadow-md shadow-gray-500 px-2">
-          <span className="">{name}</span>
+          <span className="font-dpixel">{name}</span>
         </div>
         <div className="flex justify-start gap-0.5">
           {Array(ratings)
@@ -66,14 +66,14 @@ export default function CollectedCafe({
               </div>
             ))}
         </div>
-        <div className="flex justify-center rounded-xl">
+        <div className="flex justify-center rounded-xl h-[6rem]">
           <Image
             src={photoUrl ?? '/image/cafe_thumbnail.webp'}
             alt="카페 썸네일"
             priority={true}
             width={100}
             height={50}
-            className="w-auto h-auto"
+            className="object-cover w-auto h-full rounded-xl"
           />
         </div>
         <div className="flex flex-col shadow-gray-500 shadow-md px-2">

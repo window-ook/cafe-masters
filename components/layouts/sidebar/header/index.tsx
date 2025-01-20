@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useCheckStore } from 'utils/store';
+import { usePathname, useRouter } from 'next/navigation';
+import { useMapStore, useCheckStore } from 'utils/store';
 import { Tooltip } from '@mui/material';
 import Image from 'next/image';
 import Search from './search';
@@ -10,14 +10,20 @@ import LogoImage from 'components/auth/shared/logo-image';
 
 export default function Header() {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
+  const bookmarkedCafeCount = useMapStore(state => state.bookmarkedCafeCount);
 
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isCollectedPage = pathname.startsWith('/cafe/collected');
+  const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
 
   const handleRoute = () => router.push('/');
 
   return (
     <div
-      className={`${isDarkTheme ? 'bg-darkbg' : 'bg-white'} z-10 sticky top-0 py-4 flex flex-col gap-6`}
+      className={`${isDarkTheme ? 'bg-darkbg' : 'bg-white'} z-10 top-0 sticky py-4 flex flex-col gap-6`}
     >
       <div className="flex justify-between items-center mb-2">
         <Image
@@ -39,6 +45,16 @@ export default function Header() {
         <LightDarkToggle />
       </div>
       <Search />
+      {isCollectedPage && (
+        <span className="flex justify-center font-dpixel text-xl sm:text-2xl">
+          TOTAL : {collectedCafeCount}
+        </span>
+      )}
+      {isBookmarkedPage && (
+        <span className="flex justify-center font-dpixel text-xl sm:text-2xl">
+          TOTAL : {bookmarkedCafeCount}
+        </span>
+      )}
     </div>
   );
 }

@@ -31,11 +31,11 @@ export default function Memo({
   return (
     <div className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold">
+        <span className="font-dpixel text-2xl font-semibold">
           {pathname.startsWith('/cafe/all') && detailName}
           {pathname.startsWith('/cafe/collected') && collectedCafeDetailName}
           {pathname.startsWith('/cafe/bookmarked') && bookmarkedCafeDetailName}
-        </h2>
+        </span>
         <button
           aria-label="카드 수집 취소 버튼"
           onClick={() => setMemoOpen(false)}
@@ -47,7 +47,7 @@ export default function Memo({
       <input
         required
         value={comment}
-        placeholder="내 코멘트(필수)"
+        placeholder="코멘트(필수)"
         onChange={e => setComment(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
@@ -66,12 +66,12 @@ export default function Memo({
       <input
         required
         value={eaten}
-        placeholder="먹어본 메뉴(필수)"
+        placeholder="먹은 메뉴(필수)"
         onChange={e => setEaten(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
-        placeholder="카페의 컨셉"
+        placeholder="카페 컨셉"
         value={concept}
         onChange={e => setConcept(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}

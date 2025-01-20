@@ -6,7 +6,7 @@ export const getSidebarStyle = (
 };
 
 export const getSidebarTabTextStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'text-white' : 'text-black'} w-[22rem] text-2xl font-dpixel transition ease-in-out delay-100 hover:text-opacity-30`;
+  return `${isDarkTheme ? 'text-white' : 'text-black'} w-[22rem] text-2xl transition ease-in-out delay-100 hover:text-opacity-30`;
 };
 
 export const getPageConverterStyle = (isDarkTheme: boolean) => {
@@ -21,7 +21,7 @@ export const getSubSidebarStyle = (
   const baseStyle = `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white text-black'} 
    static left-0 z-10 w-[100vw] max-w-[27rem] p-2 
    transition-transform duration-500 ease-in-out 
-   overflow-y-scroll font-dpixel shadow-md`;
+   overflow-y-scroll shadow-md`;
 
   const openStyle = isSubSidebarOpen
     ? `${isExtend ? 'translate-y-[13rem] h-[calc(100vh-13rem)]' : 'translate-y-[35rem]'} 
@@ -61,14 +61,14 @@ export const DetailCollectButtonStyle =
   'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-dpixel';
 
 export const getNormalCardStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-50 p-4 border-4 rounded-2xl shadow-md flex flex-col gap-2 cursor-pointer font-dpixel hover:scale-105 transition duration-300 ease`;
+  return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-50 p-4 border-4 rounded-2xl shadow-md flex flex-col gap-2 cursor-pointer hover:scale-105 transition duration-300 ease`;
 };
 
 export const getCollectedCardStyle = (
   bgRatings: string,
   isDarkTheme: boolean,
 ) => {
-  return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel hover:scale-105 transition duration-300 ease`;
+  return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer hover:scale-105 transition duration-300 ease`;
 };
 
 export const getExpertTierStyle = (addOn: string = '') => {
@@ -79,7 +79,7 @@ export const getMasterEffectStyle = (width: string) => {
   return `${width} z-0 absolute inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 };
 
-export const ModalMasterEffectStyle = `w-[27%] sm:w-[9%] z-0 absolute -top-0.5 inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
+export const ModalMasterEffectStyle = `w-[27%] sm:w-[9%] z-0 -top-0.5 inset-0 h-9 absolute bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 
 export const getMasterTierStyle = (addOn: string = '') => {
   return `${addOn} z-10 relative bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md`;

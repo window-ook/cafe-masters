@@ -41,13 +41,13 @@ export default function NormalCafeDetail({
   const router = useRouter();
   const pathname = usePathname();
 
+  const uploadBookmarkMutation = useUploadBookmarkMutation();
+  const cancelBookmarkMutation = useCancelBookmarkMutation();
+
   const menu =
     !Array.isArray(detail?.menu) && detail?.menu
       ? JSON.parse(detail?.menu)
       : detail?.menu;
-
-  const uploadBookmarkMutation = useUploadBookmarkMutation();
-  const cancelBookmarkMutation = useCancelBookmarkMutation();
 
   const handleUploadBookmark = () => {
     setIsBookmarked(true);
@@ -94,7 +94,9 @@ export default function NormalCafeDetail({
               />
             </button>
           )}
-          <span className="text-[1.375rem] font-semibold">{detail?.name}</span>
+          <span className="text-[1.375rem] font-dpixel font-semibold">
+            {detail?.name}
+          </span>
         </div>
         <button
           aria-label="카페 상세 정보 보기 취소 버튼"
@@ -112,13 +114,14 @@ export default function NormalCafeDetail({
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
           <div className="flex gap-4 mt-4 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory">
-            <div className="flex-shrink-0 h-[15rem] snap-center">
+            <div className="snap-center flex-shrink-0 h-[15rem] py-2">
               <Image
                 src={detail?.photoUrl || '/image/cafe_thumbnail.webp'}
                 alt="카페 썸네일"
                 className="rounded-md object-cover w-auto h-full transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
                 width={160}
                 height={240}
+                priority={false}
                 onClick={() =>
                   window.open(
                     `http://place.map.kakao.com/${detail?.id}`,
@@ -131,7 +134,7 @@ export default function NormalCafeDetail({
               return (
                 <div
                   key={photo.photoid}
-                  className="flex-shrink-0 h-[15rem] snap-center"
+                  className="flex-shrink-0 h-[15rem] snap-center py-2"
                 >
                   <Image
                     alt="review-photo"
@@ -140,6 +143,7 @@ export default function NormalCafeDetail({
                     className="rounded-md object-cover w-auto h-full transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
                     width={160}
                     height={240}
+                    priority={false}
                     onClick={() =>
                       window.open(
                         `http://place.map.kakao.com/${detail?.id}`,

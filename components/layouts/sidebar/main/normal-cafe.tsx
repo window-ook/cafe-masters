@@ -6,6 +6,7 @@ interface NormalCafeProps {
   name: string | undefined;
   address: string;
   phoneNum: string | null | undefined;
+  photoUrl?: string | null | undefined;
   onClick: () => void;
 }
 
@@ -14,24 +15,29 @@ export default function NormalCafe({
   address,
   phoneNum,
   onClick,
+  photoUrl,
 }: NormalCafeProps) {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
   return (
     <div onClick={onClick} className={getNormalCardStyle(isDarkTheme)}>
       <span
-        className={`${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'} px-2 py-1 shadow-md`}
+        className={`${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'} px-2 py-1 shadow-md font-dpixel`}
       >
         {name}
       </span>
-      <div className="flex justify-center">
+      <div className="flex justify-center h-[6rem]">
         <Image
-          src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/search_thumbnail.webp"
+          src={
+            photoUrl
+              ? photoUrl
+              : 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/search_thumbnail.webp'
+          }
           alt="카페 썸네일"
           width={100}
           height={50}
           priority={true}
-          className="w-auto h-auto"
+          className="object-cover w-auto h-full rounded-xl"
         />
       </div>
       <div
