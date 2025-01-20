@@ -10,8 +10,8 @@ import LogoImage from 'components/auth/shared/logo-image';
 
 export default function Header() {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-  const collectedCount = useMapStore(state => state.collectedCafeCount);
-  const bookmarkedCount = useMapStore(state => state.bookmarkedCafeCount);
+  const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
+  const bookmarkedCafeCount = useMapStore(state => state.bookmarkedCafeCount);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -47,12 +47,12 @@ export default function Header() {
       <Search />
       {isCollectedPage && (
         <span className="flex justify-center font-dpixel text-xl sm:text-2xl">
-          TOTAL : {collectedCount}
+          TOTAL : {collectedCafeCount}
         </span>
       )}
       {isBookmarkedPage && (
         <span className="flex justify-center font-dpixel text-xl sm:text-2xl">
-          TOTAL : {bookmarkedCount}
+          TOTAL : {bookmarkedCafeCount}
         </span>
       )}
     </div>

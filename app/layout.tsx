@@ -7,6 +7,21 @@ import ReactQueryClientProvider from 'config/react-query-client-provider';
 import AuthProvider from 'config/auth-provider';
 import MainLayout from 'components/layouts/main-layout';
 import Auth from 'components/auth/shared';
+import localFont from 'next/font/local';
+
+const pretendard = localFont({
+  src: '../public/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard',
+});
+
+const dunggeunmo = localFont({
+  src: '../public/fonts/DungGeunMo.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-dunggeunmo',
+});
 
 export const metadata: Metadata = {
   title: 'Cafe Masters',
@@ -48,18 +63,14 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="en">
+    <html lang="kr" className={`${pretendard.variable} ${dunggeunmo.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fastly.jsdelivr.net" />
-        <link rel="dns-prefetch" href="https://fastly.jsdelivr.net" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
         <meta
           name="google-site-verification"
           content="uLLg7r0DwRzwQB1croiSmhHf5Krf4FaxC2Z2t0BX4JM"
         />
       </head>
-      <body>
+      <body className={`font-pretendard`}>
         <ReactQueryClientProvider>
           <AuthProvider
             accessToken={session?.access_token ?? 'no-access-token'}

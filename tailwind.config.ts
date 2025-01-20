@@ -65,7 +65,8 @@ const config: Config = {
       },
 
       fontFamily: {
-        dpixel: ['DungGeunMo'],
+        dpixel: ['var(--font-dunggeunmo)'],
+        pretendard: ['var(--font-pretendard)'],
       },
 
       fontSize: {

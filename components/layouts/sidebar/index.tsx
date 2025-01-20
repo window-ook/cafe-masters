@@ -220,6 +220,7 @@ export default function Sidebar() {
                         name={cafe.name}
                         address={cafe.address}
                         phoneNum={cafe.phoneNum}
+                        photoUrl={cafe.photoUrl}
                         onClick={() => handleBookmarkedCafeClick(cafe)}
                       />
                     ))}

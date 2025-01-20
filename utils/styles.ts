@@ -6,7 +6,7 @@ export const getSidebarStyle = (
 };
 
 export const getSidebarTabTextStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'text-white' : 'text-black'} w-[22rem] text-2xl font-dpixel transition ease-in-out delay-100 hover:text-opacity-30`;
+  return `${isDarkTheme ? 'text-white' : 'text-black'} w-[22rem] text-2xl transition ease-in-out delay-100 hover:text-opacity-30`;
 };
 
 export const getPageConverterStyle = (isDarkTheme: boolean) => {
@@ -61,14 +61,14 @@ export const DetailCollectButtonStyle =
   'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-dpixel';
 
 export const getNormalCardStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-50 p-4 border-4 rounded-2xl shadow-md flex flex-col gap-2 cursor-pointer font-dpixel hover:scale-105 transition duration-300 ease`;
+  return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-50 p-4 border-4 rounded-2xl shadow-md flex flex-col gap-2 cursor-pointer hover:scale-105 transition duration-300 ease`;
 };
 
 export const getCollectedCardStyle = (
   bgRatings: string,
   isDarkTheme: boolean,
 ) => {
-  return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel hover:scale-105 transition duration-300 ease`;
+  return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer hover:scale-105 transition duration-300 ease`;
 };
 
 export const getExpertTierStyle = (addOn: string = '') => {
