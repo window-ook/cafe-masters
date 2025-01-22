@@ -6,7 +6,7 @@ export const getSidebarStyle = (
 };
 
 export const getSidebarTabTextStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'text-white' : 'text-black'} w-[22rem] text-2xl transition ease-in-out delay-100 hover:text-opacity-30`;
+  return `${isDarkTheme ? 'text-white' : 'text-black'} w-[22rem] font-extrabold text-2xl transition ease-in-out delay-100 hover:text-opacity-30`;
 };
 
 export const getPageConverterStyle = (isDarkTheme: boolean) => {

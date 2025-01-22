@@ -18,8 +18,8 @@ import CollectedCafe from './main/collected-cafe';
 import PageConverter from './footer/page-converter';
 import SidebarTabList from './main/sidebar-tab-list';
 import CircularProgress from '@mui/material/CircularProgress';
-import useCollectedInfiniteQuery from 'hooks/query/useCollectedInfiniteQuery';
-import useBookmarkedInfiniteQuery from 'hooks/query/useBookmarkedInfiniteQuery';
+import useCollectedInfiniteQuery from 'hooks/cache/useCollectedInfiniteQuery';
+import useBookmarkedInfiniteQuery from 'hooks/cache/useBookmarkedInfiniteQuery';
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,9 +36,7 @@ export default function Sidebar() {
   const allCafe = useMapStore(state => state.allCafe);
   const setThisX = useMapStore(state => state.setThisX);
   const setThisY = useMapStore(state => state.setThisY);
-
   const userId = useUserStore(state => state.userId);
-
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
   const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
@@ -60,38 +58,6 @@ export default function Sidebar() {
   );
 
   const cardDivStyle = 'flex flex-col gap-8 my-8 px-8';
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  const handleNormalCafeClick = (cafe: AllCafe) => {
-    setIsSubSidebarOpen(true);
-    setIsMenuOpen(false);
-    router.push(`/cafe/all/detail/${cafe.id}`);
-    setThisX(cafe?.x);
-    setThisY(cafe?.y);
-  };
-
-  const handleCollectedCafeClick = (cafe: CollectedCafeFromSupabase) => {
-    setIsSubSidebarOpen(true);
-    setIsMenuOpen(false);
-    router.push(`/cafe/collected/detail/${cafe.id}`);
-    setThisX(cafe?.coordX);
-    setThisY(cafe?.coordY);
-  };
-
-  const handleBookmarkedCafeClick = (cafe: BookmarkedCafeFromSupabase) => {
-    setIsSubSidebarOpen(true);
-    setIsMenuOpen(false);
-    router.push(`/cafe/bookmarked/detail/${cafe.id}`);
-    setThisX(cafe?.coordX);
-    setThisY(cafe?.coordY);
-  };
 
   const {
     fetchedCollectedCafe,
@@ -153,6 +119,38 @@ export default function Sidebar() {
   useEffect(() => {
     setCurrentPage(1);
   }, [allCafe]);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNormalCafeClick = (cafe: AllCafe) => {
+    setIsSubSidebarOpen(true);
+    setIsMenuOpen(false);
+    router.push(`/cafe/all/detail/${cafe.id}`);
+    setThisX(cafe?.x);
+    setThisY(cafe?.y);
+  };
+
+  const handleCollectedCafeClick = (cafe: CollectedCafeFromSupabase) => {
+    setIsSubSidebarOpen(true);
+    setIsMenuOpen(false);
+    router.push(`/cafe/collected/detail/${cafe.id}`);
+    setThisX(cafe?.coordX);
+    setThisY(cafe?.coordY);
+  };
+
+  const handleBookmarkedCafeClick = (cafe: BookmarkedCafeFromSupabase) => {
+    setIsSubSidebarOpen(true);
+    setIsMenuOpen(false);
+    router.push(`/cafe/bookmarked/detail/${cafe.id}`);
+    setThisX(cafe?.coordX);
+    setThisY(cafe?.coordY);
+  };
 
   if (pathname.startsWith('/resetpassword')) return null;
 

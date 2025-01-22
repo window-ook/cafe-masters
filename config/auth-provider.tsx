@@ -19,18 +19,12 @@ export default function AuthProvider({
     const {
       data: { subscription: authListner },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.access_token !== accessToken) {
+      if (session?.access_token !== accessToken) router.refresh();
+      if (event === 'SIGNED_OUT' || session?.access_token !== accessToken)
         router.refresh();
-      }
-
-      if (event === 'SIGNED_OUT' || session?.access_token !== accessToken) {
-        router.refresh();
-      }
     });
 
-    return () => {
-      authListner.unsubscribe();
-    };
+    return () => authListner.unsubscribe();
   }, [accessToken, supabase, router]);
 
   return children;
