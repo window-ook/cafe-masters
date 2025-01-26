@@ -3,8 +3,9 @@ module.exports = {
     'next/core-web-vitals',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:cypress/recommended',
   ],
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier', 'cypress'],
   rules: {
     'no-undef': 'error',
     '@typescript-eslint/no-require-imports': 'off',

@@ -21,6 +21,7 @@ export default function UserForm({
         onChange={e => setEmail(e.target.value)}
         placeholder="아이디@주소"
         className="border-gray-400"
+        data-cy="email-input"
       />
       <span className="text-xl font-dpixel">비밀번호</span>
       <input
@@ -29,6 +30,7 @@ export default function UserForm({
         type="password"
         placeholder="********"
         className="border-gray-400"
+        data-cy="password-input"
       />
     </div>
   );

@@ -25,7 +25,6 @@ export default function Signin() {
   const { setView } = useAuthView();
 
   const signinMutation = useSigninMutation();
-
   const resetPasswordMutation = useResetPasswordMutation();
 
   const checkEmail = () => {
@@ -82,16 +81,20 @@ export default function Signin() {
               onClick={handleSignin}
               disabled={signinMutation.isPending || password.length < 6}
             >
-              <span className="font-dpixel text-white">접속하기</span>
+              <span data-cy="signin-button" className="font-dpixel text-white">
+                접속하기
+              </span>
             </button>
             <button
               aria-label="비밀번호 재설정 폼 열기 버튼"
+              data-cy="openreset-button"
               className="bg-blue-600 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
               onClick={() => setResetRequired(true)}
             >
               <span className="font-dpixel text-white">비밀번호 재설정</span>
             </button>
             <button
+              data-cy="kakaosignin-button"
               aria-label="카카오 로그인 버튼"
               className={KakaoButtonStyle}
               onClick={() => signinWithKakao()}
@@ -101,8 +104,12 @@ export default function Signin() {
             <span color="gray" className={AuthFormMentionStyle}>
               계정이 없으신가요?{' '}
               <button
+                data-cy="opensignup-button"
                 aria-label="회원가입 폼 열기 버튼"
-                onClick={() => setView('SIGNUP')}
+                onClick={e => {
+                  e.preventDefault();
+                  setView('SIGNUP');
+                }}
                 className="hover:cursor-pointer hover:bg-gray-100"
               >
                 <span className="font-bold font-dpixel text-main">
