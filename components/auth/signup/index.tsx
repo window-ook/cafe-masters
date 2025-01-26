@@ -25,7 +25,6 @@ export default function Signup() {
   const { setView } = useAuthView();
 
   const signupMutation = useSignupMutation();
-
   const verifyOtpMutation = useVerifyOtpMutation();
 
   const checkEmail = () => {
@@ -71,6 +70,7 @@ export default function Signup() {
         <span className="text-red-500">{emailError}</span>
         <span>*비밀번호는 최소 6자 이상 입력해야 합니다.</span>
         <button
+          data-cy="otp-signup-button"
           aria-label="인증 코드 확인 버튼 | 회원가입 요청 버튼"
           className="w-full py-1 bg-main hover:bg-opacity-70 hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
           onClick={handleVerifyOtp}
@@ -85,6 +85,7 @@ export default function Signup() {
           </span>
         </button>
         <button
+          data-cy="kakaosignin-button"
           aria-label="카카오 로그인 버튼"
           className={KakaoButtonStyle}
           onClick={() => signinWithKakao()}
@@ -96,6 +97,7 @@ export default function Signup() {
         <span color="gray" className={AuthFormMentionStyle}>
           이미 계정이 있으신가요?{' '}
           <button
+            data-cy="open-signin-button"
             aria-label="로그인 폼 열기 버튼"
             onClick={() => setView('SIGNIN')}
             className="hover:cursor-pointer hover:bg-gray-100"
