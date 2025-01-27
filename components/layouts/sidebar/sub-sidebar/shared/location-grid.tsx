@@ -18,6 +18,7 @@ export default function LocationGrid({ address }: LocationGridProps) {
         <span className="text-sm">{address}</span>
         <Tooltip title="복사" placement="right-end">
           <button
+            type="button"
             onClick={() => handleCopyClick(address)}
             className="hover:opacity-70"
           >

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFinishResetMutation } from 'hooks/mutation/useFinishResetMutation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
@@ -12,22 +12,20 @@ export default function ResetpasswordPage() {
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
 
-  const textStyle = `font-dpixel text-lg`;
-
   const router = useRouter();
   const supabase = createBrowserSupabaseClient();
 
   const finishResetMutation = useFinishResetMutation();
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const textStyle = `font-dpixel text-lg`;
+
+  const handleSubmit = () => {
     finishResetMutation.mutate(newPassword);
     alert('비밀번호를 재설정했습니다!');
     router.push('/resetpassword/complete');
   };
 
-  const handleCancel = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleCancel = async () => {
     await supabase.auth.signOut();
     router.push('/');
   };
@@ -68,6 +66,7 @@ export default function ResetpasswordPage() {
                 />
               </div>
               <button
+                type="button"
                 className="bg-main w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
                 disabled={newPassword !== newPasswordConfirm}
                 onClick={handleSubmit}
@@ -76,6 +75,7 @@ export default function ResetpasswordPage() {
                 <span className={`${textStyle} text-white`}>완료</span>
               </button>
               <button
+                type="button"
                 onClick={handleCancel}
                 className="bg-blue-500 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
                 aria-label="취소 버튼, 초기 화면으로 돌아갑니다."
