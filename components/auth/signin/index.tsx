@@ -76,18 +76,19 @@ export default function Signin() {
             />
             <span className="text-red-500">{emailError}</span>
             <button
+              data-cy="signin-button"
+              type="button"
               aria-label="로그인 버튼"
               className="w-full py-1 bg-main hover:bg-opacity-70 hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
               onClick={handleSignin}
               disabled={signinMutation.isPending || password.length < 6}
             >
-              <span data-cy="signin-button" className="font-dpixel text-white">
-                접속하기
-              </span>
+              <span className="font-dpixel text-white">접속하기</span>
             </button>
             <button
-              aria-label="비밀번호 재설정 폼 열기 버튼"
+              type="button"
               data-cy="openreset-button"
+              aria-label="비밀번호 재설정 폼 열기 버튼"
               className="bg-blue-600 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
               onClick={() => setResetRequired(true)}
             >
@@ -95,6 +96,7 @@ export default function Signin() {
             </button>
             <button
               data-cy="kakaosignin-button"
+              type="button"
               aria-label="카카오 로그인 버튼"
               className={KakaoButtonStyle}
               onClick={() => signinWithKakao()}
@@ -104,6 +106,7 @@ export default function Signin() {
             <span color="gray" className={AuthFormMentionStyle}>
               계정이 없으신가요?{' '}
               <button
+                type="button"
                 data-cy="opensignup-button"
                 aria-label="회원가입 폼 열기 버튼"
                 onClick={e => {

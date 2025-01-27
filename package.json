@@ -9,7 +9,7 @@
     "lint": "next lint",
     "analyze": "ANALYZE=true next build",
     "generate-types": "npx supabase gen types typescript --project-id vsemazasjbizehcambul --schema public > types_db.ts",
-    "cypress:open": "cypress open"
+    "test": "cypress open"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",

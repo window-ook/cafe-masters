@@ -18,6 +18,7 @@ export default function PhoneGrid({ phoneNum }: PhoneNumGridProps) {
         <span className="text-lg">{phoneNum}</span>
         <Tooltip title="복사" placement="right-end">
           <button
+            type="button"
             onClick={() => handleCopyClick(phoneNum ?? '')}
             className="hover:opacity-70"
           >

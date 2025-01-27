@@ -30,7 +30,7 @@ export default function MainLayout({ children }: MainLayout) {
   const isDev = process.env.NEXT_PUBLIC_THIS_ENV === 'develope';
 
   return (
-    <main className="flex">
+    <main data-cy="main-layout" className="flex">
       <Sidebar />
       {children}
       <KakaoMap />

@@ -37,6 +37,7 @@ export default function Memo({
           {pathname.startsWith('/cafe/bookmarked') && bookmarkedCafeDetailName}
         </span>
         <button
+          type="button"
           aria-label="카드 수집 취소 버튼"
           onClick={() => setMemoOpen(false)}
           className={getMemoBackStyle(isDarkTheme)}
@@ -87,8 +88,8 @@ export default function Memo({
         />
       </div>
       <button
+        type="button"
         aria-label="카드 수집 완료 버튼"
-        type="submit"
         className={getMemoSubmitStyle(isDarkTheme)}
       >
         <span className="text-lg">완료</span>

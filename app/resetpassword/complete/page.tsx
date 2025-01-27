@@ -35,6 +35,7 @@ export default function ResetPasswordCompletePage() {
                 초기 화면으로 돌아가 다시 로그인하세요!
               </span>
               <button
+                type="button"
                 className="bg-main w-full hover:bg-opacity-70 hover:cursor-pointer"
                 onClick={handleWindow}
                 aria-label="돌아가기 버튼, 초기 화면으로 돌아갑니다."

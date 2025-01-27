@@ -79,6 +79,7 @@ export default function NormalCafeDetail({
         <div className="flex items-center">
           {isBookmarked ? (
             <button
+              type="button"
               aria-label="북마크 취소 버튼"
               onClick={handleCancelBookmark}
             >

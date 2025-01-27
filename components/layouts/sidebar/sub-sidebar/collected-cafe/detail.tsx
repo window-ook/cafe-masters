@@ -47,6 +47,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
           </span>
         </div>
         <button
+          type="button"
           aria-label="수집한 카드 상세 정보 보기 취소 버튼"
           onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
@@ -79,6 +80,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
         <div className="flex justify-between items-center">
           <RatingGrid rating={collectedCafeDetail?.rating ?? 0} />
           <button
+            type="button"
             className={DetailCollectButtonStyle}
             onClick={() => setMemoOpen(true)}
           >

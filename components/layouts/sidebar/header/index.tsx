@@ -35,6 +35,7 @@ export default function Header() {
         />
         <Tooltip title="홈페이지" placement="right-end">
           <button
+            type="button"
             aria-label="홈페이지 이동 버튼"
             className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-300"
             onClick={handleRoute}

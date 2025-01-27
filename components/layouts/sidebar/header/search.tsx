@@ -47,9 +47,9 @@ export default function Search() {
             onKeyDown={handleKeyDown}
           />
           <button
+            type="button"
             aria-label="검색 버튼"
             className={SearchButtonStyle}
-            type="button"
             onClick={handleSearch}
           >
             <FontAwesomeIcon icon={faMagnifyingGlass} />
