@@ -18,7 +18,11 @@ interface SidebarTabProps {
 
 function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
   return (
-    <li className="flex items-center gap-6 cursor-pointer" onClick={path}>
+    <li
+      data-cy={`route-${title.replace(/\s+/g, '-').toLowerCase()}`}
+      className="flex items-center gap-6 cursor-pointer"
+      onClick={path}
+    >
       <span>{icon}</span>
       <span className={getSidebarTabTextStyle(isDarkTheme)}>{title}</span>
     </li>

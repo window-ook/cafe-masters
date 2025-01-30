@@ -63,7 +63,6 @@ export default function NormalCafeDetail({
     cancelBookmarkMutation.mutate();
     setIsSubSidebarOpen(false);
     toast.success('가고 싶은 카페를 제거했습니다!');
-    router.push('/cafe/bookmarked');
   };
 
   const handleSetIsSubSidebarOpen = () => {
@@ -79,7 +78,7 @@ export default function NormalCafeDetail({
         <div className="flex items-center">
           {isBookmarked ? (
             <button
-              type="button"
+              data-cy="cancel-bookmark-button"
               aria-label="북마크 취소 버튼"
               onClick={handleCancelBookmark}
             >
@@ -87,6 +86,7 @@ export default function NormalCafeDetail({
             </button>
           ) : (
             <button
+              data-cy="upload-bookmark-button"
               aria-label="북마크 저장 버튼"
               onClick={handleUploadBookmark}
             >
@@ -167,6 +167,7 @@ export default function NormalCafeDetail({
             <CollectedBadge />
           ) : (
             <button
+              data-cy="collect-button"
               aria-label="수집하기 버튼"
               className={DetailCollectButtonStyle}
               onClick={() => setMemoOpen(true)}

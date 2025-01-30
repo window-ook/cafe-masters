@@ -46,6 +46,7 @@ export default function Memo({
         </button>
       </div>
       <input
+        data-cy="memo-comment"
         required
         value={comment}
         placeholder="코멘트(필수)"
@@ -53,18 +54,21 @@ export default function Memo({
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
+        data-cy="memo-pros"
         value={pros}
         placeholder="좋은 점"
         onChange={e => setPros(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
+        data-cy="memo-cons"
         placeholder="별로인 점"
         value={cons}
         onChange={e => setCons(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
+        data-cy="memo-eaten"
         required
         value={eaten}
         placeholder="먹은 메뉴(필수)"
@@ -72,6 +76,7 @@ export default function Memo({
         className={getMemoInputStyle(isDarkTheme)}
       />
       <input
+        data-cy="memo-concept"
         placeholder="카페 컨셉"
         value={concept}
         onChange={e => setConcept(e.target.value)}
@@ -80,6 +85,7 @@ export default function Memo({
       <div className="flex items-center gap-2">
         <span>별점 매기기</span>
         <Rating
+          data-cy="memo-rating"
           name="simple-controlled"
           value={rating}
           onChange={(event, newValue) => {
@@ -88,7 +94,7 @@ export default function Memo({
         />
       </div>
       <button
-        type="button"
+        data-cy="memo-button"
         aria-label="카드 수집 완료 버튼"
         className={getMemoSubmitStyle(isDarkTheme)}
       >
