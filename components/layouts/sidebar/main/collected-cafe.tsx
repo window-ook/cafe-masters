@@ -41,7 +41,7 @@ export default function CollectedCafe({
       : 'text-white bg-black';
 
   return (
-    <div className="relative">
+    <div data-cy="collected-cafe" className="relative">
       {isUnique && <div className={UniqueCardEffectStyle}></div>}
       <div
         onClick={onClick}

@@ -162,9 +162,9 @@ export default function Sidebar() {
       >
         <div className="flex flex-col gap-12 sm:gap-10">
           <Header />
+          {/* 사이드바 Body */}
           {pathname === '/' && <SidebarTabList />}
 
-          {/* 사이드바 Body */}
           <section className="px-8 sm:px-4">
             {isSearchResultPage && (
               <div className={cardDivStyle}>

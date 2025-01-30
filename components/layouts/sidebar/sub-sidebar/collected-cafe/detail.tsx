@@ -80,6 +80,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
         <div className="flex justify-between items-center">
           <RatingGrid rating={collectedCafeDetail?.rating ?? 0} />
           <button
+            data-cy="update-button"
             type="button"
             className={DetailCollectButtonStyle}
             onClick={() => setMemoOpen(true)}

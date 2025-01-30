@@ -20,7 +20,11 @@ export default function NormalCafe({
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
   return (
-    <div onClick={onClick} className={getNormalCardStyle(isDarkTheme)}>
+    <div
+      data-cy="normal-cafe"
+      onClick={onClick}
+      className={getNormalCardStyle(isDarkTheme)}
+    >
       <span
         className={`${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'} px-2 py-1 shadow-md font-dpixel`}
       >
