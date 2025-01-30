@@ -40,6 +40,7 @@ export default function Search() {
           className={`${isDarkTheme && 'shadow-gray-700'} relative shadow-md`}
         >
           <input
+            data-cy="search-input"
             className={getSearchInputStyle(isDarkTheme)}
             placeholder="ex) 성수, 교동, 전포"
             value={localKeyword}
@@ -47,6 +48,7 @@ export default function Search() {
             onKeyDown={handleKeyDown}
           />
           <button
+            data-cy="search-button"
             type="button"
             aria-label="검색 버튼"
             className={SearchButtonStyle}
