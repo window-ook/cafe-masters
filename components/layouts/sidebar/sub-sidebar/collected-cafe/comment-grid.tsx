@@ -12,7 +12,9 @@ export default function CommentGrid({ comment }: CommentGridProps) {
         <FontAwesomeIcon icon={faPen} className="pt-1" />
         <span className="font-dpixel">코멘트</span>
       </div>
-      <div className="col-span-2 text-md">{comment}</div>
+      <div data-cy="collected-comment" className="col-span-2 text-md">
+        {comment}
+      </div>
     </div>
   );
 }

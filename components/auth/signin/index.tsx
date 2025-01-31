@@ -87,7 +87,7 @@ export default function Signin() {
             </button>
             <button
               type="button"
-              data-cy="openreset-button"
+              data-cy="open-reset-button"
               aria-label="비밀번호 재설정 폼 열기 버튼"
               className="bg-blue-600 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
               onClick={() => setResetRequired(true)}
@@ -107,7 +107,7 @@ export default function Signin() {
               계정이 없으신가요?{' '}
               <button
                 type="button"
-                data-cy="opensignup-button"
+                data-cy="open-signup-button"
                 aria-label="회원가입 폼 열기 버튼"
                 onClick={e => {
                   e.preventDefault();

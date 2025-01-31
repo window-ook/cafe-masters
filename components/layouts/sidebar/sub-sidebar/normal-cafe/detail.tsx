@@ -117,6 +117,7 @@ export default function NormalCafeDetail({
           <div className="flex gap-4 mt-4 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory">
             <div className="snap-center flex-shrink-0 h-[15rem] py-2">
               <Image
+                data-cy="normal-detail-thumbnail"
                 src={detail?.photoUrl || '/image/cafe_thumbnail.webp'}
                 alt="카페 썸네일"
                 className="rounded-md object-cover w-auto h-full transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
