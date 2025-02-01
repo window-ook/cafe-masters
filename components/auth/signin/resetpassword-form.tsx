@@ -29,13 +29,13 @@ export default function ResetpasswordForm({
         />
       </div>
       <span
-        data-cy="success-request-for-resetpassword"
+        data-cy="success-request-resetpassword"
         className="text-success font-bold"
       >
         {resetRequested}
       </span>
       <button
-        data-cy="request-link-for-resetpassword-button"
+        data-cy="request-resetpassword-button"
         type="button"
         aria-label="비밀번호 재설정 링크 메일 요청 버튼"
         className="bg-main w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
