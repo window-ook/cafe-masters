@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useSignupMutation } from 'hooks/mutation/useSignupMutation';
 import { useAuthView } from 'config/auth-view-provider';
 import { signinWithKakao } from 'utils/supabase/signinWithKakao';
@@ -55,7 +55,12 @@ export default function Signup() {
   return (
     <div className={AuthFormCardStyle}>
       <p className={AuthFormTitleStyle}>회원가입</p>
-      <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
+      <form
+        className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4"
+        onKeyDown={e => {
+          if (e.key == 'Enter') handleVerifyOtp();
+        }}
+      >
         {confirmationRequired ? (
           <OtpForm otp={otp} setOtp={setOtp} />
         ) : (

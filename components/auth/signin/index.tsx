@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAuthView } from 'config/auth-view-provider';
 import { useSigninMutation } from 'hooks/mutation/useSigninMutation';
 import { useResetPasswordMutation } from 'hooks/mutation/useResetPasswordMutation';
@@ -67,7 +67,12 @@ export default function Signin() {
       ) : (
         <div>
           <p className={AuthFormTitleStyle}>로그인</p>
-          <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
+          <form
+            className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4"
+            onKeyDown={e => {
+              if (e.key === 'Enter') handleSignin();
+            }}
+          >
             <UserForm
               email={email}
               password={password}
