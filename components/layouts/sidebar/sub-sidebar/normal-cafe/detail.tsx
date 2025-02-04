@@ -132,10 +132,10 @@ export default function NormalCafeDetail({
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="relative flex flex-col items-center">
           <button
-            className="absolute left-0 z-10 px-2 py-1 bg-white shadow-md rounded-md top-1/2 transform -translate-y-1/2"
+            className={`absolute left-0 z-10 px-2 py-1 shadow-md rounded-md top-1/2 transform -translate-y-1/2 ${isDarkTheme ? 'bg-main' : 'bg-white'}`}
             onClick={() => handleScroll('left')}
           >
-            ◀
+            <span className={`${isDarkTheme ? '' : 'text-main'}`}>◀</span>
           </button>
           <div
             ref={scrollRef}
@@ -184,10 +184,10 @@ export default function NormalCafeDetail({
               );
             })}
             <button
-              className="absolute right-0 z-10 px-2 py-1 bg-white shadow-md rounded-md top-1/2 transform -translate-y-1/2"
+              className={`absolute right-0 z-10 px-2 py-1 shadow-md rounded-md top-1/2 transform -translate-y-1/2 ${isDarkTheme ? 'bg-main' : 'bg-white'}`}
               onClick={() => handleScroll('right')}
             >
-              ▶
+              <span className={`${isDarkTheme ? '' : 'text-main'}`}>▶</span>
             </button>
           </div>
         </div>
