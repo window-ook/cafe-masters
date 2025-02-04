@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useUploadBookmarkMutation } from 'hooks/mutation/useUploadBookmarkMutation';
 import { useCancelBookmarkMutation } from 'hooks/mutation/useCancelBookmarkMutation';
@@ -32,6 +33,8 @@ export default function NormalCafeDetail({
   handleMenuOpen,
   setMemoOpen,
 }: NormalCafeDetailProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const isCollected = useCheckStore(state => state.isCollected);
   const isBookmarked = useCheckStore(state => state.isBookmarked);
@@ -70,6 +73,20 @@ export default function NormalCafeDetail({
     if (pathname.startsWith('/cafe/all')) router.push('/cafe/all');
     if (pathname.startsWith('/cafe/bookmarked'))
       router.push('/cafe/bookmarked');
+  };
+
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (!scrollRef.current) return;
+
+    const { scrollLeft, clientWidth } = scrollRef.current;
+    const scrollAmount = clientWidth * 0.9;
+    scrollRef.current.scrollTo({
+      left:
+        direction === 'left'
+          ? scrollLeft - scrollAmount
+          : scrollLeft + scrollAmount * 0.6,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -111,10 +128,19 @@ export default function NormalCafeDetail({
         </button>
       </div>
 
-      {/* 캐러셀로 하이라이트 가로 슬라이드 구현 */}
+      {/* 가로 스크롤 구현 */}
       <div className={getDetailBodyStyle(isDarkTheme)}>
-        <div className="flex flex-col items-center">
-          <div className="flex gap-4 mt-4 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory">
+        <div className="relative flex flex-col items-center">
+          <button
+            className="absolute left-0 z-10 px-2 py-1 bg-white shadow-md rounded-md top-1/2 transform -translate-y-1/2"
+            onClick={() => handleScroll('left')}
+          >
+            ◀
+          </button>
+          <div
+            ref={scrollRef}
+            className="flex gap-4 mt-4 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory"
+          >
             <div className="snap-center flex-shrink-0 h-[15rem] py-2">
               <Image
                 data-cy="normal-detail-thumbnail"
@@ -136,11 +162,12 @@ export default function NormalCafeDetail({
               return (
                 <div
                   key={photo.photoid}
-                  className="flex-shrink-0 h-[15rem] snap-center py-2"
+                  className="snap-center py-2 flex-shrink-0 h-[15rem]"
                 >
                   <Image
-                    alt="review-photo"
                     key={photo.photoid}
+                    data-cy="normal-detail-thumbnail"
+                    alt="카페 썸네일"
                     src={photo.orgurl}
                     className="rounded-md object-cover w-auto h-full transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
                     width={160}
@@ -156,9 +183,14 @@ export default function NormalCafeDetail({
                 </div>
               );
             })}
+            <button
+              className="absolute right-0 z-10 px-2 py-1 bg-white shadow-md rounded-md top-1/2 transform -translate-y-1/2"
+              onClick={() => handleScroll('right')}
+            >
+              ▶
+            </button>
           </div>
         </div>
-
         <div className="flex justify-between items-center">
           <ReviewAndRatingGrid
             reviewCount={detail?.reviewCount}
@@ -177,7 +209,6 @@ export default function NormalCafeDetail({
             </button>
           )}
         </div>
-
         <div className="grid grid-cols-2 gap-6">
           <OpenTimeGrid
             openWeekly={detail?.openWeekly}
