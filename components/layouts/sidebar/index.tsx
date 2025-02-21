@@ -10,16 +10,24 @@ import {
 } from 'types/common';
 import { useInView } from 'react-intersection-observer';
 import { getSidebarStyle } from 'utils/styles';
+import dynamic from 'next/dynamic';
 import Header from './header';
 import Footer from './footer';
-import SubSidebar from './sub-sidebar';
-import NormalCafe from './main/normal-cafe';
-import CollectedCafe from './main/collected-cafe';
-import PageConverter from './footer/page-converter';
 import SidebarTabList from './main/sidebar-tab-list';
 import CircularProgress from '@mui/material/CircularProgress';
 import useCollectedInfiniteQuery from 'hooks/cache/useCollectedInfiniteQuery';
 import useBookmarkedInfiniteQuery from 'hooks/cache/useBookmarkedInfiniteQuery';
+
+const NormalCafe = dynamic(() => import('./main/normal-cafe'), { ssr: false });
+
+const CollectedCafe = dynamic(() => import('./main/collected-cafe'), {
+  ssr: false,
+});
+const PageConverter = dynamic(() => import('./footer/page-converter'), {
+  ssr: false,
+});
+
+const SubSidebar = dynamic(() => import('./sub-sidebar'), { ssr: false });
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState(1);

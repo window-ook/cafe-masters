@@ -8,10 +8,20 @@ import { useUpdateCollectMutation } from 'hooks/mutation/useUpdateCollectMutatio
 import { getSubSidebarStyle } from 'utils/styles';
 import { CollectedRowInsert, CollectedRowUpdate } from 'actions/collectActions';
 import { toast } from 'react-toastify';
-import Memo from './memo';
-import NormalCafeDetail from './normal-cafe/detail';
-import CollectedCafeDetail from './collected-cafe/detail';
+import dynamic from 'next/dynamic';
 import Loading from './shared/loading';
+
+const NormalCafeDetail = dynamic(() => import('./normal-cafe/detail'), {
+  ssr: false,
+});
+
+const CollectedCafeDetail = dynamic(() => import('./collected-cafe/detail'), {
+  ssr: false,
+});
+
+const Memo = dynamic(() => import('./memo'), {
+  ssr: false,
+});
 
 export default function SubSidebar() {
   const [memoOpen, setMemoOpen] = useState(false);

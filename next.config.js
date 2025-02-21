@@ -39,6 +39,13 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+
+      {
+        protocol: 'https',
+        hostname: 'blogfiles.pstatic.net',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
