@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   mode: 'jit',
@@ -46,6 +47,10 @@ const config: Config = {
         'gold-side': '#8c6a01',
       },
 
+      textShadow: {
+        black: '0 2px 4px rgba(0, 0, 0, 0.8)',
+      },
+
       backgroundImage: {
         'expert-gradient': 'linear-gradient(90deg, #f5e902 0%, #bd9b04 100%)',
         'master-gradient': 'linear-gradient(90deg, #8a24b9 0%, #f5248c 100%)',
@@ -73,7 +78,20 @@ const config: Config = {
     },
   },
   variants: {},
-  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'text-shadow': value => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme('textShadow') },
+      );
+    }),
+  ],
 };
 
 export default config;

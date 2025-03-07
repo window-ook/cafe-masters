@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAuthView } from 'config/auth-view-provider';
 import { useSigninMutation } from 'hooks/mutation/useSigninMutation';
 import { useResetPasswordMutation } from 'hooks/mutation/useResetPasswordMutation';
 import { signinWithKakao } from 'utils/supabase/signinWithKakao';
@@ -11,18 +10,17 @@ import {
   AuthFormTitleStyle,
   KakaoButtonStyle,
 } from 'utils/styles';
+import { SignProps } from 'app/auth/page';
 import { checkEmailValid } from 'utils/common';
 import UserForm from '../shared/user-form';
 import ResetpasswordForm from './resetpassword-form';
 
-export default function Signin() {
+export default function Signin({ setViewAction }: SignProps) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState('');
   const [resetRequired, setResetRequired] = useState(false);
   const [resetRequested, setResetRequested] = useState('');
-
-  const { setView } = useAuthView();
 
   const signinMutation = useSigninMutation();
   const resetPasswordMutation = useResetPasswordMutation();
@@ -116,7 +114,7 @@ export default function Signin() {
                 aria-label="회원가입 폼 열기 버튼"
                 onClick={e => {
                   e.preventDefault();
-                  setView('SIGNUP');
+                  setViewAction('SIGNUP');
                 }}
                 className="hover:cursor-pointer hover:bg-gray-100"
               >

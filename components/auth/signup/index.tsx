@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useSignupMutation } from 'hooks/mutation/useSignupMutation';
-import { useAuthView } from 'config/auth-view-provider';
 import { signinWithKakao } from 'utils/supabase/signinWithKakao';
 import {
   AuthFormCardStyle,
@@ -11,18 +10,17 @@ import {
   KakaoButtonStyle,
 } from 'utils/styles';
 import { checkEmailValid } from 'utils/common';
+import { SignProps } from 'app/auth/page';
 import UserForm from '../shared/user-form';
 import OtpForm from './otp-form';
 import useVerifyOtpMutation from 'hooks/mutation/useVerifyOtpMutation';
 
-export default function Signup() {
+export default function Signup({ setViewAction }: SignProps) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState('');
   const [confirmationRequired, setConfirmationRequired] = useState(false);
   const [otp, setOtp] = useState('');
-
-  const { setView } = useAuthView();
 
   const signupMutation = useSignupMutation();
   const verifyOtpMutation = useVerifyOtpMutation();
@@ -105,7 +103,7 @@ export default function Signup() {
             data-cy="open-signin-button"
             type="button"
             aria-label="로그인 폼 열기 버튼"
-            onClick={() => setView('SIGNIN')}
+            onClick={() => setViewAction('SIGNIN')}
             className="hover:cursor-pointer hover:bg-gray-100"
           >
             <span className="font-bold font-dpixel text-main">로그인 하기</span>

@@ -19,7 +19,7 @@ export default function Header() {
   const isCollectedPage = pathname.startsWith('/cafe/collected');
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
 
-  const handleRoute = () => router.push('/');
+  const handleRoute = () => router.push('/cafe');
 
   return (
     <div

@@ -1,7 +1,10 @@
+import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
 export function useSignupMutation() {
+  const router = useRouter();
+
   const supabase = createBrowserSupabaseClient();
 
   return useMutation({
@@ -21,6 +24,11 @@ export function useSignupMutation() {
       });
 
       if (error) throw new Error(error.message);
+    },
+
+    onSuccess: async () => {
+      await supabase.auth.refreshSession();
+      router.replace('/cafe');
     },
 
     onError: error => console.error(error),
