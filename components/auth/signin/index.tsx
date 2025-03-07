@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAuthView } from 'config/auth-view-provider';
 import { useSigninMutation } from 'hooks/mutation/useSigninMutation';
 import { useResetPasswordMutation } from 'hooks/mutation/useResetPasswordMutation';
 import { signinWithKakao } from 'utils/supabase/signinWithKakao';
@@ -11,18 +10,17 @@ import {
   AuthFormTitleStyle,
   KakaoButtonStyle,
 } from 'utils/styles';
+import { SignProps } from 'app/auth/page';
 import { checkEmailValid } from 'utils/common';
 import UserForm from '../shared/user-form';
 import ResetpasswordForm from './resetpassword-form';
 
-export default function Signin() {
+export default function Signin({ setViewAction }: SignProps) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState('');
   const [resetRequired, setResetRequired] = useState(false);
   const [resetRequested, setResetRequested] = useState('');
-
-  const { setView } = useAuthView();
 
   const signinMutation = useSigninMutation();
   const resetPasswordMutation = useResetPasswordMutation();
@@ -42,6 +40,25 @@ export default function Signin() {
     if (checkEmail()) {
       const trimmedEmail: string = email.trim();
       signinMutation.mutate({ email: trimmedEmail, password });
+    }
+  };
+
+  const handleTestSignin = async () => {
+    try {
+      const response = await fetch('/api/auth/test-credential');
+      const data = await response.json();
+      if (!response.ok)
+        throw new Error(
+          data.error || '테스트 계정 정보를 불러오지 못했습니다.',
+        );
+
+      setEmail(data.email);
+      setPassword(data.password);
+      setTimeout(() => {
+        signinMutation.mutate({ email: data.email, password: data.password });
+      }, 0);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -81,6 +98,15 @@ export default function Signin() {
             />
             <span className="text-red-500">{emailError}</span>
             <button
+              type="button"
+              data-cy="test-signin-button"
+              aria-label="체험 계정 로그인 버튼"
+              className="bg-orange-600 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
+              onClick={() => handleTestSignin()}
+            >
+              <span className="font-dpixel text-white">체험하기</span>
+            </button>
+            <button
               data-cy="signin-button"
               type="button"
               aria-label="로그인 버튼"
@@ -116,7 +142,7 @@ export default function Signin() {
                 aria-label="회원가입 폼 열기 버튼"
                 onClick={e => {
                   e.preventDefault();
-                  setView('SIGNUP');
+                  setViewAction('SIGNUP');
                 }}
                 className="hover:cursor-pointer hover:bg-gray-100"
               >

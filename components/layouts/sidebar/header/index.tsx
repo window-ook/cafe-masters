@@ -2,11 +2,11 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useMapStore, useCheckStore } from 'utils/store';
-import { Tooltip } from '@mui/material';
 import Image from 'next/image';
 import Search from './search';
 import LightDarkToggle from './light-dark-toggle';
 import LogoImage from 'components/auth/shared/logo-image';
+import Tooltip from 'components/shared/tooltip';
 
 export default function Header() {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
@@ -19,7 +19,7 @@ export default function Header() {
   const isCollectedPage = pathname.startsWith('/cafe/collected');
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
 
-  const handleRoute = () => router.push('/');
+  const handleRoute = () => router.push('/cafe');
 
   return (
     <div
@@ -33,16 +33,21 @@ export default function Header() {
           width={60}
           className="w-auto h-auto"
         />
-        <Tooltip title="홈페이지" placement="right-end">
-          <button
-            type="button"
-            aria-label="홈페이지 이동 버튼"
-            className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-300"
-            onClick={handleRoute}
-          >
-            <LogoImage size={100} />
-          </button>
-        </Tooltip>
+        <Tooltip
+          comment="홈페이지"
+          component={
+            <button
+              type="button"
+              aria-label="홈페이지 이동 버튼"
+              className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-300"
+              onClick={handleRoute}
+            >
+              <LogoImage size={100} />
+            </button>
+          }
+          left="32"
+        />
+
         <LightDarkToggle />
       </div>
       <Search />

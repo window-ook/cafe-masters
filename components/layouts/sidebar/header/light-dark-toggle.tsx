@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { useCheckStore } from 'utils/store';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 export default function LightDarkToggle() {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
@@ -16,9 +16,15 @@ export default function LightDarkToggle() {
       className="w-14 h-14 hover:opacity-70 transform duration-300 ease-out"
     >
       {isDarkTheme ? (
-        <FontAwesomeIcon icon={faMoon} className="text-white text-3xl" />
+        <FontAwesomeIcon
+          icon={faMoon}
+          className="text-white text-2xl hover:opacity-50"
+        />
       ) : (
-        <FontAwesomeIcon icon={faSun} className="text-main text-3xl" />
+        <FontAwesomeIcon
+          icon={faSun}
+          className="text-main text-2xl hover:opacity-50"
+        />
       )}
     </button>
   );

@@ -121,7 +121,7 @@ export default function Sidebar() {
   }, [currentPage]);
 
   useEffect(() => {
-    if (pathname === '/') setIsSubSidebarOpen(false);
+    if (pathname === '/cafe') setIsSubSidebarOpen(false);
   }, [pathname, setIsSubSidebarOpen]);
 
   useEffect(() => {
@@ -171,7 +171,7 @@ export default function Sidebar() {
         <div className="flex flex-col gap-12 sm:gap-10">
           <Header />
           {/* 사이드바 Body */}
-          {pathname === '/' && <SidebarTabList />}
+          {pathname === '/cafe' && <SidebarTabList />}
 
           <section className="px-8 sm:px-4">
             {isSearchResultPage && (
@@ -254,7 +254,7 @@ export default function Sidebar() {
             />
           )}
 
-          {pathname === '/' && <Footer />}
+          {pathname === '/cafe' && <Footer />}
         </div>
       </div>
 

@@ -1,7 +1,10 @@
+import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
 export function useSigninMutation() {
+  const router = useRouter();
+
   const supabase = createBrowserSupabaseClient();
 
   return useMutation({
@@ -20,9 +23,14 @@ export function useSigninMutation() {
       if (error) throw new Error(error.message);
     },
 
+    onSuccess: async () => {
+      await supabase.auth.refreshSession();
+      router.replace('/cafe');
+    },
+
     onError: error => {
-      if (error.message) alert('이메일 또는 비밀번호를 잘못 입력했습니다.');
-      else alert('알 수 없는 에러가 발생했습니다.');
+      if (error) alert(error.message);
+      else alert('서버에 에러가 발생했습니다.');
     },
   });
 }

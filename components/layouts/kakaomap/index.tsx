@@ -215,7 +215,7 @@ export default function KakaoMap() {
       return null;
     };
 
-    if (pathname === '/') {
+    if (pathname === '/cafe') {
       removeMarkers();
       removeInfoWindows();
     }

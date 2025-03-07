@@ -1,13 +1,12 @@
 import { createServerSupabaseClient } from 'utils/supabase/server';
-import { AuthViewProvider } from 'config/auth-view-provider';
 import { Metadata } from 'next';
 import './globals.css';
 import React from 'react';
 import ReactQueryClientProvider from 'config/react-query-client-provider';
 import AuthProvider from 'config/auth-provider';
 import MainLayout from 'components/layouts/main-layout';
-import Auth from 'components/auth/shared';
 import localFont from 'next/font/local';
+import NoSessionLayout from 'components/layouts/no-session-layout';
 
 const pretendard = localFont({
   src: '../public/fonts/PretendardVariable.woff2',
@@ -78,9 +77,7 @@ export default async function RootLayout({
             {session?.user || isTesting ? (
               <MainLayout>{children}</MainLayout>
             ) : (
-              <AuthViewProvider>
-                <Auth />
-              </AuthViewProvider>
+              <NoSessionLayout>{children}</NoSessionLayout>
             )}
           </AuthProvider>
         </ReactQueryClientProvider>

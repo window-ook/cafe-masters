@@ -1,7 +1,8 @@
 import { handleCopyClick } from 'utils/common';
-import { Tooltip } from '@mui/material';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faCopy } from '@fortawesome/free-solid-svg-icons';
+import Tooltip from 'components/shared/tooltip';
 
 interface LocationGridProps {
   address: string;
@@ -16,15 +17,19 @@ export default function LocationGrid({ address }: LocationGridProps) {
       </div>
       <div className="col-span-2 flex gap-4">
         <span className="text-sm">{address}</span>
-        <Tooltip title="복사" placement="right-end">
-          <button
-            type="button"
-            onClick={() => handleCopyClick(address)}
-            className="hover:opacity-70"
-          >
-            <FontAwesomeIcon icon={faCopy} />
-          </button>
-        </Tooltip>
+        <Tooltip
+          comment="복사"
+          component={
+            <button
+              type="button"
+              onClick={() => handleCopyClick(address)}
+              className="hover:opacity-70"
+            >
+              <FontAwesomeIcon icon={faCopy} />
+            </button>
+          }
+          left="8"
+        />
       </div>
     </div>
   );

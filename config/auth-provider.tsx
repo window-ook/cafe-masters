@@ -3,6 +3,7 @@
 import { ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
+
 interface AuthProviderProps {
   accessToken: string;
   children: ReactNode;

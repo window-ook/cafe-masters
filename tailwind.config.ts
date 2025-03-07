@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   mode: 'jit',
@@ -19,7 +20,7 @@ const config: Config = {
         mainShadow: '#875aad',
         darkbg: '#1f1926',
         darkaccent: '#5f018a',
-        success: '#09d665',
+        success: '#03fc73',
         indigo: '#6366f1',
         // 티어 뱃지 스타일
         beginner: '#8a919c',
@@ -44,6 +45,10 @@ const config: Config = {
         'silver-side': '#8c8c8c',
         'gold-via': '#f5e902',
         'gold-side': '#8c6a01',
+      },
+
+      textShadow: {
+        black: '0 2px 4px rgba(0, 0, 0, 0.8)',
       },
 
       backgroundImage: {
@@ -73,7 +78,20 @@ const config: Config = {
     },
   },
   variants: {},
-  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'text-shadow': value => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme('textShadow') },
+      );
+    }),
+  ],
 };
 
 export default config;
