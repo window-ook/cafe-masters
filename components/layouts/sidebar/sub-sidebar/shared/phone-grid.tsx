@@ -1,7 +1,8 @@
 import { handleCopyClick } from 'utils/common';
-import { Tooltip } from '@mui/material';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faCopy } from '@fortawesome/free-solid-svg-icons';
+import Tooltip from 'components/shared/tooltip';
 
 interface PhoneNumGridProps {
   phoneNum: string | null | undefined;
@@ -16,15 +17,19 @@ export default function PhoneGrid({ phoneNum }: PhoneNumGridProps) {
       </div>
       <div className="col-span-2 flex gap-4">
         <span className="text-lg">{phoneNum}</span>
-        <Tooltip title="복사" placement="right-end">
-          <button
-            type="button"
-            onClick={() => handleCopyClick(phoneNum ?? '')}
-            className="hover:opacity-70"
-          >
-            <FontAwesomeIcon icon={faCopy} />
-          </button>
-        </Tooltip>
+        <Tooltip
+          comment="복사"
+          component={
+            <button
+              type="button"
+              onClick={() => handleCopyClick(phoneNum ?? '')}
+              className="hover:opacity-70"
+            >
+              <FontAwesomeIcon icon={faCopy} />
+            </button>
+          }
+          left="8"
+        />
       </div>
     </div>
   );

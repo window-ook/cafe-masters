@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <main className="min-h-screen max-w-screen overflow-hidden">
       {/* 네브바 */}
-      <section className="sticky h-[4rem] bg-orange-400">
+      <section className="fixed h-[4rem] w-full">
         <div className="flex justify-between items-center px-[25rem]">
           <div className="flex items-center">
             <Image
@@ -27,7 +27,7 @@ export default function Home() {
           </div>
           <button
             onClick={() => handleRouteSignin()}
-            className="w-[6rem] h-[2rem] rounded-md bg-white opacity-80 hover:opacity-40 transition duration-100 ease-in"
+            className="w-[6rem] h-[2rem] rounded-md bg-gray-200 opacity-80 hover:opacity-40 transition duration-100 ease-in"
           >
             <span className="font-pretendard text-gray-800">시작하기</span>
           </button>
@@ -35,7 +35,7 @@ export default function Home() {
       </section>
 
       {/* 1st Section 중첩 모션 카드 */}
-      <section className="w-full h-[30rem] bg-cover bg-center bg-main_light"></section>
+      <section className="w-full h-[40rem] bg-cover bg-center bg-main_light"></section>
 
       {/* 2nd Section 사용자들의 리뷰 카드 & Contact Us */}
       <section className="w-full h-[40rem] bg-cover bg-center bg-gray-100">

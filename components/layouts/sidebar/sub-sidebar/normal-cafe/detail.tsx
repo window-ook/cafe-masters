@@ -11,10 +11,9 @@ import {
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-cafe/collected-badge';
 import ReviewAndRatingGrid from './review-and-rating-grid';
 import OpenTimeGrid from '../shared/open-time-grid';
@@ -98,17 +97,23 @@ export default function NormalCafeDetail({
               data-cy="cancel-bookmark-button"
               aria-label="북마크 취소 버튼"
               onClick={handleCancelBookmark}
+              className="flex items-center"
             >
-              <BookmarkIcon className="text-yellow-500" />
+              <FontAwesomeIcon
+                icon={faBookmark}
+                className="text-yellow-500 pr-2"
+              />
             </button>
           ) : (
             <button
               data-cy="upload-bookmark-button"
               aria-label="북마크 저장 버튼"
               onClick={handleUploadBookmark}
+              className="flex items-center"
             >
-              <BookmarkIcon
-                className={`hover:scale-105 ${isDarkTheme ? 'text-white' : ''}`}
+              <FontAwesomeIcon
+                icon={faBookmark}
+                className={`hover:scale-105 ${isDarkTheme ? 'text-white' : ''} pr-2`}
               />
             </button>
           )}

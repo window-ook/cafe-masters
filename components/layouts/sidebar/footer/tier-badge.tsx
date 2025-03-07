@@ -6,8 +6,8 @@ import {
   getMasterTierStyle,
 } from 'utils/styles';
 import { Tier } from 'types/common';
-import { Tooltip } from '@mui/material';
 import TierInfoModal from './tier-info-modal';
+import Tooltip from 'components/shared/tooltip';
 
 interface TierBadgeProps {
   tier: Tier;
@@ -27,21 +27,27 @@ export default function TierBadge({ tier }: TierBadgeProps) {
   };
 
   return (
-    <div className="hover:opacity-70 transform duration-500 ease-in">
-      <Tooltip title="티어 정보" placement="right-end">
-        <div className="relative flex items-center justify-center">
-          {tier === 'MASTER' && (
-            <div className={getMasterEffectStyle('w-[100%]')}></div>
-          )}
-          <div
-            onClick={() => handleOpen()}
-            className={`${tierStyles[tier]} ${BadgeCommon} hover:cursor-pointer`}
-          >
-            <span className="text-md font-dpixel">{tier}</span>
+    <>
+      <Tooltip
+        comment="티어 정보"
+        component={
+          <div className="relative flex items-center justify-center">
+            {tier === 'MASTER' && (
+              <div className={getMasterEffectStyle('w-[100%]')}></div>
+            )}
+            <button
+              aria-label="티어 모달 오픈 버튼"
+              onClick={() => handleOpen()}
+              className={`${tierStyles[tier]} ${BadgeCommon} hover:cursor-pointer`}
+            >
+              <span className="text-md font-dpixel">{tier}</span>
+            </button>
           </div>
-        </div>
-      </Tooltip>
+        }
+        left="16"
+      />
+
       <TierInfoModal open={open} handleClose={handleClose} />
-    </div>
+    </>
   );
 }

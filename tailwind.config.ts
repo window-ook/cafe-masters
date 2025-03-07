@@ -20,7 +20,7 @@ const config: Config = {
         mainShadow: '#875aad',
         darkbg: '#1f1926',
         darkaccent: '#5f018a',
-        success: '#09d665',
+        success: '#03fc73',
         indigo: '#6366f1',
         // 티어 뱃지 스타일
         beginner: '#8a919c',

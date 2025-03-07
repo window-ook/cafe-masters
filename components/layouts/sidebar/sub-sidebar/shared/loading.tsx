@@ -1,5 +1,4 @@
 import { useCheckStore } from 'utils/store';
-import { Tooltip } from '@mui/material';
 import {
   getDetailBodyStyle,
   RatingCircleStyle,
@@ -17,9 +16,10 @@ import {
   faCopy,
   faPhone,
   faAngleDown,
+  faBookmark,
 } from '@fortawesome/free-solid-svg-icons';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Image from 'next/image';
+import Tooltip from 'components/shared/tooltip';
 
 export default function Loading() {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
@@ -28,7 +28,8 @@ export default function Loading() {
     <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
-          <BookmarkIcon
+          <FontAwesomeIcon
+            icon={faBookmark}
             className={`hover:scale-105 ${isDarkTheme ? 'text-white' : ''}`}
           />
           <span className="text-2xl font-semibold">로딩 중입니다...</span>
@@ -93,11 +94,15 @@ export default function Loading() {
             </div>
             <div className="col-span-2 flex gap-4">
               <span className="text-sm">?? ??구 ??로</span>
-              <Tooltip title="복사" placement="right-end">
-                <div className="hover:opacity-70">
-                  <FontAwesomeIcon icon={faCopy} />
-                </div>
-              </Tooltip>
+              <Tooltip
+                comment="복사"
+                component={
+                  <div className="hover:opacity-70">
+                    <FontAwesomeIcon icon={faCopy} />
+                  </div>
+                }
+                left="16"
+              />
             </div>
           </div>
           <div className="col-span-2 grid grid-cols-3 items-center">
@@ -107,11 +112,15 @@ export default function Loading() {
             </div>
             <div className="col-span-2 flex gap-4">
               <span className="text-lg">???-????-????</span>
-              <Tooltip title="복사" placement="right-end">
-                <div className="hover:opacity-70">
-                  <FontAwesomeIcon icon={faCopy} />
-                </div>
-              </Tooltip>
+              <Tooltip
+                comment="복사"
+                component={
+                  <div className="hover:opacity-70">
+                    <FontAwesomeIcon icon={faCopy} />
+                  </div>
+                }
+                left="16"
+              />
             </div>
           </div>
           <div className="col-span-2">
