@@ -62,6 +62,22 @@ const config: Config = {
           '50%': { 'background-position': '100% 50%' },
           '100%': { 'background-position': '0% 50%' },
         },
+        reveal: {
+          from: { clipPath: 'inset(0 100% 0 0)' },
+          to: { clipPath: 'inset(0 0 0 0)' },
+        },
+        textReveal: {
+          from: { transform: 'translateY(100%)', opacity: '0' },
+          to: { transform: 'translateY(0)', opacity: '1' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        shine: {
+          from: { transform: 'translateX(-100%) rotate(45deg)' },
+          to: { transform: 'translateX(200%) rotate(45deg)' },
+        },
       },
 
       fontSize: {
@@ -70,6 +86,10 @@ const config: Config = {
 
       animation: {
         gradient: 'gradient 3s ease infinite',
+        reveal: 'reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1)',
+        textReveal: 'textReveal 0.8s cubic-bezier(0.77, 0, 0.175, 1)',
+        float: 'float 6s ease-in-out infinite',
+        shine: 'shine 1.5s',
       },
 
       dropShadow: {
@@ -90,6 +110,17 @@ const config: Config = {
         },
         { values: theme('textShadow') },
       );
+    }),
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-hidden': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+      });
     }),
   ],
 };
