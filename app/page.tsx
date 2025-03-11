@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
@@ -108,13 +108,11 @@ function ScrollSections() {
       {sections.map((section, index) => (
         <section
           key={section.id}
-          className="relative scroll-section h-full flex flex-col md:flex-row"
+          className="relative h-full scroll-section flex flex-col md:flex-row"
         >
           {index !== 1 ? (
             <>
-              <div
-                className={`w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden group before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-r before:from-neutral-950/70 before:to-neutral-950/50 before:transition-opacity before:duration-500 hover:before:opacity-0`}
-              >
+              <div className="group relative overflow-hidden w-full md:w-1/2 h-1/2 md:h-full before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-r before:from-neutral-950/70 before:to-neutral-950/50 before:transition-opacity before:duration-500 hover:before:opacity-0">
                 <Image
                   src={section.imageUrl}
                   alt={section.title}
@@ -133,7 +131,7 @@ function ScrollSections() {
                       </span>
                     ))}
                   </span>
-                  <h2 className="mt-4 text-5xl md:text-7xl font-bold leading-none bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-transparent">
+                  <h2 className="mt-4 leading-none bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-5xl md:text-7xl font-bold text-transparent">
                     {section.title.split('\n').map((text, index) => (
                       <span key={index}>
                         {text}
@@ -154,7 +152,7 @@ function ScrollSections() {
             </>
           ) : (
             <>
-              <div className="w-full whitespace-nowrap md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-8 bg-neutral-950">
+              <div className="w-full md:w-1/2 h-1/2 md:h-full p-8 bg-neutral-950 flex items-center justify-center whitespace-nowrap">
                 <div className="max-w-lg animate-float">
                   <span className="text-neutral-400 tracking-wider text-sm font-mono">
                     {section.subtitle.split('\n').map((text, index) => (
@@ -164,7 +162,7 @@ function ScrollSections() {
                       </span>
                     ))}
                   </span>
-                  <h2 className="mt-4 text-5xl md:text-7xl font-bold leading-none bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-transparent">
+                  <h2 className="mt-4 leading-none bg-gradient-to-r from-white to-neutral-400 text-5xl md:text-7xl font-bold bg-clip-text text-transparent">
                     {section.title.split('\n').map((text, index) => (
                       <span key={index}>
                         {text}
@@ -182,9 +180,7 @@ function ScrollSections() {
                   </p>
                 </div>
               </div>
-              <div
-                className={`w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden group before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-r before:from-neutral-950/70 before:to-neutral-950/50 before:transition-opacity before:duration-500 hover:before:opacity-0`}
-              >
+              <div className="group relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-gradient-to-r before:from-neutral-950/70 before:to-neutral-950/50 before:transition-opacity before:duration-500 hover:before:opacity-0">
                 <Image
                   src={section.imageUrl}
                   alt={section.title}
@@ -196,7 +192,7 @@ function ScrollSections() {
           )}
         </section>
       ))}
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-50">
+      <div className="absolute z-50 right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4">
         {sections.map((_, index) => (
           <button
             key={index}
@@ -214,7 +210,44 @@ function ScrollSections() {
   );
 }
 
+function useIntersection(ref: React.RefObject<HTMLDivElement>) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState<'down' | 'up'>('down');
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const updateScrollDirection = () => {
+      const currentScrollY = window.scrollY;
+      setScrollDirection(currentScrollY > lastScrollY.current ? 'down' : 'up');
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', updateScrollDirection);
+    return () => window.removeEventListener('scroll', updateScrollDirection);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && scrollDirection === 'down') {
+          setIsVisible(true);
+        } else if (!entry.isIntersecting) {
+          setIsVisible(false);
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [ref, scrollDirection]);
+
+  return isVisible;
+}
 function ReviewCards() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const isVisible = useIntersection(ref);
+
   const reviews = [
     {
       id: 1,
@@ -248,24 +281,40 @@ function ReviewCards() {
   ];
 
   return (
-    <div className="max-w-[80rem] mx-auto px-10 sm:px-16 md:px-20 lg:px-24 xl:px-32 flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
+    <div
+      ref={ref}
+      className={`max-w-[80rem] mx-auto px-10 sm:px-16 md:px-20 lg:px-24 xl:px-32 transition-all duration-1000 ease-out
+         ${isVisible ? 'opacity-100' : 'opacity-0'}
+         `}
+    >
+      <div
+        className={`${
+          isVisible
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-[20rem]'
+        } flex flex-col gap-2`}
+      >
         <div className="h-[2rem] rounded-md flex items-center">
           <span className="flex flex-col text-lg max-sm:text-sm font-pretendard text-main font-bold">
             실제 유저 리뷰
           </span>
         </div>
-        <span className="text-5xl max-lg:text-4xl max-md:text-2xl max-sm:text-lg font-pretendard font-bold bg-gradient-to-r from-black to-neutral-500  bg-clip-text text-transparent max-lg:text-shadow-none">
+        <span className="bg-gradient-to-r from-black to-neutral-500 bg-clip-text text-5xl max-lg:text-4xl max-md:text-2xl max-sm:text-lg font-pretendard font-bold text-transparent max-lg:text-shadow-none">
           유저의 목소리
         </span>
       </div>
 
-      <div className="flex gap-4">
+      <div className="pt-20 flex gap-4">
         {reviews.map((review, index) => (
           <div
             key={review.id}
-            className={`w-[25%] h-[20rem] p-4 bg-black rounded-xl flex flex-col justify-between
-              ${index % 2 === 0 ? 'translate-y-4' : 'translate-y-24'}`}
+            className={`w-[25%] h-[20rem] p-4 bg-black rounded-xl flex flex-col justify-between transition-all duration-1000 ease-out
+              ${index % 2 === 0 ? 'translate-y-4' : 'translate-y-24'}
+                  ${
+                    isVisible
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-[20rem]'
+                  }`}
           >
             <div className="flex flex-col">
               <span className="text-gray-400">{review.rating}</span>
@@ -287,13 +336,19 @@ function ReviewCards() {
 }
 
 function Contactme() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const isVisible = useIntersection(ref);
+
   return (
-    <div className="w-full max-w-[80rem] mx-auto px-10 sm:px-16 md:px-20 lg:px-24 xl:px-32 flex flex-col gap-4">
-      <span className="text-5xl max-lg:text-4xl max-md:text-2xl max-sm:text-lg font-pretendard font-bold bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-transparent max-lg:text-shadow-none">
+    <div
+      ref={ref}
+      className={`${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[15rem]'} w-full max-w-[80rem] mx-auto px-10 sm:px-16 md:px-20 lg:px-24 xl:px-32 flex flex-col gap-4 transition-all duration-1000 ease-out`}
+    >
+      <span className="bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-5xl max-lg:text-4xl max-md:text-2xl max-sm:text-lg font-pretendard font-bold text-transparent max-lg:text-shadow-none">
         Contact me<span className="text-main">.</span>
       </span>
       <div className="flex gap-6 justify-between">
-        <div className="w-[50%] h-[10rem] p-4 bg-gray-800 rounded-xl flex flex-col justify-center">
+        <div className="w-[50%] h-[10rem] p-4 rounded-xl bg-gray-800 flex flex-col justify-center">
           <div className="flex justify-between">
             <span className="text-2xl font-pretendard font-bold text-white">
               피드백을 들려주세요
@@ -307,7 +362,7 @@ function Contactme() {
               </span>
             </button>
           </div>
-          <span className="text-[1rem] font-bold text-mainShadow">
+          <span className="text-[1rem] font-bold text-mainShadow hover:text-gray-200 transition-colors duration-300">
             cwl64658@gmail.com
           </span>
         </div>
@@ -330,7 +385,7 @@ function Contactme() {
               </span>
             </button>
           </div>
-          <span className="text-[1rem] font-bold text-mainShadow">
+          <span className="text-[1rem] font-bold text-mainShadow hover:text-gray-200 transition-colors duration-300">
             카페 마스터즈를 어떻게 사용하는지 알려드려요
           </span>
         </div>
@@ -349,12 +404,12 @@ export default function Home() {
       </section>
 
       {/* 2nd Section 사용자들의 리뷰 카드 */}
-      <section className="w-full h-[60rem] bg-gray-100 pt-60">
+      <section className="w-full h-[60rem] pt-60 bg-gray-100">
         <ReviewCards />
       </section>
 
       {/* Contact Us */}
-      <section className="w-full h-[30rem] bg-black pt-32">
+      <section className="w-full h-[30rem] pt-32 bg-black">
         <Contactme />
       </section>
     </main>
