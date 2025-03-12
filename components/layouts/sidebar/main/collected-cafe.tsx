@@ -15,9 +15,9 @@ interface CollectedCafeProps {
   name: string | undefined;
   address: string;
   phoneNum: string | null | undefined;
-  onClick: () => void;
   photoUrl: string | null | undefined;
   ratings: number | null | undefined;
+  onClick: () => void;
 }
 
 export default function CollectedCafe({
@@ -51,22 +51,25 @@ export default function CollectedCafe({
             : getCollectedCardStyle(bgRatings, isDarkTheme)
         }
       >
-        <div className="shadow-md shadow-gray-500 px-2">
-          <span className="font-dpixel">{name}</span>
+        <div className="flex flex-col gap-2">
+          <div className="shadow-md shadow-gray-500 px-2">
+            <span className="font-dpixel">{name}</span>
+          </div>
+          <div className="flex justify-start gap-0.5">
+            {Array(ratings)
+              .fill(0)
+              .map((_, index) => (
+                <div key={index} className={RatingCircleStyle}>
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className="fa-solid fa-star absolute text-yellow-300 text-xs"
+                  />
+                </div>
+              ))}
+          </div>
         </div>
-        <div className="flex justify-start gap-0.5">
-          {Array(ratings)
-            .fill(0)
-            .map((_, index) => (
-              <div key={index} className={RatingCircleStyle}>
-                <FontAwesomeIcon
-                  icon={faStar}
-                  className="fa-solid fa-star absolute text-yellow-300 text-xs"
-                />
-              </div>
-            ))}
-        </div>
-        <div className="flex justify-center rounded-xl h-[6rem]">
+
+        <div className="flex justify-center rounded-xl h-[7rem]">
           <Image
             src={photoUrl ?? '/image/cafe_thumbnail.webp'}
             alt="카페 썸네일"

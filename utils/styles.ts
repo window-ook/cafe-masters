@@ -21,7 +21,7 @@ export const getSubSidebarStyle = (
   const baseStyle = `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white text-black'} 
    static left-0 z-10 w-[100vw] max-w-[27rem] p-2 
    transition-transform duration-500 ease-in-out 
-   overflow-y-scroll shadow-md`;
+   overflow-y-scroll shadow-md overflow-x-hidden`;
 
   const openStyle = isSubSidebarOpen
     ? `${isExtend ? 'translate-y-[13rem] h-[calc(100vh-13rem)]' : 'translate-y-[35rem]'} 
@@ -61,14 +61,14 @@ export const DetailCollectButtonStyle =
   'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-dpixel';
 
 export const getNormalCardStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-50 p-4 border-4 rounded-2xl shadow-md flex flex-col gap-2 cursor-pointer hover:scale-105 transition duration-300 ease`;
+  return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-[20rem] p-4 border-4 rounded-2xl shadow-md flex flex-col justify-between cursor-pointer hover:scale-105 transition duration-300 ease`;
 };
 
 export const getCollectedCardStyle = (
   bgRatings: string,
   isDarkTheme: boolean,
 ) => {
-  return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer hover:scale-105 transition duration-300 ease`;
+  return `${bgRatings} ${isDarkTheme ? 'border-mainShadow' : 'border-gray-600'} h-[20rem] p-4 border-4 rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer hover:scale-105 transition duration-300 ease`;
 };
 
 export const getExpertTierStyle = (addOn: string = '') => {
@@ -99,7 +99,7 @@ export const BadgeCommon =
   'rounded-xl w-20 h-6 py-4 flex items-center justify-center';
 
 export const UniqueCardStyle =
-  'bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient text-white shadow-md border-red-300 h-50 p-4 border-4 rounded-2xl flex flex-col gap-2 drop-shadow-3xl cursor-pointer font-dpixel font-bold transition duration-300 ease hover:scale-105 hover:bg-gradient-to-tr ';
+  'bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient text-white shadow-md border-red-300 h-[20rem] p-4 border-4 rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer font-dpixel font-bold transition duration-300 ease hover:scale-105 hover:bg-gradient-to-tr ';
 
 export const UniqueCardEffectStyle = `-z-10 absolute inset-0 w-[100%] h-[100%] bg-gradient-to-r from-unique-effect-left via-unique-effect-mid to-unique-effect-right rounded-xl blur-md animate-tilt`;
 
