@@ -22,6 +22,8 @@ export const useMapStore = create<MapStore>()(
       cafeDetail: {},
       collectedCafeDetail: [],
       bookmarkedCafeDetail: [],
+      collectedSearchTerm: '',
+      bookmarkedSearchTerm: '',
 
       setKeyword: (data: string) => set({ keyword: data }),
       setAllCafe: (data: AllCafe[]) => set({ allCafe: data }),
@@ -40,6 +42,8 @@ export const useMapStore = create<MapStore>()(
         set({ collectedCafeDetail: data }),
       setBookmarkedCafeDetail: (data: BookmarkedCafeFromSupabase[]) =>
         set({ bookmarkedCafeDetail: data }),
+      setCollectedSearchTerm: term => set({ collectedSearchTerm: term }),
+      setBookmarkedSearchTerm: term => set({ bookmarkedSearchTerm: term }),
     }),
     {
       name: 'mapStore',

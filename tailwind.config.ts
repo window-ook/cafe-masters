@@ -18,6 +18,7 @@ const config: Config = {
       colors: {
         main: '#7c24c9',
         mainShadow: '#875aad',
+        mainLanding: '#f5ccff',
         darkbg: '#1f1926',
         darkaccent: '#5f018a',
         success: '#03fc73',
@@ -49,6 +50,7 @@ const config: Config = {
 
       textShadow: {
         black: '0 2px 4px rgba(0, 0, 0, 0.8)',
+        main: '0 2px 4px rgba(135, 90, 173, 1)',
       },
 
       backgroundImage: {

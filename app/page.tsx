@@ -10,15 +10,8 @@ function Navbar() {
 
   return (
     <section className="fixed top-0 left-0 z-50 w-full bg-transparent shadow-md backdrop-blur-lg">
-      <div className="max-w-5xl px-6 py-2 mx-auto flex items-center justify-between">
+      <div className="max-w-5xl h-[4rem] px-6 py-2 mx-auto flex items-center justify-between">
         <div className="flex items-center">
-          <Image
-            src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp"
-            alt="logo image"
-            height={10}
-            width={60}
-            className="w-auto h-auto"
-          />
           <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
             Cafe Masters
           </span>
@@ -27,7 +20,7 @@ function Navbar() {
           onClick={() => handleRouteSignin()}
           className="h-[2rem] rounded-md opacity-80 hover:opacity-40 transition duration-100 ease-in"
         >
-          <span className="font-pretendard font-bold text-mainShadow">
+          <span className="font-pretendard font-bold text-mainLanding">
             시작하기
           </span>
         </button>
@@ -48,7 +41,7 @@ function ScrollSections() {
       subtitle: '01',
       description:
         '마스터즈 월드에서는 여러분이 찾는 모든 카페가 있습니다.\n내가 가 본 카페를 수집해 마스터가 되세요!',
-      imageUrl: '/image/cafe_masters_replacement.avif',
+      imageUrl: '/image/scroll_section.avif',
     },
     {
       id: 2,
@@ -56,7 +49,7 @@ function ScrollSections() {
       subtitle: '02',
       description:
         '마음에 드는 카페가 있는데 막상 가기전에 생각이 안 날 때가 있죠?\n북마크로 저장하고 잊지 마세요!',
-      imageUrl: '/image/cafe_masters_replacement.avif',
+      imageUrl: '/image/scroll_section_1.avif',
     },
     {
       id: 3,
@@ -64,7 +57,7 @@ function ScrollSections() {
       subtitle: '03',
       description:
         '커피 한 잔과 코딩에 집중할 수 있는 좋은 카페를\n마스터즈 월드의 창조주가 알려드립니다!',
-      imageUrl: '/image/cafe_masters_replacement.avif',
+      imageUrl: '/image/scroll_section_2.avif',
     },
   ];
 
@@ -118,7 +111,7 @@ function ScrollSections() {
                   alt={section.title}
                   fill
                   quality={100}
-                  className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
+                  className="absolute inset-0 w-full h-full object-cover saturate-150 transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
                 />
               </div>
               <div className="w-full whitespace-nowrap md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-8 bg-neutral-950">
@@ -185,7 +178,7 @@ function ScrollSections() {
                   src={section.imageUrl}
                   alt={section.title}
                   fill
-                  className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
+                  className="absolute inset-0 w-full h-full object-cover saturate-150 transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
                 />
               </div>
             </>
@@ -296,11 +289,11 @@ function ReviewCards() {
       >
         <div className="h-[2rem] rounded-md flex items-center">
           <span className="flex flex-col text-lg max-sm:text-sm font-pretendard text-main font-bold">
-            실제 유저 리뷰
+            유저의 목소리를 듣습니다
           </span>
         </div>
         <span className="bg-gradient-to-r from-black to-neutral-500 bg-clip-text text-5xl max-lg:text-4xl max-md:text-2xl max-sm:text-lg font-pretendard font-bold text-transparent max-lg:text-shadow-none">
-          유저의 목소리
+          실제 피드백과 리뷰
         </span>
       </div>
 
@@ -324,7 +317,7 @@ function ReviewCards() {
             </div>
             <div className="flex gap-2">
               <span className="text-white text-xl">{review.imageUrl}</span>
-              <span className="text-mainShadow font-bold text-xl">
+              <span className="text-mainLanding font-bold text-xl">
                 {review.user}
               </span>
             </div>
@@ -362,7 +355,7 @@ function Contactme() {
               </span>
             </button>
           </div>
-          <span className="text-[1rem] font-bold text-mainShadow hover:text-gray-200 transition-colors duration-300">
+          <span className="text-[1rem] font-bold text-mainLanding hover:text-gray-200 transition-colors duration-300">
             cwl64658@gmail.com
           </span>
         </div>
@@ -385,7 +378,7 @@ function Contactme() {
               </span>
             </button>
           </div>
-          <span className="text-[1rem] font-bold text-mainShadow hover:text-gray-200 transition-colors duration-300">
+          <span className="text-[1rem] font-bold text-mainLanding hover:text-gray-200 transition-colors duration-300">
             카페 마스터즈를 어떻게 사용하는지 알려드려요
           </span>
         </div>
@@ -408,7 +401,7 @@ export default function Home() {
         <ReviewCards />
       </section>
 
-      {/* Contact Us */}
+      {/* 3rd Section Contact Us */}
       <section className="w-full h-[30rem] pt-32 bg-black">
         <Contactme />
       </section>

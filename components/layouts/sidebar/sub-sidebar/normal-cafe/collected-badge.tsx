@@ -1,13 +1,9 @@
 import { CollectedBadgeStyle } from 'utils/styles';
-import { Chip } from '@mui/material';
 
 export default function CollectedBadge() {
   return (
-    <Chip
-      data-cy="collected-badge"
-      label="COLLECTED"
-      className={CollectedBadgeStyle}
-      sx={{ color: 'white' }}
-    />
+    <div data-cy="collected-badge" className={CollectedBadgeStyle}>
+      <span className="font-pretendard font-bold text-white">COLLECTED</span>
+    </div>
   );
 }

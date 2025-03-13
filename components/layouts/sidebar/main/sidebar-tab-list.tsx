@@ -1,13 +1,9 @@
 import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckStore } from 'utils/store';
-import { getSidebarTabTextStyle } from 'utils/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTableList,
-  faFile,
-  faBookmark,
-} from '@fortawesome/free-solid-svg-icons';
+import { IoMdCafe } from 'react-icons/io';
+import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
+import { FaLaptopCode } from 'react-icons/fa';
 
 interface SidebarTabProps {
   icon: ReactNode;
@@ -20,52 +16,55 @@ function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
   return (
     <li
       data-cy={`route-${title.replace(/\s+/g, '-').toLowerCase()}`}
-      className="flex items-center gap-6 cursor-pointer"
+      className={`group px-3 py-4 rounded-lg flex items-center gap-2 cursor-pointer ${isDarkTheme ? 'hover:bg-mainLanding' : 'hover:bg-white'} hover:shadow-md transition duration-150 ease-in`}
       onClick={path}
     >
       <span>{icon}</span>
-      <span className={getSidebarTabTextStyle(isDarkTheme)}>{title}</span>
+      <span
+        className={`w-[22rem] ${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}
+      >
+        {title}
+      </span>
     </li>
   );
 }
 
 export default function SidebarTabList() {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+
   const router = useRouter();
-  const iconStyle = 'fa-solid text-3xl';
 
   return (
-    <ul className="flex flex-col items-center gap-10 sm:gap-8 pl-32">
+    <ul className="flex flex-col items-center">
       <SidebarTab
         icon={
-          <FontAwesomeIcon
-            icon={faTableList}
-            className={`${isDarkTheme ? 'text-white' : ''} ${iconStyle}`}
+          <IoMdCafe
+            className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} text-3xl`}
           />
         }
-        title={'모든 카페 보기'}
+        title={'검색 결과'}
         path={() => router.push('/cafe/all')}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
         icon={
-          <FontAwesomeIcon
-            icon={faFile}
-            className={`${isDarkTheme ? 'text-white' : 'text-main'} ${iconStyle}`}
+          <MdCollections
+            className={`${isDarkTheme ? 'text-mainShadow' : `text-main`} text-3xl`}
           />
         }
-        title={'수집한 카드 보기'}
+        title={'수집한 카드'}
         path={() => router.push('/cafe/collected')}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
-        icon={
-          <FontAwesomeIcon
-            icon={faBookmark}
-            className={`${isDarkTheme ? 'text-white' : 'text-yellow-500'} ${iconStyle}`}
-          />
-        }
-        title={'가고 싶은 카페 보기'}
+        icon={<MdCollectionsBookmark className={`text-yellow-500 text-3xl`} />}
+        title={'가고 싶은 곳'}
+        path={() => router.push('/cafe/bookmarked')}
+        isDarkTheme={isDarkTheme}
+      />
+      <SidebarTab
+        icon={<FaLaptopCode className={`text-gray-500 text-3xl`} />}
+        title={'개발하기 좋은 카페'}
         path={() => router.push('/cafe/bookmarked')}
         isDarkTheme={isDarkTheme}
       />

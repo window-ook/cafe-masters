@@ -1,7 +1,6 @@
 import { handleCopyClick } from 'utils/common';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { FaPhoneSquare } from 'react-icons/fa';
+import { FaCopy } from 'react-icons/fa6';
 import Tooltip from 'components/shared/tooltip';
 
 interface PhoneNumGridProps {
@@ -11,11 +10,11 @@ interface PhoneNumGridProps {
 export default function PhoneGrid({ phoneNum }: PhoneNumGridProps) {
   return (
     <div className="col-span-2 grid grid-cols-3 items-center">
-      <div className="col-span-1 flex gap-1">
-        <FontAwesomeIcon icon={faPhone} />
+      <div className="col-span-1 flex items-center gap-1">
+        <FaPhoneSquare />
         <span className="font-dpixel">전화번호</span>
       </div>
-      <div className="col-span-2 flex gap-4">
+      <div className="col-span-2 flex items-center gap-4">
         <span className="text-lg">{phoneNum}</span>
         <Tooltip
           comment="복사"
@@ -25,7 +24,7 @@ export default function PhoneGrid({ phoneNum }: PhoneNumGridProps) {
               onClick={() => handleCopyClick(phoneNum ?? '')}
               className="hover:opacity-70"
             >
-              <FontAwesomeIcon icon={faCopy} />
+              <FaCopy />
             </button>
           }
           left="8"

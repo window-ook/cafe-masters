@@ -19,7 +19,7 @@ function Badge({ tier, range, color }: BadgeProps) {
       <div className={color}>
         <span className="text-sm font-dpixel">{tier}</span>
       </div>
-      <span className="text-xl font-dpixel">{range}</span>
+      <span className="text-xl font-bold font-pretendard">{range}</span>
     </div>
   );
 }
@@ -30,7 +30,8 @@ export default function TierInfoModal({
 }: TierInfoModalProps) {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
-  const tierDescStyle = 'font-dpixel lg:text-lg text-xs';
+  const tierDescStyle =
+    'font-pretendard font-bold text-gray-500 lg:text-lg text-xs';
 
   return (
     <div>
@@ -46,7 +47,7 @@ export default function TierInfoModal({
           absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center`}
         >
           <div className="flex flex-col">
-            <span className="font-dpixel text-2xl md:text-3xl">
+            <span className="font-pretendard font-extrabold text-2xl md:text-3xl">
               TIER INFORMATION
             </span>
             <span className={tierDescStyle}>
@@ -90,7 +91,9 @@ export default function TierInfoModal({
             <div className={getMasterTierStyle(BadgeCommon)}>
               <span className="text-sm font-dpixel">MASTER</span>
             </div>
-            <span className="z-10 relative text-xl font-dpixel">50</span>
+            <span className="z-10 relative text-xl font-bold font-pretendard">
+              50
+            </span>
           </div>
           <span className={tierDescStyle}>
             마스터여, 당신은 월드의 주인입니다

@@ -30,7 +30,7 @@ export default function NormalCafe({
       >
         {name}
       </span>
-      <div className="flex justify-center h-[6rem]">
+      <div className="h-[7rem] flex justify-center">
         <Image
           src={
             photoUrl

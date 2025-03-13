@@ -10,8 +10,8 @@ import {
   getDetailHeaderStyle,
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { IoCloseCircle } from 'react-icons/io5';
+import { IoBookmark } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-cafe/collected-badge';
@@ -99,10 +99,7 @@ export default function NormalCafeDetail({
               onClick={handleCancelBookmark}
               className="flex items-center"
             >
-              <FontAwesomeIcon
-                icon={faBookmark}
-                className="text-yellow-500 pr-2"
-              />
+              <IoBookmark className="pr-2 text-yellow-500 text-3xl" />
             </button>
           ) : (
             <button
@@ -111,9 +108,8 @@ export default function NormalCafeDetail({
               onClick={handleUploadBookmark}
               className="flex items-center"
             >
-              <FontAwesomeIcon
-                icon={faBookmark}
-                className={`hover:scale-105 ${isDarkTheme ? 'text-white' : ''} pr-2`}
+              <IoBookmark
+                className={`pr-2 text-3xl ${isDarkTheme ? 'text-white' : ''}`}
               />
             </button>
           )}
@@ -126,10 +122,7 @@ export default function NormalCafeDetail({
           onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
         >
-          <FontAwesomeIcon
-            icon={faCircleXmark}
-            className={SubsidebarCloseIconStyle}
-          />
+          <IoCloseCircle className={SubsidebarCloseIconStyle} />
         </button>
       </div>
 

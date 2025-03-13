@@ -1,6 +1,5 @@
 import { useCheckStore } from 'utils/store';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 interface MenuItem {
   menu: string;
@@ -31,13 +30,11 @@ export default function MenuGrid({
             onClick={handleMenuOpen}
           >
             {isMenuOpen ? (
-              <FontAwesomeIcon
-                icon={faAngleUp}
+              <FaChevronUp
                 className={`fa-solid fa-angle-up text-lg ${isDarkTheme ? 'text-white' : ''}`}
               />
             ) : (
-              <FontAwesomeIcon
-                icon={faAngleDown}
+              <FaChevronDown
                 className={`fa-solid fa-angle-down text-lg ${isDarkTheme ? 'text-white' : ''}`}
               />
             )}
@@ -45,7 +42,7 @@ export default function MenuGrid({
         </div>
         <ul>
           {isMenuOpen &&
-            menu.map((item, index) => (
+            menu?.map((item, index) => (
               <li key={index} className="flex flex-col gap-1 mb-2">
                 <div className="w-30 border-t border-solid border-gray-400"></div>
                 <span className="font-bold text-lg">{item?.menu}</span>
