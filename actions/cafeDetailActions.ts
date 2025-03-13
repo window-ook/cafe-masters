@@ -15,8 +15,11 @@ export async function getCafeDetail(id: string): Promise<FetchedCafeDetail> {
     method: 'GET',
   });
 
-  if (!response.ok) console.error(`${response.status}, ${response.text}`);
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error(`${response.status}, ${errorText}`);
+    throw new Error(`Failed to fetch cafe detail: ${response.status}`);
+  }
 
-  const data = await response.json();
-  return data;
+  return await response.json();
 }

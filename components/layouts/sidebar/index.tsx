@@ -49,10 +49,13 @@ export default function Sidebar() {
   const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
   const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
   const setIsMenuOpen = useCheckStore(state => state.setIsMenuOpen);
+  const collectedSearchTerm = useMapStore(state => state.collectedSearchTerm);
+  const bookmarkedSearchTerm = useMapStore(state => state.bookmarkedSearchTerm);
 
   const router = useRouter();
   const pathname = usePathname();
 
+  const isMainPage = pathname === '/cafe';
   const isSearchResultPage = pathname.startsWith('/cafe/all');
   const isCollectedPage = pathname.startsWith('/cafe/collected');
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
@@ -121,8 +124,8 @@ export default function Sidebar() {
   }, [currentPage]);
 
   useEffect(() => {
-    if (pathname === '/cafe') setIsSubSidebarOpen(false);
-  }, [pathname, setIsSubSidebarOpen]);
+    if (isMainPage) setIsSubSidebarOpen(false);
+  }, [pathname, isMainPage, setIsSubSidebarOpen]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -160,6 +163,26 @@ export default function Sidebar() {
     setThisY(cafe?.coordY);
   };
 
+  const filterCollctedBySearchTerm = (
+    cafes: CollectedCafeFromSupabase[],
+    searchTerm: string,
+  ) => {
+    if (!searchTerm) return cafes;
+    return cafes.filter(cafe =>
+      cafe.name?.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  };
+
+  const filterBookmarkedBySearchTerm = (
+    cafes: BookmarkedCafeFromSupabase[],
+    searchTerm: string,
+  ) => {
+    if (!searchTerm) return cafes;
+    return cafes.filter(cafe =>
+      cafe.name?.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  };
+
   if (pathname.startsWith('/resetpassword')) return null;
 
   return (
@@ -168,93 +191,100 @@ export default function Sidebar() {
         className={getSidebarStyle(isDarkTheme, isSubSidebarOpen)}
         ref={containerRef}
       >
-        <div className="flex flex-col gap-12 sm:gap-10">
+        <div className="flex flex-col min-h-screen">
           <Header />
-          {/* 사이드바 Body */}
-          {pathname === '/cafe' && <SidebarTabList />}
 
-          <section className="px-8 sm:px-4">
+          <div className="flex-1">
+            {isMainPage && <SidebarTabList />}
+
+            <section className="px-8 sm:px-4">
+              {isSearchResultPage && (
+                <div className={cardDivStyle}>
+                  {paginatedResults.map((cafe: AllCafe) => (
+                    <NormalCafe
+                      key={cafe.id}
+                      name={cafe.place_name}
+                      address={cafe.address_name}
+                      phoneNum={cafe.phone}
+                      onClick={() => handleNormalCafeClick(cafe)}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {isCollectedPage && (
+                <div>
+                  {fetchedCollectedCafe?.pages?.map((page, i) => (
+                    <div key={`page-${i}`} className={cardDivStyle}>
+                      {filterCollctedBySearchTerm(
+                        page.data,
+                        collectedSearchTerm,
+                      ).map((cafe: CollectedCafeFromSupabase) => (
+                        <CollectedCafe
+                          key={cafe.id}
+                          name={cafe.name}
+                          ratings={cafe.rating}
+                          photoUrl={cafe.photoUrl}
+                          address={cafe.address}
+                          phoneNum={cafe.phoneNum}
+                          onClick={() => handleCollectedCafeClick(cafe)}
+                        />
+                      ))}
+                    </div>
+                  ))}
+
+                  {isFetchingNextCollectedPage && (
+                    <div className="fixed bottom-4 right-4">
+                      <CircularProgress />
+                    </div>
+                  )}
+
+                  <div ref={collectedRef} className="h-[2rem] w-[22rem]"></div>
+                </div>
+              )}
+
+              {isBookmarkedPage && (
+                <div>
+                  {fetchedBookmarkedCafe?.pages?.map((page, i) => (
+                    <div key={`page-${i}`} className={cardDivStyle}>
+                      {filterBookmarkedBySearchTerm(
+                        page.data,
+                        bookmarkedSearchTerm,
+                      ).map((cafe: BookmarkedCafeFromSupabase) => (
+                        <NormalCafe
+                          key={cafe.id}
+                          name={cafe.name}
+                          address={cafe.address}
+                          phoneNum={cafe.phoneNum}
+                          photoUrl={cafe.photoUrl}
+                          onClick={() => handleBookmarkedCafeClick(cafe)}
+                        />
+                      ))}
+                    </div>
+                  ))}
+
+                  {isFetchingNextBookmarkedPage && (
+                    <div className="fixed bottom-4 right-4">
+                      <CircularProgress />
+                    </div>
+                  )}
+
+                  <div ref={bookmarkedRef} className="h-[2rem] w-[22rem]"></div>
+                </div>
+              )}
+            </section>
+
             {isSearchResultPage && (
-              <div className={cardDivStyle}>
-                {paginatedResults.map((cafe: AllCafe) => (
-                  <NormalCafe
-                    key={cafe.id}
-                    name={cafe.place_name}
-                    address={cafe.address_name}
-                    phoneNum={cafe.phone}
-                    onClick={() => handleNormalCafeClick(cafe)}
-                  />
-                ))}
-              </div>
+              <PageConverter
+                isDarkTheme={isDarkTheme}
+                handlePreviousPage={handlePreviousPage}
+                handleNextPage={handleNextPage}
+                currentPage={currentPage}
+                totalPages={totalPages}
+              />
             )}
-
-            {isCollectedPage && (
-              <div>
-                {fetchedCollectedCafe?.pages?.map((page, i) => (
-                  <div key={`page-${i}`} className={cardDivStyle}>
-                    {page.data.map((cafe: CollectedCafeFromSupabase) => (
-                      <CollectedCafe
-                        key={cafe.id}
-                        name={cafe.name}
-                        ratings={cafe.rating}
-                        photoUrl={cafe.photoUrl}
-                        address={cafe.address}
-                        phoneNum={cafe.phoneNum}
-                        onClick={() => handleCollectedCafeClick(cafe)}
-                      />
-                    ))}
-                  </div>
-                ))}
-
-                {isFetchingNextCollectedPage && (
-                  <div className="fixed bottom-4 right-4">
-                    <CircularProgress />
-                  </div>
-                )}
-
-                <div ref={collectedRef} className="w-[22rem]"></div>
-              </div>
-            )}
-
-            {isBookmarkedPage && (
-              <div>
-                {fetchedBookmarkedCafe?.pages?.map((page, i) => (
-                  <div key={`page-${i}`} className={cardDivStyle}>
-                    {page.data.map((cafe: BookmarkedCafeFromSupabase) => (
-                      <NormalCafe
-                        key={cafe.id}
-                        name={cafe.name}
-                        address={cafe.address}
-                        phoneNum={cafe.phoneNum}
-                        photoUrl={cafe.photoUrl}
-                        onClick={() => handleBookmarkedCafeClick(cafe)}
-                      />
-                    ))}
-                  </div>
-                ))}
-
-                {isFetchingNextBookmarkedPage && (
-                  <div className="fixed bottom-4 right-4">
-                    <CircularProgress />
-                  </div>
-                )}
-
-                <div ref={bookmarkedRef} className="w-[22rem]"></div>
-              </div>
-            )}
-          </section>
-
-          {isSearchResultPage && (
-            <PageConverter
-              isDarkTheme={isDarkTheme}
-              handlePreviousPage={handlePreviousPage}
-              handleNextPage={handleNextPage}
-              currentPage={currentPage}
-              totalPages={totalPages}
-            />
-          )}
-
-          {pathname === '/cafe' && <Footer />}
+          </div>
+          {isMainPage && <Footer />}
         </div>
       </div>
 

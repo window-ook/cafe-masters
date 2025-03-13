@@ -7,8 +7,7 @@ import {
   UniqueCardStyle,
   UniqueCardEffectStyle,
 } from 'utils/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FaStar } from 'react-icons/fa6';
 import Image from 'next/image';
 
 interface CollectedCafeProps {
@@ -29,6 +28,7 @@ export default function CollectedCafe({
   onClick,
 }: CollectedCafeProps) {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+
   const isUnique = name === '탐앤탐스 대구강북점';
 
   const bgRatings =
@@ -60,10 +60,7 @@ export default function CollectedCafe({
               .fill(0)
               .map((_, index) => (
                 <div key={index} className={RatingCircleStyle}>
-                  <FontAwesomeIcon
-                    icon={faStar}
-                    className="fa-solid fa-star absolute text-yellow-300 text-xs"
-                  />
+                  <FaStar className="fa-solid fa-star absolute text-yellow-300 text-xs" />
                 </div>
               ))}
           </div>

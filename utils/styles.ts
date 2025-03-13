@@ -2,15 +2,7 @@ export const getSidebarStyle = (
   isDarkTheme: boolean,
   isSubSidebarOpen: boolean,
 ) => {
-  return `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white'} ${isSubSidebarOpen ? 'hidden sm:block' : ''} z-10 relative w-screen h-screen max-w-[27rem] rounded-none shadow-xl shadow-mainShadow flex flex-col justify-between overflow-y-scroll overflow-x-hidden`;
-};
-
-export const getSidebarTabTextStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'text-white' : 'text-black'} w-[22rem] font-extrabold text-2xl transition ease-in-out delay-100 hover:text-opacity-30`;
-};
-
-export const getPageConverterStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'bg-darkbg' : 'bg-white'} z-20 w-full sticky bottom-0 py-4 font-dpixel`;
+  return `z-10 relative w-screen h-screen max-w-[27rem] pl-1 rounded-none shadow-xl shadow-mainShadow ${isDarkTheme ? 'bg-darkbg text-white' : 'bg-gray-100'} ${isSubSidebarOpen ? 'hidden sm:block' : ''} flex flex-col justify-between overflow-y-scroll overflow-x-hidden`;
 };
 
 export const getSubSidebarStyle = (
@@ -85,15 +77,11 @@ export const getMasterTierStyle = (addOn: string = '') => {
   return `${addOn} z-10 relative bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md`;
 };
 
-export const getSearchInputStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'placeholder:text-gray-200 text-white' : 'placeholder:text-slate-400 text-slate-700'} w-full pl-3 pr-28 py-4 bg-transparent text-xl sm:text-md border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 shadow-sm focus:shadow`;
-};
-
 export const SearchButtonStyle =
   'absolute top-1 right-1 py-4 px-2.5 flex items-center gap-2 rounded bg-main border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
 
 export const CollectedBadgeStyle =
-  'bg-gradient-to-r from-success via-indigo to-success bg-[length:200%_200%] animate-gradient shadow-md';
+  'rounded-xl w-[7rem] h-6 py-4 flex items-center justify-center bg-gradient-to-r from-success via-indigo to-success bg-[length:200%_200%] animate-gradient shadow-md';
 
 export const BadgeCommon =
   'rounded-xl w-20 h-6 py-4 flex items-center justify-center';

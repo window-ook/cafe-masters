@@ -6,8 +6,7 @@ import {
   getDetailHeaderStyle,
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { IoCloseCircle } from 'react-icons/io5';
 import OpenTimeGrid from '../shared/open-time-grid';
 import LocationGrid from '../shared/location-grid';
 import PhoneGrid from '../shared/phone-grid';
@@ -52,10 +51,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
           onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
         >
-          <FontAwesomeIcon
-            icon={faCircleXmark}
-            className={SubsidebarCloseIconStyle}
-          />
+          <IoCloseCircle className={SubsidebarCloseIconStyle} />
         </button>
       </div>
 

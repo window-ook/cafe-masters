@@ -7,17 +7,11 @@ import {
   RatingStarStyle,
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCircleXmark,
-  faClock,
-  faStar,
-  faLocationDot,
-  faCopy,
-  faPhone,
-  faAngleDown,
-  faBookmark,
-} from '@fortawesome/free-solid-svg-icons';
+import { IoMdClock } from 'react-icons/io';
+import { IoBookmark, IoLocation, IoCloseCircle } from 'react-icons/io5';
+import { FaStar, FaPhoneSquare, FaChevronDown } from 'react-icons/fa';
+import { FaCopy } from 'react-icons/fa6';
+
 import Image from 'next/image';
 import Tooltip from 'components/shared/tooltip';
 
@@ -28,17 +22,11 @@ export default function Loading() {
     <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
-          <FontAwesomeIcon
-            icon={faBookmark}
-            className={`hover:scale-105 ${isDarkTheme ? 'text-white' : ''}`}
-          />
+          <IoBookmark className={`${isDarkTheme ? 'text-white' : ''}`} />
           <span className="text-2xl font-semibold">로딩 중입니다...</span>
         </div>
         <div className="px-2 right-2">
-          <FontAwesomeIcon
-            icon={faCircleXmark}
-            className={SubsidebarCloseIconStyle}
-          />
+          <IoCloseCircle className={SubsidebarCloseIconStyle} />
         </div>
       </div>
 
@@ -54,10 +42,10 @@ export default function Loading() {
 
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <span className="text-xl">리뷰 ??</span>
+            <span className="text-xl font-dpixel">리뷰 ??</span>
             <span className="text-xl flex gap-1 items-center">
               <div className={RatingCircleStyle}>
-                <FontAwesomeIcon icon={faStar} className={RatingStarStyle} />
+                <FaStar className={RatingStarStyle} />
               </div>
               <span>??</span>
             </span>
@@ -70,7 +58,7 @@ export default function Loading() {
         <div className="grid grid-cols-2 gap-6">
           <div className="col-span-2 grid grid-cols-3">
             <div className="col-span-1 flex gap-1 items-center">
-              <FontAwesomeIcon icon={faClock} />
+              <IoMdClock />
               <span className="font-dpixel">영업시간</span>
             </div>
             <div className="col-span-1 text-left">
@@ -88,17 +76,17 @@ export default function Loading() {
             </div>
           </div>
           <div className="col-span-2 grid grid-cols-3 items-center">
-            <div className="col-span-1 flex gap-1">
-              <FontAwesomeIcon icon={faLocationDot} />
+            <div className="col-span-1 flex items-center gap-1">
+              <IoLocation />
               <span className="font-dpixel">위치</span>
             </div>
-            <div className="col-span-2 flex gap-4">
+            <div className="col-span-2 flex items-center gap-4">
               <span className="text-sm">?? ??구 ??로</span>
               <Tooltip
                 comment="복사"
                 component={
                   <div className="hover:opacity-70">
-                    <FontAwesomeIcon icon={faCopy} />
+                    <FaCopy />
                   </div>
                 }
                 left="16"
@@ -106,17 +94,17 @@ export default function Loading() {
             </div>
           </div>
           <div className="col-span-2 grid grid-cols-3 items-center">
-            <div className="col-span-1 flex gap-1">
-              <FontAwesomeIcon icon={faPhone} />
+            <div className="col-span-1 flex items-center gap-1">
+              <FaPhoneSquare />
               <span className="font-dpixel">전화번호</span>
             </div>
-            <div className="col-span-2 flex gap-4">
+            <div className="col-span-2 flex items-center gap-4">
               <span className="text-lg">???-????-????</span>
               <Tooltip
                 comment="복사"
                 component={
                   <div className="hover:opacity-70">
-                    <FontAwesomeIcon icon={faCopy} />
+                    <FaCopy />
                   </div>
                 }
                 left="16"
@@ -128,8 +116,7 @@ export default function Loading() {
               <div className="flex items-center gap-2">
                 <span className="text-lg">메뉴</span>
                 <div aria-label="메뉴 보기 버튼">
-                  <FontAwesomeIcon
-                    icon={faAngleDown}
+                  <FaChevronDown
                     className={`fa-solid fa-angle-down text-lg ${isDarkTheme ? 'text-white' : ''}`}
                   />
                 </div>

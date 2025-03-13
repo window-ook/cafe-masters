@@ -12,13 +12,6 @@ function Navbar() {
     <section className="fixed top-0 left-0 z-50 w-full bg-transparent shadow-md backdrop-blur-lg">
       <div className="max-w-5xl h-[4rem] px-6 py-2 mx-auto flex items-center justify-between">
         <div className="flex items-center">
-          {/* <Image
-            src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp"
-            alt="logo image"
-            height={10}
-            width={60}
-            className="w-auto h-auto"
-          /> */}
           <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
             Cafe Masters
           </span>
@@ -27,7 +20,7 @@ function Navbar() {
           onClick={() => handleRouteSignin()}
           className="h-[2rem] rounded-md opacity-80 hover:opacity-40 transition duration-100 ease-in"
         >
-          <span className="font-pretendard font-bold text-mainShadow">
+          <span className="font-pretendard font-bold text-mainLanding">
             시작하기
           </span>
         </button>
@@ -324,7 +317,7 @@ function ReviewCards() {
             </div>
             <div className="flex gap-2">
               <span className="text-white text-xl">{review.imageUrl}</span>
-              <span className="text-mainShadow font-bold text-xl">
+              <span className="text-mainLanding font-bold text-xl">
                 {review.user}
               </span>
             </div>
@@ -362,7 +355,7 @@ function Contactme() {
               </span>
             </button>
           </div>
-          <span className="text-[1rem] font-bold text-mainShadow hover:text-gray-200 transition-colors duration-300">
+          <span className="text-[1rem] font-bold text-mainLanding hover:text-gray-200 transition-colors duration-300">
             cwl64658@gmail.com
           </span>
         </div>
@@ -385,7 +378,7 @@ function Contactme() {
               </span>
             </button>
           </div>
-          <span className="text-[1rem] font-bold text-mainShadow hover:text-gray-200 transition-colors duration-300">
+          <span className="text-[1rem] font-bold text-mainLanding hover:text-gray-200 transition-colors duration-300">
             카페 마스터즈를 어떻게 사용하는지 알려드려요
           </span>
         </div>
@@ -408,7 +401,7 @@ export default function Home() {
         <ReviewCards />
       </section>
 
-      {/* Contact Us */}
+      {/* 3rd Section Contact Us */}
       <section className="w-full h-[30rem] pt-32 bg-black">
         <Contactme />
       </section>

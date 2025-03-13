@@ -2,7 +2,7 @@
 
 import { useEffect, use } from 'react';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-import { getCafeDetail } from 'actions/cafeDetailActions';
+// import { getCafeDetail } from 'actions/cafeDetailActions';
 import { getBookmarkedCafe } from 'actions/bookmarkActions';
 import { getCollectedCafe } from 'actions/collectActions';
 import { PageProps } from 'types/common';
@@ -29,14 +29,14 @@ export default function AllDetailPage({ params }: PageProps) {
       try {
         const numericId = parseFloat(id);
 
-        const cafeDetailResponse = await getCafeDetail(id);
+        // const cafeDetailResponse = await getCafeDetail(id);
         const isBookmarkedLocally = bookmarkedCafe.some(
           cafe => cafe.id === numericId,
         );
         const isCollectedLocally = collectedCafe.some(
           cafe => cafe.id === numericId,
         );
-        setCafeDetail(cafeDetailResponse);
+        // setCafeDetail(cafeDetailResponse);
         setIsBookmarked(isBookmarkedLocally);
         setIsCollected(isCollectedLocally);
 

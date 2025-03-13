@@ -1,5 +1,3 @@
-import { getPageConverterStyle } from 'utils/styles';
-
 interface PageConverterProps {
   isDarkTheme: boolean;
   handlePreviousPage: () => void;
@@ -16,7 +14,9 @@ export default function PageConverter({
   handleNextPage,
 }: PageConverterProps) {
   return (
-    <div className={getPageConverterStyle(isDarkTheme)}>
+    <div
+      className={`${isDarkTheme ? 'bg-darkbg' : 'bg-gray-100'} z-20 w-full sticky bottom-0 py-4 font-dpixel`}
+    >
       <div className="flex justify-between items-center">
         <button
           type="button"

@@ -1,6 +1,5 @@
 import { RatingCircleStyle, RatingStarStyle } from 'utils/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FaStar } from 'react-icons/fa';
 
 interface ReviewAndRatingGridProps {
   reviewCount: number | null | undefined;
@@ -16,7 +15,7 @@ export default function ReviewAndRatingGrid({
       <span className="font-dpixel text-xl">리뷰 {reviewCount}</span>
       <span className="text-xl flex gap-1 items-center">
         <div className={RatingCircleStyle}>
-          <FontAwesomeIcon icon={faStar} className={RatingStarStyle} />
+          <FaStar className={RatingStarStyle} />
         </div>
         <span className="font-dpixel">{rating || ''}</span>
       </span>

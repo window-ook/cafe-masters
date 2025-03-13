@@ -18,7 +18,8 @@ export interface MapStore {
   cafeDetail: FetchedCafeDetail;
   collectedCafeDetail: CollectedCafeFromSupabase[];
   bookmarkedCafeDetail: BookmarkedCafeFromSupabase[];
-
+  collectedSearchTerm: string;
+  bookmarkedSearchTerm: string;
   setKeyword: (data: string) => void;
   setAllCafe: (data: AllCafe[]) => void;
   setCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
@@ -30,6 +31,8 @@ export interface MapStore {
   setCafeDetail: (data: object) => void;
   setCollectedCafeDetail: (data: CollectedCafeFromSupabase[]) => void;
   setBookmarkedCafeDetail: (data: BookmarkedCafeFromSupabase[]) => void;
+  setCollectedSearchTerm: (term: string) => void;
+  setBookmarkedSearchTerm: (term: string) => void;
 }
 
 export interface UserStore {
