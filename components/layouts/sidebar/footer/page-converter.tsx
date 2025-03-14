@@ -8,28 +8,26 @@ interface PageConverterProps {
 
 export default function PageConverter({
   isDarkTheme,
-  handlePreviousPage,
   currentPage,
   totalPages,
+  handlePreviousPage,
   handleNextPage,
 }: PageConverterProps) {
   return (
-    <div
-      className={`${isDarkTheme ? 'bg-darkbg' : 'bg-gray-100'} z-20 w-full sticky bottom-0 py-4 font-dpixel`}
-    >
+    <div className={`w-full py-4 ${isDarkTheme ? 'bg-darkbg' : 'bg-gray-100'}`}>
       <div className="flex justify-between items-center">
         <button
           type="button"
           aria-label="이전 페이지 번호"
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
-          className={`px-4 py-2 text-3xl ${
+          className={`px-4 py-2 ${
             currentPage === 1 ? 'opacity-50' : 'opacity-100'
           }`}
         >
-          {'<'}{' '}
+          <span className="text-3xl font-dpixel">{'<'}</span>
         </button>
-        <span className="text-2xl">
+        <span className="text-2xl font-dpixel">
           {currentPage} / {totalPages}
         </span>
         <button
@@ -37,11 +35,11 @@ export default function PageConverter({
           aria-label="다음 페이지 번호"
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
-          className={`px-4 py-2 text-3xl ${
+          className={`px-4 py-2 ${
             currentPage === totalPages ? 'opacity-50' : 'opacity-100'
           }`}
         >
-          {'>'}
+          <span className="text-3xl font-dpixel">{'>'}</span>
         </button>
       </div>
     </div>

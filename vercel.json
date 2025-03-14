@@ -1,0 +1,9 @@
+{
+    "functions": {
+      "api/extra/[id]": {
+        "memory": 1024,
+        "maxDuration": 30
+      }
+    }
+  }
+  

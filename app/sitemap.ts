@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
-      url: 'https://app.cafe-masters.co/cafe/all',
+      url: 'https://app.cafe-masters.co/cafe/search',
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,

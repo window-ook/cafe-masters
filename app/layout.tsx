@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     description: '카드를 수집하고 카페 마스터가 되어보세요!',
     images: [
       {
-        url: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/og_image.webp',
+        url: '/image/og_image.avif',
         width: 2000,
         height: 1500,
         alt: 'OG image Alt 2000*1500(4:3)',

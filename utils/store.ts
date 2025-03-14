@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { MapStore, UserStore, CheckStore } from 'types/store';
 import {
-  AllCafe,
+  SearchResult,
   BookmarkedCafeFromSupabase,
   CollectedCafeFromSupabase,
   Tier,
@@ -12,13 +12,15 @@ export const useMapStore = create<MapStore>()(
   persist(
     set => ({
       keyword: '성수',
-      allCafe: [],
+      searchResult: [],
       collectedCafe: [],
-      collectedCafeCount: 0,
       bookmarkedCafe: [],
+      collectedCafeCount: 0,
       bookmarkedCafeCount: 0,
       thisX: 127.04663357436208,
       thisY: 37.54715716085294,
+      thisId: 12345678,
+      thisThumbnail: '',
       cafeDetail: {},
       collectedCafeDetail: [],
       bookmarkedCafeDetail: [],
@@ -26,7 +28,7 @@ export const useMapStore = create<MapStore>()(
       bookmarkedSearchTerm: '',
 
       setKeyword: (data: string) => set({ keyword: data }),
-      setAllCafe: (data: AllCafe[]) => set({ allCafe: data }),
+      setSearchResult: (data: SearchResult[]) => set({ searchResult: data }),
       setCollectedCafe: (data: CollectedCafeFromSupabase[]) =>
         set({ collectedCafe: data ?? [] }),
       setCollectedCafeCount: (data: number) =>
@@ -37,7 +39,9 @@ export const useMapStore = create<MapStore>()(
         set({ bookmarkedCafeCount: data }),
       setThisX: (x: number) => set({ thisX: x }),
       setThisY: (y: number) => set({ thisY: y }),
+      setThisId: (Id: number) => set({ thisId: Id }),
       setCafeDetail: (data: object) => set({ cafeDetail: data }),
+      setThisThumbnail: (url: string) => set({ thisThumbnail: url }),
       setCollectedCafeDetail: (data: CollectedCafeFromSupabase[]) =>
         set({ collectedCafeDetail: data }),
       setBookmarkedCafeDetail: (data: BookmarkedCafeFromSupabase[]) =>
@@ -51,14 +55,11 @@ export const useMapStore = create<MapStore>()(
   ),
 );
 
-const NO_USER = 'no-user';
-const NO_EMAIL = 'no-email';
-
 export const useUserStore = create<UserStore>()(
   persist(
     set => ({
-      userId: NO_USER,
-      userEmail: NO_EMAIL,
+      userId: '',
+      userEmail: '',
       userTier: 'BEGINNER',
 
       setUserId: (user: string) => set({ userId: user }),

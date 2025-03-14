@@ -3,8 +3,7 @@
 import Image from 'next/image';
 
 export default function AuthBackgroundCards() {
-  const imageSrc =
-    'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_transparent.webp';
+  const imageSrc = '/image/logo.avif';
 
   return (
     <div className="circles">

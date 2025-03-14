@@ -33,10 +33,12 @@ export default function Loading() {
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
           <Image
-            src={'/image/cafe_thumbnail.webp'}
+            src={'/image/cafe_thumbnail.avif'}
             alt="카페 썸네일"
-            width={0}
-            height={0}
+            width={10}
+            height={10}
+            priority={true}
+            className="w-[0.5rem] h-auto"
           />
         </div>
 

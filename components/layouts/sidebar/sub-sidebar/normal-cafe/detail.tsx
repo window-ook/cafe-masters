@@ -15,7 +15,6 @@ import { IoBookmark } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-cafe/collected-badge';
-import ReviewAndRatingGrid from './review-and-rating-grid';
 import OpenTimeGrid from '../shared/open-time-grid';
 import LocationGrid from '../shared/location-grid';
 import PhoneGrid from '../shared/phone-grid';
@@ -41,6 +40,7 @@ export default function NormalCafeDetail({
   const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
 
   const router = useRouter();
+
   const pathname = usePathname();
 
   const uploadBookmarkMutation = useUploadBookmarkMutation();
@@ -69,7 +69,7 @@ export default function NormalCafeDetail({
 
   const handleSetIsSubSidebarOpen = () => {
     setIsSubSidebarOpen(false);
-    if (pathname.startsWith('/cafe/all')) router.push('/cafe/all');
+    if (pathname.startsWith('/cafe/search')) router.push('/cafe/search');
     if (pathname.startsWith('/cafe/bookmarked'))
       router.push('/cafe/bookmarked');
   };
@@ -142,12 +142,12 @@ export default function NormalCafeDetail({
             <div className="snap-center flex-shrink-0 h-[15rem] py-2">
               <Image
                 data-cy="normal-detail-thumbnail"
-                src={detail?.photoUrl || '/image/cafe_thumbnail.webp'}
+                src={detail?.photoUrl || '/image/cafe_thumbnail.avif'}
                 alt="카페 썸네일"
-                className="rounded-md object-cover w-auto h-full transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
                 width={160}
                 height={240}
-                priority={false}
+                className="w-[20rem] h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
+                priority={true}
                 onClick={() =>
                   window.open(
                     `http://place.map.kakao.com/${detail?.id}`,
@@ -156,21 +156,21 @@ export default function NormalCafeDetail({
                 }
               />
             </div>
-            {detail?.photoList?.slice(1).map(photo => {
+            {detail?.photoList?.map((photo, i) => {
               return (
                 <div
-                  key={photo.photoid}
+                  key={i}
                   className="snap-center py-2 flex-shrink-0 h-[15rem]"
                 >
                   <Image
-                    key={photo.photoid}
+                    key={photo}
                     data-cy="normal-detail-thumbnail"
                     alt="카페 썸네일"
-                    src={photo.orgurl}
-                    className="rounded-md object-cover w-auto h-full transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
+                    src={photo || '/image/cafe_thumbnail.avif'}
                     width={160}
                     height={240}
-                    priority={false}
+                    className="w-[20rem] h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
+                    priority={true}
                     onClick={() =>
                       window.open(
                         `http://place.map.kakao.com/${detail?.id}`,
@@ -190,10 +190,7 @@ export default function NormalCafeDetail({
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <ReviewAndRatingGrid
-            reviewCount={detail?.reviewCount}
-            rating={detail?.rating}
-          />
+          <span className="font-dpixel font-extrabold text-xl">상세 정보</span>
           {isCollected ? (
             <CollectedBadge />
           ) : (
@@ -208,10 +205,7 @@ export default function NormalCafeDetail({
           )}
         </div>
         <div className="grid grid-cols-2 gap-6">
-          <OpenTimeGrid
-            openWeekly={detail?.openWeekly}
-            openWeekend={detail?.openWeekend}
-          />
+          <OpenTimeGrid openingHours={detail?.openingHours} />
           <LocationGrid address={detail?.address} />
           <PhoneGrid phoneNum={detail?.phoneNum} />
           <MenuGrid

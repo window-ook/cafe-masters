@@ -11,10 +11,10 @@ interface NormalCafeProps {
 }
 
 export default function NormalCafe({
+  onClick,
   name,
   address,
   phoneNum,
-  onClick,
   photoUrl,
 }: NormalCafeProps) {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
@@ -32,11 +32,7 @@ export default function NormalCafe({
       </span>
       <div className="h-[7rem] flex justify-center">
         <Image
-          src={
-            photoUrl
-              ? photoUrl
-              : 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/search_thumbnail.webp'
-          }
+          src={photoUrl || '/image/cafe_thumbnail.avif'}
           alt="카페 썸네일"
           width={100}
           height={50}

@@ -2,41 +2,43 @@
 
 import { useEffect, use } from 'react';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-// import { getCafeDetail } from 'actions/cafeDetailActions';
-import { getBookmarkedCafe } from 'actions/bookmarkActions';
 import { getCollectedCafe } from 'actions/collectActions';
+import { getBookmarkedCafe } from 'actions/bookmarkActions';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
 
-export default function AllDetailPage({ params }: PageProps) {
+export default function SearchDetail({ params }: PageProps) {
   const { id } = use(params);
-  const userId = useUserStore(state => state.userId);
+
   const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
   const collectedCafe = useMapStore(state => state.collectedCafe);
+  const setThisId = useMapStore(state => state.setThisId);
   const setCafeDetail = useMapStore(state => state.setCafeDetail);
+
+  const userId = useUserStore(state => state.userId);
+
   const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
   const setIsCollected = useCheckStore(state => state.setIsCollected);
   const setIsLoading = useCheckStore(state => state.setIsLoading);
 
   useEffect(() => {
-    if (!userId || userId === 'no-user') return;
+    if (!userId || userId === '') return;
 
     setIsBookmarked(false);
     setIsCollected(false);
     setIsLoading(true);
 
-    const fetchAllData = async () => {
+    const fetchSearchData = async () => {
       try {
         const numericId = parseFloat(id);
+        setThisId(numericId); // 서브사이드바에서 filter하기 위한 카페 id
 
-        // const cafeDetailResponse = await getCafeDetail(id);
         const isBookmarkedLocally = bookmarkedCafe.some(
           cafe => cafe.id === numericId,
         );
         const isCollectedLocally = collectedCafe.some(
           cafe => cafe.id === numericId,
         );
-        // setCafeDetail(cafeDetailResponse);
         setIsBookmarked(isBookmarkedLocally);
         setIsCollected(isCollectedLocally);
 
@@ -65,16 +67,29 @@ export default function AllDetailPage({ params }: PageProps) {
       }
     };
 
-    fetchAllData();
+    const fetchCafeDetail = async () => {
+      const response = await fetch(`/api/extra/${id}`);
+      if (!response.ok) {
+        console.error('상세 정보 다운로드 에러');
+        return;
+      }
+
+      const data = await response.json();
+      setCafeDetail(data);
+    };
+
+    fetchCafeDetail();
+    fetchSearchData();
   }, [
     id,
     userId,
     bookmarkedCafe,
     collectedCafe,
-    setCafeDetail,
+    setThisId,
     setIsBookmarked,
     setIsCollected,
     setIsLoading,
+    setCafeDetail,
   ]);
 
   return (

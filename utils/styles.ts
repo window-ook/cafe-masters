@@ -2,7 +2,7 @@ export const getSidebarStyle = (
   isDarkTheme: boolean,
   isSubSidebarOpen: boolean,
 ) => {
-  return `z-10 relative w-screen h-screen max-w-[27rem] pl-1 rounded-none shadow-xl shadow-mainShadow ${isDarkTheme ? 'bg-darkbg text-white' : 'bg-gray-100'} ${isSubSidebarOpen ? 'hidden sm:block' : ''} flex flex-col justify-between overflow-y-scroll overflow-x-hidden`;
+  return `z-10 relative w-screen h-screen max-w-[27rem] px-1 rounded-none shadow-xl shadow-mainShadow ${isDarkTheme ? 'bg-darkbg text-white' : 'bg-gray-100'} ${isSubSidebarOpen ? 'hidden sm:block' : ''} flex flex-col justify-between overflow-x-hidden`;
 };
 
 export const getSubSidebarStyle = (
@@ -13,7 +13,7 @@ export const getSubSidebarStyle = (
   const baseStyle = `${isDarkTheme ? 'bg-darkbg text-white' : 'bg-white text-black'} 
    static left-0 z-10 w-[100vw] max-w-[27rem] p-2 
    transition-transform duration-500 ease-in-out 
-   overflow-y-scroll shadow-md overflow-x-hidden`;
+   overflow-y-auto shadow-md overflow-x-hidden`;
 
   const openStyle = isSubSidebarOpen
     ? `${isExtend ? 'translate-y-[13rem] h-[calc(100vh-13rem)]' : 'translate-y-[35rem]'} 
@@ -50,7 +50,7 @@ export const getDetailBodyStyle = (isDarkTheme: boolean) => {
 };
 
 export const DetailCollectButtonStyle =
-  'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-dpixel';
+  'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-bold font-pretendard';
 
 export const getNormalCardStyle = (isDarkTheme: boolean) => {
   return `${isDarkTheme ? 'border-darkaccent bg-darkbg text-white shadow-mainShadow' : 'border-gray-700'} h-[20rem] p-4 border-4 rounded-2xl shadow-md flex flex-col justify-between cursor-pointer hover:scale-105 transition duration-300 ease`;

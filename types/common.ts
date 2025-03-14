@@ -1,5 +1,4 @@
-// 카카오맵 검색 데이터 JSON
-export interface AllCafe {
+export interface SearchResult {
   address_name: string;
   category_group_code: string;
   category_group_name: string;
@@ -14,72 +13,12 @@ export interface AllCafe {
   y: number;
 }
 
-// 카카오플레이스 카페 상세 JSON
-export interface Feedback {
-  scorecnt: number | undefined;
-  scoresum: number | undefined;
-}
-
-export interface TimeInfo {
-  timeSE: string;
-}
-
-export interface PeriodInfo {
-  timeList: TimeInfo[];
-}
-
-export interface OpenHour {
-  periodList: PeriodInfo[];
-}
-
-export interface Address {
-  region: {
-    newaddrfullname?: string;
-  };
-  newaddr: {
-    newaddrfull?: string;
-  };
-  addrdetail?: string;
-}
-
-export interface BasicInfo {
-  cid: number;
-  placenamefull: string;
-  mainphotourl?: string;
-  feedback?: Feedback;
-  openHour?: OpenHour;
-  address?: Address;
-  phonenum?: string;
-}
-
-export interface Comment {
-  kamapComntcnt: number;
-}
-
-export interface MenuInfo {
-  menuList?: string[];
-}
-
-export interface PhotoItem {
-  photoid: string;
-  orgurl: string;
-}
-
-export interface PhotoList {
-  photoCount: number;
-  categoryName: string;
-  list: PhotoItem[];
-}
-
-export interface Photo {
-  photoList?: PhotoList[] | undefined;
-}
-
 export interface FetchedCafeDetail {
-  basicInfo?: BasicInfo;
-  comment?: Comment;
-  menuInfo?: MenuInfo;
-  photo?: Photo;
+  menu?: string[];
+  photo?: string;
+  photoList?: string[];
+  openingHours?: string | undefined;
+  address?: string;
 }
 
 export interface NormalCafeDetailForBookmark {
@@ -88,15 +27,13 @@ export interface NormalCafeDetailForBookmark {
   name: string;
   photoUrl?: string | null;
   rating?: number | null;
-  openWeekly?: string | null;
-  openWeekend?: string | null;
+  openingHours?: string | undefined;
   address: string;
   phoneNum?: string | null;
   coordX: number;
   coordY: number;
-  reviewCount?: number | null;
   menu?: string | null;
-  photoList?: PhotoItem[] | null;
+  photoList?: string[] | null;
 }
 
 export interface CollectedCafeDetailForUpdate {
@@ -105,8 +42,7 @@ export interface CollectedCafeDetailForUpdate {
   name: string;
   photoUrl?: string | null;
   rating?: number | null;
-  openWeekly?: string | null;
-  openWeekend?: string | null;
+  openingHours?: string;
   address: string;
   phoneNum?: string | null;
   coordX: number;
@@ -129,7 +65,7 @@ export interface CollectedCafeFromSupabase
 export interface BookmarkedCafeFromSupabase
   extends NormalCafeDetailForBookmark {
   created_at: string;
-  photoList?: PhotoItem[];
+  photoList?: string[];
 }
 
 // 메모 컴포넌트

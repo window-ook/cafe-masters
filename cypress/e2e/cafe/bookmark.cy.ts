@@ -24,7 +24,7 @@ describe('북마크', () => {
     cy.get('[data-cy=search-input]').type('성수');
     cy.get('[data-cy=search-button]').click();
     cy.get('[data-cy=normal-cafe]').first().click();
-    cy.url().should('include', '/cafe/all/detail');
+    cy.url().should('include', '/cafe/search/detail');
     cy.get('[data-cy=upload-bookmark-button]').click();
     // assertion - 북마크 취소 버튼 확인
     cy.get('[data-cy=cancel-bookmark-button]').should('be.visible');
