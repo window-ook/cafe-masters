@@ -16,16 +16,16 @@ const nextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'http',
-        hostname: 't1.daumcdn.net',
+        protocol: 'https',
+        hostname: 'img1.kakaocdn.net',
         port: '',
         pathname: '/**',
       },
       {
-        protocol: 'https',
-        hostname: 'vsemazasjbizehcambul.supabase.co',
+        protocol: 'http',
+        hostname: 't1.daumcdn.net',
         port: '',
-        pathname: '/storage/v1/object/public/cafe%20masters/**',
+        pathname: '/**',
       },
       {
         protocol: 'https',
@@ -42,12 +42,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'blogfiles.pstatic.net',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
         port: '',
         pathname: '/**',
       },

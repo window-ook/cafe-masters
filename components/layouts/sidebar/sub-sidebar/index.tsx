@@ -33,6 +33,7 @@ export default function SubSidebar() {
   const [concept, setConcept] = useState('');
   const [rating, setRating] = useState(5);
 
+  const searchResult = useMapStore(state => state.searchResult);
   const cafeDetail = useMapStore(state => state.cafeDetail);
   const collectedCafeDetail = useMapStore(
     state => state.collectedCafeDetail[0],
@@ -42,7 +43,10 @@ export default function SubSidebar() {
   );
   const thisX = useMapStore(state => state.thisX);
   const thisY = useMapStore(state => state.thisY);
+  const thisId = useMapStore(state => state.thisId);
+
   const userId = useUserStore(state => state.userId);
+
   const isMenuOpen = useCheckStore(state => state.isMenuOpen);
   const setIsMenuOpen = useCheckStore(state => state.setIsMenuOpen);
   const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
@@ -57,46 +61,26 @@ export default function SubSidebar() {
   const uploadCollectMutation = useUploadCollectMutation();
   const updateCollectMutation = useUpdateCollectMutation();
 
+  const filteredFromSearchResult = searchResult.filter(
+    cafe => Number(cafe.id) === thisId,
+  );
+
   const detail = {
-    id: cafeDetail?.basicInfo?.cid ?? 0,
+    id: thisId ?? 0,
     userId,
-    name: cafeDetail?.basicInfo?.placenamefull ?? 'no-name',
-    photoUrl:
-      cafeDetail?.basicInfo?.mainphotourl || '/image/cafe_thumbnail.webp',
-    photoList: cafeDetail?.photo?.photoList?.[1]?.list, // #음식 해시태그 리뷰사진
-    reviewCount: cafeDetail?.comment?.kamapComntcnt,
-    rating:
-      cafeDetail?.basicInfo?.feedback?.scorecnt &&
-      cafeDetail?.basicInfo?.feedback?.scorecnt > 0 &&
-      cafeDetail?.basicInfo?.feedback?.scoresum &&
-      cafeDetail?.basicInfo?.feedback?.scoresum > 0
-        ? parseFloat(
-            (
-              cafeDetail?.basicInfo?.feedback?.scoresum /
-              cafeDetail?.basicInfo?.feedback?.scorecnt
-            ).toFixed(2),
-          )
-        : null,
-    openWeekly:
-      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
-    openWeekend:
-      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[1]?.timeSE ||
-      cafeDetail?.basicInfo?.openHour?.periodList?.[0]?.timeList?.[0]?.timeSE,
-    address: cafeDetail?.basicInfo?.address
-      ? cafeDetail.basicInfo.address.region?.newaddrfullname +
-        ' ' +
-        cafeDetail.basicInfo.address.newaddr?.newaddrfull +
-        ' ' +
-        (cafeDetail.basicInfo.address.addrdetail || '')
-      : 'no-address',
-    phoneNum: cafeDetail?.basicInfo?.phonenum ?? 'no-phoneNum',
-    menu:
-      Array.isArray(cafeDetail?.menuInfo?.menuList) &&
-      cafeDetail?.menuInfo?.menuList.length > 0
-        ? JSON.stringify(cafeDetail.menuInfo.menuList)
-        : null,
     coordX: thisX,
     coordY: thisY,
+    name: filteredFromSearchResult?.[0]?.place_name ?? '',
+    photoUrl: cafeDetail?.photo || '/image/cafe_thumbnail.avif',
+    photoList: cafeDetail?.photoList || [],
+    openingHours: cafeDetail?.openingHours || '',
+    address:
+      cafeDetail?.address || filteredFromSearchResult?.[0]?.road_address_name,
+    phoneNum: filteredFromSearchResult?.[0]?.phone ?? '',
+    menu:
+      Array.isArray(cafeDetail?.menu) && cafeDetail?.menu.length > 0
+        ? JSON.stringify(cafeDetail.menu)
+        : null,
   };
 
   const memoFromDetail = {
@@ -105,8 +89,7 @@ export default function SubSidebar() {
     name: detail?.name,
     photoUrl: detail?.photoUrl,
     address: detail?.address,
-    openWeekly: detail?.openWeekly,
-    openWeekend: detail?.openWeekend || detail?.openWeekly,
+    openingHours: detail?.openingHours,
     phoneNum: detail?.phoneNum,
     coordX: thisX,
     coordY: thisY,
@@ -132,9 +115,7 @@ export default function SubSidebar() {
     name: bookmarkedCafeDetail?.name,
     photoUrl: bookmarkedCafeDetail?.photoUrl,
     address: bookmarkedCafeDetail?.address,
-    openWeekly: bookmarkedCafeDetail?.openWeekly,
-    openWeekend:
-      bookmarkedCafeDetail?.openWeekend || bookmarkedCafeDetail?.openWeekly,
+    openingHours: bookmarkedCafeDetail?.openingHours,
     phoneNum: bookmarkedCafeDetail?.phoneNum,
     coordX: bookmarkedCafeDetail?.coordX,
     coordY: bookmarkedCafeDetail?.coordY,
@@ -146,7 +127,7 @@ export default function SubSidebar() {
     rating: rating,
   };
 
-  const isSearchResultPage = pathname.startsWith('/cafe/all');
+  const isSearchResultPage = pathname.startsWith('/cafe/search');
   const isCollectedPage = pathname.startsWith('/cafe/collected');
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
 
@@ -218,7 +199,7 @@ export default function SubSidebar() {
     toast.success('카드의 스펙을 수정했습니다!');
   };
 
-  if (pathname.startsWith('/cafe/all/detail') && !cafeDetail) return null;
+  if (pathname.startsWith('/cafe/search/detail') && !cafeDetail) return null;
   if (pathname.startsWith('/cafe/collected/detail') && !collectedCafeDetail)
     return null;
   if (pathname.startsWith('/cafe/bookmarked/detail') && !bookmarkedCafeDetail)
@@ -240,7 +221,7 @@ export default function SubSidebar() {
         <>
           {!memoOpen &&
             isSubSidebarOpen &&
-            pathname.startsWith('/cafe/all/detail') && (
+            pathname.startsWith('/cafe/search/detail') && (
               <NormalCafeDetail
                 detail={detail}
                 handleMenuOpen={handleMenuOpen}

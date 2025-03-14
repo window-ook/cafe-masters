@@ -2,7 +2,7 @@ import { useCheckStore } from 'utils/store';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 interface MenuItem {
-  menu: string;
+  name: string;
   price: string;
 }
 
@@ -45,7 +45,7 @@ export default function MenuGrid({
             menu?.map((item, index) => (
               <li key={index} className="flex flex-col gap-1 mb-2">
                 <div className="w-30 border-t border-solid border-gray-400"></div>
-                <span className="font-bold text-lg">{item?.menu}</span>
+                <span className="font-bold text-lg">{item?.name}</span>
                 <span className="text-lg">{item?.price}</span>
               </li>
             ))}

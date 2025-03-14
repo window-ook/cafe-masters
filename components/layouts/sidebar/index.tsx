@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMapStore, useCheckStore, useUserStore } from 'utils/store';
 import {
-  AllCafe,
+  SearchResult,
   BookmarkedCafeFromSupabase,
   CollectedCafeFromSupabase,
 } from 'types/common';
@@ -23,6 +23,7 @@ const NormalCafe = dynamic(() => import('./main/normal-cafe'), { ssr: false });
 const CollectedCafe = dynamic(() => import('./main/collected-cafe'), {
   ssr: false,
 });
+
 const PageConverter = dynamic(() => import('./footer/page-converter'), {
   ssr: false,
 });
@@ -41,7 +42,7 @@ export default function Sidebar() {
     threshold: 0.5,
   });
 
-  const allCafe = useMapStore(state => state.allCafe);
+  const searchResult = useMapStore(state => state.searchResult);
   const setThisX = useMapStore(state => state.setThisX);
   const setThisY = useMapStore(state => state.setThisY);
   const userId = useUserStore(state => state.userId);
@@ -53,17 +54,18 @@ export default function Sidebar() {
   const bookmarkedSearchTerm = useMapStore(state => state.bookmarkedSearchTerm);
 
   const router = useRouter();
+
   const pathname = usePathname();
 
   const isMainPage = pathname === '/cafe';
-  const isSearchResultPage = pathname.startsWith('/cafe/all');
+  const isSearchResultPage = pathname.startsWith('/cafe/search');
   const isCollectedPage = pathname.startsWith('/cafe/collected');
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
 
   const itemsPerPage = 15;
-  const totalPages = Math.ceil(allCafe.length / itemsPerPage);
+  const totalPages = Math.ceil(searchResult.length / itemsPerPage);
 
-  const paginatedResults = allCafe.slice(
+  const paginatedResults = searchResult.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
@@ -129,7 +131,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [allCafe]);
+  }, [searchResult]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -139,10 +141,10 @@ export default function Sidebar() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleNormalCafeClick = (cafe: AllCafe) => {
+  const handleNormalCafeClick = (cafe: SearchResult) => {
     setIsSubSidebarOpen(true);
     setIsMenuOpen(false);
-    router.push(`/cafe/all/detail/${cafe.id}`);
+    router.push(`/cafe/search/detail/${cafe.id}`);
     setThisX(cafe?.x);
     setThisY(cafe?.y);
   };
@@ -192,15 +194,19 @@ export default function Sidebar() {
         ref={containerRef}
       >
         <div className="flex flex-col min-h-screen">
-          <Header />
+          {/* 상단 */}
+          <section className="sticky top-0 z-10">
+            <Header />
+          </section>
 
-          <div className="flex-1">
+          {/* 중단 */}
+          <section className="flex-1 min-h-0 overflow-y-auto">
             {isMainPage && <SidebarTabList />}
 
             <section className="px-8 sm:px-4">
               {isSearchResultPage && (
                 <div className={cardDivStyle}>
-                  {paginatedResults.map((cafe: AllCafe) => (
+                  {paginatedResults.map((cafe: SearchResult) => (
                     <NormalCafe
                       key={cafe.id}
                       name={cafe.place_name}
@@ -273,8 +279,11 @@ export default function Sidebar() {
                 </div>
               )}
             </section>
+          </section>
 
-            {isSearchResultPage && (
+          {/* 하단 */}
+          {isSearchResultPage && (
+            <section className="sticky bottom-0 z-10">
               <PageConverter
                 isDarkTheme={isDarkTheme}
                 handlePreviousPage={handlePreviousPage}
@@ -282,8 +291,9 @@ export default function Sidebar() {
                 currentPage={currentPage}
                 totalPages={totalPages}
               />
-            )}
-          </div>
+            </section>
+          )}
+
           {isMainPage && <Footer />}
         </div>
       </div>

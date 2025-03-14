@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useMapStore } from 'utils/store';
-import { AllCafe } from 'types/common';
+import { SearchResult } from 'types/common';
 import { KakaoMapStyle } from 'utils/styles';
 import { toast } from 'react-toastify';
 
@@ -30,8 +30,8 @@ export default function KakaoMap() {
   const prevKeywordRef = useRef<string | null>(null);
 
   const keyword = useMapStore(state => state.keyword);
-  const setAllCafe = useMapStore(state => state.setAllCafe);
-  const allCafe = useMapStore(state => state.allCafe);
+  const setSearchResult = useMapStore(state => state.setSearchResult);
+  const searchResult = useMapStore(state => state.searchResult);
   const collectedCafe = useMapStore(state => state.collectedCafe);
   const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
   const thisX = useMapStore(state => state.thisX);
@@ -154,10 +154,10 @@ export default function KakaoMap() {
 
       const ps = new window.kakao.maps.services.Places();
 
-      let allResults: AllCafe[] = [];
+      let allResults: SearchResult[] = [];
 
       const handleSearch = (
-        data: AllCafe[],
+        data: SearchResult[],
         status: string,
         pagination: KakaoPagination,
       ) => {
@@ -171,7 +171,7 @@ export default function KakaoMap() {
           if (pagination.hasNextPage && allResults.length < 45) {
             pagination.nextPage();
           } else {
-            setAllCafe(allResults);
+            setSearchResult(allResults);
             updateMarkers(
               allResults,
               item => item.y,
@@ -220,14 +220,14 @@ export default function KakaoMap() {
       removeInfoWindows();
     }
 
-    if (pathname === '/cafe/all') {
+    if (pathname === '/cafe/search') {
       const query = keyword.includes('카페') ? keyword : `${keyword} 카페`;
       searchCafes(query);
     }
 
-    if (pathname.startsWith('/cafe/all/detail')) {
+    if (pathname.startsWith('/cafe/search/detail')) {
       updateMarkers(
-        allCafe,
+        searchResult,
         cafe => cafe.y,
         cafe => cafe.x,
       );
@@ -250,7 +250,7 @@ export default function KakaoMap() {
     }
 
     if (
-      pathname.startsWith('/cafe/all/detail') ||
+      pathname.startsWith('/cafe/search/detail') ||
       pathname.startsWith('/cafe/collected/detail') ||
       pathname.startsWith('/cafe/bookmarked/detail')
     ) {
@@ -262,8 +262,8 @@ export default function KakaoMap() {
     thisX,
     thisY,
     pathname,
-    setAllCafe,
-    allCafe,
+    setSearchResult,
+    searchResult,
     bookmarkedCafe,
     collectedCafe,
   ]);

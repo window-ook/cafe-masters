@@ -6,7 +6,6 @@ import { useFinishResetMutation } from 'hooks/mutation/useFinishResetMutation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
 import AuthBackgroundCards from 'components/auth/shared/background-cards';
-import LogoImage from 'components/auth/shared/logo-image';
 
 export default function ResetpasswordPage() {
   const [newPassword, setNewPassword] = useState('');
@@ -39,7 +38,9 @@ export default function ResetpasswordPage() {
       <main className="area h-screen w-screen flex justify-center items-center">
         <AuthBackgroundCards />
         <div className="flex flex-col items-center gap-4">
-          <LogoImage size={120} />
+          <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
+            Cafe Masters
+          </span>
           <div className="z-10 p-5 rounded-xl bg-white shadow-mainShadow">
             <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
               <p className="text-center text-3xl font-bold font-dpixel">

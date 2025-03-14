@@ -58,7 +58,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
           <Image
-            src={collectedCafeDetail?.photoUrl ?? '/image/cafe_thumbnail.webp'}
+            src={collectedCafeDetail?.photoUrl ?? '/image/cafe_thumbnail.avif'}
             alt="카페 썸네일"
             className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
             width={160}
@@ -86,10 +86,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
         </div>
 
         <div className="grid grid-cols-2 gap-6">
-          <OpenTimeGrid
-            openWeekly={collectedCafeDetail?.openWeekly}
-            openWeekend={collectedCafeDetail?.openWeekend}
-          />
+          <OpenTimeGrid openingHours={collectedCafeDetail?.openingHours} />
           <LocationGrid address={collectedCafeDetail?.address} />
           <PhoneGrid phoneNum={collectedCafeDetail?.phoneNum} />
 

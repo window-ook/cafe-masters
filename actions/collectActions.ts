@@ -33,9 +33,20 @@ export async function getAllCollectedCafes(
 
   if (error) throw new Error(error.message);
 
-  const nextCursor = data && data.length === limit ? offset + limit : null;
+  const safeData = (data ?? []).map(item => ({
+    ...item,
+    openingHours: item.openingHours ?? undefined,
+    phoneNum: item.phoneNum ?? undefined,
+    photoUrl: item.photoUrl ?? undefined,
+    concept: item.concept ?? undefined,
+    cons: item.cons ?? undefined,
+    pros: item.pros ?? undefined,
+  }));
 
-  return { data: data ?? [], nextCursor };
+  const nextCursor =
+    safeData && safeData.length === limit ? offset + limit : null;
+
+  return { data: safeData, nextCursor };
 }
 
 export async function getCollectedCafe(

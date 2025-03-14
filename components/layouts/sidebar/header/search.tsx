@@ -19,7 +19,7 @@ export default function Search() {
   const handleSearch = () => {
     setKeyword(localKeyword);
     setIsSubSidebarOpen(false);
-    router.push('/cafe/all');
+    router.push('/cafe/search');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

@@ -12,6 +12,13 @@ function Navbar() {
     <section className="fixed top-0 left-0 z-50 w-full bg-transparent shadow-md backdrop-blur-lg">
       <div className="max-w-5xl h-[4rem] px-6 py-2 mx-auto flex items-center justify-between">
         <div className="flex items-center">
+          <Image
+            src="/image/logo.avif"
+            width={100}
+            height={100}
+            alt="로고 아이콘"
+            className="w-[2rem] h-auto"
+          />
           <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
             Cafe Masters
           </span>

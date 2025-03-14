@@ -68,7 +68,7 @@ export default function CollectedCafe({
 
         <div className="flex justify-center rounded-xl h-[7rem]">
           <Image
-            src={photoUrl ?? '/image/cafe_thumbnail.webp'}
+            src={photoUrl ?? '/image/cafe_thumbnail.avif'}
             alt="카페 썸네일"
             priority={true}
             width={100}

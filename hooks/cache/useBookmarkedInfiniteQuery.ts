@@ -31,8 +31,8 @@ export default function useBookmarkedInfiniteQuery(
 
   useEffect(() => {
     if (isActive && fetchedBookmarkedCafe) {
-      const allCafes = fetchedBookmarkedCafe.pages.flatMap(page => page.data);
-      setBookmarkedCafe(allCafes);
+      const cafe = fetchedBookmarkedCafe.pages.flatMap(page => page.data);
+      setBookmarkedCafe(cafe);
     }
   }, [fetchedBookmarkedCafe, setBookmarkedCafe, isActive]);
 

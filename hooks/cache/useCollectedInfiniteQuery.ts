@@ -31,8 +31,8 @@ export default function useCollectedInfiniteQuery(
 
   useEffect(() => {
     if (isActive && fetchedCollectedCafe) {
-      const allCafes = fetchedCollectedCafe.pages.flatMap(page => page.data);
-      setCollectedCafe(allCafes);
+      const cafe = fetchedCollectedCafe.pages.flatMap(page => page.data);
+      setCollectedCafe(cafe);
     }
   }, [isActive, fetchedCollectedCafe, setCollectedCafe]);
 

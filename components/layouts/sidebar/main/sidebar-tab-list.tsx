@@ -1,38 +1,62 @@
 import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCheckStore } from 'utils/store';
+import { useCheckStore, useMapStore } from 'utils/store';
+import { FaLaptopCode } from 'react-icons/fa';
 import { IoMdCafe } from 'react-icons/io';
 import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
-import { FaLaptopCode } from 'react-icons/fa';
+import { FaRegCircleQuestion } from 'react-icons/fa6';
 
 interface SidebarTabProps {
   icon: ReactNode;
   title: string;
-  path: () => void;
+  path: string;
   isDarkTheme: boolean;
 }
 
 function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
+  const searchResult = useMapStore(state => state.searchResult);
+  const collectedCafe = useMapStore(state => state.collectedCafe);
+  const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
+
+  const router = useRouter();
+
   return (
     <li
       data-cy={`route-${title.replace(/\s+/g, '-').toLowerCase()}`}
-      className={`group px-3 py-4 rounded-lg flex items-center gap-2 cursor-pointer ${isDarkTheme ? 'hover:bg-mainLanding' : 'hover:bg-white'} hover:shadow-md transition duration-150 ease-in`}
-      onClick={path}
+      className={`group w-full px-3 py-4 rounded-lg flex justify-between cursor-pointer ${isDarkTheme ? 'hover:bg-mainLanding' : 'hover:bg-white'} hover:shadow-md transition duration-150 ease-in`}
+      onClick={() => router.push(path)}
     >
-      <span>{icon}</span>
-      <span
-        className={`w-[22rem] ${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}
-      >
-        {title}
-      </span>
+      <div className="flex items-center gap-2">
+        <span>{icon}</span>
+        <span
+          className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}
+        >
+          {title}
+        </span>
+      </div>
+      <div>
+        {path === '/cafe/search' && (
+          <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+            {searchResult.length}
+          </span>
+        )}
+        {path === '/cafe/collected' && (
+          <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+            {collectedCafe.length}
+          </span>
+        )}
+        {path === '/cafe/bookmarked' && (
+          <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+            {bookmarkedCafe.length}
+          </span>
+        )}
+      </div>
     </li>
   );
 }
 
 export default function SidebarTabList() {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-
-  const router = useRouter();
 
   return (
     <ul className="flex flex-col items-center">
@@ -43,7 +67,7 @@ export default function SidebarTabList() {
           />
         }
         title={'검색 결과'}
-        path={() => router.push('/cafe/all')}
+        path={'/cafe/search'}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
@@ -53,19 +77,25 @@ export default function SidebarTabList() {
           />
         }
         title={'수집한 카드'}
-        path={() => router.push('/cafe/collected')}
+        path={'/cafe/collected'}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
         icon={<MdCollectionsBookmark className={`text-yellow-500 text-3xl`} />}
         title={'가고 싶은 곳'}
-        path={() => router.push('/cafe/bookmarked')}
+        path={'/cafe/bookmarked'}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
         icon={<FaLaptopCode className={`text-gray-500 text-3xl`} />}
-        title={'개발하기 좋은 카페'}
-        path={() => router.push('/cafe/bookmarked')}
+        title={'개발하기 좋은 카페(soon)'}
+        path={'/cafe/for-dev'}
+        isDarkTheme={isDarkTheme}
+      />
+      <SidebarTab
+        icon={<FaRegCircleQuestion className={`text-gray-500 text-3xl`} />}
+        title={'도움 센터(soon)'}
+        path={'/cafe/report'}
         isDarkTheme={isDarkTheme}
       />
     </ul>

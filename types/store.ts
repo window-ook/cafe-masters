@@ -1,5 +1,5 @@
 import {
-  AllCafe,
+  SearchResult,
   BookmarkedCafeFromSupabase,
   CollectedCafeFromSupabase,
   FetchedCafeDetail,
@@ -8,27 +8,31 @@ import {
 
 export interface MapStore {
   keyword: string;
-  allCafe: AllCafe[];
+  searchResult: SearchResult[];
   collectedCafe: CollectedCafeFromSupabase[];
-  collectedCafeCount: number;
   bookmarkedCafe: BookmarkedCafeFromSupabase[];
+  collectedCafeCount: number;
   bookmarkedCafeCount: number;
   thisX: number;
   thisY: number;
+  thisId: number;
+  thisThumbnail: string;
   cafeDetail: FetchedCafeDetail;
   collectedCafeDetail: CollectedCafeFromSupabase[];
   bookmarkedCafeDetail: BookmarkedCafeFromSupabase[];
   collectedSearchTerm: string;
   bookmarkedSearchTerm: string;
   setKeyword: (data: string) => void;
-  setAllCafe: (data: AllCafe[]) => void;
+  setSearchResult: (data: SearchResult[]) => void;
   setCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
   setCollectedCafeCount: (data: number) => void;
   setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) => void;
   setBookmarkedCafeCount: (data: number) => void;
   setThisX: (x: number) => void;
   setThisY: (y: number) => void;
+  setThisId: (Id: number) => void;
   setCafeDetail: (data: object) => void;
+  setThisThumbnail: (url: string) => void;
   setCollectedCafeDetail: (data: CollectedCafeFromSupabase[]) => void;
   setBookmarkedCafeDetail: (data: BookmarkedCafeFromSupabase[]) => void;
   setCollectedSearchTerm: (term: string) => void;
