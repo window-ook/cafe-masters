@@ -2515,6 +2515,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.17.0"
     "@yarnpkg/sdks": "npm:^3.2.0"
     autoprefixer: "npm:^10.4.20"
+    chrome-aws-lambda: "npm:^10.1.0"
     cypress: "npm:^14.0.0"
     eslint: "npm:^8"
     eslint-config-next: "npm:14.2.14"
@@ -2647,6 +2648,17 @@ __metadata:
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
   checksum: 10c0/594754e1303672171cc04e50f6c398ae16128eb134a88f801bf5354fd96f205320f23536a045d9abd8b51024a149696e51231565891d4efdab8846021ecf88e6
+  languageName: node
+  linkType: hard
+
+"chrome-aws-lambda@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "chrome-aws-lambda@npm:10.1.0"
+  dependencies:
+    lambdafs: "npm:^2.0.3"
+  peerDependencies:
+    puppeteer-core: ^10.1.0
+  checksum: 10c0/968efb72640a99c0648cdf96f31260f07fcb3a6231ad8dec45bcd61f4e07e6f7f47cdbbc7fd91e34cd35632549eeec61e91845b47ee31ba9a0a1b4e2057b2b50
   languageName: node
   linkType: hard
 
@@ -5282,6 +5294,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lambdafs@npm:^2.0.3":
+  version: 2.1.1
+  resolution: "lambdafs@npm:2.1.1"
+  dependencies:
+    tar-fs: "npm:*"
+  bin:
+    lambdafs: bin/brotli.js
+  checksum: 10c0/eec9780fb2e34376c31a6c0c6d2ac2f8cc664e48f3531304bb5286018696c465403729bf1a1b42e9f1fef617959948048042af9f64205cfe75e703a06f07915a
+  languageName: node
+  linkType: hard
+
 "language-subtag-registry@npm:^0.3.20":
   version: 0.3.23
   resolution: "language-subtag-registry@npm:0.3.23"
@@ -7494,7 +7517,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar-fs@npm:^3.0.8":
+"tar-fs@npm:*, tar-fs@npm:^3.0.8":
   version: 3.0.8
   resolution: "tar-fs@npm:3.0.8"
   dependencies:

@@ -211,7 +211,7 @@ export default function SubSidebar() {
     >
       <div className="flex justify-center">
         <div
-          className={`${isDarkTheme ? 'bg-gray-300' : 'bg-mainShadow'} w-16 h-2 sm:hidden rounded-2xl`}
+          className={`${isDarkTheme ? 'bg-gray-300' : 'bg-main-shadow'} w-16 h-2 sm:hidden rounded-2xl`}
           onClick={setIsExtend}
         />
       </div>

@@ -11,8 +11,7 @@ export default function OpenTimeGrid({ openingHours }: OpenTimeGridProps) {
         <IoMdClock />
         <span className="font-dpixel">영업시간</span>
       </div>
-      <div className="col-span-1 text-left"></div>
-      <div className="col-span-1 text-center">
+      <div className="col-span-1 text-left">
         <span>{openingHours}</span>
       </div>
     </div>

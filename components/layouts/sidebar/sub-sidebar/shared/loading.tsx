@@ -1,15 +1,13 @@
 import { useCheckStore } from 'utils/store';
 import {
   getDetailBodyStyle,
-  RatingCircleStyle,
   DetailCollectButtonStyle,
   getDetailHeaderStyle,
-  RatingStarStyle,
   SubsidebarCloseIconStyle,
 } from 'utils/styles';
 import { IoMdClock } from 'react-icons/io';
 import { IoBookmark, IoLocation, IoCloseCircle } from 'react-icons/io5';
-import { FaStar, FaPhoneSquare, FaChevronDown } from 'react-icons/fa';
+import { FaPhoneSquare, FaChevronDown } from 'react-icons/fa';
 import { FaCopy } from 'react-icons/fa6';
 
 import Image from 'next/image';
@@ -22,7 +20,9 @@ export default function Loading() {
     <div className={`flex flex-col p-2 gap-4`}>
       <div className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
-          <IoBookmark className={`${isDarkTheme ? 'text-white' : ''}`} />
+          <IoBookmark
+            className={`pr-2 text-3xl ${isDarkTheme ? 'text-white' : ''}`}
+          />
           <span className="text-2xl font-semibold">로딩 중입니다...</span>
         </div>
         <div className="px-2 right-2">
@@ -35,22 +35,16 @@ export default function Loading() {
           <Image
             src={'/image/cafe_thumbnail.avif'}
             alt="카페 썸네일"
-            width={10}
-            height={10}
+            width={160}
+            height={240}
+            className="w-[20rem] h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
             priority={true}
-            className="w-[0.5rem] h-auto"
           />
         </div>
 
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <span className="text-xl font-dpixel">리뷰 ??</span>
-            <span className="text-xl flex gap-1 items-center">
-              <div className={RatingCircleStyle}>
-                <FaStar className={RatingStarStyle} />
-              </div>
-              <span>??</span>
-            </span>
+            <span className="text-xl font-dpixel">상세 정보</span>
           </div>
           <div aria-label="수집하기 버튼" className={DetailCollectButtonStyle}>
             수집하기
@@ -64,16 +58,6 @@ export default function Loading() {
               <span className="font-dpixel">영업시간</span>
             </div>
             <div className="col-span-1 text-left">
-              <span>평일</span>
-            </div>
-            <div className="col-span-1 text-center ">
-              <span>??:?? ~ ??:??</span>
-            </div>
-            <div className="col-span-1"></div>
-            <div className="col-span-1 text-left">
-              <span>주말</span>
-            </div>
-            <div className="col-span-1 text-center">
               <span>??:?? ~ ??:??</span>
             </div>
           </div>

@@ -14,7 +14,9 @@ export default function PageConverter({
   handleNextPage,
 }: PageConverterProps) {
   return (
-    <div className={`w-full py-4 ${isDarkTheme ? 'bg-darkbg' : 'bg-gray-100'}`}>
+    <div
+      className={`w-full py-4 ${isDarkTheme ? 'bg-main-dark' : 'bg-gray-100'}`}
+    >
       <div className="flex justify-between items-center">
         <button
           type="button"

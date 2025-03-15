@@ -6,7 +6,7 @@ import { PageProps } from 'types/common';
 
 import Head from 'next/head';
 
-export default function BookmarkedDetailpage({ params }: PageProps) {
+export default function BookmarkedDetail({ params }: PageProps) {
   const { id } = use(params);
 
   const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);

@@ -46,9 +46,9 @@ export default function ProfileBox() {
   return (
     <div className="w-full flex items-center gap-2">
       <div
-        className={`w-full pl-1 py-1 rounded-xl ${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-300'} shadow-md flex items-center sm:gap-6`}
+        className={`w-full pl-1 py-1 rounded-xl ${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-300'} shadow-md flex items-center sm:gap-6`}
       >
-        <div className="w-[1.5rem] h-[1.5rem] rounded-full bg-mainLanding flex items-center justify-center">
+        <div className="w-[1.5rem] h-[1.5rem] rounded-full bg-main-light flex items-center justify-center">
           <Image
             src={'/image/profile_logo.avif'}
             alt="유저 프로필 이미지"

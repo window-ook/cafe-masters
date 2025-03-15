@@ -14,10 +14,11 @@ function Navbar() {
         <div className="flex items-center">
           <Image
             src="/image/logo.avif"
+            alt="로고 아이콘"
             width={100}
             height={100}
-            alt="로고 아이콘"
             className="w-[2rem] h-auto"
+            priority={true}
           />
           <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
             Cafe Masters
@@ -27,7 +28,7 @@ function Navbar() {
           onClick={() => handleRouteSignin()}
           className="h-[2rem] rounded-md opacity-80 hover:opacity-40 transition duration-100 ease-in"
         >
-          <span className="font-pretendard font-bold text-mainLanding">
+          <span className="font-pretendard font-bold text-main-light">
             시작하기
           </span>
         </button>
@@ -117,8 +118,9 @@ function ScrollSections() {
                   src={section.imageUrl}
                   alt={section.title}
                   fill
-                  quality={100}
+                  sizes="(max-width: 1200px) 100vh, 50vw"
                   className="absolute inset-0 w-full h-full object-cover saturate-150 transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
+                  priority={true}
                 />
               </div>
               <div className="w-full whitespace-nowrap md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-8 bg-neutral-950">
@@ -185,7 +187,9 @@ function ScrollSections() {
                   src={section.imageUrl}
                   alt={section.title}
                   fill
+                  sizes="(max-width: 1200px) 100vh, 50vw"
                   className="absolute inset-0 w-full h-full object-cover saturate-150 transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
+                  priority={true}
                 />
               </div>
             </>
@@ -212,26 +216,15 @@ function ScrollSections() {
 
 function useIntersection(ref: React.RefObject<HTMLDivElement>) {
   const [isVisible, setIsVisible] = useState(false);
-  const [scrollDirection, setScrollDirection] = useState<'down' | 'up'>('down');
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    const updateScrollDirection = () => {
-      const currentScrollY = window.scrollY;
-      setScrollDirection(currentScrollY > lastScrollY.current ? 'down' : 'up');
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener('scroll', updateScrollDirection);
-    return () => window.removeEventListener('scroll', updateScrollDirection);
-  }, []);
+  const wasVisible = useRef(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && scrollDirection === 'down') {
+        if (entry.isIntersecting) {
           setIsVisible(true);
-        } else if (!entry.isIntersecting) {
+          wasVisible.current = true;
+        } else if (!wasVisible.current) {
           setIsVisible(false);
         }
       },
@@ -240,10 +233,11 @@ function useIntersection(ref: React.RefObject<HTMLDivElement>) {
 
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [ref, scrollDirection]);
+  }, [ref]);
 
   return isVisible;
 }
+
 function ReviewCards() {
   const ref = useRef<HTMLDivElement | null>(null);
   const isVisible = useIntersection(ref);
@@ -324,7 +318,7 @@ function ReviewCards() {
             </div>
             <div className="flex gap-2">
               <span className="text-white text-xl">{review.imageUrl}</span>
-              <span className="text-mainLanding font-bold text-xl">
+              <span className="text-main-light font-bold text-xl">
                 {review.user}
               </span>
             </div>
@@ -362,7 +356,7 @@ function Contactme() {
               </span>
             </button>
           </div>
-          <span className="text-[1rem] font-bold text-mainLanding hover:text-gray-200 transition-colors duration-300">
+          <span className="text-[1rem] font-bold text-main-light hover:text-gray-200 transition-colors duration-300">
             cwl64658@gmail.com
           </span>
         </div>
@@ -385,7 +379,7 @@ function Contactme() {
               </span>
             </button>
           </div>
-          <span className="text-[1rem] font-bold text-mainLanding hover:text-gray-200 transition-colors duration-300">
+          <span className="text-[1rem] font-bold text-main-light hover:text-gray-200 transition-colors duration-300">
             카페 마스터즈를 어떻게 사용하는지 알려드려요
           </span>
         </div>

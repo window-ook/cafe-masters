@@ -7,7 +7,7 @@ import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
 import AuthBackgroundCards from 'components/auth/shared/background-cards';
 
-export default function ResetpasswordPage() {
+export default function Resetpassword() {
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
 
@@ -41,7 +41,7 @@ export default function ResetpasswordPage() {
           <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
             Cafe Masters
           </span>
-          <div className="z-10 p-5 rounded-xl bg-white shadow-mainShadow">
+          <div className="z-10 p-5 rounded-xl bg-white shadow-main-shadow">
             <form className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
               <p className="text-center text-3xl font-bold font-dpixel">
                 비밀번호 재설정
