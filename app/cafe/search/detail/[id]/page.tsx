@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, use } from 'react';
+import { useEffect, use, useMemo } from 'react';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { getCollectedCafe } from 'actions/collectActions';
 import { getBookmarkedCafe } from 'actions/bookmarkActions';
@@ -9,6 +9,9 @@ import Head from 'next/head';
 
 export default function SearchDetail({ params }: PageProps) {
   const { id } = use(params);
+
+  const numericId = useMemo(() => parseFloat(id), [id]);
+  const BASE_URL = useMemo(() => process.env.NEXT_PUBLIC_API_REQUEST_URI, []);
 
   const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
   const collectedCafe = useMapStore(state => state.collectedCafe);
@@ -24,14 +27,13 @@ export default function SearchDetail({ params }: PageProps) {
   useEffect(() => {
     if (!userId || userId === '') return;
 
+    setIsLoading(true);
     setIsBookmarked(false);
     setIsCollected(false);
-    setIsLoading(true);
 
     const fetchSearchData = async () => {
       try {
-        const numericId = parseFloat(id);
-        setThisId(numericId); // 서브사이드바에서 filter하기 위한 카페 id
+        setThisId(numericId);
 
         const isBookmarkedLocally = bookmarkedCafe.some(
           cafe => cafe.id === numericId,
@@ -62,24 +64,32 @@ export default function SearchDetail({ params }: PageProps) {
         }
       } catch (error) {
         console.error('Error fetching data:', error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
     const fetchCafeDetail = async () => {
-      const response = await fetch(`/api/extra/${id}`);
-      if (!response.ok) {
-        console.error('상세 정보 다운로드 에러');
+      if (!BASE_URL) {
+        console.error('환경 변수가 설정되지 않았습니다.');
         return;
       }
 
-      const data = await response.json();
-      setCafeDetail(data);
+      const REQ_URL =
+        BASE_URL === 'http://localhost:3000'
+          ? `/api/extra/${id}`
+          : `/api/extra/product/${id}`;
+
+      try {
+        const response = await fetch(REQ_URL);
+        const data = await response.json();
+        setCafeDetail(data);
+      } catch (error) {
+        console.error('상세 정보 다운로드 에러:', error);
+      }
     };
 
-    fetchCafeDetail();
-    fetchSearchData();
+    Promise.all([fetchCafeDetail(), fetchSearchData()]).finally(() =>
+      setIsLoading(false),
+    );
   }, [
     id,
     userId,
@@ -90,6 +100,8 @@ export default function SearchDetail({ params }: PageProps) {
     setIsCollected,
     setIsLoading,
     setCafeDetail,
+    numericId,
+    BASE_URL,
   ]);
 
   return (

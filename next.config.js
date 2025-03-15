@@ -5,7 +5,16 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: config => config,
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals.push('chrome-aws-lambda', 'puppeteer-core');
+    }
+    return config;
+  },
+
+  experimental: {
+    esmExternals: false,
+  },
 
   images: {
     remotePatterns: [

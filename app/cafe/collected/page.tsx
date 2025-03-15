@@ -5,7 +5,7 @@ import { useUserStore } from 'utils/store';
 import Head from 'next/head';
 import useCountCollectedQuery from 'hooks/cache/useCountCollectedQuery';
 
-export default function CollectedPage() {
+export default function Collected() {
   const userId = useUserStore(state => state.userId);
   useCountCollectedQuery(userId);
 

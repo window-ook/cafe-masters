@@ -17,12 +17,13 @@ const config: Config = {
 
       colors: {
         main: '#7c24c9',
-        mainShadow: '#875aad',
-        mainLanding: '#f5ccff',
-        darkbg: '#1f1926',
-        darkaccent: '#5f018a',
-        success: '#03fc73',
-        indigo: '#6366f1',
+        'main-light': '#f5ccff',
+        'main-shadow': '#875aad',
+        'main-dark': '#1f1926',
+        'main-dark-border': '#5f018a',
+        // COLLECT 뱃지
+        'collected-side': '#03fc73',
+        'collected-center': '#6366f1',
         // 티어 뱃지 스타일
         beginner: '#8a919c',
         junior: '#030ffc',

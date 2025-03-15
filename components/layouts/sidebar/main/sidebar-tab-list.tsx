@@ -23,7 +23,7 @@ function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
   return (
     <li
       data-cy={`route-${title.replace(/\s+/g, '-').toLowerCase()}`}
-      className={`group w-full px-3 py-4 rounded-lg flex justify-between cursor-pointer ${isDarkTheme ? 'hover:bg-mainLanding' : 'hover:bg-white'} hover:shadow-md transition duration-150 ease-in`}
+      className={`group w-full px-3 py-4 rounded-lg flex justify-between cursor-pointer ${isDarkTheme ? 'hover:bg-main-light' : 'hover:bg-white'} hover:shadow-md transition duration-150 ease-in`}
       onClick={() => router.push(path)}
     >
       <div className="flex items-center gap-2">
@@ -73,7 +73,7 @@ export default function SidebarTabList() {
       <SidebarTab
         icon={
           <MdCollections
-            className={`${isDarkTheme ? 'text-mainShadow' : `text-main`} text-3xl`}
+            className={`${isDarkTheme ? 'text-main-shadow' : `text-main`} text-3xl`}
           />
         }
         title={'수집한 카드'}

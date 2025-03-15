@@ -5,7 +5,7 @@ import { useMapStore } from 'utils/store';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
 
-export default function CollectedDetailPage({ params }: PageProps) {
+export default function CollectedDetail({ params }: PageProps) {
   const { id } = use(params);
 
   const collectedCafe = useMapStore(state => state.collectedCafe);

@@ -43,7 +43,7 @@ export default function TierInfoModal({
         sx={{ backdropFilter: 'blur(5px)' }}
       >
         <Box
-          className={`${isDarkTheme ? 'bg-darkbg text-white border-darkaccent border-4' : 'bg-white border-mainShadow border-4'}
+          className={`${isDarkTheme ? 'bg-main-dark text-white border-main-dark-border border-4' : 'bg-white border-main-shadow border-4'}
           absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center`}
         >
           <div className="flex flex-col">

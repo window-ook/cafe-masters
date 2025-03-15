@@ -26,7 +26,7 @@ export default function NormalCafe({
       className={getNormalCardStyle(isDarkTheme)}
     >
       <span
-        className={`${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'} px-2 py-1 shadow-md font-dpixel`}
+        className={`${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-700'} px-2 py-1 shadow-md font-dpixel`}
       >
         {name}
       </span>
@@ -41,7 +41,7 @@ export default function NormalCafe({
         />
       </div>
       <div
-        className={`${isDarkTheme ? 'shadow-mainShadow' : 'shadow-gray-700'} flex flex-col px-2 shadow-md`}
+        className={`${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-700'} flex flex-col px-2 shadow-md`}
       >
         <span className="text-sm">{address}</span>
         <span>{phoneNum}</span>

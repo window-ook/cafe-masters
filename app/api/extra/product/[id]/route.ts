@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 
 export const runtime = 'nodejs';
 
@@ -16,12 +17,14 @@ export async function GET(
 
   try {
     const browser = await puppeteer.launch({
-      headless: true,
+      args: chromium.args,
+      executablePath: (await chromium.executablePath()) || '/usr/bin/chromium',
+      headless: chromium.headless,
     });
 
     const page = await browser.newPage();
     await page.goto(`https://place.map.kakao.com/${id}`, {
-      waitUntil: 'networkidle2',
+      waitUntil: 'domcontentloaded',
     });
 
     await page.waitForSelector('.img-thumb.img_cfit', { timeout: 5000 });
@@ -77,12 +80,12 @@ export async function GET(
       return { photo, photoList, address, openingHours, menu: menuItems };
     });
 
-    console.log(`📝 추출 데이터:`, data);
+    console.log(`📝 추출된 데이터:`, data);
     await browser.close();
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error('🚨 추출 오류 발생:', error);
+    console.error('🚨 추출 중 오류 발생:', error);
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 },

@@ -4,7 +4,7 @@ import { useUserStore } from 'utils/store';
 import Head from 'next/head';
 import useCountBookmarkedQuery from 'hooks/cache/useCountBookmarkedQuery';
 
-export default function BookmarkedPage() {
+export default function Bookmarked() {
   const userId = useUserStore(state => state.userId);
   useCountBookmarkedQuery(userId);
 
