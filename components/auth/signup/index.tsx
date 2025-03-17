@@ -9,7 +9,7 @@ import {
   AuthFormTitleStyle,
   KakaoButtonStyle,
 } from 'utils/styles';
-import { checkEmailValid } from 'utils/common';
+import { handleEmailValid } from '../shared/utils';
 import { SignProps } from 'app/auth/page';
 import UserForm from '../shared/user-form';
 import OtpForm from './otp-form';
@@ -28,7 +28,7 @@ export default function Signup({ setViewAction }: SignProps) {
   const checkEmail = () => {
     let isValid = true;
 
-    if (!checkEmailValid(email)) {
+    if (!handleEmailValid(email)) {
       setEmailError('유효하지 않은 이메일 형식입니다.');
       isValid = false;
     } else setEmailError(null);

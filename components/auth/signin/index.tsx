@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useSigninMutation } from 'hooks/mutation/useSigninMutation';
 import { useResetPasswordMutation } from 'hooks/mutation/useResetPasswordMutation';
 import { signinWithKakao } from 'utils/supabase/signinWithKakao';
+import { handleEmailValid } from '../shared/utils';
 import {
   AuthFormCardStyle,
   AuthFormMentionStyle,
@@ -11,7 +12,7 @@ import {
   KakaoButtonStyle,
 } from 'utils/styles';
 import { SignProps } from 'app/auth/page';
-import { checkEmailValid } from 'utils/common';
+
 import UserForm from '../shared/user-form';
 import ResetpasswordForm from './resetpassword-form';
 
@@ -28,7 +29,7 @@ export default function Signin({ setViewAction }: SignProps) {
   const checkEmail = () => {
     let isValid = true;
 
-    if (!checkEmailValid(email)) {
+    if (!handleEmailValid(email)) {
       setEmailError('유효하지 않은 이메일 형식입니다.');
       isValid = false;
     } else setEmailError(null);

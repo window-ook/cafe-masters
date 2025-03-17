@@ -1,10 +1,3 @@
-export const getSidebarStyle = (
-  isDarkTheme: boolean,
-  isSubSidebarOpen: boolean,
-) => {
-  return `z-10 relative w-screen h-screen max-w-[27rem] px-1 rounded-none shadow-xl shadow-main-shadow ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'} ${isSubSidebarOpen ? 'hidden sm:block' : ''} flex flex-col justify-between overflow-x-hidden`;
-};
-
 export const getSubSidebarStyle = (
   isSubSidebarOpen: boolean,
   isDarkTheme: boolean,
