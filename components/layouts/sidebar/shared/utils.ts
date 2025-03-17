@@ -7,9 +7,3 @@ export const handleCopyClick = async (param: string) => {
     alert('다시 시도해주세요.');
   }
 };
-
-export const checkEmailValid = (email: string): boolean => {
-  const pattern =
-    /^\s*[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}\s*$/i;
-  return pattern.test(email);
-};

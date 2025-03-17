@@ -1,4 +1,4 @@
-import { handleCopyClick } from 'utils/common';
+import { handleCopyClick } from '../../shared/utils';
 import { FaCopy } from 'react-icons/fa6';
 import { IoLocation } from 'react-icons/io5';
 import Tooltip from 'components/shared/tooltip';

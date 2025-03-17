@@ -9,7 +9,6 @@ import {
   CollectedCafeFromSupabase,
 } from 'types/common';
 import { useInView } from 'react-intersection-observer';
-import { getSidebarStyle } from 'utils/styles';
 import dynamic from 'next/dynamic';
 import Header from './header';
 import Footer from './footer';
@@ -190,17 +189,19 @@ export default function Sidebar() {
   return (
     <nav className="relative flex items-center">
       <div
-        className={getSidebarStyle(isDarkTheme, isSubSidebarOpen)}
+        className={`z-10 relative w-screen h-screen max-w-[27rem] px-1 rounded-none shadow-xl shadow-main-shadow ${
+          isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'
+        } ${isSubSidebarOpen ? 'hidden sm:block' : ''}`}
         ref={containerRef}
       >
-        <div className="flex flex-col min-h-screen">
+        <div className="h-full flex flex-col">
           {/* 상단 */}
-          <section className="sticky top-0 z-10">
+          <section className="flex-none">
             <Header />
           </section>
 
           {/* 중단 */}
-          <section className="flex-1 min-h-0 overflow-y-auto">
+          <section className="flex-1 overflow-y-auto overflow-x-hidden">
             {isMainPage && <SidebarTabList />}
 
             <section className="px-8 sm:px-4">
@@ -283,7 +284,7 @@ export default function Sidebar() {
 
           {/* 하단 */}
           {isSearchResultPage && (
-            <section className="sticky bottom-0 z-10">
+            <section className="flex-none">
               <PageConverter
                 isDarkTheme={isDarkTheme}
                 handlePreviousPage={handlePreviousPage}
@@ -294,7 +295,11 @@ export default function Sidebar() {
             </section>
           )}
 
-          {isMainPage && <Footer />}
+          {isMainPage && (
+            <section className="flex-none">
+              <Footer />
+            </section>
+          )}
         </div>
       </div>
 

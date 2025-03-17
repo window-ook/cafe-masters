@@ -1,4 +1,4 @@
-import { handleCopyClick } from 'utils/common';
+import { handleCopyClick } from '../../shared/utils';
 import { FaPhoneSquare } from 'react-icons/fa';
 import { FaCopy } from 'react-icons/fa6';
 import Tooltip from 'components/shared/tooltip';
