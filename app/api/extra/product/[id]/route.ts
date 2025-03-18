@@ -13,8 +13,6 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid cafe ID' }, { status: 400 });
   }
 
-  console.log(`🔍 Fetching cafe details for ID: ${id}`);
-
   try {
     const browser = await puppeteer.launch({
       args: chromium.args,
@@ -22,18 +20,21 @@ export async function GET(
       headless: chromium.headless,
     });
 
+    // 새로운 페이지
     const page = await browser.newPage();
-    await page.goto(`https://place.map.kakao.com/${id}`, {
-      waitUntil: 'domcontentloaded',
-    });
 
-    await page.waitForSelector('.img-thumb.img_cfit', { timeout: 5000 });
-    await page.waitForSelector(
+    const selectors = [
+      '.img-thumb.img_cfit',
       '.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit',
-      { timeout: 5000 },
+      '.row_detail .txt_detail',
+      '.line_fold .txt_detail',
+    ];
+
+    await Promise.all(
+      selectors.map(selector =>
+        page.waitForSelector(selector, { timeout: 5000 }).catch(() => null),
+      ),
     );
-    await page.waitForSelector('.row_detail .txt_detail', { timeout: 5000 });
-    await page.waitForSelector('.line_fold .txt_detail', { timeout: 5000 });
 
     const data = await page.evaluate(() => {
       const toAbsoluteUrl = (src: string | null) =>
