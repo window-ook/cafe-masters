@@ -16,10 +16,10 @@ interface TierInfoModalProps {
 function Badge({ tier, range, color }: BadgeProps) {
   return (
     <div className="flex items-center gap-3">
-      <div className={color}>
+      <p className={color}>
         <span className="text-sm font-dpixel">{tier}</span>
-      </div>
-      <span className="text-xl font-bold font-pretendard">{range}</span>
+      </p>
+      <p className="text-xl font-bold font-pretendard">{range}</p>
     </div>
   );
 }
@@ -34,7 +34,7 @@ export default function TierInfoModal({
     'font-pretendard font-bold text-gray-500 lg:text-lg text-xs';
 
   return (
-    <div>
+    <article>
       <Modal
         open={open}
         onClose={handleClose}
@@ -47,59 +47,55 @@ export default function TierInfoModal({
           absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center`}
         >
           <div className="flex flex-col">
-            <span className="font-pretendard font-extrabold text-2xl md:text-3xl">
+            <p className="font-pretendard font-extrabold text-2xl md:text-3xl">
               TIER INFORMATION
-            </span>
-            <span className={tierDescStyle}>
+            </p>
+            <p className={tierDescStyle}>
               수집한 카드의 개수에 따라 티어가 부여됩니다
-            </span>
+            </p>
           </div>
           <Badge
             tier={'BEGINNER'}
             range={'0 ~ 5'}
             color={`bg-beginner text-white ${BadgeCommon}`}
           />
-          <span className={tierDescStyle}>
+          <p className={tierDescStyle}>
             당신은 카페 월드의 초보! 갈 길이 멉니다ㅜㅜ
-          </span>
+          </p>
           <Badge
             tier={'JUNIOR'}
             range={'6 ~ 15'}
             color={`bg-junior text-white ${BadgeCommon}`}
           />
-          <span className={tierDescStyle}>
-            열심히 카페를 다니고 있는 주니어에요
-          </span>
+          <p className={tierDescStyle}>열심히 카페를 다니고 있는 주니어에요</p>
           <Badge
             tier={'SENIOR'}
             range={'16 ~ 29'}
             color={`bg-senior text-white ${BadgeCommon}`}
           />
-          <span className={tierDescStyle}>
+          <p className={tierDescStyle}>
             커피 좀 마셔봤다는 시니어가 되셨네요 후훗
-          </span>
+          </p>
           <Badge
             tier={'EXPERT'}
             range={'30 ~ 49'}
             color={getExpertTierStyle(BadgeCommon)}
           />
-          <span className={tierDescStyle}>
+          <p className={tierDescStyle}>
             어엿한 카페 고수입니다 뿌듯하셔도 좋아요!!
-          </span>
+          </p>
           <div className="relative flex items-center gap-3">
             <div className={ModalMasterEffectStyle}></div>
-            <div className={getMasterTierStyle(BadgeCommon)}>
+            <p className={getMasterTierStyle(BadgeCommon)}>
               <span className="text-sm font-dpixel">MASTER</span>
-            </div>
-            <span className="z-10 relative text-xl font-bold font-pretendard">
+            </p>
+            <p className="z-10 relative text-xl font-bold font-pretendard">
               50
-            </span>
+            </p>
           </div>
-          <span className={tierDescStyle}>
-            마스터여, 당신은 월드의 주인입니다
-          </span>
+          <p className={tierDescStyle}>마스터여, 당신은 월드의 주인입니다</p>
         </Box>
       </Modal>
-    </div>
+    </article>
   );
 }

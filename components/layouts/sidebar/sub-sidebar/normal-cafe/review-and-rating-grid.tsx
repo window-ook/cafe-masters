@@ -12,13 +12,13 @@ export default function ReviewAndRatingGrid({
 }: ReviewAndRatingGridProps) {
   return (
     <div className="flex items-center gap-4">
-      <span className="font-dpixel text-xl">리뷰 {reviewCount}</span>
-      <span className="text-xl flex gap-1 items-center">
+      <p className="font-dpixel text-xl">리뷰 {reviewCount}</p>
+      <p className="text-xl flex gap-1 items-center">
         <div className={RatingCircleStyle}>
           <FaStar className={RatingStarStyle} />
         </div>
         <span className="font-dpixel">{rating || ''}</span>
-      </span>
+      </p>
     </div>
   );
 }

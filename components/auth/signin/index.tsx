@@ -73,7 +73,7 @@ export default function Signin({ setViewAction }: SignProps) {
   };
 
   return (
-    <div className={AuthFormCardStyle}>
+    <main className={AuthFormCardStyle}>
       {resetRequired ? (
         <ResetpasswordForm
           email={email}
@@ -97,7 +97,7 @@ export default function Signin({ setViewAction }: SignProps) {
               setEmail={setEmail}
               setPassword={setPassword}
             />
-            <span className="text-red-500">{emailError}</span>
+            <p className="text-red-500">{emailError}</p>
             <button
               type="button"
               data-cy="test-signin-button"
@@ -155,6 +155,6 @@ export default function Signin({ setViewAction }: SignProps) {
           </form>
         </div>
       )}
-    </div>
+    </main>
   );
 }

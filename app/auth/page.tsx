@@ -18,8 +18,8 @@ export default function Auth() {
   return (
     <main className="area h-screen w-screen flex justify-center items-center">
       <AuthBackgroundCards />
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex">
+      <section className="flex flex-col items-center gap-4">
+        <header className="flex">
           <Image
             src="/image/logo.avif"
             width={100}
@@ -30,13 +30,13 @@ export default function Auth() {
           <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
             Cafe Masters
           </span>
-        </div>
+        </header>
         {view === 'SIGNUP' ? (
           <Signup setViewAction={setViewAction} />
         ) : (
           <Signin setViewAction={setViewAction} />
         )}
-      </div>
+      </section>
     </main>
   );
 }

@@ -14,8 +14,8 @@ const Navbar = () => {
   const handleRouteSignin = () => router.push('/auth');
 
   return (
-    <section className="fixed top-0 left-0 z-50 w-full bg-transparent shadow-md backdrop-blur-lg">
-      <div className="max-w-5xl h-[4rem] px-6 py-2 mx-auto flex items-center justify-between">
+    <header className="fixed top-0 left-0 z-50 w-full bg-transparent shadow-md backdrop-blur-lg">
+      <nav className="max-w-5xl h-[4rem] px-6 py-2 mx-auto flex items-center justify-between">
         <div className="flex items-center">
           <Image
             src="/image/logo.avif"
@@ -30,6 +30,7 @@ const Navbar = () => {
           </span>
         </div>
         <button
+          aria-label="로그인, 회원가입 페이지 이동 버튼"
           onClick={() => handleRouteSignin()}
           className="h-[2rem] rounded-md opacity-80 hover:opacity-40 transition duration-100 ease-in"
         >
@@ -37,8 +38,8 @@ const Navbar = () => {
             시작하기
           </span>
         </button>
-      </div>
-    </section>
+      </nav>
+    </header>
   );
 };
 
@@ -107,7 +108,7 @@ const ScrollSections = () => {
   }, [handleScroll]);
 
   return (
-    <div
+    <main
       ref={containerRef}
       className="h-full scroll-container scrollbar-hidden overflow-y-scroll overflow-x-hidden scroll-snap-y scroll-snap-mandatory"
     >
@@ -146,6 +147,11 @@ const ScrollSections = () => {
                       </span>
                     ))}
                   </h2>
+                  {index === 2 && (
+                    <span className="text-white">
+                      (다음 업데이트에 추가 예정)
+                    </span>
+                  )}
                   <p className="mt-6 text-neutral-400 text-lg leading-relaxed">
                     {section.description.split('\n').map((text, index) => (
                       <span key={index}>
@@ -215,7 +221,7 @@ const ScrollSections = () => {
           />
         ))}
       </div>
-    </div>
+    </main>
   );
 };
 
@@ -305,7 +311,7 @@ const ReviewCards = () => {
 
       <div className="pt-20 max-[560px]:pt-10 flex max-[560px]:flex-col gap-4">
         {reviews.map((review, index) => (
-          <div
+          <article
             key={review.id}
             className={`w-[25%] max-[560px]:w-full h-[20rem] max-[560px]:h-[12rem] p-4 bg-black rounded-xl flex flex-col justify-between transition-all duration-1000 ease-out
               ${index % 2 === 0 ? 'translate-y-4 max-[560px]:translate-y-0' : 'translate-y-24 max-[560px]:translate-y-0'}
@@ -317,19 +323,19 @@ const ReviewCards = () => {
           >
             <div className="flex flex-col gap-2">
               <span className="text-gray-400">{review.rating}</span>
-              <span className="text-xl max-[690px]:text-lg max-[560px]:text-sm font-pretendard font-bold text-gray-300 hover:text-main transition duration-200 ease-in">
+              <h3 className="text-xl max-[690px]:text-lg max-[560px]:text-sm font-pretendard font-bold text-gray-300 hover:text-main transition duration-200 ease-in">
                 {review.content}
-              </span>
+              </h3>
             </div>
-            <div className="flex items-center gap-2">
+            <footer className="flex items-center gap-2">
               <span className="text-white text-xl max-[690px]:text-sm">
                 {review.imageUrl}
               </span>
               <span className="text-main-light font-bold text-xl max-[690px]:text-sm max-[560px]:text-sm">
                 {review.user}
               </span>
-            </div>
-          </div>
+            </footer>
+          </article>
         ))}
       </div>
     </div>
@@ -355,6 +361,7 @@ const Contactme = () => {
               피드백을 들려주세요
             </span>
             <button
+              aria-label="피드백 메일 발송하기 버튼"
               className="text-white"
               onClick={() => window.open('mailto:cwl64658@gmail.com', '_blank')}
             >
@@ -373,6 +380,7 @@ const Contactme = () => {
               유튜브 보기
             </span>
             <button
+              aria-label="카페 마스터즈 데모 영상 링크 버튼"
               className="text-white"
               onClick={() =>
                 window.open(

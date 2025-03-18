@@ -5,7 +5,7 @@ interface OtpFormProps {
 
 export default function OtpForm({ otp, setOtp }: OtpFormProps) {
   return (
-    <div className="flex flex-col gap-6">
+    <section className="flex flex-col gap-6">
       <span data-cy="otp-title" className="text-xl font-dpixel">
         인증 코드
       </span>
@@ -17,6 +17,6 @@ export default function OtpForm({ otp, setOtp }: OtpFormProps) {
         type="text"
         className="p-2"
       />
-    </div>
+    </section>
   );
 }

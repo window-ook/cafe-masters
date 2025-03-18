@@ -15,7 +15,7 @@ export default function Tooltip({ comment, component, left }: TooltipProps) {
   };
   return (
     <div className="relative group">
-      <span className={`${TOOLTIP_STYLES[left]}`}>{comment}</span>
+      <p className={`${TOOLTIP_STYLES[left]}`}>{comment}</p>
       {component}
     </div>
   );

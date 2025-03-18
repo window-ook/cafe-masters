@@ -40,7 +40,7 @@ export default function Header() {
   const handleRoute = () => router.push('/cafe');
 
   return (
-    <div
+    <section
       className={`${isDarkTheme ? 'bg-main-dark' : 'bg-gray-100'} z-10 top-0 py-4 w-full max-w-[27rem] flex flex-col gap-2`}
     >
       <div className="flex justify-between items-center mb-2">
@@ -149,6 +149,6 @@ export default function Header() {
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 }

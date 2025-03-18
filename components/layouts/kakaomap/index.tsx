@@ -268,5 +268,11 @@ export default function KakaoMap() {
     collectedCafe,
   ]);
 
-  return <div aria-label="kakao map" id="map" className={KakaoMapStyle}></div>;
+  return (
+    <article
+      aria-label="kakao map"
+      id="map"
+      className={KakaoMapStyle}
+    ></article>
+  );
 }

@@ -53,7 +53,7 @@ export default function CollectedCafe({
       >
         <div className="flex flex-col gap-2">
           <div className="shadow-md shadow-gray-500 px-2">
-            <span className="font-dpixel">{name}</span>
+            <p className="font-dpixel">{name}</p>
           </div>
           <div className="flex justify-start gap-0.5">
             {Array(ratings)
@@ -77,8 +77,8 @@ export default function CollectedCafe({
           />
         </div>
         <div className="flex flex-col shadow-gray-500 shadow-md px-2">
-          <span className="text-sm">{address}</span>
-          <span>{phoneNum}</span>
+          <p className="text-sm">{address}</p>
+          <p>{phoneNum}</p>
         </div>
       </div>
     </div>

@@ -44,7 +44,7 @@ export default function ProfileBox() {
   }, [collectedCafeCount, setUserTier]);
 
   return (
-    <div className="w-full flex items-center gap-2">
+    <section className="w-full flex items-center gap-2">
       <div
         className={`w-full pl-1 py-1 rounded-xl ${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-300'} shadow-md flex items-center sm:gap-6`}
       >
@@ -57,11 +57,11 @@ export default function ProfileBox() {
             className="inline-block object-cover object-center rounded-lg w-[1rem] h-auto"
           />
         </div>
-        <span className="pl-[1rem] font-bold font-pretendard text-[0.5rem] sm:text-[1rem]">
+        <p className="pl-[1rem] font-bold font-pretendard text-[0.5rem] sm:text-[1rem]">
           {userEmail}
-        </span>
+        </p>
       </div>
       <TierBadge tier={userTier} />
-    </div>
+    </section>
   );
 }

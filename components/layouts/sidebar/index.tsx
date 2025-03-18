@@ -192,22 +192,25 @@ export default function Sidebar() {
         className={`z-10 relative w-screen h-screen max-w-[27rem] px-1 rounded-none shadow-xl shadow-main-shadow ${
           isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'
         } ${isSubSidebarOpen ? 'hidden sm:block' : ''}`}
-        ref={containerRef}
       >
         <div className="h-full flex flex-col">
           {/* 상단 */}
-          <section className="flex-none">
+          <header className="flex-none">
             <Header />
-          </section>
+          </header>
 
           {/* 중단 */}
-          <section className="flex-1 overflow-y-auto overflow-x-hidden">
+          <main
+            className="flex-1 overflow-y-auto overflow-x-hidden"
+            ref={containerRef}
+          >
             {isMainPage && <SidebarTabList />}
 
             <section className="px-8 sm:px-4">
               {isSearchResultPage && (
                 <div className={cardDivStyle}>
                   {paginatedResults.map((cafe: SearchResult) => (
+                    // 검색 리스트 컴포넌트 만들어서 대체하기
                     <NormalCafe
                       key={cafe.id}
                       name={cafe.place_name}
@@ -280,11 +283,11 @@ export default function Sidebar() {
                 </div>
               )}
             </section>
-          </section>
+          </main>
 
           {/* 하단 */}
           {isSearchResultPage && (
-            <section className="flex-none">
+            <footer className="flex-none">
               <PageConverter
                 isDarkTheme={isDarkTheme}
                 handlePreviousPage={handlePreviousPage}
@@ -292,13 +295,13 @@ export default function Sidebar() {
                 currentPage={currentPage}
                 totalPages={totalPages}
               />
-            </section>
+            </footer>
           )}
 
           {isMainPage && (
-            <section className="flex-none">
+            <footer className="flex-none">
               <Footer />
-            </section>
+            </footer>
           )}
         </div>
       </div>

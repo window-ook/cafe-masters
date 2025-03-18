@@ -13,7 +13,7 @@ interface SidebarTabProps {
   isDarkTheme: boolean;
 }
 
-function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
+const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
   const searchResult = useMapStore(state => state.searchResult);
   const collectedCafe = useMapStore(state => state.collectedCafe);
   const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
@@ -27,12 +27,12 @@ function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
       onClick={() => router.push(path)}
     >
       <div className="flex items-center gap-2">
-        <span>{icon}</span>
-        <span
+        <p>{icon}</p>
+        <p
           className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}
         >
           {title}
-        </span>
+        </p>
       </div>
       <div>
         {path === '/cafe/search' && (
@@ -53,7 +53,7 @@ function SidebarTab({ icon, title, path, isDarkTheme }: SidebarTabProps) {
       </div>
     </li>
   );
-}
+};
 
 export default function SidebarTabList() {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
