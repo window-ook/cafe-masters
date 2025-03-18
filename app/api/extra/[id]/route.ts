@@ -7,40 +7,45 @@ export async function GET(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-  const id = params.id;
+  const id = params?.id;
   if (!id) {
     return NextResponse.json({ error: 'Invalid cafe ID' }, { status: 400 });
   }
 
-  console.log(`🔍 Fetching cafe details for ID: ${id}`);
-
   try {
+    // 헤드리스 모드
     const browser = await puppeteer.launch({
       headless: true,
     });
 
+    // 새로운 페이지
     const page = await browser.newPage();
+
+    // 페이지 접속
     await page.goto(`https://place.map.kakao.com/${id}`, {
       waitUntil: 'networkidle2',
     });
 
-    await page.waitForSelector('.img-thumb.img_cfit', { timeout: 5000 });
-    await page.waitForSelector(
-      '.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit',
-      { timeout: 5000 },
-    );
-    await page.waitForSelector('.row_detail .txt_detail', { timeout: 5000 });
-    await page.waitForSelector('.line_fold .txt_detail', { timeout: 5000 });
+    // 병렬 요청
+    await Promise.allSettled([
+      await page.waitForSelector('.img-thumb.img_cfit', { timeout: 5000 }),
+      await page.waitForSelector(
+        '.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit',
+        { timeout: 5000 },
+      ),
+      await page.waitForSelector('.row_detail .txt_detail', { timeout: 5000 }),
+      await page.waitForSelector('.line_fold .txt_detail', { timeout: 5000 }),
+    ]);
 
     const data = await page.evaluate(() => {
       const toAbsoluteUrl = (src: string | null) =>
         src && !src.startsWith('http') ? `https:${src}` : src;
 
-      // ✅ 썸네일 이미지 URL 가져오기
-      const imgElement = document.querySelector('.img-thumb.img_cfit');
-      const photo = toAbsoluteUrl(imgElement?.getAttribute('src') || null);
+      // ✅ 대표 이미지 url
+      const thumbnail = document.querySelector('.img-thumb.img_cfit');
+      const photo = toAbsoluteUrl(thumbnail?.getAttribute('src') || null);
 
-      // ✅ 리뷰 이미지 4개의 URL 가져오기
+      // ✅ 리뷰 이미지 4개 url
       const photos = Array.from(
         document.querySelectorAll(
           '.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit',
@@ -50,21 +55,21 @@ export async function GET(
         .slice(0, 4)
         .map(el => toAbsoluteUrl(el.getAttribute('src')));
 
-      // ✅ 주소 정보 가져오기
+      // ✅ 주소
       const addressElement = document.querySelector('.row_detail .txt_detail');
       let address = addressElement
         ? addressElement.textContent?.trim() || ''
         : '';
       address = address.replace(/\(우\)\d{5,}/, '').trim(); // 우편번호 제거
 
-      // ✅ 운영시간 정보 가져오기
+      // ✅ 운영 시간
       const timeElement = document.querySelector('.line_fold .txt_detail');
       let openingHours = timeElement
         ? timeElement.textContent?.trim().replace(/\s+/g, ' ') || ''
         : '';
       openingHours = openingHours.replace(/^매일\s+/, '').trim();
 
-      // ✅ 메뉴명 & 가격 가져오기
+      // ✅ 메뉴명 & 가격
       const menuItems = Array.from(
         document.querySelectorAll('.list_goods > li'),
       )

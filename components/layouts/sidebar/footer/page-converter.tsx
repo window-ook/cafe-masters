@@ -14,7 +14,7 @@ export default function PageConverter({
   handleNextPage,
 }: PageConverterProps) {
   return (
-    <div
+    <section
       className={`w-full py-4 ${isDarkTheme ? 'bg-main-dark' : 'bg-gray-100'}`}
     >
       <div className="flex justify-between items-center">
@@ -29,9 +29,9 @@ export default function PageConverter({
         >
           <span className="text-3xl font-dpixel">{'<'}</span>
         </button>
-        <span className="text-2xl font-dpixel">
+        <p className="text-2xl font-dpixel">
           {currentPage} / {totalPages}
-        </span>
+        </p>
         <button
           type="button"
           aria-label="다음 페이지 번호"
@@ -44,6 +44,6 @@ export default function PageConverter({
           <span className="text-3xl font-dpixel">{'>'}</span>
         </button>
       </div>
-    </div>
+    </section>
   );
 }

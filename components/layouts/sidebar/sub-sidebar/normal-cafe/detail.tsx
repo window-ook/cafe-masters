@@ -90,7 +90,7 @@ export default function NormalCafeDetail({
 
   return (
     <div className={`flex flex-col p-2 gap-4`}>
-      <div className={getDetailHeaderStyle(isDarkTheme)}>
+      <header className={getDetailHeaderStyle(isDarkTheme)}>
         <div className="flex items-center">
           {isBookmarked ? (
             <button
@@ -124,11 +124,11 @@ export default function NormalCafeDetail({
         >
           <IoCloseCircle className={SubsidebarCloseIconStyle} />
         </button>
-      </div>
+      </header>
 
       {/* 가로 스크롤 구현 */}
-      <div className={getDetailBodyStyle(isDarkTheme)}>
-        <div className="relative flex flex-col items-center">
+      <main className={getDetailBodyStyle(isDarkTheme)}>
+        <section className="relative flex flex-col items-center">
           <button
             className={`absolute left-0 z-10 px-2 py-1 shadow-md rounded-md top-1/2 transform -translate-y-1/2 ${isDarkTheme ? 'bg-main' : 'bg-white'}`}
             onClick={() => handleScroll('left')}
@@ -188,8 +188,9 @@ export default function NormalCafeDetail({
               <span className={`${isDarkTheme ? '' : 'text-main'}`}>▶</span>
             </button>
           </div>
-        </div>
-        <div className="flex justify-between items-center">
+        </section>
+
+        <section className="flex justify-between items-center">
           <span className="font-dpixel font-extrabold text-xl">상세 정보</span>
           {isCollected ? (
             <CollectedBadge />
@@ -203,8 +204,9 @@ export default function NormalCafeDetail({
               수집하기
             </button>
           )}
-        </div>
-        <div className="grid grid-cols-2 gap-6">
+        </section>
+
+        <section className="grid grid-cols-2 gap-6">
           <OpenTimeGrid openingHours={detail?.openingHours} />
           <LocationGrid address={detail?.address} />
           <PhoneGrid phoneNum={detail?.phoneNum} />
@@ -213,8 +215,8 @@ export default function NormalCafeDetail({
             isDarkTheme={isDarkTheme}
             menu={menu}
           />
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

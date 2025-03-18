@@ -25,11 +25,11 @@ export default function NormalCafe({
       onClick={onClick}
       className={getNormalCardStyle(isDarkTheme)}
     >
-      <span
+      <p
         className={`${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-700'} px-2 py-1 shadow-md font-dpixel`}
       >
         {name}
-      </span>
+      </p>
       <div className="h-[7rem] flex justify-center">
         <Image
           src={photoUrl || '/image/cafe_thumbnail.avif'}
@@ -43,8 +43,8 @@ export default function NormalCafe({
       <div
         className={`${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-700'} flex flex-col px-2 shadow-md`}
       >
-        <span className="text-sm">{address}</span>
-        <span>{phoneNum}</span>
+        <p className="text-sm">{address}</p>
+        <p>{phoneNum}</p>
       </div>
     </div>
   );

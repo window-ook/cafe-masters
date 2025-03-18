@@ -210,7 +210,8 @@ export default function SubSidebar() {
       className={getSubSidebarStyle(isSubSidebarOpen, isDarkTheme, isExtend)}
     >
       <div className="flex justify-center">
-        <div
+        <button
+          aria-label="모바일: 서브사이드바 업 다운 버튼"
           className={`${isDarkTheme ? 'bg-gray-300' : 'bg-main-shadow'} w-16 h-2 sm:hidden rounded-2xl`}
           onClick={setIsExtend}
         />

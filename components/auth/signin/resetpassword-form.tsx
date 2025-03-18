@@ -14,7 +14,7 @@ export default function ResetpasswordForm({
   cancelFn,
 }: ResetpasswordFormProps) {
   return (
-    <div className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
+    <main className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
       <p className="text-center text-3xl font-bold font-dpixel">
         비밀번호 재설정
       </p>
@@ -28,12 +28,12 @@ export default function ResetpasswordForm({
           className="border-gray-400 w-full"
         />
       </div>
-      <span
+      <p
         data-cy="success-request-resetpassword"
         className="text-success font-bold"
       >
         {resetRequested}
-      </span>
+      </p>
       <button
         data-cy="request-resetpassword-button"
         type="button"
@@ -51,6 +51,6 @@ export default function ResetpasswordForm({
       >
         <span className="font-dpixel text-lg text-white">취소</span>
       </button>
-    </div>
+    </main>
   );
 }

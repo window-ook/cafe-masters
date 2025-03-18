@@ -31,7 +31,7 @@ export default function Search() {
   }, [keyword]);
 
   return (
-    <div className="w-full min-w-[12.5rem]">
+    <search className="w-full min-w-[12.5rem]">
       <div
         className={`relative rounded-xl shadow-md ${isDarkTheme && 'shadow-gray-700'}`}
       >
@@ -54,6 +54,6 @@ export default function Search() {
           <span className="font-pretendard">GO</span>
         </button>
       </div>
-    </div>
+    </search>
   );
 }

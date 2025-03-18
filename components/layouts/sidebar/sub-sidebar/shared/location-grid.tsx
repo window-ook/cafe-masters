@@ -12,10 +12,10 @@ export default function LocationGrid({ address }: LocationGridProps) {
     <div className="col-span-2 grid grid-cols-3 items-center">
       <div className="col-span-1 flex items-center gap-1">
         <IoLocation />
-        <span className="font-dpixel">위치</span>
+        <p className="font-dpixel">위치</p>
       </div>
       <div className="col-span-2 flex items-center gap-4">
-        <span className="text-sm">{address}</span>
+        <p className="text-sm">{address}</p>
         <Tooltip
           comment="복사"
           component={

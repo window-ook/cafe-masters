@@ -23,7 +23,7 @@ export default function MenuGrid({
     <div className="col-span-2">
       <div>
         <div className="flex items-center gap-2">
-          <span className="font-dpixel text-lg">메뉴</span>
+          <p className="font-dpixel text-lg">메뉴</p>
           <button
             type="button"
             aria-label="메뉴 보기 버튼"
@@ -45,8 +45,8 @@ export default function MenuGrid({
             menu?.map((item, index) => (
               <li key={index} className="flex flex-col gap-1 mb-2">
                 <div className="w-30 border-t border-solid border-gray-400"></div>
-                <span className="font-bold text-lg">{item?.name}</span>
-                <span className="text-lg">{item?.price}</span>
+                <p className="font-bold text-lg">{item?.name}</p>
+                <p className="text-lg">{item?.price}</p>
               </li>
             ))}
         </ul>

@@ -1,7 +1,6 @@
 'use client';
 
 import { useUserStore } from 'utils/store';
-
 import Head from 'next/head';
 import useCountCollectedQuery from 'hooks/cache/useCountCollectedQuery';
 

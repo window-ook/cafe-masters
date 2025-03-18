@@ -12,10 +12,10 @@ export default function PhoneGrid({ phoneNum }: PhoneNumGridProps) {
     <div className="col-span-2 grid grid-cols-3 items-center">
       <div className="col-span-1 flex items-center gap-1">
         <FaPhoneSquare />
-        <span className="font-dpixel">전화번호</span>
+        <p className="font-dpixel">전화번호</p>
       </div>
       <div className="col-span-2 flex items-center gap-4">
-        <span className="text-lg">{phoneNum}</span>
+        <p className="text-lg">{phoneNum}</p>
         <Tooltip
           comment="복사"
           component={

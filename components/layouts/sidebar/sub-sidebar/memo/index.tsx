@@ -29,13 +29,13 @@ export default function Memo({
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col p-2 gap-4">
+    <section className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
-        <span className="font-dpixel text-2xl font-semibold">
+        <p className="font-dpixel text-2xl font-semibold">
           {pathname.startsWith('/cafe/search') && detailName}
           {pathname.startsWith('/cafe/collected') && collectedCafeDetailName}
           {pathname.startsWith('/cafe/bookmarked') && bookmarkedCafeDetailName}
-        </span>
+        </p>
         <button
           type="button"
           aria-label="카드 수집 취소 버튼"
@@ -100,6 +100,6 @@ export default function Memo({
       >
         <span className="text-lg">완료</span>
       </button>
-    </div>
+    </section>
   );
 }

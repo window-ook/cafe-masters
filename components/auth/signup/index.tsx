@@ -51,7 +51,7 @@ export default function Signup({ setViewAction }: SignProps) {
   };
 
   return (
-    <div className={AuthFormCardStyle}>
+    <main className={AuthFormCardStyle}>
       <p className={AuthFormTitleStyle}>회원가입</p>
       <form
         className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4"
@@ -69,8 +69,8 @@ export default function Signup({ setViewAction }: SignProps) {
             setPassword={setPassword}
           />
         )}
-        <span className="text-red-500">{emailError}</span>
-        <span>*비밀번호는 최소 6자 이상 입력해야 합니다.</span>
+        <p className="text-red-500">{emailError}</p>
+        <p>*비밀번호는 최소 6자 이상 입력해야 합니다.</p>
         <button
           data-cy="otp-signup-button"
           type="button"
@@ -97,7 +97,7 @@ export default function Signup({ setViewAction }: SignProps) {
             카카오로 회원가입
           </span>
         </button>
-        <span color="gray" className={AuthFormMentionStyle}>
+        <p color="gray" className={AuthFormMentionStyle}>
           이미 계정이 있으신가요?{' '}
           <button
             data-cy="open-signin-button"
@@ -108,8 +108,8 @@ export default function Signup({ setViewAction }: SignProps) {
           >
             <span className="font-bold font-dpixel text-main">로그인 하기</span>
           </button>
-        </span>
+        </p>
       </form>
-    </div>
+    </main>
   );
 }

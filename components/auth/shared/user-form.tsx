@@ -14,7 +14,7 @@ export default function UserForm({
   setPassword,
 }: UserFormProps) {
   return (
-    <div className="mb-1 flex flex-col gap-4 z-10">
+    <section className="mb-1 flex flex-col gap-4 z-10">
       <span className="text-xl font-dpixel">이메일</span>
       <input
         value={email}
@@ -32,6 +32,6 @@ export default function UserForm({
         className="border-gray-400"
         data-cy="password-input"
       />
-    </div>
+    </section>
   );
 }

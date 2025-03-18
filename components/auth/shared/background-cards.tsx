@@ -6,7 +6,7 @@ export default function AuthBackgroundCards() {
   const imageSrc = '/image/logo.avif';
 
   return (
-    <div className="circles">
+    <section className="circles">
       <Image
         src={imageSrc}
         alt="background card"
@@ -63,6 +63,6 @@ export default function AuthBackgroundCards() {
         height={104}
         priority
       />
-    </div>
+    </section>
   );
 }
