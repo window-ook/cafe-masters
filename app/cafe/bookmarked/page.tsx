@@ -1,13 +1,8 @@
 'use client';
 
-import { useUserStore } from 'utils/store';
 import Head from 'next/head';
-import useCountBookmarkedQuery from 'hooks/cache/useCountBookmarkedQuery';
 
 export default function Bookmarked() {
-  const userId = useUserStore(state => state.userId);
-  useCountBookmarkedQuery(userId);
-
   return (
     <Head>
       <title>가고 싶은 카페 | 카페 마스터즈 Cafe Masters</title>

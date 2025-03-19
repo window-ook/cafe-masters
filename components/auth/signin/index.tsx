@@ -12,21 +12,20 @@ import {
   KakaoButtonStyle,
 } from 'utils/styles';
 import { SignProps } from 'app/auth/page';
-
 import UserForm from '../shared/user-form';
 import ResetpasswordForm from './resetpassword-form';
 
 export default function Signin({ setViewAction }: SignProps) {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState<string | null>(null);
-  const [password, setPassword] = useState('');
-  const [resetRequired, setResetRequired] = useState(false);
-  const [resetRequested, setResetRequested] = useState('');
+  const [password, setPassword] = useState<string>('');
+  const [resetRequired, setResetRequired] = useState<boolean>(false);
+  const [resetRequested, setResetRequested] = useState<string>('');
 
   const signinMutation = useSigninMutation();
   const resetPasswordMutation = useResetPasswordMutation();
 
-  const checkEmail = () => {
+  const handleEmail = () => {
     let isValid = true;
 
     if (!handleEmailValid(email)) {
@@ -38,7 +37,7 @@ export default function Signin({ setViewAction }: SignProps) {
   };
 
   const handleSignin = () => {
-    if (checkEmail()) {
+    if (handleEmail()) {
       const trimmedEmail: string = email.trim();
       signinMutation.mutate({ email: trimmedEmail, password });
     }

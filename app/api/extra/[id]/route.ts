@@ -27,15 +27,18 @@ export async function GET(
     });
 
     // 병렬 요청
-    await Promise.allSettled([
-      await page.waitForSelector('.img-thumb.img_cfit', { timeout: 5000 }),
-      await page.waitForSelector(
-        '.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit',
-        { timeout: 5000 },
+    const selectors = [
+      '.img-thumb.img_cfit',
+      '.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit',
+      '.row_detail .txt_detail',
+      '.line_fold .txt_detail',
+    ];
+
+    await Promise.all(
+      selectors.map(selector =>
+        page.waitForSelector(selector, { timeout: 5000 }).catch(() => null),
       ),
-      await page.waitForSelector('.row_detail .txt_detail', { timeout: 5000 }),
-      await page.waitForSelector('.line_fold .txt_detail', { timeout: 5000 }),
-    ]);
+    );
 
     const data = await page.evaluate(() => {
       const toAbsoluteUrl = (src: string | null) =>

@@ -8,11 +8,10 @@ import { FaMagnifyingGlass } from 'react-icons/fa6';
 
 export default function Search() {
   const keyword = useMapStore(state => state.keyword);
+  const [localKeyword, setLocalKeyword] = useState<string>(keyword);
   const setKeyword = useMapStore(state => state.setKeyword);
   const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-
-  const [localKeyword, setLocalKeyword] = useState(keyword);
 
   const router = useRouter();
 

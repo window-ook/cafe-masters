@@ -22,6 +22,7 @@ export async function getAllBookmarkedCafes(
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from('bookmarked')
     .select('*')
@@ -53,6 +54,7 @@ export async function getBookmarkedCafe(
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from('bookmarked')
     .select('id, userId')
@@ -67,6 +69,7 @@ export async function countBookmarkedCafes(userId: string): Promise<number> {
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
+
   const { count, error } = await supabase
     .from('bookmarked')
     .select('*', { count: 'exact' })
@@ -82,6 +85,7 @@ export async function createBookmarkedCafe(
   if (!bookmarked) throw new Error('유효하지 않은 카페 데이터 전송');
 
   const supabase = await createServerSupabaseClient();
+
   const { error } = await supabase.from('bookmarked').insert({
     ...bookmarked,
     created_at: new Date().toISOString(),
@@ -98,6 +102,7 @@ export async function deleteBookmarkedCafe(
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
+
   const { error } = await supabase
     .from('bookmarked')
     .delete()

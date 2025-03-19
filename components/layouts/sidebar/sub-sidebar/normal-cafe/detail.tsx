@@ -31,13 +31,13 @@ export default function NormalCafeDetail({
   handleMenuOpen,
   setMemoOpen,
 }: NormalCafeDetailProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const isCollected = useCheckStore(state => state.isCollected);
   const isBookmarked = useCheckStore(state => state.isBookmarked);
   const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
   const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 

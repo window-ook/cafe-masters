@@ -3,9 +3,9 @@ import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
 export function useSigninMutation() {
-  const router = useRouter();
-
   const supabase = createBrowserSupabaseClient();
+
+  const router = useRouter();
 
   return useMutation({
     mutationFn: async ({

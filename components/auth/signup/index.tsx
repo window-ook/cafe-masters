@@ -16,16 +16,17 @@ import OtpForm from './otp-form';
 import useVerifyOtpMutation from 'hooks/mutation/useVerifyOtpMutation';
 
 export default function Signup({ setViewAction }: SignProps) {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState<string | null>(null);
-  const [password, setPassword] = useState('');
-  const [confirmationRequired, setConfirmationRequired] = useState(false);
-  const [otp, setOtp] = useState('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmationRequired, setConfirmationRequired] =
+    useState<boolean>(false);
+  const [otp, setOtp] = useState<string>('');
 
   const signupMutation = useSignupMutation();
   const verifyOtpMutation = useVerifyOtpMutation();
 
-  const checkEmail = () => {
+  const handleEmail = () => {
     let isValid = true;
 
     if (!handleEmailValid(email)) {
@@ -37,7 +38,7 @@ export default function Signup({ setViewAction }: SignProps) {
   };
 
   const handleSignup = () => {
-    if (checkEmail()) {
+    if (handleEmail()) {
       signupMutation.mutate({ email, password });
       setConfirmationRequired(true);
     }

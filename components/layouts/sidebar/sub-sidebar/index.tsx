@@ -24,14 +24,14 @@ const Memo = dynamic(() => import('./memo'), {
 });
 
 export default function SubSidebar() {
-  const [memoOpen, setMemoOpen] = useState(false);
+  const [memoOpen, setMemoOpen] = useState<boolean>(false);
   const [id, setId] = useState<string | undefined>('');
-  const [comment, setComment] = useState('');
-  const [pros, setPros] = useState('');
-  const [cons, setCons] = useState('');
-  const [eaten, setEaten] = useState('');
-  const [concept, setConcept] = useState('');
-  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState<string>('');
+  const [pros, setPros] = useState<string>('');
+  const [cons, setCons] = useState<string>('');
+  const [eaten, setEaten] = useState<string>('');
+  const [concept, setConcept] = useState<string>('');
+  const [rating, setRating] = useState<number>(5);
 
   const searchResult = useMapStore(state => state.searchResult);
   const cafeDetail = useMapStore(state => state.cafeDetail);
@@ -98,7 +98,7 @@ export default function SubSidebar() {
     cons,
     eaten,
     concept,
-    rating: rating,
+    rating,
   };
 
   const memoFromCollectedDetail = {
@@ -107,6 +107,7 @@ export default function SubSidebar() {
     cons,
     eaten,
     concept,
+    rating,
   };
 
   const memoFromBookmarkedDetail = {
@@ -124,7 +125,7 @@ export default function SubSidebar() {
     cons,
     eaten,
     concept,
-    rating: rating,
+    rating,
   };
 
   const isSearchResultPage = pathname.startsWith('/cafe/search');
@@ -189,14 +190,20 @@ export default function SubSidebar() {
   };
 
   const handleUpdateCollect = (memo: CollectedRowUpdate) => {
-    setMemoOpen(false);
-    setComment('');
-    setPros('');
-    setCons('');
-    setEaten('');
-    setConcept('');
-    updateCollectMutation.mutate(memo);
-    toast.success('카드의 스펙을 수정했습니다!');
+    try {
+      console.log('업데이트 요청 보냄:', memo);
+      updateCollectMutation.mutate(memo);
+      toast.success('카드의 스펙을 수정했습니다!');
+
+      setMemoOpen(false);
+      setComment('');
+      setPros('');
+      setCons('');
+      setEaten('');
+      setConcept('');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (pathname.startsWith('/cafe/search/detail') && !cafeDetail) return null;

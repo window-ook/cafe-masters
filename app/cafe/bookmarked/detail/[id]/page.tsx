@@ -3,7 +3,6 @@
 import { useEffect, use } from 'react';
 import { useMapStore, useCheckStore } from 'utils/store';
 import { PageProps } from 'types/common';
-
 import Head from 'next/head';
 
 export default function BookmarkedDetail({ params }: PageProps) {
@@ -17,10 +16,10 @@ export default function BookmarkedDetail({ params }: PageProps) {
 
   useEffect(() => {
     const numericId = parseFloat(id);
-    const foundCafe = bookmarkedCafe.find(cafe => cafe.id === numericId);
-    if (foundCafe) {
+    const targetCafe = bookmarkedCafe.find(cafe => cafe.id === numericId);
+    if (targetCafe) {
       setIsBookmarked(true);
-      setBookmarkedCafeDetail([foundCafe]);
+      setBookmarkedCafeDetail([targetCafe]);
     }
   }, [id, bookmarkedCafe, setBookmarkedCafeDetail, setIsBookmarked]);
 

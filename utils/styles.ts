@@ -3,10 +3,7 @@ export const getSubSidebarStyle = (
   isDarkTheme: boolean,
   isExtend: boolean,
 ) => {
-  const baseStyle = `${isDarkTheme ? 'bg-main-dark text-white' : 'bg-white text-black'} 
-   static left-0 z-10 w-[100vw] max-w-[27rem] p-2 
-   transition-transform duration-500 ease-in-out 
-   overflow-y-auto shadow-md overflow-x-hidden`;
+  const baseStyle = `${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100 text-black backdrop-blur-lg bg-opacity-20'} static left-0 z-10 w-[100vw] max-w-[27rem] p-2 overflow-y-auto overflow-x-hidden shadow-md transition-transform duration-500 ease-in-out`;
 
   const openStyle = isSubSidebarOpen
     ? `${isExtend ? 'translate-y-[13rem] h-[calc(100vh-13rem)]' : 'translate-y-[35rem]'} 

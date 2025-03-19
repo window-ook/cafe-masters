@@ -15,8 +15,8 @@ interface SidebarTabProps {
 
 const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
   const searchResult = useMapStore(state => state.searchResult);
-  const collectedCafe = useMapStore(state => state.collectedCafe);
-  const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
+  const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
+  const bookmarkedCafeCount = useMapStore(state => state.bookmarkedCafeCount);
 
   const router = useRouter();
 
@@ -42,12 +42,12 @@ const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
         )}
         {path === '/cafe/collected' && (
           <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-            {collectedCafe.length}
+            {collectedCafeCount}
           </span>
         )}
         {path === '/cafe/bookmarked' && (
           <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-            {bookmarkedCafe.length}
+            {bookmarkedCafeCount}
           </span>
         )}
       </div>

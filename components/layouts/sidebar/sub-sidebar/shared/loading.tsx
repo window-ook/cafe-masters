@@ -9,7 +9,6 @@ import { IoMdClock } from 'react-icons/io';
 import { IoBookmark, IoLocation, IoCloseCircle } from 'react-icons/io5';
 import { FaPhoneSquare, FaChevronDown } from 'react-icons/fa';
 import { FaCopy } from 'react-icons/fa6';
-
 import Image from 'next/image';
 import Tooltip from 'components/shared/tooltip';
 

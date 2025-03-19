@@ -21,7 +21,7 @@ interface KakaoPagination {
 }
 
 export default function KakaoMap() {
-  const [mapLoaded, setMapLoaded] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 
   const mapRef = useRef<any | null>(null);
   const openInfoWindowRef = useRef<any | null>(null);
