@@ -24,6 +24,7 @@ export async function getAllCollectedCafes(
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from('collected')
     .select('*')
@@ -57,6 +58,7 @@ export async function getCollectedCafe(
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from('collected')
     .select('id, userId')
@@ -71,6 +73,7 @@ export async function countCollectedCafes(userId: string): Promise<number> {
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
+
   const { count, error } = await supabase
     .from('collected')
     .select('*', { count: 'exact' })
@@ -86,6 +89,7 @@ export async function createCollectedCafe(
   if (!collected) throw new Error('유효하지 않은 카페 데이터 전송');
 
   const supabase = await createServerSupabaseClient();
+
   const { error } = await supabase.from('collected').insert({
     ...collected,
     created_at: new Date().toISOString(),
@@ -104,6 +108,7 @@ export async function updateCollectedCafe(
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const supabase = await createServerSupabaseClient();
+
   const { error } = await supabase
     .from('collected')
     .update({

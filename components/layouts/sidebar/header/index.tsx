@@ -10,8 +10,8 @@ import Tooltip from 'components/shared/tooltip';
 import Image from 'next/image';
 
 export default function Header() {
-  const [collectedInput, setCollectedInput] = useState('');
-  const [bookmarkedInput, setBookmarkedInput] = useState('');
+  const [collectedInput, setCollectedInput] = useState<string>('');
+  const [bookmarkedInput, setBookmarkedInput] = useState<string>('');
 
   const searchResultCount = useMapStore(state => state.searchResult.length);
   const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
@@ -22,7 +22,6 @@ export default function Header() {
   const setBookmarkedSearchTerm = useMapStore(
     state => state.setBookmarkedSearchTerm,
   );
-
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
   const router = useRouter();

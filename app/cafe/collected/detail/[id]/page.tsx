@@ -15,8 +15,8 @@ export default function CollectedDetail({ params }: PageProps) {
 
   useEffect(() => {
     const numericId = parseFloat(id);
-    const foundCafe = collectedCafe.find(cafe => cafe.id === numericId);
-    if (foundCafe) setCollectedCafeDetail([foundCafe]);
+    const targetCafe = collectedCafe.find(cafe => cafe.id === numericId);
+    if (targetCafe) setCollectedCafeDetail([targetCafe]);
   }, [id, collectedCafe, setCollectedCafeDetail]);
 
   return (

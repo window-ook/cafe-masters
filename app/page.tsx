@@ -44,7 +44,7 @@ const Navbar = () => {
 };
 
 const ScrollSections = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -75,7 +75,7 @@ const ScrollSections = () => {
     },
   ];
 
-  const scrollToSection = (index: number) => {
+  const handleView = (index: number) => {
     if (containerRef.current) {
       containerRef.current.children[index].scrollIntoView({
         behavior: 'smooth',
@@ -96,14 +96,10 @@ const ScrollSections = () => {
   useEffect(() => {
     const container = containerRef.current;
 
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-    }
+    if (container) container.addEventListener('scroll', handleScroll);
 
     return () => {
-      if (container) {
-        container.removeEventListener('scroll', handleScroll);
-      }
+      if (container) container.removeEventListener('scroll', handleScroll);
     };
   }, [handleScroll]);
 
@@ -211,7 +207,7 @@ const ScrollSections = () => {
         {sections.map((_, index) => (
           <button
             key={index}
-            onClick={() => scrollToSection(index)}
+            onClick={() => handleView(index)}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               activeIndex === index
                 ? 'bg-white scale-150'
@@ -226,7 +222,8 @@ const ScrollSections = () => {
 };
 
 const useIntersection = (ref: React.RefObject<HTMLDivElement>) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
   const wasVisible = useRef(false);
 
   useEffect(() => {
@@ -235,9 +232,7 @@ const useIntersection = (ref: React.RefObject<HTMLDivElement>) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
           wasVisible.current = true;
-        } else if (!wasVisible.current) {
-          setIsVisible(false);
-        }
+        } else if (!wasVisible.current) setIsVisible(false);
       },
       { threshold: 0.1 },
     );
@@ -344,6 +339,7 @@ const ReviewCards = () => {
 
 const Contactme = () => {
   const ref = useRef<HTMLDivElement | null>(null);
+
   const isVisible = useIntersection(ref);
 
   return (

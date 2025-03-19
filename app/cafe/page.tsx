@@ -1,10 +1,20 @@
-import { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
-  title: '메뉴 페이지 | 카페 마스터즈 Cafe Masters',
-  description: '사이드바에서 기능을 선택하세요.',
-};
+import { useUserStore } from 'utils/store';
+import Head from 'next/head';
+import useCountCollectedQuery from 'hooks/cache/useCountCollectedQuery';
+import useCountBookmarkedQuery from 'hooks/cache/useCountBookmarkedQuery';
 
 export default function Cafe() {
-  return null;
+  const userId = useUserStore(state => state.userId);
+
+  useCountCollectedQuery(userId);
+  useCountBookmarkedQuery(userId);
+
+  return (
+    <Head>
+      <title>메뉴 목록 | 카페 마스터즈 Cafe Masters</title>
+      <meta name="description" content={`메뉴 목록입니다.`} />
+    </Head>
+  );
 }

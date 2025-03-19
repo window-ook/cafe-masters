@@ -7,6 +7,8 @@ import TierBadge from './tier-badge';
 import Image from 'next/image';
 
 export default function ProfileBox() {
+  const supabase = createBrowserSupabaseClient();
+
   const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
   const userEmail = useUserStore(state => state.userEmail);
   const userTier = useUserStore(state => state.userTier);
@@ -14,8 +16,6 @@ export default function ProfileBox() {
   const setUserEmail = useUserStore(state => state.setUserEmail);
   const setUserId = useUserStore(state => state.setUserId);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-
-  const supabase = createBrowserSupabaseClient();
 
   useEffect(() => {
     const fetchUserSession = async () => {
@@ -25,7 +25,6 @@ export default function ProfileBox() {
       if (session?.user) {
         setUserId(session?.user?.id);
         setUserEmail(session?.user?.email || '');
-        // setUserEmail(session?.user?.email?.split('@')?.[0] || '');
       }
     };
 

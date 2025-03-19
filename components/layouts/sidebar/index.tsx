@@ -31,7 +31,7 @@ const PageConverter = dynamic(() => import('./footer/page-converter'), {
 const SubSidebar = dynamic(() => import('./sub-sidebar'), { ssr: false });
 
 export default function Sidebar() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 

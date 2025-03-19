@@ -8,15 +8,14 @@ import Head from 'next/head';
 import AuthBackgroundCards from 'components/auth/shared/background-cards';
 
 export default function Resetpassword() {
-  const [newPassword, setNewPassword] = useState('');
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
-
-  const router = useRouter();
   const supabase = createBrowserSupabaseClient();
 
-  const finishResetMutation = useFinishResetMutation();
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>('');
 
-  const textStyle = `font-dpixel text-lg`;
+  const router = useRouter();
+
+  const finishResetMutation = useFinishResetMutation();
 
   const handleSubmit = () => {
     finishResetMutation.mutate(newPassword);
@@ -47,7 +46,7 @@ export default function Resetpassword() {
                 비밀번호 재설정
               </p>
               <div className="flex gap-4 justify-between items-center">
-                <span className={textStyle}>새 비밀번호</span>
+                <span className="font-dpixel text-lg">새 비밀번호</span>
                 <input
                   type="password"
                   value={newPassword}
@@ -57,7 +56,7 @@ export default function Resetpassword() {
                 />
               </div>
               <div className="flex gap-4 justify-between items-center">
-                <span className={textStyle}>비밀번호 확인</span>
+                <span className="font-dpixel text-lg">비밀번호 확인</span>
                 <input
                   type="password"
                   value={newPasswordConfirm}
@@ -73,7 +72,7 @@ export default function Resetpassword() {
                 onClick={handleSubmit}
                 aria-label="완료 버튼, 재설정 완료 화면으로 이동합니다."
               >
-                <span className={`${textStyle} text-white`}>완료</span>
+                <span className="font-dpixel text-lg text-white">완료</span>
               </button>
               <button
                 type="button"
@@ -81,7 +80,7 @@ export default function Resetpassword() {
                 className="bg-blue-500 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
                 aria-label="취소 버튼, 초기 화면으로 돌아갑니다."
               >
-                <span className={`${textStyle} text-white`}>취소</span>
+                <span className="font-dpixel text-lg text-white">취소</span>
               </button>
             </form>
           </div>

@@ -16,10 +16,10 @@ export default function BookmarkedDetail({ params }: PageProps) {
 
   useEffect(() => {
     const numericId = parseFloat(id);
-    const foundCafe = bookmarkedCafe.find(cafe => cafe.id === numericId);
-    if (foundCafe) {
+    const targetCafe = bookmarkedCafe.find(cafe => cafe.id === numericId);
+    if (targetCafe) {
       setIsBookmarked(true);
-      setBookmarkedCafeDetail([foundCafe]);
+      setBookmarkedCafeDetail([targetCafe]);
     }
   }, [id, bookmarkedCafe, setBookmarkedCafeDetail, setIsBookmarked]);
 

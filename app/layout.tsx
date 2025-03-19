@@ -58,8 +58,6 @@ export default async function RootLayout({
 }>) {
   const supabase = await createServerSupabaseClient();
 
-  const isTesting = process.env.NEXT_IS_TESTING === 'test';
-
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -74,10 +72,8 @@ export default async function RootLayout({
       </head>
       <body className={`font-pretendard`}>
         <ReactQueryClientProvider>
-          <AuthProvider
-            accessToken={session?.access_token ?? 'no-access-token'}
-          >
-            {session?.user || isTesting ? (
+          <AuthProvider accessToken={session?.access_token ?? 'no-token'}>
+            {session?.user ? (
               <MainLayout>{children}</MainLayout>
             ) : (
               <NoSessionLayout>{children}</NoSessionLayout>

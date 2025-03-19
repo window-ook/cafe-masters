@@ -6,9 +6,9 @@ import { cn } from '*/lib/utils';
 import { RadioGroup, RadioGroupItem } from '*/components/ui/radio-group';
 
 interface StarRatingProps {
-  maxStars?: number; // 기본 별 개수 (5개)
-  value?: number; // 초기 값
-  onChange?: (value: number) => void; // 값 변경 핸들러
+  maxStars?: number;
+  value?: number;
+  onChange?: (value: number) => void;
 }
 
 export default function Rating({
