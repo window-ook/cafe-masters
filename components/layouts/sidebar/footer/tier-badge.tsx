@@ -6,7 +6,7 @@ import {
   getMasterTierStyle,
 } from 'utils/styles';
 import { Tier } from 'types/common';
-import TierInfoModal from './tier-info-modal';
+import TierModal from './tier-modal';
 
 interface TierBadgeProps {
   tier: Tier;
@@ -39,7 +39,7 @@ export default function TierBadge({ tier }: TierBadgeProps) {
           <span className="text-sm font-dpixel">{tier}</span>
         </button>
       </div>
-      <TierInfoModal open={open} handleClose={handleClose} />
+      <TierModal open={open} handleClose={handleClose} />
     </>
   );
 }

@@ -3,7 +3,6 @@
 import { useEffect, use } from 'react';
 import { useMapStore, useCheckStore } from 'utils/store';
 import { PageProps } from 'types/common';
-
 import Head from 'next/head';
 
 export default function BookmarkedDetail({ params }: PageProps) {

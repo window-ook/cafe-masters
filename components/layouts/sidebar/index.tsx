@@ -13,9 +13,10 @@ import dynamic from 'next/dynamic';
 import Header from './header';
 import Footer from './footer';
 import SidebarTabList from './main/sidebar-tab-list';
-import CircularProgress from '@mui/material/CircularProgress';
+
 import useCollectedInfiniteQuery from 'hooks/cache/useCollectedInfiniteQuery';
 import useBookmarkedInfiniteQuery from 'hooks/cache/useBookmarkedInfiniteQuery';
+import CircularProgress from './shared/circular-progress';
 
 const NormalCafe = dynamic(() => import('./main/normal-cafe'), { ssr: false });
 
@@ -223,7 +224,7 @@ export default function Sidebar() {
               )}
 
               {isCollectedPage && (
-                <div>
+                <div className="relative">
                   {fetchedCollectedCafe?.pages?.map((page, i) => (
                     <div key={`page-${i}`} className={cardDivStyle}>
                       {filterCollctedBySearchTerm(
@@ -244,7 +245,7 @@ export default function Sidebar() {
                   ))}
 
                   {isFetchingNextCollectedPage && (
-                    <div className="fixed bottom-4 right-4">
+                    <div className="fixed bottom-4 left-4">
                       <CircularProgress />
                     </div>
                   )}
@@ -254,7 +255,7 @@ export default function Sidebar() {
               )}
 
               {isBookmarkedPage && (
-                <div>
+                <div className="relative">
                   {fetchedBookmarkedCafe?.pages?.map((page, i) => (
                     <div key={`page-${i}`} className={cardDivStyle}>
                       {filterBookmarkedBySearchTerm(
@@ -274,7 +275,7 @@ export default function Sidebar() {
                   ))}
 
                   {isFetchingNextBookmarkedPage && (
-                    <div className="fixed bottom-4 right-4">
+                    <div className="fixed bottom-4 left-4">
                       <CircularProgress />
                     </div>
                   )}

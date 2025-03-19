@@ -13,7 +13,7 @@ export default function LightDarkToggle() {
       type="button"
       aria-label="라이트/다크 테마 토글 버튼"
       onClick={handleToggle}
-      className="relative w-20 h-10 flex items-center rounded-full cursor-pointer transition-colors duration-300 ease-in-out"
+      className="relative w-20 h-10 z-0 flex items-center rounded-full cursor-pointer transition-colors duration-300 ease-in-out"
     >
       <div
         className={`absolute w-full h-full rounded-full transition-colors duration-300 ${

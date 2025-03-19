@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
+  darkMode: ['class'],
   mode: 'jit',
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
@@ -14,17 +15,14 @@ const config: Config = {
         dpixel: ['var(--font-dunggeunmo)'],
         pretendard: ['var(--font-pretendard)'],
       },
-
       colors: {
         main: '#7c24c9',
         'main-light': '#f5ccff',
         'main-shadow': '#875aad',
         'main-dark': '#1f1926',
         'main-dark-border': '#5f018a',
-        // COLLECT 뱃지
         'collected-side': '#03fc73',
         'collected-center': '#6366f1',
-        // 티어 뱃지 스타일
         beginner: '#8a919c',
         junior: '#030ffc',
         senior: '#f77a05',
@@ -35,58 +33,115 @@ const config: Config = {
         'master-effect-left': '#44BCFF',
         'master-effect-mid': '#FF44EC',
         'master-effect-right': '#FF675E',
-        // 유니크 카드 스타일
         'unique-card-left': '#5f018a',
         'unique-card-mid': '#8a24b9',
         'unique-card-right': '#f5248c',
         'unique-effect-left': '#44BCFF',
         'unique-effect-mid': '#FF44EC',
         'unique-effect-right': '#FF675E',
-        // 실버 카드, 골드 카드 스타일
         'silver-via': '#fff',
         'silver-side': '#8c8c8c',
         'gold-via': '#f5e902',
         'gold-side': '#8c6a01',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        chart: {
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
+        },
       },
-
       textShadow: {
         black: '0 2px 4px rgba(0, 0, 0, 0.8)',
         main: '0 2px 4px rgba(135, 90, 173, 1)',
       },
-
       backgroundImage: {
         'expert-gradient': 'linear-gradient(90deg, #f5e902 0%, #bd9b04 100%)',
         'master-gradient': 'linear-gradient(90deg, #8a24b9 0%, #f5248c 100%)',
       },
-
       keyframes: {
         gradient: {
-          '0%': { 'background-position': '0% 50%' },
-          '50%': { 'background-position': '100% 50%' },
-          '100%': { 'background-position': '0% 50%' },
+          '0%': {
+            'background-position': '0% 50%',
+          },
+          '50%': {
+            'background-position': '100% 50%',
+          },
+          '100%': {
+            'background-position': '0% 50%',
+          },
         },
         reveal: {
-          from: { clipPath: 'inset(0 100% 0 0)' },
-          to: { clipPath: 'inset(0 0 0 0)' },
+          from: {
+            clipPath: 'inset(0 100% 0 0)',
+          },
+          to: {
+            clipPath: 'inset(0 0 0 0)',
+          },
         },
         textReveal: {
-          from: { transform: 'translateY(100%)', opacity: '0' },
-          to: { transform: 'translateY(0)', opacity: '1' },
+          from: {
+            transform: 'translateY(100%)',
+            opacity: '0',
+          },
+          to: {
+            transform: 'translateY(0)',
+            opacity: '1',
+          },
         },
         float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
+          '0%, 100%': {
+            transform: 'translateY(0)',
+          },
+          '50%': {
+            transform: 'translateY(-10px)',
+          },
         },
         shine: {
-          from: { transform: 'translateX(-100%) rotate(45deg)' },
-          to: { transform: 'translateX(200%) rotate(45deg)' },
+          from: {
+            transform: 'translateX(-100%) rotate(45deg)',
+          },
+          to: {
+            transform: 'translateX(200%) rotate(45deg)',
+          },
         },
       },
-
       fontSize: {
         '2xs': '.3rem',
       },
-
       animation: {
         gradient: 'gradient 3s ease infinite',
         reveal: 'reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1)',
@@ -94,9 +149,13 @@ const config: Config = {
         float: 'float 6s ease-in-out infinite',
         shine: 'shine 1.5s',
       },
-
       dropShadow: {
         '3xl': '14px 14px 11px -7px rgba(47,49,51,0.75)',
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
     },
   },
@@ -125,6 +184,7 @@ const config: Config = {
         },
       });
     }),
+    // require('tailwindcss-animate'),
   ],
 };
 

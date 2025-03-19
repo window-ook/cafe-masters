@@ -5,7 +5,7 @@ import {
   getMemoSubmitStyle,
 } from 'utils/styles';
 import { MemoProps } from 'types/common';
-import { Rating } from '@mui/material';
+import Rating from './rating';
 
 export default function Memo({
   detailName,
@@ -86,10 +86,11 @@ export default function Memo({
         <span>별점 매기기</span>
         <Rating
           data-cy="memo-rating"
-          name="simple-controlled"
+          aria-label="카페의 별점을 매기는 라디오 그룹"
           value={rating}
-          onChange={(event, newValue) => {
-            setRating(newValue ?? 5);
+          onChange={value => {
+            setRating(value);
+            console.log(value);
           }}
         />
       </div>
