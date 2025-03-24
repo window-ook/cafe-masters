@@ -17,7 +17,8 @@ export async function GET(
     const browser = await puppeteer.launch({
       args: chromium.args,
       executablePath: (await chromium.executablePath()) || '/usr/bin/chromium',
-      headless: chromium.headless,
+      headless: true,
+      defaultViewport: { width: 1200, height: 800 },
     });
 
     // 새로운 페이지
@@ -25,7 +26,8 @@ export async function GET(
 
     // 페이지 접속
     await page.goto(`https://place.map.kakao.com/${id}`, {
-      waitUntil: 'networkidle2',
+      waitUntil: 'domcontentloaded',
+      timeout: 10000,
     });
 
     const selectors = [
