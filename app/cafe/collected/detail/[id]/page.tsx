@@ -24,7 +24,7 @@ export default function CollectedDetail({ params }: PageProps) {
       <title>수집한 카드의 상세 정보 | Cafe Masters</title>
       <meta
         name="description"
-        content={`선택한 카드의 상세 정보를 볼 수 있어요.`}
+        content={`수집한 카드의 상세 정보를 볼 수 있어요.`}
       />
     </Head>
   );

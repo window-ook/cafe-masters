@@ -13,8 +13,8 @@ export default function Cafe() {
 
   return (
     <Head>
-      <title>메뉴 목록 | 카페 마스터즈 Cafe Masters</title>
-      <meta name="description" content={`메뉴 목록입니다.`} />
+      <title>메뉴 | Cafe Masters</title>
+      <meta name="description" content={`원하는 메뉴를 선택해보세요.`} />
     </Head>
   );
 }

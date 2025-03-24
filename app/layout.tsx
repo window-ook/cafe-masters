@@ -27,13 +27,17 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_API_REQUEST_URI || 'http://localhost:3000',
   ),
   title: 'Cafe Masters',
-  description: '카드를 수집하고 카페 마스터가 되어보세요!',
+  description: '카드를 모으며 카페 마스터가 되어보세요!',
   keywords: [
     '카페 마스터즈',
     '카페 마스터',
     '카페 추천',
     '카페 수집',
     '카페 카드',
+    'Cafe Masters',
+    'CafeMasters',
+    'cafe masters',
+    'cafemasters',
   ],
   openGraph: {
     type: 'website',
