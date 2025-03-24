@@ -58,13 +58,13 @@ export default function NormalCafeDetail({
       photoList: detail.photoList ? JSON.stringify(detail.photoList) : null,
     };
     uploadBookmarkMutation.mutate(bookmarkData);
-    toast.success('가고 싶은 카페를 북마크했습니다!');
+    toast.success('북마크 했습니다!');
   };
 
   const handleCancelBookmark = () => {
     cancelBookmarkMutation.mutate();
     setIsSubSidebarOpen(false);
-    toast.success('가고 싶은 카페를 제거했습니다!');
+    toast.success('북마크 취소했습니다!');
   };
 
   const handleSetIsSubSidebarOpen = () => {
@@ -126,7 +126,6 @@ export default function NormalCafeDetail({
         </button>
       </header>
 
-      {/* 가로 스크롤 구현 */}
       <main className={getDetailBodyStyle(isDarkTheme)}>
         <section className="relative flex flex-col items-center">
           <button
@@ -140,21 +139,23 @@ export default function NormalCafeDetail({
             className="flex gap-4 mt-4 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory"
           >
             <div className="snap-center flex-shrink-0 h-[15rem] py-2">
-              <Image
-                data-cy="normal-detail-thumbnail"
-                src={detail?.photoUrl || '/image/cafe_thumbnail.avif'}
-                alt="카페 썸네일"
-                width={160}
-                height={240}
-                className="w-[20rem] h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
-                priority={true}
-                onClick={() =>
-                  window.open(
-                    `http://place.map.kakao.com/${detail?.id}`,
-                    '_blank',
-                  )
-                }
-              />
+              {detail?.photoUrl?.trim() && (
+                <Image
+                  data-cy="normal-detail-thumbnail"
+                  src={detail.photoUrl || '/image/cafe_thumbnail.avif'}
+                  alt="카페 썸네일"
+                  width={160}
+                  height={240}
+                  className="w-[20rem] h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
+                  priority={true}
+                  onClick={() =>
+                    window.open(
+                      `http://place.map.kakao.com/${detail?.id}`,
+                      '_blank',
+                    )
+                  }
+                />
+              )}
             </div>
             {detail?.photoList?.map((photo, i) => {
               return (

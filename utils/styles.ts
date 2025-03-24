@@ -42,10 +42,6 @@ export const getDetailBodyStyle = (isDarkTheme: boolean) => {
 export const DetailCollectButtonStyle =
   'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-bold font-pretendard';
 
-export const getNormalCardStyle = (isDarkTheme: boolean) => {
-  return `${isDarkTheme ? 'border-main-dark-border bg-main-dark text-white shadow-main-shadow' : 'border-gray-700'} h-[20rem] p-4 border-4 rounded-2xl shadow-md flex flex-col justify-between cursor-pointer hover:scale-105 transition duration-300 ease`;
-};
-
 export const getCollectedCardStyle = (
   bgRatings: string,
   isDarkTheme: boolean,
@@ -66,9 +62,6 @@ export const ModalMasterEffectStyle = `w-[27%] sm:w-[9%] z-0 -top-0.5 inset-0 h-
 export const getMasterTierStyle = (addOn: string = '') => {
   return `${addOn} z-10 relative bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md`;
 };
-
-export const SearchButtonStyle =
-  'absolute top-1 right-1 py-4 px-2.5 flex items-center gap-2 rounded bg-main border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none';
 
 export const CollectedBadgeStyle =
   'rounded-xl w-[7rem] h-6 py-4 flex items-center justify-center bg-gradient-to-r from-collected-side via-collected-center to-collected-side bg-[length:200%_200%] animate-gradient shadow-md';

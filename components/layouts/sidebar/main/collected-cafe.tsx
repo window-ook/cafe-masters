@@ -41,7 +41,7 @@ export default function CollectedCafe({
       : 'text-white bg-black';
 
   return (
-    <div data-cy="collected-cafe" className="relative">
+    <li data-cy="collected-cafe" className="relative list-none">
       {isUnique && <div className={UniqueCardEffectStyle}></div>}
       <div
         onClick={onClick}
@@ -66,7 +66,7 @@ export default function CollectedCafe({
           </div>
         </div>
 
-        <div className="flex justify-center rounded-xl h-[7rem]">
+        <div className="flex justify-center rounded-xl h-[8rem]">
           <Image
             src={photoUrl ?? '/image/cafe_thumbnail.avif'}
             alt="카페 썸네일"
@@ -81,6 +81,6 @@ export default function CollectedCafe({
           <p>{phoneNum}</p>
         </div>
       </div>
-    </div>
+    </li>
   );
 }

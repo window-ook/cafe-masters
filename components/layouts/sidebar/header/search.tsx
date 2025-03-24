@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMapStore, useCheckStore } from 'utils/store';
-import { SearchButtonStyle } from 'utils/styles';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 
 export default function Search() {
@@ -30,14 +29,12 @@ export default function Search() {
   }, [keyword]);
 
   return (
-    <search className="w-full min-w-[12.5rem]">
-      <div
-        className={`relative rounded-xl shadow-md ${isDarkTheme && 'shadow-gray-700'}`}
-      >
+    <search className="w-full">
+      <div className="rounded-xl flex gap-2">
         <input
           data-cy="search-input"
-          className={`w-full pl-3 pr-28 py-4 bg-transparent border border-slate-200 rounded-md shadow-sm font-bold text-xl sm:text-md ${isDarkTheme ? 'placeholder:text-gray-300 text-white' : 'placeholder:text-slate-400 text-slate-700'} transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 focus:shadow`}
-          placeholder="ex) 성수, 교동, 전포"
+          className={`w-5/6 pl-3 pr-28 py-4 bg-transparent border border-slate-200 rounded-md shadow-sm font-bold text-xl sm:text-md ${isDarkTheme ? 'placeholder:text-gray-300 text-white' : 'placeholder:text-slate-400 text-slate-700'} transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 focus:shadow`}
+          placeholder="성수, 밀림, 전포 감성 ..."
           value={localKeyword}
           onChange={e => setLocalKeyword(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -46,11 +43,11 @@ export default function Search() {
           data-cy="search-button"
           type="button"
           aria-label="검색 버튼"
-          className={SearchButtonStyle}
+          className="w-1/6 py-4 px-1 flex justify-center items-center gap-2 rounded bg-main border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           onClick={handleSearch}
         >
           <FaMagnifyingGlass className="text-white" />
-          <span className="font-pretendard">GO</span>
+          <span className="font-pretendard">검색</span>
         </button>
       </div>
     </search>

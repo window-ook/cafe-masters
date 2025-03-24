@@ -9,25 +9,24 @@ import {
   CollectedCafeFromSupabase,
 } from 'types/common';
 import { useInView } from 'react-intersection-observer';
+import useBookmarkedInfiniteQuery from 'hooks/cache/useBookmarkedInfiniteQuery';
+import useCollectedInfiniteQuery from 'hooks/cache/useCollectedInfiniteQuery';
+import CircularProgress from './shared/circular-progress';
 import dynamic from 'next/dynamic';
 import Header from './header';
 import Footer from './footer';
 import SidebarTabList from './main/sidebar-tab-list';
 
-import useCollectedInfiniteQuery from 'hooks/cache/useCollectedInfiniteQuery';
-import useBookmarkedInfiniteQuery from 'hooks/cache/useBookmarkedInfiniteQuery';
-import CircularProgress from './shared/circular-progress';
-
+const SearchResultList = dynamic(() => import('./main/search-result-list'), {
+  ssr: false,
+});
 const NormalCafe = dynamic(() => import('./main/normal-cafe'), { ssr: false });
-
 const CollectedCafe = dynamic(() => import('./main/collected-cafe'), {
   ssr: false,
 });
-
 const PageConverter = dynamic(() => import('./footer/page-converter'), {
   ssr: false,
 });
-
 const SubSidebar = dynamic(() => import('./sub-sidebar'), { ssr: false });
 
 export default function Sidebar() {
@@ -70,7 +69,7 @@ export default function Sidebar() {
     currentPage * itemsPerPage,
   );
 
-  const cardDivStyle = 'flex flex-col gap-8 my-8 px-8';
+  const cardContainerStyle = 'flex flex-col gap-8 my-8 px-8';
 
   const {
     fetchedCollectedCafe,
@@ -207,12 +206,12 @@ export default function Sidebar() {
           >
             {isMainPage && <SidebarTabList />}
 
-            <section className="px-8 sm:px-4">
+            <section>
               {isSearchResultPage && (
-                <div className={cardDivStyle}>
+                <ul className={cardContainerStyle}>
                   {paginatedResults.map((cafe: SearchResult) => (
                     // 검색 리스트 컴포넌트 만들어서 대체하기
-                    <NormalCafe
+                    <SearchResultList
                       key={cafe.id}
                       name={cafe.place_name}
                       address={cafe.address_name}
@@ -220,13 +219,13 @@ export default function Sidebar() {
                       onClick={() => handleNormalCafeClick(cafe)}
                     />
                   ))}
-                </div>
+                </ul>
               )}
 
               {isCollectedPage && (
                 <div className="relative">
                   {fetchedCollectedCafe?.pages?.map((page, i) => (
-                    <div key={`page-${i}`} className={cardDivStyle}>
+                    <ul key={`page-${i}`} className={cardContainerStyle}>
                       {filterCollctedBySearchTerm(
                         page.data,
                         collectedSearchTerm,
@@ -241,7 +240,7 @@ export default function Sidebar() {
                           onClick={() => handleCollectedCafeClick(cafe)}
                         />
                       ))}
-                    </div>
+                    </ul>
                   ))}
 
                   {isFetchingNextCollectedPage && (
@@ -257,7 +256,7 @@ export default function Sidebar() {
               {isBookmarkedPage && (
                 <div className="relative">
                   {fetchedBookmarkedCafe?.pages?.map((page, i) => (
-                    <div key={`page-${i}`} className={cardDivStyle}>
+                    <ul key={`page-${i}`} className={cardContainerStyle}>
                       {filterBookmarkedBySearchTerm(
                         page.data,
                         bookmarkedSearchTerm,
@@ -271,7 +270,7 @@ export default function Sidebar() {
                           onClick={() => handleBookmarkedCafeClick(cafe)}
                         />
                       ))}
-                    </div>
+                    </ul>
                   ))}
 
                   {isFetchingNextBookmarkedPage && (
