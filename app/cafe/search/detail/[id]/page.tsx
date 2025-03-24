@@ -4,8 +4,6 @@ import { useEffect, use, useMemo } from 'react';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
-// import { getCollectedCafe } from 'actions/collectActions';
-// import { getBookmarkedCafe } from 'actions/bookmarkActions';
 
 export default function SearchDetail({ params }: PageProps) {
   const { id } = use(params);
@@ -83,10 +81,10 @@ export default function SearchDetail({ params }: PageProps) {
 
   return (
     <Head>
-      <title>카페 검색 결과 상세 정보 | 카페 마스터즈 Cafe Masters</title>
+      <title>카페 검색 결과 상세 정보 | Cafe Masters</title>
       <meta
         name="description"
-        content={`선택한 카페의 상세 정보를 확인하세요.`}
+        content={`검색 결과의 상세 정보를 확인하세요.`}
       />
     </Head>
   );

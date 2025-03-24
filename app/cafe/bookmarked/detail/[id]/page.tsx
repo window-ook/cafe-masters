@@ -25,7 +25,7 @@ export default function BookmarkedDetail({ params }: PageProps) {
 
   return (
     <Head>
-      <title>가고 싶은 카페의 상세 정보 | 카페 마스터즈 Cafe Masters</title>
+      <title>가고 싶은 카페의 상세 정보 | Cafe Masters</title>
       <meta
         name="description"
         content={`가고 싶은 카페의 상세 정보를 볼 수 있어요.`}

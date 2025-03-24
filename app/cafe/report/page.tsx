@@ -6,7 +6,7 @@ export default function Report() {
       <title>도움 센터 | Cafe Masters</title>
       <meta
         name="description"
-        content={`버그, 원하는 기능 제보 요청 페이지입니다.`}
+        content={`버그 제보와 원하는 기능을 요청해주세요.`}
       />
     </Head>
   );
