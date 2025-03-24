@@ -23,6 +23,11 @@ export async function GET(
     // 새로운 페이지
     const page = await browser.newPage();
 
+    // 페이지 접속
+    await page.goto(`https://place.map.kakao.com/${id}`, {
+      waitUntil: 'networkidle2',
+    });
+
     const selectors = [
       '.img-thumb.img_cfit',
       '.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit',
