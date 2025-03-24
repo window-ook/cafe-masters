@@ -11,13 +11,19 @@ import { toast } from 'react-toastify';
 import dynamic from 'next/dynamic';
 import Loading from './shared/loading';
 
-const NormalCafeDetail = dynamic(() => import('./normal-cafe/detail'), {
-  ssr: false,
-});
+const NormalCafeDetail = dynamic(
+  () => import('./normal-cafe/normal-cafe-detail'),
+  {
+    ssr: false,
+  },
+);
 
-const CollectedCafeDetail = dynamic(() => import('./collected-cafe/detail'), {
-  ssr: false,
-});
+const CollectedCafeDetail = dynamic(
+  () => import('./collected-cafe/collected-cafe-detail'),
+  {
+    ssr: false,
+  },
+);
 
 const Memo = dynamic(() => import('./memo'), {
   ssr: false,

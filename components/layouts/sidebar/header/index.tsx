@@ -90,7 +90,7 @@ export default function Header() {
           <div className="flex items-center gap-2">
             <input
               type="text"
-              placeholder="수집한 카드 중 찾기"
+              placeholder="카드 찾기"
               aria-label="수집한 카페 중 카페 이름 검색하기"
               className={`px-1 py-2 border-0 border-b-2 ${
                 isDarkTheme
@@ -125,7 +125,7 @@ export default function Header() {
           <div className="flex items-center gap-2">
             <input
               type="text"
-              placeholder="북마크한 카페 찾기"
+              placeholder="카페 찾기"
               aria-label="북마크한 카페 중 카페 이름 검색하기"
               className={`px-1 py-2 border-0 border-b-2 ${
                 isDarkTheme
