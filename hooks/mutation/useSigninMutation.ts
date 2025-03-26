@@ -1,9 +1,16 @@
-import { useRouter } from 'next/navigation';
-import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { useRouter } from 'next/navigation';
+import { useUserStore } from 'utils/store';
+import { useMapStore } from 'utils/store';
+import { useMutation } from '@tanstack/react-query';
+import { getAdminUser } from 'actions/userActions';
 
 export function useSigninMutation() {
   const supabase = createBrowserSupabaseClient();
+
+  const setUserId = useUserStore(state => state.setUserId);
+  const setUserEmail = useUserStore(state => state.setUserEmail);
+  const setAdmin = useUserStore(state => state.setAdmin);
 
   const router = useRouter();
 
@@ -15,15 +22,38 @@ export function useSigninMutation() {
       email: string;
       password: string;
     }) => {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) throw new Error(error.message);
+      return data.session;
     },
 
-    onSuccess: async () => {
+    onSuccess: async session => {
+      // 유저 데이터 초기화 보장
+      useUserStore.setState({
+        userId: '',
+        userEmail: '',
+        userTier: 'BEGINNER',
+        admin: false,
+      });
+
+      // 키워드 초기화
+      useMapStore.setState({
+        keyword: '',
+      });
+
+      const user = session?.user;
+      if (!user) return;
+
+      setUserId(user.id);
+      setUserEmail(user.email ?? '');
+
+      const isAdmin = await getAdminUser(user.id);
+      if (isAdmin) setAdmin(true);
+
       await supabase.auth.refreshSession();
       router.replace('/cafe');
     },

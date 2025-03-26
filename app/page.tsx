@@ -68,10 +68,9 @@ const ScrollSections = () => {
     },
     {
       id: 3,
-      title: '개발자를 위한\n카페를 알려드려요',
+      title: '카테고리별\n카페를 추천해드려요',
       subtitle: '03',
-      description:
-        '커피 한 잔과 코딩에 집중할 수 있는 좋은 카페를\n마스터즈 월드의 창조주가 알려드립니다!',
+      description: '내가 찾는 무드와 상황으로 필터링하여 확인할 수 있어요',
       imageUrl: '/image/scroll_section_2.avif',
     },
   ];

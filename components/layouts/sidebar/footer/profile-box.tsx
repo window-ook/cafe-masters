@@ -2,34 +2,15 @@
 
 import { useEffect } from 'react';
 import { useMapStore, useUserStore, useCheckStore } from 'utils/store';
-import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import TierBadge from './tier-badge';
 import Image from 'next/image';
 
 export default function ProfileBox() {
-  const supabase = createBrowserSupabaseClient();
-
   const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
   const userEmail = useUserStore(state => state.userEmail);
   const userTier = useUserStore(state => state.userTier);
   const setUserTier = useUserStore(state => state.setUserTier);
-  const setUserEmail = useUserStore(state => state.setUserEmail);
-  const setUserId = useUserStore(state => state.setUserId);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-
-  useEffect(() => {
-    const fetchUserSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (session?.user) {
-        setUserId(session?.user?.id);
-        setUserEmail(session?.user?.email || '');
-      }
-    };
-
-    fetchUserSession();
-  }, [supabase, setUserEmail, setUserId]);
 
   useEffect(() => {
     if (collectedCafeCount === 50) setUserTier('MASTER');
