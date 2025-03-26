@@ -43,31 +43,28 @@ export interface UserStore {
   userId: string;
   userEmail: string;
   userTier: Tier;
-
+  admin: boolean;
   setUserId: (user: string) => void;
   setUserEmail: (user: string) => void;
   setUserTier: (user: Tier) => void;
+  setAdmin: (user: boolean) => void;
 }
 
 export interface CheckStore {
   isSubSidebarOpen: boolean;
-  setIsSubSidebarOpen: (prev: boolean) => void;
   isMenuOpen: boolean;
-  setIsMenuOpen: (prev: boolean) => void;
-
   isExtend: boolean;
   isExtendComplete: boolean;
-  setIsExtend: () => void;
-  setIsExtendComplete: () => void;
-
   isDarkTheme: boolean;
-  setIsDarkTheme: () => void;
-
   isCollected: boolean;
   isBookmarked: boolean;
+  isLoading: boolean;
+  setIsSubSidebarOpen: (prev: boolean) => void;
+  setIsMenuOpen: (prev: boolean) => void;
+  setIsExtend: () => void;
+  setIsExtendComplete: () => void;
+  setIsDarkTheme: () => void;
   setIsCollected: (prev: boolean) => void;
   setIsBookmarked: (prev: boolean) => void;
-
-  isLoading: boolean;
   setIsLoading: (prev: boolean) => void;
 }

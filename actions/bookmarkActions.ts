@@ -1,9 +1,9 @@
 'use server';
 
 import { Database } from 'types_db';
-import { PostgrestError } from '@supabase/supabase-js';
 import { BookmarkedCafeFromSupabase } from 'types/common';
 import { createServerSupabaseClient } from 'utils/supabase/server';
+import { PostgrestError } from '@supabase/supabase-js';
 
 export type BookmarkedRow = Database['public']['Tables']['bookmarked']['Row'];
 export type BookmarkedRowInsert =
@@ -14,6 +14,7 @@ function handleError(error: PostgrestError): void {
   throw new Error(error.message);
 }
 
+/** 모든 북마크 카페 */
 export async function getAllBookmarkedCafes(
   userId: string,
   offset: number = 0,
@@ -40,31 +41,35 @@ export async function getAllBookmarkedCafes(
     photoUrl: item.photoUrl ?? undefined,
     menu: item.menu ?? undefined,
   }));
+
   const nextCursor =
     safeData.length && safeData.length === limit ? offset + limit : null;
 
   return { data: safeData, nextCursor };
 }
 
-export async function getBookmarkedCafe(
-  id: number,
-  userId: string,
-): Promise<{ id: number; userId: string }[]> {
-  if (!id || id === 0) throw new Error('유효하지 않은 카페 ID');
-  if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
+/** 하나의 북마크 카페 */
+// export async function getBookmarkedCafe(
+//   id: number,
+//   userId: string,
+// ): Promise<{ id: number; userId: string }[]> {
+//   if (!id || id === 0) throw new Error('유효하지 않은 카페 ID');
+//   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
-  const supabase = await createServerSupabaseClient();
+//   const supabase = await createServerSupabaseClient();
 
-  const { data, error } = await supabase
-    .from('bookmarked')
-    .select('id, userId')
-    .eq('id', id)
-    .eq('userId', userId);
+//   const { data, error } = await supabase
+//     .from('bookmarked')
+//     .select('id, userId')
+//     .eq('id', id)
+//     .eq('userId', userId);
 
-  if (error) handleError(error);
-  return data ?? [];
-}
+//   if (error) handleError(error);
 
+//   return data ?? [];
+// }
+
+/** 북마크 카페의 수 */
 export async function countBookmarkedCafes(userId: string): Promise<number> {
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
@@ -79,6 +84,7 @@ export async function countBookmarkedCafes(userId: string): Promise<number> {
   return count ?? 0;
 }
 
+/** 새로운 북마크 추가 */
 export async function createBookmarkedCafe(
   bookmarked: BookmarkedRowInsert,
 ): Promise<void> {
@@ -94,6 +100,7 @@ export async function createBookmarkedCafe(
   if (error) handleError(error);
 }
 
+/** 선택한 북마크 삭제 */
 export async function deleteBookmarkedCafe(
   id: number | undefined,
   userId: string,

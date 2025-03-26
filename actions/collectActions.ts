@@ -1,9 +1,9 @@
 'use server';
 
-import { PostgrestError } from '@supabase/supabase-js';
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 import { CollectedCafeFromSupabase } from 'types/common';
+import { PostgrestError } from '@supabase/supabase-js';
 
 export type CollectedRow = Database['public']['Tables']['collected']['Row'];
 export type CollectedRowInsert =
@@ -16,6 +16,7 @@ function handleError(error: PostgrestError) {
   throw new Error(error.message);
 }
 
+/** 모든 수집한 카페 */
 export async function getAllCollectedCafes(
   userId: string,
   offset: number = 0,
@@ -32,7 +33,7 @@ export async function getAllCollectedCafes(
     .order('created_at', { ascending: true })
     .range(offset, offset + limit - 1);
 
-  if (error) throw new Error(error.message);
+  if (error) handleError(error);
 
   const safeData = (data ?? []).map(item => ({
     ...item,
@@ -50,25 +51,28 @@ export async function getAllCollectedCafes(
   return { data: safeData, nextCursor };
 }
 
-export async function getCollectedCafe(
-  id: number,
-  userId: string,
-): Promise<{ id: number; userId: string }[]> {
-  if (!id || id === 0) throw new Error('유효하지 않은 카페 ID');
-  if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
+/** 하나의 수집한 카페 */
+// export async function getCollectedCafe(
+//   id: number,
+//   userId: string,
+// ): Promise<{ id: number; userId: string }[]> {
+//   if (!id || id === 0) throw new Error('유효하지 않은 카페 ID');
+//   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
-  const supabase = await createServerSupabaseClient();
+//   const supabase = await createServerSupabaseClient();
 
-  const { data, error } = await supabase
-    .from('collected')
-    .select('id, userId')
-    .eq('id', id)
-    .eq('userId', userId);
+//   const { data, error } = await supabase
+//     .from('collected')
+//     .select('id, userId')
+//     .eq('id', id)
+//     .eq('userId', userId);
 
-  if (error) handleError(error);
-  return data ?? [];
-}
+//   if (error) handleError(error);
 
+//   return data ?? [];
+// }
+
+/** 수집한 카페의 수 */
 export async function countCollectedCafes(userId: string): Promise<number> {
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
@@ -83,6 +87,7 @@ export async function countCollectedCafes(userId: string): Promise<number> {
   return count ?? 0;
 }
 
+/** 새로운 수집 추가 */
 export async function createCollectedCafe(
   collected: CollectedRowInsert,
 ): Promise<void> {
@@ -98,6 +103,7 @@ export async function createCollectedCafe(
   if (error) handleError(error);
 }
 
+/** 수집한 카페의 내용을 수정  */
 export async function updateCollectedCafe(
   collected: CollectedRowUpdate,
   id: number | undefined,

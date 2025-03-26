@@ -27,21 +27,19 @@ export const useMapStore = create<MapStore>()(
       collectedSearchTerm: '',
       bookmarkedSearchTerm: '',
 
-      setKeyword: (data: string) => set({ keyword: data }),
+      setKeyword: data => set({ keyword: data }),
       setSearchResult: (data: SearchResult[]) => set({ searchResult: data }),
       setCollectedCafe: (data: CollectedCafeFromSupabase[]) =>
         set({ collectedCafe: data ?? [] }),
-      setCollectedCafeCount: (data: number) =>
-        set({ collectedCafeCount: data }),
       setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) =>
         set({ bookmarkedCafe: data }),
-      setBookmarkedCafeCount: (data: number) =>
-        set({ bookmarkedCafeCount: data }),
-      setThisX: (x: number) => set({ thisX: x }),
-      setThisY: (y: number) => set({ thisY: y }),
-      setThisId: (Id: number) => set({ thisId: Id }),
-      setCafeDetail: (data: object) => set({ cafeDetail: data }),
-      setThisThumbnail: (url: string) => set({ thisThumbnail: url }),
+      setCollectedCafeCount: data => set({ collectedCafeCount: data }),
+      setBookmarkedCafeCount: data => set({ bookmarkedCafeCount: data }),
+      setThisX: x => set({ thisX: x }),
+      setThisY: y => set({ thisY: y }),
+      setThisId: id => set({ thisId: id }),
+      setThisThumbnail: url => set({ thisThumbnail: url }),
+      setCafeDetail: data => set({ cafeDetail: data }),
       setCollectedCafeDetail: (data: CollectedCafeFromSupabase[]) =>
         set({ collectedCafeDetail: data }),
       setBookmarkedCafeDetail: (data: BookmarkedCafeFromSupabase[]) =>
@@ -61,10 +59,12 @@ export const useUserStore = create<UserStore>()(
       userId: '',
       userEmail: '',
       userTier: 'BEGINNER',
+      admin: false,
 
-      setUserId: (user: string) => set({ userId: user }),
-      setUserEmail: (user: string) => set({ userEmail: user }),
+      setUserId: user => set({ userId: user }),
+      setUserEmail: user => set({ userEmail: user }),
       setUserTier: (user: Tier) => set({ userTier: user }),
+      setAdmin: user => set({ admin: user }),
     }),
     {
       name: 'userStore',
@@ -84,15 +84,15 @@ export const useCheckStore = create<CheckStore>()(
       isBookmarked: false,
       isLoading: false,
 
-      setIsSubSidebarOpen: (prev: boolean) => set({ isSubSidebarOpen: prev }),
-      setIsMenuOpen: (prev: boolean) => set({ isMenuOpen: prev }),
+      setIsSubSidebarOpen: prev => set({ isSubSidebarOpen: prev }),
+      setIsMenuOpen: prev => set({ isMenuOpen: prev }),
       setIsExtend: () => set(prev => ({ isExtend: !prev.isExtend })),
       setIsExtendComplete: () =>
         set(prev => ({ isExtendComplete: !prev.isExtendComplete })),
       setIsDarkTheme: () => set(prev => ({ isDarkTheme: !prev.isDarkTheme })),
-      setIsCollected: (prev: boolean) => set({ isCollected: prev }),
-      setIsBookmarked: (prev: boolean) => set({ isBookmarked: prev }),
-      setIsLoading: (prev: boolean) => set({ isLoading: prev }),
+      setIsCollected: prev => set({ isCollected: prev }),
+      setIsBookmarked: prev => set({ isBookmarked: prev }),
+      setIsLoading: prev => set({ isLoading: prev }),
     }),
     {
       name: 'checkStore',

@@ -88,8 +88,8 @@ export default function SidebarTabList() {
       />
       <SidebarTab
         icon={<FaLaptopCode className={`text-gray-500 text-3xl`} />}
-        title={'개발하기 좋은 카페(soon)'}
-        path={'/cafe/for-dev'}
+        title={'추천 카페'}
+        path={'/cafe/recommends'}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
