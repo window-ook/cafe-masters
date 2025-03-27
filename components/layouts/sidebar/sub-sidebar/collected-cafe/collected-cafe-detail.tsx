@@ -1,11 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore } from 'utils/store';
-import {
-  getDetailBodyStyle,
-  DetailCollectButtonStyle,
-  getDetailHeaderStyle,
-  SubsidebarCloseIconStyle,
-} from 'utils/styles';
+import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import OpenTimeGrid from '../shared/open-time-grid';
 import LocationGrid from '../shared/location-grid';
@@ -51,7 +46,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
           onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
         >
-          <IoCloseCircle className={SubsidebarCloseIconStyle} />
+          <IoCloseCircle className="text-main text-3xl hover:text-opacity-70" />
         </button>
       </div>
 
@@ -78,7 +73,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
           <button
             data-cy="update-button"
             type="button"
-            className={DetailCollectButtonStyle}
+            className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
             onClick={() => setMemoOpen(true)}
           >
             수정하기

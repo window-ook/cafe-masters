@@ -45,11 +45,30 @@ export default function Memo({
           <span>Back</span>
         </button>
       </div>
+      <div className="flex items-center gap-2">
+        <span>별점 매기기</span>
+        <Rating
+          data-cy="memo-rating"
+          aria-label="카페의 별점을 매기는 라디오 그룹"
+          value={rating}
+          onChange={value => {
+            setRating(value);
+            console.log(value);
+          }}
+        />
+      </div>
+      <input
+        data-cy="memo-concept"
+        placeholder="*카테고리"
+        value={concept}
+        onChange={e => setConcept(e.target.value)}
+        className={getMemoInputStyle(isDarkTheme)}
+      />
       <input
         data-cy="memo-comment"
         required
         value={comment}
-        placeholder="코멘트(필수)"
+        placeholder="*코멘트"
         onChange={e => setComment(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
@@ -71,29 +90,10 @@ export default function Memo({
         data-cy="memo-eaten"
         required
         value={eaten}
-        placeholder="먹은 메뉴(필수)"
+        placeholder="*먹은 메뉴"
         onChange={e => setEaten(e.target.value)}
         className={getMemoInputStyle(isDarkTheme)}
       />
-      <input
-        data-cy="memo-concept"
-        placeholder="카페 컨셉"
-        value={concept}
-        onChange={e => setConcept(e.target.value)}
-        className={getMemoInputStyle(isDarkTheme)}
-      />
-      <div className="flex items-center gap-2">
-        <span>별점 매기기</span>
-        <Rating
-          data-cy="memo-rating"
-          aria-label="카페의 별점을 매기는 라디오 그룹"
-          value={rating}
-          onChange={value => {
-            setRating(value);
-            console.log(value);
-          }}
-        />
-      </div>
       <button
         data-cy="memo-button"
         aria-label="카드 수집 완료 버튼"

@@ -113,7 +113,6 @@ export default function Header() {
           </div>
         </div>
       )}
-
       {isBookmarkedPage && (
         <div className="flex flex-col items-center justify-center gap-4">
           <span className="font-dpixel text-xl sm:text-2xl">

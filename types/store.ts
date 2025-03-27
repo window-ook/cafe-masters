@@ -58,6 +58,7 @@ export interface CheckStore {
   isDarkTheme: boolean;
   isCollected: boolean;
   isBookmarked: boolean;
+  isRecommended: boolean;
   isLoading: boolean;
   setIsSubSidebarOpen: (prev: boolean) => void;
   setIsMenuOpen: (prev: boolean) => void;
@@ -66,5 +67,6 @@ export interface CheckStore {
   setIsDarkTheme: () => void;
   setIsCollected: (prev: boolean) => void;
   setIsBookmarked: (prev: boolean) => void;
+  setIsRecommended: (prev: boolean) => void;
   setIsLoading: (prev: boolean) => void;
 }

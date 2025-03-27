@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore } from 'utils/store';
-import { FaLaptopCode } from 'react-icons/fa';
+import { FaCheckCircle } from 'react-icons/fa';
 import { IoMdCafe } from 'react-icons/io';
 import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
 import { FaRegCircleQuestion } from 'react-icons/fa6';
@@ -87,9 +87,9 @@ export default function SidebarTabList() {
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
-        icon={<FaLaptopCode className={`text-gray-500 text-3xl`} />}
+        icon={<FaCheckCircle className={`text-recommended text-3xl`} />}
         title={'추천 카페'}
-        path={'/cafe/recommends'}
+        path={'/cafe/recommended'}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab

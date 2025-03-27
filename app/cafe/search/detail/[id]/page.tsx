@@ -44,6 +44,7 @@ export default function SearchDetail({ params }: PageProps) {
         );
         setIsBookmarked(isBookmarkedLocally);
         setIsCollected(isCollectedLocally);
+        // setIsRecommended() 추가하기
       } catch (error) {
         console.error('수집한 카페와 북마크한 카페 중에서 찾지 못함:', error);
       }

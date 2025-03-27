@@ -2,14 +2,9 @@ import { useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useUploadBookmarkMutation } from 'hooks/mutation/useUploadBookmarkMutation';
 import { useCancelBookmarkMutation } from 'hooks/mutation/useCancelBookmarkMutation';
-import { useCheckStore } from 'utils/store';
+import { useCheckStore, useUserStore } from 'utils/store';
 import { NormalCafeDetailForBookmark } from 'types/common';
-import {
-  getDetailBodyStyle,
-  DetailCollectButtonStyle,
-  getDetailHeaderStyle,
-  SubsidebarCloseIconStyle,
-} from 'utils/styles';
+import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
 import { toast } from 'react-toastify';
@@ -31,6 +26,7 @@ export default function NormalCafeDetail({
   handleMenuOpen,
   setMemoOpen,
 }: NormalCafeDetailProps) {
+  const admin = useUserStore(state => state.admin);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const isCollected = useCheckStore(state => state.isCollected);
   const isBookmarked = useCheckStore(state => state.isBookmarked);
@@ -122,7 +118,7 @@ export default function NormalCafeDetail({
           onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
         >
-          <IoCloseCircle className={SubsidebarCloseIconStyle} />
+          <IoCloseCircle className="text-main text-3xl hover:text-opacity-70" />
         </button>
       </header>
 
@@ -193,18 +189,34 @@ export default function NormalCafeDetail({
 
         <section className="flex justify-between items-center">
           <span className="font-dpixel font-extrabold text-xl">상세 정보</span>
-          {isCollected ? (
-            <CollectedBadge />
-          ) : (
-            <button
-              data-cy="collect-button"
-              aria-label="수집하기 버튼"
-              className={DetailCollectButtonStyle}
-              onClick={() => setMemoOpen(true)}
-            >
-              수집하기
-            </button>
-          )}
+          {/* admin이면 추천하기 버튼이 나오게 만들기
+          - isRecommended이면 안나와야 함 */}
+          <div className="flex gap-2">
+            {admin ? (
+              <button
+                data-cy="collect-button"
+                aria-label="수집하기 버튼"
+                className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
+                onClick={() => setMemoOpen(true)}
+              >
+                추천하기
+              </button>
+            ) : (
+              ''
+            )}
+            {isCollected ? (
+              <CollectedBadge />
+            ) : (
+              <button
+                data-cy="collect-button"
+                aria-label="수집하기 버튼"
+                className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
+                onClick={() => setMemoOpen(true)}
+              >
+                수집하기
+              </button>
+            )}
+          </div>
         </section>
 
         <section className="grid grid-cols-2 gap-6">

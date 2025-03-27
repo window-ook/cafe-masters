@@ -82,6 +82,7 @@ export const useCheckStore = create<CheckStore>()(
       isDarkTheme: false,
       isCollected: false,
       isBookmarked: false,
+      isRecommended: false,
       isLoading: false,
 
       setIsSubSidebarOpen: prev => set({ isSubSidebarOpen: prev }),
@@ -92,6 +93,7 @@ export const useCheckStore = create<CheckStore>()(
       setIsDarkTheme: () => set(prev => ({ isDarkTheme: !prev.isDarkTheme })),
       setIsCollected: prev => set({ isCollected: prev }),
       setIsBookmarked: prev => set({ isBookmarked: prev }),
+      setIsRecommended: prev => set({ isRecommended: prev }),
       setIsLoading: prev => set({ isLoading: prev }),
     }),
     {

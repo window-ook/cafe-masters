@@ -1,10 +1,5 @@
 import { useCheckStore } from 'utils/store';
-import {
-  getDetailBodyStyle,
-  DetailCollectButtonStyle,
-  getDetailHeaderStyle,
-  SubsidebarCloseIconStyle,
-} from 'utils/styles';
+import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoMdClock } from 'react-icons/io';
 import { IoBookmark, IoLocation, IoCloseCircle } from 'react-icons/io5';
 import { FaPhoneSquare, FaChevronDown } from 'react-icons/fa';
@@ -25,7 +20,7 @@ export default function Loading() {
           <p className="text-2xl font-semibold">로딩 중입니다...</p>
         </div>
         <div className="px-2 right-2">
-          <IoCloseCircle className={SubsidebarCloseIconStyle} />
+          <IoCloseCircle className="text-main text-3xl hover:text-opacity-70" />
         </div>
       </div>
 
@@ -47,7 +42,7 @@ export default function Loading() {
           </div>
           <div
             aria-label="수집하기 버튼: 로딩"
-            className={DetailCollectButtonStyle}
+            className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
           >
             수집하기
           </div>
