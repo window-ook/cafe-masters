@@ -4,12 +4,14 @@ import { useUserStore } from 'utils/store';
 import Head from 'next/head';
 import useCountCollectedQuery from 'hooks/cache/useCountCollectedQuery';
 import useCountBookmarkedQuery from 'hooks/cache/useCountBookmarkedQuery';
+import useCountRecommendedQuery from 'hooks/cache/useCountRecommendedQuery';
 
 export default function Cafe() {
   const userId = useUserStore(state => state.userId);
 
   useCountCollectedQuery(userId);
   useCountBookmarkedQuery(userId);
+  useCountRecommendedQuery();
 
   return (
     <Head>

@@ -40,7 +40,6 @@ export async function getAllCollectedCafes(
     openingHours: item.openingHours ?? undefined,
     phoneNum: item.phoneNum ?? undefined,
     photoUrl: item.photoUrl ?? undefined,
-    concept: item.concept ?? undefined,
     cons: item.cons ?? undefined,
     pros: item.pros ?? undefined,
   }));
@@ -50,27 +49,6 @@ export async function getAllCollectedCafes(
 
   return { data: safeData, nextCursor };
 }
-
-/** 하나의 수집한 카페 */
-// export async function getCollectedCafe(
-//   id: number,
-//   userId: string,
-// ): Promise<{ id: number; userId: string }[]> {
-//   if (!id || id === 0) throw new Error('유효하지 않은 카페 ID');
-//   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
-
-//   const supabase = await createServerSupabaseClient();
-
-//   const { data, error } = await supabase
-//     .from('collected')
-//     .select('id, userId')
-//     .eq('id', id)
-//     .eq('userId', userId);
-
-//   if (error) handleError(error);
-
-//   return data ?? [];
-// }
 
 /** 수집한 카페의 수 */
 export async function countCollectedCafes(userId: string): Promise<number> {

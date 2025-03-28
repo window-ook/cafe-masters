@@ -28,7 +28,6 @@ describe('수집', () => {
     cy.get('[data-cy=memo-pros]').type('테스트 좋은 점입니다.');
     cy.get('[data-cy=memo-cons]').type('테스트 별로인 점입니다.');
     cy.get('[data-cy=memo-eaten]').type('테스트 먹은 메뉴입니다.');
-    cy.get('[data-cy=memo-concept]').type('테스트 카페 컨셉입니다.');
     cy.get('[data-cy=memo-button]').click();
     // assertion - COLLECTED 뱃지 확인
     cy.get('[data-cy=collected-badge]').should('be.visible');

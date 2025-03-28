@@ -1,22 +1,17 @@
 import { useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore } from 'utils/store';
-import {
-  getDetailBodyStyle,
-  DetailCollectButtonStyle,
-  getDetailHeaderStyle,
-  SubsidebarCloseIconStyle,
-} from 'utils/styles';
+import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import OpenTimeGrid from '../shared/open-time-grid';
 import LocationGrid from '../shared/location-grid';
 import PhoneGrid from '../shared/phone-grid';
 import Image from 'next/image';
-import ConceptGrid from './concept-grid';
 import EatenGrid from './eaten-grid';
 import ProsGrid from './pros-grid';
 import ConsGrid from './cons-grid';
 import CommentGrid from './comment-grid';
 import RatingGrid from './rating-grid';
+import CategoryGrid from './category-grid';
 
 interface CafeDetailProps {
   setMemoOpen: (open: boolean) => void;
@@ -31,6 +26,10 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
   const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
 
   const router = useRouter();
+
+  const parsedCategory: string[] = collectedCafeDetail?.category
+    ? JSON.parse(collectedCafeDetail.category)
+    : [];
 
   const handleSetIsSubSidebarOpen = () => {
     setIsSubSidebarOpen(false);
@@ -51,7 +50,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
           onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
         >
-          <IoCloseCircle className={SubsidebarCloseIconStyle} />
+          <IoCloseCircle className="text-main text-3xl hover:text-opacity-70" />
         </button>
       </div>
 
@@ -78,7 +77,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
           <button
             data-cy="update-button"
             type="button"
-            className={DetailCollectButtonStyle}
+            className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
             onClick={() => setMemoOpen(true)}
           >
             수정하기
@@ -86,6 +85,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
         </div>
 
         <div className="grid grid-cols-2 gap-6">
+          <CategoryGrid category={parsedCategory ?? []} />
           <OpenTimeGrid openingHours={collectedCafeDetail?.openingHours} />
           <LocationGrid address={collectedCafeDetail?.address} />
           <PhoneGrid phoneNum={collectedCafeDetail?.phoneNum} />
@@ -94,14 +94,13 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
             <div className="bg-gray-400 bg-opacity-40 h-0.5 col-span-3"></div>
           </div>
           <div className="col-span-2 grid grid-cols-3">
-            <div className="col-span-2 font-dpixel text-2xl">CAFE SPEC</div>
+            <div className="col-span-2 font-dpixel text-2xl">CARD SPEC</div>
           </div>
 
           <CommentGrid comment={collectedCafeDetail?.comment} />
           <ProsGrid pros={collectedCafeDetail?.pros ?? ''} />
           <ConsGrid cons={collectedCafeDetail?.cons ?? ''} />
           <EatenGrid eaten={collectedCafeDetail?.eaten ?? ''} />
-          <ConceptGrid concept={collectedCafeDetail?.concept ?? ''} />
         </div>
       </div>
     </div>

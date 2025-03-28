@@ -70,7 +70,8 @@ const ScrollSections = () => {
       id: 3,
       title: '카테고리별\n카페를 추천해드려요',
       subtitle: '03',
-      description: '내가 찾는 무드와 상황으로 필터링하여 확인할 수 있어요',
+      description:
+        '개발자가 추천해드리는 카페입니다:)\n내가 찾는 무드와 상황으로 필터링하여 확인할 수 있어요',
       imageUrl: '/image/scroll_section_2.avif',
     },
   ];
@@ -143,11 +144,6 @@ const ScrollSections = () => {
                       </span>
                     ))}
                   </h2>
-                  {index === 2 && (
-                    <span className="text-white">
-                      (다음 업데이트에 추가 예정)
-                    </span>
-                  )}
                   <p className="mt-6 text-neutral-400 text-lg leading-relaxed">
                     {section.description.split('\n').map((text, index) => (
                       <span key={index}>

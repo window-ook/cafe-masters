@@ -43,6 +43,7 @@ const config: Config = {
         'silver-side': '#8c8c8c',
         'gold-via': '#f5e902',
         'gold-side': '#8c6a01',
+        recommended: '#18f282',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

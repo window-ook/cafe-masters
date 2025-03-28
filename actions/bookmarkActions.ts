@@ -48,27 +48,6 @@ export async function getAllBookmarkedCafes(
   return { data: safeData, nextCursor };
 }
 
-/** 하나의 북마크 카페 */
-// export async function getBookmarkedCafe(
-//   id: number,
-//   userId: string,
-// ): Promise<{ id: number; userId: string }[]> {
-//   if (!id || id === 0) throw new Error('유효하지 않은 카페 ID');
-//   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
-
-//   const supabase = await createServerSupabaseClient();
-
-//   const { data, error } = await supabase
-//     .from('bookmarked')
-//     .select('id, userId')
-//     .eq('id', id)
-//     .eq('userId', userId);
-
-//   if (error) handleError(error);
-
-//   return data ?? [];
-// }
-
 /** 북마크 카페의 수 */
 export async function countBookmarkedCafes(userId: string): Promise<number> {
   if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');

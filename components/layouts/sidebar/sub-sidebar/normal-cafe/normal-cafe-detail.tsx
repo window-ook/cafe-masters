@@ -2,14 +2,12 @@ import { useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useUploadBookmarkMutation } from 'hooks/mutation/useUploadBookmarkMutation';
 import { useCancelBookmarkMutation } from 'hooks/mutation/useCancelBookmarkMutation';
-import { useCheckStore } from 'utils/store';
-import { NormalCafeDetailForBookmark } from 'types/common';
+import { useCheckStore, useUserStore } from 'utils/store';
 import {
-  getDetailBodyStyle,
-  DetailCollectButtonStyle,
-  getDetailHeaderStyle,
-  SubsidebarCloseIconStyle,
-} from 'utils/styles';
+  NormalCafeDetailForBookmark,
+  NormalCafeDetailForRecommend,
+} from 'types/common';
+import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
 import { toast } from 'react-toastify';
@@ -21,19 +19,23 @@ import PhoneGrid from '../shared/phone-grid';
 import MenuGrid from './menu-grid';
 
 interface NormalCafeDetailProps {
-  detail: NormalCafeDetailForBookmark;
+  detail: NormalCafeDetailForBookmark | NormalCafeDetailForRecommend;
   handleMenuOpen: () => void;
   setMemoOpen: (open: boolean) => void;
+  setMemoRecommendationOpen: (open: boolean) => void;
 }
 
 export default function NormalCafeDetail({
   detail,
   handleMenuOpen,
   setMemoOpen,
+  setMemoRecommendationOpen,
 }: NormalCafeDetailProps) {
+  const admin = useUserStore(state => state.admin);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const isCollected = useCheckStore(state => state.isCollected);
   const isBookmarked = useCheckStore(state => state.isBookmarked);
+  const isRecommended = useCheckStore(state => state.isRecommended);
   const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
   const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
 
@@ -122,7 +124,7 @@ export default function NormalCafeDetail({
           onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
         >
-          <IoCloseCircle className={SubsidebarCloseIconStyle} />
+          <IoCloseCircle className="text-main text-3xl hover:text-opacity-70" />
         </button>
       </header>
 
@@ -193,18 +195,34 @@ export default function NormalCafeDetail({
 
         <section className="flex justify-between items-center">
           <span className="font-dpixel font-extrabold text-xl">상세 정보</span>
-          {isCollected ? (
-            <CollectedBadge />
-          ) : (
-            <button
-              data-cy="collect-button"
-              aria-label="수집하기 버튼"
-              className={DetailCollectButtonStyle}
-              onClick={() => setMemoOpen(true)}
-            >
-              수집하기
-            </button>
-          )}
+          <div className="flex gap-2">
+            {admin &&
+            !isRecommended &&
+            !pathname.startsWith('/cafe/recommended') ? (
+              <button
+                data-cy="collect-button"
+                aria-label="추천하기 버튼"
+                className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
+                onClick={() => setMemoRecommendationOpen(true)}
+              >
+                추천하기
+              </button>
+            ) : (
+              ''
+            )}
+            {isCollected ? (
+              <CollectedBadge />
+            ) : (
+              <button
+                data-cy="collect-button"
+                aria-label="수집하기 버튼"
+                className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
+                onClick={() => setMemoOpen(true)}
+              >
+                수집하기
+              </button>
+            )}
+          </div>
         </section>
 
         <section className="grid grid-cols-2 gap-6">

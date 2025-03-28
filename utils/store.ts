@@ -5,6 +5,7 @@ import {
   SearchResult,
   BookmarkedCafeFromSupabase,
   CollectedCafeFromSupabase,
+  RecommendedCafeFromSupabase,
   Tier,
 } from 'types/common';
 
@@ -15,8 +16,10 @@ export const useMapStore = create<MapStore>()(
       searchResult: [],
       collectedCafe: [],
       bookmarkedCafe: [],
+      recommendedCafe: [],
       collectedCafeCount: 0,
       bookmarkedCafeCount: 0,
+      recommendedCafeCount: 0,
       thisX: 127.04663357436208,
       thisY: 37.54715716085294,
       thisId: 12345678,
@@ -24,6 +27,7 @@ export const useMapStore = create<MapStore>()(
       cafeDetail: {},
       collectedCafeDetail: [],
       bookmarkedCafeDetail: [],
+      recommendedCafeDetail: [],
       collectedSearchTerm: '',
       bookmarkedSearchTerm: '',
 
@@ -33,8 +37,11 @@ export const useMapStore = create<MapStore>()(
         set({ collectedCafe: data ?? [] }),
       setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) =>
         set({ bookmarkedCafe: data }),
+      setRecommendedCafe: (data: RecommendedCafeFromSupabase[]) =>
+        set({ recommendedCafe: data }),
       setCollectedCafeCount: data => set({ collectedCafeCount: data }),
       setBookmarkedCafeCount: data => set({ bookmarkedCafeCount: data }),
+      setRecommendedCafeCount: data => set({ recommendedCafeCount: data }),
       setThisX: x => set({ thisX: x }),
       setThisY: y => set({ thisY: y }),
       setThisId: id => set({ thisId: id }),
@@ -44,6 +51,8 @@ export const useMapStore = create<MapStore>()(
         set({ collectedCafeDetail: data }),
       setBookmarkedCafeDetail: (data: BookmarkedCafeFromSupabase[]) =>
         set({ bookmarkedCafeDetail: data }),
+      setRecommendedCafeDetail: (data: RecommendedCafeFromSupabase[]) =>
+        set({ recommendedCafeDetail: data }),
       setCollectedSearchTerm: term => set({ collectedSearchTerm: term }),
       setBookmarkedSearchTerm: term => set({ bookmarkedSearchTerm: term }),
     }),
@@ -82,6 +91,7 @@ export const useCheckStore = create<CheckStore>()(
       isDarkTheme: false,
       isCollected: false,
       isBookmarked: false,
+      isRecommended: false,
       isLoading: false,
 
       setIsSubSidebarOpen: prev => set({ isSubSidebarOpen: prev }),
@@ -92,6 +102,7 @@ export const useCheckStore = create<CheckStore>()(
       setIsDarkTheme: () => set(prev => ({ isDarkTheme: !prev.isDarkTheme })),
       setIsCollected: prev => set({ isCollected: prev }),
       setIsBookmarked: prev => set({ isBookmarked: prev }),
+      setIsRecommended: prev => set({ isRecommended: prev }),
       setIsLoading: prev => set({ isLoading: prev }),
     }),
     {

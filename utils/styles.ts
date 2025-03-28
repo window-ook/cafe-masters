@@ -13,9 +13,6 @@ export const getSubSidebarStyle = (
   return `${baseStyle} ${openStyle}`;
 };
 
-export const SubsidebarCloseIconStyle =
-  'text-main text-3xl hover:text-opacity-70';
-
 export const KakaoMapStyle =
   'z-0 fixed top-0 sm:translate-x-[27rem] sm:w-[calc(100vw-27rem)] w-screen h-screen';
 
@@ -38,9 +35,6 @@ export const getDetailHeaderStyle = (isDarkTheme: boolean) => {
 export const getDetailBodyStyle = (isDarkTheme: boolean) => {
   return `${isDarkTheme ? 'shadow-main-shadow' : ''} p-2 flex flex-col gap-4 shadow-md rounded-md`;
 };
-
-export const DetailCollectButtonStyle =
-  'bg-red-400 hover:bg-opacity-70 rounded-2xl px-3 py-2 hover:scale-105 transition duration-200 ease text-white font-bold font-pretendard';
 
 export const getCollectedCardStyle = (
   bgRatings: string,

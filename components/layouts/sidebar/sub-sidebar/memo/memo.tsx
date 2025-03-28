@@ -4,27 +4,47 @@ import {
   getMemoInputStyle,
   getMemoSubmitStyle,
 } from 'utils/styles';
-import { MemoProps } from 'types/common';
 import Rating from './rating';
+import CategorySelector, { CategorySelectorProps } from './category-selector';
+
+interface MemoProps extends CategorySelectorProps {
+  detailName: string;
+  collectedCafeDetailName: string;
+  bookmarkedCafeDetailName: string;
+  recommendedCafeDetailName: string;
+  comment: string;
+  pros: string;
+  cons: string;
+  eaten: string;
+  setComment: (comment: string) => void;
+  setPros: (pros: string) => void;
+  setCons: (cons: string) => void;
+  setEaten: (eaten: string) => void;
+  isDarkTheme: boolean;
+  setMemoOpen: (open: boolean) => void;
+  setRating: (rating: number) => void;
+  rating: number;
+}
 
 export default function Memo({
   detailName,
   collectedCafeDetailName,
   bookmarkedCafeDetailName,
+  recommendedCafeDetailName,
   comment,
   pros,
   cons,
   eaten,
-  concept,
   setComment,
   setPros,
   setCons,
   setEaten,
-  setConcept,
   isDarkTheme,
   setMemoOpen,
   setRating,
   rating,
+  selectedCategories,
+  setSelectedCategoriesAction,
 }: MemoProps) {
   const pathname = usePathname();
 
@@ -35,6 +55,8 @@ export default function Memo({
           {pathname.startsWith('/cafe/search') && detailName}
           {pathname.startsWith('/cafe/collected') && collectedCafeDetailName}
           {pathname.startsWith('/cafe/bookmarked') && bookmarkedCafeDetailName}
+          {pathname.startsWith('/cafe/recommended') &&
+            recommendedCafeDetailName}
         </p>
         <button
           type="button"
@@ -45,43 +67,6 @@ export default function Memo({
           <span>Back</span>
         </button>
       </div>
-      <input
-        data-cy="memo-comment"
-        required
-        value={comment}
-        placeholder="코멘트(필수)"
-        onChange={e => setComment(e.target.value)}
-        className={getMemoInputStyle(isDarkTheme)}
-      />
-      <input
-        data-cy="memo-pros"
-        value={pros}
-        placeholder="좋은 점"
-        onChange={e => setPros(e.target.value)}
-        className={getMemoInputStyle(isDarkTheme)}
-      />
-      <input
-        data-cy="memo-cons"
-        placeholder="별로인 점"
-        value={cons}
-        onChange={e => setCons(e.target.value)}
-        className={getMemoInputStyle(isDarkTheme)}
-      />
-      <input
-        data-cy="memo-eaten"
-        required
-        value={eaten}
-        placeholder="먹은 메뉴(필수)"
-        onChange={e => setEaten(e.target.value)}
-        className={getMemoInputStyle(isDarkTheme)}
-      />
-      <input
-        data-cy="memo-concept"
-        placeholder="카페 컨셉"
-        value={concept}
-        onChange={e => setConcept(e.target.value)}
-        className={getMemoInputStyle(isDarkTheme)}
-      />
       <div className="flex items-center gap-2">
         <span>별점 매기기</span>
         <Rating
@@ -94,6 +79,40 @@ export default function Memo({
           }}
         />
       </div>
+      <CategorySelector
+        selectedCategories={selectedCategories}
+        setSelectedCategoriesAction={setSelectedCategoriesAction}
+      />
+      <input
+        data-cy="memo-comment"
+        required
+        value={comment}
+        placeholder="*코멘트"
+        onChange={e => setComment(e.target.value)}
+        className={getMemoInputStyle(isDarkTheme)}
+      />
+      <input
+        data-cy="memo-eaten"
+        required
+        value={eaten}
+        placeholder="*먹은 메뉴"
+        onChange={e => setEaten(e.target.value)}
+        className={getMemoInputStyle(isDarkTheme)}
+      />
+      <input
+        data-cy="memo-pros"
+        value={pros}
+        placeholder="좋은 점"
+        onChange={e => setPros(e.target.value)}
+        className={getMemoInputStyle(isDarkTheme)}
+      />
+      <input
+        data-cy="memo-cons"
+        placeholder="아쉬운 점"
+        value={cons}
+        onChange={e => setCons(e.target.value)}
+        className={getMemoInputStyle(isDarkTheme)}
+      />
       <button
         data-cy="memo-button"
         aria-label="카드 수집 완료 버튼"

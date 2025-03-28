@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
 import Home from 'app/page';
-import Sidebar from 'components/layouts/sidebar';
+import Sidebar from 'components/layouts/sidebar/sidebar';
 
 const KakaoMap = dynamic(() => import('components/layouts/kakaomap'), {
   ssr: false,
