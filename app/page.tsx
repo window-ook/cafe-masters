@@ -144,9 +144,6 @@ const ScrollSections = () => {
                       </span>
                     ))}
                   </h2>
-                  {index === 2 && (
-                    <span className="text-white">(*업데이트 예정)</span>
-                  )}
                   <p className="mt-6 text-neutral-400 text-lg leading-relaxed">
                     {section.description.split('\n').map((text, index) => (
                       <span key={index}>
