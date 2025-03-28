@@ -43,11 +43,13 @@ export default function Search() {
           data-cy="search-button"
           type="button"
           aria-label="검색 버튼"
-          className="w-1/6 py-4 px-1 flex justify-center items-center gap-2 rounded bg-main border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className="w-1/6 py-4 px-1 flex justify-center items-center gap-2 rounded bg-main border border-transparent transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           onClick={handleSearch}
         >
           <FaMagnifyingGlass className="text-white" />
-          <span className="font-pretendard">검색</span>
+          <span className="font-pretendard text-center text-sm text-white">
+            검색
+          </span>
         </button>
       </div>
     </search>
