@@ -5,8 +5,10 @@ import { usePathname } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { useUploadCollectMutation } from 'hooks/mutation/useUploadCollectMutation';
 import { useUpdateCollectMutation } from 'hooks/mutation/useUpdateCollectMutation';
-import { getSubSidebarStyle } from 'utils/styles';
+import { useUploadRecommendMutation } from 'hooks/mutation/useUploadRecommendMutation';
 import { CollectedRowInsert, CollectedRowUpdate } from 'actions/collectActions';
+import { RecommendedRowInsert } from 'actions/recommendsActions';
+import { getSubSidebarStyle } from 'utils/styles';
 import { toast } from 'react-toastify';
 import dynamic from 'next/dynamic';
 import Loading from './shared/loading';
@@ -25,19 +27,27 @@ const CollectedCafeDetail = dynamic(
   },
 );
 
-const Memo = dynamic(() => import('./memo'), {
+const Memo = dynamic(() => import('./memo/memo'), {
+  ssr: false,
+});
+
+const MemoRecommendation = dynamic(() => import('./memo/memo-recommendation'), {
   ssr: false,
 });
 
 export default function SubSidebar() {
   const [memoOpen, setMemoOpen] = useState<boolean>(false);
+  const [memoRecommendationOpen, setMemoRecommendationOpen] =
+    useState<boolean>(false);
   const [id, setId] = useState<string | undefined>('');
+  const [rating, setRating] = useState<number>(5);
+  const [selectedCategories, setSelectedCategoriesAction] = useState<string[]>(
+    [],
+  );
   const [comment, setComment] = useState<string>('');
   const [pros, setPros] = useState<string>('');
   const [cons, setCons] = useState<string>('');
   const [eaten, setEaten] = useState<string>('');
-  const [concept, setConcept] = useState<string>('');
-  const [rating, setRating] = useState<number>(5);
 
   const searchResult = useMapStore(state => state.searchResult);
   const cafeDetail = useMapStore(state => state.cafeDetail);
@@ -46,6 +56,9 @@ export default function SubSidebar() {
   );
   const bookmarkedCafeDetail = useMapStore(
     state => state.bookmarkedCafeDetail[0],
+  );
+  const recommendedCafeDetail = useMapStore(
+    state => state.recommendedCafeDetail[0],
   );
   const thisX = useMapStore(state => state.thisX);
   const thisY = useMapStore(state => state.thisY);
@@ -60,16 +73,20 @@ export default function SubSidebar() {
   const isExtend = useCheckStore(state => state.isExtend);
   const setIsExtend = useCheckStore(state => state.setIsExtend);
   const setIsCollected = useCheckStore(state => state.setIsCollected);
+  const setIsRecommended = useCheckStore(state => state.setIsRecommended);
   const isLoading = useCheckStore(state => state.isLoading);
 
   const pathname = usePathname();
 
   const uploadCollectMutation = useUploadCollectMutation();
   const updateCollectMutation = useUpdateCollectMutation();
+  const uploadRecommendMutation = useUploadRecommendMutation();
 
   const filteredFromSearchResult = searchResult.filter(
     cafe => Number(cafe.id) === thisId,
   );
+
+  const stringifiedCategories = JSON.stringify(selectedCategories);
 
   const detail = {
     id: thisId ?? 0,
@@ -89,7 +106,7 @@ export default function SubSidebar() {
         : null,
   };
 
-  const memoFromDetail = {
+  const memoForCollectFromSearchDetail = {
     id: detail?.id,
     userId,
     name: detail?.name,
@@ -103,20 +120,19 @@ export default function SubSidebar() {
     pros,
     cons,
     eaten,
-    concept,
     rating,
   };
 
-  const memoFromCollectedDetail = {
+  const memoForCollectFromCollectedDetail = {
+    category: stringifiedCategories,
     comment,
     pros,
     cons,
     eaten,
-    concept,
     rating,
   };
 
-  const memoFromBookmarkedDetail = {
+  const memoForCollectFromBookmarkedDetail = {
     id: bookmarkedCafeDetail?.id,
     userId,
     name: bookmarkedCafeDetail?.name,
@@ -130,8 +146,33 @@ export default function SubSidebar() {
     pros,
     cons,
     eaten,
-    concept,
     rating,
+  };
+
+  const memoForRecommendFromSearchDetail = {
+    id: detail?.id,
+    name: detail?.name,
+    category: stringifiedCategories,
+    coordX: thisX,
+    coordY: thisY,
+    photoUrl: detail?.photoUrl,
+    address: detail?.address,
+    openingHours: detail?.openingHours,
+    phoneNum: detail?.phoneNum,
+    menu: detail?.menu,
+  };
+
+  const memoForRecommendFromBookmarkedDetail = {
+    id: bookmarkedCafeDetail?.id,
+    name: bookmarkedCafeDetail?.name,
+    category: stringifiedCategories,
+    coordX: bookmarkedCafeDetail?.coordX,
+    coordY: bookmarkedCafeDetail?.coordY,
+    photoUrl: bookmarkedCafeDetail?.photoUrl,
+    address: bookmarkedCafeDetail?.address,
+    openingHours: bookmarkedCafeDetail?.openingHours,
+    phoneNum: bookmarkedCafeDetail?.phoneNum,
+    menu: bookmarkedCafeDetail?.menu,
   };
 
   const isSearchResultPage = pathname.startsWith('/cafe/search');
@@ -144,7 +185,6 @@ export default function SubSidebar() {
       setPros(collectedCafeDetail.pros || '');
       setCons(collectedCafeDetail.cons || '');
       setEaten(collectedCafeDetail.eaten || '');
-      setConcept(collectedCafeDetail.concept || '');
       setRating(collectedCafeDetail.rating || 5);
     }
 
@@ -153,7 +193,6 @@ export default function SubSidebar() {
       setPros('');
       setCons('');
       setEaten('');
-      setConcept('');
       setRating(5);
     }
   }, [pathname, collectedCafeDetail, isCollectedPage]);
@@ -188,16 +227,15 @@ export default function SubSidebar() {
     else setIsMenuOpen(false);
   };
 
-  const handleUploadCollect = (newMemo: CollectedRowInsert) => {
+  const handleUploadCollect = (memo: CollectedRowInsert) => {
     setIsCollected(true);
     setMemoOpen(false);
-    uploadCollectMutation.mutate(newMemo);
+    uploadCollectMutation.mutate(memo);
     toast.success('카드를 수집했습니다!');
   };
 
   const handleUpdateCollect = (memo: CollectedRowUpdate) => {
     try {
-      console.log('업데이트 요청 보냄:', memo);
       updateCollectMutation.mutate(memo);
       toast.success('카드의 스펙을 수정했습니다!');
 
@@ -206,10 +244,18 @@ export default function SubSidebar() {
       setPros('');
       setCons('');
       setEaten('');
-      setConcept('');
+      setSelectedCategoriesAction([]);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  // 추천 카페 업로드 핸들러 setCategorySelectorOpen(false)
+  const handleUploadRecommend = (memo: RecommendedRowInsert) => {
+    setIsRecommended(true);
+    setMemoRecommendationOpen(false);
+    uploadRecommendMutation.mutate(memo);
+    toast.success('추천 카페에 추가했습니다');
   };
 
   if (pathname.startsWith('/cafe/search/detail') && !cafeDetail) return null;
@@ -234,28 +280,45 @@ export default function SubSidebar() {
       ) : (
         <>
           {!memoOpen &&
+            !memoRecommendationOpen &&
             isSubSidebarOpen &&
             pathname.startsWith('/cafe/search/detail') && (
               <NormalCafeDetail
                 detail={detail}
                 handleMenuOpen={handleMenuOpen}
                 setMemoOpen={setMemoOpen}
+                setMemoRecommendationOpen={setMemoRecommendationOpen}
               />
             )}
 
           {!memoOpen &&
+            !memoRecommendationOpen &&
             isSubSidebarOpen &&
             pathname.startsWith('/cafe/collected/detail') && (
               <CollectedCafeDetail setMemoOpen={setMemoOpen} />
             )}
 
           {!memoOpen &&
+            !memoRecommendationOpen &&
             isSubSidebarOpen &&
             pathname.startsWith('/cafe/bookmarked/detail') && (
               <NormalCafeDetail
                 detail={bookmarkedCafeDetail}
                 handleMenuOpen={handleMenuOpen}
                 setMemoOpen={setMemoOpen}
+                setMemoRecommendationOpen={setMemoRecommendationOpen}
+              />
+            )}
+
+          {!memoOpen &&
+            !memoRecommendationOpen &&
+            isSubSidebarOpen &&
+            pathname.startsWith('/cafe/recommended/detail') && (
+              <NormalCafeDetail
+                detail={recommendedCafeDetail}
+                handleMenuOpen={handleMenuOpen}
+                setMemoOpen={setMemoOpen}
+                setMemoRecommendationOpen={setMemoRecommendationOpen}
               />
             )}
 
@@ -264,31 +327,54 @@ export default function SubSidebar() {
               id="memo"
               onSubmit={e => {
                 e.preventDefault();
-                if (isSearchResultPage) handleUploadCollect(memoFromDetail);
+                if (isSearchResultPage)
+                  handleUploadCollect(memoForCollectFromSearchDetail);
                 if (isCollectedPage)
-                  handleUpdateCollect(memoFromCollectedDetail);
+                  handleUpdateCollect(memoForCollectFromCollectedDetail);
                 if (isBookmarkedPage)
-                  handleUploadCollect(memoFromBookmarkedDetail);
+                  handleUploadCollect(memoForCollectFromBookmarkedDetail);
               }}
             >
               <Memo
                 detailName={detail?.name}
                 collectedCafeDetailName={collectedCafeDetail?.name}
                 bookmarkedCafeDetailName={bookmarkedCafeDetail?.name}
+                recommendedCafeDetailName={recommendedCafeDetail?.name}
                 comment={comment}
                 pros={pros}
                 cons={cons}
                 eaten={eaten}
-                concept={concept}
                 setComment={setComment}
                 setPros={setPros}
                 setCons={setCons}
                 setEaten={setEaten}
-                setConcept={setConcept}
                 setRating={setRating}
                 rating={rating}
                 isDarkTheme={isDarkTheme}
                 setMemoOpen={setMemoOpen}
+                selectedCategories={selectedCategories}
+                setSelectedCategoriesAction={setSelectedCategoriesAction}
+              />
+            </form>
+          )}
+
+          {memoRecommendationOpen && (
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+                if (isSearchResultPage)
+                  handleUploadRecommend(memoForRecommendFromSearchDetail);
+                if (isBookmarkedPage)
+                  handleUploadRecommend(memoForRecommendFromBookmarkedDetail);
+              }}
+            >
+              <MemoRecommendation
+                detailName={detail?.name}
+                bookmarkedCafeDetailName={bookmarkedCafeDetail?.name}
+                isDarkTheme={isDarkTheme}
+                setMemoRecommendationOpen={setMemoRecommendationOpen}
+                selectedCategories={selectedCategories}
+                setSelectedCategoriesAction={setSelectedCategoriesAction}
               />
             </form>
           )}

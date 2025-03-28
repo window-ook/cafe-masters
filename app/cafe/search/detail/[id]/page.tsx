@@ -10,11 +10,13 @@ export default function SearchDetail({ params }: PageProps) {
 
   const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
   const collectedCafe = useMapStore(state => state.collectedCafe);
+  const recommendedCafe = useMapStore(state => state.recommendedCafe);
   const setThisId = useMapStore(state => state.setThisId);
   const setCafeDetail = useMapStore(state => state.setCafeDetail);
   const userId = useUserStore(state => state.userId);
   const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
   const setIsCollected = useCheckStore(state => state.setIsCollected);
+  const setIsRecommended = useCheckStore(state => state.setIsRecommended);
   const setIsLoading = useCheckStore(state => state.setIsLoading);
 
   const numericId = useMemo(() => parseFloat(id), [id]);
@@ -31,6 +33,7 @@ export default function SearchDetail({ params }: PageProps) {
     setIsLoading(true);
     setIsBookmarked(false);
     setIsCollected(false);
+    setIsRecommended(false);
 
     const fetchFromStore = async () => {
       try {
@@ -42,9 +45,12 @@ export default function SearchDetail({ params }: PageProps) {
         const isCollectedLocally = collectedCafe.some(
           cafe => cafe.id === numericId,
         );
+        const isRecommendedLocally = recommendedCafe.some(
+          cafe => cafe.id === numericId,
+        );
         setIsBookmarked(isBookmarkedLocally);
         setIsCollected(isCollectedLocally);
-        // setIsRecommended() 추가하기
+        setIsRecommended(isRecommendedLocally);
       } catch (error) {
         console.error('수집한 카페와 북마크한 카페 중에서 찾지 못함:', error);
       }
@@ -71,11 +77,13 @@ export default function SearchDetail({ params }: PageProps) {
     numericId,
     bookmarkedCafe,
     collectedCafe,
+    recommendedCafe,
     BASE_URL,
     REQ_URL,
     setThisId,
     setIsBookmarked,
     setIsCollected,
+    setIsRecommended,
     setIsLoading,
     setCafeDetail,
   ]);

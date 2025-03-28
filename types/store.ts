@@ -4,6 +4,7 @@ import {
   CollectedCafeFromSupabase,
   FetchedCafeDetail,
   Tier,
+  RecommendedCafeFromSupabase,
 } from './common';
 
 export interface MapStore {
@@ -11,8 +12,10 @@ export interface MapStore {
   searchResult: SearchResult[];
   collectedCafe: CollectedCafeFromSupabase[];
   bookmarkedCafe: BookmarkedCafeFromSupabase[];
+  recommendedCafe: RecommendedCafeFromSupabase[];
   collectedCafeCount: number;
   bookmarkedCafeCount: number;
+  recommendedCafeCount: number;
   thisX: number;
   thisY: number;
   thisId: number;
@@ -20,6 +23,7 @@ export interface MapStore {
   cafeDetail: FetchedCafeDetail;
   collectedCafeDetail: CollectedCafeFromSupabase[];
   bookmarkedCafeDetail: BookmarkedCafeFromSupabase[];
+  recommendedCafeDetail: RecommendedCafeFromSupabase[];
   collectedSearchTerm: string;
   bookmarkedSearchTerm: string;
   setKeyword: (data: string) => void;
@@ -28,6 +32,8 @@ export interface MapStore {
   setCollectedCafeCount: (data: number) => void;
   setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) => void;
   setBookmarkedCafeCount: (data: number) => void;
+  setRecommendedCafe: (data: RecommendedCafeFromSupabase[]) => void;
+  setRecommendedCafeCount: (data: number) => void;
   setThisX: (x: number) => void;
   setThisY: (y: number) => void;
   setThisId: (Id: number) => void;
@@ -35,6 +41,7 @@ export interface MapStore {
   setThisThumbnail: (url: string) => void;
   setCollectedCafeDetail: (data: CollectedCafeFromSupabase[]) => void;
   setBookmarkedCafeDetail: (data: BookmarkedCafeFromSupabase[]) => void;
+  setRecommendedCafeDetail: (data: RecommendedCafeFromSupabase[]) => void;
   setCollectedSearchTerm: (term: string) => void;
   setBookmarkedSearchTerm: (term: string) => void;
 }

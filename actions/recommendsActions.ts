@@ -3,6 +3,7 @@
 import { Database } from 'types_db';
 import { createServerSupabaseClient } from 'utils/supabase/server';
 import { PostgrestError } from '@supabase/supabase-js';
+import { RecommendedCafeFromSupabase } from 'types/common';
 
 export type RecommendedRow = Database['public']['Tables']['recommended']['Row'];
 export type RecommendedRowInsert =
@@ -14,7 +15,9 @@ function handleError(error: PostgrestError): void {
 }
 
 /** 모든 추천 카페 */
-export async function getAllRecommendedCafes() {
+export async function getAllRecommendedCafes(): Promise<
+  RecommendedCafeFromSupabase[]
+> {
   const supabase = await createServerSupabaseClient();
 
   const { data, error } = await supabase
@@ -49,7 +52,7 @@ export async function countRecommendedCafes(): Promise<number> {
 }
 
 /** 새로운 추천 카페 추가 */
-export async function createRecommenedCafe(
+export async function createRecommendedCafe(
   recommended: RecommendedRowInsert,
 ): Promise<void> {
   if (!recommended) throw new Error('유효하지 않은 카페 데이터 전송');

@@ -3,7 +3,10 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useUploadBookmarkMutation } from 'hooks/mutation/useUploadBookmarkMutation';
 import { useCancelBookmarkMutation } from 'hooks/mutation/useCancelBookmarkMutation';
 import { useCheckStore, useUserStore } from 'utils/store';
-import { NormalCafeDetailForBookmark } from 'types/common';
+import {
+  NormalCafeDetailForBookmark,
+  NormalCafeDetailForRecommend,
+} from 'types/common';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
@@ -16,20 +19,23 @@ import PhoneGrid from '../shared/phone-grid';
 import MenuGrid from './menu-grid';
 
 interface NormalCafeDetailProps {
-  detail: NormalCafeDetailForBookmark;
+  detail: NormalCafeDetailForBookmark | NormalCafeDetailForRecommend;
   handleMenuOpen: () => void;
   setMemoOpen: (open: boolean) => void;
+  setMemoRecommendationOpen: (open: boolean) => void;
 }
 
 export default function NormalCafeDetail({
   detail,
   handleMenuOpen,
   setMemoOpen,
+  setMemoRecommendationOpen,
 }: NormalCafeDetailProps) {
   const admin = useUserStore(state => state.admin);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const isCollected = useCheckStore(state => state.isCollected);
   const isBookmarked = useCheckStore(state => state.isBookmarked);
+  const isRecommended = useCheckStore(state => state.isRecommended);
   const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
   const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
 
@@ -189,15 +195,15 @@ export default function NormalCafeDetail({
 
         <section className="flex justify-between items-center">
           <span className="font-dpixel font-extrabold text-xl">상세 정보</span>
-          {/* admin이면 추천하기 버튼이 나오게 만들기
-          - isRecommended이면 안나와야 함 */}
           <div className="flex gap-2">
-            {admin ? (
+            {admin &&
+            !isRecommended &&
+            !pathname.startsWith('/cafe/recommended') ? (
               <button
                 data-cy="collect-button"
-                aria-label="수집하기 버튼"
+                aria-label="추천하기 버튼"
                 className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
-                onClick={() => setMemoOpen(true)}
+                onClick={() => setMemoRecommendationOpen(true)}
               >
                 추천하기
               </button>

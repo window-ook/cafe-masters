@@ -40,7 +40,6 @@ export async function getAllCollectedCafes(
     openingHours: item.openingHours ?? undefined,
     phoneNum: item.phoneNum ?? undefined,
     photoUrl: item.photoUrl ?? undefined,
-    concept: item.concept ?? undefined,
     cons: item.cons ?? undefined,
     pros: item.pros ?? undefined,
   }));

@@ -7,10 +7,12 @@ import {
   SearchResult,
   BookmarkedCafeFromSupabase,
   CollectedCafeFromSupabase,
+  RecommendedCafeFromSupabase,
 } from 'types/common';
 import { useInView } from 'react-intersection-observer';
 import useBookmarkedInfiniteQuery from 'hooks/cache/useBookmarkedInfiniteQuery';
 import useCollectedInfiniteQuery from 'hooks/cache/useCollectedInfiniteQuery';
+import useRecommendedQuery from 'hooks/cache/useRecommendedQuery';
 import CircularProgress from './shared/circular-progress';
 import dynamic from 'next/dynamic';
 import Header from './header';
@@ -27,7 +29,9 @@ const CollectedCafe = dynamic(() => import('./main/collected-cafe'), {
 const PageConverter = dynamic(() => import('./footer/page-converter'), {
   ssr: false,
 });
-const SubSidebar = dynamic(() => import('./sub-sidebar'), { ssr: false });
+const SubSidebar = dynamic(() => import('./sub-sidebar/sub-sidebar'), {
+  ssr: false,
+});
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -60,6 +64,7 @@ export default function Sidebar() {
   const isSearchResultPage = pathname.startsWith('/cafe/search');
   const isCollectedPage = pathname.startsWith('/cafe/collected');
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
+  const isRecommendedPage = pathname.startsWith('/cafe/recommended');
 
   const itemsPerPage = 15;
   const totalPages = Math.ceil(searchResult.length / itemsPerPage);
@@ -84,6 +89,8 @@ export default function Sidebar() {
     hasNextPage: hasNextBookmarkedPage,
     isFetchingNextPage: isFetchingNextBookmarkedPage,
   } = useBookmarkedInfiniteQuery(userId, isBookmarkedPage);
+
+  const fetchedRecommendedCafe = useRecommendedQuery();
 
   useEffect(() => {
     if (
@@ -160,6 +167,14 @@ export default function Sidebar() {
     setIsSubSidebarOpen(true);
     setIsMenuOpen(false);
     router.push(`/cafe/bookmarked/detail/${cafe.id}`);
+    setThisX(cafe?.coordX);
+    setThisY(cafe?.coordY);
+  };
+
+  const handleRecommendedCafeClick = (cafe: RecommendedCafeFromSupabase) => {
+    setIsSubSidebarOpen(true);
+    setIsMenuOpen(false);
+    router.push(`/cafe/recommended/detail/${cafe.id}`);
     setThisX(cafe?.coordX);
     setThisY(cafe?.coordY);
   };
@@ -280,6 +295,25 @@ export default function Sidebar() {
                   )}
 
                   <div ref={bookmarkedRef} className="h-[2rem] w-[22rem]"></div>
+                </div>
+              )}
+
+              {isRecommendedPage && (
+                <div className="relative">
+                  <ul className={cardContainerStyle}>
+                    {fetchedRecommendedCafe?.map(
+                      (cafe: RecommendedCafeFromSupabase) => (
+                        <NormalCafe
+                          key={cafe.id}
+                          name={cafe.name}
+                          address={cafe.address}
+                          phoneNum={cafe.phoneNum}
+                          photoUrl={cafe.photoUrl}
+                          onClick={() => handleRecommendedCafeClick(cafe)}
+                        />
+                      ),
+                    )}
+                  </ul>
                 </div>
               )}
             </section>

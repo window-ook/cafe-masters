@@ -2,7 +2,7 @@ import { useCheckStore } from 'utils/store';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoMdClock } from 'react-icons/io';
 import { IoBookmark, IoLocation, IoCloseCircle } from 'react-icons/io5';
-import { FaPhoneSquare, FaChevronDown } from 'react-icons/fa';
+import { FaPhoneSquare } from 'react-icons/fa';
 import { FaCopy } from 'react-icons/fa6';
 import Image from 'next/image';
 import Tooltip from 'components/shared/tooltip';
@@ -39,12 +39,6 @@ export default function Loading() {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
             <p className="text-xl font-dpixel">상세 정보</p>
-          </div>
-          <div
-            aria-label="수집하기 버튼: 로딩"
-            className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
-          >
-            수집하기
           </div>
         </div>
 
@@ -97,12 +91,7 @@ export default function Loading() {
           <div className="col-span-2">
             <div>
               <div className="flex items-center gap-2">
-                <p className="text-lg">메뉴</p>
-                <div aria-label="메뉴 보기 버튼">
-                  <FaChevronDown
-                    className={`fa-solid fa-angle-down text-lg ${isDarkTheme ? 'text-white' : ''}`}
-                  />
-                </div>
+                <p className="text-lg font-dpixel">메뉴</p>
               </div>
             </div>
           </div>

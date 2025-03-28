@@ -57,8 +57,8 @@ export type Database = {
       collected: {
         Row: {
           address: string;
+          category: string | null;
           comment: string;
-          concept: string | null;
           cons: string | null;
           coordX: number;
           coordY: number;
@@ -76,8 +76,8 @@ export type Database = {
         };
         Insert: {
           address: string;
+          category?: string | null;
           comment: string;
-          concept?: string | null;
           cons?: string | null;
           coordX: number;
           coordY: number;
@@ -95,8 +95,8 @@ export type Database = {
         };
         Update: {
           address?: string;
+          category?: string | null;
           comment?: string;
-          concept?: string | null;
           cons?: string | null;
           coordX?: number;
           coordY?: number;
@@ -118,11 +118,13 @@ export type Database = {
         Row: {
           address: string;
           category: string;
+          coordX: number;
+          coordY: number;
           created_at: string;
           id: number;
           menu: string | null;
           name: string;
-          openingHours: number | null;
+          openingHours: string | null;
           phoneNum: string | null;
           photoList: string | null;
           photoUrl: string | null;
@@ -130,11 +132,13 @@ export type Database = {
         Insert: {
           address: string;
           category: string;
+          coordX: number;
+          coordY: number;
           created_at?: string;
           id?: number;
           menu?: string | null;
           name: string;
-          openingHours?: number | null;
+          openingHours?: string | null;
           phoneNum?: string | null;
           photoList?: string | null;
           photoUrl?: string | null;
@@ -142,11 +146,13 @@ export type Database = {
         Update: {
           address?: string;
           category?: string;
+          coordX?: number;
+          coordY?: number;
           created_at?: string;
           id?: number;
           menu?: string | null;
           name?: string;
-          openingHours?: number | null;
+          openingHours?: string | null;
           phoneNum?: string | null;
           photoList?: string | null;
           photoUrl?: string | null;

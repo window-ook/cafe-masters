@@ -17,7 +17,7 @@ const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
   const searchResult = useMapStore(state => state.searchResult);
   const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
   const bookmarkedCafeCount = useMapStore(state => state.bookmarkedCafeCount);
-
+  const recommendedCafeCount = useMapStore(state => state.recommendedCafeCount);
   const router = useRouter();
 
   return (
@@ -48,6 +48,11 @@ const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
         {path === '/cafe/bookmarked' && (
           <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
             {bookmarkedCafeCount}
+          </span>
+        )}
+        {path === '/cafe/recommended' && (
+          <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+            {recommendedCafeCount}
           </span>
         )}
       </div>

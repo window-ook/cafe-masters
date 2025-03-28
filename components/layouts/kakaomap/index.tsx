@@ -34,6 +34,7 @@ export default function KakaoMap() {
   const searchResult = useMapStore(state => state.searchResult);
   const collectedCafe = useMapStore(state => state.collectedCafe);
   const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
+  const recommendedCafe = useMapStore(state => state.recommendedCafe);
   const thisX = useMapStore(state => state.thisX);
   const thisY = useMapStore(state => state.thisY);
 
@@ -249,10 +250,19 @@ export default function KakaoMap() {
       );
     }
 
+    if (pathname.startsWith('/cafe/recommended')) {
+      updateMarkers(
+        recommendedCafe,
+        cafe => cafe.coordY,
+        cafe => cafe.coordX,
+      );
+    }
+
     if (
       pathname.startsWith('/cafe/search/detail') ||
       pathname.startsWith('/cafe/collected/detail') ||
-      pathname.startsWith('/cafe/bookmarked/detail')
+      pathname.startsWith('/cafe/bookmarked/detail') ||
+      pathname.startsWith('/cafe/recommended/detail')
     ) {
       mapRef.current.setCenter(new window.kakao.maps.LatLng(thisY, thisX));
     }
@@ -266,6 +276,7 @@ export default function KakaoMap() {
     searchResult,
     bookmarkedCafe,
     collectedCafe,
+    recommendedCafe,
   ]);
 
   return (
