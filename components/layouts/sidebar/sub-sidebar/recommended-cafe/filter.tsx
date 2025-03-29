@@ -63,7 +63,7 @@ export default function Filter() {
           className={`px-4 py-2 rounded-full border transition text-sm cursor-pointer
             ${
               selectedCategories.includes(category)
-                ? 'bg-blue-500 text-white border-blue-500'
+                ? 'bg-main text-white border-main'
                 : 'bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100'
             }
           `}

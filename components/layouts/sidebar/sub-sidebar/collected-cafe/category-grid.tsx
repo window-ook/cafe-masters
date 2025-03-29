@@ -10,7 +10,10 @@ export default function CategoryGrid({ category }: CategoryGridProps) {
       </div>
       <div className="col-span-2 flex flex-wrap gap-2 text-md">
         {category?.map(element => (
-          <div key={element} className="px-3 py-1 bg-main-light rounded-full">
+          <div
+            key={element}
+            className="px-3 py-1 rounded-full bg-main text-white"
+          >
             {element}
           </div>
         ))}

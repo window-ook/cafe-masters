@@ -43,24 +43,24 @@ export default function Signin({ setViewAction }: SignProps) {
     }
   };
 
-  const handleTestSignin = async () => {
-    try {
-      const response = await fetch('/api/auth/test-credential');
-      const data = await response.json();
-      if (!response.ok)
-        throw new Error(
-          data.error || '테스트 계정 정보를 불러오지 못했습니다.',
-        );
+  // const handleTestSignin = async () => {
+  //   try {
+  //     const response = await fetch('/api/auth/test-credential');
+  //     const data = await response.json();
+  //     if (!response.ok)
+  //       throw new Error(
+  //         data.error || '테스트 계정 정보를 불러오지 못했습니다.',
+  //       );
 
-      setEmail(data.email);
-      setPassword(data.password);
-      setTimeout(() => {
-        signinMutation.mutate({ email: data.email, password: data.password });
-      }, 0);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     setEmail(data.email);
+  //     setPassword(data.password);
+  //     setTimeout(() => {
+  //       signinMutation.mutate({ email: data.email, password: data.password });
+  //     }, 0);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleResetPassword = async () => {
     try {
@@ -97,7 +97,7 @@ export default function Signin({ setViewAction }: SignProps) {
               setPassword={setPassword}
             />
             <p className="text-red-500">{emailError}</p>
-            <button
+            {/* <button
               type="button"
               data-cy="test-signin-button"
               aria-label="체험 계정 로그인 버튼"
@@ -105,7 +105,7 @@ export default function Signin({ setViewAction }: SignProps) {
               onClick={() => handleTestSignin()}
             >
               <span className="font-dpixel text-white">체험하기</span>
-            </button>
+            </button> */}
             <button
               data-cy="signin-button"
               type="button"
