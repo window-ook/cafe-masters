@@ -24,12 +24,12 @@ export interface FetchedCafeDetail {
 export interface NormalCafeDetailForBookmark {
   id: number;
   userId: string;
+  category: string | null;
   coordX: number;
   coordY: number;
   name: string;
   photoUrl?: string | null;
   photoList?: string[] | null;
-  rating?: number | null;
   openingHours?: string | undefined;
   address: string;
   phoneNum?: string | null;
@@ -38,10 +38,10 @@ export interface NormalCafeDetailForBookmark {
 
 export interface NormalCafeDetailForRecommend {
   id: number;
+  category: string;
   coordX: number;
   coordY: number;
   name: string;
-  category: string;
   photoUrl?: string | null;
   photoList?: string[] | null;
   openingHours?: string | undefined;

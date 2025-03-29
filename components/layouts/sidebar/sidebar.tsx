@@ -46,6 +46,10 @@ export default function Sidebar() {
   });
 
   const searchResult = useMapStore(state => state.searchResult);
+  const filteredRecommendedCafe = useMapStore(
+    state => state.filteredRecommendedCafe,
+  );
+  const setRecommendedCafe = useMapStore(state => state.setRecommendedCafe);
   const setThisX = useMapStore(state => state.setThisX);
   const setThisY = useMapStore(state => state.setThisY);
   const userId = useUserStore(state => state.userId);
@@ -73,6 +77,7 @@ export default function Sidebar() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
+  // 추천 카페도 페이지네이션 처리하기
 
   const cardContainerStyle = 'flex flex-col gap-8 my-8 px-8';
 
@@ -125,6 +130,10 @@ export default function Sidebar() {
     isFetchingNextBookmarkedPage,
     isBookmarkedPage,
   ]);
+
+  useEffect(() => {
+    if (isRecommendedPage) setRecommendedCafe(fetchedRecommendedCafe || []);
+  }, [fetchedRecommendedCafe, isRecommendedPage, setRecommendedCafe]);
 
   useEffect(() => {
     if (containerRef.current)
@@ -301,7 +310,7 @@ export default function Sidebar() {
               {isRecommendedPage && (
                 <div className="relative">
                   <ul className={cardContainerStyle}>
-                    {fetchedRecommendedCafe?.map(
+                    {filteredRecommendedCafe?.map(
                       (cafe: RecommendedCafeFromSupabase) => (
                         <NormalCafe
                           key={cafe.id}

@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMapStore, useCheckStore } from 'utils/store';
-import { FaMagnifyingGlass } from 'react-icons/fa6';
 import Search from './search';
 import LightDarkToggle from './light-dark-toggle';
 import Tooltip from 'components/shared/tooltip';
 import Image from 'next/image';
+import Filter from '../sub-sidebar/recommended-cafe/filter';
 
 export default function Header() {
   const [collectedInput, setCollectedInput] = useState<string>('');
@@ -31,9 +31,9 @@ export default function Header() {
   const isSearchResultPage = pathname.startsWith('/cafe/search');
   const isCollectedPage = pathname.startsWith('/cafe/collected');
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
+  const isRecommendedPage = pathname.startsWith('/cafe/recommended');
 
   const handleCollectedSearch = () => setCollectedSearchTerm(collectedInput);
-
   const handleBookmarkedSearch = () => setBookmarkedSearchTerm(bookmarkedInput);
 
   const handleRoute = () => router.push('/cafe');
@@ -87,16 +87,16 @@ export default function Header() {
               {collectedCafeCount}
             </span>
           </span>
-          <div className="flex items-center gap-2">
+          <div className="w-full flex items-center gap-2">
             <input
               type="text"
-              placeholder="카드 찾기"
+              placeholder="수집한 카드 찾기"
               aria-label="수집한 카페 중 카페 이름 검색하기"
-              className={`px-1 py-2 border-0 border-b-2 ${
+              className={`w-5/6 py-4 border-0 border-b-2 ${
                 isDarkTheme
                   ? 'bg-main-dark border-gray-600 text-white'
-                  : 'bg-gray-100 border-gray-300'
-              } focus:outline-none focus:ring-0`}
+                  : 'bg-gray-100 border-gray-300 text-slate-700'
+              } placeholder:text-slate-400 focus:outline-none focus:ring-0`}
               value={collectedInput}
               onChange={e => setCollectedInput(e.target.value)}
               onKeyDown={e => {
@@ -105,10 +105,12 @@ export default function Header() {
             />
             <button
               onClick={handleCollectedSearch}
-              className="py-2 px-3 rounded-md hover:bg-gray-100 transition duration-200 ease-in"
+              className="w-1/6 py-4 px-1 rounded-sm bg-gray-300 hover:bg-main-light transition duration-200 ease-in"
               aria-label="검색"
             >
-              <FaMagnifyingGlass className="text-main" />
+              <span className="font-pretendard text-center text-sm text-slate-700">
+                검색
+              </span>
             </button>
           </div>
         </div>
@@ -121,16 +123,16 @@ export default function Header() {
               {bookmarkedCafeCount}
             </span>
           </span>
-          <div className="flex items-center gap-2">
+          <div className="w-full flex items-center gap-2">
             <input
               type="text"
               placeholder="카페 찾기"
               aria-label="북마크한 카페 중 카페 이름 검색하기"
-              className={`px-1 py-2 border-0 border-b-2 ${
+              className={`w-5/6 py-4 border-0 border-b-2 ${
                 isDarkTheme
                   ? 'bg-main-dark border-gray-600 text-white'
-                  : 'bg-gray-100 border-gray-300'
-              } focus:outline-none focus:ring-0`}
+                  : 'bg-gray-100 border-gray-300 text-slate-700'
+              } placeholder:text-slate-400 focus:outline-none focus:ring-0`}
               value={bookmarkedInput}
               onChange={e => setBookmarkedInput(e.target.value)}
               onKeyDown={e => {
@@ -139,12 +141,19 @@ export default function Header() {
             />
             <button
               onClick={handleBookmarkedSearch}
-              className="py-2 px-3 rounded-md hover:bg-gray-100 transition duration-200 ease-in"
+              className="w-1/6 py-4 px-1 rounded-sm bg-gray-300 hover:bg-main-light transition duration-200 ease-in"
               aria-label="검색"
             >
-              <FaMagnifyingGlass className="text-main" />
+              <span className="font-pretendard text-center text-sm text-slate-700">
+                검색
+              </span>
             </button>
           </div>
+        </div>
+      )}
+      {isRecommendedPage && (
+        <div>
+          <Filter />
         </div>
       )}
     </section>

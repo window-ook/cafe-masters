@@ -12,6 +12,7 @@ export type Database = {
       bookmarked: {
         Row: {
           address: string;
+          category: string | null;
           coordX: number;
           coordY: number;
           created_at: string;
@@ -26,6 +27,7 @@ export type Database = {
         };
         Insert: {
           address: string;
+          category?: string | null;
           coordX: number;
           coordY: number;
           created_at?: string;
@@ -40,6 +42,7 @@ export type Database = {
         };
         Update: {
           address?: string;
+          category?: string | null;
           coordX?: number;
           coordY?: number;
           created_at?: string;

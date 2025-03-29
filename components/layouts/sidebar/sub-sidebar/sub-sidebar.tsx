@@ -93,6 +93,7 @@ export default function SubSidebar() {
     userId,
     coordX: thisX,
     coordY: thisY,
+    category: null,
     name: filteredFromSearchResult?.[0]?.place_name ?? '',
     photoUrl: cafeDetail?.photo || '/image/cafe_thumbnail.avif',
     photoList: cafeDetail?.photoList || [],
@@ -164,6 +165,7 @@ export default function SubSidebar() {
 
   const memoForRecommendFromBookmarkedDetail = {
     id: bookmarkedCafeDetail?.id,
+    userId,
     name: bookmarkedCafeDetail?.name,
     category: stringifiedCategories,
     coordX: bookmarkedCafeDetail?.coordX,
@@ -250,7 +252,6 @@ export default function SubSidebar() {
     }
   };
 
-  // 추천 카페 업로드 핸들러 setCategorySelectorOpen(false)
   const handleUploadRecommend = (memo: RecommendedRowInsert) => {
     setIsRecommended(true);
     setMemoRecommendationOpen(false);

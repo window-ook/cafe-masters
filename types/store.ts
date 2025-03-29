@@ -13,6 +13,7 @@ export interface MapStore {
   collectedCafe: CollectedCafeFromSupabase[];
   bookmarkedCafe: BookmarkedCafeFromSupabase[];
   recommendedCafe: RecommendedCafeFromSupabase[];
+  filteredRecommendedCafe: RecommendedCafeFromSupabase[];
   collectedCafeCount: number;
   bookmarkedCafeCount: number;
   recommendedCafeCount: number;
@@ -29,10 +30,11 @@ export interface MapStore {
   setKeyword: (data: string) => void;
   setSearchResult: (data: SearchResult[]) => void;
   setCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
-  setCollectedCafeCount: (data: number) => void;
   setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) => void;
-  setBookmarkedCafeCount: (data: number) => void;
   setRecommendedCafe: (data: RecommendedCafeFromSupabase[]) => void;
+  setFilteredRecommendedCafe: (data: RecommendedCafeFromSupabase[]) => void;
+  setCollectedCafeCount: (data: number) => void;
+  setBookmarkedCafeCount: (data: number) => void;
   setRecommendedCafeCount: (data: number) => void;
   setThisX: (x: number) => void;
   setThisY: (y: number) => void;

@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSigninMutation } from 'hooks/mutation/useSigninMutation';
 import Image from 'next/image';
 
 /**
@@ -11,6 +12,25 @@ import Image from 'next/image';
 
 const Navbar = () => {
   const router = useRouter();
+
+  const signinMutation = useSigninMutation();
+
+  const handleTestSignin = async () => {
+    try {
+      const response = await fetch('/api/auth/test-credential');
+      const data = await response.json();
+      if (!response.ok)
+        throw new Error(
+          data.error || '테스트 계정 정보를 불러오지 못했습니다.',
+        );
+
+      setTimeout(() => {
+        signinMutation.mutate({ email: data.email, password: data.password });
+      }, 0);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleRouteSignin = () => router.push('/auth');
 
@@ -30,15 +50,26 @@ const Navbar = () => {
             Cafe Masters
           </span>
         </div>
-        <button
-          aria-label="로그인, 회원가입 페이지 이동 버튼"
-          onClick={() => handleRouteSignin()}
-          className="h-[2rem] rounded-md opacity-80 hover:opacity-40 transition duration-100 ease-in"
-        >
-          <span className="font-pretendard font-bold text-main-light">
-            시작하기
-          </span>
-        </button>
+        <div className="flex gap-4">
+          <button
+            aria-label="체험계정 로그인 버튼"
+            onClick={() => handleTestSignin()}
+            className="h-[2rem] border-2 border-solid border-opacity-50 border-neutral-100 rounded-md p-4 flex items-center hover:opacity-40 transition duration-100 ease-in"
+          >
+            <span className="font-pretendard font-bold text-white">
+              체험하기
+            </span>
+          </button>
+          <button
+            aria-label="로그인 페이지 이동 버튼"
+            onClick={() => handleRouteSignin()}
+            className="h-[2rem] rounded-md hover:opacity-40 transition duration-100 ease-in"
+          >
+            <span className="font-pretendard font-bold text-main-light">
+              시작하기
+            </span>
+          </button>
+        </div>
       </nav>
     </header>
   );

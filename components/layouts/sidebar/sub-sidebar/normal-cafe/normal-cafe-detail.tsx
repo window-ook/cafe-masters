@@ -17,6 +17,7 @@ import OpenTimeGrid from '../shared/open-time-grid';
 import LocationGrid from '../shared/location-grid';
 import PhoneGrid from '../shared/phone-grid';
 import MenuGrid from './menu-grid';
+import CategoryGrid from '../collected-cafe/category-grid';
 
 interface NormalCafeDetailProps {
   detail: NormalCafeDetailForBookmark | NormalCafeDetailForRecommend;
@@ -32,6 +33,7 @@ export default function NormalCafeDetail({
   setMemoRecommendationOpen,
 }: NormalCafeDetailProps) {
   const admin = useUserStore(state => state.admin);
+  const userId = useUserStore(state => state.userId);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
   const isCollected = useCheckStore(state => state.isCollected);
   const isBookmarked = useCheckStore(state => state.isBookmarked);
@@ -53,10 +55,15 @@ export default function NormalCafeDetail({
       ? JSON.parse(detail?.menu)
       : detail?.menu;
 
+  const parsedCategory: string[] = detail?.category
+    ? JSON.parse(detail?.category)
+    : [];
+
   const handleUploadBookmark = () => {
     setIsBookmarked(true);
     const bookmarkData = {
       ...detail,
+      userId,
       photoList: detail.photoList ? JSON.stringify(detail.photoList) : null,
     };
     uploadBookmarkMutation.mutate(bookmarkData);
@@ -72,8 +79,11 @@ export default function NormalCafeDetail({
   const handleSetIsSubSidebarOpen = () => {
     setIsSubSidebarOpen(false);
     if (pathname.startsWith('/cafe/search')) router.push('/cafe/search');
+    if (pathname.startsWith('/cafe/collected')) router.push('/cafe/collected');
     if (pathname.startsWith('/cafe/bookmarked'))
       router.push('/cafe/bookmarked');
+    if (pathname.startsWith('/cafe/recommended'))
+      router.push('/cafe/recommended');
   };
 
   const handleScroll = (direction: 'left' | 'right') => {
@@ -195,7 +205,7 @@ export default function NormalCafeDetail({
 
         <section className="flex justify-between items-center">
           <span className="font-dpixel font-extrabold text-xl">상세 정보</span>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             {admin &&
             !isRecommended &&
             !pathname.startsWith('/cafe/recommended') ? (
@@ -226,6 +236,7 @@ export default function NormalCafeDetail({
         </section>
 
         <section className="grid grid-cols-2 gap-6">
+          <CategoryGrid category={parsedCategory ?? []} />
           <OpenTimeGrid openingHours={detail?.openingHours} />
           <LocationGrid address={detail?.address} />
           <PhoneGrid phoneNum={detail?.phoneNum} />
