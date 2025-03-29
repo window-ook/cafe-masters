@@ -36,7 +36,11 @@ export default function Header() {
   const handleCollectedSearch = () => setCollectedSearchTerm(collectedInput);
   const handleBookmarkedSearch = () => setBookmarkedSearchTerm(bookmarkedInput);
 
-  const handleRoute = () => router.push('/cafe');
+  const handleRoute = () => {
+    setBookmarkedInput('');
+    setCollectedInput('');
+    router.push('/cafe');
+  };
 
   return (
     <section
