@@ -55,7 +55,7 @@ export default function Filter() {
   }, [recommendedCafe, selectedCategories, setFilteredRecommendedCafe]);
 
   return (
-    <div className="pt-2 flex flex-wrap gap-2">
+    <div className="pt-2 flex flex-wrap justify-center gap-2">
       {categories.map(category => (
         <a
           key={category}
@@ -64,7 +64,7 @@ export default function Filter() {
             ${
               selectedCategories.includes(category)
                 ? 'bg-blue-500 text-white border-blue-500'
-                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                : 'bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100'
             }
           `}
         >

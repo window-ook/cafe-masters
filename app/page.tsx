@@ -54,7 +54,7 @@ const Navbar = () => {
           <button
             aria-label="체험계정 로그인 버튼"
             onClick={() => handleTestSignin()}
-            className="h-[2rem] border border-dotted border-neutral-100 rounded-md p-4 flex items-center hover:opacity-40 transition duration-100 ease-in"
+            className="h-[2rem] border-2 border-solid border-opacity-50 border-neutral-100 rounded-md p-4 flex items-center hover:opacity-40 transition duration-100 ease-in"
           >
             <span className="font-pretendard font-bold text-white">
               체험하기
