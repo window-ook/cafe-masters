@@ -6,14 +6,18 @@ import { useRequestResetPasswordMutation } from 'hooks/mutation/useRequestResetP
 import { signinWithKakao } from 'utils/supabase/signinWithKakao';
 import { handleEmailValid } from '../shared/utils';
 import {
-  AuthFormCardStyle,
-  AuthFormMentionStyle,
-  AuthFormTitleStyle,
-  KakaoButtonStyle,
+  authFormCardStyle,
+  authFormMentionStyle,
+  authFormTitleStyle,
+  kakaoButtonStyle,
 } from 'utils/styles';
 import { SignProps } from 'app/auth/page';
+import dynamic from 'next/dynamic';
 import UserForm from '../shared/user-form';
-import ResetpasswordForm from './resetpassword-form';
+
+const ResetpasswordForm = dynamic(() => import('./resetpassword-form'), {
+  ssr: false,
+});
 
 export default function Signin({ setViewAction }: SignProps) {
   const [email, setEmail] = useState<string>('');
@@ -23,7 +27,7 @@ export default function Signin({ setViewAction }: SignProps) {
   const [resetRequested, setResetRequested] = useState<string>('');
 
   const signinMutation = useSigninMutation();
-  const resetPasswordMutation = useRequestResetPasswordMutation();
+  const requestResetPasswordMutation = useRequestResetPasswordMutation();
 
   const handleEmail = () => {
     let isValid = true;
@@ -43,9 +47,9 @@ export default function Signin({ setViewAction }: SignProps) {
     }
   };
 
-  const handleResetPassword = async () => {
+  const handleRequest = async () => {
     try {
-      const message = await resetPasswordMutation.mutateAsync(email);
+      const message = await requestResetPasswordMutation.mutateAsync(email);
       setResetRequested(message);
     } catch (error) {
       console.error('비밀번호 재설정 이메일 요청 error', error);
@@ -53,18 +57,10 @@ export default function Signin({ setViewAction }: SignProps) {
   };
 
   return (
-    <main className={AuthFormCardStyle}>
-      {resetRequired ? (
-        <ResetpasswordForm
-          email={email}
-          setEmail={setEmail}
-          resetRequested={resetRequested}
-          resetFn={handleResetPassword}
-          cancelFn={() => setResetRequired(false)}
-        />
-      ) : (
+    <main className={authFormCardStyle}>
+      {!resetRequired ? (
         <div>
-          <p className={AuthFormTitleStyle}>로그인</p>
+          <p className={authFormTitleStyle}>로그인</p>
           <form
             className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4"
             onKeyDown={e => {
@@ -101,12 +97,12 @@ export default function Signin({ setViewAction }: SignProps) {
               data-cy="kakaosignin-button"
               type="button"
               aria-label="카카오 로그인 버튼"
-              className={KakaoButtonStyle}
+              className={kakaoButtonStyle}
               onClick={() => signinWithKakao()}
             >
               <span className="font-dpixel text-white">카카오 로그인</span>
             </button>
-            <span color="gray" className={AuthFormMentionStyle}>
+            <span color="gray" className={authFormMentionStyle}>
               계정이 없으신가요?{' '}
               <button
                 type="button"
@@ -125,6 +121,14 @@ export default function Signin({ setViewAction }: SignProps) {
             </span>
           </form>
         </div>
+      ) : (
+        <ResetpasswordForm
+          email={email}
+          setEmail={setEmail}
+          resetRequested={resetRequested}
+          resetFn={handleRequest}
+          cancelFn={() => setResetRequired(false)}
+        />
       )}
     </main>
   );

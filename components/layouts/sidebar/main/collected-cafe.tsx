@@ -1,11 +1,10 @@
 import { useCheckStore } from 'utils/store';
 import {
-  OverThreeRatingStyle,
-  OverFiveRatingStyle,
-  RatingCircleStyle,
-  getCollectedCardStyle,
-  UniqueCardStyle,
-  UniqueCardEffectStyle,
+  overThreeRatingStyle,
+  overFiveRatingStyle,
+  uniqueCardStyle,
+  uniqueCardEffectStyle,
+  ratingCircleStyle,
 } from 'utils/styles';
 import { FaStar } from 'react-icons/fa6';
 import Image from 'next/image';
@@ -34,21 +33,21 @@ export default function CollectedCafe({
   const bgRatings =
     ratings != null
       ? ratings >= 5
-        ? OverFiveRatingStyle
+        ? overFiveRatingStyle
         : ratings >= 3
-          ? OverThreeRatingStyle
+          ? overThreeRatingStyle
           : 'text-white bg-black'
       : 'text-white bg-black';
 
   return (
     <li data-cy="collected-cafe" className="relative list-none">
-      {isUnique && <div className={UniqueCardEffectStyle}></div>}
+      {isUnique && <div className={uniqueCardEffectStyle}></div>}
       <div
         onClick={onClick}
         className={
           isUnique
-            ? UniqueCardStyle
-            : getCollectedCardStyle(bgRatings, isDarkTheme)
+            ? uniqueCardStyle
+            : `${bgRatings} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} h-[20rem] p-4 border-4 rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer hover:scale-105 transition duration-300 ease`
         }
       >
         <div className="flex flex-col gap-2">
@@ -59,7 +58,7 @@ export default function CollectedCafe({
             {Array(ratings)
               .fill(0)
               .map((_, index) => (
-                <div key={index} className={RatingCircleStyle}>
+                <div key={index} className={ratingCircleStyle}>
                   <FaStar className="fa-solid fa-star absolute text-yellow-300 text-xs" />
                 </div>
               ))}

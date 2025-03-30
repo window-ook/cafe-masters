@@ -139,6 +139,14 @@ const config: Config = {
             transform: 'translateX(200%) rotate(45deg)',
           },
         },
+        skeleton: {
+          '0%': {
+            'background-color': 'var(--skeleton-start)',
+          },
+          '100%': {
+            'background-color': 'var(--skeleton-end)',
+          },
+        },
       },
       fontSize: {
         '2xs': '.3rem',
@@ -149,6 +157,7 @@ const config: Config = {
         textReveal: 'textReveal 0.8s cubic-bezier(0.77, 0, 0.175, 1)',
         float: 'float 6s ease-in-out infinite',
         shine: 'shine 1.5s',
+        skeleton: 'skeleton 1s ease-in-out infinite alternate',
       },
       dropShadow: {
         '3xl': '14px 14px 11px -7px rgba(47,49,51,0.75)',

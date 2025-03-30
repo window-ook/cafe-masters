@@ -4,16 +4,20 @@ import React, { useState } from 'react';
 import { useSignupMutation } from 'hooks/mutation/useSignupMutation';
 import { signinWithKakao } from 'utils/supabase/signinWithKakao';
 import {
-  AuthFormCardStyle,
-  AuthFormMentionStyle,
-  AuthFormTitleStyle,
-  KakaoButtonStyle,
+  authFormCardStyle,
+  authFormMentionStyle,
+  authFormTitleStyle,
+  kakaoButtonStyle,
 } from 'utils/styles';
 import { handleEmailValid } from '../shared/utils';
 import { SignProps } from 'app/auth/page';
-import UserForm from '../shared/user-form';
-import OtpForm from './otp-form';
 import useVerifyOtpMutation from 'hooks/mutation/useVerifyOtpMutation';
+import UserForm from '../shared/user-form';
+import dynamic from 'next/dynamic';
+
+const OtpForm = dynamic(() => import('./otp-form'), {
+  ssr: false,
+});
 
 export default function Signup({ setViewAction }: SignProps) {
   const [email, setEmail] = useState<string>('');
@@ -52,8 +56,8 @@ export default function Signup({ setViewAction }: SignProps) {
   };
 
   return (
-    <main className={AuthFormCardStyle}>
-      <p className={AuthFormTitleStyle}>회원가입</p>
+    <main className={authFormCardStyle}>
+      <p className={authFormTitleStyle}>회원가입</p>
       <form
         className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4"
         onKeyDown={e => {
@@ -91,14 +95,14 @@ export default function Signup({ setViewAction }: SignProps) {
         <button
           type="button"
           aria-label="카카오 로그인 버튼"
-          className={KakaoButtonStyle}
+          className={kakaoButtonStyle}
           onClick={() => signinWithKakao()}
         >
           <span className="font-dpixel text-lg text-white">
             카카오로 회원가입
           </span>
         </button>
-        <p color="gray" className={AuthFormMentionStyle}>
+        <p color="gray" className={authFormMentionStyle}>
           이미 계정이 있으신가요?{' '}
           <button
             data-cy="open-signin-button"

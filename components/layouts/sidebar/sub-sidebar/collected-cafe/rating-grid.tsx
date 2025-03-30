@@ -1,4 +1,4 @@
-import { RatingCircleStyle, RatingStarStyle } from 'utils/styles';
+import { ratingCircleStyle, ratingStarStyle } from 'utils/styles';
 import { FaStar } from 'react-icons/fa6';
 
 interface RatingGridProps {
@@ -9,8 +9,8 @@ export default function RatingGrid({ rating }: RatingGridProps) {
   return (
     <span className="text-xl flex gap-1 items-center">
       <div className="flex justify-start items-center gap-1">
-        <div className={RatingCircleStyle}>
-          <FaStar className={RatingStarStyle} />
+        <div className={ratingCircleStyle}>
+          <FaStar className={ratingStarStyle} />
         </div>
         <span className="font-dpixel">{rating}</span>
       </div>

@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useMapStore } from 'utils/store';
 import { SearchResult } from 'types/common';
-import { KakaoMapStyle } from 'utils/styles';
 import { toast } from 'react-toastify';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -283,7 +282,7 @@ export default function KakaoMap() {
     <article
       aria-label="kakao map"
       id="map"
-      className={KakaoMapStyle}
+      className="fixed z-0 top-0 w-screen h-screen sm:translate-x-[27rem] sm:w-[calc(100vw-27rem)]"
     ></article>
   );
 }

@@ -1,5 +1,7 @@
 'use client';
 
+import { categories } from '../shared/categories';
+
 export interface CategorySelectorProps {
   selectedCategories: string[];
   setSelectedCategoriesAction: (value: (prev: string[]) => string[]) => void;
@@ -9,21 +11,6 @@ export default function CategorySelector({
   selectedCategories,
   setSelectedCategoriesAction,
 }: CategorySelectorProps) {
-  const categories = [
-    '조용한',
-    '시끌벅적한',
-    '콘센트 많은',
-    '의자가 편한',
-    '공간이 넓은',
-    '전망 좋은',
-    '빈티지한',
-    '세련된',
-    '특색있는',
-    '밝은',
-    '어두운',
-    '빵 구운내 나는',
-  ];
-
   const toggleCategories = (category: string) => {
     setSelectedCategoriesAction(prev =>
       prev.includes(category)

@@ -13,30 +13,44 @@ import { useInView } from 'react-intersection-observer';
 import useBookmarkedInfiniteQuery from 'hooks/cache/useBookmarkedInfiniteQuery';
 import useCollectedInfiniteQuery from 'hooks/cache/useCollectedInfiniteQuery';
 import useRecommendedQuery from 'hooks/cache/useRecommendedQuery';
-import CircularProgress from './shared/circular-progress';
-import dynamic from 'next/dynamic';
+import SidebarTabList from './main/sidebar-tab-list';
 import Header from './header';
 import Footer from './footer';
-import SidebarTabList from './main/sidebar-tab-list';
+import dynamic from 'next/dynamic';
+import Help from './main/help';
 
-const SearchResultList = dynamic(() => import('./main/search-result-list'), {
+const SearchResultList = dynamic(() => import('./main/search-result'), {
   ssr: false,
 });
-const NormalCafe = dynamic(() => import('./main/normal-cafe'), { ssr: false });
 const CollectedCafe = dynamic(() => import('./main/collected-cafe'), {
   ssr: false,
 });
+const NormalCafe = dynamic(() => import('./main/normal-cafe'), { ssr: false });
 const PageConverter = dynamic(() => import('./footer/page-converter'), {
   ssr: false,
 });
 const SubSidebar = dynamic(() => import('./sub-sidebar/sub-sidebar'), {
   ssr: false,
 });
+const Spinner = dynamic(() => import('./shared/spinner'), {
+  ssr: false,
+});
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const userId = useUserStore(state => state.userId);
+  const {
+    searchResult,
+    setRecommendedCafe,
+    filteredRecommendedCafe,
+    collectedSearchTerm,
+    bookmarkedSearchTerm,
+    setThisX,
+    setThisY,
+  } = useMapStore();
+  const { isDarkTheme, isSubSidebarOpen, setIsSubSidebarOpen, setIsMenuOpen } =
+    useCheckStore();
 
   const { ref: collectedRef, inView: collectedInView } = useInView({
     threshold: 0.5,
@@ -45,23 +59,9 @@ export default function Sidebar() {
     threshold: 0.5,
   });
 
-  const searchResult = useMapStore(state => state.searchResult);
-  const filteredRecommendedCafe = useMapStore(
-    state => state.filteredRecommendedCafe,
-  );
-  const setRecommendedCafe = useMapStore(state => state.setRecommendedCafe);
-  const setThisX = useMapStore(state => state.setThisX);
-  const setThisY = useMapStore(state => state.setThisY);
-  const userId = useUserStore(state => state.userId);
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-  const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
-  const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
-  const setIsMenuOpen = useCheckStore(state => state.setIsMenuOpen);
-  const collectedSearchTerm = useMapStore(state => state.collectedSearchTerm);
-  const bookmarkedSearchTerm = useMapStore(state => state.bookmarkedSearchTerm);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const router = useRouter();
-
   const pathname = usePathname();
 
   const isMainPage = pathname === '/cafe';
@@ -69,15 +69,29 @@ export default function Sidebar() {
   const isCollectedPage = pathname.startsWith('/cafe/collected');
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
   const isRecommendedPage = pathname.startsWith('/cafe/recommended');
+  const isHelpPage = pathname.startsWith('/cafe/help');
 
-  const itemsPerPage = 15;
-  const totalPages = Math.ceil(searchResult.length / itemsPerPage);
-
-  const paginatedResults = searchResult.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+  const searchResultsPerPage = 15;
+  const totalSearchResultPages = Math.ceil(
+    searchResult.length / searchResultsPerPage,
   );
-  // 추천 카페도 페이지네이션 처리하기
+  const paginatedResult = searchResult.slice(
+    (currentPage - 1) * searchResultsPerPage,
+    currentPage * searchResultsPerPage,
+  );
+
+  const recommendedPerPage = 5;
+  const totalRecommendedPages = Math.ceil(
+    filteredRecommendedCafe.length / recommendedPerPage,
+  );
+  const paginatedRecommend = filteredRecommendedCafe.slice(
+    (currentPage - 1) * recommendedPerPage,
+    currentPage * recommendedPerPage,
+  );
+
+  const totalPages = isRecommendedPage
+    ? totalRecommendedPages
+    : totalSearchResultPages;
 
   const cardContainerStyle = 'flex flex-col gap-8 my-8 px-8';
 
@@ -148,9 +162,17 @@ export default function Sidebar() {
     setCurrentPage(1);
   }, [searchResult]);
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  const handleNextSearchResultPage = () => {
+    if (currentPage < totalSearchResultPages) setCurrentPage(currentPage + 1);
   };
+
+  const handleNextRecommendedPage = () => {
+    if (currentPage < totalRecommendedPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handleNextPage = isRecommendedPage
+    ? handleNextRecommendedPage
+    : handleNextSearchResultPage;
 
   const handlePreviousPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -211,11 +233,11 @@ export default function Sidebar() {
   if (pathname.startsWith('/resetpassword')) return null;
 
   return (
-    <nav className="relative flex items-center">
+    <nav className="relative flex recommended-center">
       <div
         className={`z-10 relative w-screen h-screen max-w-[27rem] px-1 rounded-none shadow-xl shadow-main-shadow ${
           isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'
-        } ${isSubSidebarOpen ? 'hidden sm:block' : ''}`}
+        } ${isSubSidebarOpen && 'hidden sm:block'}`}
       >
         <div className="h-full flex flex-col">
           {/* 상단 */}
@@ -233,7 +255,7 @@ export default function Sidebar() {
             <section>
               {isSearchResultPage && (
                 <ul className={cardContainerStyle}>
-                  {paginatedResults.map((cafe: SearchResult) => (
+                  {paginatedResult.map((cafe: SearchResult) => (
                     // 검색 리스트 컴포넌트 만들어서 대체하기
                     <SearchResultList
                       key={cafe.id}
@@ -269,7 +291,7 @@ export default function Sidebar() {
 
                   {isFetchingNextCollectedPage && (
                     <div className="fixed bottom-4 left-4">
-                      <CircularProgress />
+                      <Spinner width="w-4" height="h-4" border="border-4" />
                     </div>
                   )}
 
@@ -299,7 +321,7 @@ export default function Sidebar() {
 
                   {isFetchingNextBookmarkedPage && (
                     <div className="fixed bottom-4 left-4">
-                      <CircularProgress />
+                      <Spinner width="w-4" height="h-4" border="border-4" />
                     </div>
                   )}
 
@@ -310,7 +332,7 @@ export default function Sidebar() {
               {isRecommendedPage && (
                 <div className="relative">
                   <ul className={cardContainerStyle}>
-                    {filteredRecommendedCafe?.map(
+                    {paginatedRecommend?.map(
                       (cafe: RecommendedCafeFromSupabase) => (
                         <NormalCafe
                           key={cafe.id}
@@ -325,11 +347,13 @@ export default function Sidebar() {
                   </ul>
                 </div>
               )}
+
+              {isHelpPage && <Help />}
             </section>
           </main>
 
           {/* 하단 */}
-          {isSearchResultPage && (
+          {(isSearchResultPage || isRecommendedPage) && (
             <footer className="flex-none">
               <PageConverter
                 isDarkTheme={isDarkTheme}

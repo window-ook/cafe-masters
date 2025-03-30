@@ -4,8 +4,14 @@ import { IoMdClock } from 'react-icons/io';
 import { IoBookmark, IoLocation, IoCloseCircle } from 'react-icons/io5';
 import { FaPhoneSquare } from 'react-icons/fa';
 import { FaCopy } from 'react-icons/fa6';
-import Image from 'next/image';
-import Tooltip from 'components/shared/tooltip';
+import dynamic from 'next/dynamic';
+
+const Spinner = dynamic(() => import('../../shared/spinner'), {
+  ssr: false,
+});
+const Skeleton = dynamic(() => import('./skeleton'), {
+  ssr: false,
+});
 
 export default function Loading() {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
@@ -26,14 +32,7 @@ export default function Loading() {
 
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
-          <Image
-            src={'/image/cafe_thumbnail.avif'}
-            alt="카페 썸네일"
-            width={160}
-            height={240}
-            className="w-[20rem] h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
-            priority={true}
-          />
+          <Spinner width="w-16" height="h-16" border="border-8" />
         </div>
 
         <div className="flex justify-between items-center">
@@ -49,7 +48,7 @@ export default function Loading() {
               <p className="font-dpixel">영업시간</p>
             </div>
             <div className="col-span-1 text-left">
-              <p>??:?? ~ ??:??</p>
+              <Skeleton width="w-[10rem]" height="h-[1rem]" />
             </div>
           </div>
           <div className="col-span-2 grid grid-cols-3 items-center">
@@ -58,16 +57,10 @@ export default function Loading() {
               <p className="font-dpixel">위치</p>
             </div>
             <div className="col-span-2 flex items-center gap-4">
-              <p className="text-sm">?? ??구 ??로</p>
-              <Tooltip
-                comment="복사"
-                component={
-                  <div className="hover:opacity-70">
-                    <FaCopy />
-                  </div>
-                }
-                left="16"
-              />
+              <Skeleton width="w-[10rem]" height="h-[1rem]" />
+              <div className="hover:opacity-70">
+                <FaCopy />
+              </div>
             </div>
           </div>
           <div className="col-span-2 grid grid-cols-3 items-center">
@@ -76,16 +69,10 @@ export default function Loading() {
               <p className="font-dpixel">전화번호</p>
             </div>
             <div className="col-span-2 flex items-center gap-4">
-              <p className="text-lg">???-????-????</p>
-              <Tooltip
-                comment="복사"
-                component={
-                  <div className="hover:opacity-70">
-                    <FaCopy />
-                  </div>
-                }
-                left="16"
-              />
+              <Skeleton width="w-[10rem]" height="h-[1rem]" />
+              <div className="hover:opacity-70">
+                <FaCopy />
+              </div>
             </div>
           </div>
           <div className="col-span-2">

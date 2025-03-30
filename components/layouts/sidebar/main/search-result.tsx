@@ -7,7 +7,7 @@ interface SearchResultProps {
   onClick: () => void;
 }
 
-export default function SearchResultList({
+export default function SearchResult({
   onClick,
   name,
   address,

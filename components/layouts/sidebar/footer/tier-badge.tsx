@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import {
-  BadgeCommon,
   getExpertTierStyle,
-  getMasterEffectStyle,
   getMasterTierStyle,
+  masterTierBadgeStyle,
 } from 'utils/styles';
 import { Tier } from 'types/common';
 import TierModal from './tier-modal';
@@ -29,13 +28,11 @@ export default function TierBadge({ tier }: TierBadgeProps) {
   return (
     <>
       <div className="relative flex items-center justify-center">
-        {tier === 'MASTER' && (
-          <div className={getMasterEffectStyle('w-[100%]')}></div>
-        )}
+        {tier === 'MASTER' && <div className={masterTierBadgeStyle}></div>}
         <button
           aria-label="티어 모달 오픈 버튼"
           onClick={() => handleOpen()}
-          className={`${tierStyles[tier]} ${BadgeCommon} hover:cursor-pointer`}
+          className={`${tierStyles[tier]} w-20 h-6 py-4 rounded-xl flex items-center justify-center hover:cursor-pointer`}
         >
           <span className="text-sm font-dpixel">{tier}</span>
         </button>

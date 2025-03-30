@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-export default function AuthBackgroundCards() {
+export default function BackgroundCards() {
   const imageSrc = '/image/logo.avif';
 
   return (

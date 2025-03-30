@@ -5,9 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useFinishResetPasswordMutation } from 'hooks/mutation/useFinishResetPasswordMutation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
-import AuthBackgroundCards from 'components/auth/shared/background-cards';
-
-export const dynamic = 'force-static';
+import BackgroundCards from 'components/auth/shared/background-cards';
 
 export default function Resetpassword() {
   const supabase = createBrowserSupabaseClient();
@@ -37,7 +35,7 @@ export default function Resetpassword() {
         <meta name="description" content={`새로운 비밀번호를 설정하세요.`} />
       </Head>
       <main className="area h-screen w-screen flex justify-center items-center">
-        <AuthBackgroundCards />
+        <BackgroundCards />
         <div className="flex flex-col items-center gap-4">
           <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
             Cafe Masters
