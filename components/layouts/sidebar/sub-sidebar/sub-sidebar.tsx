@@ -11,26 +11,25 @@ import { RecommendedRowInsert } from 'actions/recommendsActions';
 import { getSubSidebarStyle } from 'utils/styles';
 import { toast } from 'react-toastify';
 import dynamic from 'next/dynamic';
-import Loading from './shared/loading';
 
+const Loading = dynamic(() => import('./shared/loading'), {
+  ssr: false,
+});
 const NormalCafeDetail = dynamic(
   () => import('./normal-cafe/normal-cafe-detail'),
   {
     ssr: false,
   },
 );
-
 const CollectedCafeDetail = dynamic(
   () => import('./collected-cafe/collected-cafe-detail'),
   {
     ssr: false,
   },
 );
-
 const Memo = dynamic(() => import('./memo/memo'), {
   ssr: false,
 });
-
 const MemoRecommendation = dynamic(() => import('./memo/memo-recommendation'), {
   ssr: false,
 });

@@ -12,8 +12,12 @@ import {
   KakaoButtonStyle,
 } from 'utils/styles';
 import { SignProps } from 'app/auth/page';
+import dynamic from 'next/dynamic';
 import UserForm from '../shared/user-form';
-import ResetpasswordForm from './resetpassword-form';
+
+const ResetpasswordForm = dynamic(() => import('./resetpassword-form'), {
+  ssr: false,
+});
 
 export default function Signin({ setViewAction }: SignProps) {
   const [email, setEmail] = useState<string>('');
@@ -23,7 +27,7 @@ export default function Signin({ setViewAction }: SignProps) {
   const [resetRequested, setResetRequested] = useState<string>('');
 
   const signinMutation = useSigninMutation();
-  const resetPasswordMutation = useRequestResetPasswordMutation();
+  const requestResetPasswordMutation = useRequestResetPasswordMutation();
 
   const handleEmail = () => {
     let isValid = true;
@@ -43,9 +47,9 @@ export default function Signin({ setViewAction }: SignProps) {
     }
   };
 
-  const handleResetPassword = async () => {
+  const handleRequest = async () => {
     try {
-      const message = await resetPasswordMutation.mutateAsync(email);
+      const message = await requestResetPasswordMutation.mutateAsync(email);
       setResetRequested(message);
     } catch (error) {
       console.error('비밀번호 재설정 이메일 요청 error', error);
@@ -54,15 +58,7 @@ export default function Signin({ setViewAction }: SignProps) {
 
   return (
     <main className={AuthFormCardStyle}>
-      {resetRequired ? (
-        <ResetpasswordForm
-          email={email}
-          setEmail={setEmail}
-          resetRequested={resetRequested}
-          resetFn={handleResetPassword}
-          cancelFn={() => setResetRequired(false)}
-        />
-      ) : (
+      {!resetRequired ? (
         <div>
           <p className={AuthFormTitleStyle}>로그인</p>
           <form
@@ -125,6 +121,14 @@ export default function Signin({ setViewAction }: SignProps) {
             </span>
           </form>
         </div>
+      ) : (
+        <ResetpasswordForm
+          email={email}
+          setEmail={setEmail}
+          resetRequested={resetRequested}
+          resetFn={handleRequest}
+          cancelFn={() => setResetRequired(false)}
+        />
       )}
     </main>
   );

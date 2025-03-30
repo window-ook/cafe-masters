@@ -5,9 +5,15 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useMapStore, useCheckStore } from 'utils/store';
 import Search from './search';
 import LightDarkToggle from './light-dark-toggle';
-import Tooltip from 'components/shared/tooltip';
 import Image from 'next/image';
-import Filter from '../sub-sidebar/recommended-cafe/filter';
+import dynamic from 'next/dynamic';
+
+const Tooltip = dynamic(() => import('components/shared/tooltip'), {
+  ssr: false,
+});
+const Filter = dynamic(() => import('../sub-sidebar/recommended-cafe/filter'), {
+  ssr: false,
+});
 
 export default function Header() {
   const [collectedInput, setCollectedInput] = useState<string>('');

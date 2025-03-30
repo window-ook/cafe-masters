@@ -43,11 +43,9 @@ export async function GET(
     const data = await page.evaluate(() => {
       const toAbsoluteUrl = (src: string | null) =>
         src && !src.startsWith('http') ? `https:${src}` : src;
-
       // ✅ 대표 이미지 url
       const thumbnail = document.querySelector('.img-thumb.img_cfit');
       const photo = toAbsoluteUrl(thumbnail?.getAttribute('src') || null);
-
       // ✅ 리뷰 이미지 4개 url
       const photos = Array.from(
         document.querySelectorAll(
@@ -57,21 +55,18 @@ export async function GET(
       const photoList = photos
         .slice(0, 4)
         .map(el => toAbsoluteUrl(el.getAttribute('src')));
-
       // ✅ 주소
       const addressElement = document.querySelector('.row_detail .txt_detail');
       let address = addressElement
         ? addressElement.textContent?.trim() || ''
         : '';
-      address = address.replace(/\(우\)\d{5,}/, '').trim(); // 우편번호 제거
-
+      address = address.replace(/\(우\)\d{5,}/, '').trim();
       // ✅ 운영 시간
       const timeElement = document.querySelector('.line_fold .txt_detail');
       let openingHours = timeElement
         ? timeElement.textContent?.trim().replace(/\s+/g, ' ') || ''
         : '';
       openingHours = openingHours.replace(/^매일\s+/, '').trim();
-
       // ✅ 메뉴명 & 가격
       const menuItems = Array.from(
         document.querySelectorAll('.list_goods > li'),

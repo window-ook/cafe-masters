@@ -73,10 +73,7 @@ export default function Memo({
           data-cy="memo-rating"
           aria-label="카페의 별점을 매기는 라디오 그룹"
           value={rating}
-          onChange={value => {
-            setRating(value);
-            console.log(value);
-          }}
+          onChange={value => setRating(value)}
         />
       </div>
       <CategorySelector

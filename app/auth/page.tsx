@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import Signup from 'components/auth/signup/index';
 import Signin from 'components/auth/signin/index';
-import AuthBackgroundCards from 'components/auth/shared/background-cards';
+import BackgroundCards from 'components/auth/shared/background-cards';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-export const dynamic = 'force-static';
+const Signup = dynamic(() => import('components/auth/signup/index'), {
+  ssr: false,
+});
 
 export type AuthView = 'SIGNIN' | 'SIGNUP';
 
@@ -19,7 +21,7 @@ export default function Auth() {
 
   return (
     <main className="area h-screen w-screen flex justify-center items-center">
-      <AuthBackgroundCards />
+      <BackgroundCards />
       <section className="flex flex-col items-center gap-4">
         <header className="flex">
           <Image

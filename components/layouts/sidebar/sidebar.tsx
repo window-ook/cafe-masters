@@ -13,30 +13,43 @@ import { useInView } from 'react-intersection-observer';
 import useBookmarkedInfiniteQuery from 'hooks/cache/useBookmarkedInfiniteQuery';
 import useCollectedInfiniteQuery from 'hooks/cache/useCollectedInfiniteQuery';
 import useRecommendedQuery from 'hooks/cache/useRecommendedQuery';
-import CircularProgress from './shared/circular-progress';
-import dynamic from 'next/dynamic';
+import SidebarTabList from './main/sidebar-tab-list';
 import Header from './header';
 import Footer from './footer';
-import SidebarTabList from './main/sidebar-tab-list';
+import dynamic from 'next/dynamic';
 
-const SearchResultList = dynamic(() => import('./main/search-result-list'), {
+const SearchResultList = dynamic(() => import('./main/search-result'), {
   ssr: false,
 });
-const NormalCafe = dynamic(() => import('./main/normal-cafe'), { ssr: false });
 const CollectedCafe = dynamic(() => import('./main/collected-cafe'), {
   ssr: false,
 });
+const NormalCafe = dynamic(() => import('./main/normal-cafe'), { ssr: false });
 const PageConverter = dynamic(() => import('./footer/page-converter'), {
   ssr: false,
 });
 const SubSidebar = dynamic(() => import('./sub-sidebar/sub-sidebar'), {
   ssr: false,
 });
+const Spinner = dynamic(() => import('./shared/spinner'), {
+  ssr: false,
+});
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const userId = useUserStore(state => state.userId);
+  const {
+    searchResult,
+    setRecommendedCafe,
+    filteredRecommendedCafe,
+    collectedSearchTerm,
+    bookmarkedSearchTerm,
+    setThisX,
+    setThisY,
+  } = useMapStore();
+  const { isDarkTheme, isSubSidebarOpen, setIsSubSidebarOpen, setIsMenuOpen } =
+    useCheckStore();
 
   const { ref: collectedRef, inView: collectedInView } = useInView({
     threshold: 0.5,
@@ -45,23 +58,9 @@ export default function Sidebar() {
     threshold: 0.5,
   });
 
-  const searchResult = useMapStore(state => state.searchResult);
-  const filteredRecommendedCafe = useMapStore(
-    state => state.filteredRecommendedCafe,
-  );
-  const setRecommendedCafe = useMapStore(state => state.setRecommendedCafe);
-  const setThisX = useMapStore(state => state.setThisX);
-  const setThisY = useMapStore(state => state.setThisY);
-  const userId = useUserStore(state => state.userId);
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-  const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
-  const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
-  const setIsMenuOpen = useCheckStore(state => state.setIsMenuOpen);
-  const collectedSearchTerm = useMapStore(state => state.collectedSearchTerm);
-  const bookmarkedSearchTerm = useMapStore(state => state.bookmarkedSearchTerm);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const router = useRouter();
-
   const pathname = usePathname();
 
   const isMainPage = pathname === '/cafe';
@@ -78,6 +77,10 @@ export default function Sidebar() {
     currentPage * itemsPerPage,
   );
   // 추천 카페도 페이지네이션 처리하기
+  const paginatedRecommends = filteredRecommendedCafe.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
   const cardContainerStyle = 'flex flex-col gap-8 my-8 px-8';
 
@@ -269,7 +272,7 @@ export default function Sidebar() {
 
                   {isFetchingNextCollectedPage && (
                     <div className="fixed bottom-4 left-4">
-                      <CircularProgress />
+                      <Spinner />
                     </div>
                   )}
 
@@ -299,7 +302,7 @@ export default function Sidebar() {
 
                   {isFetchingNextBookmarkedPage && (
                     <div className="fixed bottom-4 left-4">
-                      <CircularProgress />
+                      <Spinner />
                     </div>
                   )}
 
@@ -310,7 +313,7 @@ export default function Sidebar() {
               {isRecommendedPage && (
                 <div className="relative">
                   <ul className={cardContainerStyle}>
-                    {filteredRecommendedCafe?.map(
+                    {paginatedRecommends?.map(
                       (cafe: RecommendedCafeFromSupabase) => (
                         <NormalCafe
                           key={cafe.id}
@@ -329,7 +332,7 @@ export default function Sidebar() {
           </main>
 
           {/* 하단 */}
-          {isSearchResultPage && (
+          {(isSearchResultPage || isRecommendedPage) && (
             <footer className="flex-none">
               <PageConverter
                 isDarkTheme={isDarkTheme}

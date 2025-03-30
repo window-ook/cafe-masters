@@ -11,9 +11,13 @@ import {
 } from 'utils/styles';
 import { handleEmailValid } from '../shared/utils';
 import { SignProps } from 'app/auth/page';
-import UserForm from '../shared/user-form';
-import OtpForm from './otp-form';
 import useVerifyOtpMutation from 'hooks/mutation/useVerifyOtpMutation';
+import UserForm from '../shared/user-form';
+import dynamic from 'next/dynamic';
+
+const OtpForm = dynamic(() => import('./otp-form'), {
+  ssr: false,
+});
 
 export default function Signup({ setViewAction }: SignProps) {
   const [email, setEmail] = useState<string>('');

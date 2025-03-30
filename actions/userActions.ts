@@ -21,14 +21,11 @@ export async function getCurrentUserId(): Promise<string> {
 }
 
 export async function getAdminUser(userId: string): Promise<boolean> {
-  if (!userId || userId.trim() === '' || userId === 'no-user') {
-    console.error('유효하지 않은 유저 ID:', userId);
-    return false;
-  }
-
-  const supabase = await createServerSupabaseClient();
+  if (!userId || userId === 'no-user') throw new Error('유효하지 않은 유저 ID');
 
   const trimmedUserId = userId.trim();
+
+  const supabase = await createServerSupabaseClient();
 
   const { data, error } = await supabase
     .from('user')
@@ -36,12 +33,8 @@ export async function getAdminUser(userId: string): Promise<boolean> {
     .eq('userId', trimmedUserId)
     .maybeSingle();
 
+  if (!data) throw new Error('어드민 유저가 아닙니다.');
   if (error) handleError(error);
-
-  if (!data) {
-    console.warn('admin이 아닌 사용자입니다.');
-    return false;
-  }
 
   return data.admin === true;
 }
