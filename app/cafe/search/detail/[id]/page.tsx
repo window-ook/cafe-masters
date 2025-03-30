@@ -1,76 +1,57 @@
 'use client';
 
-import { useEffect, use, useMemo } from 'react';
+import { useEffect, use } from 'react';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
 
 export default function SearchDetail({ params }: PageProps) {
   const { id } = use(params);
+  const numericId = parseFloat(id);
 
-  const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
-  const collectedCafe = useMapStore(state => state.collectedCafe);
-  const recommendedCafe = useMapStore(state => state.recommendedCafe);
-  const setThisId = useMapStore(state => state.setThisId);
-  const setCafeDetail = useMapStore(state => state.setCafeDetail);
+  const {
+    bookmarkedCafe,
+    collectedCafe,
+    recommendedCafe,
+    setThisId,
+    setCafeDetail,
+  } = useMapStore();
   const userId = useUserStore(state => state.userId);
-  const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
-  const setIsCollected = useCheckStore(state => state.setIsCollected);
-  const setIsRecommended = useCheckStore(state => state.setIsRecommended);
-  const setIsLoading = useCheckStore(state => state.setIsLoading);
-
-  const numericId = useMemo(() => parseFloat(id), [id]);
-  const BASE_URL = useMemo(() => process.env.NEXT_PUBLIC_API_REQUEST_URI, []);
-
-  const REQ_URL =
-    BASE_URL === 'http://localhost:3000'
-      ? `/api/extra/${id}`
-      : `/api/extra/product/${id}`;
+  const { setIsBookmarked, setIsCollected, setIsRecommended, setIsLoading } =
+    useCheckStore();
 
   useEffect(() => {
     if (!userId || userId === '') return;
 
-    setIsLoading(true);
-    setIsBookmarked(false);
-    setIsCollected(false);
-    setIsRecommended(false);
+    const BASE_URL = process.env.NEXT_PUBLIC_API_REQUEST_URI;
 
-    const fetchFromStore = async () => {
-      try {
-        setThisId(numericId);
+    const REQ_URL =
+      BASE_URL === 'http://localhost:3000'
+        ? `/api/extra/${id}`
+        : `/api/extra/product/${id}`;
 
-        const isBookmarkedLocally = bookmarkedCafe.some(
-          cafe => cafe.id === numericId,
-        );
-        const isCollectedLocally = collectedCafe.some(
-          cafe => cafe.id === numericId,
-        );
-        const isRecommendedLocally = recommendedCafe.some(
-          cafe => cafe.id === numericId,
-        );
-        setIsBookmarked(isBookmarkedLocally);
-        setIsCollected(isCollectedLocally);
-        setIsRecommended(isRecommendedLocally);
-      } catch (error) {
-        console.error('수집한 카페와 북마크한 카페 중에서 찾지 못함:', error);
-      }
-    };
-
-    const fetchCafeDetail = async () => {
-      if (!BASE_URL) return;
+    const fetchData = async () => {
+      setIsLoading(true);
+      setIsBookmarked(false);
+      setIsCollected(false);
+      setIsRecommended(false);
 
       try {
         const response = await fetch(REQ_URL);
         const data = await response.json();
         setCafeDetail(data);
+        setThisId(numericId);
+        setIsBookmarked(bookmarkedCafe.some(cafe => cafe.id === numericId));
+        setIsCollected(collectedCafe.some(cafe => cafe.id === numericId));
+        setIsRecommended(recommendedCafe.some(cafe => cafe.id === numericId));
       } catch (error) {
-        console.error('카페 상세 정보 다운로드 에러:', error);
+        console.error('검색 결과 상세 정보 error:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    Promise.all([fetchCafeDetail(), fetchFromStore()]).finally(() =>
-      setIsLoading(false),
-    );
+    fetchData();
   }, [
     id,
     userId,
@@ -78,8 +59,6 @@ export default function SearchDetail({ params }: PageProps) {
     bookmarkedCafe,
     collectedCafe,
     recommendedCafe,
-    BASE_URL,
-    REQ_URL,
     setThisId,
     setIsBookmarked,
     setIsCollected,

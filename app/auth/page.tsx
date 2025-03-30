@@ -6,6 +6,8 @@ import Signin from 'components/auth/signin/index';
 import AuthBackgroundCards from 'components/auth/shared/background-cards';
 import Image from 'next/image';
 
+export const dynamic = 'force-static';
+
 export type AuthView = 'SIGNIN' | 'SIGNUP';
 
 export interface SignProps {

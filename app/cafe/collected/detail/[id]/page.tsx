@@ -7,17 +7,14 @@ import Head from 'next/head';
 
 export default function CollectedDetail({ params }: PageProps) {
   const { id } = use(params);
+  const numericId = parseFloat(id);
 
-  const collectedCafe = useMapStore(state => state.collectedCafe);
-  const setCollectedCafeDetail = useMapStore(
-    state => state.setCollectedCafeDetail,
-  );
+  const { collectedCafe, setCollectedCafeDetail } = useMapStore();
 
   useEffect(() => {
-    const numericId = parseFloat(id);
     const targetCafe = collectedCafe.find(cafe => cafe.id === numericId);
     if (targetCafe) setCollectedCafeDetail([targetCafe]);
-  }, [id, collectedCafe, setCollectedCafeDetail]);
+  }, [id, numericId, collectedCafe, setCollectedCafeDetail]);
 
   return (
     <Head>
