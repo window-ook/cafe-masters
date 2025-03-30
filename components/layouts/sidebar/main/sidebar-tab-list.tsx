@@ -99,8 +99,8 @@ export default function SidebarTabList() {
       />
       <SidebarTab
         icon={<FaRegCircleQuestion className={`text-gray-500 text-3xl`} />}
-        title={'도움 센터(soon)'}
-        path={'/cafe/report'}
+        title={'도움 센터'}
+        path={'/cafe/help'}
         isDarkTheme={isDarkTheme}
       />
     </ul>

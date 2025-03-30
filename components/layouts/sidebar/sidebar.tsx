@@ -17,6 +17,7 @@ import SidebarTabList from './main/sidebar-tab-list';
 import Header from './header';
 import Footer from './footer';
 import dynamic from 'next/dynamic';
+import Help from './main/help';
 
 const SearchResultList = dynamic(() => import('./main/search-result'), {
   ssr: false,
@@ -68,6 +69,7 @@ export default function Sidebar() {
   const isCollectedPage = pathname.startsWith('/cafe/collected');
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
   const isRecommendedPage = pathname.startsWith('/cafe/recommended');
+  const isHelpPage = pathname.startsWith('/cafe/help');
 
   const searchResultsPerPage = 15;
   const totalSearchResultPages = Math.ceil(
@@ -231,7 +233,7 @@ export default function Sidebar() {
   if (pathname.startsWith('/resetpassword')) return null;
 
   return (
-    <nav className="flex recommended-center">
+    <nav className="relative flex recommended-center">
       <div
         className={`z-10 relative w-screen h-screen max-w-[27rem] px-1 rounded-none shadow-xl shadow-main-shadow ${
           isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'
@@ -345,6 +347,8 @@ export default function Sidebar() {
                   </ul>
                 </div>
               )}
+
+              {isHelpPage && <Help />}
             </section>
           </main>
 
