@@ -6,10 +6,10 @@ import { useRequestResetPasswordMutation } from 'hooks/mutation/useRequestResetP
 import { signinWithKakao } from 'utils/supabase/signinWithKakao';
 import { handleEmailValid } from '../shared/utils';
 import {
-  AuthFormCardStyle,
-  AuthFormMentionStyle,
-  AuthFormTitleStyle,
-  KakaoButtonStyle,
+  authFormCardStyle,
+  authFormMentionStyle,
+  authFormTitleStyle,
+  kakaoButtonStyle,
 } from 'utils/styles';
 import { SignProps } from 'app/auth/page';
 import dynamic from 'next/dynamic';
@@ -57,10 +57,10 @@ export default function Signin({ setViewAction }: SignProps) {
   };
 
   return (
-    <main className={AuthFormCardStyle}>
+    <main className={authFormCardStyle}>
       {!resetRequired ? (
         <div>
-          <p className={AuthFormTitleStyle}>로그인</p>
+          <p className={authFormTitleStyle}>로그인</p>
           <form
             className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4"
             onKeyDown={e => {
@@ -97,12 +97,12 @@ export default function Signin({ setViewAction }: SignProps) {
               data-cy="kakaosignin-button"
               type="button"
               aria-label="카카오 로그인 버튼"
-              className={KakaoButtonStyle}
+              className={kakaoButtonStyle}
               onClick={() => signinWithKakao()}
             >
               <span className="font-dpixel text-white">카카오 로그인</span>
             </button>
-            <span color="gray" className={AuthFormMentionStyle}>
+            <span color="gray" className={authFormMentionStyle}>
               계정이 없으신가요?{' '}
               <button
                 type="button"

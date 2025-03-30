@@ -231,11 +231,11 @@ export default function Sidebar() {
   if (pathname.startsWith('/resetpassword')) return null;
 
   return (
-    <nav className="relative flex recommended-center">
+    <nav className="flex recommended-center">
       <div
         className={`z-10 relative w-screen h-screen max-w-[27rem] px-1 rounded-none shadow-xl shadow-main-shadow ${
           isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'
-        } ${isSubSidebarOpen ? 'hidden sm:block' : ''}`}
+        } ${isSubSidebarOpen && 'hidden sm:block'}`}
       >
         <div className="h-full flex flex-col">
           {/* 상단 */}
@@ -289,7 +289,7 @@ export default function Sidebar() {
 
                   {isFetchingNextCollectedPage && (
                     <div className="fixed bottom-4 left-4">
-                      <Spinner size="4" border="4" />
+                      <Spinner width="w-4" height="h-4" border="border-4" />
                     </div>
                   )}
 
@@ -319,7 +319,7 @@ export default function Sidebar() {
 
                   {isFetchingNextBookmarkedPage && (
                     <div className="fixed bottom-4 left-4">
-                      <Spinner size="4" border="4" />
+                      <Spinner width="w-4" height="h-4" border="border-4" />
                     </div>
                   )}
 

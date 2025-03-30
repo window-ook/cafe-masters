@@ -1,10 +1,9 @@
 import { useCheckStore } from 'utils/store';
 import { BadgeProps } from 'types/common';
 import {
-  BadgeCommon,
   getExpertTierStyle,
   getMasterTierStyle,
-  ModalMasterEffectStyle,
+  masterTierModalStyle,
 } from 'utils/styles';
 
 interface TierInfoModalProps {
@@ -28,6 +27,8 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
 
   const tierDescStyle =
     'font-pretendard font-bold text-gray-500 lg:text-lg text-xs';
+  const badgeStyle =
+    'rounded-xl w-20 h-6 py-4 flex items-center justify-center';
 
   return (
     <article>
@@ -37,8 +38,7 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
           onClick={handleClose}
         >
           <div
-            className={`${isDarkTheme ? 'bg-main-dark text-white border-main-dark-border border-4' : 'bg-white border-main-shadow border-4'}
-          absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center`}
+            className={`${isDarkTheme ? 'bg-main-dark text-white border-main-dark-border border-4' : 'bg-white border-main-shadow border-4'} absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center`}
             onClick={e => e.stopPropagation()}
           >
             <div className="flex flex-col">
@@ -52,7 +52,7 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
             <Badge
               tier={'BEGINNER'}
               range={'0 ~ 5'}
-              color={`bg-beginner text-white ${BadgeCommon}`}
+              color={`bg-beginner text-white ${badgeStyle}`}
             />
             <p className={tierDescStyle}>
               당신은 카페 월드의 초보! 갈 길이 멉니다ㅜㅜ
@@ -60,7 +60,7 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
             <Badge
               tier={'JUNIOR'}
               range={'6 ~ 15'}
-              color={`bg-junior text-white ${BadgeCommon}`}
+              color={`bg-junior text-white ${badgeStyle}`}
             />
             <p className={tierDescStyle}>
               열심히 카페를 다니고 있는 주니어에요
@@ -68,7 +68,7 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
             <Badge
               tier={'SENIOR'}
               range={'16 ~ 29'}
-              color={`bg-senior text-white ${BadgeCommon}`}
+              color={`bg-senior text-white ${badgeStyle}`}
             />
             <p className={tierDescStyle}>
               커피 좀 마셔봤다는 시니어가 되셨네요 후훗
@@ -76,14 +76,14 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
             <Badge
               tier={'EXPERT'}
               range={'30 ~ 49'}
-              color={getExpertTierStyle(BadgeCommon)}
+              color={getExpertTierStyle(badgeStyle)}
             />
             <p className={tierDescStyle}>
               어엿한 카페 고수입니다 뿌듯하셔도 좋아요!!
             </p>
             <div className="relative flex items-center gap-3">
-              <div className={ModalMasterEffectStyle}></div>
-              <p className={getMasterTierStyle(BadgeCommon)}>
+              <div className={masterTierModalStyle}></div>
+              <p className={getMasterTierStyle(badgeStyle)}>
                 <span className="text-sm font-dpixel">MASTER</span>
               </p>
               <p className="z-10 relative text-xl font-bold font-pretendard">

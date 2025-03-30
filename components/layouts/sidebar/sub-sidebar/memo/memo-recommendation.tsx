@@ -1,6 +1,5 @@
 import { usePathname } from 'next/navigation';
 import CategorySelector, { CategorySelectorProps } from './category-selector';
-import { getMemoBackStyle, getMemoSubmitStyle } from 'utils/styles';
 
 interface MemoRecommendationProps extends CategorySelectorProps {
   detailName: string;
@@ -19,6 +18,9 @@ export default function MemoRecommendation({
 }: MemoRecommendationProps) {
   const pathname = usePathname();
 
+  const memoSubmitStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} p-4 shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70`;
+  const memoBackStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} py-2 px-6 shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70`;
+
   return (
     <section className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
@@ -30,7 +32,7 @@ export default function MemoRecommendation({
           type="button"
           aria-label="추천 중 취소 버튼"
           onClick={() => setMemoRecommendationOpen(false)}
-          className={getMemoBackStyle(isDarkTheme)}
+          className={memoBackStyle}
         >
           <span>Back</span>
         </button>
@@ -42,7 +44,7 @@ export default function MemoRecommendation({
       <button
         data-cy="recommend-button"
         aria-label="추천 완료 버튼"
-        className={getMemoSubmitStyle(isDarkTheme)}
+        className={memoSubmitStyle}
       >
         <span className="text-lg">완료</span>
       </button>

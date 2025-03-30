@@ -32,7 +32,7 @@ export default function Loading() {
 
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
-          <Spinner size="6" border="8" />
+          <Spinner width="w-16" height="h-16" border="border-8" />
         </div>
 
         <div className="flex justify-between items-center">
