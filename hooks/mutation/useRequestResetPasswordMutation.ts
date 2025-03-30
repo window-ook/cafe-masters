@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
-export function useResetPasswordMutation() {
+export function useRequestResetPasswordMutation() {
   const supabase = createBrowserSupabaseClient();
 
   return useMutation({

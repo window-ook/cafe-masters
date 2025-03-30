@@ -93,7 +93,7 @@ export async function GET(
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error('🚨 추출 중 오류 발생:', error);
+    console.error('상세 정보 fetch error:', error);
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 },

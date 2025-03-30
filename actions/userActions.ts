@@ -1,6 +1,12 @@
 'use server';
 
 import { createServerSupabaseClient } from 'utils/supabase/server';
+import { PostgrestError } from '@supabase/supabase-js';
+
+function handleError(error: PostgrestError): void {
+  console.error(error);
+  throw new Error(error.message);
+}
 
 export async function getCurrentUserId(): Promise<string> {
   const supabase = await createServerSupabaseClient();
@@ -30,10 +36,7 @@ export async function getAdminUser(userId: string): Promise<boolean> {
     .eq('userId', trimmedUserId)
     .maybeSingle();
 
-  if (error) {
-    console.error('Supabase 에러:', error.message);
-    return false;
-  }
+  if (error) handleError(error);
 
   if (!data) {
     console.warn('admin이 아닌 사용자입니다.');

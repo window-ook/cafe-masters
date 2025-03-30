@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useUploadBookmarkMutation } from 'hooks/mutation/useUploadBookmarkMutation';
-import { useCancelBookmarkMutation } from 'hooks/mutation/useCancelBookmarkMutation';
+import { useDeleteBookmarkMutation } from 'hooks/mutation/useDeleteBookmarkMutation';
 import { useCheckStore, useUserStore } from 'utils/store';
 import {
   NormalCafeDetailForBookmark,
@@ -48,7 +48,7 @@ export default function NormalCafeDetail({
   const pathname = usePathname();
 
   const uploadBookmarkMutation = useUploadBookmarkMutation();
-  const cancelBookmarkMutation = useCancelBookmarkMutation();
+  const deleteBookmarkMutation = useDeleteBookmarkMutation();
 
   const menu =
     !Array.isArray(detail?.menu) && detail?.menu
@@ -70,8 +70,8 @@ export default function NormalCafeDetail({
     toast.success('북마크 했습니다!');
   };
 
-  const handleCancelBookmark = () => {
-    cancelBookmarkMutation.mutate();
+  const handleDeleteBookmark = () => {
+    deleteBookmarkMutation.mutate(detail.id);
     setIsSubSidebarOpen(false);
     toast.success('북마크 취소했습니다!');
   };
@@ -107,8 +107,8 @@ export default function NormalCafeDetail({
           {isBookmarked ? (
             <button
               data-cy="cancel-bookmark-button"
-              aria-label="북마크 취소 버튼"
-              onClick={handleCancelBookmark}
+              aria-label="북마크 삭제 버튼"
+              onClick={handleDeleteBookmark}
               className="flex items-center"
             >
               <IoBookmark className="pr-2 text-yellow-500 text-3xl" />
@@ -130,7 +130,7 @@ export default function NormalCafeDetail({
           </span>
         </div>
         <button
-          aria-label="카페 상세 정보 보기 취소 버튼"
+          aria-label="상세 정보 닫기 버튼"
           onClick={handleSetIsSubSidebarOpen}
           className="px-2 right-2"
         >

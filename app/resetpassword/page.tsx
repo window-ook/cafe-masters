@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useFinishResetMutation } from 'hooks/mutation/useFinishResetMutation';
+import { useFinishResetPasswordMutation } from 'hooks/mutation/useFinishResetPasswordMutation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
 import AuthBackgroundCards from 'components/auth/shared/background-cards';
+
+export const dynamic = 'force-static';
 
 export default function Resetpassword() {
   const supabase = createBrowserSupabaseClient();
@@ -15,7 +17,7 @@ export default function Resetpassword() {
 
   const router = useRouter();
 
-  const finishResetMutation = useFinishResetMutation();
+  const finishResetMutation = useFinishResetPasswordMutation();
 
   const handleSubmit = () => {
     finishResetMutation.mutate(newPassword);

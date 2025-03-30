@@ -1,27 +1,14 @@
 'use client';
 
-import { useEffect, use } from 'react';
-import { useMapStore, useCheckStore } from 'utils/store';
+import { use } from 'react';
 import { PageProps } from 'types/common';
 import Head from 'next/head';
+import useCafeDetailState from 'hooks/state/useCafeDetailState';
 
 export default function BookmarkedDetail({ params }: PageProps) {
   const { id } = use(params);
 
-  const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
-  const setBookmarkedCafeDetail = useMapStore(
-    state => state.setBookmarkedCafeDetail,
-  );
-  const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
-
-  useEffect(() => {
-    const numericId = parseFloat(id);
-    const targetCafe = bookmarkedCafe.find(cafe => cafe.id === numericId);
-    if (targetCafe) {
-      setIsBookmarked(true);
-      setBookmarkedCafeDetail([targetCafe]);
-    }
-  }, [id, bookmarkedCafe, setBookmarkedCafeDetail, setIsBookmarked]);
+  useCafeDetailState(id, 'bookmarked');
 
   return (
     <Head>

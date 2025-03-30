@@ -4,7 +4,6 @@ import { useMapStore } from 'utils/store';
 export default function Filter() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  // 1. 버튼용 카테고리 배열
   const categories = [
     '조용한',
     '시끌벅적한',
@@ -20,8 +19,6 @@ export default function Filter() {
     '빵 구운내 나는',
   ];
 
-  // 2. recommendedCafe의 각 카페에서, 선택한 카테고리를 &&으로 가진 카페만 filter
-  // 전역 상태로 공유되어야 함 -> 사이드바에서 normal-cafe를 매핑하기 때문에
   const recommendedCafe = useMapStore(state => state.recommendedCafe);
   const setFilteredRecommendedCafe = useMapStore(
     state => state.setFilteredRecommendedCafe,
@@ -36,9 +33,8 @@ export default function Filter() {
   };
 
   useEffect(() => {
-    // 3. filteredCafe를 렌더시키도록 useEffect 활용하기
     const filteredRecommendedCafe = recommendedCafe.filter(cafe => {
-      if (!cafe.category) return false; // 카테고리가 없으면 false
+      if (!cafe.category) return false;
       try {
         const parsedCategory = JSON.parse(cafe.category) as string[];
 
@@ -46,7 +42,7 @@ export default function Filter() {
           parsedCategory.includes(selected),
         );
       } catch (error) {
-        console.error('카테고리 파싱 오류:', error);
+        console.error('카테고리 parsing error:', error);
         return false;
       }
     });

@@ -1,18 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useMapStore, useUserStore } from 'utils/store';
+import { useUserStore } from 'utils/store';
 import { deleteBookmarkedCafe } from 'actions/bookmarkActions';
 
-export function useCancelBookmarkMutation() {
-  const bookmarkedCafeDetail = useMapStore(
-    state => state.bookmarkedCafeDetail[0],
-  );
+export function useDeleteBookmarkMutation() {
   const userId = useUserStore(state => state.userId);
 
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async () =>
-      await deleteBookmarkedCafe(bookmarkedCafeDetail?.id, userId),
+    mutationFn: async (cafeId: number) => {
+      return await deleteBookmarkedCafe(cafeId, userId);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
       queryClient.invalidateQueries({

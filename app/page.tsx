@@ -5,10 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useSigninMutation } from 'hooks/mutation/useSigninMutation';
 import Image from 'next/image';
 
-/**
- * 반응형 스타일 참고
- * @params 1100, 1020, 690, 560
- */
+export const dynamic = 'force-static';
+
+// 반응형 스타일 참고 1100, 1020, 690, 560
 
 const Navbar = () => {
   const router = useRouter();

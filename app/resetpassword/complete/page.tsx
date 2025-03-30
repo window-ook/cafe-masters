@@ -4,6 +4,8 @@ import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
 import AuthBackgroundCards from 'components/auth/shared/background-cards';
 
+export const dynamic = 'force-static';
+
 export default function ResetPasswordComplete() {
   const supabase = createBrowserSupabaseClient();
 
