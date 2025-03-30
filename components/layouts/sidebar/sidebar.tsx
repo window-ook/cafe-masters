@@ -69,18 +69,27 @@ export default function Sidebar() {
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
   const isRecommendedPage = pathname.startsWith('/cafe/recommended');
 
-  const itemsPerPage = 15;
-  const totalPages = Math.ceil(searchResult.length / itemsPerPage);
+  const searchResultsPerPage = 15;
+  const totalSearchResultPages = Math.ceil(
+    searchResult.length / searchResultsPerPage,
+  );
+  const paginatedResult = searchResult.slice(
+    (currentPage - 1) * searchResultsPerPage,
+    currentPage * searchResultsPerPage,
+  );
 
-  const paginatedResults = searchResult.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+  const recommendedPerPage = 5;
+  const totalRecommendedPages = Math.ceil(
+    filteredRecommendedCafe.length / recommendedPerPage,
   );
-  // 추천 카페도 페이지네이션 처리하기
-  const paginatedRecommends = filteredRecommendedCafe.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+  const paginatedRecommend = filteredRecommendedCafe.slice(
+    (currentPage - 1) * recommendedPerPage,
+    currentPage * recommendedPerPage,
   );
+
+  const totalPages = isRecommendedPage
+    ? totalRecommendedPages
+    : totalSearchResultPages;
 
   const cardContainerStyle = 'flex flex-col gap-8 my-8 px-8';
 
@@ -151,9 +160,17 @@ export default function Sidebar() {
     setCurrentPage(1);
   }, [searchResult]);
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  const handleNextSearchResultPage = () => {
+    if (currentPage < totalSearchResultPages) setCurrentPage(currentPage + 1);
   };
+
+  const handleNextRecommendedPage = () => {
+    if (currentPage < totalRecommendedPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handleNextPage = isRecommendedPage
+    ? handleNextRecommendedPage
+    : handleNextSearchResultPage;
 
   const handlePreviousPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -214,7 +231,7 @@ export default function Sidebar() {
   if (pathname.startsWith('/resetpassword')) return null;
 
   return (
-    <nav className="relative flex items-center">
+    <nav className="relative flex recommended-center">
       <div
         className={`z-10 relative w-screen h-screen max-w-[27rem] px-1 rounded-none shadow-xl shadow-main-shadow ${
           isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'
@@ -236,7 +253,7 @@ export default function Sidebar() {
             <section>
               {isSearchResultPage && (
                 <ul className={cardContainerStyle}>
-                  {paginatedResults.map((cafe: SearchResult) => (
+                  {paginatedResult.map((cafe: SearchResult) => (
                     // 검색 리스트 컴포넌트 만들어서 대체하기
                     <SearchResultList
                       key={cafe.id}
@@ -272,7 +289,7 @@ export default function Sidebar() {
 
                   {isFetchingNextCollectedPage && (
                     <div className="fixed bottom-4 left-4">
-                      <Spinner />
+                      <Spinner size="4" border="4" />
                     </div>
                   )}
 
@@ -302,7 +319,7 @@ export default function Sidebar() {
 
                   {isFetchingNextBookmarkedPage && (
                     <div className="fixed bottom-4 left-4">
-                      <Spinner />
+                      <Spinner size="4" border="4" />
                     </div>
                   )}
 
@@ -313,7 +330,7 @@ export default function Sidebar() {
               {isRecommendedPage && (
                 <div className="relative">
                   <ul className={cardContainerStyle}>
-                    {paginatedRecommends?.map(
+                    {paginatedRecommend?.map(
                       (cafe: RecommendedCafeFromSupabase) => (
                         <NormalCafe
                           key={cafe.id}

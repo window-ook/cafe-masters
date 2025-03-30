@@ -1,5 +1,12 @@
-export default function Spinner() {
+interface SpinnerProps {
+  size: string;
+  border: string;
+}
+
+export default function Spinner({ size = '2', border = '4' }: SpinnerProps) {
   return (
-    <div className="w-10 h-10 border-4 border-main border-t-transparent rounded-full animate-spin"></div>
+    <div
+      className={`w-[${size}rem] h-[${size}rem] border-${border} border-main border-r-main-shadow border-b-main-light border-t-transparent rounded-full animate-spin`}
+    ></div>
   );
 }
