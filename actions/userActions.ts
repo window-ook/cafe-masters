@@ -33,8 +33,7 @@ export async function getAdminUser(userId: string): Promise<boolean> {
     .eq('userId', trimmedUserId)
     .maybeSingle();
 
-  if (!data) throw new Error('어드민 유저가 아닙니다.');
   if (error) handleError(error);
 
-  return data.admin === true;
+  return data?.admin === true;
 }
