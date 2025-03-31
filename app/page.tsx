@@ -22,7 +22,15 @@ const Navbar = () => {
         );
 
       setTimeout(() => {
-        signinMutation.mutate({ email: data.email, password: data.password });
+        signinMutation.mutate(
+          { email: data.email, password: data.password },
+          {
+            onSuccess: () => {
+              router.refresh(); // 세션 재요청
+              router.push('/cafe'); // 메인 페이지
+            },
+          },
+        );
       }, 0);
     } catch (error) {
       console.error(error);
