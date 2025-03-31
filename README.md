@@ -144,5 +144,7 @@ https://app.cafe-masters.co
 
 <img src="https://github.com/user-attachments/assets/985b0c24-343f-422b-b013-f717f591c6d9" width="600" height="340" />
 
-Next.js 15 App router + TypeScript + Zustand + Tanstack Query + Supabase<br/>
 확장성과 효율성을 모두 갖춘 풀스택 아키텍처입니다.<br/>
+서버와 클라이언트간 책임 분담과 효율적인 상태 관리를 추구했습니다.<br/>
+TypeScript와 ESLint가 주는 타입 안정성을 기반으로 DB의 GET, POST 요청을 안전하게 처리하며,<br/>
+예상 가능한 흐름과 유지보수가 쉬운 구조를 지향했습니다.
