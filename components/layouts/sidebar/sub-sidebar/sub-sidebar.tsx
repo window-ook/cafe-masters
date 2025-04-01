@@ -7,7 +7,7 @@ import { useUploadCollectMutation } from 'hooks/mutation/useUploadCollectMutatio
 import { useUpdateCollectMutation } from 'hooks/mutation/useUpdateCollectMutation';
 import { useUploadRecommendMutation } from 'hooks/mutation/useUploadRecommendMutation';
 import { CollectedRowInsert, CollectedRowUpdate } from 'actions/collectActions';
-import { RecommendedRowInsert } from 'actions/recommendsActions';
+import { RecommendedRowInsert } from 'actions/recommendActions';
 import { getSubSidebarStyle } from 'utils/styles';
 import { toast } from 'react-toastify';
 import dynamic from 'next/dynamic';

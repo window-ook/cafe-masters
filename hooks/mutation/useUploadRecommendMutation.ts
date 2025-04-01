@@ -2,7 +2,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 import {
   RecommendedRowInsert,
   createRecommendedCafe,
-} from 'actions/recommendsActions';
+} from 'actions/recommendActions';
 
 export function useUploadRecommendMutation() {
   const queryClient = useQueryClient();

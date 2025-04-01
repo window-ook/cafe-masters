@@ -6,7 +6,7 @@ export const getSubSidebarStyle = (
   const baseStyle = `static left-0 z-10 translate-y-4 w-[100vw] max-w-[27rem] p-2 overflow-y-auto overflow-x-hidden shadow-md ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100 text-black backdrop-blur-lg bg-opacity-20'} transition-transform duration-300 ease-in-out`;
   const openned = isSubSidebarOpen
     ? `${isExtend ? 'translate-y-[13rem] h-[calc(100vh-13rem)]' : 'translate-y-[35rem]'} rounded-t-3xl opacity-100 sm:h-[90vh] sm:translate-y-4 sm:translate-x-[2rem] sm:rounded-md`
-    : 'sm:pointer-events-none opacity-0';
+    : 'hidden sm:block sm:pointer-events-none opacity-0';
   return `${baseStyle} ${openned}`;
 };
 
