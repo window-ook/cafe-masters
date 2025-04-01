@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useMapStore } from 'utils/store';
-import { countRecommendedCafes } from 'actions/recommendsActions';
+import { countRecommendedCafes } from 'actions/recommendActions';
 
 export default function useCountRecommendedQuery() {
   const setRecommendedCafeCount = useMapStore(
