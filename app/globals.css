@@ -7,6 +7,16 @@ body {
   overflow-x: hidden;
 }
 
+.card-container {
+  perspective: 500px; 
+}
+
+.card-tilt {
+  transition: transform 0.2s ease;
+  transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+  will-change: transform; 
+}
+
 /* 랜딩 페이지 카드 애니메이션 */
 @-webkit-keyframes animatetop {
   from {

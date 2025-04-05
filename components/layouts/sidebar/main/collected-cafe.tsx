@@ -1,3 +1,4 @@
+import React, { useRef } from 'react';
 import { useCheckStore } from 'utils/store';
 import {
   overThreeRatingStyle,
@@ -28,7 +29,37 @@ export default function CollectedCafe({
 }: CollectedCafeProps) {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
-  const isUnique = name === '탐앤탐스 대구강북점';
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const container = cardRef.current;
+
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+    const x = e.nativeEvent.clientX - rect.left;
+    const y = e.nativeEvent.clientY - rect.top;
+
+    const rotateY = (x / rect.width - 0.5) * 40;
+    const rotateX = (y / rect.height - 0.5) * -40;
+
+    container.style.setProperty('--rotate-x', `${rotateX}deg`);
+    container.style.setProperty('--rotate-y', `${rotateY}deg`);
+  };
+
+  const handleMouseLeave = () => {
+    const container = cardRef.current;
+    if (!container) return;
+
+    container.style.setProperty('--rotate-x', `0deg`);
+    container.style.setProperty('--rotate-y', `0deg`);
+  };
+
+  const hidden = ['탐앤탐스 대구강북점', '접속'];
+
+  const isUnique = (name: string) => {
+    if (hidden.includes(name)) return true;
+  };
 
   const bgRatings =
     ratings != null
@@ -40,19 +71,29 @@ export default function CollectedCafe({
       : 'text-white bg-black';
 
   return (
-    <li data-cy="collected-cafe" className="relative list-none">
-      {isUnique && <div className={uniqueCardEffectStyle}></div>}
+    <li
+      data-cy="collected-cafe"
+      className="relative list-none h-[24rem] card-container"
+    >
+      {isUnique(name || '') && <div className={uniqueCardEffectStyle}></div>}
       <div
+        ref={cardRef}
+        role="button"
+        tabIndex={0}
         onClick={onClick}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         className={
-          isUnique
+          isUnique(name || '')
             ? uniqueCardStyle
-            : `${bgRatings} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} h-[20rem] p-4 border-4 rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer hover:scale-105 transition duration-300 ease`
+            : `h-full p-4 border-4 rounded-2xl flex flex-col justify-between drop-shadow-3xl card-tilt ${bgRatings} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} cursor-pointer transition duration-300 ease`
         }
       >
         <div className="flex flex-col gap-2">
-          <div className="shadow-md shadow-gray-500 px-2">
-            <p className="font-dpixel">{name}</p>
+          <div>
+            <p className="whitespace-nowrap overflow-hidden text-ellipsis font-dpixel text-lg">
+              {name}
+            </p>
           </div>
           <div className="flex justify-start gap-0.5">
             {Array(ratings)
@@ -65,7 +106,7 @@ export default function CollectedCafe({
           </div>
         </div>
 
-        <div className="flex justify-center rounded-xl h-[8rem]">
+        <div className="flex justify-center rounded-xl h-[10rem]">
           <Image
             src={photoUrl ?? '/image/cafe_thumbnail.avif'}
             alt="카페 썸네일"
@@ -75,9 +116,13 @@ export default function CollectedCafe({
             className="object-cover w-auto h-full rounded-xl"
           />
         </div>
-        <div className="flex flex-col shadow-gray-500 shadow-md px-2">
-          <p className="text-sm">{address}</p>
-          <p>{phoneNum}</p>
+        <div className="px-2 rounded-md shadow-gray-500 shadow-md flex flex-col">
+          <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+            {address}
+          </p>
+          <p className="whitespace-nowrap overflow-hidden text-ellipsis ">
+            {phoneNum}
+          </p>
         </div>
       </div>
     </li>
