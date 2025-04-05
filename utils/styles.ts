@@ -31,17 +31,6 @@ export const masterTierBadgeStyle =
 
 export const masterTierModalStyle = `w-[27%] sm:w-[10%] z-0 -top-0.5 inset-0 h-9 absolute bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 
-export const uniqueCardStyle =
-  'h-[20rem] p-4 border-4 rounded-2xl bg-gradient-to-tl from-unique-card-right via-unique-card-mid to-unique-card-left bg-[length:200%_200%] animate-gradient shadow-md drop-shadow-3xl border-red-300 text-white font-dpixel font-bold flex flex-col justify-between cursor-pointer hover:scale-105 hover:bg-gradient-to-tr transition duration-300 ease';
-
-export const uniqueCardEffectStyle = `-z-10 absolute inset-0 w-[100%] h-[100%] bg-gradient-to-r from-unique-effect-left via-unique-effect-mid to-unique-effect-right rounded-xl blur-md animate-tilt`;
-
-export const overThreeRatingStyle =
-  'bg-gradient-to-tl from-silver-side via-silver-via to-silver-side bg-[length:200%_200%] animate-gradient shadow-md text-gray-600 shadow-gray-300';
-
-export const overFiveRatingStyle =
-  'bg-gradient-to-tl from-gold-side via-gold-via to-gold-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700';
-
 export const ratingCircleStyle =
   'relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500 shadow-md shadow-yellow-100';
 

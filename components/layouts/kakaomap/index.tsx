@@ -55,6 +55,7 @@ export default function KakaoMap() {
             127.04663357436208,
           ),
           level: 7,
+          draggable: true,
         };
         const zoomControl = new window.kakao.maps.ZoomControl();
 
