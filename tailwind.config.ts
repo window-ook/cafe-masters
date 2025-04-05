@@ -15,6 +15,7 @@ const config: Config = {
         dpixel: ['var(--font-dunggeunmo)'],
         pretendard: ['var(--font-pretendard)'],
       },
+
       colors: {
         main: '#7c24c9',
         'main-light': '#f5ccff',
@@ -33,16 +34,20 @@ const config: Config = {
         'master-effect-left': '#44BCFF',
         'master-effect-mid': '#FF44EC',
         'master-effect-right': '#FF675E',
-        'unique-card-left': '#5f018a',
-        'unique-card-mid': '#8a24b9',
-        'unique-card-right': '#f5248c',
-        'unique-effect-left': '#44BCFF',
-        'unique-effect-mid': '#FF44EC',
-        'unique-effect-right': '#FF675E',
-        'silver-via': '#fff',
-        'silver-side': '#8c8c8c',
-        'gold-via': '#f5e902',
-        'gold-side': '#8c6a01',
+        'hidden-card-left': '#5f018a',
+        'hidden-card-mid': '#8a24b9',
+        'hidden-card-right': '#f5248c',
+        'hidden-effect-left': '#44BCFF',
+        'hidden-effect-mid': '#FF44EC',
+        'hidden-effect-right': '#FF675E',
+        'neutral-via': '',
+        'neutral-side': '',
+        'silver-via': '',
+        'silver-side': '#e8e7e6',
+        'gold-via': '',
+        'gold-side': '#FFD700',
+        'emerald-via': '',
+        'emerald-side': '',
         recommended: '#18f282',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -85,14 +90,17 @@ const config: Config = {
           '5': 'hsl(var(--chart-5))',
         },
       },
+
       textShadow: {
         black: '0 2px 4px rgba(0, 0, 0, 0.8)',
         main: '0 2px 4px rgba(135, 90, 173, 1)',
       },
+
       backgroundImage: {
         'expert-gradient': 'linear-gradient(90deg, #f5e902 0%, #bd9b04 100%)',
         'master-gradient': 'linear-gradient(90deg, #8a24b9 0%, #f5248c 100%)',
       },
+
       keyframes: {
         gradient: {
           '0%': {
@@ -148,9 +156,11 @@ const config: Config = {
           },
         },
       },
+
       fontSize: {
         '2xs': '.3rem',
       },
+
       animation: {
         gradient: 'gradient 3s ease infinite',
         reveal: 'reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1)',
@@ -159,9 +169,11 @@ const config: Config = {
         shine: 'shine 1.5s',
         skeleton: 'skeleton 1s ease-in-out infinite alternate',
       },
+
       dropShadow: {
         '3xl': '14px 14px 11px -7px rgba(47,49,51,0.75)',
       },
+
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
@@ -173,6 +185,7 @@ const config: Config = {
   plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
+
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {
@@ -183,6 +196,7 @@ const config: Config = {
         { values: theme('textShadow') },
       );
     }),
+
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-hidden': {

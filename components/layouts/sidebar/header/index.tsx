@@ -54,7 +54,7 @@ export default function Header() {
     >
       <div className="flex justify-between items-center mb-2">
         <Tooltip
-          comment="홈페이지"
+          comment="메뉴로"
           component={
             <button
               type="button"

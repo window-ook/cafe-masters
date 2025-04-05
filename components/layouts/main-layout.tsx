@@ -36,12 +36,6 @@ export default function MainLayout({ children }: MainLayout) {
   useEffect(() => {
     if (!pathname.startsWith('/cafe') && pathname !== '/')
       router.replace('/cafe');
-
-    if (pathname.startsWith('/cafe')) {
-      document.body.style.overflowY = 'hidden';
-    } else {
-      document.body.style.overflowY = 'auto';
-    }
   }, [pathname, router]);
 
   const isDev = process.env.NEXT_PUBLIC_THIS_ENV === 'develope';
@@ -51,7 +45,7 @@ export default function MainLayout({ children }: MainLayout) {
       {pathname === '/' ? (
         <Home />
       ) : pathname.startsWith('/cafe') ? (
-        <main data-cy="main-layout" className="flex">
+        <main data-cy="main-layout" className="flex h-screen overflow-hidden">
           <Sidebar />
           {children}
           <KakaoMap />
