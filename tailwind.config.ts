@@ -34,20 +34,35 @@ const config: Config = {
         'master-effect-left': '#44BCFF',
         'master-effect-mid': '#FF44EC',
         'master-effect-right': '#FF675E',
+
+        'neutral-base': '#e7d2fa',
+        'neutral-via': '#e3c7fc',
+        'neutral-side': '#e0bdff',
+
+        'silver-base': '#e5e7eb',
+        'silver-via': '#9ca3af',
+        'silver-side': '#4b5563',
+
+        'gold-base': '#fde68a',
+        'gold-via': '#facc15',
+        'gold-side': '#a16207',
+        'gold-effect-left': '#fde68a',
+        'gold-effect-mid': '#f2d73f',
+        'gold-effect-right': '#c9ac08',
+
+        'emerald-base': '#6ee7b7',
+        'emerald-via': '#34d399',
+        'emerald-side': '#0f766e',
+        'emerald-effect-left': '#5effda',
+        'emerald-effect-mid': '#2c9952',
+        'emerald-effect-right': '#053303',
+
         'hidden-card-left': '#5f018a',
         'hidden-card-mid': '#8a24b9',
         'hidden-card-right': '#f5248c',
         'hidden-effect-left': '#44BCFF',
         'hidden-effect-mid': '#FF44EC',
         'hidden-effect-right': '#FF675E',
-        'neutral-via': '',
-        'neutral-side': '',
-        'silver-via': '',
-        'silver-side': '#e8e7e6',
-        'gold-via': '',
-        'gold-side': '#FFD700',
-        'emerald-via': '',
-        'emerald-side': '',
         recommended: '#18f282',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -208,7 +223,6 @@ const config: Config = {
         },
       });
     }),
-    // require('tailwindcss-animate'),
   ],
 };
 
