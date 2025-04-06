@@ -2,38 +2,185 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 전체 페이지 스크롤바 */
+::-webkit-scrollbar {
+  width: 6px; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #875aad; 
+  border-radius: 10px; 
+  border: 2px solid transparent; 
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --skeleton-start: #f5f5f5; 
+    --skeleton-end: #d4d4d4;   
+    --hidden-card-left: #5f018a;
+    --hidden-card-mid: #8a24b9;
+    --hidden-card-right: #f5248c;
+    --gold-left: '#fde68a',
+    --gold-via: '#facc15',
+    --gold-right: '#a16207',
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
 body {
   font-family: 'Nanum Gothic', sans-serif;
   overflow-x: hidden;
 }
 
+/* 수집 카드에 컨테이너 부여 */
 .card-container {
   perspective: 500px; 
 }
 
+/* 카드 틸트 */
 .card-tilt {
-  transition: transform 0.2s ease;
-  transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+  transition: transform 0.1s ease;
   will-change: transform; 
+  transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
 }
 
+/* 카드 광원 효과 */
 .card-overlay {
   position: absolute;
   z-index: 20;
   width: 100%;
   height: 100%;
+  background: radial-gradient(
+    circle at var(--mouse-x, 100%) var(--mouse-y, 100%),
+    rgba(255, 255, 255, 0.8),
+    transparent 60%
+    );
+  filter: blur(var(--blur, 70px)) brightness(var(--brightness, 2));
+  opacity: 0;
   pointer-events: none;
   mix-blend-mode: screen;
   transition: background 0.2s ease, opacity 0.2s ease;
-  opacity: 0;
-  background: radial-gradient(
-    circle at var(--mouse-x, 100%) var(--mouse-y, 80%),
-    rgba(255, 255, 255, 0.8),
-    transparent 90%
-  );
-  filter: blur(var(--blur, 20px)) brightness(var(--brightness, 0.5));
 }
 
+.card-silver {
+  background: linear-gradient(
+    to bottom right,
+    #f9fafb,
+    #e5e7eb,
+    #d1d5db,
+    #9ca3af,
+    #6b7280,
+    #4b5563,
+    #374151
+  );
+}
+
+.card-gold {
+  background: linear-gradient(
+    to bottom right,
+    #fef9c3,
+    #fde68a,
+    #fde047,
+    #facc15,
+    #ca8a04,
+    #a16207,
+    #78350f
+  );
+}
+
+.card-emerald {
+  background: linear-gradient(
+    to bottom right,
+    #ccfbf1,    
+    #6ee7b7,   
+    #5fe0a9,   
+    #34d399,   
+    #178f7e,   
+    #0f766e,   
+    #0d5c5b
+  );
+  background-size: 100% 100%;
+  color: black;
+}
+
+.card-hidden {
+  background: linear-gradient(
+    to bottom right,
+    #ff9fda,    
+    #f5248c,    
+    #d622aa,
+    #b02fc5,
+    #8a24b9,    
+    #6b168a,
+    #5f018a     
+  );
+  background-size: 100% 100%;
+  color: white;
+}
+
+
+/* 히든 카드 홀로그래픽 효과 */
 .hidden-card {
   position: relative;
   overflow: hidden;
@@ -75,8 +222,8 @@ body {
 
 .hidden-card:after {
   opacity: 1;
-  background-image: url("https://assets.codepen.io/13471/sparkles.gif"), 
-    url(https://assets.codepen.io/13471/holo.png), 
+  background-image: url("https://assets.codepen.io/13471/sparkles.gif"), /* 홀로 스파클 */
+    url(https://res.cloudinary.com/simey/image/upload/Dev/PokemonCards/galaxy.png),  /* 홀로 패턴 */
     linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
   background-position: 50% 50%;
   background-size: 160%;
@@ -88,27 +235,6 @@ body {
   opacity: .75;
 }
 
-.dynamic-gradient {
-  background: linear-gradient(to top left, var(--hidden-card-right), var(--hidden-card-mid), var(--hidden-card-left));
-  background-size: 200% 200%;
-  transition: background-position 0.3s ease;
-}
-
-.bg-gold-card {
-  background-image: url('/image/gold.avif');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.bg-silver-card {
-  background-image: url('/image/silver.avif');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-/* 애니메이션 효과 */
 .animated-holo {
   animation: holoCard 12s ease 0s 1;
 }
@@ -194,7 +320,7 @@ body {
   }
 }
 
-/* 랜딩 페이지 애니메이션 */
+/* 랜딩 페이지 소개 섹션 애니메이션 */
 @-webkit-keyframes animatetop {
   from {
     top: -18.75rem;
@@ -215,6 +341,7 @@ body {
     opacity: 1;
   }
 }
+
 @-webkit-keyframes zoomIn {
   0% {
     opacity: 0;
@@ -225,6 +352,7 @@ body {
     opacity: 1;
   }
 }
+
 @keyframes zoomIn {
   0% {
     opacity: 0;
@@ -236,6 +364,7 @@ body {
   }
 }
 
+/* 로그인, 회원가입, 비밀번호 재설정 페이지 배경 카드 애니메이션 */
 .area {
   background: #2a2b2b;
   width: 100%;
@@ -337,85 +466,5 @@ body {
     transform: translateY(-1000px) rotate(720deg);
     opacity: 0;
     border-radius: 50%;
-  }
-}
-
-/* 스크롤바 */
-::-webkit-scrollbar {
-  width: 6px; 
-}
-::-webkit-scrollbar-thumb {
-  background-color: #875aad; 
-  border-radius: 10px; 
-  border: 2px solid transparent; 
-}
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --skeleton-start: #f5f5f5; 
-    --skeleton-end: #d4d4d4;   
-    --hidden-card-left: #5f018a;
-    --hidden-card-mid: #8a24b9;
-    --hidden-card-right: #f5248c;
-  }
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }
