@@ -1,4 +1,4 @@
-# Cafe Masters (Ver 2 - 2025.3.30)
+# Cafe Masters (Ver 2 - 2025.3.30 Released)
 
 ![썸네일](https://github.com/user-attachments/assets/e042eb80-164e-4031-ba76-b3c129eea431)
 
