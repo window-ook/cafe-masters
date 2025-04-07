@@ -35,10 +35,6 @@ const config: Config = {
         'master-effect-mid': '#FF44EC',
         'master-effect-right': '#FF675E',
 
-        'neutral-base': '#e7d2fa',
-        'neutral-via': '#e3c7fc',
-        'neutral-side': '#e0bdff',
-
         'silver-base': '#e5e7eb',
         'silver-via': '#9ca3af',
         'silver-side': '#4b5563',

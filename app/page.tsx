@@ -158,7 +158,7 @@ const ScrollSections = () => {
                   alt={section.title}
                   fill
                   sizes="(max-width: 1200px) 100vh, 50vw"
-                  className="absolute inset-0 w-full h-full object-cover saturate-150 group-hover:scale-110 group-hover:rotate-1 transition-all duration-1000"
+                  className="absolute inset-0 w-full h-full object-cover object-center saturate-150 group-hover:scale-110 group-hover:rotate-1 transition-all duration-1000"
                   priority={true}
                 />
               </div>
@@ -227,7 +227,7 @@ const ScrollSections = () => {
                   alt={section.title}
                   fill
                   sizes="(max-width: 1200px) 100vh, 50vw"
-                  className="absolute inset-0 w-full h-full object-cover saturate-150 transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
+                  className="absolute inset-0 w-full h-full object-cover object-center saturate-150 transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
                   priority={true}
                 />
               </div>
