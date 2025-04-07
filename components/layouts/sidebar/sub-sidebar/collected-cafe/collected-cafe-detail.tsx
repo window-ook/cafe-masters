@@ -98,9 +98,9 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
           </div>
 
           <CommentGrid comment={collectedCafeDetail?.comment} />
+          <EatenGrid eaten={collectedCafeDetail?.eaten ?? ''} />
           <ProsGrid pros={collectedCafeDetail?.pros ?? ''} />
           <ConsGrid cons={collectedCafeDetail?.cons ?? ''} />
-          <EatenGrid eaten={collectedCafeDetail?.eaten ?? ''} />
         </div>
       </div>
     </div>

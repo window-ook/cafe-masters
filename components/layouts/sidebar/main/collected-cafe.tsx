@@ -31,18 +31,18 @@ export default function CollectedCafe({
   const HIDDEN_CAFE_NAMES = ['탐앤탐스 대구강북점', '접속'];
 
   const HIDDEN_CARD =
-    'card card-tilt h-full p-4 border-4 border-red-300 rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer transition duration-300 ease';
+    'card card-tilt h-full p-4 border-4 border-main rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer hover:border-main-light transition duration-300 ease';
 
   const HIDDEN_CARD_BACK_EFFECT =
     'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-[100%] h-[100%] rounded-xl bg-gradient-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md animate-tilt pointer-none';
 
-  const RATING_ONE_N_TWO =
-    'bg-gradient-to-br from-neutral-base via-neutral-via to-neutral-side bg-[length:100%_200%] text-gray-600';
+  const RATING_ONE_N_TWO = 'bg-violet-50 text-gray-600';
   const RATING_THREE = 'card-silver text-black';
   const RATING_FOUR = 'card-gold text-black';
   const RATING_FIVE = 'card-emerald text-black';
 
   let COLOR_BY_RATING = '';
+  let HOVER_BORDER_BY_RATING = '';
   let NORMAL_CARD_BACK_EFFECT = '';
 
   switch (ratings) {
@@ -54,21 +54,24 @@ export default function CollectedCafe({
       break;
     case 3:
       COLOR_BY_RATING = RATING_THREE;
+      HOVER_BORDER_BY_RATING = 'hover:border-silver-base';
       NORMAL_CARD_BACK_EFFECT =
         'card-tilt absolute -z-10 inset-0 w-[100%] h-[100%] rounded-xl bg-gray-500 blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
       break;
     case 4:
       COLOR_BY_RATING = RATING_FOUR;
+      HOVER_BORDER_BY_RATING = 'hover:border-gold-base';
       NORMAL_CARD_BACK_EFFECT =
         'card-tilt absolute -z-10 inset-0 w-[100%] h-[100%] rounded-xl bg-gradient-to-r from-gold-effect-left via-gold-effect-mid to-gold-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
       break;
     case 5:
       COLOR_BY_RATING = RATING_FIVE;
+      HOVER_BORDER_BY_RATING = 'hover:border-emerald-base';
       NORMAL_CARD_BACK_EFFECT =
         'card-tilt absolute -z-10 inset-0 w-[100%] h-[100%] rounded-xl bg-gradient-to-r from-emerald-effect-left via-emerald-effect-mid to-emerald-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
   }
 
-  const isHidden = HIDDEN_CAFE_NAMES.includes(name || '');
+  const isHiddenCard = HIDDEN_CAFE_NAMES.includes(name || '');
 
   const handleCardMouseMove = (e: React.MouseEvent) => {
     const container = cardRef.current;
@@ -89,7 +92,7 @@ export default function CollectedCafe({
     back?.style.setProperty('--rotate-y', `${rotateY}deg`);
 
     // 히든 카드 홀로 스타일
-    if (isHidden && styleRef.current) {
+    if (isHiddenCard && styleRef.current) {
       const w = rect.width;
       const h = rect.height;
 
@@ -131,7 +134,7 @@ export default function CollectedCafe({
     back?.style.setProperty('--rotate-x', `0deg`);
     back?.style.setProperty('--rotate-y', `0deg`);
 
-    if (isHidden && styleRef.current) styleRef.current.innerHTML = '';
+    if (isHiddenCard && styleRef.current) styleRef.current.innerHTML = '';
   };
 
   const handleOverlayMouseMove = (e: React.MouseEvent) => {
@@ -180,11 +183,13 @@ export default function CollectedCafe({
       data-cy="collected-cafe"
       className="group card-container relative list-none h-[24rem]"
     >
-      {isHidden ? (
+      {/* 백라이트 레이어 */}
+      {isHiddenCard ? (
         <div ref={backEffectRef} className={HIDDEN_CARD_BACK_EFFECT}></div>
       ) : (
         <div ref={backEffectRef} className={NORMAL_CARD_BACK_EFFECT}></div>
       )}
+      {/* 카드 레이어 */}
       <div
         ref={cardRef}
         role="button"
@@ -199,9 +204,9 @@ export default function CollectedCafe({
           handleOverlayMouseLeave();
         }}
         className={
-          isHidden
+          isHiddenCard
             ? `${HIDDEN_CARD} hidden-card`
-            : `h-full p-4 border-4 rounded-2xl flex flex-col justify-between drop-shadow-3xl card-tilt ${COLOR_BY_RATING} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} cursor-pointer transition duration-300 ease`
+            : `h-full p-4 border-4 ${HOVER_BORDER_BY_RATING} rounded-2xl flex flex-col justify-between drop-shadow-3xl card-tilt ${COLOR_BY_RATING} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} cursor-pointer transition duration-300 ease`
         }
       >
         {(ratings || 0) >= 3 && (

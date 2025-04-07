@@ -80,7 +80,7 @@ export async function GET(
       return { photo, photoList, address, openingHours, menu: menuItems };
     });
 
-    console.log(`📝 추출 데이터:`, data);
+    console.log(`✅ 카페 상세 정보: `, data);
     await browser.close();
 
     return NextResponse.json(data);
