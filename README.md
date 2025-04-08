@@ -1,4 +1,4 @@
-# Cafe Masters (Ver 2 - 2025.3.30)
+# Cafe Masters (Ver 2 - 2025.3.30 Released)
 
 ![썸네일](https://github.com/user-attachments/assets/e042eb80-164e-4031-ba76-b3c129eea431)
 
@@ -49,14 +49,12 @@ https://app.cafe-masters.co
 
 ### 1. 로그인 / 회원가입 / 비밀번호 재설정
 
-<!-- 로그인 화면 png -->
 
 <img src='https://github.com/user-attachments/assets/b3591dc5-954d-459e-960c-d4a18b4b013d' width='500' height='360'>
 
 카페 마스터즈를 이용하기 위해서는 먼저 로그인을 해야합니다.<br/>
 이메일로 생성하거나 카카오 계정으로 회원가입 하시면 됩니다.<br/>
 
-<!-- 이메일 회원가입 -->
 
 <img src='https://github.com/user-attachments/assets/3a50583b-d428-4051-9c4a-3264f0a1afb8' width='500' height='360'>
 
@@ -78,7 +76,6 @@ https://app.cafe-masters.co
 
 로그인을 하고 난 후 보게 되는 페이지입니다.
 
-<!-- 검색 -->
 
 <img src='https://github.com/user-attachments/assets/c55fd9bf-a204-40d7-858d-01e96380cb46' width='500' height='360'>
 <img src='https://github.com/user-attachments/assets/afe495db-f82d-46b0-8474-8a3d60e4691f' width='500' height='300'>
@@ -87,7 +84,6 @@ https://app.cafe-masters.co
 특정 카페가 아닌, 지역만 검색해도 안의 카페를 찾을 수 있어요.<br/>
 썸네일 이미지를 클릭하면 카카오 플레이스에서 제공하는 페이지로 이동할 수 있어요.<br/>
 
-<!-- 북마크 -->
 
 <img src="https://github.com/user-attachments/assets/dcf79bf5-e42c-4d55-97d7-9101310e31a2" width="500" height="400" />
 
@@ -112,8 +108,8 @@ https://app.cafe-masters.co
 
 <img src="https://github.com/user-attachments/assets/aeea5e50-1897-4c8f-b370-044753869e31" width="250" height="180" />
 
-혹시 유니크 카드를 찾으셨나요..? 개발자에게 알려주시면 작은 선물을 드립니다!<br/>
-유니크 카드는 별의 개수와 상관없이 색깔이 완전 다릅니다!
+혹시 히든 카드를 찾으셨나요..? 히든 카드를 수집하고 개발자에게 인증하시면 기프티콘을 드립니다!<br/>
+히든 카드는 카페 이름 오른쪽에 'HIDDEN' 라벨이 표시되어있습니다:)
 
 ### 4. 가고 싶은 카페 보기
 

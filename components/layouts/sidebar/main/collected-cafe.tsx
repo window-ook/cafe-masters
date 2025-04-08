@@ -26,7 +26,7 @@ export default function CollectedCafe({
   const cardRef = useRef<HTMLDivElement>(null);
   const backEffectRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const styleRef = useRef<HTMLStyleElement | null>(null);
+  const sparkleRef = useRef<HTMLStyleElement | null>(null);
 
   const HIDDEN_CAFE_NAMES = ['탐앤탐스 대구강북점', '접속'];
 
@@ -92,7 +92,7 @@ export default function CollectedCafe({
     back?.style.setProperty('--rotate-y', `${rotateY}deg`);
 
     // 히든 카드 홀로 스타일
-    if (isHiddenCard && styleRef.current) {
+    if (isHiddenCard && sparkleRef.current) {
       const w = rect.width;
       const h = rect.height;
 
@@ -114,7 +114,7 @@ export default function CollectedCafe({
         .hidden-card:after { background-position: ${px_spark}% ${py_spark}%; opacity: ${p_opc / 100}; }
       `;
 
-      styleRef.current.innerHTML = style;
+      sparkleRef.current.innerHTML = style;
     }
 
     // 유니크 카드 홀로 스타일
@@ -134,7 +134,7 @@ export default function CollectedCafe({
     back?.style.setProperty('--rotate-x', `0deg`);
     back?.style.setProperty('--rotate-y', `0deg`);
 
-    if (isHiddenCard && styleRef.current) styleRef.current.innerHTML = '';
+    if (isHiddenCard && sparkleRef.current) sparkleRef.current.innerHTML = '';
   };
 
   const handleOverlayMouseMove = (e: React.MouseEvent) => {
@@ -164,16 +164,16 @@ export default function CollectedCafe({
   };
 
   useEffect(() => {
-    if (!styleRef.current) {
+    if (!sparkleRef.current) {
       const styleElement = document.createElement('style');
       document.head.appendChild(styleElement);
-      styleRef.current = styleElement;
+      sparkleRef.current = styleElement;
     }
 
     return () => {
-      if (styleRef.current && styleRef.current.parentNode) {
-        styleRef.current.parentNode.removeChild(styleRef.current);
-        styleRef.current = null;
+      if (sparkleRef.current && sparkleRef.current.parentNode) {
+        sparkleRef.current.parentNode.removeChild(sparkleRef.current);
+        sparkleRef.current = null;
       }
     };
   }, []);
@@ -189,6 +189,7 @@ export default function CollectedCafe({
       ) : (
         <div ref={backEffectRef} className={NORMAL_CARD_BACK_EFFECT}></div>
       )}
+
       {/* 카드 레이어 */}
       <div
         ref={cardRef}
@@ -206,7 +207,7 @@ export default function CollectedCafe({
         className={
           isHiddenCard
             ? `${HIDDEN_CARD} hidden-card`
-            : `h-full p-4 border-4 ${HOVER_BORDER_BY_RATING} rounded-2xl flex flex-col justify-between drop-shadow-3xl card-tilt ${COLOR_BY_RATING} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} cursor-pointer transition duration-300 ease`
+            : `card-tilt h-full p-4 border-4 ${COLOR_BY_RATING} ${HOVER_BORDER_BY_RATING} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`
         }
       >
         {(ratings || 0) >= 3 && (
@@ -218,8 +219,10 @@ export default function CollectedCafe({
 
         <div className="flex flex-col gap-2">
           <div>
-            <p className="whitespace-nowrap overflow-hidden text-ellipsis font-pretendard font-extrabold text-lg">
-              {name}
+            <p
+              className={`whitespace-nowrap overflow-hidden ${isHiddenCard ? '' : 'group-hover:text-main'} text-ellipsis font-pretendard font-extrabold text-lg`}
+            >
+              {name} {isHiddenCard && <span>[HIDDEN]</span>}
             </p>
           </div>
           <div className="flex justify-start gap-0.5">
@@ -233,20 +236,22 @@ export default function CollectedCafe({
           </div>
         </div>
 
-        <div className="h-[11rem] bg-gray-700 rounded-md flex flex-col">
+        <div className="h-[11rem] bg-gray-700 rounded-lg flex flex-col">
           <Image
             src={photoUrl ?? '/image/cafe_thumbnail.avif'}
             alt="카페 썸네일"
             priority={true}
             width={100}
             height={50}
-            className="object-cover object-center h-[10rem] w-auto rounded-t-md"
+            className="object-cover h-[10rem] w-auto rounded-t-md"
           />
-          <div className="h-[1rem] w-full bg-white rounded-b-md opacity-80 flex items-center justify-center">
+          <div className="h-[1rem] w-full bg-white rounded-b-md flex items-center justify-center">
             <span className="font-dpixel text-xs text-black">CAFE MASTERS</span>
           </div>
         </div>
-        <div className="px-2 rounded-md border-[0.1rem] border-gray-600 flex flex-col">
+        <div
+          className={`px-2 rounded-md border-[0.1rem] ${isHiddenCard ? 'border-main' : 'border-gray-500'} flex flex-col`}
+        >
           <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
             {address}
           </p>
