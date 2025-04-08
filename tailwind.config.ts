@@ -53,6 +53,9 @@ const config: Config = {
         'emerald-effect-mid': '#2c9952',
         'emerald-effect-right': '#053303',
 
+        'hidden-badge-left': '#ff3a9d',
+        'hidden-badge-mid': '#f5ccff',
+        'hidden-badge-right': '#ff3a9d',
         'hidden-card-left': '#5f018a',
         'hidden-card-mid': '#8a24b9',
         'hidden-card-right': '#f5248c',

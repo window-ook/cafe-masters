@@ -220,9 +220,14 @@ export default function CollectedCafe({
         <div className="flex flex-col gap-2">
           <div>
             <p
-              className={`whitespace-nowrap overflow-hidden ${isHiddenCard ? '' : 'group-hover:text-main'} text-ellipsis font-pretendard font-extrabold text-lg`}
+              className={`whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-4 ${isHiddenCard ? '' : 'group-hover:text-main'} font-pretendard font-extrabold text-lg`}
             >
-              {name} {isHiddenCard && <span>[HIDDEN]</span>}
+              {name}{' '}
+              {isHiddenCard && (
+                <span className="inline-flex h-6 px-2 rounded-lg shadow-md bg-gradient-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-[length:200%_200%] animate-gradient items-center justify-center text-sm font-dpixel">
+                  HIDDEN
+                </span>
+              )}
             </p>
           </div>
           <div className="flex justify-start gap-0.5">
