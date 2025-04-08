@@ -4,9 +4,7 @@ export default function Help() {
   return (
     <div className="flex flex-col gap-4">
       <article>
-        <p className="font-pretendard">
-          버그를 발견하셨다면 저에게 알려주세요!
-        </p>
+        <p className="font-pretendard">버그를 발견하셨다면 알려주세요!</p>
       </article>
       <button
         onClick={() => window.open(googleForm, '_blank')}

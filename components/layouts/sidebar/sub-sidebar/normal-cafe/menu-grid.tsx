@@ -49,6 +49,13 @@ export default function MenuGrid({
                 <p className="text-lg">{item?.price}</p>
               </li>
             ))}
+          {isMenuOpen && (
+            <div>
+              <p className="font-dpixel text-gray-400">
+                {'더 많은 메뉴를 보려면 썸네일 클릭'}
+              </p>
+            </div>
+          )}
         </ul>
       </div>
     </div>

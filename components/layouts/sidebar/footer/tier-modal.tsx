@@ -51,7 +51,7 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
             </div>
             <Badge
               tier={'BEGINNER'}
-              range={'0 ~ 5'}
+              range={'0 ~ 9'}
               color={`bg-beginner text-white ${badgeStyle}`}
             />
             <p className={tierDescStyle}>
@@ -59,7 +59,7 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
             </p>
             <Badge
               tier={'JUNIOR'}
-              range={'6 ~ 15'}
+              range={'10 ~ 19'}
               color={`bg-junior text-white ${badgeStyle}`}
             />
             <p className={tierDescStyle}>
@@ -67,7 +67,7 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
             </p>
             <Badge
               tier={'SENIOR'}
-              range={'16 ~ 29'}
+              range={'20 ~ 29'}
               color={`bg-senior text-white ${badgeStyle}`}
             />
             <p className={tierDescStyle}>
@@ -75,7 +75,7 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
             </p>
             <Badge
               tier={'EXPERT'}
-              range={'30 ~ 49'}
+              range={'30 ~ 39'}
               color={getExpertTierStyle(badgeStyle)}
             />
             <p className={tierDescStyle}>
@@ -87,7 +87,7 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
                 <span className="text-sm font-dpixel">MASTER</span>
               </p>
               <p className="z-10 relative text-xl font-bold font-pretendard">
-                50
+                40
               </p>
             </div>
             <p className={tierDescStyle}>마스터여, 당신은 월드의 주인입니다</p>

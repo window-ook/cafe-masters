@@ -12,15 +12,17 @@ export default function ProfileBox() {
   const setUserTier = useUserStore(state => state.setUserTier);
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
+  // 40 ~ 마스터, 30 ~ 39 엑스퍼트, 20 ~ 29 시니어, 10 ~ 19 주니어, 0 ~ 9 비기너
+
   useEffect(() => {
-    if (collectedCafeCount === 50) setUserTier('MASTER');
-    else if (collectedCafeCount < 50 && collectedCafeCount >= 30)
+    if (collectedCafeCount === 40) setUserTier('MASTER');
+    else if (collectedCafeCount < 40 && collectedCafeCount >= 30)
       setUserTier('EXPERT');
-    else if (collectedCafeCount < 30 && collectedCafeCount >= 16)
+    else if (collectedCafeCount < 30 && collectedCafeCount >= 20)
       setUserTier('SENIOR');
-    else if (collectedCafeCount < 16 && collectedCafeCount >= 6)
+    else if (collectedCafeCount < 20 && collectedCafeCount >= 10)
       setUserTier('JUNIOR');
-    else if (collectedCafeCount < 6) setUserTier('BEGINNER');
+    else if (collectedCafeCount < 10) setUserTier('BEGINNER');
   }, [collectedCafeCount, setUserTier]);
 
   return (

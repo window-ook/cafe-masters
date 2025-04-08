@@ -93,19 +93,24 @@ body {
   overflow-x: hidden;
 }
 
-/* 수집 카드에 컨테이너 부여 */
+/* 
+* ===========================
+* 카드 컴포넌트 스타일
+* =========================== 
+*/
+
 .card-container {
   perspective: 500px; 
 }
 
-/* 카드 틸트 */
+/* 틸트 */
 .card-tilt {
   transition: transform 0.1s ease;
   will-change: transform; 
   transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
 }
 
-/* 카드 광원 효과 */
+/* 오버레이 = 빛 반사 효과 */
 .card-overlay {
   position: absolute;
   z-index: 20;
@@ -178,7 +183,6 @@ body {
   background-size: 100% 100%;
   color: white;
 }
-
 
 /* 히든 카드 홀로그래픽 효과 */
 .hidden-card {
