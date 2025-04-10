@@ -2,15 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useMapStore } from 'utils/store';
-import { categories } from '../shared/categories';
+import { categories } from '../sub-sidebar/shared/categories';
 
-export default function Filter() {
+export default function CategoryFilter() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const recommendedCafe = useMapStore(state => state.recommendedCafe);
-  const setFilteredRecommendedCafe = useMapStore(
-    state => state.setFilteredRecommendedCafe,
-  );
+  const { recommendedCafe, setFilteredRecommendedCafe } = useMapStore();
 
   const toggleCategories = (category: string) => {
     setSelectedCategories(prev =>

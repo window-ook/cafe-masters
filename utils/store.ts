@@ -15,6 +15,7 @@ export const useMapStore = create<MapStore>()(
       keyword: '성수',
       searchResult: [],
       collectedCafe: [],
+      filteredCollectedCafe: [],
       bookmarkedCafe: [],
       recommendedCafe: [],
       filteredRecommendedCafe: [],
@@ -31,11 +32,15 @@ export const useMapStore = create<MapStore>()(
       recommendedCafeDetail: [],
       collectedSearchTerm: '',
       bookmarkedSearchTerm: '',
+      selectedRegion: 'all',
+      selectedRating: 'all',
 
       setKeyword: data => set({ keyword: data }),
       setSearchResult: (data: SearchResult[]) => set({ searchResult: data }),
       setCollectedCafe: (data: CollectedCafeFromSupabase[]) =>
         set({ collectedCafe: data ?? [] }),
+      setFilteredCollectedCafe: (data: CollectedCafeFromSupabase[]) =>
+        set({ filteredCollectedCafe: data ?? [] }),
       setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) =>
         set({ bookmarkedCafe: data }),
       setRecommendedCafe: (data: RecommendedCafeFromSupabase[]) =>
@@ -58,6 +63,9 @@ export const useMapStore = create<MapStore>()(
         set({ filteredRecommendedCafe: data }),
       setCollectedSearchTerm: term => set({ collectedSearchTerm: term }),
       setBookmarkedSearchTerm: term => set({ bookmarkedSearchTerm: term }),
+      setSelectedRegion: (region: string) => set({ selectedRegion: region }),
+      setSelectedRating: (rating: string | number) =>
+        set({ selectedRating: rating }),
     }),
     {
       name: 'mapStore',

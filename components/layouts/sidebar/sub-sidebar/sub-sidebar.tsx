@@ -255,6 +255,7 @@ export default function SubSidebar() {
     setIsRecommended(true);
     setMemoRecommendationOpen(false);
     uploadRecommendMutation.mutate(memo);
+    setSelectedCategoriesAction([]);
     toast.success('추천 카페에 추가했습니다');
   };
 
