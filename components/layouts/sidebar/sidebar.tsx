@@ -44,7 +44,7 @@ export default function Sidebar() {
     searchResult,
     setRecommendedCafe,
     filteredRecommendedCafe,
-    collectedSearchTerm,
+    filteredCollectedCafe,
     bookmarkedSearchTerm,
     setThisX,
     setThisY,
@@ -96,7 +96,6 @@ export default function Sidebar() {
   const cardContainerStyle = 'flex flex-col gap-8 my-8 px-8';
 
   const {
-    fetchedCollectedCafe,
     fetchNextPage: fetchNextCollectedPage,
     hasNextPage: hasNextCollectedPage,
     isFetchingNextPage: isFetchingNextCollectedPage,
@@ -210,16 +209,6 @@ export default function Sidebar() {
     setThisY(cafe?.coordY);
   };
 
-  const filterCollctedBySearchTerm = (
-    cafes: CollectedCafeFromSupabase[],
-    searchTerm: string,
-  ) => {
-    if (!searchTerm) return cafes;
-    return cafes.filter(cafe =>
-      cafe.name?.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-  };
-
   const filterBookmarkedBySearchTerm = (
     cafes: BookmarkedCafeFromSupabase[],
     searchTerm: string,
@@ -270,12 +259,9 @@ export default function Sidebar() {
 
               {isCollectedPage && (
                 <div className="relative">
-                  {fetchedCollectedCafe?.pages?.map((page, i) => (
-                    <ul key={`page-${i}`} className={cardContainerStyle}>
-                      {filterCollctedBySearchTerm(
-                        page.data,
-                        collectedSearchTerm,
-                      ).map((cafe: CollectedCafeFromSupabase) => (
+                  <ul className={cardContainerStyle}>
+                    {filteredCollectedCafe.map(
+                      (cafe: CollectedCafeFromSupabase) => (
                         <CollectedCafe
                           key={cafe.id}
                           name={cafe.name}
@@ -285,9 +271,9 @@ export default function Sidebar() {
                           phoneNum={cafe.phoneNum}
                           onClick={() => handleCollectedCafeClick(cafe)}
                         />
-                      ))}
-                    </ul>
-                  ))}
+                      ),
+                    )}
+                  </ul>
 
                   {isFetchingNextCollectedPage && (
                     <div className="fixed bottom-4 left-4">

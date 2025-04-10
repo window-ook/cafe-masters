@@ -11,7 +11,13 @@ import dynamic from 'next/dynamic';
 const Tooltip = dynamic(() => import('components/shared/tooltip'), {
   ssr: false,
 });
-const Filter = dynamic(() => import('../sub-sidebar/recommended-cafe/filter'), {
+const CategoryFilter = dynamic(() => import('./category-filter'), {
+  ssr: false,
+});
+const RegionFilter = dynamic(() => import('./region-filter'), {
+  ssr: false,
+});
+const RatingFilter = dynamic(() => import('./rating-filter'), {
   ssr: false,
 });
 
@@ -91,16 +97,10 @@ export default function Header() {
       )}
       {isCollectedPage && (
         <div className="flex flex-col items-center justify-center gap-4">
-          <span className="font-dpixel text-xl sm:text-2xl">
-            TOTAL{' '}
-            <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
-              {collectedCafeCount}
-            </span>
-          </span>
           <div className="w-full flex items-center gap-2">
             <input
               type="text"
-              placeholder="수집한 카드 찾기"
+              placeholder="카드 이름으로 검색"
               aria-label="수집한 카페 중 카페 이름 검색하기"
               className={`w-5/6 py-4 border-0 border-b-2 ${
                 isDarkTheme
@@ -123,20 +123,24 @@ export default function Header() {
               </span>
             </button>
           </div>
+          <div className="flex gap-4">
+            <span className="font-dpixel text-xl sm:text-2xl">
+              TOTAL{' '}
+              <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
+                {collectedCafeCount}
+              </span>
+            </span>
+            <RegionFilter />
+            <RatingFilter />
+          </div>
         </div>
       )}
       {isBookmarkedPage && (
         <div className="flex flex-col items-center justify-center gap-4">
-          <span className="font-dpixel text-xl sm:text-2xl">
-            TOTAL{' '}
-            <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
-              {bookmarkedCafeCount}
-            </span>
-          </span>
           <div className="w-full flex items-center gap-2">
             <input
               type="text"
-              placeholder="카페 찾기"
+              placeholder="카페 이름으로 검색"
               aria-label="북마크한 카페 중 카페 이름 검색하기"
               className={`w-5/6 py-4 border-0 border-b-2 ${
                 isDarkTheme
@@ -159,11 +163,20 @@ export default function Header() {
               </span>
             </button>
           </div>
+          <div className="flex gap-4">
+            <span className="font-dpixel text-xl sm:text-2xl">
+              TOTAL{' '}
+              <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
+                {bookmarkedCafeCount}
+              </span>
+            </span>
+            <RegionFilter />
+          </div>
         </div>
       )}
       {isRecommendedPage && (
         <div>
-          <Filter />
+          <CategoryFilter />
         </div>
       )}
     </section>

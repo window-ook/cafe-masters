@@ -62,6 +62,7 @@ const config: Config = {
         'hidden-effect-left': '#44BCFF',
         'hidden-effect-mid': '#FF44EC',
         'hidden-effect-right': '#FF675E',
+
         recommended: '#18f282',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

@@ -11,6 +11,7 @@ export interface MapStore {
   keyword: string;
   searchResult: SearchResult[];
   collectedCafe: CollectedCafeFromSupabase[];
+  filteredCollectedCafe: CollectedCafeFromSupabase[];
   bookmarkedCafe: BookmarkedCafeFromSupabase[];
   recommendedCafe: RecommendedCafeFromSupabase[];
   filteredRecommendedCafe: RecommendedCafeFromSupabase[];
@@ -27,9 +28,12 @@ export interface MapStore {
   recommendedCafeDetail: RecommendedCafeFromSupabase[];
   collectedSearchTerm: string;
   bookmarkedSearchTerm: string;
+  selectedRegion: string;
+  selectedRating: string | number;
   setKeyword: (data: string) => void;
   setSearchResult: (data: SearchResult[]) => void;
   setCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
+  setFilteredCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
   setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) => void;
   setRecommendedCafe: (data: RecommendedCafeFromSupabase[]) => void;
   setFilteredRecommendedCafe: (data: RecommendedCafeFromSupabase[]) => void;
@@ -46,6 +50,8 @@ export interface MapStore {
   setRecommendedCafeDetail: (data: RecommendedCafeFromSupabase[]) => void;
   setCollectedSearchTerm: (term: string) => void;
   setBookmarkedSearchTerm: (term: string) => void;
+  setSelectedRegion: (region: string) => void;
+  setSelectedRating: (rating: string | number) => void;
 }
 
 export interface UserStore {

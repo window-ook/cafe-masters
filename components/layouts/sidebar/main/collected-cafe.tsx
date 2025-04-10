@@ -220,7 +220,7 @@ export default function CollectedCafe({
         <div className="flex flex-col gap-2">
           <div>
             <p
-              className={`whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-4 ${isHiddenCard ? '' : 'group-hover:text-main'} font-pretendard font-extrabold text-lg`}
+              className={`whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-4 ${isHiddenCard ? '' : 'group-hover:text-main group-hover:font-bold transition-all duration-300 ease-in-out'} font-pretendard font-extrabold text-lg`}
             >
               {name}{' '}
               {isHiddenCard && (
@@ -248,14 +248,14 @@ export default function CollectedCafe({
             priority={true}
             width={100}
             height={50}
-            className="object-cover h-[10rem] w-auto rounded-t-md"
+            className="h-[10rem] w-auto object-contain rounded-t-md"
           />
           <div className="h-[1rem] w-full bg-white rounded-b-md flex items-center justify-center">
             <span className="font-dpixel text-xs text-black">CAFE MASTERS</span>
           </div>
         </div>
         <div
-          className={`px-2 rounded-md border-[0.1rem] ${isHiddenCard ? 'border-main' : 'border-gray-500'} flex flex-col`}
+          className={`px-2 rounded-md border-[0.1rem] ${isHiddenCard ? 'border-main' : 'border-gray-500'} group-hover:border-main flex flex-col`}
         >
           <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
             {address}
