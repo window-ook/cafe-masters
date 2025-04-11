@@ -59,9 +59,9 @@ export default function SubSidebar() {
   const recommendedCafeDetail = useMapStore(
     state => state.recommendedCafeDetail[0],
   );
-  const thisX = useMapStore(state => state.thisX);
-  const thisY = useMapStore(state => state.thisY);
-  const thisId = useMapStore(state => state.thisId);
+  const currentCoordX = useMapStore(state => state.currentCoordX);
+  const currentCoordY = useMapStore(state => state.currentCoordY);
+  const currentCafeId = useMapStore(state => state.currentCafeId);
 
   const userId = useUserStore(state => state.userId);
 
@@ -82,16 +82,16 @@ export default function SubSidebar() {
   const uploadRecommendMutation = useUploadRecommendMutation();
 
   const filteredFromSearchResult = searchResult.filter(
-    cafe => Number(cafe.id) === thisId,
+    cafe => Number(cafe.id) === currentCafeId,
   );
 
   const stringifiedCategories = JSON.stringify(selectedCategories);
 
   const detail = {
-    id: thisId ?? 0,
+    id: currentCafeId ?? 0,
     userId,
-    coordX: thisX,
-    coordY: thisY,
+    coordX: currentCoordX,
+    coordY: currentCoordY,
     category: null,
     name: filteredFromSearchResult?.[0]?.place_name ?? '',
     photoUrl: cafeDetail?.photo || '/image/cafe_thumbnail.avif',
@@ -114,8 +114,8 @@ export default function SubSidebar() {
     address: detail?.address,
     openingHours: detail?.openingHours,
     phoneNum: detail?.phoneNum,
-    coordX: thisX,
-    coordY: thisY,
+    coordX: currentCoordX,
+    coordY: currentCoordY,
     comment,
     pros,
     cons,
@@ -153,8 +153,8 @@ export default function SubSidebar() {
     id: detail?.id,
     name: detail?.name,
     category: stringifiedCategories,
-    coordX: thisX,
-    coordY: thisY,
+    coordX: currentCoordX,
+    coordY: currentCoordY,
     photoUrl: detail?.photoUrl,
     address: detail?.address,
     openingHours: detail?.openingHours,

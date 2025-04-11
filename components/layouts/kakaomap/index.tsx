@@ -34,8 +34,8 @@ export default function KakaoMap() {
   const collectedCafe = useMapStore(state => state.collectedCafe);
   const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
   const recommendedCafe = useMapStore(state => state.recommendedCafe);
-  const thisX = useMapStore(state => state.thisX);
-  const thisY = useMapStore(state => state.thisY);
+  const currentCoordX = useMapStore(state => state.currentCoordX);
+  const currentCoordY = useMapStore(state => state.currentCoordY);
 
   const pathname = usePathname();
 
@@ -264,13 +264,13 @@ export default function KakaoMap() {
       pathname.startsWith('/cafe/bookmarked/detail') ||
       pathname.startsWith('/cafe/recommended/detail')
     ) {
-      mapRef.current.setCenter(new window.kakao.maps.LatLng(thisY, thisX));
+      mapRef.current.setCenter(new window.kakao.maps.LatLng(currentCoordY, currentCoordX));
     }
   }, [
     mapLoaded,
     keyword,
-    thisX,
-    thisY,
+    currentCoordX,
+    currentCoordY,
     pathname,
     setSearchResult,
     searchResult,

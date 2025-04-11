@@ -28,11 +28,11 @@ export default function Header() {
   const searchResultCount = useMapStore(state => state.searchResult.length);
   const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
   const bookmarkedCafeCount = useMapStore(state => state.bookmarkedCafeCount);
-  const setCollectedSearchTerm = useMapStore(
-    state => state.setCollectedSearchTerm,
+  const setSearchTermInCollectedCafe = useMapStore(
+    state => state.setSearchTermInCollectedCafe,
   );
-  const setBookmarkedSearchTerm = useMapStore(
-    state => state.setBookmarkedSearchTerm,
+  const setSearchTermInBookmarkedCafe = useMapStore(
+    state => state.setSearchTermInBookmarkedCafe,
   );
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
@@ -45,8 +45,8 @@ export default function Header() {
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
   const isRecommendedPage = pathname.startsWith('/cafe/recommended');
 
-  const handleCollectedSearch = () => setCollectedSearchTerm(collectedInput);
-  const handleBookmarkedSearch = () => setBookmarkedSearchTerm(bookmarkedInput);
+  const handleCollectedSearch = () => setSearchTermInCollectedCafe(collectedInput);
+  const handleBookmarkedSearch = () => setSearchTermInBookmarkedCafe(bookmarkedInput);
 
   const handleRoute = () => {
     setBookmarkedInput('');

@@ -45,9 +45,9 @@ export default function Sidebar() {
     setRecommendedCafe,
     filteredRecommendedCafe,
     filteredCollectedCafe,
-    bookmarkedSearchTerm,
-    setThisX,
-    setThisY,
+    searchTermInBookmarkedCafe,
+    setCurrentCoordX,
+    setCurrentCoordY,
   } = useMapStore();
   const { isDarkTheme, isSubSidebarOpen, setIsSubSidebarOpen, setIsMenuOpen } =
     useCheckStore();
@@ -181,32 +181,32 @@ export default function Sidebar() {
     setIsSubSidebarOpen(true);
     setIsMenuOpen(false);
     router.push(`/cafe/search/detail/${cafe.id}`);
-    setThisX(cafe?.x);
-    setThisY(cafe?.y);
+    setCurrentCoordX(cafe?.x);
+    setCurrentCoordY(cafe?.y);
   };
 
   const handleCollectedCafeClick = (cafe: CollectedCafeFromSupabase) => {
     setIsSubSidebarOpen(true);
     setIsMenuOpen(false);
     router.push(`/cafe/collected/detail/${cafe.id}`);
-    setThisX(cafe?.coordX);
-    setThisY(cafe?.coordY);
+    setCurrentCoordX(cafe?.coordX);
+    setCurrentCoordY(cafe?.coordY);
   };
 
   const handleBookmarkedCafeClick = (cafe: BookmarkedCafeFromSupabase) => {
     setIsSubSidebarOpen(true);
     setIsMenuOpen(false);
     router.push(`/cafe/bookmarked/detail/${cafe.id}`);
-    setThisX(cafe?.coordX);
-    setThisY(cafe?.coordY);
+    setCurrentCoordX(cafe?.coordX);
+    setCurrentCoordY(cafe?.coordY);
   };
 
   const handleRecommendedCafeClick = (cafe: RecommendedCafeFromSupabase) => {
     setIsSubSidebarOpen(true);
     setIsMenuOpen(false);
     router.push(`/cafe/recommended/detail/${cafe.id}`);
-    setThisX(cafe?.coordX);
-    setThisY(cafe?.coordY);
+    setCurrentCoordX(cafe?.coordX);
+    setCurrentCoordY(cafe?.coordY);
   };
 
   const filterBookmarkedBySearchTerm = (
@@ -291,7 +291,7 @@ export default function Sidebar() {
                     <ul key={`page-${i}`} className={cardContainerStyle}>
                       {filterBookmarkedBySearchTerm(
                         page.data,
-                        bookmarkedSearchTerm,
+                        searchTermInBookmarkedCafe,
                       ).map((cafe: BookmarkedCafeFromSupabase) => (
                         <NormalCafe
                           key={cafe.id}

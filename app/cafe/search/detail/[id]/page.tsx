@@ -13,7 +13,7 @@ export default function SearchDetail({ params }: PageProps) {
     bookmarkedCafe,
     collectedCafe,
     recommendedCafe,
-    setThisId,
+    setCurrentCafeId,
     setCafeDetail,
   } = useMapStore();
   const userId = useUserStore(state => state.userId);
@@ -40,7 +40,7 @@ export default function SearchDetail({ params }: PageProps) {
         const response = await fetch(REQ_URL);
         const data = await response.json();
         setCafeDetail(data);
-        setThisId(numericId);
+        setCurrentCafeId(numericId);
         setIsBookmarked(bookmarkedCafe.some(cafe => cafe.id === numericId));
         setIsCollected(collectedCafe.some(cafe => cafe.id === numericId));
         setIsRecommended(recommendedCafe.some(cafe => cafe.id === numericId));
@@ -59,7 +59,7 @@ export default function SearchDetail({ params }: PageProps) {
     bookmarkedCafe,
     collectedCafe,
     recommendedCafe,
-    setThisId,
+    setCurrentCafeId,
     setIsBookmarked,
     setIsCollected,
     setIsRecommended,
