@@ -45,7 +45,7 @@ export default function Sidebar() {
     setRecommendedCafe,
     filteredRecommendedCafe,
     filteredCollectedCafe,
-    searchTermInBookmarkedCafe,
+    filteredBookmarkedCafe,
     setCurrentCoordX,
     setCurrentCoordY,
   } = useMapStore();
@@ -102,7 +102,6 @@ export default function Sidebar() {
   } = useCollectedInfiniteQuery(userId, isCollectedPage);
 
   const {
-    fetchedBookmarkedCafe,
     fetchNextPage: fetchNextBookmarkedPage,
     hasNextPage: hasNextBookmarkedPage,
     isFetchingNextPage: isFetchingNextBookmarkedPage,
@@ -209,16 +208,6 @@ export default function Sidebar() {
     setCurrentCoordY(cafe?.coordY);
   };
 
-  const filterBookmarkedBySearchTerm = (
-    cafes: BookmarkedCafeFromSupabase[],
-    searchTerm: string,
-  ) => {
-    if (!searchTerm) return cafes;
-    return cafes.filter(cafe =>
-      cafe.name?.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-  };
-
   if (pathname.startsWith('/resetpassword')) return null;
 
   return (
@@ -287,12 +276,9 @@ export default function Sidebar() {
 
               {isBookmarkedPage && (
                 <div className="relative">
-                  {fetchedBookmarkedCafe?.pages?.map((page, i) => (
-                    <ul key={`page-${i}`} className={cardContainerStyle}>
-                      {filterBookmarkedBySearchTerm(
-                        page.data,
-                        searchTermInBookmarkedCafe,
-                      ).map((cafe: BookmarkedCafeFromSupabase) => (
+                  <ul className={cardContainerStyle}>
+                    {filteredBookmarkedCafe.map(
+                      (cafe: BookmarkedCafeFromSupabase) => (
                         <NormalCafe
                           key={cafe.id}
                           name={cafe.name}
@@ -301,9 +287,9 @@ export default function Sidebar() {
                           photoUrl={cafe.photoUrl}
                           onClick={() => handleBookmarkedCafeClick(cafe)}
                         />
-                      ))}
-                    </ul>
-                  ))}
+                      ),
+                    )}
+                  </ul>
 
                   {isFetchingNextBookmarkedPage && (
                     <div className="fixed bottom-4 left-4">

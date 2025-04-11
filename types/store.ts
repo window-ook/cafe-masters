@@ -7,13 +7,13 @@ import {
   RecommendedCafeFromSupabase,
 } from './common';
 
-// 지도 & 카페 데이터
 export interface MapStore {
   keyword: string;
   searchResult: SearchResult[];
   collectedCafe: CollectedCafeFromSupabase[];
   filteredCollectedCafe: CollectedCafeFromSupabase[];
   bookmarkedCafe: BookmarkedCafeFromSupabase[];
+  filteredBookmarkedCafe: BookmarkedCafeFromSupabase[];
   recommendedCafe: RecommendedCafeFromSupabase[];
   filteredRecommendedCafe: RecommendedCafeFromSupabase[];
   searchTermInCollectedCafe: string;
@@ -38,6 +38,7 @@ export interface MapStore {
   setCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
   setFilteredCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
   setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) => void;
+  setFilteredBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) => void;
   setRecommendedCafe: (data: RecommendedCafeFromSupabase[]) => void;
   setFilteredRecommendedCafe: (data: RecommendedCafeFromSupabase[]) => void;
   setSearchTermInCollectedCafe: (term: string) => void;
@@ -58,19 +59,18 @@ export interface MapStore {
   setRecommendedCafeDetail: (data: RecommendedCafeFromSupabase[]) => void;
 }
 
-// 유저 데이터
 export interface UserStore {
   userId: string;
   userEmail: string;
   userTier: Tier;
   admin: boolean;
+
   setUserId: (user: string) => void;
   setUserEmail: (user: string) => void;
   setUserTier: (user: Tier) => void;
   setAdmin: (user: boolean) => void;
 }
 
-// 체크 데이터
 export interface CheckStore {
   isSubSidebarOpen: boolean;
   isMenuOpen: boolean;
@@ -81,6 +81,7 @@ export interface CheckStore {
   isBookmarked: boolean;
   isRecommended: boolean;
   isLoading: boolean;
+
   setIsSubSidebarOpen: (prev: boolean) => void;
   setIsMenuOpen: (prev: boolean) => void;
   setIsExtend: () => void;

@@ -264,7 +264,9 @@ export default function KakaoMap() {
       pathname.startsWith('/cafe/bookmarked/detail') ||
       pathname.startsWith('/cafe/recommended/detail')
     ) {
-      mapRef.current.setCenter(new window.kakao.maps.LatLng(currentCoordY, currentCoordX));
+      mapRef.current.setCenter(
+        new window.kakao.maps.LatLng(currentCoordY, currentCoordX),
+      );
     }
   }, [
     mapLoaded,

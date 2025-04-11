@@ -13,7 +13,9 @@ export default function useCollectedInfiniteQuery(
   );
   const selectedRegion = useMapStore(state => state.selectedRegion);
   const selectedRating = useMapStore(state => state.selectedRating);
-  const searchTermInCollectedCafe = useMapStore(state => state.searchTermInCollectedCafe);
+  const searchTermInCollectedCafe = useMapStore(
+    state => state.searchTermInCollectedCafe,
+  );
 
   const {
     data: fetchedCollectedCafe,
@@ -46,7 +48,9 @@ export default function useCollectedInfiniteQuery(
         // 검색어 필터링
         const matchesSearch =
           !searchTermInCollectedCafe ||
-          cafe.name?.toLowerCase().includes(searchTermInCollectedCafe.toLowerCase());
+          cafe.name
+            ?.toLowerCase()
+            .includes(searchTermInCollectedCafe.toLowerCase());
 
         // 지역 필터링
         const matchesRegion =
