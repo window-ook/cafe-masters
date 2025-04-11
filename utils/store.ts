@@ -9,6 +9,7 @@ import {
   Tier,
 } from 'types/common';
 
+// 지도 & 카페 데이터
 export const useMapStore = create<MapStore>()(
   persist(
     set => ({
@@ -17,23 +18,25 @@ export const useMapStore = create<MapStore>()(
       collectedCafe: [],
       filteredCollectedCafe: [],
       bookmarkedCafe: [],
+      filteredBookmarkedCafe: [],
       recommendedCafe: [],
       filteredRecommendedCafe: [],
+      searchTermInCollectedCafe: '',
+      searchTermInBookmarkedCafe: '',
+      selectedRegion: 'all',
+      selectedRating: 'all',
       collectedCafeCount: 0,
       bookmarkedCafeCount: 0,
       recommendedCafeCount: 0,
-      thisX: 127.04663357436208,
-      thisY: 37.54715716085294,
-      thisId: 12345678,
-      thisThumbnail: '',
+
+      currentCoordX: 127.04663357436208,
+      currentCoordY: 37.54715716085294,
+      currentCafeId: 12345678,
+      currentCafeThumbnail: '',
       cafeDetail: {},
       collectedCafeDetail: [],
       bookmarkedCafeDetail: [],
       recommendedCafeDetail: [],
-      collectedSearchTerm: '',
-      bookmarkedSearchTerm: '',
-      selectedRegion: 'all',
-      selectedRating: 'all',
 
       setKeyword: data => set({ keyword: data }),
       setSearchResult: (data: SearchResult[]) => set({ searchResult: data }),
@@ -43,15 +46,25 @@ export const useMapStore = create<MapStore>()(
         set({ filteredCollectedCafe: data ?? [] }),
       setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) =>
         set({ bookmarkedCafe: data }),
+      setFilteredBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) =>
+        set({ filteredBookmarkedCafe: data }),
       setRecommendedCafe: (data: RecommendedCafeFromSupabase[]) =>
         set({ recommendedCafe: data }),
+      setSearchTermInCollectedCafe: term =>
+        set({ searchTermInCollectedCafe: term }),
+      setSearchTermInBookmarkedCafe: term =>
+        set({ searchTermInBookmarkedCafe: term }),
+      setSelectedRegion: (region: string) => set({ selectedRegion: region }),
+      setSelectedRating: (rating: string | number) =>
+        set({ selectedRating: rating }),
       setCollectedCafeCount: data => set({ collectedCafeCount: data }),
       setBookmarkedCafeCount: data => set({ bookmarkedCafeCount: data }),
       setRecommendedCafeCount: data => set({ recommendedCafeCount: data }),
-      setThisX: x => set({ thisX: x }),
-      setThisY: y => set({ thisY: y }),
-      setThisId: id => set({ thisId: id }),
-      setThisThumbnail: url => set({ thisThumbnail: url }),
+
+      setCurrentCoordX: x => set({ currentCoordX: x }),
+      setCurrentCoordY: y => set({ currentCoordY: y }),
+      setCurrentCafeId: id => set({ currentCafeId: id }),
+      setCurrentCafeThumbnail: url => set({ currentCafeThumbnail: url }),
       setCafeDetail: data => set({ cafeDetail: data }),
       setCollectedCafeDetail: (data: CollectedCafeFromSupabase[]) =>
         set({ collectedCafeDetail: data }),
@@ -61,11 +74,6 @@ export const useMapStore = create<MapStore>()(
         set({ recommendedCafeDetail: data }),
       setFilteredRecommendedCafe: (data: RecommendedCafeFromSupabase[]) =>
         set({ filteredRecommendedCafe: data }),
-      setCollectedSearchTerm: term => set({ collectedSearchTerm: term }),
-      setBookmarkedSearchTerm: term => set({ bookmarkedSearchTerm: term }),
-      setSelectedRegion: (region: string) => set({ selectedRegion: region }),
-      setSelectedRating: (rating: string | number) =>
-        set({ selectedRating: rating }),
     }),
     {
       name: 'mapStore',
@@ -73,6 +81,7 @@ export const useMapStore = create<MapStore>()(
   ),
 );
 
+// 유저 데이터
 export const useUserStore = create<UserStore>()(
   persist(
     set => ({
@@ -92,6 +101,7 @@ export const useUserStore = create<UserStore>()(
   ),
 );
 
+// 체크 데이터
 export const useCheckStore = create<CheckStore>()(
   persist(
     set => ({

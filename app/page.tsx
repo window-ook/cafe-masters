@@ -88,10 +88,10 @@ const ScrollSections = () => {
   const sections = [
     {
       id: 1,
-      title: '여러분만의 카드를\n수집하세요',
+      title: '나만의 카드를\n수집하세요',
       subtitle: '01',
       description:
-        '마스터즈 월드에는 모든 카페가 있습니다.\n여러분이 갔던 카페를 수집해 마스터가 되세요!',
+        '마스터즈 월드에는 모든 카페가 있습니다\n여러분이 갔던 카페를 수집해 마스터가 되세요!',
       imageUrl: '/image/scroll_section.avif',
     },
     {
@@ -107,7 +107,7 @@ const ScrollSections = () => {
       title: '카테고리별\n카페를 추천해드려요',
       subtitle: '03',
       description:
-        '개발자가 추천해드리는 카페입니다:)\n내가 찾는 무드와 상황으로 필터링하여 확인할 수 있어요',
+        '개발자가 직접 추천하는 카페입니다\n내가 찾는 조건으로 필터링해보세요',
       imageUrl: '/image/scroll_section_2.avif',
     },
   ];
@@ -405,7 +405,7 @@ const Contactme = () => {
         <div className="w-[50%] h-[10rem] p-4 bg-gray-800 rounded-xl flex flex-col justify-center">
           <div className="flex justify-between">
             <span className="text-2xl max-[690px]:text-xl max-[560px]:text-xs font-pretendard font-bold text-white">
-              유튜브 보기
+              데모 시청하기
             </span>
             <button
               aria-label="카페 마스터즈 데모 영상 링크 버튼"

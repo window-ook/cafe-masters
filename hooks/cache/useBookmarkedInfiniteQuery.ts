@@ -8,6 +8,13 @@ export default function useBookmarkedInfiniteQuery(
   isActive: boolean,
 ) {
   const setBookmarkedCafe = useMapStore(state => state.setBookmarkedCafe);
+  const setFilteredBookmarkedCafe = useMapStore(
+    state => state.setFilteredBookmarkedCafe,
+  );
+  const selectedRegion = useMapStore(state => state.selectedRegion);
+  const searchTermInBookmarkedCafe = useMapStore(
+    state => state.searchTermInBookmarkedCafe,
+  );
 
   const {
     data: fetchedBookmarkedCafe,
@@ -31,10 +38,38 @@ export default function useBookmarkedInfiniteQuery(
 
   useEffect(() => {
     if (isActive && fetchedBookmarkedCafe) {
-      const cafe = fetchedBookmarkedCafe.pages.flatMap(page => page.data);
-      setBookmarkedCafe(cafe);
+      // 모든 페이지의 데이터를 하나의 배열로 합침
+      const allCafes = fetchedBookmarkedCafe.pages.flatMap(page => page.data);
+      setBookmarkedCafe(allCafes);
+
+      // 필터링 적용
+      const filteredCafes = allCafes.filter(cafe => {
+        // 검색어 필터링
+        const matchesSearch =
+          !searchTermInBookmarkedCafe ||
+          cafe.name
+            ?.toLowerCase()
+            .includes(searchTermInBookmarkedCafe.toLowerCase());
+
+        // 지역 필터링
+        const matchesRegion =
+          selectedRegion === 'all' ||
+          (cafe.address && cafe.address.split(' ')[0] === selectedRegion);
+
+        // 모든 조건을 만족하는 카페만 반환
+        return matchesSearch && matchesRegion;
+      });
+
+      setFilteredBookmarkedCafe(filteredCafes); // 필터링 된 카페를 저장
     }
-  }, [fetchedBookmarkedCafe, setBookmarkedCafe, isActive]);
+  }, [
+    isActive,
+    fetchedBookmarkedCafe,
+    setBookmarkedCafe,
+    setFilteredBookmarkedCafe,
+    selectedRegion,
+    searchTermInBookmarkedCafe,
+  ]);
 
   return {
     fetchedBookmarkedCafe,

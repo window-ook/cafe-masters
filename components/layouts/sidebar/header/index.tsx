@@ -28,11 +28,11 @@ export default function Header() {
   const searchResultCount = useMapStore(state => state.searchResult.length);
   const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
   const bookmarkedCafeCount = useMapStore(state => state.bookmarkedCafeCount);
-  const setCollectedSearchTerm = useMapStore(
-    state => state.setCollectedSearchTerm,
+  const setSearchTermInCollectedCafe = useMapStore(
+    state => state.setSearchTermInCollectedCafe,
   );
-  const setBookmarkedSearchTerm = useMapStore(
-    state => state.setBookmarkedSearchTerm,
+  const setSearchTermInBookmarkedCafe = useMapStore(
+    state => state.setSearchTermInBookmarkedCafe,
   );
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
@@ -45,8 +45,10 @@ export default function Header() {
   const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
   const isRecommendedPage = pathname.startsWith('/cafe/recommended');
 
-  const handleCollectedSearch = () => setCollectedSearchTerm(collectedInput);
-  const handleBookmarkedSearch = () => setBookmarkedSearchTerm(bookmarkedInput);
+  const handleCollectedSearch = () =>
+    setSearchTermInCollectedCafe(collectedInput);
+  const handleBookmarkedSearch = () =>
+    setSearchTermInBookmarkedCafe(bookmarkedInput);
 
   const handleRoute = () => {
     setBookmarkedInput('');
@@ -85,6 +87,7 @@ export default function Header() {
         <LightDarkToggle />
       </div>
       <Search />
+
       {isSearchResultPage && (
         <div className="flex justify-center items-center">
           <span className="font-dpixel text-xl sm:text-2xl">
@@ -95,6 +98,7 @@ export default function Header() {
           </span>
         </div>
       )}
+
       {isCollectedPage && (
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="w-full flex items-center gap-2">
@@ -135,6 +139,7 @@ export default function Header() {
           </div>
         </div>
       )}
+
       {isBookmarkedPage && (
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="w-full flex items-center gap-2">
@@ -163,7 +168,7 @@ export default function Header() {
               </span>
             </button>
           </div>
-          <div className="flex gap-4">
+          <div className="w-full px-2 flex gap-4">
             <span className="font-dpixel text-xl sm:text-2xl">
               TOTAL{' '}
               <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
@@ -174,6 +179,7 @@ export default function Header() {
           </div>
         </div>
       )}
+
       {isRecommendedPage && (
         <div>
           <CategoryFilter />

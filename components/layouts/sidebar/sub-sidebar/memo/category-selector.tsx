@@ -1,6 +1,7 @@
 'use client';
 
 import { categories } from '../shared/categories';
+import { RiResetLeftFill } from 'react-icons/ri';
 
 export interface CategorySelectorProps {
   selectedCategories: string[];
@@ -19,6 +20,8 @@ export default function CategorySelector({
     );
   };
 
+  const resetCategories = () => setSelectedCategoriesAction(() => []);
+
   return (
     <div className="flex flex-wrap gap-2">
       {categories.map(category => (
@@ -36,6 +39,13 @@ export default function CategorySelector({
           {category}
         </a>
       ))}
+      <button
+        type="button"
+        className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center transform duration-300 hover:opacity-60"
+        onClick={resetCategories}
+      >
+        <RiResetLeftFill />
+      </button>
     </div>
   );
 }

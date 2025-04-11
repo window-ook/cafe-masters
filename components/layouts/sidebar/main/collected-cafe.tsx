@@ -90,36 +90,6 @@ export default function CollectedCafe({
 
     back?.style.setProperty('--rotate-x', `${rotateX}deg`);
     back?.style.setProperty('--rotate-y', `${rotateY}deg`);
-
-    // 히든 카드 홀로 스타일
-    if (isHiddenCard && sparkleRef.current) {
-      const w = rect.width;
-      const h = rect.height;
-
-      // 마우스 위치
-      const px = Math.abs(Math.floor((100 / w) * x) - 100);
-      const py = Math.abs(Math.floor((100 / h) * y) - 100);
-      const pa = 50 - px + (50 - py);
-
-      // 그라데이션 / 배경 위치
-      const lp = 50 + (px - 50) / 1.5;
-      const tp = 50 + (py - 50) / 1.5;
-      const px_spark = 50 + (px - 50) / 7;
-      const py_spark = 50 + (py - 50) / 7;
-      const p_opc = 20 + Math.abs(pa) * 1.5;
-
-      // 홀로그래픽 움직임
-      const style = `
-        .hidden-card:before { background-position: ${lp}% ${tp}%; }
-        .hidden-card:after { background-position: ${px_spark}% ${py_spark}%; opacity: ${p_opc / 100}; }
-      `;
-
-      sparkleRef.current.innerHTML = style;
-    }
-
-    // 유니크 카드 홀로 스타일
-
-    // 4 ~ 5 카드 홀로 스타일
   };
 
   const handleCardMouseLeave = () => {
@@ -190,7 +160,7 @@ export default function CollectedCafe({
         <div ref={backEffectRef} className={NORMAL_CARD_BACK_EFFECT}></div>
       )}
 
-      {/* 카드 레이어 */}
+      {/* 카드 표면 */}
       <div
         ref={cardRef}
         role="button"
@@ -210,6 +180,7 @@ export default function CollectedCafe({
             : `card-tilt h-full p-4 border-4 ${COLOR_BY_RATING} ${HOVER_BORDER_BY_RATING} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`
         }
       >
+        {/* 빛 반사 효과 */}
         {(ratings || 0) >= 3 && (
           <div
             ref={overlayRef}

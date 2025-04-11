@@ -45,9 +45,9 @@ export default function Sidebar() {
     setRecommendedCafe,
     filteredRecommendedCafe,
     filteredCollectedCafe,
-    bookmarkedSearchTerm,
-    setThisX,
-    setThisY,
+    filteredBookmarkedCafe,
+    setCurrentCoordX,
+    setCurrentCoordY,
   } = useMapStore();
   const { isDarkTheme, isSubSidebarOpen, setIsSubSidebarOpen, setIsMenuOpen } =
     useCheckStore();
@@ -102,7 +102,6 @@ export default function Sidebar() {
   } = useCollectedInfiniteQuery(userId, isCollectedPage);
 
   const {
-    fetchedBookmarkedCafe,
     fetchNextPage: fetchNextBookmarkedPage,
     hasNextPage: hasNextBookmarkedPage,
     isFetchingNextPage: isFetchingNextBookmarkedPage,
@@ -181,42 +180,32 @@ export default function Sidebar() {
     setIsSubSidebarOpen(true);
     setIsMenuOpen(false);
     router.push(`/cafe/search/detail/${cafe.id}`);
-    setThisX(cafe?.x);
-    setThisY(cafe?.y);
+    setCurrentCoordX(cafe?.x);
+    setCurrentCoordY(cafe?.y);
   };
 
   const handleCollectedCafeClick = (cafe: CollectedCafeFromSupabase) => {
     setIsSubSidebarOpen(true);
     setIsMenuOpen(false);
     router.push(`/cafe/collected/detail/${cafe.id}`);
-    setThisX(cafe?.coordX);
-    setThisY(cafe?.coordY);
+    setCurrentCoordX(cafe?.coordX);
+    setCurrentCoordY(cafe?.coordY);
   };
 
   const handleBookmarkedCafeClick = (cafe: BookmarkedCafeFromSupabase) => {
     setIsSubSidebarOpen(true);
     setIsMenuOpen(false);
     router.push(`/cafe/bookmarked/detail/${cafe.id}`);
-    setThisX(cafe?.coordX);
-    setThisY(cafe?.coordY);
+    setCurrentCoordX(cafe?.coordX);
+    setCurrentCoordY(cafe?.coordY);
   };
 
   const handleRecommendedCafeClick = (cafe: RecommendedCafeFromSupabase) => {
     setIsSubSidebarOpen(true);
     setIsMenuOpen(false);
     router.push(`/cafe/recommended/detail/${cafe.id}`);
-    setThisX(cafe?.coordX);
-    setThisY(cafe?.coordY);
-  };
-
-  const filterBookmarkedBySearchTerm = (
-    cafes: BookmarkedCafeFromSupabase[],
-    searchTerm: string,
-  ) => {
-    if (!searchTerm) return cafes;
-    return cafes.filter(cafe =>
-      cafe.name?.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
+    setCurrentCoordX(cafe?.coordX);
+    setCurrentCoordY(cafe?.coordY);
   };
 
   if (pathname.startsWith('/resetpassword')) return null;
@@ -287,12 +276,9 @@ export default function Sidebar() {
 
               {isBookmarkedPage && (
                 <div className="relative">
-                  {fetchedBookmarkedCafe?.pages?.map((page, i) => (
-                    <ul key={`page-${i}`} className={cardContainerStyle}>
-                      {filterBookmarkedBySearchTerm(
-                        page.data,
-                        bookmarkedSearchTerm,
-                      ).map((cafe: BookmarkedCafeFromSupabase) => (
+                  <ul className={cardContainerStyle}>
+                    {filteredBookmarkedCafe.map(
+                      (cafe: BookmarkedCafeFromSupabase) => (
                         <NormalCafe
                           key={cafe.id}
                           name={cafe.name}
@@ -301,9 +287,9 @@ export default function Sidebar() {
                           photoUrl={cafe.photoUrl}
                           onClick={() => handleBookmarkedCafeClick(cafe)}
                         />
-                      ))}
-                    </ul>
-                  ))}
+                      ),
+                    )}
+                  </ul>
 
                   {isFetchingNextBookmarkedPage && (
                     <div className="fixed bottom-4 left-4">
