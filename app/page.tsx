@@ -253,7 +253,7 @@ const ScrollSections = () => {
   );
 };
 
-const useIntersection = (ref: React.RefObject<HTMLDivElement>) => {
+const useIntersection = (ref: React.RefObject<HTMLDivElement | null>) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const wasVisible = useRef(false);
