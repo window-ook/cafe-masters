@@ -1,12 +1,10 @@
-'use client';
+import { Metadata } from 'next';
 
-import Head from 'next/head';
+export const metadata: Metadata = {
+  title: '수집한 카드 | Cafe Masters',
+  description: '내가 수집한 카드를 볼 수 있어요.',
+};
 
 export default function Collected() {
-  return (
-    <Head>
-      <title>수집한 카드 | Cafe Masters</title>
-      <meta name="description" content={`내가 수집한 카드를 볼 수 있어요.`} />
-    </Head>
-  );
+  return;
 }

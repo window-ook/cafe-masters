@@ -152,21 +152,24 @@ export default function NormalCafeDetail({
           >
             <div className="snap-center flex-shrink-0 h-[15rem] py-2">
               {detail?.photoUrl?.trim() && (
-                <Image
+                <a
                   data-cy="normal-detail-thumbnail"
-                  src={detail.photoUrl || '/image/cafe_thumbnail.avif'}
-                  alt="카페 썸네일"
-                  width={160}
-                  height={240}
-                  className="w-[20rem] h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
-                  priority={true}
                   onClick={() =>
                     window.open(
                       `http://place.map.kakao.com/${detail?.id}`,
                       '_blank',
                     )
                   }
-                />
+                >
+                  <Image
+                    src={detail.photoUrl || '/image/cafe_thumbnail.avif'}
+                    alt="카페 썸네일"
+                    width={160}
+                    height={240}
+                    priority={true}
+                    className="w-[20rem] h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
+                  />
+                </a>
               )}
             </div>
             {detail?.photoList?.map((photo, i) => {

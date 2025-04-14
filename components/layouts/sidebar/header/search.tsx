@@ -40,8 +40,8 @@ export default function Search() {
           onKeyDown={handleKeyDown}
         />
         <button
-          data-cy="search-button"
           type="button"
+          data-cy="search-button"
           aria-label="검색 버튼"
           className="w-1/6 py-4 px-1 flex justify-center items-center gap-2 rounded bg-main border border-transparent transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-purple-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           onClick={handleSearch}

@@ -35,8 +35,8 @@ export default function ResetpasswordForm({
         {resetRequested}
       </p>
       <button
-        data-cy="request-resetpassword-button"
         type="button"
+        data-cy="request-resetpassword-button"
         aria-label="비밀번호 재설정 링크 메일 요청 버튼"
         className="bg-main w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
         onClick={resetFn}

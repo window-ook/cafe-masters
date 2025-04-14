@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore } from 'utils/store';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoMdCafe } from 'react-icons/io';
 import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
 import { FaRegCircleQuestion } from 'react-icons/fa6';
-import Link from 'next/link';
 
 interface SidebarTabProps {
   icon: ReactNode;
@@ -19,12 +19,17 @@ const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
   const bookmarkedCafeCount = useMapStore(state => state.bookmarkedCafeCount);
   const recommendedCafeCount = useMapStore(state => state.recommendedCafeCount);
 
+  const router = useRouter();
+
   return (
     <li
       data-cy={`route-${title.replace(/\s+/g, '-').toLowerCase()}`}
       className={`group w-full px-3 py-4 rounded-lg flex justify-between cursor-pointer ${isDarkTheme ? 'hover:bg-main-light' : 'hover:bg-white'} hover:shadow-md transition duration-150 ease-in`}
     >
-      <Link href={path} className="flex justify-between w-full">
+      <button
+        onClick={() => router.push(path)}
+        className="flex justify-between w-full"
+      >
         <div className="flex items-center gap-2">
           <p>{icon}</p>
           <p
@@ -55,7 +60,7 @@ const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
             </span>
           )}
         </div>
-      </Link>
+      </button>
     </li>
   );
 };

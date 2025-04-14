@@ -62,6 +62,7 @@ export default function CategoryFilter() {
             </a>
           ))}
           <button
+            type="button"
             className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center transform duration-300 hover:opacity-60"
             onClick={resetCategories}
           >

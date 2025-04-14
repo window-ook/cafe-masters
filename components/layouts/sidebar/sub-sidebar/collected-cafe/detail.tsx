@@ -56,27 +56,30 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
 
       <div className={getDetailBodyStyle(isDarkTheme)}>
         <div className="flex flex-col items-center">
-          <Image
-            src={collectedCafeDetail?.photoUrl ?? '/image/cafe_thumbnail.avif'}
-            alt="카페 썸네일"
-            className="rounded-md w-auto h-auto transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
-            width={160}
-            height={30}
-            priority={true}
-            onClick={() =>
-              window.open(
-                `http://place.map.kakao.com/${collectedCafeDetail?.id}`,
-                '_blank',
-              )
-            }
-          />
+          <a
+            href={`http://place.map.kakao.com/${collectedCafeDetail?.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block transform duration-300 ease-out hover:opacity-30"
+          >
+            <Image
+              src={
+                collectedCafeDetail?.photoUrl ?? '/image/cafe_thumbnail.avif'
+              }
+              alt="카페 썸네일"
+              className="rounded-md w-auto h-auto"
+              width={160}
+              height={30}
+              priority={true}
+            />
+          </a>
         </div>
 
         <div className="flex justify-between items-center">
           <RatingGrid rating={collectedCafeDetail?.rating ?? 0} />
           <button
-            data-cy="update-button"
             type="button"
+            data-cy="update-button"
             className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
             onClick={() => setMemoOpen(true)}
           >

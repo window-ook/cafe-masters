@@ -237,6 +237,7 @@ const ScrollSections = () => {
       <div className="absolute z-50 right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4">
         {sections.map((_, index) => (
           <button
+            type="button"
             key={index}
             onClick={() => handleView(index)}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
@@ -388,6 +389,7 @@ const Contactme = () => {
               피드백을 들려주세요
             </span>
             <button
+              type="button"
               aria-label="피드백 메일 발송하기 버튼"
               className="text-white"
               onClick={() => window.open('mailto:cwl64658@gmail.com', '_blank')}
@@ -407,6 +409,7 @@ const Contactme = () => {
               데모 시청하기
             </span>
             <button
+              type="button"
               aria-label="카페 마스터즈 데모 영상 링크 버튼"
               className="text-white"
               onClick={() =>
