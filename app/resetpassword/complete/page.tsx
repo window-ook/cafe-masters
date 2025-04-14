@@ -18,7 +18,7 @@ export default function ResetPasswordComplete() {
         <title>비밀번호 재설정 완료 | Cafe Masters</title>
         <meta
           name="description"
-          content={`비밀번호 재설정을 완료했으니, 다시 로그인해보세요.`}
+          content={`비밀번호 재설정을 완료페이지입니다.`}
         />
       </Head>
       <main className="area h-screen w-screen flex justify-center items-center">

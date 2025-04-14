@@ -15,7 +15,7 @@ export default function Cafe() {
 
   return (
     <Head>
-      <title>메뉴 | Cafe Masters</title>
+      <title>메뉴 페이지 | Cafe Masters</title>
       <meta name="description" content={`원하는 메뉴를 선택해보세요.`} />
     </Head>
   );

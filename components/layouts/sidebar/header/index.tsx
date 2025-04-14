@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useMapStore, useCheckStore } from 'utils/store';
 import Search from './search';
 import LightDarkToggle from './light-dark-toggle';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 const Tooltip = dynamic(() => import('components/shared/tooltip'), {
   ssr: false,
@@ -26,17 +27,15 @@ export default function Header() {
   const [bookmarkedInput, setBookmarkedInput] = useState<string>('');
 
   const searchResultCount = useMapStore(state => state.searchResult.length);
-  const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
-  const bookmarkedCafeCount = useMapStore(state => state.bookmarkedCafeCount);
-  const setSearchTermInCollectedCafe = useMapStore(
-    state => state.setSearchTermInCollectedCafe,
-  );
-  const setSearchTermInBookmarkedCafe = useMapStore(
-    state => state.setSearchTermInBookmarkedCafe,
-  );
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
-  const router = useRouter();
+  const {
+    collectedCafeCount,
+    bookmarkedCafeCount,
+    setSearchTermInCollectedCafe,
+    setSearchTermInBookmarkedCafe,
+  } = useMapStore();
+
+  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
   const pathname = usePathname();
 
@@ -50,10 +49,9 @@ export default function Header() {
   const handleBookmarkedSearch = () =>
     setSearchTermInBookmarkedCafe(bookmarkedInput);
 
-  const handleRoute = () => {
+  const handleStateReset = () => {
     setBookmarkedInput('');
     setCollectedInput('');
-    router.push('/cafe');
   };
 
   return (
@@ -64,11 +62,11 @@ export default function Header() {
         <Tooltip
           comment="메뉴로"
           component={
-            <button
-              type="button"
+            <Link
+              href="/cafe"
               aria-label="홈페이지 이동 버튼"
               className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-300"
-              onClick={handleRoute}
+              onClick={handleStateReset}
             >
               <Image
                 src="/image/logo.avif"
@@ -80,7 +78,7 @@ export default function Header() {
               <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
                 Cafe Masters
               </span>
-            </button>
+            </Link>
           }
           left="32"
         />
@@ -181,9 +179,9 @@ export default function Header() {
       )}
 
       {isRecommendedPage && (
-        <div>
+        <>
           <CategoryFilter />
-        </div>
+        </>
       )}
     </section>
   );

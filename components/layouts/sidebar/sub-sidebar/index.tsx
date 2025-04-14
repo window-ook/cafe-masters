@@ -15,22 +15,16 @@ import dynamic from 'next/dynamic';
 const Loading = dynamic(() => import('./shared/loading'), {
   ssr: false,
 });
-const NormalCafeDetail = dynamic(
-  () => import('./normal-cafe/normal-cafe-detail'),
-  {
-    ssr: false,
-  },
-);
-const CollectedCafeDetail = dynamic(
-  () => import('./collected-cafe/collected-cafe-detail'),
-  {
-    ssr: false,
-  },
-);
-const Memo = dynamic(() => import('./memo/memo'), {
+const NormalCafeDetail = dynamic(() => import('./normal-cafe/detail'), {
   ssr: false,
 });
-const MemoRecommendation = dynamic(() => import('./memo/memo-recommendation'), {
+const CollectedCafeDetail = dynamic(() => import('./collected-cafe/detail'), {
+  ssr: false,
+});
+const Memo = dynamic(() => import('./memo'), {
+  ssr: false,
+});
+const MemoRecommendation = dynamic(() => import('./memo/recommendation'), {
   ssr: false,
 });
 
