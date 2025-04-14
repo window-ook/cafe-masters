@@ -23,7 +23,7 @@ export default function CollectedCafe({
 }: CollectedCafeProps) {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLButtonElement>(null);
   const backEffectRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const sparkleRef = useRef<HTMLStyleElement | null>(null);
@@ -31,7 +31,7 @@ export default function CollectedCafe({
   const HIDDEN_CAFE_NAMES = ['탐앤탐스 대구강북점', '접속'];
 
   const HIDDEN_CARD =
-    'card card-tilt h-full p-4 border-4 border-main rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer hover:border-main-light transition duration-300 ease';
+    'card card-tilt w-full h-full p-4 border-4 border-main rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer hover:border-main-light transition duration-300 ease';
 
   const HIDDEN_CARD_BACK_EFFECT =
     'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-[100%] h-[100%] rounded-xl bg-gradient-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md animate-tilt pointer-none';
@@ -161,9 +161,8 @@ export default function CollectedCafe({
       )}
 
       {/* 카드 표면 */}
-      <div
+      <button
         ref={cardRef}
-        role="button"
         tabIndex={0}
         onClick={onClick}
         onMouseMove={e => {
@@ -177,15 +176,12 @@ export default function CollectedCafe({
         className={
           isHiddenCard
             ? `${HIDDEN_CARD} hidden-card`
-            : `card-tilt h-full p-4 border-4 ${COLOR_BY_RATING} ${HOVER_BORDER_BY_RATING} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`
+            : `card-tilt w-full h-full p-4 border-4 ${COLOR_BY_RATING} ${HOVER_BORDER_BY_RATING} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`
         }
       >
         {/* 빛 반사 효과 */}
         {(ratings || 0) >= 3 && (
-          <div
-            ref={overlayRef}
-            className="card-overlay inset-0 rounded-2xl"
-          ></div>
+          <div ref={overlayRef} className="card-overlay inset-0 rounded-2xl" />
         )}
 
         <div className="flex flex-col gap-2">
@@ -235,7 +231,7 @@ export default function CollectedCafe({
             {phoneNum}
           </p>
         </div>
-      </div>
+      </button>
     </li>
   );
 }

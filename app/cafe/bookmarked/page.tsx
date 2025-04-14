@@ -1,12 +1,10 @@
-'use client';
+import { Metadata } from 'next';
 
-import Head from 'next/head';
+export const metadata: Metadata = {
+  title: '가고 싶은 카페 | Cafe Masters',
+  description: '가고 싶은 카페를 볼 수 있어요.',
+};
 
 export default function Bookmarked() {
-  return (
-    <Head>
-      <title>가고 싶은 카페 | Cafe Masters</title>
-      <meta name="description" content={`가고 싶은 카페를 볼 수 있어요.`} />
-    </Head>
-  );
+  return;
 }

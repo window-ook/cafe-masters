@@ -18,44 +18,49 @@ const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
   const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
   const bookmarkedCafeCount = useMapStore(state => state.bookmarkedCafeCount);
   const recommendedCafeCount = useMapStore(state => state.recommendedCafeCount);
+
   const router = useRouter();
 
   return (
     <li
       data-cy={`route-${title.replace(/\s+/g, '-').toLowerCase()}`}
       className={`group w-full px-3 py-4 rounded-lg flex justify-between cursor-pointer ${isDarkTheme ? 'hover:bg-main-light' : 'hover:bg-white'} hover:shadow-md transition duration-150 ease-in`}
-      onClick={() => router.push(path)}
     >
-      <div className="flex items-center gap-2">
-        <p>{icon}</p>
-        <p
-          className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}
-        >
-          {title}
-        </p>
-      </div>
-      <div>
-        {path === '/cafe/search' && (
-          <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-            {searchResult.length}
-          </span>
-        )}
-        {path === '/cafe/collected' && (
-          <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-            {collectedCafeCount}
-          </span>
-        )}
-        {path === '/cafe/bookmarked' && (
-          <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-            {bookmarkedCafeCount}
-          </span>
-        )}
-        {path === '/cafe/recommended' && (
-          <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-            {recommendedCafeCount}
-          </span>
-        )}
-      </div>
+      <button
+        onClick={() => router.push(path)}
+        className="flex justify-between w-full"
+      >
+        <div className="flex items-center gap-2">
+          <p>{icon}</p>
+          <p
+            className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}
+          >
+            {title}
+          </p>
+        </div>
+        <div>
+          {path === '/cafe/search' && (
+            <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+              {searchResult.length}
+            </span>
+          )}
+          {path === '/cafe/collected' && (
+            <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+              {collectedCafeCount}
+            </span>
+          )}
+          {path === '/cafe/bookmarked' && (
+            <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+              {bookmarkedCafeCount}
+            </span>
+          )}
+          {path === '/cafe/recommended' && (
+            <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+              {recommendedCafeCount}
+            </span>
+          )}
+        </div>
+      </button>
     </li>
   );
 };

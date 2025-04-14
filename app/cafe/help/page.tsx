@@ -1,10 +1,10 @@
-import Head from 'next/head';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '도움 센터 | Cafe Masters',
+  description: '버그 제보를 위한 페이지 입니다.',
+};
 
 export default function Help() {
-  return (
-    <Head>
-      <title>도움 센터 | Cafe Masters</title>
-      <meta name="description" content={`버그가 발견되면 제보해주세요.`} />
-    </Head>
-  );
+  return null;
 }

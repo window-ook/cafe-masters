@@ -75,8 +75,8 @@ export default function Signin({ setViewAction }: SignProps) {
             />
             <p className="text-red-500">{emailError}</p>
             <button
-              data-cy="signin-button"
               type="button"
+              data-cy="signin-button"
               aria-label="로그인 버튼"
               className="w-full py-1 bg-main hover:bg-opacity-70 hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
               onClick={handleSignin}
@@ -94,8 +94,8 @@ export default function Signin({ setViewAction }: SignProps) {
               <span className="font-dpixel text-white">비밀번호 재설정</span>
             </button>
             <button
-              data-cy="kakaosignin-button"
               type="button"
+              data-cy="kakaosignin-button"
               aria-label="카카오 로그인 버튼"
               className={kakaoButtonStyle}
               onClick={() => signinWithKakao()}

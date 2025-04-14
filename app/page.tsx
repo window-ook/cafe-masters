@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSigninMutation } from 'hooks/mutation/useSigninMutation';
 import Image from 'next/image';
+import Link from 'next/link';
 
 // 반응형 스타일 참고 1100, 1020, 690, 560
 
@@ -26,8 +27,8 @@ const Navbar = () => {
           { email: data.email, password: data.password },
           {
             onSuccess: () => {
-              router.refresh(); // 세션 재요청
-              router.push('/cafe'); // 메인 페이지
+              router.refresh();
+              router.push('/cafe');
             },
           },
         );
@@ -36,8 +37,6 @@ const Navbar = () => {
       console.error(error);
     }
   };
-
-  const handleRouteSignin = () => router.push('/auth');
 
   return (
     <header className="fixed top-0 left-0 z-50 w-full bg-transparent shadow-md backdrop-blur-lg">
@@ -65,15 +64,15 @@ const Navbar = () => {
               체험하기
             </span>
           </button>
-          <button
+          <Link
+            href="/auth"
             aria-label="로그인 페이지 이동 버튼"
-            onClick={() => handleRouteSignin()}
-            className="h-[2rem] rounded-md hover:opacity-40 transition duration-100 ease-in"
+            className="h-[2rem] rounded-md flex justify-center items-center hover:opacity-40 transition duration-100 ease-in"
           >
             <span className="font-pretendard font-bold text-main-light">
               시작하기
             </span>
-          </button>
+          </Link>
         </div>
       </nav>
     </header>
@@ -238,6 +237,7 @@ const ScrollSections = () => {
       <div className="absolute z-50 right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4">
         {sections.map((_, index) => (
           <button
+            type="button"
             key={index}
             onClick={() => handleView(index)}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
@@ -389,6 +389,7 @@ const Contactme = () => {
               피드백을 들려주세요
             </span>
             <button
+              type="button"
               aria-label="피드백 메일 발송하기 버튼"
               className="text-white"
               onClick={() => window.open('mailto:cwl64658@gmail.com', '_blank')}
@@ -408,6 +409,7 @@ const Contactme = () => {
               데모 시청하기
             </span>
             <button
+              type="button"
               aria-label="카페 마스터즈 데모 영상 링크 버튼"
               className="text-white"
               onClick={() =>
