@@ -1,13 +1,12 @@
-'use client';
-
-import { use } from 'react';
+import { Metadata } from 'next';
 import { PageProps } from 'types/common';
-import useCafeDetailState from 'hooks/state/useCafeDetailState';
+import BookmarkedDetailUI from './ui';
 
-export default function BookmarkedDetail({ params }: PageProps) {
-  const { id } = use(params);
+export const metadata: Metadata = {
+  title: `카페 상세 정보 | Cafe Masters`,
+  description: `북마크된 카페의 상세 정보를 확인해보세요.`,
+};
 
-  useCafeDetailState(id, 'bookmarked');
-
-  return null;
+export default function BookmarkedDetail(props: PageProps) {
+  return <BookmarkedDetailUI {...props} />;
 }
