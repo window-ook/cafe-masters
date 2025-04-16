@@ -1,19 +1,12 @@
-'use client';
-
-import { useEffect, use } from 'react';
-import { useMapStore } from 'utils/store';
+import { Metadata } from 'next';
 import { PageProps } from 'types/common';
+import CollectedDetailUI from './ui';
 
-export default function CollectedDetail({ params }: PageProps) {
-  const { id } = use(params);
-  const numericId = parseFloat(id);
+export const metadata: Metadata = {
+  title: `카드 상세 정보 | Cafe Masters`,
+  description: `수집한 카드의 상세 정보를 확인해보세요.`,
+};
 
-  const { collectedCafe, setCollectedCafeDetail } = useMapStore();
-
-  useEffect(() => {
-    const targetCafe = collectedCafe.find(cafe => cafe.id === numericId);
-    if (targetCafe) setCollectedCafeDetail([targetCafe]);
-  }, [id, numericId, collectedCafe, setCollectedCafeDetail]);
-
-  return null;
+export default function CollectedDetail(props: PageProps) {
+  return <CollectedDetailUI {...props} />;
 }

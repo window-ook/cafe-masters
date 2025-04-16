@@ -1,13 +1,12 @@
-'use client';
-
-import { use } from 'react';
+import { Metadata } from 'next';
 import { PageProps } from 'types/common';
-import useCafeDetailState from 'hooks/state/useCafeDetailState';
+import RecommendedDetailUI from './ui';
 
-export default function RecommendedDetail({ params }: PageProps) {
-  const { id } = use(params);
+export const metadata: Metadata = {
+  title: `카페 상세 정보 | Cafe Masters`,
+  description: `추천 카페의 상세 정보를 확인해보세요.`,
+};
 
-  useCafeDetailState(id, 'recommended');
-
-  return null;
+export default function CollectedDetail(props: PageProps) {
+  return <RecommendedDetailUI {...props} />;
 }
