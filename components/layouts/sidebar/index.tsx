@@ -238,7 +238,7 @@ export default function Sidebar() {
                     <SearchResultList
                       key={cafe.id}
                       name={cafe.place_name}
-                      address={cafe.address_name}
+                      address={cafe.road_address_name}
                       phoneNum={cafe.phone}
                       onClick={() => handleNormalCafeClick(cafe)}
                     />

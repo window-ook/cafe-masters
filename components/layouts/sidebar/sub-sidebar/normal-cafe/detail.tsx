@@ -10,6 +10,7 @@ import {
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
+import { IoRefreshCircle } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 import CollectedBadge from 'components/layouts/sidebar/sub-sidebar/normal-cafe/collected-badge';
@@ -24,6 +25,7 @@ interface NormalCafeDetailProps {
   handleMenuOpen: () => void;
   setMemoOpen: (open: boolean) => void;
   setMemoRecommendationOpen: (open: boolean) => void;
+  onRefetch?: () => void;
 }
 
 export default function NormalCafeDetail({
@@ -31,15 +33,17 @@ export default function NormalCafeDetail({
   handleMenuOpen,
   setMemoOpen,
   setMemoRecommendationOpen,
+  onRefetch,
 }: NormalCafeDetailProps) {
-  const admin = useUserStore(state => state.admin);
-  const userId = useUserStore(state => state.userId);
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-  const isCollected = useCheckStore(state => state.isCollected);
-  const isBookmarked = useCheckStore(state => state.isBookmarked);
-  const isRecommended = useCheckStore(state => state.isRecommended);
-  const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
-  const setIsBookmarked = useCheckStore(state => state.setIsBookmarked);
+  const { admin, userId } = useUserStore();
+  const {
+    isDarkTheme,
+    isCollected,
+    isBookmarked,
+    isRecommended,
+    setIsSubSidebarOpen,
+    setIsBookmarked,
+  } = useCheckStore();
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -129,13 +133,24 @@ export default function NormalCafeDetail({
             {detail?.name}
           </span>
         </div>
-        <button
-          aria-label="상세 정보 닫기 버튼"
-          onClick={handleSetIsSubSidebarOpen}
-          className="px-2 right-2"
-        >
-          <IoCloseCircle className="text-main text-3xl hover:text-opacity-70" />
-        </button>
+        <div className="flex items-center">
+          {pathname.includes('/cafe/search') && onRefetch && (
+            <button
+              aria-label="데이터 다시 불러오기"
+              onClick={onRefetch}
+              className="px-2 rounded-full"
+            >
+              <IoRefreshCircle className="text-main text-3xl hover:text-opacity-70" />
+            </button>
+          )}
+          <button
+            aria-label="상세 정보 닫기 버튼"
+            onClick={handleSetIsSubSidebarOpen}
+            className="px-2 rounded-full right-2"
+          >
+            <IoCloseCircle className="text-main text-3xl hover:text-opacity-70" />
+          </button>
+        </div>
       </header>
 
       <main className={getDetailBodyStyle(isDarkTheme)}>
@@ -239,7 +254,9 @@ export default function NormalCafeDetail({
         </section>
 
         <section className="grid grid-cols-2 gap-6">
-          <CategoryGrid category={parsedCategory ?? []} />
+          {!pathname.includes('/cafe/search/detail') && (
+            <CategoryGrid category={parsedCategory ?? []} />
+          )}
           <OpenTimeGrid openingHours={detail?.openingHours} />
           <LocationGrid address={detail?.address} />
           <PhoneGrid phoneNum={detail?.phoneNum} />

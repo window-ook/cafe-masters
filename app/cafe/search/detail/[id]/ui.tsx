@@ -3,12 +3,12 @@
 import { useEffect, use } from 'react';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
 import { PageProps } from 'types/common';
-import Head from 'next/head';
 
 export default function SearchDetailUI({ params }: PageProps) {
   const { id } = use(params);
   const numericId = parseFloat(id);
 
+  const userId = useUserStore(state => state.userId);
   const {
     bookmarkedCafe,
     collectedCafe,
@@ -16,34 +16,40 @@ export default function SearchDetailUI({ params }: PageProps) {
     setCurrentCafeId,
     setCafeDetail,
   } = useMapStore();
-  const userId = useUserStore(state => state.userId);
   const { setIsBookmarked, setIsCollected, setIsRecommended, setIsLoading } =
     useCheckStore();
 
   useEffect(() => {
-    if (!userId || userId === '') return;
+    if (!userId) return;
+
+    setCafeDetail({});
+    setCurrentCafeId(numericId);
+
+    const isBookmarked = bookmarkedCafe.some(cafe => cafe.id === numericId);
+    const isCollected = collectedCafe.some(cafe => cafe.id === numericId);
+    const isRecommended = recommendedCafe.some(cafe => cafe.id === numericId);
+
+    setIsBookmarked(isBookmarked);
+    setIsCollected(isCollected);
+    setIsRecommended(isRecommended);
 
     const BASE_URL = process.env.NEXT_PUBLIC_API_REQUEST_URI;
-
     const REQ_URL =
       BASE_URL === 'http://localhost:3000'
         ? `/api/extra/${id}`
         : `/api/extra/product/${id}`;
 
-    const fetchData = async () => {
-      setIsLoading(true);
-      setIsBookmarked(false);
-      setIsCollected(false);
-      setIsRecommended(false);
+    setIsLoading(true);
 
+    const fetchDetail = async () => {
+      console.time('전체 요청 시간');
       try {
         const response = await fetch(REQ_URL);
+
         const data = await response.json();
+        console.timeEnd('전체 요청 시간');
+
         setCafeDetail(data);
-        setCurrentCafeId(numericId);
-        setIsBookmarked(bookmarkedCafe.some(cafe => cafe.id === numericId));
-        setIsCollected(collectedCafe.some(cafe => cafe.id === numericId));
-        setIsRecommended(recommendedCafe.some(cafe => cafe.id === numericId));
       } catch (error) {
         console.error('검색 결과 상세 정보 error:', error);
       } finally {
@@ -51,7 +57,7 @@ export default function SearchDetailUI({ params }: PageProps) {
       }
     };
 
-    fetchData();
+    fetchDetail();
   }, [
     id,
     userId,
@@ -67,13 +73,5 @@ export default function SearchDetailUI({ params }: PageProps) {
     setCafeDetail,
   ]);
 
-  return (
-    <Head>
-      <title>카페 검색 결과 상세 정보 | Cafe Masters</title>
-      <meta
-        name="description"
-        content={`검색 결과의 상세 정보를 확인하세요.`}
-      />
-    </Head>
-  );
+  return null;
 }

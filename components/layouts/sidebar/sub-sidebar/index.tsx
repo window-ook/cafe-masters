@@ -42,8 +42,15 @@ export default function SubSidebar() {
   const [cons, setCons] = useState<string>('');
   const [eaten, setEaten] = useState<string>('');
 
-  const searchResult = useMapStore(state => state.searchResult);
-  const cafeDetail = useMapStore(state => state.cafeDetail);
+  const {
+    searchResult,
+    cafeDetail,
+    setCafeDetail,
+    currentCoordX,
+    currentCoordY,
+    currentCafeId,
+  } = useMapStore();
+
   const collectedCafeDetail = useMapStore(
     state => state.collectedCafeDetail[0],
   );
@@ -53,21 +60,21 @@ export default function SubSidebar() {
   const recommendedCafeDetail = useMapStore(
     state => state.recommendedCafeDetail[0],
   );
-  const currentCoordX = useMapStore(state => state.currentCoordX);
-  const currentCoordY = useMapStore(state => state.currentCoordY);
-  const currentCafeId = useMapStore(state => state.currentCafeId);
 
   const userId = useUserStore(state => state.userId);
 
-  const isMenuOpen = useCheckStore(state => state.isMenuOpen);
-  const setIsMenuOpen = useCheckStore(state => state.setIsMenuOpen);
-  const isSubSidebarOpen = useCheckStore(state => state.isSubSidebarOpen);
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-  const isExtend = useCheckStore(state => state.isExtend);
-  const setIsExtend = useCheckStore(state => state.setIsExtend);
-  const setIsCollected = useCheckStore(state => state.setIsCollected);
-  const setIsRecommended = useCheckStore(state => state.setIsRecommended);
-  const isLoading = useCheckStore(state => state.isLoading);
+  const {
+    isMenuOpen,
+    setIsMenuOpen,
+    isSubSidebarOpen,
+    isDarkTheme,
+    isExtend,
+    setIsExtend,
+    setIsCollected,
+    setIsRecommended,
+    isLoading,
+    setIsLoading,
+  } = useCheckStore();
 
   const pathname = usePathname();
 
@@ -91,8 +98,7 @@ export default function SubSidebar() {
     photoUrl: cafeDetail?.photo || '/image/cafe_thumbnail.avif',
     photoList: cafeDetail?.photoList || [],
     openingHours: cafeDetail?.openingHours || '',
-    address:
-      cafeDetail?.address || filteredFromSearchResult?.[0]?.road_address_name,
+    address: filteredFromSearchResult?.[0]?.road_address_name,
     phoneNum: filteredFromSearchResult?.[0]?.phone ?? '',
     menu:
       Array.isArray(cafeDetail?.menu) && cafeDetail?.menu.length > 0
@@ -223,17 +229,21 @@ export default function SubSidebar() {
   };
 
   const handleUploadCollect = (memo: CollectedRowInsert) => {
-    setIsCollected(true);
-    setMemoOpen(false);
-    uploadCollectMutation.mutate(memo);
-    toast.success('카드를 수집했습니다!');
+    try {
+      setIsCollected(true);
+      setMemoOpen(false);
+      uploadCollectMutation.mutate(memo);
+      toast.success('카드를 수집했습니다!');
+      setSelectedCategoriesAction([]);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleUpdateCollect = (memo: CollectedRowUpdate) => {
     try {
       updateCollectMutation.mutate(memo);
       toast.success('카드의 스펙을 수정했습니다!');
-
       setMemoOpen(false);
       setComment('');
       setPros('');
@@ -246,11 +256,35 @@ export default function SubSidebar() {
   };
 
   const handleUploadRecommend = (memo: RecommendedRowInsert) => {
-    setIsRecommended(true);
-    setMemoRecommendationOpen(false);
-    uploadRecommendMutation.mutate(memo);
-    setSelectedCategoriesAction([]);
-    toast.success('추천 카페에 추가했습니다');
+    try {
+      setIsRecommended(true);
+      setMemoRecommendationOpen(false);
+      uploadRecommendMutation.mutate(memo);
+      setSelectedCategoriesAction([]);
+      toast.success('추천 카페에 추가했습니다');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleRefetch = async () => {
+    setIsLoading(true);
+    try {
+      const BASE_URL = process.env.NEXT_PUBLIC_API_REQUEST_URI;
+
+      const REQ_URL =
+        BASE_URL === 'http://localhost:3000'
+          ? `/api/extra/${id}`
+          : `/api/extra/product/${id}`;
+
+      const response = await fetch(REQ_URL);
+      const data = await response.json();
+      setCafeDetail(data);
+    } catch (error) {
+      console.error('검색 결과 상세 정보 error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (pathname.startsWith('/cafe/search/detail') && !cafeDetail) return null;
@@ -283,6 +317,7 @@ export default function SubSidebar() {
                 handleMenuOpen={handleMenuOpen}
                 setMemoOpen={setMemoOpen}
                 setMemoRecommendationOpen={setMemoRecommendationOpen}
+                onRefetch={handleRefetch}
               />
             )}
 
