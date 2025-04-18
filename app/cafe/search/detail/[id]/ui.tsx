@@ -42,12 +42,12 @@ export default function SearchDetailUI({ params }: PageProps) {
     setIsLoading(true);
 
     const fetchDetail = async () => {
-      console.time('전체 요청 시간');
+      console.time(`${numericId}`);
       try {
         const response = await fetch(REQ_URL);
 
         const data = await response.json();
-        console.timeEnd('전체 요청 시간');
+        console.timeEnd(`${numericId}`);
 
         setCafeDetail(data);
       } catch (error) {

@@ -1,3 +1,5 @@
+'use client';
+
 import { FaRegThumbsDown } from 'react-icons/fa';
 
 interface ConsGridProps {

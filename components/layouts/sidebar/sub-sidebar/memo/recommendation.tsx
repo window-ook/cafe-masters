@@ -1,3 +1,5 @@
+'use client';
+
 import { usePathname } from 'next/navigation';
 import CategorySelector, { CategorySelectorProps } from './category-selector';
 
@@ -5,14 +7,14 @@ interface MemoRecommendationProps extends CategorySelectorProps {
   detailName: string;
   bookmarkedCafeDetailName: string;
   isDarkTheme: boolean;
-  setMemoRecommendationOpen: (open: boolean) => void;
+  setMemoRecommendationOpenAction: (open: boolean) => void;
 }
 
 export default function MemoRecommendation({
   detailName,
   bookmarkedCafeDetailName,
   isDarkTheme,
-  setMemoRecommendationOpen,
+  setMemoRecommendationOpenAction,
   selectedCategories,
   setSelectedCategoriesAction,
 }: MemoRecommendationProps) {
@@ -31,7 +33,7 @@ export default function MemoRecommendation({
         <button
           type="button"
           aria-label="추천 중 취소 버튼"
-          onClick={() => setMemoRecommendationOpen(false)}
+          onClick={() => setMemoRecommendationOpenAction(false)}
           className={memoBackStyle}
         >
           <span>Back</span>

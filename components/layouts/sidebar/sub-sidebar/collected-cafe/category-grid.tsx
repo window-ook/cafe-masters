@@ -1,3 +1,5 @@
+'use client';
+
 interface CategoryGridProps {
   category: string[];
 }

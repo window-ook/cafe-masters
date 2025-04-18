@@ -1,3 +1,5 @@
+'use client';
+
 import { useCheckStore } from 'utils/store';
 import { BadgeProps } from 'types/common';
 import {
@@ -8,7 +10,7 @@ import {
 
 interface TierInfoModalProps {
   open: boolean;
-  handleClose: () => void;
+  handleCloseAction: () => void;
 }
 
 const Badge = ({ tier, range, color }: BadgeProps) => {
@@ -22,7 +24,10 @@ const Badge = ({ tier, range, color }: BadgeProps) => {
   );
 };
 
-export default function TierModal({ open, handleClose }: TierInfoModalProps) {
+export default function TierModal({
+  open,
+  handleCloseAction,
+}: TierInfoModalProps) {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
   const tierDescStyle =
@@ -33,10 +38,10 @@ export default function TierModal({ open, handleClose }: TierInfoModalProps) {
   return (
     <article>
       {open && (
-        <button type="button" onClick={handleClose}>
+        <button type="button" onClick={handleCloseAction}>
           <div
             className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm text-left"
-            onClick={handleClose}
+            onClick={handleCloseAction}
           >
             <div
               className={`${isDarkTheme ? 'bg-main-dark text-white border-main-dark-border border-4' : 'bg-white border-main-shadow border-4'} absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center`}

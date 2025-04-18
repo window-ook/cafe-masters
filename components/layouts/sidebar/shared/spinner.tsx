@@ -1,3 +1,5 @@
+'use client';
+
 interface SpinnerProps {
   width: string;
   height: string;

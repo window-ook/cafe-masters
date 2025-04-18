@@ -29,18 +29,18 @@ const MemoRecommendation = dynamic(() => import('./memo/recommendation'), {
 });
 
 export default function SubSidebar() {
-  const [memoOpen, setMemoOpen] = useState<boolean>(false);
-  const [memoRecommendationOpen, setMemoRecommendationOpen] =
+  const [memoOpen, setMemoOpenAction] = useState<boolean>(false);
+  const [memoRecommendationOpen, setMemoRecommendationOpenAction] =
     useState<boolean>(false);
   const [id, setId] = useState<string | undefined>('');
-  const [rating, setRating] = useState<number>(5);
+  const [rating, setRatingAction] = useState<number>(5);
   const [selectedCategories, setSelectedCategoriesAction] = useState<string[]>(
     [],
   );
-  const [comment, setComment] = useState<string>('');
-  const [pros, setPros] = useState<string>('');
-  const [cons, setCons] = useState<string>('');
-  const [eaten, setEaten] = useState<string>('');
+  const [comment, setCommentAction] = useState<string>('');
+  const [pros, setProsAction] = useState<string>('');
+  const [cons, setConsAction] = useState<string>('');
+  const [eaten, setEatenAction] = useState<string>('');
 
   const {
     searchResult,
@@ -182,19 +182,19 @@ export default function SubSidebar() {
 
   useEffect(() => {
     if (isCollectedPage && collectedCafeDetail) {
-      setComment(collectedCafeDetail.comment || '');
-      setPros(collectedCafeDetail.pros || '');
-      setCons(collectedCafeDetail.cons || '');
-      setEaten(collectedCafeDetail.eaten || '');
-      setRating(collectedCafeDetail.rating || 5);
+      setCommentAction(collectedCafeDetail.comment || '');
+      setProsAction(collectedCafeDetail.pros || '');
+      setConsAction(collectedCafeDetail.cons || '');
+      setEatenAction(collectedCafeDetail.eaten || '');
+      setRatingAction(collectedCafeDetail.rating || 5);
     }
 
     if (!isCollectedPage) {
-      setComment('');
-      setPros('');
-      setCons('');
-      setEaten('');
-      setRating(5);
+      setCommentAction('');
+      setProsAction('');
+      setConsAction('');
+      setEatenAction('');
+      setRatingAction(5);
     }
   }, [pathname, collectedCafeDetail, isCollectedPage]);
 
@@ -210,7 +210,7 @@ export default function SubSidebar() {
     const strId = newId?.toString();
     if (strId !== id) {
       setId(strId);
-      setMemoOpen(false);
+      setMemoOpenAction(false);
     }
   }, [
     pathname,
@@ -223,7 +223,7 @@ export default function SubSidebar() {
     isBookmarkedPage,
   ]);
 
-  const handleMenuOpen = () => {
+  const handleMenuOpenAction = () => {
     if (isMenuOpen === false) setIsMenuOpen(true);
     else setIsMenuOpen(false);
   };
@@ -231,7 +231,7 @@ export default function SubSidebar() {
   const handleUploadCollect = (memo: CollectedRowInsert) => {
     try {
       setIsCollected(true);
-      setMemoOpen(false);
+      setMemoOpenAction(false);
       uploadCollectMutation.mutate(memo);
       toast.success('카드를 수집했습니다!');
       setSelectedCategoriesAction([]);
@@ -244,11 +244,11 @@ export default function SubSidebar() {
     try {
       updateCollectMutation.mutate(memo);
       toast.success('카드의 스펙을 수정했습니다!');
-      setMemoOpen(false);
-      setComment('');
-      setPros('');
-      setCons('');
-      setEaten('');
+      setMemoOpenAction(false);
+      setCommentAction('');
+      setProsAction('');
+      setConsAction('');
+      setEatenAction('');
       setSelectedCategoriesAction([]);
     } catch (error) {
       console.error(error);
@@ -258,7 +258,7 @@ export default function SubSidebar() {
   const handleUploadRecommend = (memo: RecommendedRowInsert) => {
     try {
       setIsRecommended(true);
-      setMemoRecommendationOpen(false);
+      setMemoRecommendationOpenAction(false);
       uploadRecommendMutation.mutate(memo);
       setSelectedCategoriesAction([]);
       toast.success('추천 카페에 추가했습니다');
@@ -314,9 +314,11 @@ export default function SubSidebar() {
             pathname.startsWith('/cafe/search/detail') && (
               <NormalCafeDetail
                 detail={detail}
-                handleMenuOpen={handleMenuOpen}
-                setMemoOpen={setMemoOpen}
-                setMemoRecommendationOpen={setMemoRecommendationOpen}
+                handleMenuOpenAction={handleMenuOpenAction}
+                setMemoOpenAction={setMemoOpenAction}
+                setMemoRecommendationOpenAction={
+                  setMemoRecommendationOpenAction
+                }
                 onRefetch={handleRefetch}
               />
             )}
@@ -325,7 +327,7 @@ export default function SubSidebar() {
             !memoRecommendationOpen &&
             isSubSidebarOpen &&
             pathname.startsWith('/cafe/collected/detail') && (
-              <CollectedCafeDetail setMemoOpen={setMemoOpen} />
+              <CollectedCafeDetail setMemoOpenAction={setMemoOpenAction} />
             )}
 
           {!memoOpen &&
@@ -334,9 +336,11 @@ export default function SubSidebar() {
             pathname.startsWith('/cafe/bookmarked/detail') && (
               <NormalCafeDetail
                 detail={bookmarkedCafeDetail}
-                handleMenuOpen={handleMenuOpen}
-                setMemoOpen={setMemoOpen}
-                setMemoRecommendationOpen={setMemoRecommendationOpen}
+                handleMenuOpenAction={handleMenuOpenAction}
+                setMemoOpenAction={setMemoOpenAction}
+                setMemoRecommendationOpenAction={
+                  setMemoRecommendationOpenAction
+                }
               />
             )}
 
@@ -346,9 +350,11 @@ export default function SubSidebar() {
             pathname.startsWith('/cafe/recommended/detail') && (
               <NormalCafeDetail
                 detail={recommendedCafeDetail}
-                handleMenuOpen={handleMenuOpen}
-                setMemoOpen={setMemoOpen}
-                setMemoRecommendationOpen={setMemoRecommendationOpen}
+                handleMenuOpenAction={handleMenuOpenAction}
+                setMemoOpenAction={setMemoOpenAction}
+                setMemoRecommendationOpenAction={
+                  setMemoRecommendationOpenAction
+                }
               />
             )}
 
@@ -374,16 +380,16 @@ export default function SubSidebar() {
                 pros={pros}
                 cons={cons}
                 eaten={eaten}
-                setComment={setComment}
-                setPros={setPros}
-                setCons={setCons}
-                setEaten={setEaten}
-                setRating={setRating}
+                setRatingAction={setRatingAction}
+                setSelectedCategoriesAction={setSelectedCategoriesAction}
+                setCommentAction={setCommentAction}
+                setEatenAction={setEatenAction}
+                setProsAction={setProsAction}
+                setConsAction={setConsAction}
                 rating={rating}
                 isDarkTheme={isDarkTheme}
-                setMemoOpen={setMemoOpen}
+                setMemoOpenAction={setMemoOpenAction}
                 selectedCategories={selectedCategories}
-                setSelectedCategoriesAction={setSelectedCategoriesAction}
               />
             </form>
           )}
@@ -402,7 +408,9 @@ export default function SubSidebar() {
                 detailName={detail?.name}
                 bookmarkedCafeDetailName={bookmarkedCafeDetail?.name}
                 isDarkTheme={isDarkTheme}
-                setMemoRecommendationOpen={setMemoRecommendationOpen}
+                setMemoRecommendationOpenAction={
+                  setMemoRecommendationOpenAction
+                }
                 selectedCategories={selectedCategories}
                 setSelectedCategoriesAction={setSelectedCategoriesAction}
               />

@@ -1,3 +1,5 @@
+'use client';
+
 export const handleCopyClick = async (param: string) => {
   try {
     await navigator.clipboard.writeText(param);

@@ -1,3 +1,5 @@
+'use client';
+
 import { useCheckStore } from 'utils/store';
 import { MdSunny } from 'react-icons/md';
 import { FaMoon } from 'react-icons/fa';

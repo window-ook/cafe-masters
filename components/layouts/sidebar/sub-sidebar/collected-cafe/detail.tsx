@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import { useCheckStore, useMapStore } from 'utils/store';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
@@ -14,10 +16,12 @@ import RatingGrid from './rating-grid';
 import CategoryGrid from './category-grid';
 
 interface CafeDetailProps {
-  setMemoOpen: (open: boolean) => void;
+  setMemoOpenAction: (open: boolean) => void;
 }
 
-export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
+export default function CollectedCafeDetail({
+  setMemoOpenAction,
+}: CafeDetailProps) {
   const collectedCafeDetail = useMapStore(
     state => state.collectedCafeDetail[0],
   );
@@ -81,7 +85,7 @@ export default function CollectedCafeDetail({ setMemoOpen }: CafeDetailProps) {
             type="button"
             data-cy="update-button"
             className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
-            onClick={() => setMemoOpen(true)}
+            onClick={() => setMemoOpenAction(true)}
           >
             수정하기
           </button>
