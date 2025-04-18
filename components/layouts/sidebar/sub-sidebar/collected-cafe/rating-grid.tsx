@@ -1,3 +1,5 @@
+'use client';
+
 import { ratingCircleStyle, ratingStarStyle } from 'utils/styles';
 import { FaStar } from 'react-icons/fa6';
 

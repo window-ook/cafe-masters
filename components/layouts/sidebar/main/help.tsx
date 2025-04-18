@@ -1,3 +1,5 @@
+'use client';
+
 export default function Help() {
   const googleForm = 'https://forms.gle/7jEc8cKfELoKDFPb7';
 

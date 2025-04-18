@@ -1,17 +1,19 @@
+'use client';
+
 interface PageConverterProps {
   isDarkTheme: boolean;
-  handlePreviousPage: () => void;
   currentPage: number;
   totalPages: number;
-  handleNextPage: () => void;
+  handlePreviousPageAction: () => void;
+  handleNextPageAction: () => void;
 }
 
 export default function PageConverter({
   isDarkTheme,
   currentPage,
   totalPages,
-  handlePreviousPage,
-  handleNextPage,
+  handlePreviousPageAction,
+  handleNextPageAction,
 }: PageConverterProps) {
   return (
     <section
@@ -21,7 +23,7 @@ export default function PageConverter({
         <button
           type="button"
           aria-label="이전 페이지 번호"
-          onClick={handlePreviousPage}
+          onClick={handlePreviousPageAction}
           disabled={currentPage === 1}
           className={`px-4 py-2 ${
             currentPage === 1 ? 'opacity-50' : 'opacity-100'
@@ -35,7 +37,7 @@ export default function PageConverter({
         <button
           type="button"
           aria-label="다음 페이지 번호"
-          onClick={handleNextPage}
+          onClick={handleNextPageAction}
           disabled={currentPage === totalPages}
           className={`px-4 py-2 ${
             currentPage === totalPages ? 'opacity-50' : 'opacity-100'

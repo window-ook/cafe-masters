@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import {
   getExpertTierStyle,
@@ -15,7 +17,7 @@ export default function TierBadge({ tier }: TierBadgeProps) {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleCloseAction = () => setOpen(false);
 
   const tierStyles = {
     BEGINNER: 'bg-beginner text-white',
@@ -37,7 +39,7 @@ export default function TierBadge({ tier }: TierBadgeProps) {
           <span className="text-sm font-dpixel">{tier}</span>
         </button>
       </div>
-      <TierModal open={open} handleClose={handleClose} />
+      <TierModal open={open} handleCloseAction={handleCloseAction} />
     </>
   );
 }

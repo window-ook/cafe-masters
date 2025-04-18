@@ -1,3 +1,5 @@
+'use client';
+
 import { useCheckStore } from 'utils/store';
 import Image from 'next/image';
 
@@ -6,11 +8,11 @@ interface NormalCafeProps {
   address: string;
   phoneNum: string | null | undefined;
   photoUrl?: string | null | undefined;
-  onClick: () => void;
+  onClickAction: () => void;
 }
 
 export default function NormalCafe({
-  onClick,
+  onClickAction,
   name,
   address,
   phoneNum,
@@ -25,7 +27,7 @@ export default function NormalCafe({
     >
       <button
         type="button"
-        onClick={onClick}
+        onClick={onClickAction}
         className="w-full h-full flex justify-between items-center text-left"
       >
         <div className="h-full flex flex-col justify-center gap-1">

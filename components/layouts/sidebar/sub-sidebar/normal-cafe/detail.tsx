@@ -22,17 +22,17 @@ import CategoryGrid from '../collected-cafe/category-grid';
 
 interface NormalCafeDetailProps {
   detail: NormalCafeDetailForBookmark | NormalCafeDetailForRecommend;
-  handleMenuOpen: () => void;
-  setMemoOpen: (open: boolean) => void;
-  setMemoRecommendationOpen: (open: boolean) => void;
+  handleMenuOpenAction: () => void;
+  setMemoOpenAction: (open: boolean) => void;
+  setMemoRecommendationOpenAction: (open: boolean) => void;
   onRefetch?: () => void;
 }
 
 export default function NormalCafeDetail({
   detail,
-  handleMenuOpen,
-  setMemoOpen,
-  setMemoRecommendationOpen,
+  handleMenuOpenAction,
+  setMemoOpenAction,
+  setMemoRecommendationOpenAction,
   onRefetch,
 }: NormalCafeDetailProps) {
   const { admin, userId } = useUserStore();
@@ -231,7 +231,7 @@ export default function NormalCafeDetail({
                 data-cy="collect-button"
                 aria-label="추천하기 버튼"
                 className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
-                onClick={() => setMemoRecommendationOpen(true)}
+                onClick={() => setMemoRecommendationOpenAction(true)}
               >
                 추천하기
               </button>
@@ -245,7 +245,7 @@ export default function NormalCafeDetail({
                 data-cy="collect-button"
                 aria-label="수집하기 버튼"
                 className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
-                onClick={() => setMemoOpen(true)}
+                onClick={() => setMemoOpenAction(true)}
               >
                 수집하기
               </button>
@@ -261,7 +261,7 @@ export default function NormalCafeDetail({
           <LocationGrid address={detail?.address} />
           <PhoneGrid phoneNum={detail?.phoneNum} />
           <MenuGrid
-            handleMenuOpen={handleMenuOpen}
+            handleMenuOpenAction={handleMenuOpenAction}
             isDarkTheme={isDarkTheme}
             menu={menu}
           />

@@ -1,3 +1,5 @@
+'use client';
+
 import { useCheckStore } from 'utils/store';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
@@ -8,13 +10,13 @@ interface MenuItem {
 
 interface MenuGridProps {
   isDarkTheme: boolean;
-  handleMenuOpen: () => void;
+  handleMenuOpenAction: () => void;
   menu: MenuItem[];
 }
 
 export default function MenuGrid({
   isDarkTheme,
-  handleMenuOpen,
+  handleMenuOpenAction,
   menu,
 }: MenuGridProps) {
   const isMenuOpen = useCheckStore(state => state.isMenuOpen);
@@ -27,7 +29,7 @@ export default function MenuGrid({
           <button
             type="button"
             aria-label="메뉴 보기 버튼"
-            onClick={handleMenuOpen}
+            onClick={handleMenuOpenAction}
           >
             {isMenuOpen ? (
               <FaChevronUp

@@ -168,11 +168,11 @@ export default function Sidebar() {
     if (currentPage < totalRecommendedPages) setCurrentPage(currentPage + 1);
   };
 
-  const handleNextPage = isRecommendedPage
+  const handleNextPageAction = isRecommendedPage
     ? handleNextRecommendedPage
     : handleNextSearchResultPage;
 
-  const handlePreviousPage = () => {
+  const handlePreviousPageAction = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
@@ -240,7 +240,7 @@ export default function Sidebar() {
                       name={cafe.place_name}
                       address={cafe.road_address_name}
                       phoneNum={cafe.phone}
-                      onClick={() => handleNormalCafeClick(cafe)}
+                      onClickAction={() => handleNormalCafeClick(cafe)}
                     />
                   ))}
                 </ul>
@@ -258,7 +258,7 @@ export default function Sidebar() {
                           photoUrl={cafe.photoUrl}
                           address={cafe.address}
                           phoneNum={cafe.phoneNum}
-                          onClick={() => handleCollectedCafeClick(cafe)}
+                          onClickAction={() => handleCollectedCafeClick(cafe)}
                         />
                       ),
                     )}
@@ -285,7 +285,7 @@ export default function Sidebar() {
                           address={cafe.address}
                           phoneNum={cafe.phoneNum}
                           photoUrl={cafe.photoUrl}
-                          onClick={() => handleBookmarkedCafeClick(cafe)}
+                          onClickAction={() => handleBookmarkedCafeClick(cafe)}
                         />
                       ),
                     )}
@@ -312,7 +312,7 @@ export default function Sidebar() {
                           address={cafe.address}
                           phoneNum={cafe.phoneNum}
                           photoUrl={cafe.photoUrl}
-                          onClick={() => handleRecommendedCafeClick(cafe)}
+                          onClickAction={() => handleRecommendedCafeClick(cafe)}
                         />
                       ),
                     )}
@@ -329,8 +329,8 @@ export default function Sidebar() {
             <footer className="flex-none">
               <PageConverter
                 isDarkTheme={isDarkTheme}
-                handlePreviousPage={handlePreviousPage}
-                handleNextPage={handleNextPage}
+                handlePreviousPageAction={handlePreviousPageAction}
+                handleNextPageAction={handleNextPageAction}
                 currentPage={currentPage}
                 totalPages={totalPages}
               />

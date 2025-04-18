@@ -1,3 +1,5 @@
+'use client';
+
 import { MdOutlineRestaurantMenu } from 'react-icons/md';
 
 interface EatenGridProps {

@@ -1,3 +1,5 @@
+'use client';
+
 import { FaPencilAlt } from 'react-icons/fa';
 
 interface CommentGridProps {

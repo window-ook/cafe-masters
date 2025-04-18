@@ -1,14 +1,16 @@
+'use client';
+
 import { useCheckStore } from 'utils/store';
 
 interface SearchResultProps {
   name: string | undefined;
   address: string;
   phoneNum: string | null | undefined;
-  onClick: () => void;
+  onClickAction: () => void;
 }
 
 export default function SearchResult({
-  onClick,
+  onClickAction,
   name,
   address,
   phoneNum,
@@ -22,7 +24,7 @@ export default function SearchResult({
     >
       <button
         type="button"
-        onClick={onClick}
+        onClick={onClickAction}
         className="w-full flex flex-col justify-center gap-1 text-left"
       >
         <p className="whitespace-nowrap overflow-hidden text-ellipsis font-dpixel font-bold text-xl">

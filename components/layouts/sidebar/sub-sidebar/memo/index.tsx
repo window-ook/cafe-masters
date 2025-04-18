@@ -1,3 +1,5 @@
+'use client';
+
 import { usePathname } from 'next/navigation';
 import CategorySelector, { CategorySelectorProps } from './category-selector';
 import Rating from './rating';
@@ -11,13 +13,13 @@ interface MemoProps extends CategorySelectorProps {
   pros: string;
   cons: string;
   eaten: string;
-  setComment: (comment: string) => void;
-  setPros: (pros: string) => void;
-  setCons: (cons: string) => void;
-  setEaten: (eaten: string) => void;
+  setCommentAction: (comment: string) => void;
+  setProsAction: (pros: string) => void;
+  setConsAction: (cons: string) => void;
+  setEatenAction: (eaten: string) => void;
   isDarkTheme: boolean;
-  setMemoOpen: (open: boolean) => void;
-  setRating: (rating: number) => void;
+  setMemoOpenAction: (open: boolean) => void;
+  setRatingAction: (rating: number) => void;
   rating: number;
 }
 
@@ -26,20 +28,20 @@ export default function Memo({
   collectedCafeDetailName,
   bookmarkedCafeDetailName,
   recommendedCafeDetailName,
+  rating,
+  selectedCategories,
   comment,
   pros,
   cons,
   eaten,
-  setComment,
-  setPros,
-  setCons,
-  setEaten,
   isDarkTheme,
-  setMemoOpen,
-  setRating,
-  rating,
-  selectedCategories,
+  setMemoOpenAction,
+  setRatingAction,
   setSelectedCategoriesAction,
+  setCommentAction,
+  setProsAction,
+  setConsAction,
+  setEatenAction,
 }: MemoProps) {
   const pathname = usePathname();
 
@@ -60,7 +62,7 @@ export default function Memo({
         <button
           type="button"
           aria-label="카드 수집 취소 버튼"
-          onClick={() => setMemoOpen(false)}
+          onClick={() => setMemoOpenAction(false)}
           className={memoBackStyle}
         >
           <span>Back</span>
@@ -72,7 +74,7 @@ export default function Memo({
           data-cy="memo-rating"
           aria-label="카페의 별점을 매기는 라디오 그룹"
           value={rating}
-          onChange={value => setRating(value)}
+          onChange={value => setRatingAction(value)}
         />
       </div>
       <CategorySelector
@@ -84,7 +86,7 @@ export default function Memo({
         required
         value={comment}
         placeholder="*코멘트"
-        onChange={e => setComment(e.target.value)}
+        onChange={e => setCommentAction(e.target.value)}
         className={memoInputStyle}
       />
       <input
@@ -92,21 +94,21 @@ export default function Memo({
         required
         value={eaten}
         placeholder="*먹은 메뉴"
-        onChange={e => setEaten(e.target.value)}
+        onChange={e => setEatenAction(e.target.value)}
         className={memoInputStyle}
       />
       <input
         data-cy="memo-pros"
         value={pros}
         placeholder="좋은 점"
-        onChange={e => setPros(e.target.value)}
+        onChange={e => setProsAction(e.target.value)}
         className={memoInputStyle}
       />
       <input
         data-cy="memo-cons"
         placeholder="아쉬운 점"
         value={cons}
-        onChange={e => setCons(e.target.value)}
+        onChange={e => setConsAction(e.target.value)}
         className={memoInputStyle}
       />
       <button

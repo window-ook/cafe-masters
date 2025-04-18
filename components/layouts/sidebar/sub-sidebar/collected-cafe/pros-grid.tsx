@@ -1,3 +1,5 @@
+'use client';
+
 import { FaRegThumbsUp } from 'react-icons/fa';
 
 interface ProsGridProps {

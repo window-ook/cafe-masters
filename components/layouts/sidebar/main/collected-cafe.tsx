@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef } from 'react';
 import { useCheckStore } from 'utils/store';
 import { ratingCircleStyle } from 'utils/styles';
@@ -10,7 +12,7 @@ interface CollectedCafeProps {
   phoneNum: string | null | undefined;
   photoUrl: string | null | undefined;
   ratings: number | null | undefined;
-  onClick: () => void;
+  onClickAction: () => void;
 }
 
 export default function CollectedCafe({
@@ -19,7 +21,7 @@ export default function CollectedCafe({
   address,
   phoneNum,
   ratings,
-  onClick,
+  onClickAction,
 }: CollectedCafeProps) {
   const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
@@ -164,7 +166,7 @@ export default function CollectedCafe({
       <button
         ref={cardRef}
         tabIndex={0}
-        onClick={onClick}
+        onClick={onClickAction}
         onMouseMove={e => {
           handleCardMouseMove(e);
           handleOverlayMouseMove(e);
