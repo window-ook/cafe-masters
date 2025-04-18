@@ -18,6 +18,7 @@ import Header from './header';
 import Footer from './footer';
 import dynamic from 'next/dynamic';
 import Help from './main/help';
+import useThrottle from '@/hooks/handler/useThrottle';
 
 const SearchResultList = dynamic(() => import('./main/search-result'), {
   ssr: false,
@@ -42,10 +43,11 @@ export default function Sidebar() {
   const userId = useUserStore(state => state.userId);
   const {
     searchResult,
-    setRecommendedCafe,
     filteredRecommendedCafe,
     filteredCollectedCafe,
     filteredBookmarkedCafe,
+    currentCafeId,
+    setRecommendedCafe,
     setCurrentCoordX,
     setCurrentCoordY,
   } = useMapStore();
@@ -176,37 +178,53 @@ export default function Sidebar() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleNormalCafeClick = (cafe: SearchResult) => {
-    setIsSubSidebarOpen(true);
-    setIsMenuOpen(false);
-    router.push(`/cafe/search/detail/${cafe.id}`);
-    setCurrentCoordX(cafe?.x);
-    setCurrentCoordY(cafe?.y);
-  };
+  const handleNormalCafeClick = useThrottle(
+    (cafe: SearchResult) => {
+      setIsSubSidebarOpen(true);
+      setIsMenuOpen(false);
+      router.push(`/cafe/search/detail/${cafe.id}`);
+      setCurrentCoordX(cafe?.x);
+      setCurrentCoordY(cafe?.y);
+    },
+    5000,
+    (cafe: SearchResult) => parseInt(cafe.id) === currentCafeId,
+  );
 
-  const handleCollectedCafeClick = (cafe: CollectedCafeFromSupabase) => {
-    setIsSubSidebarOpen(true);
-    setIsMenuOpen(false);
-    router.push(`/cafe/collected/detail/${cafe.id}`);
-    setCurrentCoordX(cafe?.coordX);
-    setCurrentCoordY(cafe?.coordY);
-  };
+  const handleCollectedCafeClick = useThrottle(
+    (cafe: CollectedCafeFromSupabase) => {
+      setIsSubSidebarOpen(true);
+      setIsMenuOpen(false);
+      router.push(`/cafe/collected/detail/${cafe.id}`);
+      setCurrentCoordX(cafe?.coordX);
+      setCurrentCoordY(cafe?.coordY);
+    },
+    5000,
+    (cafe: CollectedCafeFromSupabase) => cafe.id === currentCafeId,
+  );
 
-  const handleBookmarkedCafeClick = (cafe: BookmarkedCafeFromSupabase) => {
-    setIsSubSidebarOpen(true);
-    setIsMenuOpen(false);
-    router.push(`/cafe/bookmarked/detail/${cafe.id}`);
-    setCurrentCoordX(cafe?.coordX);
-    setCurrentCoordY(cafe?.coordY);
-  };
+  const handleBookmarkedCafeClick = useThrottle(
+    (cafe: BookmarkedCafeFromSupabase) => {
+      setIsSubSidebarOpen(true);
+      setIsMenuOpen(false);
+      router.push(`/cafe/bookmarked/detail/${cafe.id}`);
+      setCurrentCoordX(cafe?.coordX);
+      setCurrentCoordY(cafe?.coordY);
+    },
+    5000,
+    (cafe: BookmarkedCafeFromSupabase) => cafe.id === currentCafeId,
+  );
 
-  const handleRecommendedCafeClick = (cafe: RecommendedCafeFromSupabase) => {
-    setIsSubSidebarOpen(true);
-    setIsMenuOpen(false);
-    router.push(`/cafe/recommended/detail/${cafe.id}`);
-    setCurrentCoordX(cafe?.coordX);
-    setCurrentCoordY(cafe?.coordY);
-  };
+  const handleRecommendedCafeClick = useThrottle(
+    (cafe: RecommendedCafeFromSupabase) => {
+      setIsSubSidebarOpen(true);
+      setIsMenuOpen(false);
+      router.push(`/cafe/recommended/detail/${cafe.id}`);
+      setCurrentCoordX(cafe?.coordX);
+      setCurrentCoordY(cafe?.coordY);
+    },
+    5000,
+    (cafe: RecommendedCafeFromSupabase) => cafe.id === currentCafeId,
+  );
 
   if (pathname.startsWith('/resetpassword')) return null;
 
@@ -234,7 +252,6 @@ export default function Sidebar() {
               {isSearchResultPage && (
                 <ul className={cardContainerStyle}>
                   {paginatedResult.map((cafe: SearchResult) => (
-                    // 검색 리스트 컴포넌트 만들어서 대체하기
                     <SearchResultList
                       key={cafe.id}
                       name={cafe.place_name}

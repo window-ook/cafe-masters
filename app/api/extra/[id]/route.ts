@@ -61,8 +61,10 @@ export async function GET(
 
     // 필요한 요소만 기다림
     const mainSelector = '.img-thumb.img_cfit';
+    const menuSelector = '.list_goods';
     try {
       await page.waitForSelector(mainSelector, { timeout: 3000 });
+      await page.waitForSelector(menuSelector, { timeout: 3000 });
     } catch (e) {
       console.error(e);
     }
@@ -94,15 +96,13 @@ export async function GET(
       openingHours = openingHours.replace(/^매일\s+/, '').trim();
 
       // 메뉴 3개
-      const menuItems = Array.from(
-        document.querySelectorAll('.list_goods > li'),
-      )
+      const menuItems = Array.from(document.querySelectorAll('.list_goods li'))
         .slice(0, 3)
         .map(el => ({
           name: el.querySelector('.tit_item')?.textContent?.trim() || '',
           price: el.querySelector('.desc_item')?.textContent?.trim() || '',
         }))
-        .filter(menu => menu.name !== '');
+        .filter(menu => menu.name && menu.price); // 이름과 가격이 모두 있는 경우만 포함
 
       return { photo, photoList, openingHours, menu: menuItems };
     });
