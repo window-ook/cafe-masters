@@ -8,13 +8,13 @@
 * =========================== 
 */
 ::-webkit-scrollbar {
-  width: 6px; 
+  width: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #875aad; 
-  border-radius: 10px; 
-  border: 2px solid transparent; 
+  background-color: #875aad;
+  border-radius: 10px;
+  border: 2px solid transparent;
 }
 
 @layer base {
@@ -44,14 +44,14 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --skeleton-start: #f5f5f5; 
-    --skeleton-end: #d4d4d4;   
+    --skeleton-start: #f5f5f5;
+    --skeleton-end: #d4d4d4;
     --hidden-card-left: #5f018a;
     --hidden-card-mid: #8a24b9;
     --hidden-card-right: #f5248c;
     --gold-left: '#fde68a',
-    --gold-via: '#facc15',
-    --gold-right: '#a16207',
+      --gold-via: '#facc15',
+      --gold-right: '#a16207',
   }
 
   .dark {
@@ -103,13 +103,13 @@ body {
 * =========================== 
 */
 .card-container {
-  perspective: 500px; 
+  perspective: 500px;
 }
 
 /* 틸트 */
 .card-tilt {
   transition: transform 0.1s ease;
-  will-change: transform; 
+  will-change: transform;
   transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
 }
 
@@ -119,11 +119,9 @@ body {
   z-index: 20;
   width: 100%;
   height: 100%;
-  background: radial-gradient(
-    circle at var(--mouse-x, 100%) var(--mouse-y, 100%),
-    rgba(255, 255, 255, 0.8),
-    transparent 60%
-    );
+  background: radial-gradient(circle at var(--mouse-x, 100%) var(--mouse-y, 100%),
+      rgba(255, 255, 255, 0.8),
+      transparent 60%);
   filter: blur(var(--blur, 70px)) brightness(var(--brightness, 2));
   opacity: 0;
   pointer-events: none;
@@ -133,44 +131,38 @@ body {
 
 /* 3점, 실버 */
 .card-silver {
-  background: linear-gradient(
-    to bottom right,
-    #f9fafb,
-    #e5e7eb,
-    #d1d5db,
-    #9ca3af,
-    #6b7280,
-    #4b5563,
-    #374151
-  );
+  background: linear-gradient(to bottom right,
+      #f9fafb,
+      #e5e7eb,
+      #d1d5db,
+      #9ca3af,
+      #6b7280,
+      #4b5563,
+      #374151);
 }
 
 /* 4점, 골드 */
 .card-gold {
-  background: linear-gradient(
-    to bottom right,
-    #fef9c3,
-    #fde68a,
-    #fde047,
-    #facc15,
-    #ca8a04,
-    #a16207,
-    #78350f
-  );
+  background: linear-gradient(to bottom right,
+      #fef9c3,
+      #fde68a,
+      #fde047,
+      #facc15,
+      #ca8a04,
+      #a16207,
+      #78350f);
 }
 
 /* 5점, 에메랄드 */
 .card-emerald {
-  background: linear-gradient(
-    to bottom right,
-    #ccfbf1,    
-    #6ee7b7,   
-    #5fe0a9,   
-    #34d399,   
-    #178f7e,   
-    #0f766e,   
-    #0d5c5b
-  );
+  background: linear-gradient(to bottom right,
+      #ccfbf1,
+      #6ee7b7,
+      #5fe0a9,
+      #34d399,
+      #178f7e,
+      #0f766e,
+      #0d5c5b);
   background-size: 100% 100%;
   color: black;
   position: relative;
@@ -186,10 +178,13 @@ body {
   background-image: url("/image/pattern_diagonal_1.gif");
   background-position: 50% 50%;
   background-size: 160%;
-  background-blend-mode: normal; /* overlay에서 normal로 변경 */
-  opacity: .2; /* 투명도를 조절하여 기본 색상이 더 잘 보이게 함 */
+  background-blend-mode: normal;
+  /* overlay에서 normal로 변경 */
+  opacity: .2;
+  /* 투명도를 조절하여 기본 색상이 더 잘 보이게 함 */
   filter: brightness(1) contrast(1);
-  mix-blend-mode: color-dodge; /* 필요에 따라 변경 가능 */
+  mix-blend-mode: color-dodge;
+  /* 필요에 따라 변경 가능 */
   transition: all .33s ease;
   border-radius: inherit;
   pointer-events: none;
@@ -202,16 +197,14 @@ body {
   z-index: 10;
   color: white;
   overflow: hidden;
-  background: linear-gradient(
-    to bottom right,
-    #ff9fda,    
-    #f5248c,    
-    #d622aa,
-    #b02fc5,
-    #8a24b9,    
-    #6b168a,
-    #5f018a     
-  );
+  background: linear-gradient(to bottom right,
+      #ff9fda,
+      #f5248c,
+      #d622aa,
+      #b02fc5,
+      #8a24b9,
+      #6b168a,
+      #5f018a);
   background-size: 100% 100%;
 }
 
@@ -219,7 +212,7 @@ body {
 .card-hidden:after {
   content: "";
   position: absolute;
-  inset: 0; 
+  inset: 0;
   background-repeat: no-repeat;
   transition: all .33s ease;
   border-radius: inherit;
@@ -228,15 +221,13 @@ body {
 }
 
 .card-hidden:before {
-  background-image: linear-gradient(
-    115deg,
-    transparent 0%,
-    rgba(0, 231, 255, 0.8) 25%,
-    transparent 47%,
-    transparent 53%,
-    rgba(255, 0, 231, 0.8) 75%,
-    transparent 100%
-  );
+  background-image: linear-gradient(115deg,
+      transparent 0%,
+      rgba(0, 231, 255, 0.8) 25%,
+      transparent 47%,
+      transparent 53%,
+      rgba(255, 0, 231, 0.8) 75%,
+      transparent 100%);
   background-position: 50% 50%;
   background-size: 300% 300%;
   opacity: 0.5;
@@ -245,8 +236,8 @@ body {
 }
 
 .card-hidden:after {
-  background-image: 
-    url("/image/pattern_diagonal_1.gif"),   
+  background-image:
+    url("/image/pattern_diagonal_1.gif"),
     url("https://assets.codepen.io/13471/sparkles.gif"),
     linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
   background-position: 50% 50%;
@@ -263,16 +254,19 @@ body {
     top: -18.75rem;
     opacity: 0;
   }
+
   to {
     top: 0;
     opacity: 1;
   }
 }
+
 @keyframes animatetop {
   from {
     top: -18.75rem;
     opacity: 0;
   }
+
   to {
     top: 0;
     opacity: 1;
@@ -285,6 +279,7 @@ body {
     -webkit-transform: scale3d(0.3, 0.3, 0.3);
     transform: scale3d(0.3, 0.3, 0.3);
   }
+
   50% {
     opacity: 1;
   }
@@ -296,6 +291,7 @@ body {
     -webkit-transform: scale3d(0.3, 0.3, 0.3);
     transform: scale3d(0.3, 0.3, 0.3);
   }
+
   50% {
     opacity: 1;
   }
@@ -327,7 +323,7 @@ body {
   height: 1.25rem;
   background-image: url('/image/logo.avif');
   background-size: cover;
-  background-position: center; 
+  background-position: center;
   animation: animate 25s linear infinite;
   bottom: -9.375rem;
 }
