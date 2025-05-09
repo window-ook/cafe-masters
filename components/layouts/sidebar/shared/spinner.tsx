@@ -9,7 +9,7 @@ interface SpinnerProps {
 export default function Spinner({ width, height, border }: SpinnerProps) {
   return (
     <div
-      className={`${width} ${height} ${border} border-main border-r-main-shadow border-b-main-light border-t-transparent rounded-full animate-spin`}
+      className={`${width} ${height} ${border} border-main border-t-transparent rounded-full animate-spin`}
     ></div>
   );
 }
