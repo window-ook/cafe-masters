@@ -19,6 +19,7 @@ import Footer from './footer';
 import dynamic from 'next/dynamic';
 import Help from './main/help';
 import useThrottle from '@/hooks/handler/useThrottle';
+import PulseDot from './shared/pulse-dot';
 
 const SearchResultList = dynamic(() => import('./main/search-result'), {
   ssr: false,
@@ -281,11 +282,7 @@ export default function Sidebar() {
                     )}
                   </ul>
 
-                  {isFetchingNextCollectedPage && (
-                    <div className="fixed bottom-4 left-4">
-                      <Spinner width="w-4" height="h-4" border="border-4" />
-                    </div>
-                  )}
+                  {isFetchingNextCollectedPage && <PulseDot />}
 
                   <div ref={collectedRef} className="h-[2rem] w-[22rem]"></div>
                 </div>

@@ -117,6 +117,20 @@ const config: Config = {
       },
 
       keyframes: {
+        dotOne: {
+          '0%, 100%': { opacity: '0' },
+          '33%': { opacity: '1' },
+          '66%': { opacity: '1' },
+        },
+        dotTwo: {
+          '0%, 33%': { opacity: '0' },
+          '66%': { opacity: '1' },
+          '100%': { opacity: '1' },
+        },
+        dotThree: {
+          '0%, 66%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
         gradient: {
           '0%': {
             'background-position': '0% 50%',
