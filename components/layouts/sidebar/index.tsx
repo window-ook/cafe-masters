@@ -34,9 +34,6 @@ const PageConverter = dynamic(() => import('./footer/page-converter'), {
 const SubSidebar = dynamic(() => import('./sub-sidebar'), {
   ssr: false,
 });
-const Spinner = dynamic(() => import('./shared/spinner'), {
-  ssr: false,
-});
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -305,11 +302,7 @@ export default function Sidebar() {
                     )}
                   </ul>
 
-                  {isFetchingNextBookmarkedPage && (
-                    <div className="fixed bottom-4 left-4">
-                      <Spinner width="w-4" height="h-4" border="border-4" />
-                    </div>
-                  )}
+                  {isFetchingNextBookmarkedPage && <PulseDot />}
 
                   <div ref={bookmarkedRef} className="h-[2rem] w-[22rem]"></div>
                 </div>
