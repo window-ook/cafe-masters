@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 // 반응형 스타일 참고 1100, 1020, 690, 560
-
 const Navbar = () => {
   return (
     <header className="fixed top-0 left-0 z-50 w-full bg-transparent shadow-md backdrop-blur-lg">
