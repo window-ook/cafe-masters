@@ -1,43 +1,9 @@
-'use client';
-
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useSigninMutation } from 'hooks/mutation/useSigninMutation';
 import Image from 'next/image';
 import Link from 'next/link';
 
 // 반응형 스타일 참고 1100, 1020, 690, 560
 
 const Navbar = () => {
-  const router = useRouter();
-
-  const signinMutation = useSigninMutation();
-
-  const handleTestSignin = async () => {
-    try {
-      const response = await fetch('/api/auth/test-credential');
-      const data = await response.json();
-      if (!response.ok)
-        throw new Error(
-          data.error || '테스트 계정 정보를 불러오지 못했습니다.',
-        );
-
-      setTimeout(() => {
-        signinMutation.mutate(
-          { email: data.email, password: data.password },
-          {
-            onSuccess: () => {
-              router.refresh();
-              router.push('/cafe');
-            },
-          },
-        );
-      }, 0);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <header className="fixed top-0 left-0 z-50 w-full bg-transparent shadow-md backdrop-blur-lg">
       <nav className="max-w-5xl h-[4rem] px-6 py-2 mx-auto flex items-center justify-between">
@@ -55,15 +21,6 @@ const Navbar = () => {
           </span>
         </div>
         <div className="flex gap-4">
-          <button
-            aria-label="체험계정 로그인 버튼"
-            onClick={() => handleTestSignin()}
-            className="h-[2rem] border-2 border-solid border-opacity-50 border-neutral-100 rounded-md p-4 flex items-center hover:opacity-40 transition duration-100 ease-in"
-          >
-            <span className="font-pretendard font-bold text-white">
-              체험하기
-            </span>
-          </button>
           <Link
             href="/auth"
             aria-label="로그인 페이지 이동 버튼"
@@ -80,10 +37,6 @@ const Navbar = () => {
 };
 
 const ScrollSections = () => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
   const sections = [
     {
       id: 1,
@@ -111,39 +64,8 @@ const ScrollSections = () => {
     },
   ];
 
-  const handleView = (index: number) => {
-    if (containerRef.current) {
-      containerRef.current.children[index].scrollIntoView({
-        behavior: 'smooth',
-      });
-      setActiveIndex(index);
-    }
-  };
-
-  const handleScroll = useCallback(() => {
-    if (!containerRef.current) return;
-    const index = Math.round(
-      containerRef.current.scrollTop / window.innerHeight,
-    );
-
-    setActiveIndex(index);
-  }, []);
-
-  useEffect(() => {
-    const container = containerRef.current;
-
-    if (container) container.addEventListener('scroll', handleScroll);
-
-    return () => {
-      if (container) container.removeEventListener('scroll', handleScroll);
-    };
-  }, [handleScroll]);
-
   return (
-    <main
-      ref={containerRef}
-      className="h-full scroll-container scrollbar-hidden overflow-y-scroll overflow-x-hidden scroll-snap-y scroll-snap-mandatory"
-    >
+    <main className="h-full scroll-container scrollbar-hidden overflow-y-scroll overflow-x-hidden scroll-snap-y scroll-snap-mandatory">
       {sections.map((section, index) => (
         <section
           key={section.id}
@@ -234,52 +156,12 @@ const ScrollSections = () => {
           )}
         </section>
       ))}
-      <div className="absolute z-50 right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4">
-        {sections.map((_, index) => (
-          <button
-            type="button"
-            key={index}
-            onClick={() => handleView(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              activeIndex === index
-                ? 'bg-white scale-150'
-                : 'bg-white/20 hover:bg-white hover:scale-150'
-            }`}
-            title={`Go to section ${index + 1}`}
-          />
-        ))}
-      </div>
+      <div className="absolute z-50 right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4"></div>
     </main>
   );
 };
 
-const useIntersection = (ref: React.RefObject<HTMLDivElement | null>) => {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-
-  const wasVisible = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          wasVisible.current = true;
-        } else if (!wasVisible.current) setIsVisible(false);
-      },
-      { threshold: 0.1 },
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [ref]);
-
-  return isVisible;
-};
-
 const ReviewCards = () => {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const isVisible = useIntersection(ref);
-
   const reviews = [
     {
       id: 1,
@@ -313,19 +195,8 @@ const ReviewCards = () => {
   ];
 
   return (
-    <div
-      ref={ref}
-      className={`max-w-[80rem] mx-auto px-10 sm:px-16 md:px-20 lg:px-24 xl:px-32 transition-all duration-1000 ease-out
-         ${isVisible ? 'opacity-100' : 'opacity-0'}
-         `}
-    >
-      <div
-        className={`${
-          isVisible
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 translate-y-[20rem]'
-        } flex flex-col gap-2`}
-      >
+    <div className="max-w-[80rem] mx-auto px-10 sm:px-16 md:px-20 lg:px-24 xl:px-32 transition-all duration-1000 ease-out">
+      <div className="flex flex-col gap-2">
         <div className="h-[2rem] rounded-md flex items-center">
           <span className="flex flex-col text-lg max-sm:text-sm font-pretendard text-main font-bold">
             유저의 목소리를 듣습니다
@@ -340,13 +211,7 @@ const ReviewCards = () => {
         {reviews.map((review, index) => (
           <article
             key={review.id}
-            className={`w-[25%] max-[560px]:w-full h-[20rem] max-[560px]:h-[12rem] p-4 bg-black rounded-xl flex flex-col justify-between transition-all duration-1000 ease-out
-              ${index % 2 === 0 ? 'translate-y-4 max-[560px]:translate-y-0' : 'translate-y-24 max-[560px]:translate-y-0'}
-                  ${
-                    isVisible
-                      ? 'opacity-100 translate-y-0'
-                      : 'opacity-0 translate-y-[20rem]'
-                  }`}
+            className={`w-[25%] max-[560px]:w-full h-[20rem] max-[560px]:h-[12rem] p-4 bg-black rounded-xl flex flex-col justify-between transition-all duration-1000 ease-out${index % 2 === 0 ? 'translate-y-4 max-[560px]:translate-y-0' : 'translate-y-24 max-[560px]:translate-y-0'}`}
           >
             <div className="flex flex-col gap-2">
               <span className="text-gray-400">{review.rating}</span>
@@ -370,15 +235,8 @@ const ReviewCards = () => {
 };
 
 const Contactme = () => {
-  const ref = useRef<HTMLDivElement | null>(null);
-
-  const isVisible = useIntersection(ref);
-
   return (
-    <div
-      ref={ref}
-      className={`w-full max-w-[80rem] mx-auto px-10 sm:px-16 md:px-20 lg:px-24 xl:px-32 flex flex-col gap-4 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-[15rem] opacity-0'} transition-all duration-1000 ease-out`}
-    >
+    <div className="w-full max-w-[80rem] mx-auto px-10 sm:px-16 md:px-20 lg:px-24 xl:px-32 flex flex-col gap-4 transition-all duration-1000 ease-out">
       <span className="bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-5xl max-lg:text-4xl max-md:text-2xl max-sm:text-lg font-pretendard font-bold text-transparent max-lg:text-shadow-none">
         Contact me<span className="text-main">.</span>
       </span>
@@ -392,7 +250,6 @@ const Contactme = () => {
               type="button"
               aria-label="피드백 메일 발송하기 버튼"
               className="text-white"
-              onClick={() => window.open('mailto:cwl64658@gmail.com', '_blank')}
             >
               <span className="text-4xl max-[690px]:text-lg font-pretendard font-bold text-white">
                 ↗
@@ -412,12 +269,6 @@ const Contactme = () => {
               type="button"
               aria-label="카페 마스터즈 데모 영상 링크 버튼"
               className="text-white"
-              onClick={() =>
-                window.open(
-                  'https://www.youtube.com/watch?v=7vk0clfjUh4',
-                  '_blank',
-                )
-              }
             >
               <span className="text-4xl max-[690px]:text-lg font-pretendard font-bold text-white">
                 ↗
