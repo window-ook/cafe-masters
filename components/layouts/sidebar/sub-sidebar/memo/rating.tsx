@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { Star } from 'lucide-react';
-import { cn } from '*/lib/utils';
-import { RadioGroup, RadioGroupItem } from '*/components/ui/radio-group';
+import { cn } from '@/lib/cn';
+import { RadioGroup, RadioGroupItem } from '@/components/shadcn-ui/radio-group';
 
 interface StarRatingProps {
   maxStars?: number;

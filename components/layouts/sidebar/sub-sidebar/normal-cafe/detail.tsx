@@ -165,7 +165,7 @@ export default function NormalCafeDetail({
             ref={scrollRef}
             className="flex gap-4 mt-4 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory"
           >
-            <div className="snap-center flex-shrink-0 h-[15rem] py-2">
+            <div className="snap-center shrink-0 h-60 py-2">
               {detail?.photoUrl?.trim() && (
                 <a
                   data-cy="normal-detail-thumbnail"
@@ -189,10 +189,7 @@ export default function NormalCafeDetail({
             </div>
             {detail?.photoList?.map((photo, i) => {
               return (
-                <div
-                  key={i}
-                  className="snap-center py-2 flex-shrink-0 h-[15rem]"
-                >
+                <div key={i} className="snap-center py-2 shrink-0 h-60">
                   <Image
                     key={photo}
                     data-cy="normal-detail-thumbnail"
@@ -225,8 +222,8 @@ export default function NormalCafeDetail({
           <span className="font-dpixel font-extrabold text-xl">상세 정보</span>
           <div className="flex items-center gap-2">
             {admin &&
-            !isRecommended &&
-            !pathname.startsWith('/cafe/recommended') ? (
+              !isRecommended &&
+              !pathname.startsWith('/cafe/recommended') ? (
               <button
                 data-cy="collect-button"
                 aria-label="추천하기 버튼"

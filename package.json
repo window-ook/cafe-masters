@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -18,7 +18,6 @@
     "@sparticuz/chromium": "^133.0.0",
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.4",
-    "@tailwindcss/forms": "^0.5.9",
     "@tanstack/react-query": "5.60.6",
     "chrome-aws-lambda": "^10.1.0",
     "class-variance-authority": "^0.7.1",
@@ -38,7 +37,9 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/typography": "^0.5.16",
     "@tanstack/react-query-devtools": "^5.60.6",
     "@types/node": "^22.14.1",
     "@types/react": "^19.1.0",
@@ -57,8 +58,8 @@
     "eslint-plugin-prettier": "^5.2.1",
     "postcss": "^8.4.31",
     "prettier": "^3.5.3",
-    "prettier-plugin-tailwindcss": "^0.6.11",
-    "tailwindcss": "^3.4.1",
+    "prettier-plugin-tailwindcss": "^0.6.13",
+    "tailwindcss": "^4.1.11",
     "typescript": "^5.9.0-dev.20250412"
   },
   "packageManager": "pnpm@9.15.0"

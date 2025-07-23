@@ -1,19 +1,16 @@
-const withPlugins = require('next-compose-plugins');
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
+const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config, { isServer }) => {
+  webpack: (config: any, { isServer }: { isServer: any }) => {
     if (isServer) {
       config.externals.push('chrome-aws-lambda', 'puppeteer-core');
     }
     return config;
-  },
-
-  experimental: {
-    esmExternals: false,
   },
 
   images: {
@@ -54,15 +51,10 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
-    ],
+    ] as any,
   },
+  
+  compress: true,
 };
 
-module.exports = withPlugins(
-  [
-    withBundleAnalyzer({
-      compress: true,
-    }),
-  ],
-  nextConfig,
-);
+export default bundleAnalyzer(nextConfig);

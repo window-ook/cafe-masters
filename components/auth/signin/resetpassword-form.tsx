@@ -14,7 +14,7 @@ export default function ResetpasswordForm({
   cancelFn,
 }: ResetpasswordFormProps) {
   return (
-    <main className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
+    <main className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4">
       <p className="text-center text-3xl font-bold font-dpixel">
         비밀번호 재설정
       </p>

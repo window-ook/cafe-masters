@@ -47,3 +47,8 @@ next-env.d.ts
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# cursor, claude
+.cursor/
+.claude/
+CLAUDE.md

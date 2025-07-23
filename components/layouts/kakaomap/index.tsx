@@ -285,7 +285,7 @@ export default function KakaoMap() {
     <article
       aria-label="kakao map"
       id="map"
-      className="fixed z-0 top-0 w-screen h-screen sm:translate-x-[27rem] sm:w-[calc(100vw-27rem)]"
+      className="fixed z-0 top-0 w-screen h-screen sm:translate-x-108 sm:w-[calc(100vw-27rem)]"
     ></article>
   );
 }

@@ -3,9 +3,9 @@ export const getSubSidebarStyle = (
   isDarkTheme: boolean,
   isExtend: boolean,
 ) => {
-  const baseStyle = `static left-0 z-10 translate-y-4 w-[100vw] max-w-[27rem] p-2 overflow-y-auto overflow-x-hidden shadow-md ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100 text-black backdrop-blur-lg bg-opacity-20'} transition-transform duration-300 ease-in-out`;
+  const baseStyle = `static left-0 z-10 translate-y-4 w-screen max-w-108 p-2 overflow-y-auto overflow-x-hidden shadow-md ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100 text-black backdrop-blur-lg bg-opacity-20'} transition-transform duration-300 ease-in-out`;
   const openned = isSubSidebarOpen
-    ? `${isExtend ? 'translate-y-[13rem] h-[calc(100vh-13rem)]' : 'translate-y-[35rem]'} rounded-t-3xl opacity-100 sm:h-[90vh] sm:translate-y-4 sm:translate-x-[2rem] sm:rounded-md`
+    ? `${isExtend ? 'translate-y-52 h-[calc(100vh-13rem)]' : 'translate-y-140'} rounded-t-3xl opacity-100 sm:h-[90vh] sm:translate-y-4 sm:translate-x-8 sm:rounded-md`
     : 'hidden sm:block sm:pointer-events-none opacity-0';
   return `${baseStyle} ${openned}`;
 };
@@ -19,17 +19,17 @@ export const getDetailBodyStyle = (isDarkTheme: boolean) => {
 };
 
 export const getExpertTierStyle = (addOn: string = '') => {
-  return `${addOn} bg-gradient-to-r from-expert-side via-expert-via to-expert-side bg-[length:200%_200%] animate-gradient text-black shadow-md shadow-amber-700`;
+  return `${addOn} bg-linear-to-r from-expert-side via-expert-via to-expert-side bg-size-[200%_200%] animate-gradient text-black shadow-md shadow-amber-700`;
 };
 
 export const getMasterTierStyle = (addOn: string = '') => {
-  return `${addOn} z-10 relative bg-gradient-to-r from-master-side via-master-via to-master-side bg-[length:200%_200%] animate-gradient text-white shadow-md`;
+  return `${addOn} z-10 relative bg-linear-to-r from-master-side via-master-via to-master-side bg-size-[200%_200%] animate-gradient text-white shadow-md`;
 };
 
 export const masterTierBadgeStyle =
-  'w-[100%] z-0 absolute inset-0 h-9 bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt"';
+  'w-full z-0 absolute inset-0 h-9 bg-linear-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt"';
 
-export const masterTierModalStyle = `w-[27%] sm:w-[10%] z-0 -top-0.5 inset-0 h-9 absolute bg-gradient-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
+export const masterTierModalStyle = `w-[27%] sm:w-[10%] z-0 -top-0.5 inset-0 h-9 absolute bg-linear-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm animate-tilt`;
 
 export const ratingCircleStyle =
   'relative flex items-center justify-center w-5 h-5 rounded-full bg-red-500 shadow-md shadow-yellow-100';

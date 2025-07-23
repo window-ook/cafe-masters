@@ -62,7 +62,7 @@ export default function Signin({ setViewAction }: SignProps) {
         <div>
           <p className={authFormTitleStyle}>로그인</p>
           <form
-            className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4"
+            className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
             onKeyDown={e => {
               if (e.key === 'Enter') handleSignin();
             }}

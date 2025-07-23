@@ -36,7 +36,7 @@ export default function CollectedCafe({
     'card card-tilt w-full h-full p-4 border-4 border-main rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer hover:border-main-light transition duration-300 ease';
 
   const HIDDEN_CARD_BACK_EFFECT =
-    'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-[100%] h-[100%] rounded-xl bg-gradient-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md animate-tilt pointer-none';
+    'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md animate-tilt pointer-none';
 
   const RATING_ONE_N_TWO = 'bg-violet-50 text-gray-600';
   const RATING_THREE = 'card-silver text-black';
@@ -58,19 +58,19 @@ export default function CollectedCafe({
       COLOR_BY_RATING = RATING_THREE;
       HOVER_BORDER_BY_RATING = 'hover:border-silver-base';
       NORMAL_CARD_BACK_EFFECT =
-        'card-tilt absolute -z-10 inset-0 w-[100%] h-[100%] rounded-xl bg-gray-500 blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
+        'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-gray-500 blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
       break;
     case 4:
       COLOR_BY_RATING = RATING_FOUR;
       HOVER_BORDER_BY_RATING = 'hover:border-gold-base';
       NORMAL_CARD_BACK_EFFECT =
-        'card-tilt absolute -z-10 inset-0 w-[100%] h-[100%] rounded-xl bg-gradient-to-r from-gold-effect-left via-gold-effect-mid to-gold-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
+        'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-gold-effect-left via-gold-effect-mid to-gold-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
       break;
     case 5:
       COLOR_BY_RATING = RATING_FIVE;
       HOVER_BORDER_BY_RATING = 'hover:border-emerald-base';
       NORMAL_CARD_BACK_EFFECT =
-        'card-tilt absolute -z-10 inset-0 w-[100%] h-[100%] rounded-xl bg-gradient-to-r from-emerald-effect-left via-emerald-effect-mid to-emerald-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
+        'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-emerald-effect-left via-emerald-effect-mid to-emerald-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
   }
 
   const isHiddenCard = HIDDEN_CAFE_NAMES.includes(name || '');
@@ -153,7 +153,7 @@ export default function CollectedCafe({
   return (
     <li
       data-cy="collected-cafe"
-      className="group card-container relative list-none h-[24rem]"
+      className="group card-container relative list-none h-96"
     >
       {/* 백라이트 레이어 */}
       {isHiddenCard ? (
@@ -193,7 +193,7 @@ export default function CollectedCafe({
             >
               {name}{' '}
               {isHiddenCard && (
-                <span className="inline-flex h-6 px-2 rounded-lg shadow-md bg-gradient-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-[length:200%_200%] animate-gradient items-center justify-center text-sm font-dpixel">
+                <span className="inline-flex h-6 px-2 rounded-lg shadow-md bg-linear-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-size-[200%_200%] animate-gradient items-center justify-center text-sm font-dpixel">
                   HIDDEN
                 </span>
               )}
@@ -210,16 +210,16 @@ export default function CollectedCafe({
           </div>
         </div>
 
-        <div className="h-[11rem] bg-gray-700 rounded-lg flex flex-col">
+        <div className="h-44 bg-gray-700 rounded-lg flex flex-col">
           <Image
             src={photoUrl ?? '/image/cafe_thumbnail.avif'}
             alt="카페 썸네일"
             priority={true}
             width={100}
             height={50}
-            className="h-[10rem] w-auto object-contain rounded-t-md"
+            className="h-40 w-auto object-contain rounded-t-md"
           />
-          <div className="h-[1rem] w-full bg-white rounded-b-md flex items-center justify-center">
+          <div className="h-4 w-full bg-white rounded-b-md flex items-center justify-center">
             <span className="font-dpixel text-xs text-black">CAFE MASTERS</span>
           </div>
         </div>

@@ -59,7 +59,7 @@ export default function Signup({ setViewAction }: SignProps) {
     <main className={authFormCardStyle}>
       <p className={authFormTitleStyle}>회원가입</p>
       <form
-        className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4"
+        className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
         onKeyDown={e => {
           if (e.key == 'Enter') handleVerifyOtp();
         }}

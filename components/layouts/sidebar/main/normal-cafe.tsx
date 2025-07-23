@@ -23,7 +23,7 @@ export default function NormalCafe({
   return (
     <li
       data-cy="normal-cafe"
-      className={`${isDarkTheme ? 'bg-main-dark text-white shadow-main-shadow' : ''} h-[6rem] p-2 rounded-sm shadow-md list-none cursor-pointer hover:opacity-50 transition duration-150 ease`}
+      className={`${isDarkTheme ? 'bg-main-dark text-white shadow-main-shadow' : ''} h-24 p-2 rounded-sm shadow-md list-none cursor-pointer hover:opacity-50 transition duration-150 ease`}
     >
       <button
         type="button"
@@ -50,7 +50,7 @@ export default function NormalCafe({
             width={100}
             height={50}
             priority={true}
-            className="object-cover w-auto h-[4rem] rounded-lg"
+            className="object-cover w-auto h-16 rounded-lg"
           />
         </div>
       </button>

@@ -67,14 +67,16 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="kr" className={`${pretendard.variable} ${dunggeunmo.variable}`}>
+    <html lang="kr">
       <head>
         <meta
           name="google-site-verification"
           content="uLLg7r0DwRzwQB1croiSmhHf5Krf4FaxC2Z2t0BX4JM"
         />
       </head>
-      <body className={`font-pretendard`}>
+      <body
+        className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
+      >
         <ReactQueryClientProvider>
           <AuthProvider accessToken={session?.access_token ?? 'no-token'}>
             {session?.user ? (

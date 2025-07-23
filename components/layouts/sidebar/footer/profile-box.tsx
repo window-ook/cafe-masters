@@ -30,16 +30,16 @@ export default function ProfileBox() {
       <div
         className={`w-full pl-1 py-1 rounded-xl ${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-300'} shadow-md flex items-center sm:gap-6`}
       >
-        <div className="w-[1.5rem] h-[1.5rem] rounded-full bg-main-light flex items-center justify-center">
+        <div className="w-6 h-6 rounded-full bg-main-light flex items-center justify-center">
           <Image
             src={'/image/profile_logo.avif'}
             alt="유저 프로필 이미지"
             width={20}
             height={20}
-            className="inline-block object-cover object-center rounded-lg w-[1rem] h-auto"
+            className="inline-block object-cover object-center rounded-lg w-4 h-auto"
           />
         </div>
-        <p className="pl-[1rem] font-bold font-pretendard text-[0.5rem] sm:text-[1rem]">
+        <p className="pl-4 font-bold font-pretendard text-[0.5rem] sm:text-[1rem]">
           {userEmail}
         </p>
       </div>

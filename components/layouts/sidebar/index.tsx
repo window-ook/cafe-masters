@@ -229,7 +229,7 @@ export default function Sidebar() {
   return (
     <nav className="relative flex recommended-center">
       <div
-        className={`z-10 relative w-screen h-screen max-w-[27rem] px-1 rounded-none shadow-xl shadow-main-shadow ${
+        className={`z-10 relative w-screen h-screen max-w-108 px-1 rounded-none shadow-xl shadow-main-shadow ${
           isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'
         } ${isSubSidebarOpen && 'hidden sm:block'}`}
       >
@@ -281,7 +281,7 @@ export default function Sidebar() {
 
                   {isFetchingNextCollectedPage && <PulseDot />}
 
-                  <div ref={collectedRef} className="h-[2rem] w-[22rem]"></div>
+                  <div ref={collectedRef} className="h-8 w-88"></div>
                 </div>
               )}
 
@@ -304,7 +304,7 @@ export default function Sidebar() {
 
                   {isFetchingNextBookmarkedPage && <PulseDot />}
 
-                  <div ref={bookmarkedRef} className="h-[2rem] w-[22rem]"></div>
+                  <div ref={bookmarkedRef} className="h-8 w-88"></div>
                 </div>
               )}
 

@@ -1,6 +1,210 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+body {
+  overflow-x: hidden;
+}
+
+@theme {
+  /* 브레이크 포인트 */
+  --breakpoint-sm: 401px;
+  --breakpoint-md: 801px;
+  --breakpoint-lg: 1201px;
+
+  /* 폰트 */
+  --font-pretendard: var(--font-pretendard);
+  --font-dpixel: var(--font-dunggeunmo);
+
+  /* 폰트 사이즈 */
+  --text-2xs: 0.3rem;
+
+  /* 컬러 */
+  --color-main: #7c24c9;
+  --color-main-light: #f5ccff;
+  --color-main-shadow: #875aad;
+  --color-main-dark: #1f1926;
+  --color-main-dark-border: #5f018a;
+  --color-collected-side: #03fc73;
+  --color-collected-center: #6366f1;
+  --color-beginner: #8a919c;
+  --color-junior: #030ffc;
+  --color-senior: #f77a05;
+  --color-expert-via: #f5e902;
+  --color-expert-side: #8c6a01;
+  --color-master-via: #f5248c;
+  --color-master-side: #8a24b9;
+  --color-master-effect-left: #44BCFF;
+  --color-master-effect-mid: #FF44EC;
+  --color-master-effect-right: #FF675E;
+
+  --color-silver-base: #e5e7eb;
+  --color-silver-via: #9ca3af;
+  --color-silver-side: #4b5563;
+
+  --color-gold-base: #fde68a;
+  --color-gold-via: #facc15;
+  --color-gold-side: #a16207;
+  --color-gold-effect-left: #fde68a;
+  --color-gold-effect-mid: #f2d73f;
+  --color-gold-effect-right: #c9ac08;
+
+  --color-emerald-base: #6ee7b7;
+  --color-emerald-via: #34d399;
+  --color-emerald-side: #0f766e;
+  --color-emerald-effect-left: #5effda;
+  --color-emerald-effect-mid: #2c9952;
+  --color-emerald-effect-right: #053303;
+
+  --color-hidden-badge-left: #ff3a9d;
+  --color-hidden-badge-mid: #f5ccff;
+  --color-hidden-badge-right: #ff3a9d;
+  --color-hidden-card-left: #5f018a;
+  --color-hidden-card-mid: #8a24b9;
+  --color-hidden-card-right: #f5248c;
+  --color-hidden-effect-left: #44BCFF;
+  --color-hidden-effect-mid: #FF44EC;
+  --color-hidden-effect-right: #FF675E;
+
+  --color-recommended: #18f282;
+
+  --color-button: var(--color-main-500);
+  --color-button-text: var(--color-white);
+  --color-button-disabled: var(--color-gray-400);
+  --color-button-hover: var(--color-main-600);
+
+  /* 텍스트 그림자 */
+  --text-shadow-black: 0 2px 4px rgba(0, 0, 0, 0.8);
+  --text-shadow-main: 0 2px 4px rgba(135, 90, 173, 1);
+
+  /* 애니메이션 */
+  --animate-gradient: gradient 3s ease infinite;
+  --animate-reveal: reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+  --animate-textReveal: textReveal 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  --animate-shine: shine 1.5s;
+  --animate-skeleton: skeleton 1s ease-in-out infinite alternate;
+
+  --animate-dotOne: dotOne 1s ease-in-out infinite;
+  --animate-dotTwo: dotTwo 1s ease-in-out infinite;
+  --animate-dotThree: dotThree 1s ease-in-out infinite;
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* 드롭 쉐도우 */
+  --drop-shadow-3xl: drop-shadow(14px 14px 11px -7px rgba(47, 49, 51, 0.75));
+
+  @keyframes dotOne {
+    '0%, 100%': {
+      opacity: '0'
+    }
+
+    '33%': {
+      opacity: '1'
+    }
+
+
+    '66%': {
+      opacity: '1'
+    }
+  }
+
+  @keyframes dotTwo {
+    '0%, 33%': {
+      opacity: '0'
+    }
+
+    '66%': {
+      opacity: '1'
+    }
+
+    '100%': {
+      opacity: '1'
+    }
+  }
+
+  @keyframes dotThree {
+    '0%, 66%': {
+      opacity: '0'
+    }
+
+    '100%': {
+      opacity: '1'
+    }
+  }
+
+  @keyframes reveal {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes textReveal {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    '0%': {
+      transform: 'translateY(0)'
+    }
+  }
+
+  @keyframes shine {
+    from: {
+      transform: 'translateX(-100%) rotate(45deg)',
+    }
+
+    to: {
+      transform: 'translateX(200%) rotate(45deg)',
+    }
+  }
+
+  @keyframes skeleton {
+    '0%': {
+      'background-color': var(--skeleton-start),
+    }
+
+    '100%': {
+      'background-color': var(--skeleton-end),
+    }
+  }
+}
+
+@layer components {
+  .expert-gradient {
+    @apply bg-gradient-to-r from-expert-via to-expert-side;
+  }
+
+  .master-gradient {
+    @apply bg-gradient-to-r from-master-via to-master-side;
+  }
+
+  /* 버튼 hover */
+  .hover-button {
+    @apply cursor-pointer hover:bg-button-hover transition duration-150 ease-in;
+  }
+
+}
 
 /* 
 * ===========================
@@ -82,21 +286,6 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-body {
-  font-family: 'Nanum Gothic', sans-serif;
-  overflow-x: hidden;
-}
-
 /* 
 * ===========================
 * 카드 디자인
@@ -106,7 +295,6 @@ body {
   perspective: 500px;
 }
 
-/* 틸트 */
 .card-tilt {
   transition: transform 0.1s ease;
   will-change: transform;
@@ -246,55 +434,6 @@ body {
   opacity: 1;
   filter: brightness(1) contrast(1);
   z-index: 2;
-}
-
-/* 랜딩 페이지 소개 섹션 애니메이션 */
-@-webkit-keyframes animatetop {
-  from {
-    top: -18.75rem;
-    opacity: 0;
-  }
-
-  to {
-    top: 0;
-    opacity: 1;
-  }
-}
-
-@keyframes animatetop {
-  from {
-    top: -18.75rem;
-    opacity: 0;
-  }
-
-  to {
-    top: 0;
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes zoomIn {
-  0% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes zoomIn {
-  0% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-
-  50% {
-    opacity: 1;
-  }
 }
 
 /* 로그인, 회원가입, 비밀번호 재설정 페이지 배경 카드 애니메이션 */

@@ -28,7 +28,7 @@ export default function ResetPasswordComplete() {
             Cafe Masters
           </span>
           <div className="z-10 p-5 rounded-xl bg-white shadow-main-shadow">
-            <div className="w-80 max-w-screen-lg sm:w-96 flex flex-col gap-4">
+            <div className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4">
               <p className="text-center text-3xl font-bold font-dpixel">
                 비밀번호 재설정 완료
               </p>

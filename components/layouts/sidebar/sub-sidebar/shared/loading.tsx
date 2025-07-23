@@ -20,13 +20,13 @@ export default function Loading() {
             className={`pr-2 text-3xl ${isDarkTheme ? 'text-white' : ''}`}
           />
           <span className="text-2xl font-semibold">로딩 중입니다</span>
-          <span className="w-[0.5rem] inline-block animate-[dotOne_1.5s_ease-in-out_infinite]">
+          <span className="w-2 inline-block animate-[dotOne_1.5s_ease-in-out_infinite]">
             .
           </span>
-          <span className="w-[0.5rem] inline-block animate-[dotTwo_1.5s_ease-in-out_infinite]">
+          <span className="w-2 inline-block animate-[dotTwo_1.5s_ease-in-out_infinite]">
             .
           </span>
-          <span className="w-[0.5rem] inline-block animate-[dotThree_1.5s_ease-in-out_infinite]">
+          <span className="w-2 inline-block animate-[dotThree_1.5s_ease-in-out_infinite]">
             .
           </span>
         </div>

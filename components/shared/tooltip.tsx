@@ -10,10 +10,10 @@ interface TooltipProps {
 
 export default function Tooltip({ comment, component, left }: TooltipProps) {
   const TOOLTIP_STYLES: Record<TooltipProps['left'], string> = {
-    '8': `absolute left-8 translate-y-[2rem] px-3 py-1 rounded-md shadow-lg opacity-0 bg-gray-500 text-white text-xs whitespace-nowrap group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`,
-    '16': `absolute left-16 translate-y-[2rem] px-3 py-1 rounded-md shadow-lg opacity-0 bg-gray-500 text-white text-xs whitespace-nowrap group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`,
-    '24': `absolute left-24 translate-y-[2rem] px-3 py-1 rounded-md shadow-lg opacity-0 bg-gray-500 text-white text-xs whitespace-nowrap group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`,
-    '32': `absolute left-32 translate-y-[2rem] px-3 py-1 rounded-md shadow-lg opacity-0 bg-gray-500 text-white text-xs whitespace-nowrap group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`,
+    '8': `absolute left-8 translate-y-8 px-3 py-1 rounded-md shadow-lg opacity-0 bg-gray-500 text-white text-xs whitespace-nowrap group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`,
+    '16': `absolute left-16 translate-y-8 px-3 py-1 rounded-md shadow-lg opacity-0 bg-gray-500 text-white text-xs whitespace-nowrap group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`,
+    '24': `absolute left-24 translate-y-8 px-3 py-1 rounded-md shadow-lg opacity-0 bg-gray-500 text-white text-xs whitespace-nowrap group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`,
+    '32': `absolute left-32 translate-y-8 px-3 py-1 rounded-md shadow-lg opacity-0 bg-gray-500 text-white text-xs whitespace-nowrap group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`,
   };
   return (
     <div className="relative group">
