@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   description: '마스터즈 월드의 크리에이터가 추천하는 카페입니다.',
 };
 
-export default function Recommends() {
+export default function RecommendedPage() {
   return null;
 }

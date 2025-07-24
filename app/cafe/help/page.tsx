@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   description: '버그 제보를 위한 페이지 입니다.',
 };
 
-export default function Help() {
+export default function HelpPage() {
   return null;
 }

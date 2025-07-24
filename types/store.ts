@@ -1,5 +1,5 @@
 import {
-  SearchResult,
+  IKakaoSearchResult,
   BookmarkedCafeFromSupabase,
   CollectedCafeFromSupabase,
   FetchedCafeDetail,
@@ -9,7 +9,7 @@ import {
 
 export interface MapStore {
   keyword: string;
-  searchResult: SearchResult[];
+  searchResult: IKakaoSearchResult[];
   collectedCafe: CollectedCafeFromSupabase[];
   filteredCollectedCafe: CollectedCafeFromSupabase[];
   bookmarkedCafe: BookmarkedCafeFromSupabase[];
@@ -34,7 +34,7 @@ export interface MapStore {
   recommendedCafeDetail: RecommendedCafeFromSupabase[];
 
   setKeyword: (data: string) => void;
-  setSearchResult: (data: SearchResult[]) => void;
+  setSearchResult: (data: IKakaoSearchResult[]) => void;
   setCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
   setFilteredCollectedCafe: (data: CollectedCafeFromSupabase[]) => void;
   setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) => void;

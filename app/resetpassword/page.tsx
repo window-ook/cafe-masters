@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useFinishResetPasswordMutation } from 'hooks/mutation/useFinishResetPasswordMutation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
-import BackgroundCards from 'components/auth/shared/background-cards';
+import BackgroundCards from '@/components/auth/shared/FallingCards';
 
-export default function Resetpassword() {
+export default function ResetPasswordPage() {
   const supabase = createBrowserSupabaseClient();
 
   const [newPassword, setNewPassword] = useState<string>('');

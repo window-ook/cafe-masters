@@ -1,37 +1,4 @@
-import Image from 'next/image';
 import Link from 'next/link';
-
-const Navbar = () => {
-  return (
-    <header className="fixed top-0 left-0 z-50 w-full bg-transparent backdrop-blur-lg shadow-md border-b border-main/20">
-      <nav className="max-w-5xl h-16 px-6 py-2 mx-auto flex items-center justify-between">
-        <div className="flex items-center">
-          <Image
-            src="/image/logo.avif"
-            alt="로고 아이콘"
-            width={32}
-            height={32}
-            className="w-8 h-auto"
-          />
-          <h1 className="text-3xl max-[560px]:text-xl text-white text-shadow-black font-bold">
-            Cafe Masters
-          </h1>
-        </div>
-        <div className="flex gap-4">
-          <Link
-            href="/auth"
-            aria-label="로그인 페이지 이동 버튼"
-            className="h-8 rounded-md flex justify-center items-center hover:opacity-40 transition duration-100 ease-in"
-          >
-            <span className="font-pretendard font-bold text-white">
-              시작하기
-            </span>
-          </Link>
-        </div>
-      </nav>
-    </header>
-  );
-};
 
 // Hero Section
 const HeroSection = () => {
@@ -41,7 +8,7 @@ const HeroSection = () => {
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <div className="mb-6">
           <span className="inline-block px-4 py-2 bg-main/20 backdrop-blur-sm border border-main/30 rounded-full text-main-light text-sm font-medium">
-            ☕ 5,000+ 카페 수집됨
+            ☕ 100+ 카페 수집됨
           </span>
         </div>
         <h1 className="text-6xl max-lg:text-5xl max-md:text-4xl max-sm:text-3xl font-bold text-white mb-6 leading-tight">
@@ -423,8 +390,6 @@ const Contactme = () => {
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <Navbar />
-
       {/* Hero Section */}
       <HeroSection />
 

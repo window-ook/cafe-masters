@@ -4,9 +4,9 @@ import './globals.css';
 import React from 'react';
 import ReactQueryClientProvider from 'config/react-query-client-provider';
 import AuthProvider from 'config/auth-provider';
-import MainLayout from 'components/layouts/main-layout';
+import MainLayout from '@/layouts/MainLayout';
 import localFont from 'next/font/local';
-import NoSessionLayout from 'components/layouts/no-session-layout';
+import NoSessionLayout from '@/layouts/NoSessionLayout';
 
 const pretendard = localFont({
   src: '../public/fonts/PretendardVariable.woff2',

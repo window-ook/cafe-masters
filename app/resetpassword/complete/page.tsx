@@ -2,9 +2,9 @@
 
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import Head from 'next/head';
-import BackgroundCards from 'components/auth/shared/background-cards';
+import BackgroundCards from '@/components/auth/shared/FallingCards';
 
-export default function ResetPasswordComplete() {
+export default function ResetPasswordCompletePage() {
   const supabase = createBrowserSupabaseClient();
 
   const handleWindow = async () => {

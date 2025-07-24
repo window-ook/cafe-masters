@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   description: '찾으시는 카페나 지역을 검색하세요.',
 };
 
-export default function Search() {
+export default function SearchPage() {
   return null;
 }

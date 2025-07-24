@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { MapStore, UserStore, CheckStore } from 'types/store';
 import {
-  SearchResult,
+  IKakaoSearchResult,
   BookmarkedCafeFromSupabase,
   CollectedCafeFromSupabase,
   RecommendedCafeFromSupabase,
@@ -39,7 +39,7 @@ export const useMapStore = create<MapStore>()(
       recommendedCafeDetail: [],
 
       setKeyword: data => set({ keyword: data }),
-      setSearchResult: (data: SearchResult[]) => set({ searchResult: data }),
+      setSearchResult: (data: IKakaoSearchResult[]) => set({ searchResult: data }),
       setCollectedCafe: (data: CollectedCafeFromSupabase[]) =>
         set({ collectedCafe: data ?? [] }),
       setFilteredCollectedCafe: (data: CollectedCafeFromSupabase[]) =>

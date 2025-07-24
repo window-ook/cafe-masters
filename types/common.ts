@@ -1,4 +1,4 @@
-export interface SearchResult {
+export interface IKakaoSearchResult {
   id: string;
   category_group_code: string;
   category_group_name: string;

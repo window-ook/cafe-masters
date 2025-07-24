@@ -2,14 +2,10 @@
 
 import { useState } from 'react';
 import Head from 'next/head';
-import Signin from 'components/auth/signin/index';
-import BackgroundCards from 'components/auth/shared/background-cards';
-import dynamic from 'next/dynamic';
+import FallingCards from '@/components/auth/shared/FallingCards';
 import Image from 'next/image';
-
-const Signup = dynamic(() => import('components/auth/signup/index'), {
-  ssr: false,
-});
+import SignUpForm from '@/components/auth/signup/SignUpForm';
+import SignInForm from '@/components/auth/signin/SignInForm';
 
 export type AuthView = 'SIGNIN' | 'SIGNUP';
 
@@ -27,7 +23,7 @@ export default function Auth() {
         <meta name="description" content={`로그인 페이지입니다.`} />
       </Head>
       <main className="area h-screen w-screen flex justify-center items-center">
-        <BackgroundCards />
+        <FallingCards />
         <section className="flex flex-col items-center gap-4">
           <header className="flex">
             <Image
@@ -42,9 +38,9 @@ export default function Auth() {
             </span>
           </header>
           {view === 'SIGNUP' ? (
-            <Signup setViewAction={setViewAction} />
+            <SignUpForm setViewAction={setViewAction} />
           ) : (
-            <Signin setViewAction={setViewAction} />
+            <SignInForm setViewAction={setViewAction} />
           )}
         </section>
       </main>

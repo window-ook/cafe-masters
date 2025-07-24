@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   description: '내가 수집한 카드를 볼 수 있어요.',
 };
 
-export default function Collected() {
+export default function CollectedPage() {
   return;
 }
