@@ -7,10 +7,7 @@ import dynamic from 'next/dynamic';
 import Home from 'app/page';
 import Sidebar from '@/components/shared/sliding-drawer/SideBar';
 
-
-const KakaoMap = dynamic(() => import('@/components/shared/KaKaoMap'), {
-  ssr: false,
-});
+const KakaoMap = dynamic(() => import('@/components/shared/KaKaoMap'), { ssr: false });
 
 const ReactQueryDevtools = dynamic(
   () =>

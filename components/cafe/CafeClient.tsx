@@ -1,16 +1,16 @@
 'use client';
 
 import { useUserStore } from 'utils/store';
-import useCountCollectedQuery from 'hooks/cache/useCountCollectedQuery';
-import useCountBookmarkedQuery from 'hooks/cache/useCountBookmarkedQuery';
-import useCountRecommendedQuery from 'hooks/cache/useCountRecommendedQuery';
+import { useCountBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCafesCounts';
+import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafesCounts';
+import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafesCounts';
 
 export default function CafeClient() {
   const userId = useUserStore(state => state.userId);
 
-  useCountCollectedQuery(userId);
-  useCountBookmarkedQuery(userId);
-  useCountRecommendedQuery();
+  useCollectedCafesCounts(userId);
+  useCountBookmarkedCafesCounts(userId);
+  useRecommendedCafesCounts();
 
   return null;
 }

@@ -1,7 +1,13 @@
-import { useMutation } from '@tanstack/react-query';
-import { createBrowserSupabaseClient } from 'utils/supabase/client';
+'use client';
 
-export function useRequestResetPasswordMutation() {
+import { useMutation } from '@tanstack/react-query';
+import { createBrowserSupabaseClient } from '@/utils/supabase/client';
+
+/** Supabase 비밀번호 재설정 요청 훅
+ * @description 이메일로 비밀번호 재설정 링크를 전송합니다
+ * @returns { requestReset: (email: string) => void, isPending, error }
+ */
+export function useResetPassword() {
   const supabase = createBrowserSupabaseClient();
 
   return useMutation({

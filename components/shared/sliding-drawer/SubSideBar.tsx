@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-import { useUploadCollectMutation } from 'hooks/mutation/useUploadCollectMutation';
-import { useUpdateCollectMutation } from 'hooks/mutation/useUpdateCollectMutation';
-import { useUploadRecommendMutation } from 'hooks/mutation/useUploadRecommendMutation';
+import { useUploadCollectedCafe } from '@/hooks/supabase/useUploadCollectedCafe';
+import { useUpdateCollectedCafe } from '@/hooks/supabase/useUpdateCollectedCafe';
+import { useUploadRecommendedCafe } from '@/hooks/supabase/useUploadRecommendedCafe';
 import { CollectedRowInsert, CollectedRowUpdate } from 'actions/collectActions';
 import { RecommendedRowInsert } from 'actions/recommendActions';
 import { getSubSidebarStyle } from 'utils/styles';
@@ -66,9 +66,9 @@ export default function SubSidebar() {
 
   const pathname = usePathname();
 
-  const uploadCollectMutation = useUploadCollectMutation();
-  const updateCollectMutation = useUpdateCollectMutation();
-  const uploadRecommendMutation = useUploadRecommendMutation();
+  const uploadCollectMutation = useUploadCollectedCafe();
+  const updateCollectMutation = useUpdateCollectedCafe();
+  const uploadRecommendMutation = useUploadRecommendedCafe();
 
   const filteredFromSearchResult = searchResult.filter(
     cafe => Number(cafe.id) === currentCafeId,

@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
-export function useSignupMutation() {
+export function useSignUp() {
   const supabase = createBrowserSupabaseClient();
 
   const router = useRouter();

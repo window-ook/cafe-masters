@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useSigninMutation } from '@/hooks/mutation/useSigninMutation';
-import { useRequestResetPasswordMutation } from '@/hooks/mutation/useRequestResetPasswordMutation';
+import { useSignIn } from '@/hooks/supabase/useSignIn';
+import { useResetPassword } from '@/hooks/supabase/useResetPassword';
 import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
 import { handleEmailValid } from '@/utils/shared/auth';
 import {
@@ -22,8 +22,8 @@ export default function SignInForm({ setViewAction }: SignProps) {
   const [resetRequired, setResetRequired] = useState<boolean>(false);
   const [resetRequested, setResetRequested] = useState<string>('');
 
-  const signinMutation = useSigninMutation();
-  const requestResetPasswordMutation = useRequestResetPasswordMutation();
+  const signinMutation = useSignIn();
+  const requestResetPasswordMutation = useResetPassword();
 
   const handleEmail = () => {
     let isValid = true;

@@ -5,7 +5,7 @@ import { useMapStore } from 'utils/store';
 import { useMutation } from '@tanstack/react-query';
 import { getAdminUser } from 'actions/userActions';
 
-export function useSigninMutation() {
+export function useSignIn() {
   const supabase = createBrowserSupabaseClient();
 
   const setUserId = useUserStore(state => state.setUserId);

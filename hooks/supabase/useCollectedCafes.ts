@@ -3,7 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useMapStore } from 'utils/store';
 import { getAllCollectedCafes } from 'actions/collectActions';
 
-export default function useCollectedInfiniteQuery(
+export function useCollectedCafes(
   userId: string,
   isActive: boolean,
 ) {

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useMapStore } from 'utils/store';
 import { countCollectedCafes } from 'actions/collectActions';
 
-export default function useCountCollectedQuery(userId: string) {
+export function useCollectedCafesCounts(userId: string) {
   const setCollectedCafeCount = useMapStore(
     state => state.setCollectedCafeCount,
   );

@@ -10,14 +10,14 @@ import {
   RecommendedCafeFromSupabase,
 } from 'types/common';
 import { useInView } from 'react-intersection-observer';
-import useBookmarkedInfiniteQuery from 'hooks/cache/useBookmarkedInfiniteQuery';
-import useCollectedInfiniteQuery from 'hooks/cache/useCollectedInfiniteQuery';
-import useRecommendedQuery from 'hooks/cache/useRecommendedQuery';
+import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
+import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
+import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 import TabsForLink from '../sidebar/TabsForLink';
 import Footer from '../sidebar/Footer';
 import Help from '../sidebar/HelpCenter';
 import Header from '../sidebar/Header';
-import useThrottle from '@/hooks/handler/useThrottle';
+import useThrottle from '@/hooks/shared/useThrottle';
 import CollectedCafe from '../sidebar/CollectedCafe';
 import SearchResult from '../sidebar/SearchResult';
 import PulseDot from './PulseDot';
@@ -89,15 +89,15 @@ export default function Sidebar() {
     fetchNextPage: fetchNextCollectedPage,
     hasNextPage: hasNextCollectedPage,
     isFetchingNextPage: isFetchingNextCollectedPage,
-  } = useCollectedInfiniteQuery(userId, isCollectedPage);
+  } = useCollectedCafes(userId, isCollectedPage);
 
   const {
     fetchNextPage: fetchNextBookmarkedPage,
     hasNextPage: hasNextBookmarkedPage,
     isFetchingNextPage: isFetchingNextBookmarkedPage,
-  } = useBookmarkedInfiniteQuery(userId, isBookmarkedPage);
+  } = useBookmarkedCafes(userId, isBookmarkedPage);
 
-  const fetchedRecommendedCafe = useRecommendedQuery();
+  const fetchedRecommendedCafe = useRecommendedCafes();
 
   useEffect(() => {
     if (

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useSignupMutation } from '@/hooks/mutation/useSignupMutation';
+import { useSignUp } from '@/hooks/supabase/useSignUp';
 import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
 import {
   authFormCardStyle,
@@ -11,7 +11,7 @@ import {
 } from '@/utils/styles';
 import { handleEmailValid } from '@/utils/shared/auth';
 import { SignProps } from '@/app/auth/page';
-import useVerifyOtpMutation from '@/hooks/mutation/useVerifyOtpMutation';
+import { useVerifyOtpCode } from '@/hooks/supabase/useVerifyOtpCode';
 import UserForm from '@/components/auth/shared/UserForm';
 import CodeForm from '@/components/auth/signup/CodeForm';
 
@@ -23,8 +23,8 @@ export default function Signup({ setViewAction }: SignProps) {
     useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
 
-  const signupMutation = useSignupMutation();
-  const verifyOtpMutation = useVerifyOtpMutation();
+  const signupMutation = useSignUp();
+  const verifyOtpMutation = useVerifyOtpCode();
 
   const handleEmail = () => {
     let isValid = true;

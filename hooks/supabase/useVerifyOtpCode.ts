@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
-export default function useVerifyOtpMutation() {
+export function useVerifyOtpCode() {
   const supabase = createBrowserSupabaseClient();
 
   return useMutation({

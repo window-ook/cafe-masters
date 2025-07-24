@@ -4,7 +4,7 @@ import {
   createRecommendedCafe,
 } from 'actions/recommendActions';
 
-export function useUploadRecommendMutation() {
+export function useUploadRecommendedCafe() {
   const queryClient = useQueryClient();
 
   return useMutation({

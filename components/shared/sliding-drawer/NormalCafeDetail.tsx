@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useUploadBookmarkMutation } from 'hooks/mutation/useUploadBookmarkMutation';
-import { useDeleteBookmarkMutation } from 'hooks/mutation/useDeleteBookmarkMutation';
+import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
+import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useCheckStore, useUserStore } from 'utils/store';
 import {
     NormalCafeDetailForBookmark,
@@ -49,8 +49,8 @@ export default function NormalCafeDetail({
 
     const pathname = usePathname();
 
-    const uploadBookmarkMutation = useUploadBookmarkMutation();
-    const deleteBookmarkMutation = useDeleteBookmarkMutation();
+    const uploadBookmarkMutation = useUploadBookmarkedCafe();
+    const deleteBookmarkMutation = useDeleteBookmarkedCafe();
 
     const parsedCategory: string[] = detail?.category
         ? JSON.parse(detail?.category)

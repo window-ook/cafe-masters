@@ -5,7 +5,7 @@ import {
   createCollectedCafe,
 } from 'actions/collectActions';
 
-export function useUploadCollectMutation() {
+export function useUploadCollectedCafe() {
   const userId = useUserStore(state => state.userId);
 
   const queryClient = useQueryClient();
