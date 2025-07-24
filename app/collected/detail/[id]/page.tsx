@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { PageProps } from 'types/common';
-import CollectedDetailClient from '@/components/collected/CollectedDetailClient';
+import CollectedCafeDetailClient from '@/components/collected/CollectedCafeDetailClient';
 
 export const metadata: Metadata = {
   title: `카드 상세 정보 | Cafe Masters`,
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function CollectedDetailPage(props: PageProps) {
-  return <CollectedDetailClient {...props} />;
+  return <CollectedCafeDetailClient {...props} />;
 }

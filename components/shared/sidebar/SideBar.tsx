@@ -13,17 +13,17 @@ import { useInView } from 'react-intersection-observer';
 import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
 import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
-import TabsForLink from '../sidebar/TabsForLink';
-import Footer from '../sidebar/Footer';
-import Help from '../sidebar/HelpCenter';
-import Header from '../sidebar/Header';
+import TabsForLink from '@/components/shared/sidebar/TabsForLink';
+import Footer from '@/components/shared/sidebar/Footer';
+import Help from '@/components/shared/sidebar/HelpCenter';
+import Header from '@/components/shared/sidebar/Header';
 import useThrottle from '@/hooks/shared/useThrottle';
-import CollectedCafe from '../sidebar/CollectedCafe';
-import SearchResult from '../sidebar/SearchResult';
-import PulseDot from './PulseDot';
-import NormalCafe from '../sidebar/NormalCafe';
-import PageConverter from '../sidebar/PageConverter';
-import SubSidebar from './SubSideBar';
+import CollectedCafe from '@/components/shared/sidebar/CollectedCafe';
+import SearchResult from '@/components/shared/sidebar/SearchResult';
+import NormalCafe from '@/components/shared/sidebar/NormalCafe';
+import PageConverter from '@/components/shared/sidebar/PageConverter';
+import PulseDot from '@/components/shared/sliding-drawer/PulseDot';
+import SubSidebar from '@/components/shared/sliding-drawer/SubSideBar';
 
 export default function Sidebar() {
   const [currentPage, setCurrentPage] = useState<number>(1);

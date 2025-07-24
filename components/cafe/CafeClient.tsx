@@ -5,7 +5,7 @@ import { useCountBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCaf
 import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafesCounts';
 import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafesCounts';
 
-export default function CafeClient() {
+export default function MainClient() {
   const userId = useUserStore(state => state.userId);
 
   useCollectedCafesCounts(userId);

@@ -1,12 +1,10 @@
-import { createServerSupabaseClient } from 'utils/supabase/server';
 import { Metadata } from 'next';
+import { createServerSupabaseClient } from '@/utils/supabase/server';
 import './globals.css';
 import React from 'react';
-import ReactQueryClientProvider from 'config/react-query-client-provider';
-import AuthProvider from 'config/auth-provider';
-import MainLayout from '@/layouts/MainLayout';
 import localFont from 'next/font/local';
-import NoSessionLayout from '@/layouts/NoSessionLayout';
+import AuthProvider from '@/providers/AuthProvider';
+import Providers from '@/providers/Providers';
 
 const pretendard = localFont({
   src: '../public/fonts/PretendardVariable.woff2',
@@ -37,7 +35,6 @@ export const metadata: Metadata = {
     'Cafe Masters',
     'CafeMasters',
     'cafe masters',
-    'cafemasters',
   ],
   openGraph: {
     type: 'website',
@@ -77,15 +74,9 @@ export default async function RootLayout({
       <body
         className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
       >
-        <ReactQueryClientProvider>
-          <AuthProvider accessToken={session?.access_token ?? 'no-token'}>
-            {session?.user ? (
-              <MainLayout>{children}</MainLayout>
-            ) : (
-              <NoSessionLayout>{children}</NoSessionLayout>
-            )}
-          </AuthProvider>
-        </ReactQueryClientProvider>
+        <AuthProvider accessToken={session?.access_token ?? 'no-token'}>
+          <Providers>{children}</Providers>
+        </AuthProvider>
       </body>
     </html>
   );

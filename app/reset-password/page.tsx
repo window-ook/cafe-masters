@@ -25,7 +25,7 @@ export default function ResetPasswordPage() {
 
   const handleCancel = async () => {
     await supabase.auth.signOut();
-    router.push('/auth');
+    router.push('/signin');
   };
 
   return (

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { PageProps } from 'types/common';
-import BookmarkedDetailClient from '../../../../../components/bookmarked/BookmarkedDetailClient';
+import BookmarkedDetailClient from '@/components/bookmarked/BookmarkedDetailClient';
 
 export const metadata: Metadata = {
   title: `카페 상세 정보 | Cafe Masters`,

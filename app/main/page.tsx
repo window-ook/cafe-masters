@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   description: '원하는 메뉴를 선택해보세요.',
 };
 
-export default function CafePage() {
+export default function MainPage() {
   return <CafeClient />;
 }

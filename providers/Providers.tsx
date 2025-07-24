@@ -1,0 +1,71 @@
+'use client';
+
+import React, { useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import 'react-toastify/dist/ReactToastify.css';
+import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
+import Sidebar from '@/components/shared/sidebar/SideBar';
+
+const ReactQueryDevtools = dynamic(
+  () =>
+    import('@tanstack/react-query-devtools').then(
+      mod => mod.ReactQueryDevtools,
+    ),
+  { ssr: false },
+);
+
+const ToastContainer = dynamic(
+  () => import('react-toastify').then(mod => mod.ToastContainer),
+  { ssr: false },
+);
+
+const KakaoMap = dynamic(() => import('@/components/shared/KaKaoMap'), { ssr: false });
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: (failureCount, error) => {
+              if (error?.name === 'NetworkError') return failureCount < 3;
+              return false;
+            },
+            staleTime: 30 * 60 * 1000,
+            gcTime: 60 * 60 * 1000,
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: 'always',
+          },
+        },
+      }),
+  );
+
+  const pathname = usePathname();
+
+  // 카카오맵과 사이드바를 숨겨야 하는 페이지들
+  const hiddenPages = ['/', '/signin', '/signup', '/reset-password'];
+  const shouldHideComponents = hiddenPages.includes(pathname);
+
+  return (
+    <main
+      data-cy="main-layout"
+      className={shouldHideComponents ? "w-full" : "flex h-screen overflow-hidden"}
+    >
+      <QueryClientProvider client={queryClient}>
+        {!shouldHideComponents && <Sidebar />}
+        {children}
+        {!shouldHideComponents && <KakaoMap />}
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          newestOnTop={false}
+          draggable
+          theme="light"
+          limit={1}
+        />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </main>
+  );
+}

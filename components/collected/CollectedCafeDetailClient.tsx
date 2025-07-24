@@ -4,7 +4,7 @@ import { useEffect, use } from 'react';
 import { useMapStore } from 'utils/store';
 import { PageProps } from 'types/common';
 
-export default function CollectedDetailClient({ params }: PageProps) {
+export default function CollectedCafeDetailClient({ params }: PageProps) {
   const { id } = use(params);
   const numericId = parseFloat(id);
 

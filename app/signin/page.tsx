@@ -1,26 +1,16 @@
 'use client';
 
-import { useState } from 'react';
 import Head from 'next/head';
 import FallingCards from '@/components/auth/shared/FallingCards';
 import Image from 'next/image';
-import SignUpForm from '@/components/auth/signup/SignUpForm';
 import SignInForm from '@/components/auth/signin/SignInForm';
 
-export type AuthView = 'SIGNIN' | 'SIGNUP';
-
-export interface SignProps {
-  setViewAction: (view: AuthView) => void;
-}
-
-export default function Auth() {
-  const [view, setViewAction] = useState<AuthView>('SIGNIN');
-
+export default function SignIn() {
   return (
     <>
       <Head>
         <title>로그인 | Cafe Masters</title>
-        <meta name="description" content={`로그인 페이지입니다.`} />
+        <meta name="description" content="로그인 페이지입니다." />
       </Head>
       <main className="area h-screen w-screen flex justify-center items-center">
         <FallingCards />
@@ -37,11 +27,7 @@ export default function Auth() {
               Cafe Masters
             </span>
           </header>
-          {view === 'SIGNUP' ? (
-            <SignUpForm setViewAction={setViewAction} />
-          ) : (
-            <SignInForm setViewAction={setViewAction} />
-          )}
+          <SignInForm />
         </section>
       </main>
     </>

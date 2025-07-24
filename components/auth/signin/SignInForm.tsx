@@ -11,11 +11,11 @@ import {
   authFormTitleStyle,
   kakaoButtonStyle,
 } from '@/utils/styles';
-import { SignProps } from '@/app/auth/page';
+import Link from 'next/link';
 import UserForm from '@/components/auth/shared/UserForm';
 import ResetpasswordForm from './ResetPasswordForm';
 
-export default function SignInForm({ setViewAction }: SignProps) {
+export default function SignInForm() {
   const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState<string>('');
@@ -100,20 +100,16 @@ export default function SignInForm({ setViewAction }: SignProps) {
             </button>
             <span color="gray" className={authFormMentionStyle}>
               계정이 없으신가요?{' '}
-              <button
-                type="button"
+              <Link
+                href="/signup"
                 data-cy="open-signup-button"
-                aria-label="회원가입 폼 열기 버튼"
-                onClick={e => {
-                  e.preventDefault();
-                  setViewAction('SIGNUP');
-                }}
+                aria-label="회원가입 페이지로 이동 버튼"
                 className="hover:cursor-pointer hover:bg-gray-100"
               >
                 <span className="font-bold font-dpixel text-main">
                   회원가입
                 </span>
-              </button>
+              </Link>
             </span>
           </form>
         </div>

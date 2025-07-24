@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { PageProps } from 'types/common';
-import SearchedCafeDetail from '@/components/search/SearchedCafeDetail';
+import SearchedCafeDetailClient from '@/components/search/SearchedCafeDetailClient';
 
 export const metadata: Metadata = {
   title: `카페 상세 정보 | Cafe Masters`,
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function SearchDetailPage(props: PageProps) {
-  return <SearchedCafeDetail {...props} />;
+  return <SearchedCafeDetailClient {...props} />;
 }

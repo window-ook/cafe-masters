@@ -1,6 +1,6 @@
-import RecommendedDetailClient from '@/components/recommendation/RecommendedDetailClient';
 import { Metadata } from 'next';
 import { PageProps } from 'types/common';
+import RecommendedCafeDetailClient from '@/components/recommendation/RecommendedCafeDetailClient';
 
 
 export const metadata: Metadata = {
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function RecommendedDetailPage(props: PageProps) {
-  return <RecommendedDetailClient {...props} />;
+  return <RecommendedCafeDetailClient {...props} />;
 }

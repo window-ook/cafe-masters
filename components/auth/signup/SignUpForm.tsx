@@ -10,12 +10,12 @@ import {
   kakaoButtonStyle,
 } from '@/utils/styles';
 import { handleEmailValid } from '@/utils/shared/auth';
-import { SignProps } from '@/app/auth/page';
+import Link from 'next/link';
 import { useVerifyOtpCode } from '@/hooks/supabase/useVerifyOtpCode';
 import UserForm from '@/components/auth/shared/UserForm';
 import CodeForm from '@/components/auth/signup/CodeForm';
 
-export default function Signup({ setViewAction }: SignProps) {
+export default function SignUpForm() {
   const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState<string>('');
@@ -100,15 +100,14 @@ export default function Signup({ setViewAction }: SignProps) {
         </button>
         <p color="gray" className={authFormMentionStyle}>
           이미 계정이 있으신가요?{' '}
-          <button
-            type="button"
+          <Link
+            href="/signin"
             data-cy="open-signin-button"
-            aria-label="로그인 폼 열기 버튼"
-            onClick={() => setViewAction('SIGNIN')}
+            aria-label="로그인 페이지로 이동 버튼"
             className="hover:cursor-pointer hover:bg-gray-100"
           >
             <span className="font-bold font-dpixel text-main">로그인 하기</span>
-          </button>
+          </Link>
         </p>
       </form>
     </main>

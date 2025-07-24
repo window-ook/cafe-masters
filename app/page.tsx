@@ -1,6 +1,5 @@
 import Link from 'next/link';
 
-// Hero Section
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-main-super-dark via-main-dark to-main bg-cover bg-center">
@@ -25,7 +24,7 @@ const HeroSection = () => {
         </p>
         <div className="flex gap-4 justify-center max-sm:flex-col max-sm:items-center">
           <Link
-            href="/auth"
+            href="/main"
             className="glass-card px-8 py-4 bg-main hover:bg-main-dark text-white font-bold rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
           >
             컬렉션 시작하기
@@ -39,7 +38,7 @@ const HeroSection = () => {
   );
 };
 
-const FeaturedFeatures = () => {
+const FeaturesSection = () => {
   const features = [
     {
       id: 1,
@@ -111,7 +110,6 @@ const FeaturedFeatures = () => {
   );
 };
 
-// Benefits Section
 const BenefitsSection = () => {
   const benefits = [
     {
@@ -182,7 +180,6 @@ const BenefitsSection = () => {
   );
 };
 
-// Category Section
 const CategorySection = () => {
   const categories = [
     {
@@ -263,7 +260,6 @@ const CategorySection = () => {
   );
 };
 
-// Statistics Section
 const StatisticsSection = () => {
   const stats = [
     {
@@ -313,7 +309,6 @@ const StatisticsSection = () => {
   );
 };
 
-// CTA Section
 const CTASection = () => {
   return (
     <section className="py-20 bg-gradient-to-r from-main to-main-dark text-white">
@@ -327,7 +322,7 @@ const CTASection = () => {
           새로운 카페 경험의 세계로 떠나보세요.
         </p>
         <Link
-          href="/auth"
+          href="/signin"
           className="inline-block px-12 py-4 bg-white text-main font-bold text-xl rounded-xl hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
         >
           지금 시작하기
@@ -389,29 +384,16 @@ const Contactme = () => {
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
+    <div className="w-full min-h-screen overflow-y-auto">
       <HeroSection />
-
-      {/* Featured Features */}
-      <FeaturedFeatures />
-
-      {/* Benefits Section */}
+      <FeaturesSection />
       <BenefitsSection />
-
-      {/* Category Section */}
       <CategorySection />
-
-      {/* Statistics Section */}
       <StatisticsSection />
-
-      {/* CTA Section */}
       <CTASection />
-
-      {/* Contact Section */}
       <section className="w-full py-32 bg-black">
         <Contactme />
       </section>
-    </main>
+    </div>
   );
 }
