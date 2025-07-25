@@ -1,29 +1,14 @@
-import { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useMapStore } from 'utils/store';
-import { countRecommendedCafes } from 'actions/recommendActions';
+import { useQueryClient } from '@tanstack/react-query';
+import { recommendationQuery } from '@/queries/supabase/recommendation';
+import { useMemo } from 'react';
 
 export function useRecommendedCafesCounts() {
-  const setRecommendedCafeCount = useMapStore(
-    state => state.setRecommendedCafeCount,
-  );
+  const queryClient = useQueryClient();
 
-  const countRecommendedCafeQuery = useQuery({
-    queryKey: ['recommendedCafeCount'],
-    queryFn: async () => {
-      const response = await countRecommendedCafes();
-      return response || 0;
-    },
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 60 * 5,
-  });
+  const count = useMemo(() => {
+    const cachedData = queryClient.getQueryData(recommendationQuery.all());
+    return cachedData;
+  }, [queryClient]);
 
-  useEffect(() => {
-    if (countRecommendedCafeQuery.isSuccess)
-      setRecommendedCafeCount(countRecommendedCafeQuery.data);
-  }, [
-    countRecommendedCafeQuery.data,
-    countRecommendedCafeQuery.isSuccess,
-    setRecommendedCafeCount,
-  ]);
+  return { count };
 }

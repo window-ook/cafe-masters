@@ -3,7 +3,7 @@ import { useUserStore } from 'utils/store';
 import {
   CollectedRowInsert,
   createCollectedCafe,
-} from 'actions/collectActions';
+} from '@/actions/supabase/collection';
 
 export function useUploadCollectedCafe() {
   const userId = useUserStore(state => state.userId);

@@ -74,7 +74,7 @@ export default async function RootLayout({
       <body
         className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
       >
-        <AuthProvider accessToken={session?.access_token ?? 'no-token'}>
+        <AuthProvider accessToken={session?.access_token || null}>
           <Providers>{children}</Providers>
         </AuthProvider>
       </body>

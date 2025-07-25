@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { PageProps } from 'types/common';
 import CollectedCafeDetailClient from '@/components/collected/CollectedCafeDetailClient';
+import { PageProps } from '@/types/shared/page';
 
 export const metadata: Metadata = {
   title: `카드 상세 정보 | Cafe Masters`,

@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
 interface IAuthProvider {
-  accessToken: string;
+  accessToken: string | null;
   children: ReactNode;
 }
 

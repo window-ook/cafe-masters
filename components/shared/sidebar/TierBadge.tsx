@@ -6,7 +6,7 @@ import {
   getMasterTierStyle,
   masterTierBadgeStyle,
 } from 'utils/styles';
-import { Tier } from 'types/common';
+import { Tier } from 'types/shared/sidebar';
 import TierDialog from './TierDialog';
 
 interface TierBadgeProps {

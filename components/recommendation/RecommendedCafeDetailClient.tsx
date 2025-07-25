@@ -1,11 +1,12 @@
 'use client';
 
 import { use } from 'react';
-import { PageProps } from 'types/common';
+import { ClientPageProps, UrlParams } from 'types/shared/page';
 import useCafeDetailState from '@/hooks/shared/useCafeDetailState';
 
-export default function RecommendedDetailClient({ params }: PageProps) {
-  const { id } = use(params);
+export default function RecommendedDetailClient({ params }: ClientPageProps) {
+  const resolvedParams: UrlParams = use(params);
+  const { id } = resolvedParams;
 
   useCafeDetailState(id, 'recommended');
 

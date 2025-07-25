@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useMapStore } from 'utils/store';
-import { IKakaoSearchResult } from 'types/common';
+import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { toast } from 'react-toastify';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -221,12 +221,12 @@ export default function KakaoMap() {
       removeInfoWindows();
     }
 
-    if (pathname === '/cafe/search') {
+    if (pathname === '/search') {
       const query = keyword.includes('카페') ? keyword : `${keyword} 카페`;
       searchCafes(query);
     }
 
-    if (pathname.startsWith('/cafe/search/detail')) {
+    if (pathname.startsWith('/search/detail')) {
       updateMarkers(
         searchResult,
         cafe => cafe.y,
@@ -234,7 +234,7 @@ export default function KakaoMap() {
       );
     }
 
-    if (pathname.startsWith('/cafe/collected')) {
+    if (pathname.startsWith('/collected')) {
       updateMarkers(
         collectedCafe,
         cafe => cafe.coordY,
@@ -242,7 +242,7 @@ export default function KakaoMap() {
       );
     }
 
-    if (pathname.startsWith('/cafe/bookmarked')) {
+    if (pathname.startsWith('/bookmarked')) {
       updateMarkers(
         bookmarkedCafe,
         cafe => cafe.coordY,
@@ -259,9 +259,9 @@ export default function KakaoMap() {
     }
 
     if (
-      pathname.startsWith('/cafe/search/detail') ||
-      pathname.startsWith('/cafe/collected/detail') ||
-      pathname.startsWith('/cafe/bookmarked/detail') ||
+      pathname.startsWith('/search/detail') ||
+      pathname.startsWith('/collected/detail') ||
+      pathname.startsWith('/bookmarked/detail') ||
       pathname.startsWith('/cafe/recommended/detail')
     ) {
       mapRef.current.setCenter(

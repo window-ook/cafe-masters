@@ -1,7 +1,7 @@
 'use client';
 
 import { useCheckStore } from 'utils/store';
-import { BadgeProps } from 'types/common';
+import { BadgeProps } from 'types/shared/sidebar';
 import {
   getExpertTierStyle,
   getMasterTierStyle,

@@ -2,10 +2,11 @@
 
 import { useEffect, use } from 'react';
 import { useCheckStore, useMapStore, useUserStore } from 'utils/store';
-import { PageProps } from 'types/common';
+import { ClientPageProps, UrlParams } from 'types/shared/page';
 
-export default function SearchedCafeDetail({ params }: PageProps) {
-  const { id } = use(params);
+export default function SearchedCafeDetail({ params }: ClientPageProps) {
+  const resolvedParams: UrlParams = use(params);
+  const { id } = resolvedParams;
   const numericId = parseFloat(id);
 
   const userId = useUserStore(state => state.userId);

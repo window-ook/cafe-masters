@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import CafeClient from '@/components/cafe/CafeClient';
+import MainClient from '@/components/cafe/MainClient';
 
 export const metadata: Metadata = {
   title: '메뉴 페이지 | Cafe Masters',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function MainPage() {
-  return <CafeClient />;
+  return <MainClient />;
 }

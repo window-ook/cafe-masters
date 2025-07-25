@@ -1,10 +1,10 @@
 import { IoMdClock } from 'react-icons/io';
 
 interface OpenTimeGridProps {
-  openingHours: string | undefined;
+  opening_time: string | null | undefined;
 }
 
-export default function OpenTime({ openingHours }: OpenTimeGridProps) {
+export default function OpenTime({ opening_time }: OpenTimeGridProps) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 items-center">
@@ -12,7 +12,7 @@ export default function OpenTime({ openingHours }: OpenTimeGridProps) {
         <p className="font-dpixel">영업시간</p>
       </div>
       <div className="col-span-1 text-left">
-        <p>{openingHours}</p>
+        <p>{opening_time}</p>
       </div>
     </div>
   );

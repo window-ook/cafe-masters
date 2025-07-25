@@ -41,22 +41,22 @@ const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
           </p>
         </div>
         <div>
-          {path === '/cafe/search' && (
+          {path === '/search' && (
             <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
               {searchResult.length}
             </span>
           )}
-          {path === '/cafe/collected' && (
+          {path === '/collected' && (
             <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
               {collectedCafeCount}
             </span>
           )}
-          {path === '/cafe/bookmarked' && (
+          {path === '/bookmarked' && (
             <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
               {bookmarkedCafeCount}
             </span>
           )}
-          {path === '/cafe/recommended' && (
+          {path === '/recommended' && (
             <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
               {recommendedCafeCount}
             </span>
@@ -79,7 +79,7 @@ export default function TabsForLink() {
           />
         }
         title={'검색 결과'}
-        path={'/cafe/search'}
+        path={'/search'}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
@@ -89,25 +89,25 @@ export default function TabsForLink() {
           />
         }
         title={'수집한 카드'}
-        path={'/cafe/collected'}
+        path={'/collected'}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
         icon={<MdCollectionsBookmark className={`text-yellow-500 text-3xl`} />}
         title={'가고 싶은 곳'}
-        path={'/cafe/bookmarked'}
+        path={'/bookmarked'}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
         icon={<FaCheckCircle className={`text-recommended text-3xl`} />}
         title={'추천 카페'}
-        path={'/cafe/recommended'}
+        path={'/recommended'}
         isDarkTheme={isDarkTheme}
       />
       <SidebarTab
         icon={<FaRegCircleQuestion className={`text-gray-500 text-3xl`} />}
         title={'도움 센터'}
-        path={'/cafe/help'}
+        path={'/help'}
         isDarkTheme={isDarkTheme}
       />
     </ul>

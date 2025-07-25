@@ -3,10 +3,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useCheckStore, useUserStore } from 'utils/store';
-import {
-    NormalCafeDetailForBookmark,
-    NormalCafeDetailForRecommend,
-} from 'types/common';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
@@ -18,9 +14,10 @@ import Categories from './Categories';
 import OpenTime from './OpenTime';
 import Location from './Location';
 import PhoneNumber from './PhoneNumber';
+import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 
 interface NormalCafeDetailProps {
-    detail: NormalCafeDetailForBookmark | NormalCafeDetailForRecommend;
+    detail: ISupabaseRecommendedCafe;
     handleMenuOpenAction: () => void;
     setMemoOpenAction: (open: boolean) => void;
     setMemoRecommendationOpenAction: (open: boolean) => void;
@@ -52,8 +49,8 @@ export default function NormalCafeDetail({
     const uploadBookmarkMutation = useUploadBookmarkedCafe();
     const deleteBookmarkMutation = useDeleteBookmarkedCafe();
 
-    const parsedCategory: string[] = detail?.category
-        ? JSON.parse(detail?.category)
+    const parsedCategory: string[] = detail?.categories
+        ? JSON.parse(detail?.categories)
         : [];
 
     const handleUploadBookmark = () => {
@@ -61,7 +58,7 @@ export default function NormalCafeDetail({
         const bookmarkData = {
             ...detail,
             userId,
-            photoList: detail.photoList ? JSON.stringify(detail.photoList) : null,
+            extra_images: detail.extra_images ? JSON.stringify(detail.extra_images) : null,
         };
         uploadBookmarkMutation.mutate(bookmarkData);
         toast.success('북마크 했습니다!');
@@ -75,10 +72,10 @@ export default function NormalCafeDetail({
 
     const handleSetIsSubSidebarOpen = () => {
         setIsSubSidebarOpen(false);
-        if (pathname.startsWith('/cafe/search')) router.push('/cafe/search');
-        if (pathname.startsWith('/cafe/collected')) router.push('/cafe/collected');
-        if (pathname.startsWith('/cafe/bookmarked'))
-            router.push('/cafe/bookmarked');
+        if (pathname.startsWith('/search')) router.push('/search');
+        if (pathname.startsWith('/collected')) router.push('/collected');
+        if (pathname.startsWith('/bookmarked'))
+            router.push('/bookmarked');
         if (pathname.startsWith('/cafe/recommended'))
             router.push('/cafe/recommended');
     };
@@ -127,7 +124,7 @@ export default function NormalCafeDetail({
                     </span>
                 </div>
                 <div className="flex items-center">
-                    {pathname.includes('/cafe/search') && onRefetch && (
+                    {pathname.includes('/search') && onRefetch && (
                         <button
                             aria-label="데이터 다시 불러오기"
                             onClick={onRefetch}
@@ -159,7 +156,7 @@ export default function NormalCafeDetail({
                         className="flex gap-4 mt-4 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory"
                     >
                         <div className="snap-center shrink-0 h-60 py-2">
-                            {detail?.photoUrl?.trim() && (
+                            {detail?.image?.trim() && (
                                 <a
                                     data-cy="normal-detail-thumbnail"
                                     onClick={() =>
@@ -170,7 +167,7 @@ export default function NormalCafeDetail({
                                     }
                                 >
                                     <Image
-                                        src={detail.photoUrl || '/image/cafe_thumbnail.avif'}
+                                        src={detail.image || '/image/cafe_thumbnail.avif'}
                                         alt="카페 썸네일"
                                         width={160}
                                         height={240}
@@ -180,7 +177,7 @@ export default function NormalCafeDetail({
                                 </a>
                             )}
                         </div>
-                        {detail?.photoList?.map((photo, i) => {
+                        {detail?.extra_images?.map((photo, i) => {
                             return (
                                 <div key={i} className="snap-center py-2 shrink-0 h-60">
                                     <Image
@@ -244,12 +241,12 @@ export default function NormalCafeDetail({
                 </section>
 
                 <section className="grid grid-cols-2 gap-6">
-                    {!pathname.includes('/cafe/search/detail') && (
+                    {!pathname.includes('/search/detail') && (
                         <Categories category={parsedCategory ?? []} />
                     )}
-                    <OpenTime openingHours={detail?.openingHours} />
+                    <OpenTime opening_time={detail?.opening_time} />
                     <Location address={detail?.address} />
-                    <PhoneNumber phoneNum={detail?.phoneNum} />
+                    <PhoneNumber phoneNum={detail?.phone_number} />
                 </section>
             </main>
         </div>

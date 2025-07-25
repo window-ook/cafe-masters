@@ -1,13 +1,11 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { MapStore, UserStore, CheckStore } from 'types/store';
-import {
-  IKakaoSearchResult,
-  BookmarkedCafeFromSupabase,
-  CollectedCafeFromSupabase,
-  RecommendedCafeFromSupabase,
-  Tier,
-} from 'types/common';
+import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
+import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
+import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
+import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
+import { Tier } from '@/types/shared/sidebar';
 
 // 지도 & 카페 데이터
 export const useMapStore = create<MapStore>()(
@@ -40,15 +38,15 @@ export const useMapStore = create<MapStore>()(
 
       setKeyword: data => set({ keyword: data }),
       setSearchResult: (data: IKakaoSearchResult[]) => set({ searchResult: data }),
-      setCollectedCafe: (data: CollectedCafeFromSupabase[]) =>
+      setCollectedCafe: (data: ISupabaseCollectedCafe[]) =>
         set({ collectedCafe: data ?? [] }),
-      setFilteredCollectedCafe: (data: CollectedCafeFromSupabase[]) =>
+      setFilteredCollectedCafe: (data: ISupabaseCollectedCafe[]) =>
         set({ filteredCollectedCafe: data ?? [] }),
-      setBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) =>
+      setBookmarkedCafe: (data: ISupabaseBookmarkedCafe[]) =>
         set({ bookmarkedCafe: data }),
-      setFilteredBookmarkedCafe: (data: BookmarkedCafeFromSupabase[]) =>
+      setFilteredBookmarkedCafe: (data: ISupabaseBookmarkedCafe[]) =>
         set({ filteredBookmarkedCafe: data }),
-      setRecommendedCafe: (data: RecommendedCafeFromSupabase[]) =>
+      setRecommendedCafe: (data: ISupabaseRecommendedCafe[]) =>
         set({ recommendedCafe: data }),
       setSearchTermInCollectedCafe: term =>
         set({ searchTermInCollectedCafe: term }),
@@ -66,13 +64,13 @@ export const useMapStore = create<MapStore>()(
       setCurrentCafeId: id => set({ currentCafeId: id }),
       setCurrentCafeThumbnail: url => set({ currentCafeThumbnail: url }),
       setCafeDetail: data => set({ cafeDetail: data }),
-      setCollectedCafeDetail: (data: CollectedCafeFromSupabase[]) =>
+      setCollectedCafeDetail: (data: ISupabaseCollectedCafe[]) =>
         set({ collectedCafeDetail: data }),
-      setBookmarkedCafeDetail: (data: BookmarkedCafeFromSupabase[]) =>
+      setBookmarkedCafeDetail: (data: ISupabaseBookmarkedCafe[]) =>
         set({ bookmarkedCafeDetail: data }),
-      setRecommendedCafeDetail: (data: RecommendedCafeFromSupabase[]) =>
+      setRecommendedCafeDetail: (data: ISupabaseRecommendedCafe[]) =>
         set({ recommendedCafeDetail: data }),
-      setFilteredRecommendedCafe: (data: RecommendedCafeFromSupabase[]) =>
+      setFilteredRecommendedCafe: (data: ISupabaseRecommendedCafe[]) =>
         set({ filteredRecommendedCafe: data }),
     }),
     {

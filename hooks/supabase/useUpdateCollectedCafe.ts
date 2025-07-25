@@ -3,7 +3,7 @@ import { useMapStore, useUserStore } from 'utils/store';
 import {
   CollectedRowUpdate,
   updateCollectedCafe,
-} from 'actions/collectActions';
+} from '@/actions/supabase/collection';
 
 export function useUpdateCollectedCafe() {
   const userId = useUserStore(state => state.userId);

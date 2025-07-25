@@ -39,10 +39,10 @@ export default function Header() {
 
   const pathname = usePathname();
 
-  const isSearchResultPage = pathname.startsWith('/cafe/search');
-  const isCollectedPage = pathname.startsWith('/cafe/collected');
-  const isBookmarkedPage = pathname.startsWith('/cafe/bookmarked');
-  const isRecommendedPage = pathname.startsWith('/cafe/recommended');
+  const isSearchResultPage = pathname.startsWith('/search');
+  const isCollectedPage = pathname.startsWith('/collected');
+  const isBookmarkedPage = pathname.startsWith('/bookmarked');
+  const isRecommendedPage = pathname.startsWith('/recommended');
 
   const handleCollectedSearch = () =>
     setSearchTermInCollectedCafe(collectedInput);
@@ -63,7 +63,7 @@ export default function Header() {
           comment="메뉴로"
           component={
             <Link
-              href="/cafe"
+              href="/main"
               aria-label="홈페이지 이동 버튼"
               className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-300"
               onClick={handleStateReset}

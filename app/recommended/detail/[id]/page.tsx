@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
-import { PageProps } from 'types/common';
 import RecommendedCafeDetailClient from '@/components/recommendation/RecommendedCafeDetailClient';
-
+import { PageProps } from '@/types/shared/page';
 
 export const metadata: Metadata = {
   title: `카페 상세 정보 | Cafe Masters`,

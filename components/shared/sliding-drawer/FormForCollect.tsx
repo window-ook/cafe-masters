@@ -53,9 +53,9 @@ export default function Memo({
     <section className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
         <p className="font-dpixel text-2xl font-semibold">
-          {pathname.startsWith('/cafe/search') && detailName}
-          {pathname.startsWith('/cafe/collected') && collectedCafeDetailName}
-          {pathname.startsWith('/cafe/bookmarked') && bookmarkedCafeDetailName}
+          {pathname.startsWith('/search') && detailName}
+          {pathname.startsWith('/collected') && collectedCafeDetailName}
+          {pathname.startsWith('/bookmarked') && bookmarkedCafeDetailName}
           {pathname.startsWith('/cafe/recommended') &&
             recommendedCafeDetailName}
         </p>

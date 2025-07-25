@@ -18,11 +18,21 @@ body {
   --text-2xs: 0.3rem;
 
   /* 컬러 */
-  --color-main: #7c24c9;
-  --color-main-light: #f5ccff;
-  --color-main-shadow: #875aad;
-  --color-main-dark: #1f1926;
-  --color-main-dark-border: #5f018a;
+  --color-main-100: #F7B3A8;
+  --color-main-200: #E59487;
+  --color-main-300: #D37566;
+  --color-main-400: #C15645;
+  --color-main-500: #AF3724;
+  --color-main-600: #9D2A1B;
+  --color-main-700: #8B1D13;
+  --color-main-800: #79100A;
+  --color-main-900: #670302;
+
+  --color-main: var(--color-main-500);
+  --color-main-light: var(--color-main-100);
+  --color-main-shadow: var(--color-main-600);
+  --color-main-dark: var(--color-main-900);
+  --color-main-dark-border: var(--color-main-800);
   --color-collected-side: #03fc73;
   --color-collected-center: #6366f1;
   --color-beginner: #8a919c;

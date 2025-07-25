@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getAllRecommendedCafes } from 'actions/recommendActions';
+import { getRecommendationCafes } from '@/actions/supabase/recommendation';
 import { useMapStore } from 'utils/store';
+import { recommendationQuery } from '@/queries/supabase/recommendation';
 
 export function useRecommendedCafes() {
   const setRecommendedCafe = useMapStore(state => state.setRecommendedCafe);
 
   const { data } = useQuery({
-    queryKey: ['recommendedCafe'],
+    queryKey: recommendationQuery.all(),
     queryFn: async () => {
-      const response = await getAllRecommendedCafes();
-      return response;
+      const response = await getRecommendationCafes();
+      return response.data;
     },
     staleTime: 1000 * 60 * 3,
     gcTime: 1000 * 60 * 5,

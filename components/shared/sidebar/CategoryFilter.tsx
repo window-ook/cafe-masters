@@ -26,9 +26,13 @@ export default function CategoryFilter() {
 
   useEffect(() => {
     const filteredRecommendedCafe = recommendedCafe.filter(cafe => {
-      if (!cafe.category) return false;
+      if (!cafe.categories) return selectedCategories.length === 0;
+      
+      // 선택된 카테고리가 없으면 모든 카페를 보여줌
+      if (selectedCategories.length === 0) return true;
+      
       try {
-        const parsedCategory = JSON.parse(cafe.category) as string[];
+        const parsedCategory = JSON.parse(cafe.categories) as string[];
 
         return selectedCategories.every(selected =>
           parsedCategory.includes(selected),

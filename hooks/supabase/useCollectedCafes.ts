@@ -1,33 +1,23 @@
-import { useEffect } from 'react';
+'use client';
+import { useMemo } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useMapStore } from 'utils/store';
-import { getAllCollectedCafes } from 'actions/collectActions';
+import { useFilterStore } from 'stores/filter';
+import { getCollectedCafes } from '@/actions/supabase/collection';
+import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 
-export function useCollectedCafes(
-  userId: string,
-  isActive: boolean,
-) {
-  const setCollectedCafe = useMapStore(state => state.setCollectedCafe);
-  const setFilteredCollectedCafe = useMapStore(
-    state => state.setFilteredCollectedCafe,
-  );
-  const selectedRegion = useMapStore(state => state.selectedRegion);
-  const selectedRating = useMapStore(state => state.selectedRating);
-  const searchTermInCollectedCafe = useMapStore(
+export function useCollectedCafes(userId: string, isActive: boolean = true) {
+  const selectedRegion = useFilterStore(state => state.selectedRegion);
+  const selectedRating = useFilterStore(state => state.selectedRating);
+  const searchTermInCollectedCafe = useFilterStore(
     state => state.searchTermInCollectedCafe,
   );
 
-  const {
-    data: fetchedCollectedCafe,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
+  const infiniteQuery = useInfiniteQuery({
     enabled: isActive && !!userId && userId !== 'no-user',
     queryKey: ['collectedCafe', userId],
     initialPageParam: 0,
     queryFn: async ({ pageParam }) => {
-      const response = await getAllCollectedCafes(userId, pageParam, 4);
+      const response = await getCollectedCafes(userId, pageParam, 4);
       return response;
     },
     getNextPageParam: lastPage => {
@@ -37,50 +27,46 @@ export function useCollectedCafes(
     gcTime: 1000 * 60 * 5,
   });
 
-  useEffect(() => {
-    if (isActive && fetchedCollectedCafe) {
-      // 모든 페이지의 데이터를 하나의 배열로 합침
-      const allCafes = fetchedCollectedCafe.pages.flatMap(page => page.data);
-      setCollectedCafe(allCafes);
-
-      // 필터링 적용
-      const filteredCafes = allCafes.filter(cafe => {
-        // 검색어 필터링
-        const matchesSearch =
-          !searchTermInCollectedCafe ||
-          cafe.name
-            ?.toLowerCase()
-            .includes(searchTermInCollectedCafe.toLowerCase());
-
-        // 지역 필터링
-        const matchesRegion =
-          selectedRegion === 'all' ||
-          (cafe.address && cafe.address.split(' ')[0] === selectedRegion);
-
-        // 별점 필터링
-        const matchesRating =
-          selectedRating === 'all' || cafe.rating === selectedRating;
-
-        // 모든 조건을 만족하는 카페만 반환
-        return matchesSearch && matchesRegion && matchesRating;
-      });
-
-      setFilteredCollectedCafe(filteredCafes); // 필터링 된 카페를 저장
+  // 모든 페이지의 데이터를 하나의 배열로 합치고 필터링 적용
+  const { allCafes, filteredCafes } = useMemo(() => {
+    if (!infiniteQuery.data) {
+      return { allCafes: [], filteredCafes: [] };
     }
+
+    const allCafes = infiniteQuery.data.pages.flatMap(page => page.data);
+    
+    // 필터링 적용
+    const filteredCafes = allCafes.filter((cafe: ISupabaseCollectedCafe) => {
+      // 검색어 필터링
+      const matchesSearch =
+        !searchTermInCollectedCafe ||
+        cafe.name
+          ?.toLowerCase()
+          .includes(searchTermInCollectedCafe.toLowerCase());
+
+      // 지역 필터링
+      const matchesRegion =
+        selectedRegion === 'all' ||
+        (cafe.address && cafe.address.split(' ')[0] === selectedRegion);
+
+      // 별점 필터링
+      const matchesRating =
+        selectedRating === 'all' || cafe.ratings === selectedRating;
+
+      return matchesSearch && matchesRegion && matchesRating;
+    });
+
+    return { allCafes, filteredCafes };
   }, [
-    isActive,
-    fetchedCollectedCafe,
-    setCollectedCafe,
-    setFilteredCollectedCafe,
+    infiniteQuery.data,
     selectedRegion,
     selectedRating,
     searchTermInCollectedCafe,
   ]);
 
   return {
-    fetchedCollectedCafe,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
+    ...infiniteQuery,
+    data: allCafes,
+    filteredData: filteredCafes,
   };
 }

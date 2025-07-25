@@ -1,7 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCheckStore, useMapStore } from 'utils/store';
+import { useUIStore, useUserStore } from 'stores';
+import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
+import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import Image from 'next/image';
@@ -15,29 +17,39 @@ import EatenMenus from './EatenMenus';
 import Pros from './Pros';
 import Cons from './Cons';
 
-interface CafeDetailProps {
+interface ICafeDetailProps {
+  cafeId: string;
   setMemoOpenAction: (open: boolean) => void;
 }
 
 export default function CollectedCafeDetail({
+  cafeId,
   setMemoOpenAction,
-}: CafeDetailProps) {
-  const collectedCafeDetail = useMapStore(
-    state => state.collectedCafeDetail[0],
-  );
+}: ICafeDetailProps) {
+  const { userId } = useUserStore();
+  const { isDarkTheme, setIsSubSidebarOpen } = useUIStore();
 
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-  const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
+  // React Query 캐시에서 수집된 카페 데이터 가져오기
+  const { filteredData: collectedCafes } = useCollectedCafes(userId, true);
+  const collectedCafeDetail = collectedCafes.find((cafe: ISupabaseCollectedCafe) => cafe.id === Number(cafeId));
 
   const router = useRouter();
 
-  const parsedCategory: string[] = collectedCafeDetail?.category
-    ? JSON.parse(collectedCafeDetail.category)
+  if (!collectedCafeDetail) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <p>카페 정보를 찾을 수 없습니다.</p>
+      </div>
+    );
+  }
+
+  const parsedCategory: string[] = collectedCafeDetail?.categories
+    ? JSON.parse(collectedCafeDetail.categories)
     : [];
 
   const handleSetIsSubSidebarOpen = () => {
     setIsSubSidebarOpen(false);
-    router.push('/cafe/collected');
+    router.back();
   };
 
   return (
@@ -68,7 +80,7 @@ export default function CollectedCafeDetail({
           >
             <Image
               src={
-                collectedCafeDetail?.photoUrl ?? '/image/cafe_thumbnail.avif'
+                collectedCafeDetail?.image ?? '/image/cafe_thumbnail.avif'
               }
               alt="카페 썸네일"
               className="rounded-md w-auto h-auto"
@@ -80,7 +92,7 @@ export default function CollectedCafeDetail({
         </div>
 
         <div className="flex justify-between items-center">
-          <Ratings rating={collectedCafeDetail?.rating ?? 0} />
+          <Ratings rating={collectedCafeDetail?.ratings ?? 0} />
           <button
             type="button"
             data-cy="update-button"
@@ -93,9 +105,9 @@ export default function CollectedCafeDetail({
 
         <div className="grid grid-cols-2 gap-6">
           <CategoryGrid category={parsedCategory ?? []} />
-          <OpenTimeGrid openingHours={collectedCafeDetail?.openingHours} />
+          <OpenTimeGrid opening_time={collectedCafeDetail?.opening_time} />
           <Location address={collectedCafeDetail?.address} />
-          <PhoneNumber phoneNum={collectedCafeDetail?.phoneNum} />
+          <PhoneNumber phoneNum={collectedCafeDetail?.phone_number} />
 
           <div className="col-span-2 grid grid-cols-3">
             <div className="bg-gray-400 bg-opacity-40 h-0.5 col-span-3"></div>
@@ -105,7 +117,7 @@ export default function CollectedCafeDetail({
           </div>
 
           <Comment comment={collectedCafeDetail?.comment} />
-          <EatenMenus eaten={collectedCafeDetail?.eaten ?? ''} />
+          <EatenMenus eaten={collectedCafeDetail?.eaten_menus ?? ''} />
           <Pros pros={collectedCafeDetail?.pros ?? ''} />
           <Cons cons={collectedCafeDetail?.cons ?? ''} />
         </div>

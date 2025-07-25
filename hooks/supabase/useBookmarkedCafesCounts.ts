@@ -1,30 +1,10 @@
-import { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useMapStore } from 'utils/store';
-import { countBookmarkedCafes } from 'actions/bookmarkActions';
+'use client';
+import { useBookmarkedCafes } from './useBookmarkedCafes';
 
-export function useCountBookmarkedCafesCounts(userId: string) {
-  const setBookmarkedCafeCount = useMapStore(
-    state => state.setBookmarkedCafeCount,
-  );
-
-  const countBookmarkedCafeQuery = useQuery({
-    queryKey: ['bookmarkedCafeCount', userId],
-    queryFn: async () => {
-      const response = await countBookmarkedCafes(userId);
-      return response || 0;
-    },
-    enabled: !!userId && userId !== 'no-user',
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 60 * 5,
-  });
-
-  useEffect(() => {
-    if (countBookmarkedCafeQuery.isSuccess)
-      setBookmarkedCafeCount(countBookmarkedCafeQuery.data);
-  }, [
-    countBookmarkedCafeQuery.data,
-    countBookmarkedCafeQuery.isSuccess,
-    setBookmarkedCafeCount,
-  ]);
+export function useBookmarkedCafesCounts(userId: string) {
+  const { data } = useBookmarkedCafes(userId, true);
+  
+  return { 
+    count: data?.length || 0 
+  };
 }

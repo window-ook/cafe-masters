@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
-      url: 'https://app.cafe-masters.co/cafe/search',
+      url: 'https://app.cafe-masters.co/search',
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
@@ -27,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
-      url: 'https://app.cafe-masters.co/cafe/collected',
+      url: 'https://app.cafe-masters.co/collected',
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
@@ -39,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
-      url: 'https://app.cafe-masters.co/cafe/bookmarked',
+      url: 'https://app.cafe-masters.co/bookmarked',
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,

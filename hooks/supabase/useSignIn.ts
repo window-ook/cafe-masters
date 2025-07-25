@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useUserStore } from 'utils/store';
 import { useMapStore } from 'utils/store';
 import { useMutation } from '@tanstack/react-query';
-import { getAdminUser } from 'actions/userActions';
+import { getAdminUser } from '@/actions/supabase/user';
 
 export function useSignIn() {
   const supabase = createBrowserSupabaseClient();

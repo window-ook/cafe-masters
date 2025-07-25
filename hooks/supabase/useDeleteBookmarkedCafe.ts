@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserStore } from 'utils/store';
-import { deleteBookmarkedCafe } from 'actions/bookmarkActions';
+import { deleteBookmarkedCafe } from '@/actions/supabase/bookmark';
 
 export function useDeleteBookmarkedCafe() {
   const userId = useUserStore(state => state.userId);

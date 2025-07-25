@@ -3,7 +3,7 @@ import { useUserStore } from 'utils/store';
 import {
   BookmarkedRowInsert,
   createBookmarkedCafe,
-} from 'actions/bookmarkActions';
+} from '@/actions/supabase/bookmark';
 
 export function useUploadBookmarkedCafe() {
   const userId = useUserStore(state => state.userId);

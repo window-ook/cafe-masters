@@ -27,8 +27,8 @@ export default function FormForRecommend({
     <section className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
         <p className="font-dpixel text-2xl font-semibold">
-          {pathname.startsWith('/cafe/search') && detailName}
-          {pathname.startsWith('/cafe/bookmarked') && bookmarkedCafeDetailName}
+          {pathname.startsWith('/search') && detailName}
+          {pathname.startsWith('/bookmarked') && bookmarkedCafeDetailName}
         </p>
         <button
           type="button"
