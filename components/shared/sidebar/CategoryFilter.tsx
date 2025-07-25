@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useMapStore } from 'utils/store';
+import { useCafeStore } from 'stores';
 import { CATEGORIES } from '@/utils/constants/categories';
 import { RiResetLeftFill } from 'react-icons/ri';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 export default function CategoryFilter() {
+  const { recommendedCafe, setFilteredRecommendedCafe } = useCafeStore();
+
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isExpanded, setIsExpanded] = useState(true);
-
-  const { recommendedCafe, setFilteredRecommendedCafe } = useMapStore();
 
   const toggleCategories = (category: string) => {
     setSelectedCategories(prev =>
@@ -27,16 +27,13 @@ export default function CategoryFilter() {
   useEffect(() => {
     const filteredRecommendedCafe = recommendedCafe.filter(cafe => {
       if (!cafe.categories) return selectedCategories.length === 0;
-      
+
       // 선택된 카테고리가 없으면 모든 카페를 보여줌
       if (selectedCategories.length === 0) return true;
-      
+
       try {
         const parsedCategory = JSON.parse(cafe.categories) as string[];
-
-        return selectedCategories.every(selected =>
-          parsedCategory.includes(selected),
-        );
+        return selectedCategories.every(selected => parsedCategory.includes(selected));
       } catch (error) {
         console.error('카테고리 parsing error:', error);
         return false;

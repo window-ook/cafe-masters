@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
-import { useUIStore, useUserStore } from 'stores';
+import { useCafeStateStore, useUIStore, useUserStore } from 'stores';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
@@ -13,8 +13,6 @@ import Image from 'next/image';
 import CollectedBadge from './CollectedBadge';
 import Location from './Location';
 import PhoneNumber from './PhoneNumber';
-import Categories from './Categories';
-import OpenTime from './OpenTime';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 
 interface IBookmarkedCafeDetailProps {
@@ -32,10 +30,11 @@ export default function BookmarkedCafeDetail({
   const { admin, userId } = useUserStore();
   const {
     isDarkTheme,
-    isCollected,
     setIsSubSidebarOpen,
-    setIsBookmarked,
+
   } = useUIStore();
+
+  const { isCollected, setIsBookmarked } = useCafeStateStore();
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -58,10 +57,7 @@ export default function BookmarkedCafeDetail({
     if (!userId) return;
 
     try {
-      await deleteBookmarkMutation.mutateAsync({
-        userId,
-        cafeId: detail.id,
-      });
+      await deleteBookmarkMutation.mutateAsync(detail.id);
       setIsBookmarked(false);
       toast.success('북마크가 해제되었습니다.');
       handleClose();
@@ -113,7 +109,7 @@ export default function BookmarkedCafeDetail({
 
             <Location address={detail.address} />
 
-            <PhoneNumber phoneNumber={detail.phone_number} />
+            <PhoneNumber phone_number={detail.phone_number!} />
 
             {/* 수집 상태 배지 */}
             {isCollected && <CollectedBadge />}

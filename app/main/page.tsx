@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
-import MainClient from '@/components/cafe/MainClient';
+import MainClient from '@/components/shared/sidebar/MainClient';
 
 export const metadata: Metadata = {
-  title: '메뉴 페이지 | Cafe Masters',
-  description: '원하는 메뉴를 선택해보세요.',
+  title: '메인 페이지 : Cafe Masters',
+  description: '검색 결과, 수집한 카페, 북마크한 카페, 추천 카페 중 선택하여 카페를 확인해보세요.',
 };
 
 export default function MainPage() {

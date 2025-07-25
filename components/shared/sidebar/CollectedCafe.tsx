@@ -1,17 +1,17 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { useCheckStore } from 'utils/store';
-import { ratingCircleStyle } from 'utils/styles';
+import { useUIStore } from '@/stores';
+import { ratingCircleStyle } from '@/utils/styles';
 import { FaStar } from 'react-icons/fa6';
 import Image from 'next/image';
 
-interface CollectedCafeProps {
+interface ICollectedCafe {
   name: string | undefined;
   address: string;
-  phoneNum: string | null | undefined;
-  photoUrl: string | null | undefined;
-  ratings: number | null | undefined;
+  phoneNum: string | null;
+  photoUrl: string | null;
+  ratings: number | null;
   onClickAction: () => void;
 }
 
@@ -22,8 +22,8 @@ export default function CollectedCafe({
   phoneNum,
   ratings,
   onClickAction,
-}: CollectedCafeProps) {
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+}: ICollectedCafe) {
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   const cardRef = useRef<HTMLButtonElement>(null);
   const backEffectRef = useRef<HTMLDivElement>(null);

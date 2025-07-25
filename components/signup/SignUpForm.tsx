@@ -12,8 +12,8 @@ import {
 import { handleEmailValid } from '@/utils/shared/auth';
 import Link from 'next/link';
 import { useVerifyOtpCode } from '@/hooks/supabase/useVerifyOtpCode';
-import UserForm from '@/components/auth/shared/UserForm';
-import CodeForm from '@/components/auth/signup/CodeForm';
+import UserForm from '@/components/shared/UserForm';
+import CodeForm from '@/components/signup/CodeForm';
 
 export default function SignUpForm() {
   const [email, setEmail] = useState<string>('');

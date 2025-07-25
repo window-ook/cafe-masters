@@ -2,15 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useMapStore, useCheckStore } from 'utils/store';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
+import { useFilterStore, useUIStore } from '@/stores';
 
 export default function Search() {
-  const keyword = useMapStore(state => state.keyword);
+  const { keyword, setKeyword } = useFilterStore();
+  const { setIsSubSidebarOpen, isDarkTheme } = useUIStore();
   const [localKeyword, setLocalKeyword] = useState<string>(keyword);
-  const setKeyword = useMapStore(state => state.setKeyword);
-  const setIsSubSidebarOpen = useCheckStore(state => state.setIsSubSidebarOpen);
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
 
   const router = useRouter();
 

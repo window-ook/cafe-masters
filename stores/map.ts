@@ -1,25 +1,25 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface MapStore {
+interface IMapStore {
   // 지도 좌표 상태
   currentCoordX: number;
   currentCoordY: number;
-  
+
   // 현재 선택된 카페 정보
   currentCafeId: number;
   currentCafeThumbnail: string;
-  
+
   // 지도 좌표 액션
   setCurrentCoordX: (x: number) => void;
   setCurrentCoordY: (y: number) => void;
-  
+
   // 현재 카페 액션
   setCurrentCafeId: (id: number) => void;
   setCurrentCafeThumbnail: (url: string) => void;
 }
 
-export const useMapStore = create<MapStore>()(
+export const useMapStore = create<IMapStore>()(
   persist(
     set => ({
       // 성수 지역 기본 좌표

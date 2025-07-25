@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface UserFormProps {
+interface IUserForm {
   email: string;
   password: string;
   setEmail: (value: string) => void;
@@ -12,7 +12,7 @@ export default function UserForm({
   password,
   setEmail,
   setPassword,
-}: UserFormProps) {
+}: IUserForm) {
   return (
     <section className="mb-1 flex flex-col gap-4 z-10">
       <label htmlFor="email" className="text-xl font-dpixel">

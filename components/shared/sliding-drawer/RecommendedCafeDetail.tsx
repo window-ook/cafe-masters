@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
-import { useUIStore, useUserStore } from 'stores';
+import { useCafeStateStore, useUIStore, useUserStore } from 'stores';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
@@ -33,21 +33,21 @@ export default function RecommendedCafeDetail({
   const { admin, userId } = useUserStore();
   const {
     isDarkTheme,
-    isCollected,
-    isBookmarked,
     setIsSubSidebarOpen,
-    setIsBookmarked,
+
   } = useUIStore();
+
+  const { isCollected, isBookmarked, setIsBookmarked } = useCafeStateStore();
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const uploadBookmarkMutation = useUploadBookmarkedCafe();
   const deleteBookmarkMutation = useDeleteBookmarkedCafe();
-  
+
   // React Query 캐시에서 추천 카페 데이터 가져오기
   const recommendedCafes = useRecommendedCafes();
-  const detail = recommendedCafes?.find((cafe: ISupabaseRecommendedCafe) => cafe.id === cafeId);
+  const detail = recommendedCafes?.find((cafe: ISupabaseRecommendedCafe) => cafe.id === Number(cafeId));
 
   if (!detail) {
     return (
@@ -65,19 +65,16 @@ export default function RecommendedCafeDetail({
 
     try {
       if (isBookmarked) {
-        await deleteBookmarkMutation.mutateAsync({
-          userId,
-          cafeId: detail.id,
-        });
+        await deleteBookmarkMutation.mutateAsync(detail.id);
         setIsBookmarked(false);
         toast.success('북마크가 해제되었습니다.');
       } else {
         await uploadBookmarkMutation.mutateAsync({
-          userId,
-          cafeId: detail.id,
+          user_id: userId,
+          id: detail.id,
           name: detail.name,
           address: detail.address,
-          phoneNumber: detail.phone_number,
+          phone_number: detail.phone_number,
           image: detail.image,
           coordX: detail.coordX,
           coordY: detail.coordY,
@@ -85,7 +82,7 @@ export default function RecommendedCafeDetail({
         setIsBookmarked(true);
         toast.success('북마크에 추가되었습니다.');
       }
-    } catch (error) {
+    } catch {
       toast.error('작업 중 오류가 발생했습니다.');
     }
   };
@@ -107,9 +104,9 @@ export default function RecommendedCafeDetail({
             <IoCloseCircle size={24} />
           </button>
           <button onClick={handleBookmarkToggle}>
-            <IoBookmark 
-              size={24} 
-              className={isBookmarked ? 'text-main' : 'text-gray-400'} 
+            <IoBookmark
+              size={24}
+              className={isBookmarked ? 'text-main' : 'text-gray-400'}
             />
           </button>
         </div>
@@ -133,14 +130,14 @@ export default function RecommendedCafeDetail({
           {/* 카페 정보 */}
           <div className="space-y-4">
             <h1 className="text-2xl font-bold">{detail.name}</h1>
-            
-            <Categories categories={detail.categories || []} />
-            
+
+            <Categories categories={detail.categories.split(',')} />
+
             <Location address={detail.address} />
-            
-            <PhoneNumber phoneNumber={detail.phone_number} />
-            
-            <OpenTime openTime={detail.open_time || ''} />
+
+            <PhoneNumber phone_number={detail.phone_number!} />
+
+            <OpenTime opening_time={detail.opening_time || ''} />
 
             {/* 추천 배지 */}
             <div className="bg-recommended text-white px-3 py-1 rounded-full text-sm w-fit">

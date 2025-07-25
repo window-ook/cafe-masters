@@ -2,40 +2,23 @@
 
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useMapStore, useCheckStore } from 'utils/store';
-import Search from './SearchBar';
-import LightDarkToggle from './ThemeToggleButton';
+import { useCafeStore, useFilterStore, useUIStore } from '@/stores';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
-
-const Tooltip = dynamic(() => import('@/components/shared/TooltipContainer'), {
-  ssr: false,
-});
-const CategoryFilter = dynamic(() => import('./CategoryFilter'), {
-  ssr: false,
-});
-const RegionFilter = dynamic(() => import('./RegionsFilter'), {
-  ssr: false,
-});
-const RatingFilter = dynamic(() => import('./RatingsFilter'), {
-  ssr: false,
-});
+import Search from '@/components/shared/sidebar/SearchBar';
+import LightDarkToggle from '@/components/shared/sidebar/ThemeToggleButton';
+import Tooltip from '@/components/shared/TooltipContainer';
+import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
+import RegionFilter from '@/components/shared/sidebar/RegionsFilter';
+import RatingFilter from '@/components/shared/sidebar/RatingsFilter';
 
 export default function Header() {
   const [collectedInput, setCollectedInput] = useState<string>('');
   const [bookmarkedInput, setBookmarkedInput] = useState<string>('');
 
-  const searchResultCount = useMapStore(state => state.searchResult.length);
-
-  const {
-    collectedCafeCount,
-    bookmarkedCafeCount,
-    setSearchTermInCollectedCafe,
-    setSearchTermInBookmarkedCafe,
-  } = useMapStore();
-
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const { collectedCafeCount, bookmarkedCafeCount, searchResult } = useCafeStore();
+  const { setSearchTermInCollectedCafe, setSearchTermInBookmarkedCafe } = useFilterStore();
+  const { isDarkTheme } = useUIStore();
 
   const pathname = usePathname();
 
@@ -44,10 +27,8 @@ export default function Header() {
   const isBookmarkedPage = pathname.startsWith('/bookmarked');
   const isRecommendedPage = pathname.startsWith('/recommended');
 
-  const handleCollectedSearch = () =>
-    setSearchTermInCollectedCafe(collectedInput);
-  const handleBookmarkedSearch = () =>
-    setSearchTermInBookmarkedCafe(bookmarkedInput);
+  const handleCollectedSearch = () => setSearchTermInCollectedCafe(collectedInput);
+  const handleBookmarkedSearch = () => setSearchTermInBookmarkedCafe(bookmarkedInput);
 
   const handleStateReset = () => {
     setBookmarkedInput('');
@@ -91,7 +72,7 @@ export default function Header() {
           <span className="font-dpixel text-xl sm:text-2xl">
             TOTAL{' '}
             <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
-              {searchResultCount}
+              {searchResult.length}
             </span>
           </span>
         </div>

@@ -2,11 +2,11 @@
 
 import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCheckStore, useMapStore } from 'utils/store';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoMdCafe } from 'react-icons/io';
 import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
 import { FaRegCircleQuestion } from 'react-icons/fa6';
+import { useCafeStore, useUIStore } from '@/stores';
 
 interface SidebarTabProps {
   icon: ReactNode;
@@ -16,10 +16,7 @@ interface SidebarTabProps {
 }
 
 const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
-  const searchResult = useMapStore(state => state.searchResult);
-  const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
-  const bookmarkedCafeCount = useMapStore(state => state.bookmarkedCafeCount);
-  const recommendedCafeCount = useMapStore(state => state.recommendedCafeCount);
+  const { searchResult, collectedCafeCount, bookmarkedCafeCount, recommendedCafeCount } = useCafeStore();
 
   const router = useRouter();
 
@@ -68,7 +65,7 @@ const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
 };
 
 export default function TabsForLink() {
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const { isDarkTheme } = useUIStore();
 
   return (
     <ul className="flex flex-col items-center">

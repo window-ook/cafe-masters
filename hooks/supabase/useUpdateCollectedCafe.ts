@@ -1,5 +1,5 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { useMapStore, useUserStore } from 'utils/store';
+import { useCafeStore, useUserStore } from '@/stores';
 import {
   CollectedRowUpdate,
   updateCollectedCafe,
@@ -10,7 +10,7 @@ export function useUpdateCollectedCafe() {
 
   const queryClient = useQueryClient();
 
-  const collectedCafeDetail = useMapStore(
+  const collectedCafeDetail = useCafeStore(
     state => state.collectedCafeDetail[0],
   );
 

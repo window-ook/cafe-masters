@@ -1,5 +1,5 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { useUserStore } from 'utils/store';
+import { useUserStore } from '@/stores';
 import {
   CollectedRowInsert,
   createCollectedCafe,

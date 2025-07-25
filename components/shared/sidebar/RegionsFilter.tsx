@@ -1,10 +1,10 @@
 'use client';
 
-import { useMapStore } from 'utils/store';
+import { useFilterStore } from '@/stores';
 import React from 'react';
 
 export default function RegionFilter() {
-  const { selectedRegion, setSelectedRegion } = useMapStore();
+  const { selectedRegion, setSelectedRegion } = useFilterStore();
 
   const regions = [
     { value: 'all', label: '선택 안 함' },

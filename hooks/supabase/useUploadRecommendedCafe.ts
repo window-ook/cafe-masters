@@ -3,7 +3,7 @@ import {
   RecommendationRowInsert,
   createRecommendedCafe,
 } from '@/actions/supabase/recommendation';
-import { recommendationQuery } from '@/queries/supabase/recommendation';
+import { recommendedCafeQuery } from '@/queries/supabase/recommendation';
 
 export function useUploadRecommendedCafe() {
   const queryClient = useQueryClient();
@@ -12,8 +12,8 @@ export function useUploadRecommendedCafe() {
     mutationFn: async (memo: RecommendationRowInsert) =>
       await createRecommendedCafe(memo),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: recommendationQuery.all() });
-      queryClient.refetchQueries({ queryKey: recommendationQuery.all() });
+      queryClient.invalidateQueries({ queryKey: recommendedCafeQuery.all() });
+      queryClient.refetchQueries({ queryKey: recommendedCafeQuery.all() });
     },
     onError: error => console.error(error),
   });

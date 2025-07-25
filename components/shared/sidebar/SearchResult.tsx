@@ -1,6 +1,6 @@
 'use client';
 
-import { useCheckStore } from 'utils/store';
+import { useUIStore } from '@/stores';
 
 interface SearchResultProps {
   name: string | undefined;
@@ -15,7 +15,7 @@ export default function SearchResult({
   address,
   phoneNum,
 }: SearchResultProps) {
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const { isDarkTheme } = useUIStore();
 
   return (
     <li

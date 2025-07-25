@@ -13,3 +13,16 @@ export interface IKakaoSearchResult {
     distance: string;
     phone: string;
 }
+
+/** 검색한 카페 상세 정보 인터페이스 */
+export interface ICafeDetail {
+    image?: string;
+    extra_images?: string[];
+    opening_time?: string;
+    address?: string;
+    phone_number?: string;
+    menu?: {
+        name: string;
+        price: string;
+    }[];
+}

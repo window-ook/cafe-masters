@@ -1,7 +1,7 @@
 'use client';
 
-import { useCheckStore } from 'utils/store';
-import { BadgeProps } from 'types/shared/sidebar';
+import { IBadge } from '@/types/shared/sidebar';
+import { useUIStore } from '@/stores';
 import {
   getExpertTierStyle,
   getMasterTierStyle,
@@ -13,7 +13,7 @@ interface TierInfoModalProps {
   handleCloseAction: () => void;
 }
 
-const Badge = ({ tier, range, color }: BadgeProps) => {
+const Badge = ({ tier, range, color }: IBadge) => {
   return (
     <div className="flex items-center gap-3">
       <p className={color}>
@@ -28,7 +28,7 @@ export default function TierDialog({
   open,
   handleCloseAction,
 }: TierInfoModalProps) {
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const { isDarkTheme } = useUIStore();
 
   const tierDescStyle =
     'font-pretendard font-bold text-gray-500 lg:text-lg text-xs';

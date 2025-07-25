@@ -1,12 +1,12 @@
-import { useCheckStore } from 'utils/store';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoMdClock } from 'react-icons/io';
 import { IoBookmark, IoLocation, IoCloseCircle } from 'react-icons/io5';
 import { FaPhoneSquare } from 'react-icons/fa';
+import { useUIStore } from '@/stores';
 import Spinner from './Spinner';
 
 export default function Loading() {
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const { isDarkTheme } = useUIStore();
 
   return (
     <div className={`flex flex-col p-2 gap-4`}>

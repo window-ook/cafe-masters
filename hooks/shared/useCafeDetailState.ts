@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useCheckStore, useMapStore } from 'utils/store';
+import { useCafeStore, useCafeStateStore } from '@/stores';
 
 export default function useCafeDetailState(
   id: string,
@@ -7,14 +7,14 @@ export default function useCafeDetailState(
 ) {
   const numericId = parseFloat(id);
 
+  const { setIsBookmarked, setIsCollected } = useCafeStateStore();
   const {
     bookmarkedCafe,
     collectedCafe,
     recommendedCafe,
     setBookmarkedCafeDetail,
     setRecommendedCafeDetail,
-  } = useMapStore();
-  const { setIsBookmarked, setIsCollected } = useCheckStore();
+  } = useCafeStore();
 
   useEffect(() => {
     const isCollected = collectedCafe.some(c => c.id === numericId);

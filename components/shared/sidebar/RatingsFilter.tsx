@@ -1,10 +1,10 @@
 'use client';
 
-import { useMapStore } from 'utils/store';
+import { useFilterStore } from '@/stores';
 import React from 'react';
 
 export default function RatingFilter() {
-  const { selectedRating, setSelectedRating } = useMapStore();
+  const { selectedRating, setSelectedRating } = useFilterStore();
 
   const stars = [
     { value: 'all', label: '선택 안 함' },

@@ -1,18 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useMapStore, useUserStore, useCheckStore } from 'utils/store';
+import { useUIStore, useUserStore, useCafeStore } from '@/stores';
 import TierBadge from './TierBadge';
 import Image from 'next/image';
 
 export default function ProfileSection() {
-  const collectedCafeCount = useMapStore(state => state.collectedCafeCount);
-  const userEmail = useUserStore(state => state.userEmail);
-  const userTier = useUserStore(state => state.userTier);
-  const setUserTier = useUserStore(state => state.setUserTier);
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
-
-  // 40 ~ 마스터, 30 ~ 39 엑스퍼트, 20 ~ 29 시니어, 10 ~ 19 주니어, 0 ~ 9 비기너
+  const { collectedCafeCount } = useCafeStore();
+  const { isDarkTheme } = useUIStore();
+  const { userEmail, userTier, setUserTier } = useUserStore();
 
   useEffect(() => {
     if (collectedCafeCount === 40) setUserTier('MASTER');

@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
-import { useCheckStore, useUserStore } from 'utils/store';
+import { useCafeStateStore, useUIStore, useUserStore } from 'stores';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
@@ -32,13 +32,12 @@ export default function NormalCafeDetail({
 }: NormalCafeDetailProps) {
     const { admin, userId } = useUserStore();
     const {
-        isDarkTheme,
         isCollected,
         isBookmarked,
         isRecommended,
-        setIsSubSidebarOpen,
         setIsBookmarked,
-    } = useCheckStore();
+    } = useCafeStateStore();
+    const { isDarkTheme, setIsSubSidebarOpen } = useUIStore();
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -242,11 +241,11 @@ export default function NormalCafeDetail({
 
                 <section className="grid grid-cols-2 gap-6">
                     {!pathname.includes('/search/detail') && (
-                        <Categories category={parsedCategory ?? []} />
+                        <Categories categories={parsedCategory ?? []} />
                     )}
                     <OpenTime opening_time={detail?.opening_time} />
                     <Location address={detail?.address} />
-                    <PhoneNumber phoneNum={detail?.phone_number} />
+                    <PhoneNumber phone_number={detail?.phone_number || ''} />
                 </section>
             </main>
         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useUserStore } from 'utils/store';
+import { useUserStore } from '@/stores';
 import { useBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCafesCounts';
 import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafesCounts';
 import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafesCounts';

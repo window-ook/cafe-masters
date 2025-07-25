@@ -1,3 +1,3 @@
-export const recommendationQuery = {
-    all: () => ['recommendation'],
+export const recommendedCafeQuery = {
+    all: () => ['recommendedCafe'],
 } as const;

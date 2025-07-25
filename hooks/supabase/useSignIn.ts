@@ -1,7 +1,6 @@
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useRouter } from 'next/navigation';
-import { useUserStore } from 'utils/store';
-import { useMapStore } from 'utils/store';
+import { useUserStore, useFilterStore } from '@/stores';
 import { useMutation } from '@tanstack/react-query';
 import { getAdminUser } from '@/actions/supabase/user';
 
@@ -41,9 +40,7 @@ export function useSignIn() {
       });
 
       // 키워드 초기화
-      useMapStore.setState({
-        keyword: '',
-      });
+      useFilterStore.setState({ keyword: '' });
 
       const user = session?.user;
       if (!user) return;

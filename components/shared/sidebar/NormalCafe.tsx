@@ -1,6 +1,6 @@
 'use client';
 
-import { useCheckStore } from 'utils/store';
+import { useUIStore } from '@/stores';
 import Image from 'next/image';
 
 interface NormalCafeProps {
@@ -18,7 +18,7 @@ export default function NormalCafe({
   phoneNum,
   photoUrl,
 }: NormalCafeProps) {
-  const isDarkTheme = useCheckStore(state => state.isDarkTheme);
+  const { isDarkTheme } = useUIStore();
 
   return (
     <li

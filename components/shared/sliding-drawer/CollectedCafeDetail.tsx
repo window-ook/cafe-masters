@@ -7,15 +7,15 @@ import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import Image from 'next/image';
-import CategoryGrid from './Categories';
 import Ratings from './Ratings';
-import OpenTimeGrid from './OpenTime';
 import Location from './Location';
 import PhoneNumber from './PhoneNumber';
 import Comment from './Comment';
 import EatenMenus from './EatenMenus';
 import Pros from './Pros';
 import Cons from './Cons';
+import OpenTime from './OpenTime';
+import Categories from './Categories';
 
 interface ICafeDetailProps {
   cafeId: string;
@@ -104,10 +104,10 @@ export default function CollectedCafeDetail({
         </div>
 
         <div className="grid grid-cols-2 gap-6">
-          <CategoryGrid category={parsedCategory ?? []} />
-          <OpenTimeGrid opening_time={collectedCafeDetail?.opening_time} />
+          <Categories categories={parsedCategory ?? []} />
+          <OpenTime opening_time={collectedCafeDetail?.opening_time || ''} />
           <Location address={collectedCafeDetail?.address} />
-          <PhoneNumber phoneNum={collectedCafeDetail?.phone_number} />
+          <PhoneNumber phone_number={collectedCafeDetail?.phone_number || ''} />
 
           <div className="col-span-2 grid grid-cols-3">
             <div className="bg-gray-400 bg-opacity-40 h-0.5 col-span-3"></div>

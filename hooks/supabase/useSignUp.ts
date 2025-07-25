@@ -19,7 +19,7 @@ export function useSignUp() {
         email,
         password,
         options: {
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_API_REQUEST_URI}/signup/confirm`,
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/signup/confirm`,
         },
       });
 

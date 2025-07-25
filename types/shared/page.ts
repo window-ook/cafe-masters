@@ -1,11 +1,11 @@
 /** 페이지 Props 타입 */
-export interface PageProps {
+export interface IPageProps {
     params: Promise<{ id: string }>;
     searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 /** 클라이언트 컴포넌트에서 사용할 페이지 Props 타입 */
-export interface ClientPageProps {
+export interface IClientPage {
     params: Promise<{ id: string }>;
 }
 

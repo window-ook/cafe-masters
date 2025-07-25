@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useUserStore } from 'utils/store';
+import { useUserStore } from '@/stores';
 import { deleteBookmarkedCafe } from '@/actions/supabase/bookmark';
 
 export function useDeleteBookmarkedCafe() {

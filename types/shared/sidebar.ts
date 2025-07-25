@@ -2,7 +2,7 @@
 export type Tier = 'BEGINNER' | 'JUNIOR' | 'SENIOR' | 'EXPERT' | 'MASTER';
 
 /** 뱃지 */
-export interface BadgeProps {
+export interface IBadge {
     tier: Tier;
     range: string;
     color: string;

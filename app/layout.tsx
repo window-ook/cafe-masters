@@ -22,7 +22,7 @@ const dunggeunmo = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_API_REQUEST_URI || 'http://localhost:3000',
+    process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
   ),
   title: 'Cafe Masters',
   description: '카드를 모으며 카페 마스터가 되어보세요!',

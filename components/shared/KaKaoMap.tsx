@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useMapStore } from 'utils/store';
+import { useMapStore, useCafeStore, useFilterStore } from '@/stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { toast } from 'react-toastify';
 
@@ -20,6 +20,10 @@ interface KakaoPagination {
 }
 
 export default function KakaoMap() {
+  const { keyword } = useFilterStore();
+  const { searchResult, setSearchResult, collectedCafe, bookmarkedCafe, recommendedCafe } = useCafeStore();
+  const { currentCoordX, currentCoordY } = useMapStore();
+
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 
   const mapRef = useRef<any | null>(null);
@@ -27,15 +31,6 @@ export default function KakaoMap() {
   const markersRef = useRef<any[]>([]);
   const prevMarkerDataRef = useRef<any[] | null>(null);
   const prevKeywordRef = useRef<string | null>(null);
-
-  const keyword = useMapStore(state => state.keyword);
-  const setSearchResult = useMapStore(state => state.setSearchResult);
-  const searchResult = useMapStore(state => state.searchResult);
-  const collectedCafe = useMapStore(state => state.collectedCafe);
-  const bookmarkedCafe = useMapStore(state => state.bookmarkedCafe);
-  const recommendedCafe = useMapStore(state => state.recommendedCafe);
-  const currentCoordX = useMapStore(state => state.currentCoordX);
-  const currentCoordY = useMapStore(state => state.currentCoordY);
 
   const pathname = usePathname();
 
@@ -74,11 +69,13 @@ export default function KakaoMap() {
     };
   }, []);
 
+  // 마커 제거
   const removeMarkers = () => {
     markersRef.current.forEach(marker => marker.setMap(null));
     markersRef.current = [];
   };
 
+  // 정보창 제거
   const removeInfoWindows = () => {
     if (openInfoWindowRef.current) {
       openInfoWindowRef.current.close();
@@ -192,30 +189,6 @@ export default function KakaoMap() {
       ps.keywordSearch(query, handleSearch);
     };
 
-    // 길찾기 API 요청
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    const getWalkingRoute = async (
-      originX: number,
-      originY: number,
-      destX: number,
-      destY: number,
-    ) => {
-      const url = `https://apis-navi.kakaomobility.com/v1/walking?origin=${originX},${originY}&destination=${destX},${destY}`;
-      const headers = {
-        Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
-      };
-
-      const response = await fetch(url, { headers });
-      const data = await response.json();
-
-      if (data?.routes?.length) {
-        const { duration, distance } = data.routes[0].summary;
-        return { duration, distance };
-      }
-
-      return null;
-    };
-
     if (pathname === '/cafe') {
       removeMarkers();
       removeInfoWindows();
@@ -262,7 +235,7 @@ export default function KakaoMap() {
       pathname.startsWith('/search/detail') ||
       pathname.startsWith('/collected/detail') ||
       pathname.startsWith('/bookmarked/detail') ||
-      pathname.startsWith('/cafe/recommended/detail')
+      pathname.startsWith('/recommended/detail')
     ) {
       mapRef.current.setCenter(
         new window.kakao.maps.LatLng(currentCoordY, currentCoordX),
@@ -282,10 +255,10 @@ export default function KakaoMap() {
   ]);
 
   return (
-    <article
+    <figure
       aria-label="kakao map"
       id="map"
       className="fixed z-0 top-0 w-screen h-screen sm:translate-x-108 sm:w-[calc(100vw-27rem)]"
-    ></article>
+    ></figure>
   );
 }

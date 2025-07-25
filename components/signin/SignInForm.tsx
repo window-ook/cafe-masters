@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useSignIn } from '@/hooks/supabase/useSignIn';
-import { useResetPassword } from '@/hooks/supabase/useResetPassword';
 import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
 import { handleEmailValid } from '@/utils/shared/auth';
 import {
@@ -12,7 +11,7 @@ import {
   kakaoButtonStyle,
 } from '@/utils/styles';
 import Link from 'next/link';
-import UserForm from '@/components/auth/shared/UserForm';
+import UserForm from '@/components/shared/UserForm';
 import ResetpasswordForm from './ResetPasswordForm';
 
 export default function SignInForm() {
@@ -20,10 +19,8 @@ export default function SignInForm() {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState<string>('');
   const [resetRequired, setResetRequired] = useState<boolean>(false);
-  const [resetRequested, setResetRequested] = useState<string>('');
 
   const signinMutation = useSignIn();
-  const requestResetPasswordMutation = useResetPassword();
 
   const handleEmail = () => {
     let isValid = true;
@@ -43,14 +40,6 @@ export default function SignInForm() {
     }
   };
 
-  const handleRequest = async () => {
-    try {
-      const message = await requestResetPasswordMutation.mutateAsync(email);
-      setResetRequested(message);
-    } catch (error) {
-      console.error('비밀번호 재설정 이메일 요청 error', error);
-    }
-  };
 
   return (
     <main className={authFormCardStyle}>
@@ -115,11 +104,6 @@ export default function SignInForm() {
         </div>
       ) : (
         <ResetpasswordForm
-          email={email}
-          setEmail={setEmail}
-          resetRequested={resetRequested}
-          resetFn={handleRequest}
-          cancelFn={() => setResetRequired(false)}
         />
       )}
     </main>
