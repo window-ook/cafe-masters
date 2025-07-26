@@ -6,7 +6,7 @@ interface IUIStore {
   isDarkTheme: boolean;
 
   // 서브사이드바 상태 (전역 관리 필요)
-  isSubSidebarOpen: boolean;
+  isSlidingDrawerOpen: boolean;
 
   // 로딩 상태 (전역 관리 필요)
   isLoading: boolean;
@@ -20,7 +20,7 @@ interface IUIStore {
   setIsDarkTheme: () => void;
 
   // 서브사이드바 액션
-  setIsSubSidebarOpen: (isOpen: boolean) => void;
+  setIsSlidingDrawerOpen: (isOpen: boolean) => void;
 
   // 로딩 액션
   setIsLoading: (isLoading: boolean) => void;
@@ -36,7 +36,7 @@ export const useUIStore = create<IUIStore>()(
     set => ({
       // UI 상태 초기값
       isDarkTheme: false,
-      isSubSidebarOpen: false,
+      isSlidingDrawerOpen: false,
       isLoading: false,
 
       // ➕ 메뉴/확장 관련 UI 상태 초기값
@@ -48,7 +48,7 @@ export const useUIStore = create<IUIStore>()(
       setIsDarkTheme: () => set(state => ({ isDarkTheme: !state.isDarkTheme })),
 
       // 서브사이드바 상태 설정
-      setIsSubSidebarOpen: isOpen => set({ isSubSidebarOpen: isOpen }),
+      setIsSlidingDrawerOpen: isOpen => set({ isSlidingDrawerOpen: isOpen }),
 
       // 로딩 상태 설정
       setIsLoading: isLoading => set({ isLoading }),

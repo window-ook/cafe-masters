@@ -1,9 +1,9 @@
 'use client';
 
 import { useUserStore } from '@/stores';
-import { useBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCafesCounts';
-import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafesCounts';
-import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafesCounts';
+import { useBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCafes';
+import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
+import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafes';
 
 export default function MainClient() {
   const userId = useUserStore(state => state.userId);

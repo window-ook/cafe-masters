@@ -12,7 +12,7 @@ export default function BookmarkedCafes() {
   const router = useRouter();
 
   const { currentCafeId, setCurrentCoordX, setCurrentCoordY } = useMapStore();
-  const { isDarkTheme, setIsSubSidebarOpen } = useUIStore();
+  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
   const { userId } = useUserStore();
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -44,11 +44,11 @@ export default function BookmarkedCafes() {
   const handleBookmarkedCafeClick = useCallback((cafe: ISupabaseBookmarkedCafe) => {
     // 현재 선택된 카페와 동일한 경우 중복 클릭 방지
     if (cafe.id === currentCafeId) return;
-    setIsSubSidebarOpen(true);
+    setIsSlidingDrawerOpen(true);
     router.push(`/bookmarked/detail/${cafe.id}`);
     setCurrentCoordX(cafe.coordX);
     setCurrentCoordY(cafe.coordY);
-  }, [currentCafeId, router, setIsSubSidebarOpen, setCurrentCoordX, setCurrentCoordY]);
+  }, [currentCafeId, router, setIsSlidingDrawerOpen, setCurrentCoordX, setCurrentCoordY]);
 
   return (
     <main className="relative overflow-y-auto overflow-x-hidden">

@@ -1,7 +1,7 @@
 import { IoMdClock } from 'react-icons/io';
 
 interface OpenTimeGridProps {
-  opening_time: string | null | undefined;
+  opening_time: string | null;
 }
 
 export default function OpenTime({ opening_time }: OpenTimeGridProps) {

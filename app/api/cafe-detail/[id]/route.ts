@@ -104,7 +104,8 @@ export async function GET(
         }))
         .filter(menu => menu.name && menu.price); // 이름과 가격이 모두 있는 경우만 포함
 
-      return { photo, photoList, openingHours, menu: menuItems };
+      // ICafeDetail 타입에 맞게 변환
+      return { image: photo, extra_images: photoList, opening_time: openingHours, menus: menuItems };
     });
     console.log(`✅ 카페 상세 정보: `, data);
     await browser.close();

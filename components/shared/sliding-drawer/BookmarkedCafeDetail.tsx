@@ -16,21 +16,20 @@ import PhoneNumber from './PhoneNumber';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 
 interface IBookmarkedCafeDetailProps {
-  cafeId: string;
-  handleMenuOpenAction: () => void;
-  setMemoOpenAction: (open: boolean) => void;
-  setMemoRecommendationOpenAction: (open: boolean) => void;
+  cafeId: number;
+  setIsCollectedFormOpenAction: (open: boolean) => void;
+  setIsRecommendFormOpenAction: (open: boolean) => void;
 }
 
 export default function BookmarkedCafeDetail({
   cafeId,
-  setMemoOpenAction,
-  setMemoRecommendationOpenAction,
+  setIsCollectedFormOpenAction,
+  setIsRecommendFormOpenAction,
 }: IBookmarkedCafeDetailProps) {
   const { admin, userId } = useUserStore();
   const {
     isDarkTheme,
-    setIsSubSidebarOpen,
+    setIsSlidingDrawerOpen,
 
   } = useUIStore();
 
@@ -67,7 +66,7 @@ export default function BookmarkedCafeDetail({
   };
 
   const handleClose = () => {
-    setIsSubSidebarOpen(false);
+    setIsSlidingDrawerOpen(false);
     router.back();
   };
 
@@ -118,14 +117,14 @@ export default function BookmarkedCafeDetail({
           {/* 액션 버튼들 */}
           <div className="flex gap-2">
             <button
-              onClick={() => setMemoOpenAction(true)}
+              onClick={() => setIsCollectedFormOpenAction(true)}
               className="flex-1 bg-main text-white py-2 px-4 rounded-lg"
             >
               수집하기
             </button>
             {admin && (
               <button
-                onClick={() => setMemoRecommendationOpenAction(true)}
+                onClick={() => setIsRecommendFormOpenAction(true)}
                 className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg"
               >
                 추천하기

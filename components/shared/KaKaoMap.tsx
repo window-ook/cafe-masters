@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import { useMapStore, useCafeStore, useFilterStore } from '@/stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { toast } from 'react-toastify';
@@ -13,13 +13,15 @@ declare global {
   }
 }
 
-interface KakaoPagination {
+interface IKakaoPagination {
   current: number;
   hasNextPage: boolean;
   nextPage: () => void;
 }
 
 export default function KakaoMap() {
+  const pathname = usePathname();
+
   const { keyword } = useFilterStore();
   const { searchResult, setSearchResult, collectedCafe, bookmarkedCafe, recommendedCafe } = useCafeStore();
   const { currentCoordX, currentCoordY } = useMapStore();
@@ -31,8 +33,6 @@ export default function KakaoMap() {
   const markersRef = useRef<any[]>([]);
   const prevMarkerDataRef = useRef<any[] | null>(null);
   const prevKeywordRef = useRef<string | null>(null);
-
-  const pathname = usePathname();
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -124,16 +124,8 @@ export default function KakaoMap() {
         const hideInfoWindow = () => infowindow.close();
 
         if (window.innerWidth > 768) {
-          window.kakao.maps.event.addListener(
-            marker,
-            'mouseover',
-            showInfoWindow,
-          );
-          window.kakao.maps.event.addListener(
-            marker,
-            'mouseout',
-            hideInfoWindow,
-          );
+          window.kakao.maps.event.addListener(marker, 'mouseover', showInfoWindow);
+          window.kakao.maps.event.addListener(marker, 'mouseout', hideInfoWindow);
         } else {
           window.kakao.maps.event.addListener(marker, 'click', showInfoWindow);
           window.kakao.maps.event.addListener(map, 'click', hideInfoWindow);
@@ -157,12 +149,10 @@ export default function KakaoMap() {
       const handleSearch = (
         data: IKakaoSearchResult[],
         status: string,
-        pagination: KakaoPagination,
+        pagination: IKakaoPagination,
       ) => {
         if (status === window.kakao.maps.services.Status.OK) {
-          const filteredData = data.filter(
-            item => item.category_group_code === 'CE7',
-          );
+          const filteredData = data.filter(item => item.category_group_code === 'CE7');
 
           allResults = [...allResults, ...filteredData];
 
@@ -175,9 +165,7 @@ export default function KakaoMap() {
               item => item.y,
               item => item.x,
             );
-            mapRef.current.setCenter(
-              new window.kakao.maps.LatLng(allResults[0].y, allResults[0].x),
-            );
+            mapRef.current.setCenter(new window.kakao.maps.LatLng(allResults[0].y, allResults[0].x));
           }
         } else {
           toast.warning(
@@ -223,7 +211,7 @@ export default function KakaoMap() {
       );
     }
 
-    if (pathname.startsWith('/cafe/recommended')) {
+    if (pathname.startsWith('/recommended')) {
       updateMarkers(
         recommendedCafe,
         cafe => cafe.coordY,

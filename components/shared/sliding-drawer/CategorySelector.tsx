@@ -2,25 +2,20 @@
 
 import { CATEGORIES } from '@/utils/constants/categories';
 import { RiResetLeftFill } from 'react-icons/ri';
-
-export interface CategorySelectorProps {
-  selectedCategories: string[];
-  setSelectedCategoriesAction: (value: (prev: string[]) => string[]) => void;
-}
+import { ICategorySelector } from '@/types/shared/form';
 
 export default function CategorySelector({
   selectedCategories,
   setSelectedCategoriesAction,
-}: CategorySelectorProps) {
+}: ICategorySelector) {
   const toggleCategories = (category: string) => {
-    setSelectedCategoriesAction(prev =>
-      prev.includes(category)
-        ? prev.filter(t => t !== category)
-        : [...prev, category],
-    );
+    const newCategories = selectedCategories.includes(category)
+      ? selectedCategories.filter(t => t !== category)
+      : [...selectedCategories, category];
+    setSelectedCategoriesAction(newCategories);
   };
 
-  const resetCategories = () => setSelectedCategoriesAction(() => []);
+  const resetCategories = () => setSelectedCategoriesAction([]);
 
   return (
     <div className="flex flex-wrap gap-2">

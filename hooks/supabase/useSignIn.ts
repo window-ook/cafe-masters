@@ -48,6 +48,7 @@ export function useSignIn() {
       setUserId(user.id);
       setUserEmail(user.email ?? '');
 
+      // 관리자 여부 체크
       const isAdmin = await getAdminUser(user.id);
       if (isAdmin) setAdmin(true);
 

@@ -1,10 +1,4 @@
-'use client';
-
-interface CategoryGridProps {
-  categories: string[];
-}
-
-export default function Categories({ categories }: CategoryGridProps) {
+export default function Categories({ categories }: { categories: string[] }) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 items-center">

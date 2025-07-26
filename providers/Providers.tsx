@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
-import { usePathname } from 'next/navigation';
 import Sidebar from '@/components/shared/sidebar/SideBar';
 
 const ReactQueryDevtools = dynamic(

@@ -15,7 +15,7 @@ export interface ISupabaseCollectedCafe {
     eaten_menus: string;
     phone_number?: string | null;
     opening_time?: string | null;
-    categories: string;
+    categories: string[];
     created_at: string;
     updated_at?: string | null;
 }

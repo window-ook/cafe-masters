@@ -7,14 +7,14 @@ import { useFilterStore, useUIStore } from '@/stores';
 
 export default function Search() {
   const { keyword, setKeyword } = useFilterStore();
-  const { setIsSubSidebarOpen, isDarkTheme } = useUIStore();
+  const { setIsSlidingDrawerOpen, isDarkTheme } = useUIStore();
   const [localKeyword, setLocalKeyword] = useState<string>(keyword);
 
   const router = useRouter();
 
   const handleSearch = () => {
     setKeyword(localKeyword);
-    setIsSubSidebarOpen(false);
+    setIsSlidingDrawerOpen(false);
     router.push('/search');
   };
 

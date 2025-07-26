@@ -5,23 +5,20 @@ import { useUIStore, useUserStore, useCafeStore } from '@/stores';
 import TierBadge from './TierBadge';
 import Image from 'next/image';
 
-export default function ProfileSection() {
+export default function Profile() {
   const { collectedCafeCount } = useCafeStore();
   const { isDarkTheme } = useUIStore();
   const { userEmail, userTier, setUserTier } = useUserStore();
 
   useEffect(() => {
     if (collectedCafeCount === 40) setUserTier('MASTER');
-    else if (collectedCafeCount < 40 && collectedCafeCount >= 30)
-      setUserTier('EXPERT');
-    else if (collectedCafeCount < 30 && collectedCafeCount >= 20)
-      setUserTier('SENIOR');
-    else if (collectedCafeCount < 20 && collectedCafeCount >= 10)
-      setUserTier('JUNIOR');
+    else if (collectedCafeCount < 40 && collectedCafeCount >= 30) setUserTier('EXPERT');
+    else if (collectedCafeCount < 30 && collectedCafeCount >= 20) setUserTier('SENIOR');
+    else if (collectedCafeCount < 20 && collectedCafeCount >= 10) setUserTier('JUNIOR');
     else if (collectedCafeCount < 10) setUserTier('BEGINNER');
   }, [collectedCafeCount, setUserTier]);
 
-  return (
+  if (userEmail) return (
     <section className="w-full flex items-center gap-2">
       <div
         className={`w-full pl-1 py-1 rounded-xl ${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-300'} shadow-md flex items-center sm:gap-6`}
@@ -42,4 +39,6 @@ export default function ProfileSection() {
       <TierBadge tier={userTier} />
     </section>
   );
+
+  return;
 }

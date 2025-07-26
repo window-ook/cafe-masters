@@ -14,8 +14,9 @@ import CollectedCafes from '@/components/shared/sidebar/CollectedCafes';
 import SlidingDrawer from '../sliding-drawer/SlidingDrawer';
 
 export default function Sidebar() {
-  const { isDarkTheme, isSubSidebarOpen, setIsSubSidebarOpen } = useUIStore();
   const pathname = usePathname();
+
+  const { isDarkTheme, isSlidingDrawerOpen, setIsSlidingDrawerOpen } = useUIStore();
 
   const PATHS = {
     MAIN: pathname === '/main',
@@ -27,18 +28,15 @@ export default function Sidebar() {
   };
 
   useEffect(() => {
-    if (PATHS.MAIN) setIsSubSidebarOpen(false);
-  }, [pathname, PATHS.MAIN, setIsSubSidebarOpen]);
-
-
-  if (pathname.startsWith('/resetpassword')) return null;
+    if (PATHS.MAIN) setIsSlidingDrawerOpen(false);
+  }, [pathname, PATHS.MAIN, setIsSlidingDrawerOpen]);
 
   return (
     <nav className="relative flex recommended-center">
       {/* 사이드바 컨테이너 */}
       <div
         className={`z-10 relative w-screen h-screen max-w-108 px-1 rounded-none shadow-xl shadow-main-shadow ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'
-          } ${isSubSidebarOpen && 'hidden sm:block'}`}
+          } ${isSlidingDrawerOpen && 'hidden sm:block'}`}
       >
         {/* 사이드바 컨텐츠 */}
         <div className="h-full flex flex-col">
@@ -48,7 +46,7 @@ export default function Sidebar() {
 
           {PATHS.MAIN && (
             <>
-              <main className="flex-1 overflow-y-auto overflow-x-hidden">
+              <main className="flex-1">
                 <TabsForLink />
               </main>
               <footer className="flex-none">
@@ -57,7 +55,7 @@ export default function Sidebar() {
             </>
           )}
 
-          {PATHS.SEARCH && <SearchedCafes searchResult={[]} />}
+          {PATHS.SEARCH && <SearchedCafes />}
           {PATHS.COLLECTED && <CollectedCafes />}
           {PATHS.BOOKMARKED && <BookmarkedCafes />}
           {PATHS.RECOMMENDED && <RecommendedSidebarContent />}
@@ -66,7 +64,7 @@ export default function Sidebar() {
       </div>
 
       {/* 슬라이딩 드로어: 상세 정보 표시 */}
-      <SlidingDrawer />
+      {isSlidingDrawerOpen && <SlidingDrawer />}
     </nav>
   );
 }

@@ -1,9 +1,9 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import CategorySelector, { CategorySelectorProps } from './CategorySelector';
+import CategorySelector from './CategorySelector';
 
-interface MemoRecommendationProps extends CategorySelectorProps {
+interface MemoRecommendationProps {
   detailName: string;
   bookmarkedCafeDetailName: string;
   isDarkTheme: boolean;
@@ -15,8 +15,6 @@ export default function FormForRecommend({
   bookmarkedCafeDetailName,
   isDarkTheme,
   setMemoRecommendationOpenAction,
-  selectedCategories,
-  setSelectedCategoriesAction,
 }: MemoRecommendationProps) {
   const pathname = usePathname();
 
@@ -40,8 +38,8 @@ export default function FormForRecommend({
         </button>
       </div>
       <CategorySelector
-        selectedCategories={selectedCategories}
-        setSelectedCategoriesAction={setSelectedCategoriesAction}
+        selectedCategories={[]}
+        setSelectedCategoriesAction={() => { }}
       />
       <button
         data-cy="recommend-button"

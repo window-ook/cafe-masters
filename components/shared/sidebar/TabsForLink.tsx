@@ -1,75 +1,56 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafes';
+import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
+import { useBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCafes';
+import { useCafeStore, useUIStore, useUserStore } from '@/stores';
+import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoMdCafe } from 'react-icons/io';
-import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
 import { FaRegCircleQuestion } from 'react-icons/fa6';
-import { useCafeStore, useUIStore } from '@/stores';
+import Link from 'next/link';
 
-interface SidebarTabProps {
+interface ISideBarTab {
   icon: ReactNode;
   title: string;
   path: string;
+  counts?: number;
   isDarkTheme: boolean;
 }
 
-const SidebarTab = ({ icon, title, path, isDarkTheme }: SidebarTabProps) => {
-  const { searchResult, collectedCafeCount, bookmarkedCafeCount, recommendedCafeCount } = useCafeStore();
-
-  const router = useRouter();
-
+const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => {
   return (
-    <li
-      data-cy={`route-${title.replace(/\s+/g, '-').toLowerCase()}`}
-      className={`group w-full px-3 py-4 rounded-lg flex justify-between cursor-pointer ${isDarkTheme ? 'hover:bg-main-light' : 'hover:bg-white'} hover:shadow-md transition duration-150 ease-in`}
+    <Link
+      href={path}
+      className={`group w-full px-3 py-4 rounded-lg ${isDarkTheme ? 'hover:bg-main-light' : 'hover:bg-white'} flex justify-between cursor-pointer hover:shadow-md transition duration-150 ease-in`}
     >
-      <button
-        onClick={() => router.push(path)}
-        className="flex justify-between w-full"
-      >
+      <div className="flex justify-between w-full">
         <div className="flex items-center gap-2">
           <p>{icon}</p>
-          <p
-            className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}
-          >
+          <p className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}>
             {title}
           </p>
         </div>
-        <div>
-          {path === '/search' && (
-            <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-              {searchResult.length}
-            </span>
-          )}
-          {path === '/collected' && (
-            <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-              {collectedCafeCount}
-            </span>
-          )}
-          {path === '/bookmarked' && (
-            <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-              {bookmarkedCafeCount}
-            </span>
-          )}
-          {path === '/recommended' && (
-            <span className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-              {recommendedCafeCount}
-            </span>
-          )}
-        </div>
-      </button>
-    </li>
+        <p className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+          {counts}
+        </p>
+      </div>
+    </Link>
   );
 };
 
 export default function TabsForLink() {
+  const { userId } = useUserStore();
   const { isDarkTheme } = useUIStore();
+  const { bookmarkedCounts } = useBookmarkedCafesCounts(userId);
+  const { collectedCounts } = useCollectedCafesCounts(userId);
+  const { recommendedCounts } = useRecommendedCafesCounts();
+  const { searchResult } = useCafeStore();
 
   return (
     <ul className="flex flex-col items-center">
-      <SidebarTab
+      <SideBarTab
         icon={
           <IoMdCafe
             className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} text-3xl`}
@@ -78,30 +59,34 @@ export default function TabsForLink() {
         title={'검색 결과'}
         path={'/search'}
         isDarkTheme={isDarkTheme}
+        counts={searchResult.length}
       />
-      <SidebarTab
+      <SideBarTab
         icon={
           <MdCollections
             className={`${isDarkTheme ? 'text-main-shadow' : `text-main`} text-3xl`}
           />
         }
-        title={'수집한 카드'}
+        title={'내가 수집한 카페'}
         path={'/collected'}
         isDarkTheme={isDarkTheme}
+        counts={collectedCounts!}
       />
-      <SidebarTab
+      <SideBarTab
         icon={<MdCollectionsBookmark className={`text-yellow-500 text-3xl`} />}
-        title={'가고 싶은 곳'}
+        title={'북마크한 카페'}
         path={'/bookmarked'}
         isDarkTheme={isDarkTheme}
+        counts={bookmarkedCounts!}
       />
-      <SidebarTab
+      <SideBarTab
         icon={<FaCheckCircle className={`text-recommended text-3xl`} />}
-        title={'추천 카페'}
+        title={'개발자가 추천하는 카페'}
         path={'/recommended'}
         isDarkTheme={isDarkTheme}
+        counts={recommendedCounts!}
       />
-      <SidebarTab
+      <SideBarTab
         icon={<FaRegCircleQuestion className={`text-gray-500 text-3xl`} />}
         title={'도움 센터'}
         path={'/help'}

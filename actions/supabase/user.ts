@@ -18,7 +18,7 @@ export async function getCurrentUserId(): Promise<string> {
   return user.id;
 }
 
-/** 유저 관리자 여부 조회
+/** 관리자 여부 조회
  * @param user_id 유저 ID
  * @returns 관리자 여부
  */

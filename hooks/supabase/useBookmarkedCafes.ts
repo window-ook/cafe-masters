@@ -1,10 +1,15 @@
 'use client';
 import { useMemo } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useFilterStore } from 'stores/filter';
-import { getBookmarkedCafes } from '@/actions/supabase/bookmark';
+import { getBookmarkedCafes, getBookmarkedCafesCounts } from '@/actions/supabase/bookmark';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 
+/** 모든 북마크 카페 조회 훅
+ * @param userId 유저 ID
+ * @param isActive 활성화 여부
+ * @returns 북마크 카페 데이터
+ */
 export function useBookmarkedCafes(userId: string, isActive: boolean = true) {
   const selectedRegion = useFilterStore(state => state.selectedRegion);
   const searchTermInBookmarkedCafe = useFilterStore(
@@ -33,7 +38,7 @@ export function useBookmarkedCafes(userId: string, isActive: boolean = true) {
     }
 
     const allCafes = infiniteQuery.data.pages.flatMap(page => page.data);
-    
+
     // 필터링 적용
     const filteredCafes = allCafes.filter((cafe: ISupabaseBookmarkedCafe) => {
       // 검색어 필터링
@@ -59,4 +64,20 @@ export function useBookmarkedCafes(userId: string, isActive: boolean = true) {
     data: allCafes,
     filteredData: filteredCafes,
   };
+}
+
+/** 모든 북마크 카페 수 조회 훅
+ * @param userId 유저 ID
+ * @returns 북마크 카페 수
+ */
+export function useBookmarkedCafesCounts(userId: string) {
+  const { data, isError, error, isLoading } = useQuery({
+    enabled: !!userId,
+    queryKey: ['bookmarkedCafesCounts', userId],
+    queryFn: () => getBookmarkedCafesCounts(userId),
+    staleTime: 1000 * 60 * 3,
+    gcTime: 1000 * 60 * 5,
+  });
+
+  return { bookmarkedCounts: data, isError, error, isLoading };
 }

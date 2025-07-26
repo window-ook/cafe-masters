@@ -5,7 +5,7 @@ import { createBrowserSupabaseClient } from 'utils/supabase/client';
 export default function SignOutButton() {
   const supabase = createBrowserSupabaseClient();
 
-  const handleLogout = async () => {
+  const handleSignOut = async () => {
     localStorage.removeItem('checkStore');
     localStorage.removeItem('mapStore');
     localStorage.removeItem('subSidebarStore');
@@ -17,12 +17,10 @@ export default function SignOutButton() {
     <button
       type="button"
       aria-label="로그아웃 버튼"
-      className="bg-main rounded-xl shadow-md w-full py-4 sm:py-2 hover:bg-opacity-70 transition duration-300 ease-in"
-      onClick={handleLogout}
+      className="bg-main rounded-xl shadow-md w-full py-4 sm:py-2 hover:bg-main-dark cursor-pointer transition duration-300 ease-in"
+      onClick={handleSignOut}
     >
-      <span className="text-white font-dpixel text-2xl sm:text-lg">
-        로그아웃
-      </span>
+      <span className="text-white font-dpixel text-2xl sm:text-lg">로그아웃</span>
     </button>
   );
 }

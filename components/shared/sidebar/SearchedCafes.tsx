@@ -2,16 +2,17 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { useMapStore, useUIStore } from 'stores';
+import { useCafeStore, useMapStore, useUIStore } from 'stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import SearchResult from '@/components/shared/sidebar/SearchResult';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
-export default function SearchedCafes({ searchResult }: { searchResult: IKakaoSearchResult[] }) {
+export default function SearchedCafes() {
   const router = useRouter();
 
   const { currentCafeId, setCurrentCoordX, setCurrentCoordY } = useMapStore();
-  const { isDarkTheme, setIsSubSidebarOpen } = useUIStore();
+  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
+  const { searchResult } = useCafeStore();
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -34,16 +35,16 @@ export default function SearchedCafes({ searchResult }: { searchResult: IKakaoSe
 
   const handleNormalCafeClick = useCallback((cafe: IKakaoSearchResult) => {
     if (Number(cafe.id) === currentCafeId) return; // 중복 클릭 명시적 방지
-    setIsSubSidebarOpen(true);
+    setIsSlidingDrawerOpen(true);
     router.push(`/search/detail/${cafe.id}`);
     setCurrentCoordX(Number(cafe.x));
     setCurrentCoordY(Number(cafe.y));
-  }, [currentCafeId, router, setIsSubSidebarOpen, setCurrentCoordX, setCurrentCoordY]);
+  }, [currentCafeId, router, setIsSlidingDrawerOpen, setCurrentCoordX, setCurrentCoordY]);
 
   return (
-    <main>
+    <main className="relative overflow-y-auto">
       {/* 검색 결과 리스트 */}
-      <section className="flex-1 overflow-y-auto overflow-x-hidden">
+      <section className="flex-1 overflow-x-hidden">
         <ul className="my-8 px-8 flex flex-col gap-8">
           {paginatedResult.map((cafe: IKakaoSearchResult) => (
             <SearchResult
@@ -59,7 +60,7 @@ export default function SearchedCafes({ searchResult }: { searchResult: IKakaoSe
 
       {/* 페이지네이션 */}
       {totalSearchResultPages > 1 && (
-        <footer className="flex-none">
+        <footer className="flex-none sticky bottom-0">
           <PageConverter
             isDarkTheme={isDarkTheme}
             handlePreviousPageAction={handlePreviousPageAction}

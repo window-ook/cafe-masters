@@ -3,6 +3,9 @@
 import { useEffect, use } from 'react';
 import { useCafeStateStore, useCafeStore, useMapStore, useUIStore, useUserStore } from '@/stores';
 import { IClientPage, UrlParams } from '@/types/shared/page';
+import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
+import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
+import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 
 /** 검색 카페 상세 페이지 클라이언트 컴포넌트
  * @param {IClientPage} props - 클라이언트 페이지 속성
@@ -15,8 +18,11 @@ export default function SearchedCafeDetailClient({ params }: IClientPage) {
   const numericId = parseFloat(id);
 
   const { userId } = useUserStore();
-  const { bookmarkedCafe, collectedCafe, recommendedCafe, setCafeDetail } = useCafeStore();
+  const { setCafeDetail } = useCafeStore();
   const { setIsBookmarked, setIsCollected, setIsRecommended } = useCafeStateStore();
+  const { filteredData: bookmarkedCafes } = useBookmarkedCafes(userId, true);
+  const { filteredData: collectedCafes } = useCollectedCafes(userId, true);
+  const recommendedCafes = useRecommendedCafes();
   const { setCurrentCafeId } = useMapStore();
   const { setIsLoading } = useUIStore();
 
@@ -26,18 +32,18 @@ export default function SearchedCafeDetailClient({ params }: IClientPage) {
     setCafeDetail({}); // 변경할 때 빈 객체로 초기화
     setCurrentCafeId(numericId);
 
-    const isBookmarked = bookmarkedCafe.some(cafe => cafe.id === numericId);
-    const isCollected = collectedCafe.some(cafe => cafe.id === numericId);
-    const isRecommended = recommendedCafe.some(cafe => cafe.id === numericId);
+    const isBookmarked = bookmarkedCafes.some(cafe => cafe.id === numericId);
+    const isCollected = collectedCafes.some(cafe => cafe.id === numericId);
+    const isRecommended = recommendedCafes?.some(cafe => cafe.id === numericId);
 
     setIsBookmarked(isBookmarked);
     setIsCollected(isCollected);
-    setIsRecommended(isRecommended);
+    setIsRecommended(isRecommended || false);
 
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
     const detailUrl = BASE_URL === 'http://localhost:3000'
-      ? `/api/extra/${id}` // 로컬에서 조회
-      : `/api/extra/product/${id}`; // Vercel에서 조회
+      ? `/api/cafe-detail/${id}` // 로컬에서 조회
+      : `/api/cafe-detail/product/${id}`; // Vercel에서 조회
 
     setIsLoading(true);
 
@@ -64,9 +70,9 @@ export default function SearchedCafeDetailClient({ params }: IClientPage) {
     id,
     userId,
     numericId,
-    bookmarkedCafe,
-    collectedCafe,
-    recommendedCafe,
+    bookmarkedCafes,
+    collectedCafes,
+    recommendedCafes,
     setCurrentCafeId,
     setIsBookmarked,
     setIsCollected,

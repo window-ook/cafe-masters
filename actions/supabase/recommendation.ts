@@ -38,6 +38,22 @@ export async function getRecommendationCafes(offset: number = 0, limit: number =
   return { data: safeData, nextCursor };
 }
 
+/** 모든 추천 카페 수 조회
+ * @param user_id 유저 ID
+ * @returns 추천 카페 수
+ */
+export async function getRecommendedCafesCounts(): Promise<number> {
+  const supabase = await createServerSupabaseClient();
+
+  const { data, error } = await supabase
+    .from('recommendation')
+    .select('*', { count: 'exact' });
+
+  if (error) throw new Error(error.message);
+
+  return data?.length ?? 0;
+}
+
 /** 새로운 추천 카페 추가
  * @param cafe 카페 데이터
  */

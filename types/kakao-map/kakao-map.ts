@@ -19,8 +19,6 @@ export interface ICafeDetail {
     image?: string;
     extra_images?: string[];
     opening_time?: string;
-    address?: string;
-    phone_number?: string;
     menu?: {
         name: string;
         price: string;

@@ -19,7 +19,7 @@ export default function RecommendedSidebarContent({
 
   const router = useRouter();
   const { currentCafeId, setCurrentCoordX, setCurrentCoordY } = useMapStore();
-  const { isDarkTheme, setIsSubSidebarOpen } = useUIStore();
+  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
 
   const fetchedRecommendedCafe = useRecommendedCafes();
 
@@ -54,7 +54,7 @@ export default function RecommendedSidebarContent({
 
   const handleRecommendedCafeClick = useThrottle(
     (cafe: ISupabaseRecommendedCafe) => {
-      setIsSubSidebarOpen(true);
+      setIsSlidingDrawerOpen(true);
       router.push(`/recommended/detail/${cafe.id}`);
       setCurrentCoordX(cafe.coordX);
       setCurrentCoordY(cafe.coordY);

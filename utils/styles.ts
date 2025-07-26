@@ -1,15 +1,3 @@
-export const getSubSidebarStyle = (
-  isSubSidebarOpen: boolean,
-  isDarkTheme: boolean,
-  isExtend: boolean,
-) => {
-  const baseStyle = `static left-0 z-10 translate-y-4 w-screen max-w-108 p-2 overflow-y-auto overflow-x-hidden shadow-md ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100 text-black backdrop-blur-lg bg-opacity-20'} transition-transform duration-300 ease-in-out`;
-  const openned = isSubSidebarOpen
-    ? `${isExtend ? 'translate-y-52 h-[calc(100vh-13rem)]' : 'translate-y-140'} rounded-t-3xl opacity-100 sm:h-[90vh] sm:translate-y-4 sm:translate-x-8 sm:rounded-md`
-    : 'hidden sm:block sm:pointer-events-none opacity-0';
-  return `${baseStyle} ${openned}`;
-};
-
 export const getDetailHeaderStyle = (isDarkTheme: boolean) => {
   return `${isDarkTheme ? 'shadow-main-shadow' : ''} flex justify-between items-center shadow-md rounded-md p-2`;
 };

@@ -17,23 +17,16 @@ import Cons from './Cons';
 import OpenTime from './OpenTime';
 import Categories from './Categories';
 
-interface ICafeDetailProps {
-  cafeId: string;
-  setMemoOpenAction: (open: boolean) => void;
-}
+export default function CollectedCafeDetail({ cafeId, setIsCollectedFormOpenAction }: { cafeId: number; setIsCollectedFormOpenAction: (open: boolean) => void }) {
+  const router = useRouter();
 
-export default function CollectedCafeDetail({
-  cafeId,
-  setMemoOpenAction,
-}: ICafeDetailProps) {
   const { userId } = useUserStore();
-  const { isDarkTheme, setIsSubSidebarOpen } = useUIStore();
+  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
 
   // React Query 캐시에서 수집된 카페 데이터 가져오기
   const { filteredData: collectedCafes } = useCollectedCafes(userId, true);
+  // 카페 id로 해당 카페의 상세 정보 조회
   const collectedCafeDetail = collectedCafes.find((cafe: ISupabaseCollectedCafe) => cafe.id === Number(cafeId));
-
-  const router = useRouter();
 
   if (!collectedCafeDetail) {
     return (
@@ -43,12 +36,8 @@ export default function CollectedCafeDetail({
     );
   }
 
-  const parsedCategory: string[] = collectedCafeDetail?.categories
-    ? JSON.parse(collectedCafeDetail.categories)
-    : [];
-
   const handleSetIsSubSidebarOpen = () => {
-    setIsSubSidebarOpen(false);
+    setIsSlidingDrawerOpen(false);
     router.back();
   };
 
@@ -97,14 +86,14 @@ export default function CollectedCafeDetail({
             type="button"
             data-cy="update-button"
             className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
-            onClick={() => setMemoOpenAction(true)}
+            onClick={() => setIsCollectedFormOpenAction(true)}
           >
             수정하기
           </button>
         </div>
 
         <div className="grid grid-cols-2 gap-6">
-          <Categories categories={parsedCategory ?? []} />
+          <Categories categories={collectedCafeDetail?.categories} />
           <OpenTime opening_time={collectedCafeDetail?.opening_time || ''} />
           <Location address={collectedCafeDetail?.address} />
           <PhoneNumber phone_number={collectedCafeDetail?.phone_number || ''} />

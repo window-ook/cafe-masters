@@ -1,16 +1,14 @@
 'use client';
 import { useMemo } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useFilterStore } from 'stores/filter';
-import { getCollectedCafes } from '@/actions/supabase/collection';
+import { getCollectedCafes, getCollectedCafesCounts } from '@/actions/supabase/collection';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 
 export function useCollectedCafes(userId: string, isActive: boolean = true) {
   const selectedRegion = useFilterStore(state => state.selectedRegion);
   const selectedRating = useFilterStore(state => state.selectedRating);
-  const searchTermInCollectedCafe = useFilterStore(
-    state => state.searchTermInCollectedCafe,
-  );
+  const searchTermInCollectedCafe = useFilterStore(state => state.searchTermInCollectedCafe);
 
   const infiniteQuery = useInfiniteQuery({
     enabled: isActive && !!userId && userId !== 'no-user',
@@ -34,7 +32,7 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
     }
 
     const allCafes = infiniteQuery.data.pages.flatMap(page => page.data);
-    
+
     // 필터링 적용
     const filteredCafes = allCafes.filter((cafe: ISupabaseCollectedCafe) => {
       // 검색어 필터링
@@ -69,4 +67,20 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
     data: allCafes,
     filteredData: filteredCafes,
   };
+}
+
+/** 모든 수집 카페 수 조회 훅
+ * @param userId 유저 ID
+ * @returns 수집 카페 수
+ */
+export function useCollectedCafesCounts(userId: string) {
+  const { data, isError, error, isLoading } = useQuery({
+    enabled: !!userId,
+    queryKey: ['collectedCafesCounts', userId],
+    queryFn: () => getCollectedCafesCounts(userId),
+    staleTime: 1000 * 60 * 3,
+    gcTime: 1000 * 60 * 5,
+  });
+
+  return { collectedCounts: data, isError, error, isLoading };
 }
