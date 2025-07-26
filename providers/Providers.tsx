@@ -7,19 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
 import Sidebar from '@/components/shared/sidebar/SideBar';
 
-const ReactQueryDevtools = dynamic(
-  () =>
-    import('@tanstack/react-query-devtools').then(
-      mod => mod.ReactQueryDevtools,
-    ),
-  { ssr: false },
-);
-
-const ToastContainer = dynamic(
-  () => import('react-toastify').then(mod => mod.ToastContainer),
-  { ssr: false },
-);
-
+const ReactQueryDevtools = dynamic(() => import('@tanstack/react-query-devtools').then(mod => mod.ReactQueryDevtools), { ssr: false });
+const ToastContainer = dynamic(() => import('react-toastify').then(mod => mod.ToastContainer), { ssr: false });
 const KakaoMap = dynamic(() => import('@/components/shared/KaKaoMap'), { ssr: false });
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -64,7 +53,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           theme="light"
           limit={1}
         />
-        <ReactQueryDevtools initialIsOpen={false} />
+        {process.env.NODE_ENV === 'development' && (
+          <ReactQueryDevtools
+            initialIsOpen={false}
+          />
+        )}
       </QueryClientProvider>
     </main>
   );
