@@ -15,6 +15,7 @@
     "@floating-ui/dom": "^1.6.11",
     "@hookform/resolvers": "^5.2.0",
     "@next/bundle-analyzer": "^15.0.3",
+    "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-radio-group": "^1.2.3",
     "@sparticuz/chromium": "^133.0.0",
     "@supabase/ssr": "^0.5.1",

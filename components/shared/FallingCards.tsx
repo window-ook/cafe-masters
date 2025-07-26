@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-export default function BackgroundCards() {
+export default function FallingCards() {
   const imageSrc = '/image/logo.avif';
 
   return (

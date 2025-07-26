@@ -1,17 +1,14 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-import { useCafeStore, useMapStore, useUIStore } from 'stores';
+import React, { useState, useEffect } from 'react';
+import { useCafeStore, useUIStore } from 'stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
+import { useCafeClickHandler } from '@/hooks/shared/useCafeClickHandler';
 import SearchResult from '@/components/shared/sidebar/SearchResult';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
 export default function SearchedCafes() {
-  const router = useRouter();
-
-  const { currentCafeId, setCurrentCoordX, setCurrentCoordY } = useMapStore();
-  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
+  const { isDarkTheme } = useUIStore();
   const { searchResult } = useCafeStore();
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -33,13 +30,10 @@ export default function SearchedCafes() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleNormalCafeClick = useCallback((cafe: IKakaoSearchResult) => {
-    if (Number(cafe.id) === currentCafeId) return; // 중복 클릭 명시적 방지
-    setIsSlidingDrawerOpen(true);
-    router.push(`/search/detail/${cafe.id}`);
-    setCurrentCoordX(Number(cafe.x));
-    setCurrentCoordY(Number(cafe.y));
-  }, [currentCafeId, router, setIsSlidingDrawerOpen, setCurrentCoordX, setCurrentCoordY]);
+  const handleNormalCafeClick = useCafeClickHandler<IKakaoSearchResult>({
+    routePath: 'search',
+    shouldSetCurrentCafeId: false,
+  });
 
   return (
     <main className="relative overflow-y-auto">

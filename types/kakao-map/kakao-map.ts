@@ -15,12 +15,12 @@ export interface IKakaoSearchResult {
 }
 
 /** 검색한 카페 상세 정보 인터페이스 */
-export interface ICafeDetail {
-    image?: string;
-    extra_images?: string[];
-    opening_time?: string;
-    menu?: {
+export interface ISearchedCafeDetail {
+    image: string;
+    extra_images: string[];
+    opening_time: string;
+    menus: Array<{
         name: string;
         price: string;
-    }[];
+    }>;
 }

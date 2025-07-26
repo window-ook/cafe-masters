@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useUIStore } from 'stores';
 import TabsForLink from '@/components/shared/sidebar/TabsForLink';
@@ -9,9 +9,9 @@ import HelpCenter from '@/components/shared/sidebar/HelpCenter';
 import Header from '@/components/shared/sidebar/Header';
 import SearchedCafes from '@/components/shared/sidebar/SearchedCafes';
 import BookmarkedCafes from '@/components/shared/sidebar/BookmarkedCafes';
-import RecommendedSidebarContent from '@/components/shared/sidebar/RecommendedSidebarContent';
+import RecommendedCafes from '@/components/shared/sidebar/RecommendedCafes';
 import CollectedCafes from '@/components/shared/sidebar/CollectedCafes';
-import SlidingDrawer from '../sliding-drawer/SlidingDrawer';
+import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -54,12 +54,13 @@ export default function Sidebar() {
               </footer>
             </>
           )}
-
-          {PATHS.SEARCH && <SearchedCafes />}
-          {PATHS.COLLECTED && <CollectedCafes />}
-          {PATHS.BOOKMARKED && <BookmarkedCafes />}
-          {PATHS.RECOMMENDED && <RecommendedSidebarContent />}
-          {PATHS.HELP && <HelpCenter />}
+          <Suspense fallback={<div>Loading...</div>}>
+            {PATHS.SEARCH && <SearchedCafes />}
+            {PATHS.COLLECTED && <CollectedCafes />}
+            {PATHS.BOOKMARKED && <BookmarkedCafes />}
+            {PATHS.RECOMMENDED && <RecommendedCafes />}
+            {PATHS.HELP && <HelpCenter />}
+          </Suspense>
         </div>
       </div>
 

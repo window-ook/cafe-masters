@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
-import { useCafeStateStore, useUIStore, useUserStore } from 'stores';
+import { useCurrentCafeStore, useUIStore, useUserStore } from 'stores';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
@@ -33,7 +33,7 @@ export default function BookmarkedCafeDetail({
 
   } = useUIStore();
 
-  const { isCollected, setIsBookmarked } = useCafeStateStore();
+  const { isCollected, setIsBookmarked } = useCurrentCafeStore();
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();

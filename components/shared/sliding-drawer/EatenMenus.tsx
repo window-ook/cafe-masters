@@ -1,12 +1,6 @@
-'use client';
-
 import { MdOutlineRestaurantMenu } from 'react-icons/md';
 
-interface EatenGridProps {
-  eaten: string;
-}
-
-export default function EatenMenus({ eaten }: EatenGridProps) {
+export default function EatenMenus({ eaten }: { eaten: string }) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 items-center">

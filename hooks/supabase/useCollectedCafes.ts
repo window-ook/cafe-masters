@@ -4,6 +4,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useFilterStore } from 'stores/filter';
 import { getCollectedCafes, getCollectedCafesCounts } from '@/actions/supabase/collection';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
+import { collectedCafeQuery } from '@/queries/supabase/collections';
 
 export function useCollectedCafes(userId: string, isActive: boolean = true) {
   const selectedRegion = useFilterStore(state => state.selectedRegion);
@@ -12,7 +13,7 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
 
   const infiniteQuery = useInfiniteQuery({
     enabled: isActive && !!userId && userId !== 'no-user',
-    queryKey: ['collectedCafe', userId],
+    queryKey: collectedCafeQuery.all(userId),
     initialPageParam: 0,
     queryFn: async ({ pageParam }) => {
       const response = await getCollectedCafes(userId, pageParam, 4);
@@ -76,7 +77,7 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
 export function useCollectedCafesCounts(userId: string) {
   const { data, isError, error, isLoading } = useQuery({
     enabled: !!userId,
-    queryKey: ['collectedCafesCounts', userId],
+    queryKey: collectedCafeQuery.counts(userId),
     queryFn: () => getCollectedCafesCounts(userId),
     staleTime: 1000 * 60 * 3,
     gcTime: 1000 * 60 * 5,

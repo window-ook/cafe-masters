@@ -1,19 +1,15 @@
 'use client';
 
-import React, { useCallback, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useMapStore, useUIStore, useUserStore } from 'stores';
+import React, { useEffect } from 'react';
+import { useUserStore } from 'stores';
 import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
 import { useInView } from 'react-intersection-observer';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
+import { useCafeClickHandler } from '@/hooks/shared/useCafeClickHandler';
 import CollectedCafe from '@/components/shared/sidebar/CollectedCafe';
 import PulseDot from '@/components/shared/sliding-drawer/PulseDot';
 
 export default function CollectedCafes() {
-  const router = useRouter();
-
-  const { currentCafeId, setCurrentCoordX, setCurrentCoordY } = useMapStore();
-  const { setIsSlidingDrawerOpen } = useUIStore();
   const { userId } = useUserStore();
 
   const {
@@ -34,13 +30,10 @@ export default function CollectedCafes() {
     if (collectedInView && hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [collectedInView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
-  const handleCollectedCafeClick = useCallback((cafe: ISupabaseCollectedCafe) => {
-    if (cafe.id === currentCafeId) return; // 중복 클릭 명시적 방지
-    setIsSlidingDrawerOpen(true);
-    router.push(`/collected/detail/${cafe.id}`);
-    setCurrentCoordX(cafe.coordX);
-    setCurrentCoordY(cafe.coordY);
-  }, [currentCafeId, router, setIsSlidingDrawerOpen, setCurrentCoordX, setCurrentCoordY]);
+  const handleCollectedCafeClick = useCafeClickHandler<ISupabaseCollectedCafe>({
+    routePath: 'collected',
+    shouldSetCurrentCafeId: false,
+  });
 
   // 사용자 인증 상태 확인
   if (!userId) {

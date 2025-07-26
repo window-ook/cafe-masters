@@ -1,67 +1,43 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useMapStore, useUIStore } from 'stores';
+import { useUIStore } from 'stores';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
+import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
+import { useCafeClickHandler } from '@/hooks/shared/useCafeClickHandler';
 import NormalCafe from '@/components/shared/sidebar/NormalCafe';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
-import useThrottle from '@/hooks/shared/useThrottle';
-import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 
-export interface IRecommendedSidebarContentProps {
-  className?: string;
-}
+const CARD_CONTAINER_STYLE = 'my-8 px-8 flex flex-col gap-8';
 
-export default function RecommendedSidebarContent({
-}: IRecommendedSidebarContentProps) {
+export default function RecommendedCafes() {
+  const { isDarkTheme } = useUIStore();
+
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const router = useRouter();
-  const { currentCafeId, setCurrentCoordX, setCurrentCoordY } = useMapStore();
-  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
-
-  const fetchedRecommendedCafe = useRecommendedCafes();
+  const { recommendedCafes } = useRecommendedCafes();
 
   const recommendedPerPage = 5;
-  const totalRecommendedPages = Math.ceil(
-    (fetchedRecommendedCafe?.length || 0) / recommendedPerPage,
-  );
-
-  const paginatedRecommend = fetchedRecommendedCafe?.slice(
-    (currentPage - 1) * recommendedPerPage,
-    currentPage * recommendedPerPage,
-  ) || [];
-
-  const CARD_CONTAINER_STYLE = 'flex flex-col gap-8 my-8 px-8';
+  const totalRecommendedPages = Math.ceil((recommendedCafes?.length || 0) / recommendedPerPage);
+  const paginatedRecommend = recommendedCafes?.slice((currentPage - 1) * recommendedPerPage, currentPage * recommendedPerPage) || [];
 
   // 데이터 변경 시 첫 페이지로 리셋
   useEffect(() => {
     setCurrentPage(1);
-  }, [fetchedRecommendedCafe]);
+  }, [recommendedCafes]);
 
   const handleNextRecommendedPage = () => {
-    if (currentPage < totalRecommendedPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    if (currentPage < totalRecommendedPages) setCurrentPage(currentPage + 1);
   };
 
   const handlePreviousPageAction = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleRecommendedCafeClick = useThrottle(
-    (cafe: ISupabaseRecommendedCafe) => {
-      setIsSlidingDrawerOpen(true);
-      router.push(`/recommended/detail/${cafe.id}`);
-      setCurrentCoordX(cafe.coordX);
-      setCurrentCoordY(cafe.coordY);
-    },
-    5000,
-    (cafe: ISupabaseRecommendedCafe) => cafe.id === currentCafeId,
-  );
+  const handleRecommendedCafeClick = useCafeClickHandler<ISupabaseRecommendedCafe>({
+    routePath: 'recommended',
+    shouldSetCurrentCafeId: true,
+  });
 
   return (
     <>

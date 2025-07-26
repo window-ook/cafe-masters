@@ -3,14 +3,10 @@ import puppeteer from 'puppeteer';
 
 export const runtime = 'nodejs';
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } },
-) {
-  const id = params?.id;
-  if (!id) {
-    return NextResponse.json({ error: 'Invalid cafe ID' }, { status: 400 });
-  }
+export async function GET({ params }: { params: { id: string } }) {
+  const id = await params?.id;
+
+  if (!id) return NextResponse.json({ error: 'Invalid cafe ID' }, { status: 400 });
 
   try {
     // 브라우저 설정
@@ -76,7 +72,7 @@ export async function GET(
 
       // 대표 이미지
       const thumbnail = document.querySelector('.img-thumb.img_cfit');
-      const photo = toAbsoluteUrl(thumbnail?.getAttribute('src') || null);
+      const image = toAbsoluteUrl(thumbnail?.getAttribute('src') || null);
 
       // 리뷰 이미지 2개
       const photos = Array.from(
@@ -84,34 +80,34 @@ export async function GET(
           '.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit',
         ),
       );
-      const photoList = photos
+
+      const extra_images = photos
         .slice(0, 2)
         .map(el => toAbsoluteUrl(el.getAttribute('src')));
 
       // 영업 시간
       const timeElement = document.querySelector('.line_fold .txt_detail');
-      let openingHours = timeElement
+      let opening_time = timeElement
         ? timeElement.textContent?.trim().replace(/\s+/g, ' ') || ''
         : '';
-      openingHours = openingHours.replace(/^매일\s+/, '').trim();
+      opening_time = opening_time.replace(/^매일\s+/, '').trim();
 
-      // 메뉴 3개
-      const menuItems = Array.from(document.querySelectorAll('.list_goods li'))
-        .slice(0, 3)
+      // 메뉴 4개
+      const menus = Array.from(document.querySelectorAll('.list_goods li'))
+        .slice(0, 4)
         .map(el => ({
           name: el.querySelector('.tit_item')?.textContent?.trim() || '',
           price: el.querySelector('.desc_item')?.textContent?.trim() || '',
         }))
-        .filter(menu => menu.name && menu.price); // 이름과 가격이 모두 있는 경우만 포함
+        .filter(menu => menu.name && menu.price);
 
-      // ICafeDetail 타입에 맞게 변환
-      return { image: photo, extra_images: photoList, opening_time: openingHours, menus: menuItems };
+      return { image, extra_images, opening_time, menus };
     });
-    console.log(`✅ 카페 상세 정보: `, data);
+    console.log(`✅ 검색한 카페 상세 정보: `, data);
     await browser.close();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('상세 정보 fetch error:', error);
+    console.error('검색한 카페 상세 정보 조회 중 에러:', error);
     return NextResponse.json({ status: 500, error: 'Internal Server Error' });
   }
 }

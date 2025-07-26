@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { getRecommendationCafes, getRecommendedCafesCounts } from '@/actions/supabase/recommendation';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { getRecommendedCafes, getRecommendedCafesCounts } from '@/actions/supabase/recommendation';
 import { recommendedCafeQuery } from '@/queries/supabase/recommendation';
 
 /**
@@ -7,17 +7,15 @@ import { recommendedCafeQuery } from '@/queries/supabase/recommendation';
  * @returns 추천 카페 데이터
  */
 export function useRecommendedCafes() {
-  const { data } = useQuery({
+  const { data, isError, error } = useSuspenseQuery({
     queryKey: recommendedCafeQuery.all(),
     queryFn: async () => {
-      const response = await getRecommendationCafes();
+      const response = await getRecommendedCafes();
       return response.data;
     },
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 60 * 5,
   });
 
-  return data;
+  return { recommendedCafes: data, isError, error };
 }
 
 /** 모든 추천 카페 수 조회 훅
@@ -26,10 +24,8 @@ export function useRecommendedCafes() {
  */
 export function useRecommendedCafesCounts() {
   const { data, isError, error, isLoading } = useQuery({
-    queryKey: ['recommendedCafesCounts'],
+    queryKey: recommendedCafeQuery.counts(),
     queryFn: () => getRecommendedCafesCounts(),
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 60 * 5,
   });
 
   return { recommendedCounts: data, isError, error, isLoading };

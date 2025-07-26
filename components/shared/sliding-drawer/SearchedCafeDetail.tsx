@@ -4,7 +4,8 @@ import { useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
-import { useCafeStateStore, useCafeStore, useMapStore, useUIStore, useUserStore } from '@/stores';
+import { useSearchedCafeDetail } from '@/hooks/supabase/useSearchedCafeDetail';
+import { useCurrentCafeStore, useCafeStore, useMapStore, useUIStore, useUserStore } from '@/stores';
 import { getDetailBodyStyle } from '@/utils/styles';
 import { Bookmark, CircleX } from 'lucide-react';
 import { toast } from 'react-toastify';
@@ -14,19 +15,23 @@ import OpenTime from './OpenTime';
 import Location from './Location';
 import PhoneNumber from './PhoneNumber';
 import Button from './Button';
+import Menus from './Menus';
 
-interface ICafeDetail {
+interface ISearchedCafeDetail {
   cafeId: number;
   setIsCollectedFormOpenAction: (isMemoOpen: boolean) => void;
   setIsRecommendFormOpenAction: (isMemoOpen: boolean) => void;
 }
 
-export default function CafeDetail({ cafeId, setIsCollectedFormOpenAction, setIsRecommendFormOpenAction }: ICafeDetail) {
+export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenAction, setIsRecommendFormOpenAction }: ISearchedCafeDetail) {
   const { admin, userId } = useUserStore();
   const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
   const { currentCoordX, currentCoordY } = useMapStore();
-  const { isCollected, isBookmarked, setIsBookmarked } = useCafeStateStore();
-  const { searchResult, cafeDetail } = useCafeStore();
+  const { searchResult } = useCafeStore();
+  const { isCollected, isBookmarked, setIsBookmarked } = useCurrentCafeStore();
+
+  // React Query로 카페 상세 정보 가져오기
+  const { searchedCafeDetail } = useSearchedCafeDetail(cafeId.toString());
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -153,7 +158,7 @@ export default function CafeDetail({ cafeId, setIsCollectedFormOpenAction, setIs
       <main className={`p-2 overflow-y-auto flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
         <div className="p-4 space-y-6">
           {/* 카페 이미지 */}
-          {cafeDetail.image && (
+          {searchedCafeDetail.image && (
             <div className={`pb-2 flex flex-col gap-4 shadow-sm shadow-main/10 rounded-md`}>
               <section className="relative flex flex-col items-center">
                 <button
@@ -168,7 +173,7 @@ export default function CafeDetail({ cafeId, setIsCollectedFormOpenAction, setIs
                   className="flex gap-4 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory"
                 >
                   <div className="snap-center shrink-0 h-60 py-2">
-                    {cafeDetail?.image && (
+                    {searchedCafeDetail?.image && (
                       <a
                         data-cy="normal-detail-thumbnail"
                         onClick={() =>
@@ -179,7 +184,7 @@ export default function CafeDetail({ cafeId, setIsCollectedFormOpenAction, setIs
                         }
                       >
                         <Image
-                          src={cafeDetail.image}
+                          src={searchedCafeDetail.image}
                           alt="카페 썸네일"
                           width={340}
                           height={240}
@@ -189,7 +194,7 @@ export default function CafeDetail({ cafeId, setIsCollectedFormOpenAction, setIs
                       </a>
                     )}
                   </div>
-                  {cafeDetail?.extra_images?.map((photo, i) => {
+                  {searchedCafeDetail?.extra_images?.map((photo, i) => {
                     return (
                       <div key={i} className="snap-center py-2 shrink-0 h-60">
                         <Image
@@ -247,7 +252,7 @@ export default function CafeDetail({ cafeId, setIsCollectedFormOpenAction, setIs
               </div>
             )}
             {/* 운영시간 */}
-            <OpenTime opening_time={cafeDetail.opening_time || ''} />
+            <OpenTime opening_time={searchedCafeDetail.opening_time || ''} />
             {/* 수집 상태 배지 */}
             {isCollected && <CollectedBadge />}
           </div>
@@ -269,6 +274,9 @@ export default function CafeDetail({ cafeId, setIsCollectedFormOpenAction, setIs
               </Button>
             )}
           </div>
+
+          {/* 메뉴 표시 */}
+          <Menus menus={searchedCafeDetail?.menus} />
         </div>
       </main>
     </div>

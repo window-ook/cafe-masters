@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useCafeStore, useFilterStore, useUIStore } from '@/stores';
+import { useCafeStore, useFilterStore, useUIStore, useUserStore } from '@/stores';
+import { useBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCafes';
+import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
 import Image from 'next/image';
 import Link from 'next/link';
 import Search from '@/components/shared/sidebar/SearchBar';
@@ -13,14 +15,17 @@ import RegionFilter from '@/components/shared/sidebar/RegionsFilter';
 import RatingFilter from '@/components/shared/sidebar/RatingsFilter';
 
 export default function Header() {
-  const [collectedInput, setCollectedInput] = useState<string>('');
-  const [bookmarkedInput, setBookmarkedInput] = useState<string>('');
+  const pathname = usePathname();
 
-  const { collectedCafeCount, bookmarkedCafeCount, searchResult } = useCafeStore();
+  const { searchResult } = useCafeStore();
+  const { userId } = useUserStore();
+  const { collectedCounts } = useCollectedCafesCounts(userId);
+  const { bookmarkedCounts } = useBookmarkedCafesCounts(userId);
   const { setSearchTermInCollectedCafe, setSearchTermInBookmarkedCafe } = useFilterStore();
   const { isDarkTheme } = useUIStore();
 
-  const pathname = usePathname();
+  const [collectedInput, setCollectedInput] = useState<string>('');
+  const [bookmarkedInput, setBookmarkedInput] = useState<string>('');
 
   const isSearchResultPage = pathname.startsWith('/search');
   const isCollectedPage = pathname.startsWith('/collected');
@@ -30,7 +35,7 @@ export default function Header() {
   const handleCollectedSearch = () => setSearchTermInCollectedCafe(collectedInput);
   const handleBookmarkedSearch = () => setSearchTermInBookmarkedCafe(bookmarkedInput);
 
-  const handleStateReset = () => {
+  const handleResetInput = () => {
     setBookmarkedInput('');
     setCollectedInput('');
   };
@@ -47,7 +52,7 @@ export default function Header() {
               href="/main"
               aria-label="홈페이지 이동 버튼"
               className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-300"
-              onClick={handleStateReset}
+              onClick={handleResetInput}
             >
               <Image
                 src="/image/logo.avif"
@@ -109,7 +114,7 @@ export default function Header() {
             <span className="font-dpixel text-xl sm:text-2xl">
               TOTAL{' '}
               <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
-                {collectedCafeCount}
+                {collectedCounts}
               </span>
             </span>
             <RegionFilter />
@@ -149,7 +154,7 @@ export default function Header() {
             <span className="font-dpixel text-xl sm:text-2xl">
               TOTAL{' '}
               <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
-                {bookmarkedCafeCount}
+                {bookmarkedCounts}
               </span>
             </span>
             <RegionFilter />
@@ -157,11 +162,7 @@ export default function Header() {
         </div>
       )}
 
-      {isRecommendedPage && (
-        <>
-          <CategoryFilter />
-        </>
-      )}
+      {isRecommendedPage && <CategoryFilter />}
     </section>
   );
 }

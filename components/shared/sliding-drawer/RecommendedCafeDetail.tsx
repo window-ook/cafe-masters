@@ -4,8 +4,9 @@ import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
+import { useCurrentCafeStore, useUIStore, useUserStore } from 'stores';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
-import { useCafeStateStore, useUIStore, useUserStore } from 'stores';
+import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
@@ -16,7 +17,6 @@ import Categories from './Categories';
 import OpenTime from './OpenTime';
 import Location from './Location';
 import PhoneNumber from './PhoneNumber';
-import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 
 interface IRecommendedCafeDetailProps {
   cafeId: number;
@@ -30,13 +30,8 @@ export default function RecommendedCafeDetail({
   setIsRecommendFormOpenAction,
 }: IRecommendedCafeDetailProps) {
   const { admin, userId } = useUserStore();
-  const {
-    isDarkTheme,
-    setIsSlidingDrawerOpen,
-
-  } = useUIStore();
-
-  const { isCollected, isBookmarked, setIsBookmarked } = useCafeStateStore();
+  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
+  const { isCollected, isBookmarked, setIsBookmarked } = useCurrentCafeStore();
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -45,10 +40,10 @@ export default function RecommendedCafeDetail({
   const deleteBookmarkMutation = useDeleteBookmarkedCafe();
 
   // React Query 캐시에서 추천 카페 데이터 가져오기
-  const recommendedCafes = useRecommendedCafes();
-  const detail = recommendedCafes?.find((cafe: ISupabaseRecommendedCafe) => cafe.id === Number(cafeId));
+  const { recommendedCafes } = useRecommendedCafes();
+  const recommendedCafedetail = recommendedCafes?.find((cafe: ISupabaseRecommendedCafe) => cafe.id === cafeId);
 
-  if (!detail) {
+  if (!recommendedCafedetail) {
     return (
       <div className="h-full flex items-center justify-center">
         <p>카페 정보를 찾을 수 없습니다.</p>
@@ -64,19 +59,19 @@ export default function RecommendedCafeDetail({
 
     try {
       if (isBookmarked) {
-        await deleteBookmarkMutation.mutateAsync(detail.id);
+        await deleteBookmarkMutation.mutateAsync(recommendedCafedetail.id);
         setIsBookmarked(false);
         toast.success('북마크가 해제되었습니다.');
       } else {
         await uploadBookmarkMutation.mutateAsync({
           user_id: userId,
-          id: detail.id,
-          name: detail.name,
-          address: detail.address,
-          phone_number: detail.phone_number,
-          image: detail.image,
-          coordX: detail.coordX,
-          coordY: detail.coordY,
+          id: recommendedCafedetail.id,
+          name: recommendedCafedetail.name,
+          address: recommendedCafedetail.address,
+          phone_number: recommendedCafedetail.phone_number,
+          image: recommendedCafedetail.image,
+          coordX: recommendedCafedetail.coordX,
+          coordY: recommendedCafedetail.coordY,
         });
         setIsBookmarked(true);
         toast.success('북마크에 추가되었습니다.');
@@ -115,11 +110,11 @@ export default function RecommendedCafeDetail({
       <main className={`flex-1 overflow-y-auto ${getDetailBodyStyle(isDarkTheme)}`}>
         <div className="p-4 space-y-6">
           {/* 카페 이미지 */}
-          {detail.image && (
+          {recommendedCafedetail.image && (
             <div className="relative w-full h-48 rounded-lg overflow-hidden">
               <Image
-                src={detail.image}
-                alt={detail.name}
+                src={recommendedCafedetail.image}
+                alt={recommendedCafedetail.name}
                 fill
                 className="object-cover"
               />
@@ -128,15 +123,12 @@ export default function RecommendedCafeDetail({
 
           {/* 카페 정보 */}
           <div className="space-y-4">
-            <h1 className="text-2xl font-bold">{detail.name}</h1>
+            <h1 className="text-2xl font-bold">{recommendedCafedetail.name}</h1>
 
-            <Categories categories={detail.categories.split(',')} />
-
-            <Location address={detail.address} />
-
-            <PhoneNumber phone_number={detail.phone_number!} />
-
-            <OpenTime opening_time={detail.opening_time || ''} />
+            <Categories categories={recommendedCafedetail.categories.split(',')} />
+            <Location address={recommendedCafedetail.address} />
+            <PhoneNumber phone_number={recommendedCafedetail.phone_number!} />
+            <OpenTime opening_time={recommendedCafedetail.opening_time || ''} />
 
             {/* 추천 배지 */}
             <div className="bg-recommended text-white px-3 py-1 rounded-full text-sm w-fit">

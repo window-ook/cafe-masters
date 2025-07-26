@@ -1,22 +1,24 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useUIStore, useUserStore, useCafeStore } from '@/stores';
+import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
+import { useUIStore, useUserStore } from '@/stores';
 import TierBadge from './TierBadge';
 import Image from 'next/image';
 
 export default function Profile() {
-  const { collectedCafeCount } = useCafeStore();
   const { isDarkTheme } = useUIStore();
-  const { userEmail, userTier, setUserTier } = useUserStore();
+  const { userId, userEmail, userTier, setUserTier } = useUserStore();
+
+  const { collectedCounts } = useCollectedCafesCounts(userId);
 
   useEffect(() => {
-    if (collectedCafeCount === 40) setUserTier('MASTER');
-    else if (collectedCafeCount < 40 && collectedCafeCount >= 30) setUserTier('EXPERT');
-    else if (collectedCafeCount < 30 && collectedCafeCount >= 20) setUserTier('SENIOR');
-    else if (collectedCafeCount < 20 && collectedCafeCount >= 10) setUserTier('JUNIOR');
-    else if (collectedCafeCount < 10) setUserTier('BEGINNER');
-  }, [collectedCafeCount, setUserTier]);
+    if (collectedCounts && collectedCounts === 40) setUserTier('MASTER');
+    else if (collectedCounts && collectedCounts < 40 && collectedCounts >= 30) setUserTier('EXPERT');
+    else if (collectedCounts && collectedCounts < 30 && collectedCounts >= 20) setUserTier('SENIOR');
+    else if (collectedCounts && collectedCounts < 20 && collectedCounts >= 10) setUserTier('JUNIOR');
+    else if (collectedCounts && collectedCounts < 10) setUserTier('BEGINNER');
+  }, [collectedCounts, setUserTier]);
 
   if (userEmail) return (
     <section className="w-full flex items-center gap-2">

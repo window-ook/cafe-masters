@@ -1,18 +1,15 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-import { useMapStore, useUIStore, useUserStore } from 'stores';
+import React, { useState, useEffect } from 'react';
+import { useUIStore, useUserStore } from 'stores';
 import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
+import { useCafeClickHandler } from '@/hooks/shared/useCafeClickHandler';
 import NormalCafe from '@/components/shared/sidebar/NormalCafe';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
 export default function BookmarkedCafes() {
-  const router = useRouter();
-
-  const { currentCafeId, setCurrentCoordX, setCurrentCoordY } = useMapStore();
-  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
+  const { isDarkTheme } = useUIStore();
   const { userId } = useUserStore();
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -41,14 +38,10 @@ export default function BookmarkedCafes() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleBookmarkedCafeClick = useCallback((cafe: ISupabaseBookmarkedCafe) => {
-    // 현재 선택된 카페와 동일한 경우 중복 클릭 방지
-    if (cafe.id === currentCafeId) return;
-    setIsSlidingDrawerOpen(true);
-    router.push(`/bookmarked/detail/${cafe.id}`);
-    setCurrentCoordX(cafe.coordX);
-    setCurrentCoordY(cafe.coordY);
-  }, [currentCafeId, router, setIsSlidingDrawerOpen, setCurrentCoordX, setCurrentCoordY]);
+  const handleBookmarkedCafeClick = useCafeClickHandler<ISupabaseBookmarkedCafe>({
+    routePath: 'bookmarked',
+    shouldSetCurrentCafeId: false,
+  });
 
   return (
     <main className="relative overflow-y-auto overflow-x-hidden">

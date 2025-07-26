@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface ICafeStateStore {
+interface ICurrentCafeStore {
     // 🚩 카페 상태 플래그
     isCollected: boolean;
     isBookmarked: boolean;
@@ -16,7 +16,7 @@ interface ICafeStateStore {
     resetCafeStates: () => void;
 }
 
-export const useCafeStateStore = create<ICafeStateStore>()(
+export const useCurrentCafeStore = create<ICurrentCafeStore>()(
     persist(
         set => ({
             // 🚩 카페 상태 플래그 초기값

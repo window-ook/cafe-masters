@@ -1,14 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useMapStore, useUIStore } from '@/stores';
 import { usePathname } from 'next/navigation';
-import CafeDetail from '@/components/shared/sliding-drawer/CafeDetail';
+import SearchedCafeDetail from '@/components/shared/sliding-drawer/SearchedCafeDetail';
+import CafeDetailSkeleton from '@/components/shared/sliding-drawer/CafeDetailSkeleton';
 import CollectedCafeDetail from '@/components/shared/sliding-drawer/CollectedCafeDetail';
 import BookmarkedCafeDetail from '@/components/shared/sliding-drawer/BookmarkedCafeDetail';
 import RecommendedCafeDetail from '@/components/shared/sliding-drawer/RecommendedCafeDetail';
 import FormForCollect from '@/components/shared/sliding-drawer/FormForCollect';
+import FormForRecommend from '@/components/shared/sliding-drawer/FormForRecommend';
 
+/** 각 도메인별 상세 정보 페이지를 표시하는 슬라이딩 드로어 */
 export default function SlidingDrawer() {
     const pathname = usePathname();
 
@@ -34,14 +37,25 @@ export default function SlidingDrawer() {
 
     if (!isCollectFormOpen && !isRecommendFormOpen) return (
         <div className={SLIDING_DRAWER_STYLE}>
-            {PATHS.SEARCH && <CafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
-            {PATHS.COLLECTED && <CollectedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} />}
-            {PATHS.BOOKMARKED && <BookmarkedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
-            {PATHS.RECOMMENDED && <RecommendedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+            <Suspense fallback={<CafeDetailSkeleton />}>
+                {PATHS.SEARCH && <SearchedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+                {PATHS.COLLECTED && <CollectedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} />}
+                {PATHS.BOOKMARKED && <BookmarkedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+                {PATHS.RECOMMENDED && <RecommendedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+            </Suspense>
         </div>
     );
 
-    return (
+    if (isCollectFormOpen) return (
         <FormForCollect />
+    );
+
+    if (isRecommendFormOpen) return (
+        <FormForRecommend
+            detailName={'detailName'}
+            bookmarkedCafeDetailName={'bookmarkedCafeDetailName'}
+            isDarkTheme={isDarkTheme}
+            setMemoRecommendationOpenAction={setIsRecommendFormOpenAction}
+        />
     );
 }

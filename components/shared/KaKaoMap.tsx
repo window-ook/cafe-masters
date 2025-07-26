@@ -2,9 +2,12 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { useMapStore, useCafeStore, useFilterStore } from '@/stores';
+import { useMapStore, useCafeStore, useFilterStore, useUserStore } from '@/stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { toast } from 'react-toastify';
+import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
+import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
+import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
@@ -21,9 +24,13 @@ interface IKakaoPagination {
 
 export default function KakaoMap() {
   const pathname = usePathname();
+  const { userId } = useUserStore();
 
   const { keyword } = useFilterStore();
-  const { searchResult, setSearchResult, collectedCafe, bookmarkedCafe, recommendedCafe } = useCafeStore();
+  const { searchResult, setSearchResult } = useCafeStore();
+  const { filteredData: collectedCafes } = useCollectedCafes(userId, true);
+  const { filteredData: bookmarkedCafes } = useBookmarkedCafes(userId, true);
+  const { recommendedCafes } = useRecommendedCafes();
   const { currentCoordX, currentCoordY } = useMapStore();
 
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
@@ -197,7 +204,7 @@ export default function KakaoMap() {
 
     if (pathname.startsWith('/collected')) {
       updateMarkers(
-        collectedCafe,
+        collectedCafes,
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
@@ -205,7 +212,7 @@ export default function KakaoMap() {
 
     if (pathname.startsWith('/bookmarked')) {
       updateMarkers(
-        bookmarkedCafe,
+        bookmarkedCafes,
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
@@ -213,7 +220,7 @@ export default function KakaoMap() {
 
     if (pathname.startsWith('/recommended')) {
       updateMarkers(
-        recommendedCafe,
+        recommendedCafes,
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
@@ -237,9 +244,9 @@ export default function KakaoMap() {
     pathname,
     setSearchResult,
     searchResult,
-    bookmarkedCafe,
-    collectedCafe,
-    recommendedCafe,
+    bookmarkedCafes,
+    collectedCafes,
+    recommendedCafes,
   ]);
 
   return (

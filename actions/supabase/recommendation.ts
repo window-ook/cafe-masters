@@ -8,13 +8,13 @@ export type RecommendationRow = Database['public']['Tables']['recommendation']['
 export type RecommendationRowInsert =
   Database['public']['Tables']['recommendation']['Insert'];
 
-/** 모든 추천 카페
+/** 모든 추천 카페 조회
  * @param offset 오프셋
  * @param limit 한 번에 가져올 카페 수
  * @returns 추천 카페 목록
  */
-export async function getRecommendationCafes(offset: number = 0, limit: number = 4)
-  : Promise<{ data: ISupabaseRecommendedCafe[]; nextCursor: number | null }> {
+export async function getRecommendedCafes()
+  : Promise<{ data: ISupabaseRecommendedCafe[] }> {
   const supabase = await createServerSupabaseClient();
 
   const { data, error } = await supabase
@@ -22,20 +22,29 @@ export async function getRecommendationCafes(offset: number = 0, limit: number =
     .select('*')
     .order('created_at', { ascending: true });
 
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(`추천 카페 목록 조회에 실패했습니다: ${error.message}`);
 
-  const safeData = (data ?? []).map(item => ({
-    ...item,
-    image: item.image ?? undefined,
-    extra_images: item.extra_images ? JSON.parse(item.extra_images) : undefined,
-    opening_time: item.opening_time ?? undefined,
-    phone_number: item.phone_number ?? undefined,
-    menus: item.menus ?? undefined,
-  }));
+  const safeData = (data ?? []).map(item => {
+    // JSON.parse 안전성 처리
+    let extraImages;
+    try {
+      extraImages = item.extra_images ? JSON.parse(item.extra_images) : undefined;
+    } catch (parseError) {
+      console.warn('extra_images JSON 파싱 실패:', item.extra_images, parseError);
+      extraImages = undefined;
+    }
 
-  const nextCursor = data && data.length === limit ? offset + limit : null;
+    return {
+      ...item,
+      image: item.image ?? undefined,
+      extra_images: extraImages,
+      opening_time: item.opening_time ?? undefined,
+      phone_number: item.phone_number ?? undefined,
+      menus: item.menus ?? undefined,
+    };
+  });
 
-  return { data: safeData, nextCursor };
+  return { data: safeData };
 }
 
 /** 모든 추천 카페 수 조회
@@ -86,4 +95,39 @@ export async function deleteRecommendedCafe(id: number): Promise<boolean> {
   if (error) throw new Error(error.message);
 
   return true;
+}
+
+/**
+ * 선택한 추천 카페 상세 조회
+ * @param id 카페 ID
+ * @returns 추천 카페 상세 데이터
+ */
+export async function getRecommendedCafeDetail(id: number): Promise<ISupabaseRecommendedCafe> {
+  if (!id) throw new Error('추천 카페 상세 조회를 위한 카페 ID가 유효하지 않습니다.');
+
+  const supabase = await createServerSupabaseClient();
+
+  const { data, error } = await supabase
+    .from('recommendation')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) throw new Error(`추천 카페 조회에 실패했습니다: ${error.message}`);
+  if (!data) throw new Error('해당 추천 카페를 찾을 수 없습니다.');
+  let extraImages;
+  try {
+    extraImages = data.extra_images ? JSON.parse(data.extra_images) : undefined;
+  } catch (parseError) {
+    console.warn('extra_images JSON 파싱 실패:', data.extra_images, parseError);
+    extraImages = undefined;
+  }
+  return {
+    ...data,
+    image: data.image ?? undefined,
+    extra_images: extraImages,
+    opening_time: data.opening_time ?? undefined,
+    phone_number: data.phone_number ?? undefined,
+    menus: data.menus ?? undefined,
+  };
 }

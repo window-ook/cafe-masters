@@ -10,6 +10,6 @@ export interface ISupabaseRecommendedCafe {
     opening_time?: string | undefined;
     address: string;
     phone_number?: string | null;
-    menu?: string | null;
+    menus?: string | null;
     created_at: string;
 }
