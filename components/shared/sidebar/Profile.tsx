@@ -20,7 +20,9 @@ export default function Profile() {
     else if (collectedCounts && collectedCounts < 10) setUserTier('BEGINNER');
   }, [collectedCounts, setUserTier]);
 
-  if (userEmail) return (
+  if (!userEmail) return;
+
+  return (
     <section className="w-full flex items-center gap-2">
       <div
         className={`w-full pl-1 py-1 rounded-xl ${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-300'} shadow-md flex items-center sm:gap-6`}
@@ -41,6 +43,4 @@ export default function Profile() {
       <TierBadge tier={userTier} />
     </section>
   );
-
-  return;
 }

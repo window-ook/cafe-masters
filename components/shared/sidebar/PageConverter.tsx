@@ -1,6 +1,4 @@
-'use client';
-
-interface PageConverterProps {
+interface IPageConverter {
   isDarkTheme: boolean;
   currentPage: number;
   totalPages: number;
@@ -14,7 +12,7 @@ export default function PageConverter({
   totalPages,
   handlePreviousPageAction,
   handleNextPageAction,
-}: PageConverterProps) {
+}: IPageConverter) {
   return (
     <section className={`w-full py-4 ${isDarkTheme ? 'bg-main-dark' : 'bg-gray-100'}`}>
       <div className="flex justify-between items-center">

@@ -5,7 +5,7 @@ import { useUIStore } from 'stores';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 import { useCafeClickHandler } from '@/hooks/shared/useCafeClickHandler';
-import NormalCafe from '@/components/shared/sidebar/NormalCafe';
+import CafeItem from '@/components/shared/sidebar/CafeItem';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
 const CARD_CONTAINER_STYLE = 'my-8 px-8 flex flex-col gap-8';
@@ -22,9 +22,7 @@ export default function RecommendedCafes() {
   const paginatedRecommend = recommendedCafes?.slice((currentPage - 1) * recommendedPerPage, currentPage * recommendedPerPage) || [];
 
   // 데이터 변경 시 첫 페이지로 리셋
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [recommendedCafes]);
+  useEffect(() => { setCurrentPage(1); }, [recommendedCafes]);
 
   const handleNextRecommendedPage = () => {
     if (currentPage < totalRecommendedPages) setCurrentPage(currentPage + 1);
@@ -46,7 +44,7 @@ export default function RecommendedCafes() {
         <section>
           <ul className={CARD_CONTAINER_STYLE}>
             {paginatedRecommend.map((cafe: ISupabaseRecommendedCafe) => (
-              <NormalCafe
+              <CafeItem
                 key={cafe.id}
                 name={cafe.name}
                 address={cafe.address}

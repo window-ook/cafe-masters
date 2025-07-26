@@ -4,7 +4,7 @@ import { useUIStore } from '@/stores';
 import { MdSunny } from 'react-icons/md';
 import { FaMoon } from 'react-icons/fa';
 
-export default function LightDarkToggle() {
+export default function ThemeToggleButton() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsDarkTheme = useUIStore(state => state.setIsDarkTheme);
 

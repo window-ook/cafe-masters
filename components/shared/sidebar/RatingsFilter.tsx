@@ -3,17 +3,17 @@
 import { useFilterStore } from '@/stores';
 import React from 'react';
 
-export default function RatingFilter() {
-  const { selectedRating, setSelectedRating } = useFilterStore();
+const STARS = [
+  { value: 'all', label: '선택 안 함' },
+  { value: 1, label: '⭐️' },
+  { value: 2, label: '⭐️⭐️' },
+  { value: 3, label: '⭐️⭐️⭐️' },
+  { value: 4, label: '⭐️⭐️⭐️⭐️' },
+  { value: 5, label: '⭐️⭐️⭐️⭐️⭐️' },
+];
 
-  const stars = [
-    { value: 'all', label: '선택 안 함' },
-    { value: 1, label: '⭐️' },
-    { value: 2, label: '⭐️⭐️' },
-    { value: 3, label: '⭐️⭐️⭐️' },
-    { value: 4, label: '⭐️⭐️⭐️⭐️' },
-    { value: 5, label: '⭐️⭐️⭐️⭐️⭐️' },
-  ];
+export default function RatingsFilter() {
+  const { selectedRating, setSelectedRating } = useFilterStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -27,7 +27,7 @@ export default function RatingFilter() {
         onChange={handleChange}
         value={selectedRating}
       >
-        {stars.map(rating => (
+        {STARS.map(rating => (
           <option key={rating.value} value={rating.value}>
             {rating.label}
           </option>

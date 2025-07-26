@@ -6,9 +6,9 @@ import {
 } from '@/actions/supabase/bookmark';
 
 export function useUploadBookmarkedCafe() {
-  const userId = useUserStore(state => state.userId);
-
   const queryClient = useQueryClient();
+
+  const { userId } = useUserStore();
 
   return useMutation({
     mutationFn: async (detail: BookmarkedRowInsert) =>

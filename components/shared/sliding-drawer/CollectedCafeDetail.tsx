@@ -23,10 +23,9 @@ export default function CollectedCafeDetail({ cafeId, setIsCollectedFormOpenActi
   const { userId } = useUserStore();
   const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
 
-  // React Query 캐시에서 수집된 카페 데이터 가져오기
-  const { filteredData: collectedCafes } = useCollectedCafes(userId, true);
-  // 카페 id로 해당 카페의 상세 정보 조회
-  const collectedCafeDetail = collectedCafes.find((cafe: ISupabaseCollectedCafe) => cafe.id === Number(cafeId));
+  const { filteredCollectedCafes } = useCollectedCafes(userId);
+
+  const collectedCafeDetail = filteredCollectedCafes.find((cafe: ISupabaseCollectedCafe) => cafe.id === cafeId);
 
   if (!collectedCafeDetail) {
     return (

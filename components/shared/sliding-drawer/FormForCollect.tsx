@@ -7,12 +7,28 @@ import { useCafeStore } from '@/stores/cafe';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import CategorySelector from './CategorySelector';
 import RatingsSelector from './RatingsSelector';
-import { useUIStore } from '@/stores';
+import { useMapStore, useUIStore, useUserStore } from '@/stores';
+import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
+import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
+import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
+import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
+import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
+import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 
 export default function FormForCollect() {
   const pathname = usePathname();
 
-  const { searchResult, collectedCafeDetail, bookmarkedCafeDetail, recommendedCafeDetail } = useCafeStore();
+  const { userId } = useUserStore();
+  const { searchResult } = useCafeStore();
+  const { currentCafeId } = useMapStore();
+  const { collectedCafes } = useCollectedCafes(userId);
+  const { bookmarkedCafes } = useBookmarkedCafes(userId);
+  const { recommendedCafes } = useRecommendedCafes();
+
+  const collectedCafeDetail = collectedCafes.find((cafe: ISupabaseCollectedCafe) => cafe.id === currentCafeId);
+  const bookmarkedCafeDetail = bookmarkedCafes.find((cafe: ISupabaseBookmarkedCafe) => cafe.id === currentCafeId);
+  const recommendedCafeDetail = recommendedCafes.find((cafe: ISupabaseRecommendedCafe) => cafe.id === currentCafeId);
+
   const { isDarkTheme } = useUIStore();
 
   // 현재 페이지에 따라 카페 이름 결정
@@ -21,13 +37,13 @@ export default function FormForCollect() {
       return searchResult[0]?.place_name || '';
     }
     if (pathname.startsWith('/collected')) {
-      return collectedCafeDetail[0]?.name || '';
+      return collectedCafeDetail?.name || '';
     }
     if (pathname.startsWith('/bookmarked')) {
-      return bookmarkedCafeDetail[0]?.name || '';
+      return bookmarkedCafeDetail?.name || '';
     }
     if (pathname.startsWith('/cafe/recommended')) {
-      return recommendedCafeDetail[0]?.name || '';
+      return recommendedCafeDetail?.name || '';
     }
     return '';
   };

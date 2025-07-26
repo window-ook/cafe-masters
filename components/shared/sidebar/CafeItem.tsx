@@ -3,7 +3,7 @@
 import { useUIStore } from '@/stores';
 import Image from 'next/image';
 
-interface NormalCafeProps {
+interface ICafeItem {
   name: string | undefined;
   address: string;
   phoneNum: string | null | undefined;
@@ -11,13 +11,13 @@ interface NormalCafeProps {
   onClickAction: () => void;
 }
 
-export default function NormalCafe({
+export default function CafeItem({
   onClickAction,
   name,
   address,
   phoneNum,
   photoUrl,
-}: NormalCafeProps) {
+}: ICafeItem) {
   const { isDarkTheme } = useUIStore();
 
   return (

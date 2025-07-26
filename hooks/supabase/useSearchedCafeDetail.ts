@@ -24,16 +24,12 @@ export function useSearchedCafeDetail(cafeId: string) {
         },
       });
 
-      if (!response.ok) {
-        throw new Error(`카페 상세 정보를 불러올 수 없습니다. (${response.status})`);
-      }
+      if (!response.ok) throw new Error(`카페 상세 정보를 불러올 수 없습니다. (${response.status})`);
 
       const data = await response.json();
 
-      // API에서 에러 응답이 온 경우 처리
       if (data.error) throw new Error(data.error);
 
-      // 데이터 정규화
       return {
         image: data.image || null,
         extra_images: Array.isArray(data.extra_images) ? data.extra_images : [],
@@ -41,8 +37,6 @@ export function useSearchedCafeDetail(cafeId: string) {
         menus: Array.isArray(data.menus) ? data.menus : [],
       };
     },
-    staleTime: 1000 * 60 * 3, // 3분
-    gcTime: 1000 * 60 * 5, // 5분
   });
 
   return { searchedCafeDetail: data, isError, error };

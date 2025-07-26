@@ -3,11 +3,7 @@ import { FaPhoneSquare } from 'react-icons/fa';
 import { FaCopy } from 'react-icons/fa6';
 import Tooltip from '@/components/shared/TooltipContainer';
 
-interface PhoneNumGridProps {
-  phone_number: string | null;
-}
-
-export default function PhoneNumber({ phone_number }: PhoneNumGridProps) {
+export default function PhoneNumber({ phone_number }: { phone_number: string | null }) {
   return (
     <div className="col-span-2 grid grid-cols-3 items-center">
       <div className="col-span-1 flex items-center gap-1">

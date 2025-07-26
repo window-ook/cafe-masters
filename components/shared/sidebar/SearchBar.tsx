@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { useFilterStore, useUIStore } from '@/stores';
 
-export default function Search() {
+export default function SearchBar() {
   const { keyword, setKeyword } = useFilterStore();
   const { setIsSlidingDrawerOpen, isDarkTheme } = useUIStore();
+
   const [localKeyword, setLocalKeyword] = useState<string>(keyword);
 
   const router = useRouter();
@@ -22,9 +23,7 @@ export default function Search() {
     if (e.key === 'Enter') handleSearch();
   };
 
-  useEffect(() => {
-    setLocalKeyword(keyword);
-  }, [keyword]);
+  useEffect(() => { setLocalKeyword(keyword); }, [keyword]);
 
   return (
     <search className="w-full">

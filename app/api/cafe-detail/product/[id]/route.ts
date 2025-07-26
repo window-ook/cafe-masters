@@ -6,9 +6,9 @@ export const runtime = 'nodejs';
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const id = params.id;
+  const { id } = await params;
   if (!id) {
     return NextResponse.json({ error: 'Invalid cafe ID' }, { status: 400 });
   }
@@ -106,7 +106,12 @@ export async function GET(
         }))
         .filter(menu => menu.name !== '');
 
-      return { photo, photoList, openingHours, menu: menuItems };
+      return { 
+        image: photo, 
+        extra_images: photoList, 
+        opening_time: openingHours, 
+        menus: menuItems 
+      };
     });
     console.log(`✅ 카페 상세 정보: `, data);
     await browser.close();

@@ -8,7 +8,7 @@ import {
   masterTierModalStyle,
 } from 'utils/styles';
 
-interface TierInfoModalProps {
+interface ITierDialog {
   open: boolean;
   handleCloseAction: () => void;
 }
@@ -24,16 +24,14 @@ const Badge = ({ tier, range, color }: IBadge) => {
   );
 };
 
+const TIER_DESC_STYLE = 'font-pretendard font-bold text-gray-500 lg:text-lg text-xs';
+const BADGE_STYLE = 'rounded-xl w-20 h-6 py-4 flex items-center justify-center';
+
 export default function TierDialog({
   open,
   handleCloseAction,
-}: TierInfoModalProps) {
+}: ITierDialog) {
   const { isDarkTheme } = useUIStore();
-
-  const tierDescStyle =
-    'font-pretendard font-bold text-gray-500 lg:text-lg text-xs';
-  const badgeStyle =
-    'rounded-xl w-20 h-6 py-4 flex items-center justify-center';
 
   return (
     <article>
@@ -51,52 +49,52 @@ export default function TierDialog({
                 <p className="font-pretendard font-extrabold text-2xl md:text-3xl">
                   TIER INFORMATION
                 </p>
-                <p className={tierDescStyle}>
+                <p className={TIER_DESC_STYLE}>
                   수집한 카드의 개수에 따라 티어가 부여됩니다
                 </p>
               </div>
               <Badge
                 tier={'BEGINNER'}
                 range={'0 ~ 9'}
-                color={`bg-beginner text-white ${badgeStyle}`}
+                color={`bg-beginner text-white ${BADGE_STYLE}`}
               />
-              <p className={tierDescStyle}>
+              <p className={TIER_DESC_STYLE}>
                 당신은 카페 월드의 초보! 갈 길이 멉니다ㅜㅜ
               </p>
               <Badge
                 tier={'JUNIOR'}
                 range={'10 ~ 19'}
-                color={`bg-junior text-white ${badgeStyle}`}
+                color={`bg-junior text-white ${BADGE_STYLE}`}
               />
-              <p className={tierDescStyle}>
+              <p className={TIER_DESC_STYLE}>
                 열심히 카페를 다니고 있는 주니어에요
               </p>
               <Badge
                 tier={'SENIOR'}
                 range={'20 ~ 29'}
-                color={`bg-senior text-white ${badgeStyle}`}
+                color={`bg-senior text-white ${BADGE_STYLE}`}
               />
-              <p className={tierDescStyle}>
+              <p className={TIER_DESC_STYLE}>
                 커피 좀 마셔봤다는 시니어가 되셨네요 후훗
               </p>
               <Badge
                 tier={'EXPERT'}
                 range={'30 ~ 39'}
-                color={getExpertTierStyle(badgeStyle)}
+                color={getExpertTierStyle(BADGE_STYLE)}
               />
-              <p className={tierDescStyle}>
+              <p className={TIER_DESC_STYLE}>
                 어엿한 카페 고수입니다 뿌듯하셔도 좋아요!!
               </p>
               <div className="relative flex items-center gap-3">
                 <div className={masterTierModalStyle}></div>
-                <p className={getMasterTierStyle(badgeStyle)}>
+                <p className={getMasterTierStyle(BADGE_STYLE)}>
                   <span className="text-sm font-dpixel">MASTER</span>
                 </p>
                 <p className="z-10 relative text-xl font-bold font-pretendard">
                   40
                 </p>
               </div>
-              <p className={tierDescStyle}>
+              <p className={TIER_DESC_STYLE}>
                 마스터여, 당신은 월드의 주인입니다
               </p>
             </div>

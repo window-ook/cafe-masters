@@ -8,29 +8,32 @@ import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
 import Image from 'next/image';
 import Link from 'next/link';
 import Search from '@/components/shared/sidebar/SearchBar';
-import LightDarkToggle from '@/components/shared/sidebar/ThemeToggleButton';
+import ThemeToggleButton from '@/components/shared/sidebar/ThemeToggleButton';
 import Tooltip from '@/components/shared/TooltipContainer';
 import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
 import RegionFilter from '@/components/shared/sidebar/RegionsFilter';
-import RatingFilter from '@/components/shared/sidebar/RatingsFilter';
+import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
 
 export default function Header() {
   const pathname = usePathname();
 
   const { searchResult } = useCafeStore();
   const { userId } = useUserStore();
-  const { collectedCounts } = useCollectedCafesCounts(userId);
-  const { bookmarkedCounts } = useBookmarkedCafesCounts(userId);
-  const { setSearchTermInCollectedCafe, setSearchTermInBookmarkedCafe } = useFilterStore();
   const { isDarkTheme } = useUIStore();
+  const { setSearchTermInCollectedCafe, setSearchTermInBookmarkedCafe } = useFilterStore();
 
   const [collectedInput, setCollectedInput] = useState<string>('');
   const [bookmarkedInput, setBookmarkedInput] = useState<string>('');
 
-  const isSearchResultPage = pathname.startsWith('/search');
-  const isCollectedPage = pathname.startsWith('/collected');
-  const isBookmarkedPage = pathname.startsWith('/bookmarked');
-  const isRecommendedPage = pathname.startsWith('/recommended');
+  const { collectedCounts } = useCollectedCafesCounts(userId);
+  const { bookmarkedCounts } = useBookmarkedCafesCounts(userId);
+
+  const PATHS = {
+    SEARCH: pathname.startsWith('/search'),
+    COLLECTED: pathname.startsWith('/collected'),
+    BOOKMARKED: pathname.startsWith('/bookmarked'),
+    RECOMMENDED: pathname.startsWith('/recommended'),
+  };
 
   const handleCollectedSearch = () => setSearchTermInCollectedCafe(collectedInput);
   const handleBookmarkedSearch = () => setSearchTermInBookmarkedCafe(bookmarkedInput);
@@ -46,7 +49,7 @@ export default function Header() {
     >
       <div className="flex justify-between items-center mb-2">
         <Tooltip
-          comment="메뉴로"
+          comment="메인페이지"
           component={
             <Link
               href="/main"
@@ -61,18 +64,18 @@ export default function Header() {
                 alt="로고 아이콘"
                 className="w-8 h-auto"
               />
-              <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
+              <h1 className="text-3xl text-white text-shadow-black font-bold">
                 Cafe Masters
-              </span>
+              </h1>
             </Link>
           }
           left="32"
         />
-        <LightDarkToggle />
+        <ThemeToggleButton />
       </div>
       <Search />
 
-      {isSearchResultPage && (
+      {PATHS.SEARCH && (
         <div className="flex justify-center items-center">
           <span className="font-dpixel text-xl sm:text-2xl">
             TOTAL{' '}
@@ -83,7 +86,7 @@ export default function Header() {
         </div>
       )}
 
-      {isCollectedPage && (
+      {PATHS.COLLECTED && (
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="w-full flex items-center gap-2">
             <input
@@ -118,18 +121,18 @@ export default function Header() {
               </span>
             </span>
             <RegionFilter />
-            <RatingFilter />
+            <RatingsFilter />
           </div>
         </div>
       )}
 
-      {isBookmarkedPage && (
+      {PATHS.BOOKMARKED && (
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="w-full flex items-center gap-2">
             <input
               type="text"
               placeholder="카페 이름으로 검색"
-              aria-label="북마크한 카페 중 카페 이름 검색하기"
+              aria-label="북마크한 카페 중 이름 검색"
               className={`w-5/6 py-4 border-0 border-b-2 ${isDarkTheme
                 ? 'bg-main-dark border-gray-600 text-white'
                 : 'bg-gray-100 border-gray-300 text-slate-700'
@@ -162,7 +165,7 @@ export default function Header() {
         </div>
       )}
 
-      {isRecommendedPage && <CategoryFilter />}
+      {PATHS.RECOMMENDED && <CategoryFilter />}
     </section>
   );
 }

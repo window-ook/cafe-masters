@@ -5,7 +5,7 @@ import { Star } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { RadioGroup, RadioGroupItem } from '@/components/shadcn-ui/radio-group';
 
-interface StarRatingProps {
+interface IRatingSelector {
   maxStars?: number;
   value?: number;
   onChange?: (value: number) => void;
@@ -15,7 +15,7 @@ export default function RatingsSelector({
   maxStars = 5,
   value = 0,
   onChange,
-}: StarRatingProps) {
+}: IRatingSelector) {
   const [rating, setRating] = useState<number>(value);
 
   const handleRatingChange = (value: string) => {

@@ -7,25 +7,21 @@ import {
   masterTierBadgeStyle,
 } from 'utils/styles';
 import { Tier } from 'types/shared/sidebar';
-import TierDialog from './TierDialog';
+import TierDialog from '@/components/shared/sidebar/TierDialog';
 
-interface TierBadgeProps {
-  tier: Tier;
-}
+const TIER_STYLES = {
+  BEGINNER: 'bg-beginner text-white',
+  JUNIOR: 'bg-junior text-white',
+  SENIOR: 'bg-senior text-white',
+  EXPERT: getExpertTierStyle(),
+  MASTER: getMasterTierStyle(),
+};
 
-export default function TierBadge({ tier }: TierBadgeProps) {
+export default function TierBadge({ tier }: { tier: Tier }) {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleOpen = () => setOpen(true);
   const handleCloseAction = () => setOpen(false);
-
-  const tierStyles = {
-    BEGINNER: 'bg-beginner text-white',
-    JUNIOR: 'bg-junior text-white',
-    SENIOR: 'bg-senior text-white',
-    EXPERT: getExpertTierStyle(),
-    MASTER: getMasterTierStyle(),
-  };
 
   return (
     <>
@@ -34,7 +30,7 @@ export default function TierBadge({ tier }: TierBadgeProps) {
         <button
           aria-label="티어 모달 오픈 버튼"
           onClick={() => handleOpen()}
-          className={`${tierStyles[tier]} w-20 h-6 py-4 rounded-xl flex items-center justify-center hover:cursor-pointer`}
+          className={`${TIER_STYLES[tier]} w-20 h-6 py-4 rounded-xl flex items-center justify-center hover:cursor-pointer`}
         >
           <span className="text-sm font-dpixel">{tier}</span>
         </button>

@@ -15,6 +15,14 @@ interface ICollectedCafe {
   onClickAction: () => void;
 }
 
+const HIDDEN_CAFE_NAMES = ['탐앤탐스 대구강북점', '접속'];
+const HIDDEN_CARD = 'card card-tilt w-full h-full p-4 border-4 border-main rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer hover:border-main-light transition duration-300 ease';
+const HIDDEN_CARD_BACK_EFFECT = 'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md animate-tilt pointer-none';
+const RATING_ONE_N_TWO = 'bg-violet-50 text-gray-600';
+const RATING_THREE = 'card-silver text-black';
+const RATING_FOUR = 'card-gold text-black';
+const RATING_FIVE = 'card-emerald text-black';
+
 export default function CollectedCafe({
   name,
   photoUrl,
@@ -29,19 +37,6 @@ export default function CollectedCafe({
   const backEffectRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const sparkleRef = useRef<HTMLStyleElement | null>(null);
-
-  const HIDDEN_CAFE_NAMES = ['탐앤탐스 대구강북점', '접속'];
-
-  const HIDDEN_CARD =
-    'card card-tilt w-full h-full p-4 border-4 border-main rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer hover:border-main-light transition duration-300 ease';
-
-  const HIDDEN_CARD_BACK_EFFECT =
-    'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md animate-tilt pointer-none';
-
-  const RATING_ONE_N_TWO = 'bg-violet-50 text-gray-600';
-  const RATING_THREE = 'card-silver text-black';
-  const RATING_FOUR = 'card-gold text-black';
-  const RATING_FIVE = 'card-emerald text-black';
 
   let COLOR_BY_RATING = '';
   let HOVER_BORDER_BY_RATING = '';

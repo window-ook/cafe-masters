@@ -7,14 +7,13 @@ import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 export type BookmarkedRow = Database['public']['Tables']['bookmark']['Row'];
 export type BookmarkedRowInsert = Database['public']['Tables']['bookmark']['Insert'];
 
-/** 모든 북마크 카페
+/** 북마크한 카페 조회
  * @param user_id 유저 ID
  * @param offset 오프셋
  * @param limit 한 번에 가져올 카페 수
  * @returns 북마크 카페 목록과 다음 커서
  */
-export async function getBookmarkedCafes(user_id: string, offset: number = 0, limit: number = 3)
-  : Promise<{ data: ISupabaseBookmarkedCafe[]; nextCursor: number | null }> {
+export async function getBookmarkedCafes(user_id: string): Promise<{ data: ISupabaseBookmarkedCafe[] }> {
   if (!user_id) throw new Error('유저 ID가 유효하지 않습니다.');
 
   const supabase = await createServerSupabaseClient();
@@ -23,11 +22,9 @@ export async function getBookmarkedCafes(user_id: string, offset: number = 0, li
     .from('bookmark')
     .select('*')
     .eq('user_id', user_id)
-    .order('created_at', { ascending: true })
-    .range(offset, offset + limit - 1);
+    .order('created_at', { ascending: true });
 
   if (error) throw new Error(error.message);
-
 
   const safeData = (data ?? []).map(item => ({
     ...item,
@@ -37,13 +34,10 @@ export async function getBookmarkedCafes(user_id: string, offset: number = 0, li
     menus: item.menus ?? undefined,
   }));
 
-  const nextCursor =
-    safeData.length && safeData.length === limit ? offset + limit : null;
-
-  return { data: safeData, nextCursor };
+  return { data: safeData };
 }
 
-/** 모든 북마크 카페 수 조회
+/** 북마크한 카페 수 조회
  * @param user_id 유저 ID
  * @returns 북마크 카페 수
  */
@@ -62,7 +56,7 @@ export async function getBookmarkedCafesCounts(user_id: string): Promise<number>
   return data?.length ?? 0;
 }
 
-/** 새로운 북마크 카페 추가
+/** 북마크한 카페 추가
  * @param cafe 카페 데이터
  */
 export async function createBookmarkedCafe(cafe: BookmarkedRowInsert): Promise<boolean> {
@@ -80,8 +74,8 @@ export async function createBookmarkedCafe(cafe: BookmarkedRowInsert): Promise<b
   return true;
 }
 
-/** 선택한 북마크 카페 삭제 */
-export async function deleteBookmarkedCafe(id: number | undefined, user_id: string,): Promise<boolean> {
+/** 북마크한 카페 삭제 */
+export async function deleteBookmarkedCafe(id: number, user_id: string,): Promise<boolean> {
   if (!id) throw new Error('북마크 삭제를 위한 카페 ID가 유효하지 않습니다.');
   if (!user_id) throw new Error('유저 ID가 유효하지 않습니다.');
 

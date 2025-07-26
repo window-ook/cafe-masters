@@ -2,11 +2,7 @@
 
 import { FaRegThumbsUp } from 'react-icons/fa';
 
-interface ProsGridProps {
-  pros: string;
-}
-
-export default function Pros({ pros }: ProsGridProps) {
+export default function Pros({ pros }: { pros: string }) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 items-center">

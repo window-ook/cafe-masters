@@ -1,5 +1,3 @@
-'use client';
-
 import { CATEGORIES } from '@/utils/constants/categories';
 import { RiResetLeftFill } from 'react-icons/ri';
 import { ICategorySelector } from '@/types/shared/form';

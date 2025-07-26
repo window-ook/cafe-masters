@@ -1,12 +1,6 @@
-'use client';
-
 import { FaRegThumbsDown } from 'react-icons/fa';
 
-interface ConsGridProps {
-  cons: string;
-}
-
-export default function Cons({ cons }: ConsGridProps) {
+export default function Cons({ cons }: { cons: string }) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 items-center">

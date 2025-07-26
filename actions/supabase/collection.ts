@@ -8,7 +8,7 @@ export type CollectedRow = Database['public']['Tables']['collection']['Row'];
 export type CollectedRowInsert = Database['public']['Tables']['collection']['Insert'];
 export type CollectedRowUpdate = Database['public']['Tables']['collection']['Update'];
 
-/** 로그인 유저의 수집한 카페 목록 조회
+/** 수집한 카페 목록 조회
  * @param user_id 유저 ID
  * @param offset 오프셋
  * @param limit 한 번에 가져올 카페 수
@@ -43,7 +43,7 @@ export async function getCollectedCafes(user_id: string, offset: number = 0, lim
   return { data: safeData, nextCursor };
 }
 
-/** 모든 수집 카페 수 조회
+/** 수집한 카페 수 조회
  * @param user_id 유저 ID
  * @returns 수집 카페 수
  */
@@ -62,8 +62,7 @@ export async function getCollectedCafesCounts(user_id: string): Promise<number> 
   return data?.length ?? 0;
 }
 
-
-/** 새로운 수집 카페 추가
+/** 수집한 카페 추가
  * @param cafe 카페 데이터
  */
 export async function createCollectedCafe(cafe: CollectedRowInsert): Promise<boolean> {
@@ -81,16 +80,12 @@ export async function createCollectedCafe(cafe: CollectedRowInsert): Promise<boo
   return true;
 }
 
-/** 수집한 카페의 내용 수정
+/** 수집한 카페 내용 수정
  * @param cafe 수정된 카페 데이터
  * @param id 카페 ID
  * @param user_id 유저 ID
  */
-export async function updateCollectedCafe(
-  cafe: CollectedRowUpdate,
-  id: number | undefined,
-  user_id: string,
-): Promise<boolean> {
+export async function updateCollectedCafe(cafe: CollectedRowUpdate, id: number, user_id: string): Promise<boolean> {
   if (!cafe) throw new Error('수집 카페 수정을 위한 카페 데이터가 유효하지 않습니다.');
   if (!id || id === 0) throw new Error('수집 카페 수정을 위한 카페 ID가 유효하지 않습니다.');
   if (!user_id) throw new Error('유저 ID가 유효하지 않습니다.');

@@ -6,13 +6,17 @@ import { getCollectedCafes, getCollectedCafesCounts } from '@/actions/supabase/c
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { collectedCafeQuery } from '@/queries/supabase/collections';
 
+/**
+ * 모든 수집 카페 조회 훅
+ * @param userId 유저 ID
+ * @param isActive 활성화 여부
+ * @returns 수집 카페 데이터와 로딩 상태
+ */
 export function useCollectedCafes(userId: string, isActive: boolean = true) {
-  const selectedRegion = useFilterStore(state => state.selectedRegion);
-  const selectedRating = useFilterStore(state => state.selectedRating);
-  const searchTermInCollectedCafe = useFilterStore(state => state.searchTermInCollectedCafe);
+  const { selectedRegion, selectedRating, searchTermInCollectedCafe } = useFilterStore();
 
   const infiniteQuery = useInfiniteQuery({
-    enabled: isActive && !!userId && userId !== 'no-user',
+    enabled: isActive && !!userId,
     queryKey: collectedCafeQuery.all(userId),
     initialPageParam: 0,
     queryFn: async ({ pageParam }) => {
@@ -27,15 +31,13 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
   });
 
   // 모든 페이지의 데이터를 하나의 배열로 합치고 필터링 적용
-  const { allCafes, filteredCafes } = useMemo(() => {
-    if (!infiniteQuery.data) {
-      return { allCafes: [], filteredCafes: [] };
-    }
+  const { collectedCafes, filteredCollectedCafes } = useMemo(() => {
+    if (!infiniteQuery.data) return { collectedCafes: [], filteredCollectedCafes: [] };
 
-    const allCafes = infiniteQuery.data.pages.flatMap(page => page.data);
+    const collectedCafes = infiniteQuery.data.pages.flatMap(page => page.data);
 
     // 필터링 적용
-    const filteredCafes = allCafes.filter((cafe: ISupabaseCollectedCafe) => {
+    const filteredCollectedCafes = collectedCafes.filter((cafe: ISupabaseCollectedCafe) => {
       // 검색어 필터링
       const matchesSearch =
         !searchTermInCollectedCafe ||
@@ -55,7 +57,7 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
       return matchesSearch && matchesRegion && matchesRating;
     });
 
-    return { allCafes, filteredCafes };
+    return { collectedCafes, filteredCollectedCafes };
   }, [
     infiniteQuery.data,
     selectedRegion,
@@ -65,8 +67,8 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
 
   return {
     ...infiniteQuery,
-    data: allCafes,
-    filteredData: filteredCafes,
+    collectedCafes,
+    filteredCollectedCafes,
   };
 }
 

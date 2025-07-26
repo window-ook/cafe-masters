@@ -5,44 +5,36 @@ import { useRouter } from 'next/navigation';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
 import { useCurrentCafeStore, useUIStore, useUserStore } from 'stores';
+import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
 import { IoBookmark } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
-import CollectedBadge from './CollectedBadge';
-import Location from './Location';
-import PhoneNumber from './PhoneNumber';
-import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
+import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
+import Location from '@/components/shared/sliding-drawer/Location';
+import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
 
-interface IBookmarkedCafeDetailProps {
+interface IBookmarkedCafeDetail {
   cafeId: number;
   setIsCollectedFormOpenAction: (open: boolean) => void;
   setIsRecommendFormOpenAction: (open: boolean) => void;
 }
 
-export default function BookmarkedCafeDetail({
-  cafeId,
-  setIsCollectedFormOpenAction,
-  setIsRecommendFormOpenAction,
-}: IBookmarkedCafeDetailProps) {
+export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAction, setIsRecommendFormOpenAction }: IBookmarkedCafeDetail) {
+  const router = useRouter();
+
   const { admin, userId } = useUserStore();
-  const {
-    isDarkTheme,
-    setIsSlidingDrawerOpen,
-
-  } = useUIStore();
-
+  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
   const { isCollected, setIsBookmarked } = useCurrentCafeStore();
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
+
+  const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
+
+  const detail = filteredBookmarkedCafes.find((cafe: ISupabaseBookmarkedCafe) => cafe.id === Number(cafeId));
 
   const deleteBookmarkMutation = useDeleteBookmarkedCafe();
-
-  // React Query 캐시에서 북마크된 카페 데이터 가져오기
-  const { filteredData: bookmarkedCafes } = useBookmarkedCafes(userId, true);
-  const detail = bookmarkedCafes.find((cafe: ISupabaseBookmarkedCafe) => cafe.id === Number(cafeId));
 
   if (!detail) {
     return (

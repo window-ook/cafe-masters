@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import CategorySelector from './CategorySelector';
 
-interface MemoRecommendationProps {
+interface IFormForRecommend {
   detailName: string;
   bookmarkedCafeDetailName: string;
   isDarkTheme: boolean;
@@ -15,7 +15,7 @@ export default function FormForRecommend({
   bookmarkedCafeDetailName,
   isDarkTheme,
   setMemoRecommendationOpenAction,
-}: MemoRecommendationProps) {
+}: IFormForRecommend) {
   const pathname = usePathname();
 
   const memoSubmitStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} p-4 shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70`;

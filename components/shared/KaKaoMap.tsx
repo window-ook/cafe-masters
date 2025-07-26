@@ -28,9 +28,9 @@ export default function KakaoMap() {
 
   const { keyword } = useFilterStore();
   const { searchResult, setSearchResult } = useCafeStore();
-  const { filteredData: collectedCafes } = useCollectedCafes(userId, true);
-  const { filteredData: bookmarkedCafes } = useBookmarkedCafes(userId, true);
-  const { recommendedCafes } = useRecommendedCafes();
+  const { filteredCollectedCafes } = useCollectedCafes(userId);
+  const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
+  const { recommendedCafes, isLoading: isRecommendedCafesLoading } = useRecommendedCafes();
   const { currentCoordX, currentCoordY } = useMapStore();
 
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
@@ -204,7 +204,7 @@ export default function KakaoMap() {
 
     if (pathname.startsWith('/collected')) {
       updateMarkers(
-        collectedCafes,
+        filteredCollectedCafes,
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
@@ -212,18 +212,20 @@ export default function KakaoMap() {
 
     if (pathname.startsWith('/bookmarked')) {
       updateMarkers(
-        bookmarkedCafes,
+        filteredBookmarkedCafes,
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
     }
 
     if (pathname.startsWith('/recommended')) {
-      updateMarkers(
-        recommendedCafes,
-        cafe => cafe.coordY,
-        cafe => cafe.coordX,
-      );
+      if (!isRecommendedCafesLoading && recommendedCafes) {
+        updateMarkers(
+          recommendedCafes,
+          cafe => cafe.coordY,
+          cafe => cafe.coordX,
+        );
+      }
     }
 
     if (
@@ -244,9 +246,10 @@ export default function KakaoMap() {
     pathname,
     setSearchResult,
     searchResult,
-    bookmarkedCafes,
-    collectedCafes,
+    filteredBookmarkedCafes,
+    filteredCollectedCafes,
     recommendedCafes,
+    isRecommendedCafesLoading,
   ]);
 
   return (

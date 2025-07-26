@@ -6,9 +6,9 @@ import {
 } from '@/actions/supabase/collection';
 
 export function useUploadCollectedCafe() {
-  const userId = useUserStore(state => state.userId);
-
   const queryClient = useQueryClient();
+
+  const { userId } = useUserStore();
 
   return useMutation({
     mutationFn: async (memo: CollectedRowInsert) =>

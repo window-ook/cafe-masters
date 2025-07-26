@@ -2,11 +2,7 @@
 
 import { FaPencilAlt } from 'react-icons/fa';
 
-interface CommentGridProps {
-  comment: string;
-}
-
-export default function Comment({ comment }: CommentGridProps) {
+export default function Comment({ comment }: { comment: string }) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 items-center">

@@ -18,7 +18,7 @@ import OpenTime from './OpenTime';
 import Location from './Location';
 import PhoneNumber from './PhoneNumber';
 
-interface IRecommendedCafeDetailProps {
+interface IRecommendedCafeDetail {
   cafeId: number;
   setIsCollectedFormOpenAction: (open: boolean) => void;
   setIsRecommendFormOpenAction: (open: boolean) => void;
@@ -28,7 +28,7 @@ export default function RecommendedCafeDetail({
   cafeId,
   setIsCollectedFormOpenAction,
   setIsRecommendFormOpenAction,
-}: IRecommendedCafeDetailProps) {
+}: IRecommendedCafeDetail) {
   const { admin, userId } = useUserStore();
   const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
   const { isCollected, isBookmarked, setIsBookmarked } = useCurrentCafeStore();
@@ -39,8 +39,8 @@ export default function RecommendedCafeDetail({
   const uploadBookmarkMutation = useUploadBookmarkedCafe();
   const deleteBookmarkMutation = useDeleteBookmarkedCafe();
 
-  // React Query 캐시에서 추천 카페 데이터 가져오기
   const { recommendedCafes } = useRecommendedCafes();
+
   const recommendedCafedetail = recommendedCafes?.find((cafe: ISupabaseRecommendedCafe) => cafe.id === cafeId);
 
   if (!recommendedCafedetail) {

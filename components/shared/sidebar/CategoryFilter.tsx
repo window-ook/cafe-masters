@@ -1,16 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 import { useCafeStore } from 'stores';
 import { CATEGORIES } from '@/utils/constants/categories';
 import { RiResetLeftFill } from 'react-icons/ri';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 export default function CategoryFilter() {
-  const { recommendedCafe, setFilteredRecommendedCafe } = useCafeStore();
+  const { setFilteredRecommendedCafe } = useCafeStore();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isExpanded, setIsExpanded] = useState(true);
+
+  const { recommendedCafes } = useRecommendedCafes();
 
   const toggleCategories = (category: string) => {
     setSelectedCategories(prev =>
@@ -25,7 +28,7 @@ export default function CategoryFilter() {
   const toggleExpand = () => setIsExpanded(prev => !prev);
 
   useEffect(() => {
-    const filteredRecommendedCafe = recommendedCafe.filter(cafe => {
+    const filteredRecommendedCafe = recommendedCafes.filter(cafe => {
       if (!cafe.categories) return selectedCategories.length === 0;
 
       // 선택된 카테고리가 없으면 모든 카페를 보여줌
@@ -41,7 +44,7 @@ export default function CategoryFilter() {
     });
 
     setFilteredRecommendedCafe(filteredRecommendedCafe);
-  }, [recommendedCafe, selectedCategories, setFilteredRecommendedCafe]);
+  }, [recommendedCafes, selectedCategories, setFilteredRecommendedCafe]);
 
   return (
     <div className="pt-2 flex flex-wrap justify-center gap-2">

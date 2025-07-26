@@ -18,9 +18,7 @@ export default function SearchedCafes() {
   const paginatedResult = searchResult.slice((currentPage - 1) * searchResultsPerPage, currentPage * searchResultsPerPage);
 
   // 페이지 변경 시 맨 위로 스크롤
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchResult]);
+  useEffect(() => { setCurrentPage(1); }, [searchResult]);
 
   const handleNextSearchResultPage = () => {
     if (currentPage < totalSearchResultPages) setCurrentPage(currentPage + 1);
@@ -30,7 +28,7 @@ export default function SearchedCafes() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleNormalCafeClick = useCafeClickHandler<IKakaoSearchResult>({
+  const handleSearchedCafeClick = useCafeClickHandler<IKakaoSearchResult>({
     routePath: 'search',
     shouldSetCurrentCafeId: false,
   });
@@ -46,7 +44,7 @@ export default function SearchedCafes() {
               name={cafe.place_name}
               address={cafe.road_address_name}
               phoneNum={cafe.phone}
-              onClickAction={() => handleNormalCafeClick(cafe)}
+              onClickAction={() => handleSearchedCafeClick(cafe)}
             />
           ))}
         </ul>

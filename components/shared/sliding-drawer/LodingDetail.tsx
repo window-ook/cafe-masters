@@ -1,3 +1,5 @@
+'use client';
+
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoMdClock } from 'react-icons/io';
 import { IoBookmark, IoLocation, IoCloseCircle } from 'react-icons/io5';

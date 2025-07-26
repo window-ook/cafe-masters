@@ -27,16 +27,15 @@ export default function Sidebar() {
     HELP: pathname.startsWith('/help'),
   };
 
-  useEffect(() => {
-    if (PATHS.MAIN) setIsSlidingDrawerOpen(false);
-  }, [pathname, PATHS.MAIN, setIsSlidingDrawerOpen]);
+  useEffect(() => { if (PATHS.MAIN) setIsSlidingDrawerOpen(false); }, [pathname, PATHS.MAIN, setIsSlidingDrawerOpen]);
 
   return (
     <nav className="relative flex recommended-center">
       {/* 사이드바 컨테이너 */}
       <div
-        className={`z-10 relative w-screen h-screen max-w-108 px-1 rounded-none shadow-xl shadow-main-shadow ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'
-          } ${isSlidingDrawerOpen && 'hidden sm:block'}`}
+        className={`z-10 relative w-screen h-screen max-w-108 px-1 rounded-none shadow-xl shadow-main-shadow 
+          ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'} 
+          ${isSlidingDrawerOpen && 'hidden sm:block'}`}
       >
         {/* 사이드바 컨텐츠 */}
         <div className="h-full flex flex-col">
@@ -54,6 +53,7 @@ export default function Sidebar() {
               </footer>
             </>
           )}
+
           <Suspense fallback={<div>Loading...</div>}>
             {PATHS.SEARCH && <SearchedCafes />}
             {PATHS.COLLECTED && <CollectedCafes />}

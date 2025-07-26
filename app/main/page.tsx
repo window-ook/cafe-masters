@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import MainClient from '@/components/shared/sidebar/MainClient';
+import MainClient from '@/components/main/MainClient';
 
 export const metadata: Metadata = {
   title: '메인 페이지 : Cafe Masters',

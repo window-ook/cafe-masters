@@ -13,7 +13,7 @@ export default function CollectedCafes() {
   const { userId } = useUserStore();
 
   const {
-    filteredData: filteredCollectedCafe,
+    filteredCollectedCafes,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -32,7 +32,7 @@ export default function CollectedCafes() {
 
   const handleCollectedCafeClick = useCafeClickHandler<ISupabaseCollectedCafe>({
     routePath: 'collected',
-    shouldSetCurrentCafeId: false,
+    shouldSetCurrentCafeId: true,
   });
 
   // 사용자 인증 상태 확인
@@ -76,7 +76,7 @@ export default function CollectedCafes() {
   }
 
   // 빈 데이터 상태
-  if (!filteredCollectedCafe || filteredCollectedCafe.length === 0) {
+  if (!filteredCollectedCafes || filteredCollectedCafes.length === 0) {
     return (
       <main className="relative overflow-y-auto overflow-x-hidden">
         <div className="flex flex-col items-center justify-center h-full py-16 px-8">
@@ -93,7 +93,7 @@ export default function CollectedCafes() {
     <main className="relative overflow-y-auto overflow-x-hidden">
       {/* 수집된 카페 리스트 */}
       <ul className="flex flex-col gap-8 my-8 px-8">
-        {filteredCollectedCafe.map((cafe: ISupabaseCollectedCafe) => (
+        {filteredCollectedCafes.map((cafe: ISupabaseCollectedCafe) => (
           <CollectedCafe
             key={cafe.id}
             name={cafe.name}

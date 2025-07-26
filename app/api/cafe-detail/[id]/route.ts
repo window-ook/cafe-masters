@@ -3,8 +3,11 @@ import puppeteer from 'puppeteer';
 
 export const runtime = 'nodejs';
 
-export async function GET({ params }: { params: { id: string } }) {
-  const id = await params?.id;
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
 
   if (!id) return NextResponse.json({ error: 'Invalid cafe ID' }, { status: 400 });
 

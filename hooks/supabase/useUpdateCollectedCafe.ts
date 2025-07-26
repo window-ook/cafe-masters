@@ -1,22 +1,18 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { useCafeStore, useUserStore } from '@/stores';
+import { useMapStore, useUserStore } from '@/stores';
 import {
   CollectedRowUpdate,
   updateCollectedCafe,
 } from '@/actions/supabase/collection';
 
 export function useUpdateCollectedCafe() {
-  const userId = useUserStore(state => state.userId);
-
   const queryClient = useQueryClient();
 
-  const collectedCafeDetail = useCafeStore(
-    state => state.collectedCafeDetail[0],
-  );
+  const { userId } = useUserStore();
+  const { currentCafeId } = useMapStore();
 
   return useMutation({
-    mutationFn: async (memo: CollectedRowUpdate) =>
-      await updateCollectedCafe(memo, collectedCafeDetail.id, userId),
+    mutationFn: async (memo: CollectedRowUpdate) => await updateCollectedCafe(memo, currentCafeId, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
       queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });

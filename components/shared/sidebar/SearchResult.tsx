@@ -2,7 +2,7 @@
 
 import { useUIStore } from '@/stores';
 
-interface SearchResultProps {
+interface ISearchResult {
   name: string | undefined;
   address: string;
   phoneNum: string | null | undefined;
@@ -14,7 +14,7 @@ export default function SearchResult({
   name,
   address,
   phoneNum,
-}: SearchResultProps) {
+}: ISearchResult) {
   const { isDarkTheme } = useUIStore();
 
   return (
