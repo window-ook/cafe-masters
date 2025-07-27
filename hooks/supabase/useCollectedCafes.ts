@@ -4,7 +4,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useFilterStore } from 'stores/filter';
 import { getCollectedCafes, getCollectedCafesCounts } from '@/actions/supabase/collection';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
-import { collectedCafeQuery } from '@/queries/supabase/collections';
+import { collectedCafeQuery } from '@/queries/supabase/collection';
 
 /**
  * 모든 수집 카페 조회 훅
@@ -26,8 +26,6 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
     getNextPageParam: lastPage => {
       return lastPage.nextCursor !== null ? lastPage.nextCursor : null;
     },
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 60 * 5,
   });
 
   // 모든 페이지의 데이터를 하나의 배열로 합치고 필터링 적용
@@ -65,11 +63,7 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
     searchTermInCollectedCafe,
   ]);
 
-  return {
-    ...infiniteQuery,
-    collectedCafes,
-    filteredCollectedCafes,
-  };
+  return { ...infiniteQuery, collectedCafes, filteredCollectedCafes };
 }
 
 /** 모든 수집 카페 수 조회 훅
@@ -81,8 +75,6 @@ export function useCollectedCafesCounts(userId: string) {
     enabled: !!userId,
     queryKey: collectedCafeQuery.counts(userId),
     queryFn: () => getCollectedCafesCounts(userId),
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 60 * 5,
   });
 
   return { collectedCounts: data, isError, error, isLoading };

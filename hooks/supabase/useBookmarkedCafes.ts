@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useFilterStore } from 'stores/filter';
 import { getBookmarkedCafes, getBookmarkedCafesCounts } from '@/actions/supabase/bookmark';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
+import { bookmarkedCafeQuery } from '@/queries/supabase/bookmark';
 
 interface IBookmarkedCafes {
   bookmarkedCafes: ISupabaseBookmarkedCafe[];
@@ -34,7 +35,7 @@ export function useBookmarkedCafes(
 
   const queryData = useQuery({
     enabled: !!userId,
-    queryKey: ['bookmarkedCafe', userId],
+    queryKey: bookmarkedCafeQuery.all(userId),
     queryFn: async () => {
       const response = await getBookmarkedCafes(userId);
       return response;
@@ -92,12 +93,7 @@ export function useBookmarkedCafes(
     itemsPerPage,
   ]);
 
-  return {
-    ...paginationData,
-    isLoading: queryData.isLoading,
-    isError: queryData.isError,
-    error: queryData.error,
-  };
+  return { ...paginationData, isLoading: queryData.isLoading, isError: queryData.isError, error: queryData.error };
 }
 
 /** 모든 북마크 카페 수 조회 훅

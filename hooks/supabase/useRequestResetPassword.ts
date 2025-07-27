@@ -7,10 +7,10 @@ import { createBrowserSupabaseClient } from '@/utils/supabase/client';
  * @description 이메일로 비밀번호 재설정 링크를 전송합니다
  * @returns { requestReset: (email: string) => void, isPending, error }
  */
-export function useResetPassword() {
+export function useRequestResetPassword() {
   const supabase = createBrowserSupabaseClient();
 
-  return useMutation({
+  const requestResetPassword = useMutation({
     mutationFn: async (email: string) => {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/resetpassword`,
@@ -24,4 +24,6 @@ export function useResetPassword() {
       alert('재요청은 이전 요청 60초 후 가능합니다.');
     },
   });
+
+  return { requestResetPassword: requestResetPassword.mutate };
 }

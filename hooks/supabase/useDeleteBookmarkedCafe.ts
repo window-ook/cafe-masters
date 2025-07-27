@@ -2,23 +2,20 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserStore } from '@/stores';
 import { deleteBookmarkedCafe } from '@/actions/supabase/bookmark';
 
+/** 북마크한 카페 삭제 훅 */
 export function useDeleteBookmarkedCafe() {
-  const userId = useUserStore(state => state.userId);
-
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async (cafeId: number) => {
-      return await deleteBookmarkedCafe(cafeId, userId);
-    },
+  const { userId } = useUserStore();
+
+  const deleteBookmark = useMutation({
+    mutationFn: async (cafeId: number) => await deleteBookmarkedCafe(cafeId, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkedCafe', userId] });
-      queryClient.invalidateQueries({
-        queryKey: ['bookmarkedCafeCount', userId],
-      });
-      queryClient.refetchQueries({ queryKey: ['bookmarkedCafe', userId] });
-      queryClient.refetchQueries({ queryKey: ['bookmarkedCafeCount', userId] });
+      queryClient.invalidateQueries({ queryKey: ['bookmarkedCafeCount', userId] });
     },
     onError: error => console.error(error),
   });
+
+  return { deleteBookmarkedCafe: deleteBookmark.mutate };
 }

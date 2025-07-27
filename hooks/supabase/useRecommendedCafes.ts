@@ -13,8 +13,6 @@ export function useRecommendedCafes() {
       const response = await getRecommendedCafes();
       return response.data;
     },
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 60 * 5,
   });
 
   return { recommendedCafes: data || [], isError, error, isLoading };

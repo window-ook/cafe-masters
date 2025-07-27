@@ -4,7 +4,7 @@ import { createBrowserSupabaseClient } from 'utils/supabase/client';
 export function useVerifyOtpCode() {
   const supabase = createBrowserSupabaseClient();
 
-  return useMutation({
+  const verifyOtpCode = useMutation({
     mutationFn: async ({ email, otp }: { email: string; otp: string }) => {
       const { error } = await supabase.auth.verifyOtp({
         type: 'signup',
@@ -17,4 +17,6 @@ export function useVerifyOtpCode() {
 
     onError: error => console.error(error),
   });
+
+  return { verifyOtpCode: verifyOtpCode.mutate, verifyOtpPending: verifyOtpCode.isPending };
 }

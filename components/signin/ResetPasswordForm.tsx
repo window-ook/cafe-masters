@@ -14,10 +14,10 @@ export default function ResetPasswordForm() {
 
   const router = useRouter();
 
-  const finishResetMutation = useFinishResetPassword();
+  const { finishResetPassword } = useFinishResetPassword();
 
   const handleSubmit = () => {
-    finishResetMutation.mutate(newPassword);
+    finishResetPassword(newPassword);
     alert('비밀번호를 재설정했습니다!');
     router.push('/reset-password/complete');
   };

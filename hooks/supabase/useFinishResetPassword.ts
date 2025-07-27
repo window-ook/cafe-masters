@@ -4,7 +4,7 @@ import { createBrowserSupabaseClient } from 'utils/supabase/client';
 export function useFinishResetPassword() {
   const supabase = createBrowserSupabaseClient();
 
-  return useMutation({
+  const finishResetPassword = useMutation({
     mutationFn: async (newPassword: string) => {
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
@@ -20,4 +20,6 @@ export function useFinishResetPassword() {
       alert('새로운 비밀번호는 기존 비밀번호와 달라야합니다.');
     },
   });
+
+  return { finishResetPassword: finishResetPassword.mutate };
 }

@@ -7,31 +7,20 @@ import { getAdminUser } from '@/actions/supabase/user';
 export function useSignIn() {
   const supabase = createBrowserSupabaseClient();
 
-  const setUserId = useUserStore(state => state.setUserId);
-  const setUserEmail = useUserStore(state => state.setUserEmail);
-  const setAdmin = useUserStore(state => state.setAdmin);
-
   const router = useRouter();
 
-  return useMutation({
-    mutationFn: async ({
-      email,
-      password,
-    }: {
-      email: string;
-      password: string;
-    }) => {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+  const { setUserId, setUserEmail, setAdmin } = useUserStore();
+
+  const signIn = useMutation({
+    mutationFn: async ({ email, password }: { email: string; password: string }) => {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) throw new Error(error.message);
       return data.session;
     },
 
     onSuccess: async session => {
-      // 유저 데이터 초기화 보장
+      // 유저 데이터 초기화
       useUserStore.setState({
         userId: '',
         userEmail: '',
@@ -45,6 +34,7 @@ export function useSignIn() {
       const user = session?.user;
       if (!user) return;
 
+      // 유저 ID, 이메일 동기화
       setUserId(user.id);
       setUserEmail(user.email ?? '');
 
@@ -52,6 +42,7 @@ export function useSignIn() {
       const isAdmin = await getAdminUser(user.id);
       if (isAdmin) setAdmin(true);
 
+      // 세션 새로고침
       await supabase.auth.refreshSession();
       router.replace('/cafe');
     },
@@ -61,4 +52,6 @@ export function useSignIn() {
       else alert('서버에 에러가 발생했습니다.');
     },
   });
+
+  return { signIn: signIn.mutate, isPending: signIn.isPending };
 }

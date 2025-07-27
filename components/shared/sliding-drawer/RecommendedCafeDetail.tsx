@@ -36,8 +36,8 @@ export default function RecommendedCafeDetail({
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  const uploadBookmarkMutation = useUploadBookmarkedCafe();
-  const deleteBookmarkMutation = useDeleteBookmarkedCafe();
+  const { uploadBookmarkedCafe } = useUploadBookmarkedCafe();
+  const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
 
   const { recommendedCafes } = useRecommendedCafes();
 
@@ -59,11 +59,11 @@ export default function RecommendedCafeDetail({
 
     try {
       if (isBookmarked) {
-        await deleteBookmarkMutation.mutateAsync(recommendedCafedetail.id);
+        await deleteBookmarkedCafe(recommendedCafedetail.id);
         setIsBookmarked(false);
         toast.success('북마크가 해제되었습니다.');
       } else {
-        await uploadBookmarkMutation.mutateAsync({
+        await uploadBookmarkedCafe({
           user_id: userId,
           id: recommendedCafedetail.id,
           name: recommendedCafedetail.name,

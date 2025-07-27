@@ -36,8 +36,8 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  const uploadBookmarkMutation = useUploadBookmarkedCafe();
-  const deleteBookmarkMutation = useDeleteBookmarkedCafe();
+  const { uploadBookmarkedCafe } = useUploadBookmarkedCafe();
+  const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
 
   // searchResult에서 cafeId에 해당하는 카페 찾기
   const detail = useMemo(() => {
@@ -88,11 +88,11 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
 
     try {
       if (isBookmarked) {
-        await deleteBookmarkMutation.mutateAsync(Number(detail.id));
+        await deleteBookmarkedCafe(Number(detail.id));
         setIsBookmarked(false);
         toast.success('북마크에서 제거되었습니다.');
       } else {
-        await uploadBookmarkMutation.mutateAsync({
+        await uploadBookmarkedCafe({
           user_id: userId,
           id: Number(detail.id),
           name: detail.name,

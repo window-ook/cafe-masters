@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useSignUp } from '@/hooks/supabase/useSignUp';
 import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
+import { useVerifyOtpCode } from '@/hooks/supabase/useVerifyOtpCode';
 import {
   authFormCardStyle,
   authFormMentionStyle,
@@ -11,7 +12,6 @@ import {
 } from '@/utils/styles';
 import { handleEmailValid } from '@/utils/shared/auth';
 import Link from 'next/link';
-import { useVerifyOtpCode } from '@/hooks/supabase/useVerifyOtpCode';
 import UserForm from '@/components/shared/UserForm';
 import CodeForm from '@/components/signup/CodeForm';
 
@@ -23,8 +23,8 @@ export default function SignUpForm() {
     useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
 
-  const signupMutation = useSignUp();
-  const verifyOtpMutation = useVerifyOtpCode();
+  const { signUp, signUpPending } = useSignUp();
+  const { verifyOtpCode, verifyOtpPending } = useVerifyOtpCode();
 
   const handleEmail = () => {
     let isValid = true;
@@ -39,14 +39,14 @@ export default function SignUpForm() {
 
   const handleSignup = () => {
     if (handleEmail()) {
-      signupMutation.mutate({ email, password });
+      signUp({ email, password });
       setConfirmationRequired(true);
     }
   };
 
   const handleVerifyOtp = () => {
     if (confirmationRequired) {
-      verifyOtpMutation.mutate({ email, otp });
+      verifyOtpCode({ email, otp });
       alert('회원가입이 완료되었습니다');
     } else handleSignup();
   };
@@ -80,8 +80,8 @@ export default function SignUpForm() {
           onClick={handleVerifyOtp}
           disabled={
             confirmationRequired
-              ? verifyOtpMutation.isPending || otp.length < 6
-              : signupMutation.isPending || password.length < 6
+              ? verifyOtpPending || otp.length < 6
+              : signUpPending || password.length < 6
           }
         >
           <span className="font-dpixel text-lg text-white">

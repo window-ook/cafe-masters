@@ -2,6 +2,7 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ISearchedCafeDetail } from '@/types/kakao-map/kakao-map';
+import { searchedCafeDetailQuery } from '@/queries/kakao-map/searched';
 
 /** 검색된 카페 상세 정보 조회 훅
  * @param cafeId 카페 ID
@@ -9,7 +10,7 @@ import { ISearchedCafeDetail } from '@/types/kakao-map/kakao-map';
  */
 export function useSearchedCafeDetail(cafeId: string) {
   const { data, isError, error } = useSuspenseQuery({
-    queryKey: ['searchedCafeDetail', cafeId],
+    queryKey: searchedCafeDetailQuery.all(cafeId),
     queryFn: async (): Promise<ISearchedCafeDetail> => {
       const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
       const detailUrl = BASE_URL === 'http://localhost:3000'

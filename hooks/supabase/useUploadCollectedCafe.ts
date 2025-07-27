@@ -5,18 +5,17 @@ import {
   createCollectedCafe,
 } from '@/actions/supabase/collection';
 
+/** 수집한 카페 추가 훅 */
 export function useUploadCollectedCafe() {
   const queryClient = useQueryClient();
 
   const { userId } = useUserStore();
 
-  return useMutation({
-    mutationFn: async (memo: CollectedRowInsert) =>
-      await createCollectedCafe(memo),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] });
-      queryClient.refetchQueries({ queryKey: ['collectedCafe', userId] });
-    },
+  const uploadCollected = useMutation({
+    mutationFn: async (memo: CollectedRowInsert) => await createCollectedCafe(memo),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['collectedCafe', userId] }),
     onError: error => console.error(error),
   });
+
+  return { uploadCollectedCafe: uploadCollected.mutate };
 }

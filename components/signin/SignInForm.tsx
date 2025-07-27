@@ -20,7 +20,7 @@ export default function SignInForm() {
   const [password, setPassword] = useState<string>('');
   const [resetRequired, setResetRequired] = useState<boolean>(false);
 
-  const signinMutation = useSignIn();
+  const { signIn, isPending } = useSignIn();
 
   const handleEmail = () => {
     let isValid = true;
@@ -36,7 +36,7 @@ export default function SignInForm() {
   const handleSignin = () => {
     if (handleEmail()) {
       const trimmedEmail: string = email.trim();
-      signinMutation.mutate({ email: trimmedEmail, password });
+      signIn({ email: trimmedEmail, password });
     }
   };
 
@@ -65,7 +65,7 @@ export default function SignInForm() {
               aria-label="로그인 버튼"
               className="w-full py-1 bg-main hover:bg-opacity-70 hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
               onClick={handleSignin}
-              disabled={signinMutation.isPending || password.length < 6}
+              disabled={isPending || password.length < 6}
             >
               <span className="font-dpixel text-white">접속하기</span>
             </button>

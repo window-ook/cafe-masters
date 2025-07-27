@@ -7,14 +7,8 @@ export function useSignUp() {
 
   const router = useRouter();
 
-  return useMutation({
-    mutationFn: async ({
-      email,
-      password,
-    }: {
-      email: string;
-      password: string;
-    }) => {
+  const signUp = useMutation({
+    mutationFn: async ({ email, password }: { email: string; password: string }) => {
       const { error } = await supabase.auth.signUp({
         email,
         password,
@@ -33,4 +27,6 @@ export function useSignUp() {
 
     onError: error => console.error(error),
   });
+
+  return { signUp: signUp.mutate, signUpPending: signUp.isPending };
 }

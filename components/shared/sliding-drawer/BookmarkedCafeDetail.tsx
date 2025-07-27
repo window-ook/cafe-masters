@@ -34,7 +34,7 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
 
   const detail = filteredBookmarkedCafes.find((cafe: ISupabaseBookmarkedCafe) => cafe.id === Number(cafeId));
 
-  const deleteBookmarkMutation = useDeleteBookmarkedCafe();
+  const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
 
   if (!detail) {
     return (
@@ -48,7 +48,7 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
     if (!userId) return;
 
     try {
-      await deleteBookmarkMutation.mutateAsync(detail.id);
+      await deleteBookmarkedCafe(detail.id);
       setIsBookmarked(false);
       toast.success('북마크가 해제되었습니다.');
       handleClose();
