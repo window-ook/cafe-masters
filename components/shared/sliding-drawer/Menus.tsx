@@ -21,7 +21,7 @@ export default function Menus({ menus }: IMenus) {
         <div className="w-full">
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="menus">
-                    <AccordionTrigger className="py-3 text-lg font-semibold">
+                    <AccordionTrigger className="text-lg font-semibold cursor-pointer">
                         메뉴 보기 ({menus.length}개)
                     </AccordionTrigger>
                     <AccordionContent className="px-4 pb-4">
@@ -29,7 +29,7 @@ export default function Menus({ menus }: IMenus) {
                             {menus.map((menu, index) => (
                                 <div
                                     key={index}
-                                    className="flex flex-col gap-1 p-3 bg-gray-50 rounded-lg border"
+                                    className="flex flex-col gap-1 p-3 shadow-md rounded-lg"
                                 >
                                     <div className="flex justify-between items-start">
                                         <h4 className="font-medium text-base">{menu.name}</h4>
@@ -44,7 +44,7 @@ export default function Menus({ menus }: IMenus) {
                                     )}
                                 </div>
                             ))}
-                            <p>더 많은 메뉴는 썸네일 클릭</p>
+                            <p>더 다양한 메뉴를 보려면 썸네일 클릭</p>
                         </div>
                     </AccordionContent>
                 </AccordionItem>

@@ -15,7 +15,7 @@ export default function UserForm({
 }: IUserForm) {
   return (
     <section className="mb-1 flex flex-col gap-4 z-10">
-      <label htmlFor="email" className="text-xl font-dpixel">
+      <label htmlFor="email" className="text-xl ">
         이메일
       </label>
       <input
@@ -25,7 +25,7 @@ export default function UserForm({
         className="border border-gray-400"
         data-cy="email-input"
       />
-      <label htmlFor="password" className="text-xl font-dpixel">
+      <label htmlFor="password" className="text-xl ">
         비밀번호
       </label>
       <input

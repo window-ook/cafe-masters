@@ -20,10 +20,10 @@ export default function ResetPasswordCompleteForm() {
                 </span>
                 <div className="z-10 p-5 rounded-xl bg-white shadow-main-shadow">
                     <div className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4">
-                        <p className="text-center text-3xl font-bold font-dpixel">
+                        <p className="text-center text-3xl font-bold ">
                             비밀번호 재설정 완료
                         </p>
-                        <span className="text-lg font-dpixel">
+                        <span className="text-lg ">
                             초기 화면으로 돌아가 다시 로그인하세요!
                         </span>
                         <button
@@ -32,7 +32,7 @@ export default function ResetPasswordCompleteForm() {
                             onClick={handleWindow}
                             aria-label="돌아가기 버튼, 초기 화면으로 돌아갑니다."
                         >
-                            <span className="text-white font-dpixel">돌아가기</span>
+                            <span className="text-white ">돌아가기</span>
                         </button>
                     </div>
                 </div>

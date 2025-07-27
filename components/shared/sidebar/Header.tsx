@@ -79,13 +79,13 @@ export default function Header() {
 
       {PATHS.SEARCH && (
         <div className="flex justify-center items-center">
-          <span className="text-xl">
-            검색 결과{' '}
-            <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
+          <p className="text-xl">
+            <span>검색 결과 </span>
+            <span className={`font-semibold ${isDarkTheme ? 'text-white' : 'text-main'}`}>
               {searchResult.length}
             </span>
             개
-          </span>
+          </p>
         </div>
       )}
 

@@ -15,7 +15,7 @@ import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 
-export default function FormForCollect() {
+export default function FormForCollect({ setIsCollectFormOpenAction }: { setIsCollectFormOpenAction: (isCollectFormOpen: boolean) => void }) {
   const pathname = usePathname();
 
   const userId = useUserStore(state => state.userId);
@@ -55,20 +55,20 @@ export default function FormForCollect() {
   const onFormSubmit = (data: CollectionFormData) => console.log(data);
 
   const memoInputStyle = `${isDarkTheme ? 'text-black' : ''} px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent`;
-  const memoSubmitStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} p-4 shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70 disabled:opacity-50 disabled:cursor-not-allowed transition-all`;
-  const memoBackStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} py-2 px-6 shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70 transition-all`;
+  const memoSubmitStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} p-4 shadow-sm rounded-xl bg-main text-white cursor-pointer hover:bg-opacity-70 disabled:opacity-50 disabled:cursor-not-allowed transition-all`;
+  const memoBackStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} py-2 px-6 shadow-sm rounded-xl bg-main text-white cursor-pointer hover:bg-opacity-70 transition-all`;
   const errorStyle = 'text-red-500 text-sm mt-1 block';
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
-        <p className="font-dpixel text-2xl font-semibold">
+        <p className=" text-2xl font-semibold">
           {getCafeName()}
         </p>
         <button
           type="button"
           aria-label="카드 수집 취소 버튼"
-          // onClick={() => setMemoOpenAction(false)}
+          onClick={() => setIsCollectFormOpenAction(false)}
           className={memoBackStyle}
         >
           <span>Back</span>

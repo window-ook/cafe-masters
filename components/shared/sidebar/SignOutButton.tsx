@@ -20,7 +20,7 @@ export default function SignOutButton() {
       className="bg-main rounded-xl shadow-md w-full py-4 sm:py-2 hover:bg-main-dark cursor-pointer transition duration-300 ease-in"
       onClick={handleSignOut}
     >
-      <span className="text-white font-dpixel text-2xl sm:text-lg">로그아웃</span>
+      <span className="text-white  text-2xl sm:text-lg">로그아웃</span>
     </button>
   );
 }

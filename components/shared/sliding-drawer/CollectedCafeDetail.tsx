@@ -4,8 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useUIStore, useUserStore } from 'stores';
 import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
-import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
-import { IoCloseCircle } from 'react-icons/io5';
+import { CircleX } from 'lucide-react';
 import Image from 'next/image';
 import Ratings from './Ratings';
 import Location from './Location';
@@ -16,6 +15,7 @@ import Pros from './Pros';
 import Cons from './Cons';
 import OpenTime from './OpenTime';
 import Categories from './Categories';
+import Button from '@/components/shared/sliding-drawer/Button';
 
 export default function CollectedCafeDetail({ cafeId, setIsCollectedFormOpenAction }: { cafeId: number; setIsCollectedFormOpenAction: (open: boolean) => void }) {
   const router = useRouter();
@@ -42,25 +42,23 @@ export default function CollectedCafeDetail({ cafeId, setIsCollectedFormOpenActi
   };
 
   return (
-    <div className={`flex flex-col p-2 gap-4`}>
-      <div className={getDetailHeaderStyle(isDarkTheme)}>
-        <div className="flex items-center">
-          <span className="text-[1.375rem] font-dpixel font-semibold">
-            {collectedCafeDetail?.name}
-          </span>
-        </div>
+    <div className={`h-full rounded-md flex flex-col ${isDarkTheme ? 'bg-main-dark text-white' : ''}`}>
+      {/* 헤더 */}
+      <header className={`w-full p-4 flex justify-between items-center ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
+        <div />
         <button
+          onClick={handleSetIsSubSidebarOpen}
+          className='cursor-pointer'
           type="button"
           aria-label="수집한 카드 상세 정보 보기 취소 버튼"
-          onClick={handleSetIsSubSidebarOpen}
-          className="px-2 right-2"
         >
-          <IoCloseCircle className="text-main text-3xl hover:text-opacity-70" />
+          <CircleX className='size-8' />
         </button>
-      </div>
+      </header>
 
-      <div className={getDetailBodyStyle(isDarkTheme)}>
-        <div className="flex flex-col items-center">
+      {/* 바디 */}
+      <main className={`overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
+        <section className="flex flex-col items-center">
           <a
             href={`http://place.map.kakao.com/${collectedCafeDetail?.id}`}
             target="_blank"
@@ -78,39 +76,30 @@ export default function CollectedCafeDetail({ cafeId, setIsCollectedFormOpenActi
               priority={true}
             />
           </a>
-        </div>
+        </section>
 
-        <div className="flex justify-between items-center">
-          <Ratings rating={collectedCafeDetail?.ratings ?? 0} />
-          <button
-            type="button"
-            data-cy="update-button"
-            className="px-3 py-2 bg-red-400 rounded-lg font-bold font-pretendard text-white hover:bg-opacity-70 transition duration-200 ease"
-            onClick={() => setIsCollectedFormOpenAction(true)}
-          >
-            수정하기
-          </button>
-        </div>
-
-        <div className="grid grid-cols-2 gap-6">
+        <section className="space-y-4">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-semibold">{collectedCafeDetail?.name}</h1>
+            <Ratings rating={collectedCafeDetail?.ratings ?? 0} />
+          </div>
           <Categories categories={collectedCafeDetail?.categories} />
           <OpenTime opening_time={collectedCafeDetail?.opening_time || ''} />
           <Location address={collectedCafeDetail?.address} />
           <PhoneNumber phone_number={collectedCafeDetail?.phone_number || ''} />
 
-          <div className="col-span-2 grid grid-cols-3">
-            <div className="bg-gray-400 bg-opacity-40 h-0.5 col-span-3"></div>
-          </div>
-          <div className="col-span-2 grid grid-cols-3">
-            <div className="col-span-2 font-dpixel text-2xl">CARD SPEC</div>
-          </div>
-
           <Comment comment={collectedCafeDetail?.comment} />
           <EatenMenus eaten={collectedCafeDetail?.eaten_menus ?? ''} />
           <Pros pros={collectedCafeDetail?.pros ?? ''} />
           <Cons cons={collectedCafeDetail?.cons ?? ''} />
-        </div>
-      </div>
+        </section>
+
+        <Button
+          onClick={() => setIsCollectedFormOpenAction(true)}
+        >
+          수정하기
+        </Button>
+      </main>
     </div>
   );
 }

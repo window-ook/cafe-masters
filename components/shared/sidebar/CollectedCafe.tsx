@@ -187,7 +187,7 @@ export default function CollectedCafe({
             >
               {name}{' '}
               {isHiddenCard && (
-                <span className="inline-flex h-6 px-2 rounded-lg shadow-md bg-linear-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-size-[200%_200%] animate-gradient items-center justify-center text-sm font-dpixel">
+                <span className="inline-flex h-6 px-2 rounded-lg shadow-md bg-linear-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-size-[200%_200%] animate-gradient items-center justify-center text-sm ">
                   HIDDEN
                 </span>
               )}
@@ -214,7 +214,7 @@ export default function CollectedCafe({
             className="h-40 w-auto object-contain rounded-t-md"
           />
           <div className="h-4 w-full bg-white rounded-b-md flex items-center justify-center">
-            <span className="font-dpixel text-xs text-black">CAFE MASTERS</span>
+            <span className=" text-xs text-black">CAFE MASTERS</span>
           </div>
         </div>
         <div

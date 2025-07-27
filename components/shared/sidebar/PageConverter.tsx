@@ -24,9 +24,9 @@ export default function PageConverter({
           className={`px-4 py-2 ${currentPage === 1 ? 'opacity-50' : 'opacity-100'
             }`}
         >
-          <span className="text-3xl font-dpixel">{'<'}</span>
+          <span className="text-3xl ">{'<'}</span>
         </button>
-        <p className="text-2xl font-dpixel">
+        <p className="text-2xl ">
           {currentPage} / {totalPages}
         </p>
         <button
@@ -37,7 +37,7 @@ export default function PageConverter({
           className={`px-4 py-2 ${currentPage === totalPages ? 'opacity-50' : 'opacity-100'
             }`}
         >
-          <span className="text-3xl font-dpixel">{'>'}</span>
+          <span className="text-3xl ">{'>'}</span>
         </button>
       </div>
     </section>

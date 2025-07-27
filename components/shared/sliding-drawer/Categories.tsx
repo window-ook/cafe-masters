@@ -1,9 +1,14 @@
+import { Layers } from 'lucide-react';
+
 export default function Categories({ categories }: { categories: string[] }) {
   return (
-    <div className="col-span-2 grid grid-cols-3">
+    <section className="col-span-2 grid grid-cols-3">
+      {/* 왼쪽 */}
       <div className="col-span-1 flex gap-1 items-center">
-        <span className="font-dpixel">카테고리</span>
+        <Layers className='size-4' />
+        <span className="font-medium">카테고리</span>
       </div>
+      {/* 오른쪽 */}
       <div className="col-span-2 flex flex-wrap gap-2 text-md">
         {categories?.map(element => (
           <div
@@ -14,6 +19,6 @@ export default function Categories({ categories }: { categories: string[] }) {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

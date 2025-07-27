@@ -83,7 +83,7 @@ export default function SignUpForm() {
               : signUpPending || password.length < 6
           }
         >
-          <span className="font-dpixel text-lg text-white">
+          <span className=" text-lg text-white">
             {confirmationRequired ? '인증 코드 확인' : '가입하기'}
           </span>
         </button>
@@ -93,7 +93,7 @@ export default function SignUpForm() {
           className={kakaoButtonStyle}
           onClick={() => signinWithKakao()}
         >
-          <span className="font-dpixel text-lg text-white">
+          <span className=" text-lg text-white">
             카카오로 회원가입
           </span>
         </button>
@@ -105,7 +105,7 @@ export default function SignUpForm() {
             aria-label="로그인 페이지로 이동 버튼"
             className="hover:cursor-pointer hover:bg-gray-100"
           >
-            <span className="font-bold font-dpixel text-main">로그인 하기</span>
+            <span className="font-bold  text-main">로그인 하기</span>
           </Link>
         </p>
       </form>

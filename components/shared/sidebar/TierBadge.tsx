@@ -32,7 +32,7 @@ export default function TierBadge({ tier }: { tier: Tier }) {
           onClick={() => handleOpen()}
           className={`${TIER_STYLES[tier]} w-20 h-6 py-4 rounded-xl flex items-center justify-center hover:cursor-pointer`}
         >
-          <span className="text-sm font-dpixel">{tier}</span>
+          <span className="text-sm ">{tier}</span>
         </button>
       </div>
       <TierDialog open={open} handleCloseAction={handleCloseAction} />

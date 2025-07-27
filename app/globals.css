@@ -17,7 +17,7 @@ body {
 
   /* 폰트 */
   --font-pretendard: var(--font-pretendard);
-  --font-dpixel: var(--font-dunggeunmo);
+  --: var(--font-dunggeunmo);
 
   /* 폰트 사이즈 */
   --text-2xs: 0.3rem;
@@ -209,6 +209,11 @@ body {
   /* 페이지네이션 사이드바 리스트 */
   .pagination-sidebar-list {
     @apply my-8 px-8 flex flex-col gap-8;
+  }
+
+  /* 상세 페이지 슬라이드의 카페 이미지 */
+  .slide-images {
+    @apply w-80 max-w-full h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer;
   }
 
   /* Expert 티어 뱃지 그라데이션 */

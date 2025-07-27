@@ -54,12 +54,12 @@ export default function CategoryFilter() {
         className="w-full px-4 py-2 rounded-full flex justify-center items-center text-gray-700 hover:text-main transition"
       >
         {isExpanded ? (
-          <p className="flex items-center gap-1 font-dpixel">
+          <p className="flex items-center gap-1 ">
             <span>접기</span>
             <FaChevronUp />
           </p>
         ) : (
-          <p className="flex items-center gap-1 font-dpixel">
+          <p className="flex items-center gap-1 ">
             <span>펼치기</span>
             <FaChevronDown />
           </p>

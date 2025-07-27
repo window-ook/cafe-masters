@@ -1,21 +1,21 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import { useRef, useMemo } from 'react';
 import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
 import { useSearchedResultStore, useMapStore, useUIStore, useUserStore } from '@/stores';
 import { getDetailBodyStyle } from '@/utils/styles';
-import { Bookmark, CircleX } from 'lucide-react';
+import { Bookmark, CircleX, FolderCheck } from 'lucide-react';
 import { toast } from 'react-toastify';
-import Image from 'next/image';
 import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
 import Location from '@/components/shared/sliding-drawer/Location';
 import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
 import Button from '@/components/shared/sliding-drawer/Button';
 import Menus from '@/components/shared/sliding-drawer/Menus';
+import ImageWithFallback from '../ImageWithFallback';
 
 interface ISearchedCafeDetail {
   cafeId: number;
@@ -41,7 +41,6 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
 
   // React Query로 카페 상세 정보 가져오기
   const { searchedCafeDetail } = useSearchedCafeDetail(cafeId.toString());
-
   const { uploadBookmarkedCafe } = useUploadBookmarkedCafe();
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
 
@@ -52,7 +51,7 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
     if (!foundCafe) {
       return {
         id: cafeId,
-        name: '카페 정보를 찾을 수 없습니다',
+        name: '카페를 찾을 수 없습니다',
         image: '',
         address: '',
         phone_number: '',
@@ -149,141 +148,131 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
   return (
     <div className={`h-full rounded-md flex flex-col ${isDarkTheme ? 'bg-main-dark text-white' : ''}`}>
       {/* 헤더 */}
-      <header className={`p-2 ${isDarkTheme ? 'shadow-main-shadow' : ''} flex justify-between items-center`}>
-        <div className="flex justify-between items-center p-4 w-full">
+      <header className={`w-full p-4 ${isDarkTheme ? 'shadow-main-shadow' : ''} flex justify-between items-center`}>
+        <div className='flex items-center gap-2'>
           <button onClick={handleBookmarkToggle} className='cursor-pointer'>
             <Bookmark className={`size-8 ${isBookmarked ? 'text-bookmark fill-bookmark' : 'text-unbookmark'}`} />
           </button>
-          <button onClick={handleClose} className='cursor-pointer'>
-            <CircleX className='size-8' />
-          </button>
+          {/* 수집 상태 배지 */}
+          {isCollected && <CollectedBadge />}
         </div>
+        <button onClick={handleClose} className='cursor-pointer'>
+          <CircleX className='size-8' />
+        </button>
       </header>
 
       {/* 바디 */}
-      <main className={`p-2 overflow-y-auto flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
-        <div className="p-4 space-y-6">
-          {/* 카페 이미지 */}
-          {searchedCafeDetail.image && (
-            <div className={`pb-2 flex flex-col gap-4 shadow-sm shadow-main/10 rounded-md`}>
-              <section className="relative flex flex-col items-center">
-                <button
-                  onClick={() => handleScroll('left')}
-                  className={`absolute left-0 z-10 px-2 py-1 shadow-md rounded-md top-1/2 transform -translate-y-1/2 ${isDarkTheme ? 'bg-main' : 'bg-white/30'}`}
-                >
-                  <span className={`${isDarkTheme ? '' : 'text-main'}`}>◀</span>
-                </button>
-                {/* 카페 이미지 슬라이드 */}
-                <div
-                  ref={scrollRef}
-                  className="flex gap-4 overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory"
-                >
-                  <div className="snap-center shrink-0 h-60 py-2">
-                    {searchedCafeDetail?.image && (
-                      <a
-                        data-cy="normal-detail-thumbnail"
-                        onClick={() =>
-                          window.open(
-                            `http://place.map.kakao.com/${detail?.id}`,
-                            '_blank',
-                          )
-                        }
-                      >
-                        <Image
-                          src={searchedCafeDetail.image}
-                          alt="카페 썸네일"
-                          width={340}
-                          height={240}
-                          priority={true}
-                          className="w-[20rem] h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
-                        />
-                      </a>
-                    )}
-                  </div>
-                  {searchedCafeDetail?.extra_images?.map((photo, i) => {
-                    return (
-                      <div key={i} className="snap-center py-2 shrink-0 h-60">
-                        <Image
-                          key={photo}
-                          data-cy="normal-detail-thumbnail"
-                          alt="카페 썸네일"
-                          src={photo || '/image/cafe_thumbnail.avif'}
-                          width={340}
-                          height={240}
-                          className="w-[20rem] h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer"
-                          priority={true}
-                          onClick={() =>
-                            window.open(
-                              `http://place.map.kakao.com/${detail?.id}`,
-                              '_blank',
-                            )
-                          }
-                        />
-                      </div>
-                    );
-                  })}
-                  <button
-                    className={`absolute right-0 z-10 px-2 py-1 shadow-md rounded-md top-1/2 transform -translate-y-1/2 ${isDarkTheme ? 'bg-main' : 'bg-white/30'}`}
-                    onClick={() => handleScroll('right')}
+      <main className={`overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
+        {/* 카페 이미지 */}
+        {searchedCafeDetail.image && (
+          <section className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4 ">
+            <button
+              type="button"
+              aria-label="카페 이미지 슬라이드 왼쪽으로 이동"
+              onClick={() => handleScroll('left')}
+              className={`absolute left-0 z-10 top-1/2 transform -translate-y-1/2 px-2 py-1 shadow-md rounded-md ${isDarkTheme ? 'bg-main' : 'bg-white/30'} cursor-pointer`}
+            >
+              <span className={`${isDarkTheme ? '' : 'text-main'}`}>◀</span>
+            </button>
+            {/* 카페 이미지 슬라이드 */}
+            <div
+              ref={scrollRef}
+              className="w-full max-w-full overflow-x-auto overflow-y-hidden flex gap-4 scrollbar-hide snap-x snap-mandatory"
+            >
+              <div className="h-60 py-2 snap-center shrink-0">
+                {searchedCafeDetail?.image && (
+                  <a
+                    type="button"
+                    aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
+                    onClick={() =>
+                      window.open(
+                        `http://place.map.kakao.com/${detail?.id}`,
+                        '_blank',
+                      )
+                    }
                   >
-                    <span className={`${isDarkTheme ? '' : 'text-main'}`}>▶</span>
-                  </button>
-                </div>
-              </section>
+                    <ImageWithFallback
+                      src={searchedCafeDetail.image}
+                      fallbackSrc={'/image/cafe_thumbnail.avif'}
+                      alt="카페 썸네일"
+                      width={340}
+                      height={240}
+                      priority={true}
+                      className="slide-images"
+                    />
+                  </a>
+                )}
+              </div>
+              {searchedCafeDetail?.extra_images?.map((photo, i) => {
+                return (
+                  <div key={i} className="h-60 py-2 snap-center shrink-0">
+                    <ImageWithFallback
+                      alt="카페 썸네일"
+                      src={photo}
+                      fallbackSrc={'/image/cafe_thumbnail.avif'}
+                      width={340}
+                      height={240}
+                      className="slide-images"
+                      priority={true}
+                      onClick={() =>
+                        window.open(
+                          `http://place.map.kakao.com/${detail?.id}`,
+                          '_blank',
+                        )
+                      }
+                    />
+                  </div>
+                );
+              })}
+              <button
+                className={`absolute right-0 z-10 px-2 py-1 top-1/2 transform -translate-y-1/2 shadow-md rounded-md ${isDarkTheme ? 'bg-main' : 'bg-white/30'} cursor-pointer`}
+                onClick={() => handleScroll('right')}
+              >
+                <span className={`${isDarkTheme ? '' : 'text-main'}`}>▶</span>
+              </button>
+            </div>
+          </section>
+        )}
+
+        {/* 카페 정보 */}
+        <section className="space-y-4">
+          {/* 카페 이름 */}
+          <h1 className="text-2xl font-bold">{detail.name}</h1>
+          {/* 주소 */}
+          <Location address={detail.address} />
+          {/* 전화번호 */}
+          <PhoneNumber phone_number={detail.phone_number} />
+          {/* 분류 */}
+          {detail.categories && detail.categories.length > 0 && (
+            <div className="col-span-2 grid grid-cols-3">
+              <div className='flex items-center gap-2'>
+                <FolderCheck className='size-4' />
+                <p className="col-span-1 font-medium">분류</p>
+              </div>
+              <div className="col-span-2 flex flex-wrap gap-2">
+                {detail.categories.map((category, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-1 rounded-full shadow-md text-xs"
+                  >
+                    {category}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
+          {/* 운영시간 */}
+          <OpenTime opening_time={searchedCafeDetail.opening_time || ''} />
+        </section>
 
-          {/* 카페 정보 */}
-          <div className="space-y-4">
-            {/* 카페 이름 */}
-            <h1 className="text-2xl font-bold">{detail.name}</h1>
-            {/* 주소 */}
-            <Location address={detail.address} />
-            {/* 전화번호 */}
-            <PhoneNumber phone_number={detail.phone_number} />
-            {/* 분류 */}
-            {detail.categories && detail.categories.length > 0 && (
-              <div className="col-span-2 grid grid-cols-3">
-                <p className="col-span-1">분류</p>
-                <div className="col-span-2 flex flex-wrap gap-2">
-                  {detail.categories.map((category, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded-full"
-                    >
-                      {category}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-            {/* 운영시간 */}
-            <OpenTime opening_time={searchedCafeDetail.opening_time || ''} />
-            {/* 수집 상태 배지 */}
-            {isCollected && <CollectedBadge />}
-          </div>
+        {/* 액션 버튼들 */}
+        <section className="flex gap-2">
+          <Button onClick={() => setIsCollectedFormOpenAction(true)} customClassName='flex-1'>수집하기</Button>
+          {admin && <Button onClick={() => setIsRecommendFormOpenAction(true)} customClassName='flex-1 bg-blue-600'>추천하기</Button>}
+        </section>
 
-          {/* 액션 버튼들 */}
-          <div className="flex gap-2">
-            <Button
-              onClick={() => setIsCollectedFormOpenAction(true)}
-              customClassName='flex-1'
-            >
-              수집하기
-            </Button>
-            {admin && (
-              <Button
-                onClick={() => setIsRecommendFormOpenAction(true)}
-                customClassName='flex-1 bg-blue-600'
-              >
-                추천하기
-              </Button>
-            )}
-          </div>
-
-          {/* 메뉴 표시 */}
-          <Menus menus={searchedCafeDetail?.menus} />
-        </div>
+        {/* 메뉴 */}
+        <Menus menus={searchedCafeDetail?.menus} />
       </main>
     </div>
   );

@@ -17,7 +17,7 @@ const Badge = ({ tier, range, color }: IBadge) => {
   return (
     <div className="flex items-center gap-3">
       <p className={color}>
-        <span className="text-sm font-dpixel">{tier}</span>
+        <span className="text-sm ">{tier}</span>
       </p>
       <p className="text-xl font-bold font-pretendard">{range}</p>
     </div>
@@ -88,7 +88,7 @@ export default function TierDialog({
               <div className="relative flex items-center gap-3">
                 <div className={masterTierModalStyle}></div>
                 <p className={getMasterTierStyle(BADGE_STYLE)}>
-                  <span className="text-sm font-dpixel">MASTER</span>
+                  <span className="text-sm ">MASTER</span>
                 </p>
                 <p className="z-10 relative text-xl font-bold font-pretendard">
                   40

@@ -31,7 +31,7 @@ export default function SlidingDrawer() {
         HELP: pathname.startsWith('/help/'),
     };
 
-    const BASE_STYLE = `static left-0 z-10 translate-y-4 w-screen max-w-108 p-2 overflow-y-auto overflow-x-hidden shadow-md ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-white/20 text-black backdrop-blur-lg'} transition-transform duration-300 ease-in-out`;
+    const BASE_STYLE = `static left-0 z-10 translate-y-4 w-screen max-w-108 p-2 overflow-x-hidden overflow-y-auto shadow-md ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-white/20 text-black backdrop-blur-lg'} transition-transform duration-300 ease-in-out`;
     const IS_OPENNED = isSlidingDrawerOpen
         ? `${isExtend ? 'translate-y-52 h-[calc(100vh-13rem)]' : 'translate-y-140'} rounded-t-3xl opacity-100 sm:h-[90vh] sm:translate-y-4 sm:translate-x-8 sm:rounded-md`
         : 'hidden sm:block sm:pointer-events-none opacity-0';
@@ -49,15 +49,16 @@ export default function SlidingDrawer() {
     );
 
     if (isCollectFormOpen) return (
-        <FormForCollect />
+        <div className={SLIDING_DRAWER_STYLE}>
+            <FormForCollect setIsCollectFormOpenAction={setIsCollectFormOpenAction} />
+        </div>
     );
 
     if (isRecommendFormOpen) return (
-        <FormForRecommend
-            detailName={'detailName'}
-            bookmarkedCafeDetailName={'bookmarkedCafeDetailName'}
-            isDarkTheme={isDarkTheme}
-            setMemoRecommendationOpenAction={setIsRecommendFormOpenAction}
-        />
+        <div className={SLIDING_DRAWER_STYLE}>
+            <FormForRecommend
+                setIsRecommendFormOpenAction={setIsRecommendFormOpenAction}
+            />
+        </div>
     );
 }

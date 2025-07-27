@@ -31,7 +31,7 @@ export default function CafeItem({
         className="w-full h-full flex justify-between items-center text-left"
       >
         <div className="h-full flex flex-col justify-center gap-1">
-          <span className="whitespace-nowrap overflow-hidden text-ellipsis font-dpixel font-bold text-xl">
+          <span className="whitespace-nowrap overflow-hidden text-ellipsis  font-bold text-xl">
             {name}
           </span>
           <div>

@@ -1,22 +1,20 @@
 'use client';
 
-import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useMapStore, useUIStore, useUserStore } from 'stores';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
-import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
-import { IoCloseCircle } from 'react-icons/io5';
-import { IoBookmark } from 'react-icons/io5';
+import { Bookmark, CircleX } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
-import CollectedBadge from './CollectedBadge';
+import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 import Categories from './Categories';
-import OpenTime from './OpenTime';
-import Location from './Location';
-import PhoneNumber from './PhoneNumber';
+import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
+import Location from '@/components/shared/sliding-drawer/Location';
+import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
+import Button from '@/components/shared/sliding-drawer/Button';
 
 interface IRecommendedCafeDetail {
   cafeId: number;
@@ -39,7 +37,6 @@ export default function RecommendedCafeDetail({
   const isBookmarked = useMapStore(state => state.isBookmarked);
   const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
 
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   const { uploadBookmarkedCafe } = useUploadBookmarkedCafe();
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
@@ -92,27 +89,21 @@ export default function RecommendedCafeDetail({
   };
 
   return (
-    <div
-      className={`h-full flex flex-col ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-white'}`}
-      ref={scrollRef}
-    >
+    <div className={`h-full rounded-md flex flex-col ${isDarkTheme ? 'bg-main-dark text-white' : ''}`}>
       {/* 헤더 */}
-      <header className={getDetailHeaderStyle(isDarkTheme)}>
-        <div className="flex justify-between items-center p-4">
-          <button onClick={handleClose}>
-            <IoCloseCircle size={24} />
+      <header className={`p-2 ${isDarkTheme ? 'shadow-main-shadow' : ''} flex justify-between items-center`}>
+        <div className="flex justify-between items-center p-4 w-full">
+          <button onClick={handleBookmarkToggle} className='cursor-pointer'>
+            <Bookmark className={`size-8 ${isBookmarked ? 'text-bookmark fill-bookmark' : 'text-unbookmark'}`} />
           </button>
-          <button onClick={handleBookmarkToggle}>
-            <IoBookmark
-              size={24}
-              className={isBookmarked ? 'text-main' : 'text-gray-400'}
-            />
+          <button onClick={handleClose} className='cursor-pointer'>
+            <CircleX className='size-8' />
           </button>
         </div>
       </header>
 
       {/* 바디 */}
-      <main className={`flex-1 overflow-y-auto ${getDetailBodyStyle(isDarkTheme)}`}>
+      <main className={`p-2 overflow-y-auto flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
         <div className="p-4 space-y-6">
           {/* 카페 이미지 */}
           {recommendedCafedetail.image && (
@@ -146,19 +137,19 @@ export default function RecommendedCafeDetail({
 
           {/* 액션 버튼들 */}
           <div className="flex gap-2">
-            <button
+            <Button
               onClick={() => setIsCollectedFormOpenAction(true)}
-              className="flex-1 bg-main text-white py-2 px-4 rounded-lg"
+              customClassName='flex-1'
             >
               수집하기
-            </button>
+            </Button>
             {admin && (
-              <button
+              <Button
                 onClick={() => setIsRecommendFormOpenAction(true)}
-                className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg"
+                customClassName='flex-1 bg-blue-600'
               >
                 수정하기
-              </button>
+              </Button>
             )}
           </div>
         </div>

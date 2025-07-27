@@ -6,7 +6,7 @@ interface ICodeForm {
 export default function CodeForm({ otp, setOtp }: ICodeForm) {
   return (
     <section className="flex flex-col gap-6">
-      <span data-cy="otp-title" className="text-xl font-dpixel">
+      <span data-cy="otp-title" className="text-xl ">
         인증 코드
       </span>
       <input

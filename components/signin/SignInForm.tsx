@@ -66,7 +66,7 @@ export default function SignInForm() {
               onClick={handleSignin}
               disabled={isPending || password.length < 6}
             >
-              <span className="font-dpixel text-white">접속하기</span>
+              <span className=" text-white">접속하기</span>
             </button>
             <button
               type="button"
@@ -75,7 +75,7 @@ export default function SignInForm() {
               className="bg-blue-600 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
               onClick={() => setResetRequired(true)}
             >
-              <span className="font-dpixel text-white">비밀번호 재설정</span>
+              <span className=" text-white">비밀번호 재설정</span>
             </button>
             <button
               type="button"
@@ -84,7 +84,7 @@ export default function SignInForm() {
               className={kakaoButtonStyle}
               onClick={() => signinWithKakao()}
             >
-              <span className="font-dpixel text-white">카카오 로그인</span>
+              <span className=" text-white">카카오 로그인</span>
             </button>
             <span color="gray" className={authFormMentionStyle}>
               계정이 없으신가요?{' '}
@@ -94,7 +94,7 @@ export default function SignInForm() {
                 aria-label="회원가입 페이지로 이동 버튼"
                 className="hover:cursor-pointer hover:bg-gray-100"
               >
-                <span className="font-bold font-dpixel text-main">
+                <span className="font-bold  text-main">
                   회원가입
                 </span>
               </Link>

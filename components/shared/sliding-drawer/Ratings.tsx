@@ -8,7 +8,7 @@ export default function Ratings({ rating }: { rating: number }) {
         <div className={ratingCircleStyle}>
           <FaStar className={ratingStarStyle} />
         </div>
-        <span className="font-dpixel">{rating}</span>
+        <span className="">{rating}</span>
       </div>
     </span>
   );

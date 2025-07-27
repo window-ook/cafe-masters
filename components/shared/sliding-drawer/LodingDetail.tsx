@@ -40,7 +40,7 @@ export default function Loading() {
 
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <p className="text-xl font-dpixel">상세 정보</p>
+            <p className="text-xl ">상세 정보</p>
           </div>
         </div>
 
@@ -48,14 +48,14 @@ export default function Loading() {
           <div className="col-span-2 grid grid-cols-3">
             <div className="col-span-1 flex gap-1 items-center">
               <IoMdClock />
-              <p className="font-dpixel">영업시간</p>
+              <p className="">영업시간</p>
             </div>
             <div className="col-span-1 text-left"></div>
           </div>
           <div className="col-span-2 grid grid-cols-3 items-center">
             <div className="col-span-1 flex items-center gap-1">
               <IoLocation />
-              <p className="font-dpixel">위치</p>
+              <p className="">위치</p>
             </div>
             <div className="col-span-2 flex items-center gap-4">
               <div className="hover:opacity-70"></div>
@@ -64,7 +64,7 @@ export default function Loading() {
           <div className="col-span-2 grid grid-cols-3 items-center">
             <div className="col-span-1 flex items-center gap-1">
               <FaPhoneSquare />
-              <p className="font-dpixel">전화번호</p>
+              <p className="">전화번호</p>
             </div>
             <div className="col-span-2 flex items-center gap-4">
               <div className="hover:opacity-70"></div>
@@ -73,7 +73,7 @@ export default function Loading() {
           <div className="col-span-2">
             <div>
               <div className="flex items-center gap-2">
-                <p className="text-lg font-dpixel">메뉴</p>
+                <p className="text-lg ">메뉴</p>
               </div>
             </div>
           </div>

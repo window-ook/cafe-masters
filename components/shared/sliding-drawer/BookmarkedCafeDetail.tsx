@@ -1,19 +1,17 @@
 'use client';
 
-import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
 import { useMapStore, useUIStore, useUserStore } from 'stores';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
-import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
-import { IoCloseCircle } from 'react-icons/io5';
-import { IoBookmark } from 'react-icons/io5';
+import { Bookmark, CircleX } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 import Location from '@/components/shared/sliding-drawer/Location';
 import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
+import Button from '@/components/shared/sliding-drawer/Button';
 
 interface IBookmarkedCafeDetail {
   cafeId: number;
@@ -31,7 +29,6 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
   const isCollected = useMapStore(state => state.isCollected);
   const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
 
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
   const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
@@ -65,24 +62,21 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
   };
 
   return (
-    <div
-      className={`h-full flex flex-col ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-white'}`}
-      ref={scrollRef}
-    >
+    <div className={`h-full rounded-md flex flex-col ${isDarkTheme ? 'bg-main-dark text-white' : ''}`}>
       {/* 헤더 */}
-      <header className={getDetailHeaderStyle(isDarkTheme)}>
-        <div className="flex justify-between items-center p-4">
-          <button onClick={handleClose}>
-            <IoCloseCircle size={24} />
+      <header className={`p-2 ${isDarkTheme ? 'shadow-main-shadow' : ''} flex justify-between items-center`}>
+        <div className="flex justify-between items-center p-4 w-full">
+          <button onClick={handleBookmarkDelete} className='cursor-pointer'>
+            <Bookmark className="size-8 text-bookmark fill-bookmark" />
           </button>
-          <button onClick={handleBookmarkDelete}>
-            <IoBookmark size={24} className="text-main" />
+          <button onClick={handleClose} className='cursor-pointer'>
+            <CircleX className='size-8' />
           </button>
         </div>
       </header>
 
       {/* 바디 */}
-      <main className={`flex-1 overflow-y-auto ${getDetailBodyStyle(isDarkTheme)}`}>
+      <main className={`p-2 overflow-y-auto flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
         <div className="p-4 space-y-6">
           {/* 카페 이미지 */}
           {detail.image && (
@@ -110,19 +104,19 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
 
           {/* 액션 버튼들 */}
           <div className="flex gap-2">
-            <button
+            <Button
               onClick={() => setIsCollectedFormOpenAction(true)}
-              className="flex-1 bg-main text-white py-2 px-4 rounded-lg"
+              customClassName='flex-1'
             >
               수집하기
-            </button>
+            </Button>
             {admin && (
-              <button
+              <Button
                 onClick={() => setIsRecommendFormOpenAction(true)}
-                className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg"
+                customClassName='flex-1 bg-blue-600'
               >
                 추천하기
-              </button>
+              </Button>
             )}
           </div>
         </div>

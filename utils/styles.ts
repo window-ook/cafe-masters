@@ -27,10 +27,10 @@ export const ratingStarStyle = 'absolute text-yellow-300 text-xs';
 export const authFormCardStyle =
   'p-5 rounded-xl bg-white shadow-main-shadow z-10';
 
-export const authFormTitleStyle = 'text-center text-3xl font-bold font-dpixel';
+export const authFormTitleStyle = 'text-center text-3xl font-bold ';
 
 export const authFormMentionStyle =
-  'flex items-center justify-center gap-4 text-center font-dpixel';
+  'flex items-center justify-center gap-4 text-center ';
 
 export const kakaoButtonStyle =
   'w-full py-1 bg-yellow-500 hover:bg-opacity-70 hover:cursor-pointer';
