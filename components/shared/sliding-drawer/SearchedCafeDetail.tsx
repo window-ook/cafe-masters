@@ -4,18 +4,18 @@ import { useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
-import { useSearchedCafeDetail } from '@/hooks/supabase/useSearchedCafeDetail';
+import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
 import { useCurrentCafeStore, useCafeStore, useMapStore, useUIStore, useUserStore } from '@/stores';
 import { getDetailBodyStyle } from '@/utils/styles';
 import { Bookmark, CircleX } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
-import CollectedBadge from './CollectedBadge';
-import OpenTime from './OpenTime';
-import Location from './Location';
-import PhoneNumber from './PhoneNumber';
-import Button from './Button';
-import Menus from './Menus';
+import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
+import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
+import Location from '@/components/shared/sliding-drawer/Location';
+import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
+import Button from '@/components/shared/sliding-drawer/Button';
+import Menus from '@/components/shared/sliding-drawer/Menus';
 
 interface ISearchedCafeDetail {
   cafeId: number;

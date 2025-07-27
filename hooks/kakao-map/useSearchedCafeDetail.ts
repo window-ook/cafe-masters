@@ -18,13 +18,10 @@ export function useSearchedCafeDetail(cafeId: string) {
 
       const response = await fetch(detailUrl, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'force-cache',
-        },
+        headers: { 'Content-Type': 'application/json' },
       });
 
-      if (!response.ok) throw new Error(`카페 상세 정보를 불러올 수 없습니다. (${response.status})`);
+      if (!response.ok) throw new Error(`카페 상세 정보를 불러올 수 없습니다: ${response.status}`);
 
       const data = await response.json();
 

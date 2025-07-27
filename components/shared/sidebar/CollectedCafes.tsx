@@ -5,7 +5,7 @@ import { useUserStore } from 'stores';
 import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
 import { useInView } from 'react-intersection-observer';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
-import { useCafeClickHandler } from '@/hooks/shared/useCafeClickHandler';
+import { useCafeClickHandler } from '@/hooks/ui/useCafeClickHandler';
 import CollectedCafe from '@/components/shared/sidebar/CollectedCafe';
 import PulseDot from '@/components/shared/sliding-drawer/PulseDot';
 

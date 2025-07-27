@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useUIStore } from 'stores';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
-import { useCafeClickHandler } from '@/hooks/shared/useCafeClickHandler';
+import { useCafeClickHandler } from '@/hooks/ui/useCafeClickHandler';
 import CafeItem from '@/components/shared/sidebar/CafeItem';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 

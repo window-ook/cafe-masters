@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCafeStore, useUIStore } from 'stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
-import { useCafeClickHandler } from '@/hooks/shared/useCafeClickHandler';
+import { useCafeClickHandler } from '@/hooks/ui/useCafeClickHandler';
 import SearchResult from '@/components/shared/sidebar/SearchResult';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 

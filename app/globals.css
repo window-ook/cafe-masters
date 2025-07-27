@@ -4,6 +4,11 @@ body {
   overflow-x: hidden;
 }
 
+/* 
+* ===========================
+* Tailwind CSS 커스텀 컬러 설정
+* =========================== 
+*/
 @theme {
   /* 브레이크 포인트 */
   --breakpoint-sm: 401px;
@@ -18,66 +23,62 @@ body {
   --text-2xs: 0.3rem;
 
   /* 컬러 */
-  --color-main-100: #F7B3A8;
-  --color-main-200: #E59487;
-  --color-main-300: #D37566;
-  --color-main-400: #C15645;
-  --color-main-500: #AF3724;
-  --color-main-600: #9D2A1B;
-  --color-main-700: #8B1D13;
-  --color-main-800: #79100A;
-  --color-main-900: #670302;
+  --color-main-100: oklch(84.11% 0.081 26.55);
+  --color-main-200: oklch(78.57% 0.111 27.15);
+  --color-main-300: oklch(72.8% 0.138 27.73);
+  --color-main-400: oklch(66.78% 0.163 28.3);
+  --color-main-500: oklch(60.49% 0.185 28.84);
+  --color-main-600: oklch(55.58% 0.174 29.2);
+  --color-main-700: oklch(50.48% 0.162 29.53);
+  --color-main-800: oklch(45.17% 0.15 29.84);
+  --color-main-900: oklch(39.64% 0.137 30.13);
 
   --color-bookmark: var(--color-yellow-400);
   --color-unbookmark: var(--color-gray-400);
+  --color-recommended: oklch(79.32% 0.196 159.88);
 
   --color-main: var(--color-main-500);
   --color-main-light: var(--color-main-100);
   --color-main-shadow: var(--color-main-600);
   --color-main-dark: var(--color-main-900);
   --color-main-dark-border: var(--color-main-800);
-  --color-collected-side: #03fc73;
-  --color-collected-center: #6366f1;
-  --color-beginner: #8a919c;
-  --color-junior: #030ffc;
-  --color-senior: #f77a05;
-  --color-expert-via: #f5e902;
-  --color-expert-side: #8c6a01;
-  --color-master-via: #f5248c;
-  --color-master-side: #8a24b9;
-  --color-master-effect-left: #44BCFF;
-  --color-master-effect-mid: #FF44EC;
-  --color-master-effect-right: #FF675E;
+  --color-collected-side: oklch(87.84% 0.279 145.33);
+  --color-collected-center: oklch(60.39% 0.239 279.53);
+  --color-beginner: oklch(64.33% 0.023 259.32);
+  --color-junior: oklch(45.16% 0.316 269.89);
+  --color-senior: oklch(69.58% 0.222 53.94);
+  --color-expert-via: oklch(94.24% 0.226 109.1);
+  --color-expert-side: oklch(56.13% 0.131 90.83);
+  --color-master-via: oklch(62.84% 0.276 330.28);
+  --color-master-side: oklch(50.51% 0.256 300.23);
+  --color-master-effect-left: oklch(75.31% 0.173 229.86);
+  --color-master-effect-mid: oklch(67.16% 0.286 310.12);
+  --color-master-effect-right: oklch(69.1% 0.213 29.61);
 
-  --color-silver-base: #e5e7eb;
-  --color-silver-via: #9ca3af;
-  --color-silver-side: #4b5563;
+  --color-silver-base: oklch(91.51% 0.006 259.32);
+  --color-silver-via: oklch(69.78% 0.016 259.32);
+  --color-silver-side: oklch(45.54% 0.023 259.32);
 
-  --color-gold-base: #fde68a;
-  --color-gold-via: #facc15;
-  --color-gold-side: #a16207;
-  --color-gold-effect-left: #fde68a;
-  --color-gold-effect-mid: #f2d73f;
-  --color-gold-effect-right: #c9ac08;
+  --color-gold-base: oklch(93.08% 0.149 98.8);
+  --color-gold-via: oklch(85.86% 0.206 98.8);
+  --color-gold-side: oklch(56.93% 0.141 78.76);
+  --color-gold-effect-left: oklch(93.08% 0.149 98.8);
+  --color-gold-effect-mid: oklch(88.51% 0.189 98.8);
+  --color-gold-effect-right: oklch(75.48% 0.181 98.8);
 
-  --color-emerald-base: #6ee7b7;
-  --color-emerald-via: #34d399;
-  --color-emerald-side: #0f766e;
-  --color-emerald-effect-left: #5effda;
-  --color-emerald-effect-mid: #2c9952;
-  --color-emerald-effect-right: #053303;
+  --color-emerald-base: oklch(86.33% 0.154 159.88);
+  --color-emerald-via: oklch(79.32% 0.196 159.88);
+  --color-emerald-side: oklch(51.53% 0.101 179.88);
+  --color-emerald-effect-left: oklch(90.06% 0.204 179.88);
+  --color-emerald-effect-mid: oklch(61.53% 0.151 149.88);
+  --color-emerald-effect-right: oklch(22.5% 0.081 149.88);
 
-  --color-hidden-badge-left: #ff3a9d;
-  --color-hidden-badge-mid: #f5ccff;
-  --color-hidden-badge-right: #ff3a9d;
-  --color-hidden-card-left: #5f018a;
-  --color-hidden-card-mid: #8a24b9;
-  --color-hidden-card-right: #f5248c;
-  --color-hidden-effect-left: #44BCFF;
-  --color-hidden-effect-mid: #FF44EC;
-  --color-hidden-effect-right: #FF675E;
-
-  --color-recommended: #18f282;
+  --color-hidden-badge-left: oklch(65.8% 0.266 330.28);
+  --color-hidden-badge-mid: oklch(87.5% 0.101 310.12);
+  --color-hidden-badge-right: oklch(65.8% 0.266 330.28);
+  --color-hidden-effect-left: oklch(75.31% 0.173 229.86);
+  --color-hidden-effect-mid: oklch(67.16% 0.286 310.12);
+  --color-hidden-effect-right: oklch(69.1% 0.213 29.61);
 
   --color-button: var(--color-main-500);
   --color-button-text: var(--color-white);
@@ -87,6 +88,9 @@ body {
   /* 텍스트 그림자 */
   --text-shadow-black: 0 2px 4px rgba(0, 0, 0, 0.8);
   --text-shadow-main: 0 2px 4px rgba(135, 90, 173, 1);
+
+  /* 드롭 쉐도우 */
+  --drop-shadow-3xl: drop-shadow(14px 14px 11px -7px rgba(47, 49, 51, 0.75));
 
   /* 애니메이션 */
   --animate-gradient: gradient 3s ease infinite;
@@ -112,9 +116,6 @@ body {
       background-position: 0% 50%;
     }
   }
-
-  /* 드롭 쉐도우 */
-  --drop-shadow-3xl: drop-shadow(14px 14px 11px -7px rgba(47, 49, 51, 0.75));
 
   @keyframes dotOne {
     '0%, 100%': {
@@ -204,10 +205,13 @@ body {
 }
 
 @layer components {
+
+  /* Expert 티어 뱃지 그라데이션 */
   .expert-gradient {
     @apply bg-gradient-to-r from-expert-via to-expert-side;
   }
 
+  /* Master 티어 뱃지 그라데이션 */
   .master-gradient {
     @apply bg-gradient-to-r from-master-via to-master-side;
   }
@@ -225,15 +229,20 @@ body {
 * =========================== 
 */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #875aad;
+  background-color: var(--color-main-500);
   border-radius: 10px;
   border: 2px solid transparent;
 }
 
+/* 
+* ===========================
+* shadcn-ui 기본 컬러 설정
+* =========================== 
+*/
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -266,9 +275,9 @@ body {
     --hidden-card-left: #5f018a;
     --hidden-card-mid: #8a24b9;
     --hidden-card-right: #f5248c;
-    --gold-left: '#fde68a',
-      --gold-via: '#facc15',
-      --gold-right: '#a16207',
+    --gold-left: #fde68a;
+    --gold-via: #facc15;
+    --gold-right: #a16207;
   }
 
   .dark {
@@ -301,7 +310,7 @@ body {
 
 /* 
 * ===========================
-* 카드 디자인
+* 수집한 카페의 카드 디자인
 * =========================== 
 */
 .card-container {
@@ -449,7 +458,11 @@ body {
   z-index: 2;
 }
 
-/* 로그인, 회원가입, 비밀번호 재설정 페이지 배경 카드 애니메이션 */
+/*
+* ===========================
+* 배경 카드 라이징 애니메이션
+* =========================== 
+*/
 .area {
   background: #2a2b2b;
   width: 100%;
@@ -476,7 +489,7 @@ body {
   background-image: url('/image/logo.avif');
   background-size: cover;
   background-position: center;
-  animation: animate 25s linear infinite;
+  animation: rising 25s linear infinite;
   bottom: -9.375rem;
 }
 
@@ -540,7 +553,7 @@ body {
   animation-duration: 8s;
 }
 
-@keyframes animate {
+@keyframes rising {
   0% {
     transform: translateY(0) rotate(0deg);
     opacity: 1;
