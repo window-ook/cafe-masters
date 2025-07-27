@@ -23,7 +23,7 @@ export default function CollectedCafes() {
   } = useCollectedCafes(userId, true);
 
   const { ref: collectedRef, inView: collectedInView } = useInView({
-    threshold: 0.5,
+    threshold: 0.1,
   });
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function CollectedCafes() {
     shouldSetCurrentCafeId: true,
   });
 
-  // 사용자 인증 상태 확인
+  // 로그인 확인
   if (!userId) {
     return (
       <main className="relative overflow-y-auto overflow-x-hidden">
@@ -90,27 +90,24 @@ export default function CollectedCafes() {
   }
 
   return (
-    <main className="relative overflow-y-auto overflow-x-hidden">
-      {/* 수집된 카페 리스트 */}
-      <ul className="flex flex-col gap-8 my-8 px-8">
-        {filteredCollectedCafes.map((cafe: ISupabaseCollectedCafe) => (
-          <CollectedCafe
-            key={cafe.id}
-            name={cafe.name}
-            ratings={cafe.ratings!}
-            photoUrl={cafe.image}
-            address={cafe.address}
-            phoneNum={cafe.phone_number!}
-            onClickAction={() => handleCollectedCafeClick(cafe)}
-          />
-        ))}
-      </ul>
-
-      {/* 로딩 인디케이터 */}
-      {isFetchingNextPage && <PulseDot />}
-
-      {/* 무한 스크롤 트리거 */}
-      <div ref={collectedRef} className="h-8 w-88"></div>
+    <main className="h-full flex flex-col">
+      <section className="flex-1 overflow-y-auto overflow-x-hidden">
+        <ul className="pagination-sidebar-list">
+          {filteredCollectedCafes.map((cafe: ISupabaseCollectedCafe) => (
+            <CollectedCafe
+              key={cafe.id}
+              name={cafe.name}
+              ratings={cafe.ratings!}
+              photoUrl={cafe.image}
+              address={cafe.address}
+              phoneNum={cafe.phone_number!}
+              onClickAction={() => handleCollectedCafeClick(cafe)}
+            />
+          ))}
+        </ul>
+        {isFetchingNextPage && <PulseDot />}
+        <div ref={collectedRef} className="h-8 w-full bg-transparent"></div>
+      </section>
     </main>
   );
 }

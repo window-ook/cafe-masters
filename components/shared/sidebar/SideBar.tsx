@@ -30,7 +30,7 @@ export default function Sidebar() {
   useEffect(() => { if (PATHS.MAIN) setIsSlidingDrawerOpen(false); }, [pathname, PATHS.MAIN, setIsSlidingDrawerOpen]);
 
   return (
-    <nav className="relative flex recommended-center">
+    <nav className="relative flex">
       {/* 사이드바 컨테이너 */}
       <div
         className={`z-10 relative w-screen h-screen max-w-108 px-1 rounded-none shadow-xl shadow-main-shadow 
@@ -54,13 +54,45 @@ export default function Sidebar() {
             </>
           )}
 
-          <Suspense fallback={<div>Loading...</div>}>
-            {PATHS.SEARCH && <SearchedCafes />}
-            {PATHS.COLLECTED && <CollectedCafes />}
-            {PATHS.BOOKMARKED && <BookmarkedCafes />}
-            {PATHS.RECOMMENDED && <RecommendedCafes />}
-            {PATHS.HELP && <HelpCenter />}
-          </Suspense>
+          {PATHS.SEARCH && (
+            <main className="flex-1 min-h-0">
+              <Suspense fallback={<div>Loading...</div>}>
+                <SearchedCafes />
+              </Suspense>
+            </main>
+          )}
+
+          {PATHS.COLLECTED && (
+            <main className="flex-1 min-h-0">
+              <Suspense fallback={<div>Loading...</div>}>
+                <CollectedCafes />
+              </Suspense>
+            </main>
+          )}
+
+          {PATHS.BOOKMARKED && (
+            <main className="flex-1 min-h-0">
+              <Suspense fallback={<div>Loading...</div>}>
+                <BookmarkedCafes />
+              </Suspense>
+            </main>
+          )}
+
+          {PATHS.RECOMMENDED && (
+            <main className="flex-1 min-h-0">
+              <Suspense fallback={<div>Loading...</div>}>
+                <RecommendedCafes />
+              </Suspense>
+            </main>
+          )}
+
+          {PATHS.HELP && (
+            <main className="flex-1 min-h-0">
+              <Suspense fallback={<div>Loading...</div>}>
+                <HelpCenter />
+              </Suspense>
+            </main>
+          )}
         </div>
       </div>
 

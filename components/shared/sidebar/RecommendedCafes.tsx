@@ -8,8 +8,6 @@ import { useCafeClickHandler } from '@/hooks/ui/useCafeClickHandler';
 import CafeItem from '@/components/shared/sidebar/CafeItem';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
-const CARD_CONTAINER_STYLE = 'my-8 px-8 flex flex-col gap-8';
-
 export default function RecommendedCafes() {
   const { isDarkTheme } = useUIStore();
 
@@ -21,7 +19,6 @@ export default function RecommendedCafes() {
   const totalRecommendedPages = Math.ceil((recommendedCafes?.length || 0) / recommendedPerPage);
   const paginatedRecommend = recommendedCafes?.slice((currentPage - 1) * recommendedPerPage, currentPage * recommendedPerPage) || [];
 
-  // 데이터 변경 시 첫 페이지로 리셋
   useEffect(() => { setCurrentPage(1); }, [recommendedCafes]);
 
   const handleNextRecommendedPage = () => {
@@ -38,37 +35,31 @@ export default function RecommendedCafes() {
   });
 
   return (
-    <>
-      {/* 추천 카페 리스트 */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden">
-        <section>
-          <ul className={CARD_CONTAINER_STYLE}>
-            {paginatedRecommend.map((cafe: ISupabaseRecommendedCafe) => (
-              <CafeItem
-                key={cafe.id}
-                name={cafe.name}
-                address={cafe.address}
-                phoneNum={cafe.phone_number}
-                photoUrl={cafe.image}
-                onClickAction={() => handleRecommendedCafeClick(cafe)}
-              />
-            ))}
-          </ul>
-        </section>
-      </main>
+    <main className="h-full flex flex-col">
+      <section className='flex-1 overflow-y-auto overflow-x-hidden'>
+        <ul className="pagination-sidebar-list">
+          {paginatedRecommend.map((cafe: ISupabaseRecommendedCafe) => (
+            <CafeItem
+              key={cafe.id}
+              name={cafe.name}
+              address={cafe.address}
+              phoneNum={cafe.phone_number}
+              photoUrl={cafe.image}
+              onClickAction={() => handleRecommendedCafeClick(cafe)}
+            />
+          ))}
+        </ul>
+      </section>
 
-      {/* 페이지네이션 */}
       {totalRecommendedPages > 1 && (
-        <footer className="flex-none">
-          <PageConverter
-            isDarkTheme={isDarkTheme}
-            handlePreviousPageAction={handlePreviousPageAction}
-            handleNextPageAction={handleNextRecommendedPage}
-            currentPage={currentPage}
-            totalPages={totalRecommendedPages}
-          />
-        </footer>
+        <PageConverter
+          isDarkTheme={isDarkTheme}
+          handlePreviousPageAction={handlePreviousPageAction}
+          handleNextPageAction={handleNextRecommendedPage}
+          currentPage={currentPage}
+          totalPages={totalRecommendedPages}
+        />
       )}
-    </>
+    </main>
   );
 }

@@ -28,7 +28,6 @@ export default function BookmarkedCafes() {
     error,
   } = useBookmarkedCafes(userId, currentPage, BOOKMARKED_CAFES_PER_PAGE);
 
-  // 필터링 결과 변경 시 첫 페이지로 이동
   useEffect(() => { setCurrentPage(1); }, [totalFilteredCount]);
 
   const handleNextBookmarkedCafePage = () => {
@@ -143,10 +142,9 @@ export default function BookmarkedCafes() {
   }
 
   return (
-    <main className="relative overflow-y-auto overflow-x-hidden">
-      {/* 북마크된 카페 리스트 */}
+    <main className="h-full flex flex-col">
       <section className="flex-1 overflow-y-auto overflow-x-hidden">
-        <ul className="my-8 px-8 flex flex-col gap-8">
+        <ul className="pagination-sidebar-list">
           {paginatedBookmarkedCafes.map((cafe: ISupabaseBookmarkedCafe) => (
             <CafeItem
               key={cafe.id}
@@ -160,16 +158,13 @@ export default function BookmarkedCafes() {
         </ul>
       </section>
 
-      {/* 페이지네이션 */}
-      <footer className="flex-none">
-        <PageConverter
-          isDarkTheme={isDarkTheme}
-          handlePreviousPageAction={handlePreviousPageAction}
-          handleNextPageAction={handleNextBookmarkedCafePage}
-          currentPage={currentPage}
-          totalPages={totalPages}
-        />
-      </footer>
+      <PageConverter
+        isDarkTheme={isDarkTheme}
+        handlePreviousPageAction={handlePreviousPageAction}
+        handleNextPageAction={handleNextBookmarkedCafePage}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
     </main>
   );
 }

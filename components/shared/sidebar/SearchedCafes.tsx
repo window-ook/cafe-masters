@@ -17,7 +17,6 @@ export default function SearchedCafes() {
   const totalSearchResultPages = Math.ceil(searchResult.length / searchResultsPerPage);
   const paginatedResult = searchResult.slice((currentPage - 1) * searchResultsPerPage, currentPage * searchResultsPerPage);
 
-  // 페이지 변경 시 맨 위로 스크롤
   useEffect(() => { setCurrentPage(1); }, [searchResult]);
 
   const handleNextSearchResultPage = () => {
@@ -34,10 +33,9 @@ export default function SearchedCafes() {
   });
 
   return (
-    <main className="relative overflow-y-auto">
-      {/* 검색 결과 리스트 */}
-      <section className="flex-1 overflow-x-hidden">
-        <ul className="my-8 px-8 flex flex-col gap-8">
+    <main className="h-full flex flex-col">
+      <section className="flex-1 overflow-y-auto overflow-x-hidden">
+        <ul className="pagination-sidebar-list">
           {paginatedResult.map((cafe: IKakaoSearchResult) => (
             <SearchResult
               key={cafe.id}
@@ -50,17 +48,14 @@ export default function SearchedCafes() {
         </ul>
       </section>
 
-      {/* 페이지네이션 */}
       {totalSearchResultPages > 1 && (
-        <footer className="flex-none sticky bottom-0">
-          <PageConverter
-            isDarkTheme={isDarkTheme}
-            handlePreviousPageAction={handlePreviousPageAction}
-            handleNextPageAction={handleNextSearchResultPage}
-            currentPage={currentPage}
-            totalPages={totalSearchResultPages}
-          />
-        </footer>
+        <PageConverter
+          isDarkTheme={isDarkTheme}
+          handlePreviousPageAction={handlePreviousPageAction}
+          handleNextPageAction={handleNextSearchResultPage}
+          currentPage={currentPage}
+          totalPages={totalSearchResultPages}
+        />
       )}
     </main>
   );
