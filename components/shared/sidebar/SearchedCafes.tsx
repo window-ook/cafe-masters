@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useCafeStore, useUIStore } from 'stores';
+import { useSearchedResultStore, useUIStore } from 'stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { useCafeClickHandler } from '@/hooks/ui/useCafeClickHandler';
 import SearchResult from '@/components/shared/sidebar/SearchResult';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
 export default function SearchedCafes() {
-  const { isDarkTheme } = useUIStore();
-  const { searchResult } = useCafeStore();
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const searchResult = useSearchedResultStore(state => state.searchResult);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -41,7 +41,7 @@ export default function SearchedCafes() {
               key={cafe.id}
               name={cafe.place_name}
               address={cafe.road_address_name}
-              phoneNum={cafe.phone}
+              phone_number={cafe.phone}
               onClickAction={() => handleSearchedCafeClick(cafe)}
             />
           ))}

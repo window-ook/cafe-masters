@@ -6,12 +6,16 @@ import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { useFilterStore, useUIStore } from '@/stores';
 
 export default function SearchBar() {
-  const { keyword, setKeyword } = useFilterStore();
-  const { setIsSlidingDrawerOpen, isDarkTheme } = useUIStore();
+  const router = useRouter();
+
+  const keyword = useFilterStore(state => state.keyword);
+  const setKeyword = useFilterStore(state => state.setKeyword);
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
 
   const [localKeyword, setLocalKeyword] = useState<string>(keyword);
 
-  const router = useRouter();
+  useEffect(() => { setLocalKeyword(keyword); }, [keyword]);
 
   const handleSearch = () => {
     setKeyword(localKeyword);
@@ -22,8 +26,6 @@ export default function SearchBar() {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') handleSearch();
   };
-
-  useEffect(() => { setLocalKeyword(keyword); }, [keyword]);
 
   return (
     <search className="w-full">

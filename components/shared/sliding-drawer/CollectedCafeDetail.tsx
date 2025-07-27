@@ -20,8 +20,9 @@ import Categories from './Categories';
 export default function CollectedCafeDetail({ cafeId, setIsCollectedFormOpenAction }: { cafeId: number; setIsCollectedFormOpenAction: (open: boolean) => void }) {
   const router = useRouter();
 
-  const { userId } = useUserStore();
-  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
+  const userId = useUserStore(state => state.userId);
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
 
   const { filteredCollectedCafes } = useCollectedCafes(userId);
 

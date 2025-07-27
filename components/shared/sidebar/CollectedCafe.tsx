@@ -9,8 +9,8 @@ import Image from 'next/image';
 interface ICollectedCafe {
   name: string | undefined;
   address: string;
-  phoneNum: string | null;
-  photoUrl: string | null;
+  phone_number: string | null;
+  image: string | null;
   ratings: number | null;
   onClickAction: () => void;
 }
@@ -23,11 +23,15 @@ const RATING_THREE = 'card-silver text-black';
 const RATING_FOUR = 'card-gold text-black';
 const RATING_FIVE = 'card-emerald text-black';
 
+let COLOR_BY_RATING = '';
+let HOVER_BORDER_BY_RATING = '';
+let NORMAL_CARD_BACK_EFFECT = '';
+
 export default function CollectedCafe({
   name,
-  photoUrl,
+  image,
   address,
-  phoneNum,
+  phone_number,
   ratings,
   onClickAction,
 }: ICollectedCafe) {
@@ -37,10 +41,6 @@ export default function CollectedCafe({
   const backEffectRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const sparkleRef = useRef<HTMLStyleElement | null>(null);
-
-  let COLOR_BY_RATING = '';
-  let HOVER_BORDER_BY_RATING = '';
-  let NORMAL_CARD_BACK_EFFECT = '';
 
   switch (ratings) {
     case 1:
@@ -147,7 +147,6 @@ export default function CollectedCafe({
 
   return (
     <li
-      data-cy="collected-cafe"
       className="group card-container relative list-none h-96"
     >
       {/* 백라이트 레이어 */}
@@ -207,7 +206,7 @@ export default function CollectedCafe({
 
         <div className="h-44 bg-gray-700 rounded-lg flex flex-col">
           <Image
-            src={photoUrl ?? '/image/cafe_thumbnail.avif'}
+            src={image ?? '/image/cafe_thumbnail.avif'}
             alt="카페 썸네일"
             priority={true}
             width={100}
@@ -225,7 +224,7 @@ export default function CollectedCafe({
             {address}
           </p>
           <p className="whitespace-nowrap overflow-hidden text-ellipsis ">
-            {phoneNum}
+            {phone_number}
           </p>
         </div>
       </button>

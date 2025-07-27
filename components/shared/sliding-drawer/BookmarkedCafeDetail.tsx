@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
-import { useCurrentCafeStore, useUIStore, useUserStore } from 'stores';
+import { useMapStore, useUIStore, useUserStore } from 'stores';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoCloseCircle } from 'react-icons/io5';
@@ -24,17 +24,19 @@ interface IBookmarkedCafeDetail {
 export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAction, setIsRecommendFormOpenAction }: IBookmarkedCafeDetail) {
   const router = useRouter();
 
-  const { admin, userId } = useUserStore();
-  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
-  const { isCollected, setIsBookmarked } = useCurrentCafeStore();
+  const admin = useUserStore(state => state.admin);
+  const userId = useUserStore(state => state.userId);
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
+  const isCollected = useMapStore(state => state.isCollected);
+  const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
   const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
 
   const detail = filteredBookmarkedCafes.find((cafe: ISupabaseBookmarkedCafe) => cafe.id === Number(cafeId));
-
-  const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
 
   if (!detail) {
     return (
@@ -44,7 +46,7 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
     );
   }
 
-  const handleBookmarkRemove = async () => {
+  const handleBookmarkDelete = async () => {
     if (!userId) return;
 
     try {
@@ -73,7 +75,7 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
           <button onClick={handleClose}>
             <IoCloseCircle size={24} />
           </button>
-          <button onClick={handleBookmarkRemove}>
+          <button onClick={handleBookmarkDelete}>
             <IoBookmark size={24} className="text-main" />
           </button>
         </div>

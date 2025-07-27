@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
-import { useCurrentCafeStore, useCafeStore, useMapStore, useUIStore, useUserStore } from '@/stores';
+import { useSearchedResultStore, useMapStore, useUIStore, useUserStore } from '@/stores';
 import { getDetailBodyStyle } from '@/utils/styles';
 import { Bookmark, CircleX } from 'lucide-react';
 import { toast } from 'react-toastify';
@@ -24,17 +24,23 @@ interface ISearchedCafeDetail {
 }
 
 export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenAction, setIsRecommendFormOpenAction }: ISearchedCafeDetail) {
-  const { admin, userId } = useUserStore();
-  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
-  const { currentCoordX, currentCoordY } = useMapStore();
-  const { searchResult } = useCafeStore();
-  const { isCollected, isBookmarked, setIsBookmarked } = useCurrentCafeStore();
+  const router = useRouter();
+
+  const admin = useUserStore(state => state.admin);
+  const userId = useUserStore(state => state.userId);
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
+  const currentCoordX = useMapStore(state => state.currentCoordX);
+  const currentCoordY = useMapStore(state => state.currentCoordY);
+  const searchResult = useSearchedResultStore(state => state.searchResult);
+  const isCollected = useMapStore(state => state.isCollected);
+  const isBookmarked = useMapStore(state => state.isBookmarked);
+  const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   // React Query로 카페 상세 정보 가져오기
   const { searchedCafeDetail } = useSearchedCafeDetail(cafeId.toString());
-
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   const { uploadBookmarkedCafe } = useUploadBookmarkedCafe();
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();

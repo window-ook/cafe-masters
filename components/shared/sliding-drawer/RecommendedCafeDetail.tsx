@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
-import { useCurrentCafeStore, useUIStore, useUserStore } from 'stores';
+import { useMapStore, useUIStore, useUserStore } from 'stores';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
@@ -29,12 +29,17 @@ export default function RecommendedCafeDetail({
   setIsCollectedFormOpenAction,
   setIsRecommendFormOpenAction,
 }: IRecommendedCafeDetail) {
-  const { admin, userId } = useUserStore();
-  const { isDarkTheme, setIsSlidingDrawerOpen } = useUIStore();
-  const { isCollected, isBookmarked, setIsBookmarked } = useCurrentCafeStore();
+  const router = useRouter();
+
+  const admin = useUserStore(state => state.admin);
+  const userId = useUserStore(state => state.userId);
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
+  const isCollected = useMapStore(state => state.isCollected);
+  const isBookmarked = useMapStore(state => state.isBookmarked);
+  const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   const { uploadBookmarkedCafe } = useUploadBookmarkedCafe();
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();

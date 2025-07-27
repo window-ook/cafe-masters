@@ -6,7 +6,6 @@ import { getAdminUser } from '@/actions/supabase/user';
 
 export function useSignIn() {
   const supabase = createBrowserSupabaseClient();
-
   const router = useRouter();
 
   const { setUserId, setUserEmail, setAdmin } = useUserStore();

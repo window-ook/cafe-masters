@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image, { ImageProps } from 'next/image';
 
-interface ImageWithFallbackProps extends Omit<ImageProps, 'src'> {
+interface IImageWithFallback extends Omit<ImageProps, 'src'> {
     src: string;
     fallbackSrc: string;
     alt: string;
@@ -15,7 +15,7 @@ interface ImageWithFallbackProps extends Omit<ImageProps, 'src'> {
     placeholder?: 'blur' | 'empty';
 }
 
-export default function ImageWithFallback(props: ImageWithFallbackProps) {
+export default function ImageWithFallback(props: IImageWithFallback) {
     const {
         src,
         fallbackSrc,

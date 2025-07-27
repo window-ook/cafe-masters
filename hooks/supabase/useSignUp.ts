@@ -4,7 +4,6 @@ import { createBrowserSupabaseClient } from 'utils/supabase/client';
 
 export function useSignUp() {
   const supabase = createBrowserSupabaseClient();
-
   const router = useRouter();
 
   const signUp = useMutation({

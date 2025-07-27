@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useCafeStore, useFilterStore, useUIStore, useUserStore } from '@/stores';
+import { useFilterStore, useUIStore, useUserStore } from '@/stores';
+import { useSearchedResultStore } from '@/stores/searched-result';
 import { useBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCafes';
 import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
 import Image from 'next/image';
@@ -17,10 +18,11 @@ import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
 export default function Header() {
   const pathname = usePathname();
 
-  const { searchResult } = useCafeStore();
-  const { userId } = useUserStore();
-  const { isDarkTheme } = useUIStore();
-  const { setSearchTermInCollectedCafe, setSearchTermInBookmarkedCafe } = useFilterStore();
+  const searchResult = useSearchedResultStore(state => state.searchResult);
+  const userId = useUserStore(state => state.userId);
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const setSearchTermInCollectedCafe = useFilterStore(state => state.setSearchTermInCollectedCafe);
+  const setSearchTermInBookmarkedCafe = useFilterStore(state => state.setSearchTermInBookmarkedCafe);
 
   const [collectedInput, setCollectedInput] = useState<string>('');
   const [bookmarkedInput, setBookmarkedInput] = useState<string>('');
@@ -77,11 +79,12 @@ export default function Header() {
 
       {PATHS.SEARCH && (
         <div className="flex justify-center items-center">
-          <span className="font-dpixel text-xl sm:text-2xl">
-            TOTAL{' '}
+          <span className="text-xl">
+            검색 결과{' '}
             <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
               {searchResult.length}
             </span>
+            개
           </span>
         </div>
       )}
@@ -114,7 +117,7 @@ export default function Header() {
             </button>
           </div>
           <div className="flex gap-4">
-            <span className="font-dpixel text-xl sm:text-2xl">
+            <span className="text-xl">
               TOTAL{' '}
               <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
                 {collectedCounts}
@@ -154,7 +157,7 @@ export default function Header() {
             </button>
           </div>
           <div className="w-full px-2 flex gap-4">
-            <span className="font-dpixel text-xl sm:text-2xl">
+            <span className="text-xl">
               TOTAL{' '}
               <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
                 {bookmarkedCounts}

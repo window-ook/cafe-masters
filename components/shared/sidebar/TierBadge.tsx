@@ -6,7 +6,7 @@ import {
   getMasterTierStyle,
   masterTierBadgeStyle,
 } from 'utils/styles';
-import { Tier } from 'types/shared/sidebar';
+import { Tier } from '@/types/shared/tier';
 import TierDialog from '@/components/shared/sidebar/TierDialog';
 
 const TIER_STYLES = {

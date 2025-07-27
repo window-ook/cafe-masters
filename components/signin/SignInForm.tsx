@@ -40,7 +40,6 @@ export default function SignInForm() {
     }
   };
 
-
   return (
     <main className={authFormCardStyle}>
       {!resetRequired ? (

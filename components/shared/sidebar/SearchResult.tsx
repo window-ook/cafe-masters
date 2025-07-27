@@ -5,7 +5,7 @@ import { useUIStore } from '@/stores';
 interface ISearchResult {
   name: string | undefined;
   address: string;
-  phoneNum: string | null | undefined;
+  phone_number: string | null | undefined;
   onClickAction: () => void;
 }
 
@@ -13,9 +13,9 @@ export default function SearchResult({
   onClickAction,
   name,
   address,
-  phoneNum,
+  phone_number,
 }: ISearchResult) {
-  const { isDarkTheme } = useUIStore();
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   return (
     <li
@@ -34,7 +34,7 @@ export default function SearchResult({
           {address}
         </p>
         <p className="font-pretendard text-sm whitespace-nowrap overflow-hidden text-ellipsis">
-          {phoneNum}
+          {phone_number}
         </p>
       </button>
     </li>

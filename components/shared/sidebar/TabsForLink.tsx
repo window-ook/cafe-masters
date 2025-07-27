@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafes';
 import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
 import { useBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCafes';
-import { useCafeStore, useUIStore, useUserStore } from '@/stores';
+import { useSearchedResultStore, useUIStore, useUserStore } from '@/stores';
 import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoMdCafe } from 'react-icons/io';
@@ -41,12 +41,13 @@ const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => 
 };
 
 export default function TabsForLink() {
-  const { userId } = useUserStore();
-  const { isDarkTheme } = useUIStore();
+  const userId = useUserStore(state => state.userId);
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const searchResult = useSearchedResultStore(state => state.searchResult);
+
   const { bookmarkedCounts } = useBookmarkedCafesCounts(userId);
   const { collectedCounts } = useCollectedCafesCounts(userId);
   const { recommendedCounts } = useRecommendedCafesCounts();
-  const { searchResult } = useCafeStore();
 
   return (
     <ul className="flex-1 flex flex-col items-center">

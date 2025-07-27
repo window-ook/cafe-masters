@@ -11,8 +11,8 @@ import PageConverter from '@/components/shared/sidebar/PageConverter';
 const BOOKMARKED_CAFES_PER_PAGE = 8 as const;
 
 export default function BookmarkedCafes() {
-  const { isDarkTheme } = useUIStore();
-  const { userId } = useUserStore();
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const userId = useUserStore(state => state.userId);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -150,8 +150,8 @@ export default function BookmarkedCafes() {
               key={cafe.id}
               name={cafe.name}
               address={cafe.address}
-              phoneNum={cafe.phone_number}
-              photoUrl={cafe.image}
+              phone_number={cafe.phone_number}
+              image={cafe.image}
               onClickAction={() => handleBookmarkedCafeClick(cafe)}
             />
           ))}

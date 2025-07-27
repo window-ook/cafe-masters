@@ -1,9 +1,9 @@
-interface OtpFormProps {
+interface ICodeForm {
   otp: string;
   setOtp: (state: string) => void;
 }
 
-export default function CodeForm({ otp, setOtp }: OtpFormProps) {
+export default function CodeForm({ otp, setOtp }: ICodeForm) {
   return (
     <section className="flex flex-col gap-6">
       <span data-cy="otp-title" className="text-xl font-dpixel">

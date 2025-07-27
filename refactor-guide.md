@@ -1,4 +1,4 @@
-# 카페 마스터즈 리팩토링 계획 (ErrorBoundary 포함)
+# 카페 마스터즈 리팩토링 계획
 
 ## 📋 현재 상황 분석
 
@@ -6,11 +6,8 @@
 
 ## 🔴 HIGH 우선순위 문제점
 
-1. **과도한 Persist 사용: 모든 store에 persist가 적용되어 메모리 낭비 발생**
-2. **상태 중복 저장: useCafeStore에 필터링된 데이터가 저장되지만 실제로는 React Query에서 필터링 재수행**
-3. **비효율적 Cache Invalidation: invalidateQueries + refetchQueries 중복 호출로 성능 저하**
-4. **에러 처리 부족: 7개 파일에서 onError: error => console.error(error) 패턴 사용 (사용자 피드백 없음)**
-5. **❌ ErrorBoundary 부재: 컴포넌트 레벨 에러 처리 시스템 없음**
+1. **에러 처리 부족: 7개 파일에서 onError: error => console.error(error) 패턴 사용 (사용자 피드백 없음)**
+2. **❌ ErrorBoundary 부재: 컴포넌트 레벨 에러 처리 시스템 없음**
 
 ## 🟡 MEDIUM 우선순위 문제점
 
@@ -36,23 +33,7 @@
   - 사용자 친화적 폴백 UI: 에러 발생 시 보여줄 아름다운 에러 화면
   - 에러 복구 기능: 사용자가 에러에서 복구할 수 있는 액션 버튼들
 
-**1.2 Persist 전략 재정의**
-
-- 대상 파일: stores/cafe.ts, stores/ui.ts, stores/map.ts, stores/filter.ts
-- 작업 내용
-  - UI 일시적 상태 persist 제거 (검색 결과, 필터링된 데이터)
-  - 중요한 사용자 설정만 선택적 persist (다크테마, 사용자 위치 등)
-  - partialize 옵션 활용하여 필요한 상태만 저장
-
-**1.3 상태 중복 제거**
-
-- 대상 파일: stores/cafe.ts
-- 작업 내용
-  - filteredCollectedCafe, filteredBookmarkedCafe, filteredRecommendedCafe 제거
-  - React Query 훅에서만 필터링 처리하도록 통합
-  - 불필요한 setter 함수들 제거
-
-**1.4 통합 에러 처리 시스템 구축**
+**1.2 통합 에러 처리 시스템 구축**
 
 - 대상 파일: hooks/supabase/ 폴더 내 mutation 훅들 (7개 파일)
 - 작업 내용
@@ -61,7 +42,7 @@
   - 에러 타입별 맞춤형 메시지 및 복구 액션 제공
   - 네트워크 에러, 권한 에러, 서버 에러 등 타입별 처리
 
-**1.5 Cache Invalidation 최적화**
+**1.3 Cache Invalidation 최적화**
 
 - 대상 파일: hooks/supabase/ 폴더 내 mutation 훅들 (7개 파일)
 - 작업 내용
@@ -99,28 +80,14 @@
   - 각 컴포넌트별 특화된 에러 폴백 UI
   - API 실패, 네트워크 에러 등에 대한 복구 메커니즘
 
-### Phase 3: 고도화 + 모니터링 (LOW 우선순위)
+### Phase 3: 고도화 (LOW 우선순위)
 
-**3.1 에러 모니터링 시스템**
-
-- 작업 내용
-  - 에러 발생 패턴 분석을 위한 로깅
-  - 성능 지표 수집 (에러율, 복구율 등)
-  - 사용자 피드백 수집 시스템
-
-**3.2 타입 안전성 강화**
+**3.1 타입 안전성 강화**
 
 - 작업 내용
   - 더 엄격한 타입 정의
   - ErrorBoundary props 타입 안전성
   - 에러 객체 타입 정의
-
-**3.3 테스트 커버리지 개선**
-
-- 작업 내용
-  - ErrorBoundary 관련 테스트 케이스
-  - 에러 시나리오 E2E 테스트
-  - 핵심 비즈니스 로직에 대한 단위 테스트
 
 ## 🛡️ ErrorBoundary 아키텍처 설계
 
@@ -150,11 +117,3 @@
 - API 호출 최적화: 20-30% 감소 (cache invalidation 개선)
 - 렌더링 성능: 15-25% 향상 (React 최적화)
 - 개발자 경험: 에러 디버깅 및 모니터링 개선
-
-## 🎯 작업 순서
-
-1. ErrorBoundary 시스템 구축 + Persist 전략 재정의
-2. 통합 에러 처리 + 상태 중복 제거
-3. Cache Invalidation 최적화 + 컴포넌트 성능 최적화
-4. 특수 컴포넌트 ErrorBoundary 적용 + 테스트 추가
-5. 에러 모니터링 시스템 + 최종 검증

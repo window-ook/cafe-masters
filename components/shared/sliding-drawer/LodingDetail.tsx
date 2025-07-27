@@ -8,7 +8,7 @@ import { useUIStore } from '@/stores';
 import Spinner from './Spinner';
 
 export default function Loading() {
-  const { isDarkTheme } = useUIStore();
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   return (
     <div className={`flex flex-col p-2 gap-4`}>

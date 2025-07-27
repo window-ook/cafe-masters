@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Tier } from 'types/shared/sidebar';
+import { Tier } from '@/types/shared/tier';
 
 interface UserStore {
   // 유저 정보 상태
@@ -8,13 +8,13 @@ interface UserStore {
   userEmail: string;
   userTier: Tier;
   admin: boolean;
-  
+
   // 유저 정보 액션
   setUserId: (userId: string) => void;
   setUserEmail: (userEmail: string) => void;
   setUserTier: (userTier: Tier) => void;
   setAdmin: (admin: boolean) => void;
-  
+
   // 유저 정보 초기화
   resetUser: () => void;
 }
@@ -33,7 +33,7 @@ export const useUserStore = create<UserStore>()(
       setUserEmail: userEmail => set({ userEmail }),
       setUserTier: userTier => set({ userTier }),
       setAdmin: admin => set({ admin }),
-      
+
       // 유저 정보 초기화 (로그아웃 시 사용)
       resetUser: () => set({
         userId: '',

@@ -2,17 +2,16 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface IUIStore {
-  // 다크모드 테마 상태
+  // 다크모드
   isDarkTheme: boolean;
 
-  // 서브사이드바 상태 (전역 관리 필요)
+  // 슬라이딩 드로어
   isSlidingDrawerOpen: boolean;
 
-  // 로딩 상태 (전역 관리 필요)
-  isLoading: boolean;
-
-  // ➕ 메뉴/확장 관련 UI 상태
+  // ➕ 상세 정보의 메뉴 확장
   isMenuOpen: boolean;
+
+  // 슬라이딩 드로어 활성화
   isExtend: boolean;
   isExtendComplete: boolean;
 
@@ -21,9 +20,6 @@ interface IUIStore {
 
   // 서브사이드바 액션
   setIsSlidingDrawerOpen: (isOpen: boolean) => void;
-
-  // 로딩 액션
-  setIsLoading: (isLoading: boolean) => void;
 
   // ➕ 메뉴/확장 관련 액션
   setIsMenuOpen: (isOpen: boolean) => void;
@@ -34,32 +30,21 @@ interface IUIStore {
 export const useUIStore = create<IUIStore>()(
   persist(
     set => ({
-      // UI 상태 초기값
       isDarkTheme: false,
       isSlidingDrawerOpen: false,
-      isLoading: false,
 
-      // ➕ 메뉴/확장 관련 UI 상태 초기값
       isMenuOpen: false,
       isExtend: false,
       isExtendComplete: false,
 
-      // 다크모드 토글
       setIsDarkTheme: () => set(state => ({ isDarkTheme: !state.isDarkTheme })),
 
-      // 서브사이드바 상태 설정
       setIsSlidingDrawerOpen: isOpen => set({ isSlidingDrawerOpen: isOpen }),
 
-      // 로딩 상태 설정
-      setIsLoading: isLoading => set({ isLoading }),
-
-      // ➕ 메뉴/확장 관련 액션
       setIsMenuOpen: isOpen => set({ isMenuOpen: isOpen }),
       setIsExtend: () => set(state => ({ isExtend: !state.isExtend })),
       setIsExtendComplete: () => set(state => ({ isExtendComplete: !state.isExtendComplete })),
     }),
-    {
-      name: 'uiStore',
-    },
+    { name: 'UIStore' },
   ),
 );

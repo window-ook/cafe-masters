@@ -1,6 +1,6 @@
 'use client';
 
-import { IBadge } from '@/types/shared/sidebar';
+import { IBadge } from '@/types/shared/tier';
 import { useUIStore } from '@/stores';
 import {
   getExpertTierStyle,
@@ -31,7 +31,7 @@ export default function TierDialog({
   open,
   handleCloseAction,
 }: ITierDialog) {
-  const { isDarkTheme } = useUIStore();
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   return (
     <article>

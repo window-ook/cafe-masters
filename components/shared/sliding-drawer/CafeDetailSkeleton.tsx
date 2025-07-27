@@ -6,7 +6,7 @@ import Skeleton from './Skeleton';
 
 /** 카페 상세 정보 로딩 중 스켈레톤 UI */
 export default function CafeDetailSkeleton() {
-  const { isDarkTheme } = useUIStore();
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   return (
     <div className={`h-full rounded-md flex flex-col ${isDarkTheme ? 'bg-main-dark text-white' : ''}`}>

@@ -16,7 +16,9 @@ import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
 export default function Sidebar() {
   const pathname = usePathname();
 
-  const { isDarkTheme, isSlidingDrawerOpen, setIsSlidingDrawerOpen } = useUIStore();
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
+  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
 
   const PATHS = {
     MAIN: pathname === '/main',

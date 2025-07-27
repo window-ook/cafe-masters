@@ -8,13 +8,12 @@ export default function ThemeToggleButton() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsDarkTheme = useUIStore(state => state.setIsDarkTheme);
 
-  const handleToggle = () => setIsDarkTheme();
 
   return (
     <button
       type="button"
       aria-label="라이트/다크 테마 토글 버튼"
-      onClick={handleToggle}
+      onClick={() => setIsDarkTheme()}
       className="relative w-20 h-10 z-0 flex items-center rounded-full cursor-pointer transition-colors duration-300 ease-in-out"
     >
       <div

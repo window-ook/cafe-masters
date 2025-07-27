@@ -19,8 +19,7 @@ export default function SignUpForm() {
   const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState<string | null>(null);
   const [password, setPassword] = useState<string>('');
-  const [confirmationRequired, setConfirmationRequired] =
-    useState<boolean>(false);
+  const [confirmationRequired, setConfirmationRequired] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
 
   const { signUp, signUpPending } = useSignUp();

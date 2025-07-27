@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { useMapStore, useCafeStore, useFilterStore, useUserStore } from '@/stores';
+import { useMapStore, useSearchedResultStore, useFilterStore, useUserStore } from '@/stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { toast } from 'react-toastify';
 import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
@@ -24,14 +24,17 @@ interface IKakaoPagination {
 
 export default function KakaoMap() {
   const pathname = usePathname();
-  const { userId } = useUserStore();
 
-  const { keyword } = useFilterStore();
-  const { searchResult, setSearchResult } = useCafeStore();
+  const userId = useUserStore(state => state.userId);
+  const keyword = useFilterStore(state => state.keyword);
+  const searchResult = useSearchedResultStore(state => state.searchResult);
+  const setSearchResult = useSearchedResultStore(state => state.setSearchResult);
+  const currentCoordX = useMapStore(state => state.currentCoordX);
+  const currentCoordY = useMapStore(state => state.currentCoordY);
+
   const { filteredCollectedCafes } = useCollectedCafes(userId);
   const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
   const { recommendedCafes, isLoading: isRecommendedCafesLoading } = useRecommendedCafes();
-  const { currentCoordX, currentCoordY } = useMapStore();
 
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 

@@ -7,8 +7,11 @@ import TierBadge from './TierBadge';
 import Image from 'next/image';
 
 export default function Profile() {
-  const { isDarkTheme } = useUIStore();
-  const { userId, userEmail, userTier, setUserTier } = useUserStore();
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const userId = useUserStore(state => state.userId);
+  const userEmail = useUserStore(state => state.userEmail);
+  const userTier = useUserStore(state => state.userTier);
+  const setUserTier = useUserStore(state => state.setUserTier);
 
   const { collectedCounts } = useCollectedCafesCounts(userId);
 

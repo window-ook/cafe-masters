@@ -25,7 +25,8 @@ const REGIONS = [
 ];
 
 export default function RegionFilter() {
-  const { selectedRegion, setSelectedRegion } = useFilterStore();
+  const selectedRegion = useFilterStore(state => state.selectedRegion);
+  const setSelectedRegion = useFilterStore(state => state.setSelectedRegion);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;

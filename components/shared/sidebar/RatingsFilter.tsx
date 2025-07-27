@@ -13,7 +13,8 @@ const STARS = [
 ];
 
 export default function RatingsFilter() {
-  const { selectedRating, setSelectedRating } = useFilterStore();
+  const selectedRating = useFilterStore(state => state.selectedRating);
+  const setSelectedRating = useFilterStore(state => state.setSelectedRating);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;

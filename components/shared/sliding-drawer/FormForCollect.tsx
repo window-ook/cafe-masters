@@ -3,7 +3,7 @@
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname } from 'next/navigation';
-import { useCafeStore } from '@/stores/cafe';
+import { useSearchedResultStore } from '@/stores/searched-result';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import CategorySelector from './CategorySelector';
 import RatingsSelector from './RatingsSelector';
@@ -18,9 +18,11 @@ import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 export default function FormForCollect() {
   const pathname = usePathname();
 
-  const { userId } = useUserStore();
-  const { searchResult } = useCafeStore();
-  const { currentCafeId } = useMapStore();
+  const userId = useUserStore(state => state.userId);
+  const searchResult = useSearchedResultStore(state => state.searchResult);
+  const currentCafeId = useMapStore(state => state.currentCafeId);
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
   const { collectedCafes } = useCollectedCafes(userId);
   const { bookmarkedCafes } = useBookmarkedCafes(userId);
   const { recommendedCafes } = useRecommendedCafes();
@@ -29,30 +31,16 @@ export default function FormForCollect() {
   const bookmarkedCafeDetail = bookmarkedCafes.find((cafe: ISupabaseBookmarkedCafe) => cafe.id === currentCafeId);
   const recommendedCafeDetail = recommendedCafes.find((cafe: ISupabaseRecommendedCafe) => cafe.id === currentCafeId);
 
-  const { isDarkTheme } = useUIStore();
-
   // 현재 페이지에 따라 카페 이름 결정
   const getCafeName = () => {
-    if (pathname.startsWith('/search')) {
-      return searchResult[0]?.place_name || '';
-    }
-    if (pathname.startsWith('/collected')) {
-      return collectedCafeDetail?.name || '';
-    }
-    if (pathname.startsWith('/bookmarked')) {
-      return bookmarkedCafeDetail?.name || '';
-    }
-    if (pathname.startsWith('/cafe/recommended')) {
-      return recommendedCafeDetail?.name || '';
-    }
+    if (pathname.startsWith('/search')) return searchResult[0]?.place_name || '';
+    if (pathname.startsWith('/collected')) return collectedCafeDetail?.name || '';
+    if (pathname.startsWith('/bookmarked')) return bookmarkedCafeDetail?.name || '';
+    if (pathname.startsWith('/cafe/recommended')) return recommendedCafeDetail?.name || '';
     return '';
   };
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<CollectionFormData>({
+  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<CollectionFormData>({
     resolver: zodResolver(collectionFormSchema),
     defaultValues: {
       rating: 0,
@@ -64,9 +52,7 @@ export default function FormForCollect() {
     },
   });
 
-  const onFormSubmit = (data: CollectionFormData) => {
-    console.log(data);
-  };
+  const onFormSubmit = (data: CollectionFormData) => console.log(data);
 
   const memoInputStyle = `${isDarkTheme ? 'text-black' : ''} px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent`;
   const memoSubmitStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} p-4 shadow-sm rounded-xl bg-main text-white hover:bg-opacity-70 disabled:opacity-50 disabled:cursor-not-allowed transition-all`;

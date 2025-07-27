@@ -6,7 +6,7 @@ import SignInButton from '@/components/shared/sidebar/SignInButton';
 import Profile from '@/components/shared/sidebar/Profile';
 
 export default function Footer() {
-  const { userId } = useUserStore();
+  const userId = useUserStore(state => state.userId);
 
   return (
     <footer className="flex-none w-full max-w-108 pb-4 flex flex-col gap-6 items-center">

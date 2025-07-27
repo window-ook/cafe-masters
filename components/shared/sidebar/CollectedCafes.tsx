@@ -10,7 +10,11 @@ import CollectedCafe from '@/components/shared/sidebar/CollectedCafe';
 import PulseDot from '@/components/shared/sliding-drawer/PulseDot';
 
 export default function CollectedCafes() {
-  const { userId } = useUserStore();
+  const userId = useUserStore(state => state.userId);
+
+  const { ref: collectedRef, inView: collectedInView } = useInView({
+    threshold: 0.1,
+  });
 
   const {
     filteredCollectedCafes,
@@ -21,10 +25,6 @@ export default function CollectedCafes() {
     isError,
     error,
   } = useCollectedCafes(userId, true);
-
-  const { ref: collectedRef, inView: collectedInView } = useInView({
-    threshold: 0.1,
-  });
 
   useEffect(() => {
     if (collectedInView && hasNextPage && !isFetchingNextPage) fetchNextPage();
@@ -98,9 +98,9 @@ export default function CollectedCafes() {
               key={cafe.id}
               name={cafe.name}
               ratings={cafe.ratings!}
-              photoUrl={cafe.image}
+              image={cafe.image}
               address={cafe.address}
-              phoneNum={cafe.phone_number!}
+              phone_number={cafe.phone_number!}
               onClickAction={() => handleCollectedCafeClick(cafe)}
             />
           ))}

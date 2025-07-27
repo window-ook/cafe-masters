@@ -8,11 +8,10 @@ import BackgroundCards from '@/components/shared/FallingCards';
 
 export default function ResetPasswordForm() {
   const supabase = createBrowserSupabaseClient();
+  const router = useRouter();
 
   const [newPassword, setNewPassword] = useState<string>('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>('');
-
-  const router = useRouter();
 
   const { finishResetPassword } = useFinishResetPassword();
 

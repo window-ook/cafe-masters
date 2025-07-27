@@ -15,8 +15,10 @@ import FormForRecommend from '@/components/shared/sliding-drawer/FormForRecommen
 export default function SlidingDrawer() {
     const pathname = usePathname();
 
-    const { isSlidingDrawerOpen, isDarkTheme, isExtend } = useUIStore();
-    const { currentCafeId } = useMapStore();
+    const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
+    const isDarkTheme = useUIStore(state => state.isDarkTheme);
+    const isExtend = useUIStore(state => state.isExtend);
+    const currentCafeId = useMapStore(state => state.currentCafeId);
 
     const [isCollectFormOpen, setIsCollectFormOpenAction] = useState(false);
     const [isRecommendFormOpen, setIsRecommendFormOpenAction] = useState(false);

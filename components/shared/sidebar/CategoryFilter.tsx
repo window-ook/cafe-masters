@@ -1,50 +1,26 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
-import { useCafeStore } from 'stores';
+import { useState } from 'react';
+import { useFilterStore } from 'stores/filter';
 import { CATEGORIES } from '@/utils/constants/categories';
 import { RiResetLeftFill } from 'react-icons/ri';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 export default function CategoryFilter() {
-  const { setFilteredRecommendedCafe } = useCafeStore();
+  const selectedCategories = useFilterStore(state => state.selectedCategories);
+  const setSelectedCategories = useFilterStore(state => state.setSelectedCategories);
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isExpanded, setIsExpanded] = useState(true);
 
-  const { recommendedCafes } = useRecommendedCafes();
-
   const toggleCategories = (category: string) => {
-    setSelectedCategories(prev =>
-      prev.includes(category)
-        ? prev.filter(t => t !== category)
-        : [...prev, category],
-    );
+    const newCategories = selectedCategories.includes(category)
+      ? selectedCategories.filter(t => t !== category)
+      : [...selectedCategories, category];
+    setSelectedCategories(newCategories);
   };
 
-  const resetCategories = () => setSelectedCategories(() => []);
-
+  const resetCategories = () => setSelectedCategories([]);
   const toggleExpand = () => setIsExpanded(prev => !prev);
-
-  useEffect(() => {
-    const filteredRecommendedCafe = recommendedCafes.filter(cafe => {
-      if (!cafe.categories) return selectedCategories.length === 0;
-
-      // 선택된 카테고리가 없으면 모든 카페를 보여줌
-      if (selectedCategories.length === 0) return true;
-
-      try {
-        const parsedCategory = JSON.parse(cafe.categories) as string[];
-        return selectedCategories.every(selected => parsedCategory.includes(selected));
-      } catch (error) {
-        console.error('카테고리 parsing error:', error);
-        return false;
-      }
-    });
-
-    setFilteredRecommendedCafe(filteredRecommendedCafe);
-  }, [recommendedCafes, selectedCategories, setFilteredRecommendedCafe]);
 
   return (
     <div className="pt-2 flex flex-wrap justify-center gap-2">

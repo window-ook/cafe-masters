@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, use } from 'react';
-import { useCurrentCafeStore, useMapStore, useUserStore } from '@/stores';
+import { useMapStore, useUserStore } from '@/stores';
 import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
 import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
@@ -14,12 +14,15 @@ export default function SearchedDetailClient({ params }: { params: Promise<{ id:
   const { id } = resolvedParams;
   const numericId = Number(id);
 
-  const { userId } = useUserStore();
+  const userId = useUserStore(state => state.userId);
+  const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
+  const setIsCollected = useMapStore(state => state.setIsCollected);
+  const setIsRecommended = useMapStore(state => state.setIsRecommended);
+  const setCurrentCafeId = useMapStore(state => state.setCurrentCafeId);
+
   const { collectedCafes } = useCollectedCafes(userId, true);
   const { bookmarkedCafes } = useBookmarkedCafes(userId);
   const { recommendedCafes } = useRecommendedCafes();
-  const { setIsBookmarked, setIsCollected, setIsRecommended } = useCurrentCafeStore();
-  const { setCurrentCafeId } = useMapStore();
 
   // 카페 ID 설정 - 페이지 로드시 1회만 실행
   useEffect(() => {

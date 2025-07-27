@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useUIStore } from 'stores';
+import { useFilterStore } from 'stores/filter';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 import { useCafeClickHandler } from '@/hooks/ui/useCafeClickHandler';
@@ -9,17 +10,18 @@ import CafeItem from '@/components/shared/sidebar/CafeItem';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
 export default function RecommendedCafes() {
-  const { isDarkTheme } = useUIStore();
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+  const selectedCategories = useFilterStore(state => state.selectedCategories);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { recommendedCafes } = useRecommendedCafes();
+  const { filteredRecommendedCafes } = useRecommendedCafes(selectedCategories);
 
   const recommendedPerPage = 5;
-  const totalRecommendedPages = Math.ceil((recommendedCafes?.length || 0) / recommendedPerPage);
-  const paginatedRecommend = recommendedCafes?.slice((currentPage - 1) * recommendedPerPage, currentPage * recommendedPerPage) || [];
+  const totalRecommendedPages = Math.ceil((filteredRecommendedCafes?.length || 0) / recommendedPerPage);
+  const paginatedRecommend = filteredRecommendedCafes?.slice((currentPage - 1) * recommendedPerPage, currentPage * recommendedPerPage) || [];
 
-  useEffect(() => { setCurrentPage(1); }, [recommendedCafes]);
+  useEffect(() => { setCurrentPage(1); }, [filteredRecommendedCafes]);
 
   const handleNextRecommendedPage = () => {
     if (currentPage < totalRecommendedPages) setCurrentPage(currentPage + 1);
@@ -43,8 +45,8 @@ export default function RecommendedCafes() {
               key={cafe.id}
               name={cafe.name}
               address={cafe.address}
-              phoneNum={cafe.phone_number}
-              photoUrl={cafe.image}
+              phone_number={cafe.phone_number}
+              image={cafe.image}
               onClickAction={() => handleRecommendedCafeClick(cafe)}
             />
           ))}
