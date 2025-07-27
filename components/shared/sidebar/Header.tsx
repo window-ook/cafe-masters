@@ -44,8 +44,8 @@ export default function Header() {
   };
 
   return (
-    <section
-      className={`${isDarkTheme ? 'bg-main-dark' : 'bg-gray-100'} z-10 top-0 py-4 w-full max-w-108 flex flex-col gap-2`}
+    <header
+      className={`flex-none ${isDarkTheme ? 'bg-main-dark' : 'bg-gray-100'} z-10 top-0 py-4 w-full max-w-108 flex flex-col gap-2`}
     >
       <div className="flex justify-between items-center mb-2">
         <Tooltip
@@ -166,6 +166,6 @@ export default function Header() {
       )}
 
       {PATHS.RECOMMENDED && <CategoryFilter />}
-    </section>
+    </header>
   );
 }

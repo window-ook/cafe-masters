@@ -35,7 +35,7 @@ export default function RecommendedCafes() {
   });
 
   return (
-    <main className="h-full flex flex-col">
+    <div className="h-full flex flex-col">
       <section className='flex-1 overflow-y-auto overflow-x-hidden'>
         <ul className="pagination-sidebar-list">
           {paginatedRecommend.map((cafe: ISupabaseRecommendedCafe) => (
@@ -60,6 +60,6 @@ export default function RecommendedCafes() {
           totalPages={totalRecommendedPages}
         />
       )}
-    </main>
+    </div>
   );
 }

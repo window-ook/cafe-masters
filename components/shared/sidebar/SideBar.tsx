@@ -38,19 +38,13 @@ export default function Sidebar() {
           ${isSlidingDrawerOpen && 'hidden sm:block'}`}
       >
         {/* 사이드바 컨텐츠 */}
-        <div className="h-full flex flex-col">
-          <header className="flex-none">
-            <Header />
-          </header>
+        <section className="h-full flex flex-col">
+          <Header />
 
           {PATHS.MAIN && (
             <>
-              <main className="flex-1">
-                <TabsForLink />
-              </main>
-              <footer className="flex-none">
-                <Footer />
-              </footer>
+              <TabsForLink />
+              <Footer />
             </>
           )}
 
@@ -93,7 +87,7 @@ export default function Sidebar() {
               </Suspense>
             </main>
           )}
-        </div>
+        </section>
       </div>
 
       {/* 슬라이딩 드로어: 상세 정보 표시 */}

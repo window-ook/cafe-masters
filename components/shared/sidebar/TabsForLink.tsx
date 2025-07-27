@@ -49,7 +49,7 @@ export default function TabsForLink() {
   const { searchResult } = useCafeStore();
 
   return (
-    <ul className="flex flex-col items-center">
+    <ul className="flex-1 flex flex-col items-center">
       <SideBarTab
         icon={
           <IoMdCafe

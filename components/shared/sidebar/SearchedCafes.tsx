@@ -33,7 +33,7 @@ export default function SearchedCafes() {
   });
 
   return (
-    <main className="h-full flex flex-col">
+    <div className="h-full flex flex-col">
       <section className="flex-1 overflow-y-auto overflow-x-hidden">
         <ul className="pagination-sidebar-list">
           {paginatedResult.map((cafe: IKakaoSearchResult) => (
@@ -57,6 +57,6 @@ export default function SearchedCafes() {
           totalPages={totalSearchResultPages}
         />
       )}
-    </main>
+    </div>
   );
 }

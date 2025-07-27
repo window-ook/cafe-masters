@@ -46,7 +46,7 @@ export default function BookmarkedCafes() {
   // 로딩 상태 처리
   if (isLoading) {
     return (
-      <main className="relative overflow-y-auto overflow-x-hidden">
+      <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="my-8 px-8 flex flex-col gap-8">
             {Array.from({ length: BOOKMARKED_CAFES_PER_PAGE }).map((_, index) => (
@@ -57,14 +57,14 @@ export default function BookmarkedCafes() {
             ))}
           </div>
         </section>
-      </main>
+      </div>
     );
   }
 
   // 에러 상태 처리
   if (isError) {
     return (
-      <main className="relative overflow-y-auto overflow-x-hidden">
+      <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="my-8 px-8 flex items-center justify-center h-40">
             <div className="text-center">
@@ -77,14 +77,14 @@ export default function BookmarkedCafes() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     );
   }
 
   // userId가 없는 경우
   if (!userId) {
     return (
-      <main className="relative overflow-y-auto overflow-x-hidden">
+      <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="my-8 px-8 flex items-center justify-center h-40">
             <div className="text-center">
@@ -97,14 +97,14 @@ export default function BookmarkedCafes() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     );
   }
 
   // 전체 데이터가 없는 경우 vs 필터링 결과가 없는 경우 구분
   if (bookmarkedCafes?.length === 0) {
     return (
-      <main className="relative overflow-y-auto overflow-x-hidden">
+      <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="my-8 px-8 flex items-center justify-center h-40">
             <div className="text-center">
@@ -117,14 +117,14 @@ export default function BookmarkedCafes() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     );
   }
 
   // 필터링 결과만 없는 경우
   if (totalFilteredCount === 0) {
     return (
-      <main className="relative overflow-y-auto overflow-x-hidden">
+      <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="my-8 px-8 flex items-center justify-center h-40">
             <div className="text-center">
@@ -137,12 +137,12 @@ export default function BookmarkedCafes() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="h-full flex flex-col">
+    <div className="h-full flex flex-col">
       <section className="flex-1 overflow-y-auto overflow-x-hidden">
         <ul className="pagination-sidebar-list">
           {paginatedBookmarkedCafes.map((cafe: ISupabaseBookmarkedCafe) => (
@@ -165,6 +165,6 @@ export default function BookmarkedCafes() {
         currentPage={currentPage}
         totalPages={totalPages}
       />
-    </main>
+    </div>
   );
 }
