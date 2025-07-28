@@ -2,13 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { useRef, useMemo } from 'react';
-import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
-import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
 import { useSearchedResultStore, useMapStore, useUIStore, useUserStore } from '@/stores';
 import { getDetailBodyStyle } from '@/utils/styles';
-import { Bookmark, CircleX, FolderCheck } from 'lucide-react';
-import { toast } from 'react-toastify';
+import { CircleX, FolderCheck } from 'lucide-react';
 import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
 import Location from '@/components/shared/sliding-drawer/Location';
@@ -16,6 +13,7 @@ import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
 import Button from '@/components/shared/sliding-drawer/Button';
 import Menus from '@/components/shared/sliding-drawer/Menus';
 import ImageWithFallback from '../ImageWithFallback';
+import BookmarkToggleButton from './BookmarkToggleButton';
 
 interface ISearchedCafeDetail {
   cafeId: number;
@@ -27,22 +25,17 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
   const router = useRouter();
 
   const admin = useUserStore(state => state.admin);
-  const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
   const currentCoordX = useMapStore(state => state.currentCoordX);
   const currentCoordY = useMapStore(state => state.currentCoordY);
   const searchResult = useSearchedResultStore(state => state.searchResult);
   const isCollected = useMapStore(state => state.isCollected);
-  const isBookmarked = useMapStore(state => state.isBookmarked);
-  const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // React Query로 카페 상세 정보 가져오기
   const { searchedCafeDetail } = useSearchedCafeDetail(cafeId.toString());
-  const { uploadBookmarkedCafe } = useUploadBookmarkedCafe();
-  const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
 
   // searchResult에서 cafeId에 해당하는 카페 찾기
   const detail = useMemo(() => {
@@ -85,35 +78,6 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
     });
   };
 
-  const handleBookmarkToggle = async () => {
-    if (!userId) {
-      toast.error('로그인이 필요합니다.');
-      return;
-    }
-
-    try {
-      if (isBookmarked) {
-        await deleteBookmarkedCafe(Number(detail.id));
-        setIsBookmarked(false);
-        toast.success('북마크에서 제거되었습니다.');
-      } else {
-        await uploadBookmarkedCafe({
-          user_id: userId,
-          id: Number(detail.id),
-          name: detail.name,
-          address: detail.address,
-          phone_number: detail.phone_number,
-          image: detail.image,
-          coordX: currentCoordX,
-          coordY: currentCoordY,
-        });
-        setIsBookmarked(true);
-        toast.success('북마크에 추가되었습니다.');
-      }
-    } catch {
-      toast.error('작업 중 오류가 발생했습니다.');
-    }
-  };
 
   const handleClose = () => {
     setIsSlidingDrawerOpen(false);
@@ -150,9 +114,20 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
       {/* 헤더 */}
       <header className={`w-full p-4 ${isDarkTheme ? 'shadow-main-shadow' : ''} flex justify-between items-center`}>
         <div className='flex items-center gap-2'>
-          <button onClick={handleBookmarkToggle} className='cursor-pointer'>
-            <Bookmark className={`size-8 ${isBookmarked ? 'text-bookmark fill-bookmark' : 'text-unbookmark'}`} />
-          </button>
+          <BookmarkToggleButton
+            bookmarkData={{
+              id: Number(detail.id),
+              name: detail.name,
+              address: detail.address,
+              phone_number: detail.phone_number,
+              image: detail.image,
+              coordX: currentCoordX,
+              coordY: currentCoordY,
+              extra_images: searchedCafeDetail?.extra_images || null,
+              opening_time: searchedCafeDetail?.opening_time || null,
+              menus: searchedCafeDetail?.menus || null,
+            }}
+          />
           {/* 수집 상태 배지 */}
           {isCollected && <CollectedBadge />}
         </div>

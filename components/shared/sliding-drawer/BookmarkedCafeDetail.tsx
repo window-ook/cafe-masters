@@ -12,6 +12,8 @@ import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 import Location from '@/components/shared/sliding-drawer/Location';
 import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
 import Button from '@/components/shared/sliding-drawer/Button';
+import OpenTime from './OpenTime';
+import Menus from './Menus';
 
 interface IBookmarkedCafeDetail {
   cafeId: number;
@@ -28,7 +30,6 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
   const isCollected = useMapStore(state => state.isCollected);
   const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
-
 
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
   const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
@@ -64,20 +65,22 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
   return (
     <div className={`h-full rounded-md flex flex-col ${isDarkTheme ? 'bg-main-dark text-white' : ''}`}>
       {/* 헤더 */}
-      <header className={`p-2 ${isDarkTheme ? 'shadow-main-shadow' : ''} flex justify-between items-center`}>
-        <div className="flex justify-between items-center p-4 w-full">
+      <header className={`w-full p-4 ${isDarkTheme ? 'shadow-main-shadow' : ''} flex justify-between items-center`}>
+        <div className='flex items-center gap-2'>
           <button onClick={handleBookmarkDelete} className='cursor-pointer'>
             <Bookmark className="size-8 text-bookmark fill-bookmark" />
           </button>
-          <button onClick={handleClose} className='cursor-pointer'>
-            <CircleX className='size-8' />
-          </button>
+          {/* 수집 상태 배지 */}
+          {isCollected && <CollectedBadge />}
         </div>
+        <button onClick={handleClose} className='cursor-pointer'>
+          <CircleX className='size-8' />
+        </button>
       </header>
 
       {/* 바디 */}
-      <main className={`p-2 overflow-y-auto flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
-        <div className="p-4 space-y-6">
+      <main className={`p-4 overflow-y-auto flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
+        <div className="space-y-6">
           {/* 카페 이미지 */}
           {detail.image && (
             <div className="relative w-full h-48 rounded-lg overflow-hidden">
@@ -93,32 +96,24 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
           {/* 카페 정보 */}
           <div className="space-y-4">
             <h1 className="text-2xl font-bold">{detail.name}</h1>
-
             <Location address={detail.address} />
-
             <PhoneNumber phone_number={detail.phone_number!} />
-
-            {/* 수집 상태 배지 */}
-            {isCollected && <CollectedBadge />}
+            <OpenTime opening_time={detail.opening_time || '등록 X'} />
           </div>
 
           {/* 액션 버튼들 */}
-          <div className="flex gap-2">
-            <Button
-              onClick={() => setIsCollectedFormOpenAction(true)}
-              customClassName='flex-1'
-            >
-              수집하기
-            </Button>
-            {admin && (
-              <Button
-                onClick={() => setIsRecommendFormOpenAction(true)}
-                customClassName='flex-1 bg-blue-600'
-              >
-                추천하기
-              </Button>
-            )}
-          </div>
+          <section className="flex gap-2">
+            <Button onClick={() => setIsCollectedFormOpenAction(true)} customClassName='flex-1'>수집하기</Button>
+            {admin && <Button onClick={() => setIsRecommendFormOpenAction(true)} customClassName='flex-1 bg-blue-600'>추천하기</Button>}
+          </section>
+
+          <Menus menus={detail.menus ? (() => {
+            try {
+              return JSON.parse(detail.menus);
+            } catch {
+              return null;
+            }
+          })() : null} />
         </div>
       </main>
     </div>

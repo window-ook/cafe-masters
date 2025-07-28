@@ -1,13 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
-import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useMapStore, useUIStore, useUserStore } from 'stores';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
-import { Bookmark, CircleX } from 'lucide-react';
-import { toast } from 'react-toastify';
+import { CircleX } from 'lucide-react';
 import Image from 'next/image';
 import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 import Categories from './Categories';
@@ -15,6 +12,8 @@ import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
 import Location from '@/components/shared/sliding-drawer/Location';
 import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
 import Button from '@/components/shared/sliding-drawer/Button';
+import BookmarkToggleButton from './BookmarkToggleButton';
+import Menus from './Menus';
 
 interface IRecommendedCafeDetail {
   cafeId: number;
@@ -30,16 +29,9 @@ export default function RecommendedCafeDetail({
   const router = useRouter();
 
   const admin = useUserStore(state => state.admin);
-  const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
   const isCollected = useMapStore(state => state.isCollected);
-  const isBookmarked = useMapStore(state => state.isBookmarked);
-  const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
-
-
-  const { uploadBookmarkedCafe } = useUploadBookmarkedCafe();
-  const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
 
   const { recommendedCafes } = useRecommendedCafes();
 
@@ -53,36 +45,6 @@ export default function RecommendedCafeDetail({
     );
   }
 
-  const handleBookmarkToggle = async () => {
-    if (!userId) {
-      toast.error('로그인이 필요합니다.');
-      return;
-    }
-
-    try {
-      if (isBookmarked) {
-        await deleteBookmarkedCafe(recommendedCafedetail.id);
-        setIsBookmarked(false);
-        toast.success('북마크가 해제되었습니다.');
-      } else {
-        await uploadBookmarkedCafe({
-          user_id: userId,
-          id: recommendedCafedetail.id,
-          name: recommendedCafedetail.name,
-          address: recommendedCafedetail.address,
-          phone_number: recommendedCafedetail.phone_number,
-          image: recommendedCafedetail.image,
-          coordX: recommendedCafedetail.coordX,
-          coordY: recommendedCafedetail.coordY,
-        });
-        setIsBookmarked(true);
-        toast.success('북마크에 추가되었습니다.');
-      }
-    } catch {
-      toast.error('작업 중 오류가 발생했습니다.');
-    }
-  };
-
   const handleClose = () => {
     setIsSlidingDrawerOpen(false);
     router.back();
@@ -93,9 +55,30 @@ export default function RecommendedCafeDetail({
       {/* 헤더 */}
       <header className={`p-2 ${isDarkTheme ? 'shadow-main-shadow' : ''} flex justify-between items-center`}>
         <div className="flex justify-between items-center p-4 w-full">
-          <button onClick={handleBookmarkToggle} className='cursor-pointer'>
-            <Bookmark className={`size-8 ${isBookmarked ? 'text-bookmark fill-bookmark' : 'text-unbookmark'}`} />
-          </button>
+          <div className='flex items-center gap-2'>
+            <BookmarkToggleButton
+              bookmarkData={{
+                id: recommendedCafedetail.id,
+                name: recommendedCafedetail.name,
+                address: recommendedCafedetail.address,
+                phone_number: recommendedCafedetail.phone_number || '',
+                image: recommendedCafedetail.image || '',
+                coordX: recommendedCafedetail.coordX,
+                coordY: recommendedCafedetail.coordY,
+                extra_images: recommendedCafedetail.extra_images || null,
+                opening_time: recommendedCafedetail.opening_time || null,
+                menus: recommendedCafedetail.menus ? (() => {
+                  try {
+                    return JSON.parse(recommendedCafedetail.menus);
+                  } catch {
+                    return null;
+                  }
+                })() : null,
+              }}
+            />
+            {/* 수집 상태 배지 */}
+            {isCollected && <CollectedBadge />}
+          </div>
           <button onClick={handleClose} className='cursor-pointer'>
             <CircleX className='size-8' />
           </button>
@@ -120,19 +103,10 @@ export default function RecommendedCafeDetail({
           {/* 카페 정보 */}
           <div className="space-y-4">
             <h1 className="text-2xl font-bold">{recommendedCafedetail.name}</h1>
-
             <Categories categories={recommendedCafedetail.categories.split(',')} />
             <Location address={recommendedCafedetail.address} />
             <PhoneNumber phone_number={recommendedCafedetail.phone_number!} />
             <OpenTime opening_time={recommendedCafedetail.opening_time || ''} />
-
-            {/* 추천 배지 */}
-            <div className="bg-recommended text-white px-3 py-1 rounded-full text-sm w-fit">
-              추천 카페
-            </div>
-
-            {/* 수집 상태 배지 */}
-            {isCollected && <CollectedBadge />}
           </div>
 
           {/* 액션 버튼들 */}
@@ -152,6 +126,13 @@ export default function RecommendedCafeDetail({
               </Button>
             )}
           </div>
+          <Menus menus={recommendedCafedetail.menus ? (() => {
+            try {
+              return JSON.parse(recommendedCafedetail.menus);
+            } catch {
+              return null;
+            }
+          })() : null} />
         </div>
       </main>
     </div>
