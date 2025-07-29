@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useSignIn } from '@/hooks/supabase/useSignIn';
+import { useSignIn } from '@/hooks/supabase/user';
 import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
 import { validateEmailByRegex } from '@/utils/shared/auth';
 import {

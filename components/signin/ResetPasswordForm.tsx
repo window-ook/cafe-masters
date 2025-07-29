@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useFinishResetPassword } from '@/hooks/supabase/useFinishResetPassword';
+import { useFinishResetPassword } from '@/hooks/supabase/user';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import BackgroundCards from '@/components/shared/FallingCards';
 

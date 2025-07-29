@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useSignUp } from '@/hooks/supabase/useSignUp';
+import { useSignUp } from '@/hooks/supabase/user';
 import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
-import { useVerifyOtpCode } from '@/hooks/supabase/useVerifyOtpCode';
+import { useVerifyOtpCode } from '@/hooks/supabase/user';
 import {
   authFormCardStyle,
   authFormMentionStyle,
