@@ -7,7 +7,7 @@ import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { toast } from 'react-toastify';
 import { useCollectedCafes } from '@/hooks/supabase/collection';
 import { useBookmarkedCafes } from '@/hooks/supabase/bookmark';
-import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
+import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {

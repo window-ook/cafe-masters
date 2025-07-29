@@ -1,5 +1,5 @@
-export { useMapStore } from '@/stores/map';
-export { useFilterStore } from '@/stores/filter';
-export { useUIStore } from '@/stores/ui';
-export { useUserStore } from '@/stores/user';
-export { useSearchedResultStore } from '@/stores/searched-result';
+export { useMapStore } from '@/stores/mapStore';
+export { useFilterStore } from '@/stores/filterStore';
+export { useUIStore } from '@/stores/UIStore';
+export { useUserStore } from '@/stores/userStore';
+export { useSearchedResultStore } from '@/stores/searchedResultStore';

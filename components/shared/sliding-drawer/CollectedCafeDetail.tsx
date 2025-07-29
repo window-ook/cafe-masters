@@ -3,7 +3,7 @@
 import { RefObject, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUIStore, useUserStore } from 'stores';
-import { useCollectionStore } from '@/stores/collection';
+import { useCollectionStore } from '@/stores/collectionStore';
 import { useCollectedCafes } from '@/hooks/supabase/collection';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { scrollThumbnails } from '@/utils/shared/detail';

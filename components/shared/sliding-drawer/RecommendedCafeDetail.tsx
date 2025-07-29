@@ -1,8 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useMapStore, useUIStore, useUserStore } from 'stores';
-import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
+import { useMapStore, useUIStore } from 'stores';
+import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
 import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 import { CircleX } from 'lucide-react';
@@ -16,18 +16,9 @@ import Button from '@/components/shared/sliding-drawer/Button';
 import BookmarkToggleButton from './BookmarkToggleButton';
 import Menus from './Menus';
 
-interface IRecommendedCafeDetail {
-  cafeId: number;
-  setIsRecommendFormOpenAction: (open: boolean) => void;
-}
-
-export default function RecommendedCafeDetail({
-  cafeId,
-  setIsRecommendFormOpenAction,
-}: IRecommendedCafeDetail) {
+export default function RecommendedCafeDetail({ cafeId }: { cafeId: number }) {
   const router = useRouter();
 
-  const admin = useUserStore(state => state.admin);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
   const isCollected = useMapStore(state => state.isCollected);
@@ -113,6 +104,7 @@ export default function RecommendedCafeDetail({
           <div className="flex gap-2">
             <Button
               onClick={() => selectTargetCafeForCollect({
+                id: recommendedCafedetail.id,
                 name: recommendedCafedetail.name,
                 coordX: recommendedCafedetail.coordX,
                 coordY: recommendedCafedetail.coordY,
@@ -126,14 +118,6 @@ export default function RecommendedCafeDetail({
             >
               수집하기
             </Button>
-            {admin && (
-              <Button
-                onClick={() => setIsRecommendFormOpenAction(true)}
-                customClassName='flex-1 bg-blue-600'
-              >
-                수정하기
-              </Button>
-            )}
           </div>
           <Menus menus={recommendedCafedetail.menus ? (() => {
             try {

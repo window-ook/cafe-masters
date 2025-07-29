@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 
-export interface ITargetCafe {
+export interface IFormDataForCollect {
+  id: number;
   name: string;
   coordX: number;
   coordY: number;
@@ -13,10 +14,10 @@ export interface ITargetCafe {
 }
 
 interface ICollectionStore {
-  targetCafe: ITargetCafe | null;
+  targetCafe: IFormDataForCollect | null;
   editingCafe: ISupabaseCollectedCafe | null;
 
-  setTargetCafe: (cafe: ITargetCafe) => void;
+  setTargetCafe: (cafe: IFormDataForCollect) => void;
   clearTargetCafe: () => void;
   setEditingCafe: (cafe: ISupabaseCollectedCafe | null) => void;
   clearEditingCafe: () => void;
@@ -26,7 +27,7 @@ export const useCollectionStore = create<ICollectionStore>((set) => ({
   targetCafe: null,
   editingCafe: null,
 
-  setTargetCafe: (cafe: ITargetCafe) => set({ targetCafe: cafe }),
+  setTargetCafe: (cafe: IFormDataForCollect) => set({ targetCafe: cafe }),
   clearTargetCafe: () => set({ targetCafe: null }),
   setEditingCafe: (cafe: ISupabaseCollectedCafe | null) => set({ editingCafe: cafe }),
   clearEditingCafe: () => set({ editingCafe: null }),

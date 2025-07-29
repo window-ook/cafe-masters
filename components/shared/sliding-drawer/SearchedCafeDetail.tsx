@@ -5,6 +5,7 @@ import { useRef, useMemo, RefObject } from 'react';
 import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
 import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import { useSearchedResultStore, useMapStore, useUIStore, useUserStore } from '@/stores';
+import { useRecommendationStore } from '@/stores/recommendationStore';
 import { scrollThumbnails } from '@/utils/shared/detail';
 import { getDetailBodyStyle } from '@/utils/styles';
 import { CircleX, FolderCheck } from 'lucide-react';
@@ -34,6 +35,7 @@ export default function SearchedCafeDetail({ cafeId, setIsRecommendFormOpenActio
   const isCollected = useMapStore(state => state.isCollected);
 
   const { selectTargetCafeForCollect } = useCreateCollectedCafe();
+  const { setTargetCafe } = useRecommendationStore();
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -234,6 +236,7 @@ export default function SearchedCafeDetail({ cafeId, setIsRecommendFormOpenActio
         <section className="flex gap-2">
           <Button
             onClick={() => selectTargetCafeForCollect({
+              id: Number(detail.id),
               name: detail.name,
               coordX: currentCoordX,
               coordY: currentCoordY,
@@ -247,7 +250,20 @@ export default function SearchedCafeDetail({ cafeId, setIsRecommendFormOpenActio
           >
             수집하기
           </Button>
-          {admin && <Button onClick={() => setIsRecommendFormOpenAction(true)} customClassName='flex-1 bg-blue-600'>추천하기</Button>}
+          {admin && <Button onClick={() => {
+            setTargetCafe({
+              id: Number(detail.id),
+              name: detail.name,
+              coordX: currentCoordX,
+              coordY: currentCoordY,
+              address: detail.address,
+              image: searchedCafeDetail?.image || 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif',
+              extra_images: searchedCafeDetail?.extra_images || [],
+              phone_number: detail.phone_number,
+              opening_time: searchedCafeDetail?.opening_time || null,
+            });
+            setIsRecommendFormOpenAction(true);
+          }} customClassName='flex-1 bg-blue-600'>추천하기</Button>}
         </section>
 
         {/* 메뉴 */}

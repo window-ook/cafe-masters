@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname } from 'next/navigation';
 import { useUIStore } from '@/stores';
-import { useCollectionStore } from '@/stores/collection';
+import { useCollectionStore } from '@/stores/collectionStore';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { createCollectedCafe } from '@/actions/supabase/collection';
 import { useUpdateCollectedCafe } from '@/hooks/supabase/collection/useUpdateCollectedCafe';
@@ -18,6 +18,7 @@ export default function FormForCollect() {
   const editingCafe = useCollectionStore(state => state.editingCafe);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const clearEditingCafe = useCollectionStore(state => state.clearEditingCafe);
+
   const { updateCollectedCafe } = useUpdateCollectedCafe();
 
   // 편집 모드 감지
@@ -84,6 +85,7 @@ export default function FormForCollect() {
       try {
         // 완전한 수집 데이터 생성
         const collectionData = {
+          id: targetCafe.id,
           name: targetCafe.name,
           coordX: targetCafe.coordX,
           coordY: targetCafe.coordY,

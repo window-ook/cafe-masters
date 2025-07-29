@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useFilterStore } from 'stores/filter';
+import { useFilterStore } from '@/stores/filterStore';
 import { getCollectedCafes } from '@/actions/supabase/collection';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { collectedCafeQuery } from '@/queries/supabase/collection';

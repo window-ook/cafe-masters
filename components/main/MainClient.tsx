@@ -3,7 +3,7 @@
 import { useUserStore } from '@/stores';
 import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
 import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
-import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafes';
+import { useRecommendedCafesCounts } from '@/hooks/supabase/recommendation';
 
 export default function MainClient() {
   const userId = useUserStore(state => state.userId);

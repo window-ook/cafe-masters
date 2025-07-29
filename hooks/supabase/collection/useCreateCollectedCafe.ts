@@ -1,7 +1,7 @@
 'use client';
 
 import { useUIStore } from "@/stores";
-import { useCollectionStore, ITargetCafe } from "@/stores/collection";
+import { useCollectionStore, IFormDataForCollect } from "@/stores/collectionStore";
 
 /**
  * 수집할 카페의 데이터를 상태로 동기화하는 커스텀 훅
@@ -11,7 +11,7 @@ export function useCreateCollectedCafe() {
     const { setTargetCafe, clearTargetCafe } = useCollectionStore();
     const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
 
-    const selectTargetCafeForCollect = (cafeData: ITargetCafe) => {
+    const selectTargetCafeForCollect = (cafeData: IFormDataForCollect) => {
         setTargetCafe(cafeData);
         setIsCollectFormOpen(true);
     };

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useUIStore } from '@/stores/ui';
-import { useMapStore } from '@/stores/map';
+import { useUIStore } from '@/stores/UIStore';
+import { useMapStore } from '@/stores/mapStore';
 
 /**
  * 카페 클릭 핸들러 공통 타입 인터페이스

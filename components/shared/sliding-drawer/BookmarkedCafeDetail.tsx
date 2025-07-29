@@ -18,15 +18,9 @@ import OpenTime from './OpenTime';
 import Menus from './Menus';
 import ImageWithFallback from '../ImageWithFallback';
 
-interface IBookmarkedCafeDetail {
-  cafeId: number;
-  setIsRecommendFormOpenAction: (open: boolean) => void;
-}
-
-export default function BookmarkedCafeDetail({ cafeId, setIsRecommendFormOpenAction }: IBookmarkedCafeDetail) {
+export default function BookmarkedCafeDetail({ cafeId }: { cafeId: number }) {
   const router = useRouter();
 
-  const admin = useUserStore(state => state.admin);
   const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
@@ -171,6 +165,7 @@ export default function BookmarkedCafeDetail({ cafeId, setIsRecommendFormOpenAct
           <section className="flex gap-2">
             <Button
               onClick={() => selectTargetCafeForCollect({
+                id: detail.id,
                 name: detail.name,
                 coordX: detail.coordX,
                 coordY: detail.coordY,
@@ -184,7 +179,6 @@ export default function BookmarkedCafeDetail({ cafeId, setIsRecommendFormOpenAct
             >
               수집하기
             </Button>
-            {admin && <Button onClick={() => setIsRecommendFormOpenAction(true)} customClassName='flex-1 bg-blue-600'>추천하기</Button>}
           </section>
 
           <Menus menus={detail.menus ? (() => {

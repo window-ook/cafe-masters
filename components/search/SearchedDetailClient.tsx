@@ -4,7 +4,7 @@ import { useEffect, use } from 'react';
 import { useMapStore, useUserStore } from '@/stores';
 import { useBookmarkedCafes } from '@/hooks/supabase/bookmark';
 import { useCollectedCafes } from '@/hooks/supabase/collection';
-import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
+import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
 
 /** 검색 카페 상세 페이지 클라이언트 컴포넌트
  * @description 카페 ID 동기화 / 북마크, 수집, 추천된 건지 확인하고 상태 업데이트

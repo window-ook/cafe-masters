@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafes';
+import { useRecommendedCafesCounts } from '@/hooks/supabase/recommendation';
 import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
 import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
 import { useSearchedResultStore, useUIStore, useUserStore } from '@/stores';

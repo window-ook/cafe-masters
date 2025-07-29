@@ -42,8 +42,8 @@ export default function SlidingDrawer() {
             <Suspense fallback={<CafeDetailSkeleton />}>
                 {PATHS.SEARCH && <SearchedCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
                 {PATHS.COLLECTED && <CollectedCafeDetail cafeId={currentCafeId} />}
-                {PATHS.BOOKMARKED && <BookmarkedCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
-                {PATHS.RECOMMENDED && <RecommendedCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+                {PATHS.BOOKMARKED && <BookmarkedCafeDetail cafeId={currentCafeId} />}
+                {PATHS.RECOMMENDED && <RecommendedCafeDetail cafeId={currentCafeId} />}
             </Suspense>
         </div>
     );
@@ -56,9 +56,7 @@ export default function SlidingDrawer() {
 
     if (isRecommendFormOpen) return (
         <div className={SLIDING_DRAWER_STYLE}>
-            <FormForRecommend
-                setIsRecommendFormOpenAction={setIsRecommendFormOpenAction}
-            />
+            <FormForRecommend setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />
         </div>
     );
 }
