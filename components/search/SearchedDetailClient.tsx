@@ -2,8 +2,8 @@
 
 import { useEffect, use } from 'react';
 import { useMapStore, useUserStore } from '@/stores';
-import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
-import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
+import { useBookmarkedCafes } from '@/hooks/supabase/bookmark';
+import { useCollectedCafes } from '@/hooks/supabase/collection';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 
 /** 검색 카페 상세 페이지 클라이언트 컴포넌트

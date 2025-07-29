@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useMapStore, useUIStore, useUserStore } from 'stores';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
-import { useCollectedCafeFormForUpload } from '@/hooks/supabase/useCollectedCafes';
+import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 import { CircleX } from 'lucide-react';
 import Image from 'next/image';
@@ -33,7 +33,7 @@ export default function RecommendedCafeDetail({
   const isCollected = useMapStore(state => state.isCollected);
 
   const { recommendedCafes } = useRecommendedCafes();
-  const { handleCollectClick } = useCollectedCafeFormForUpload();
+  const { selectTargetCafeForCollect } = useCreateCollectedCafe();
 
   const recommendedCafedetail = recommendedCafes?.find((cafe: ISupabaseRecommendedCafe) => cafe.id === cafeId);
 
@@ -112,7 +112,7 @@ export default function RecommendedCafeDetail({
           {/* 액션 버튼들 */}
           <div className="flex gap-2">
             <Button
-              onClick={() => handleCollectClick({
+              onClick={() => selectTargetCafeForCollect({
                 name: recommendedCafedetail.name,
                 coordX: recommendedCafedetail.coordX,
                 coordY: recommendedCafedetail.coordY,

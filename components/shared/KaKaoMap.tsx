@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useMapStore, useSearchedResultStore, useFilterStore, useUserStore } from '@/stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { toast } from 'react-toastify';
-import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
-import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
+import { useCollectedCafes } from '@/hooks/supabase/collection';
+import { useBookmarkedCafes } from '@/hooks/supabase/bookmark';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

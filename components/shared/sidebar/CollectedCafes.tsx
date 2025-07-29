@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useUserStore } from 'stores';
-import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
+import { useCollectedCafes } from '@/hooks/supabase/collection';
 import { useInView } from 'react-intersection-observer';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';

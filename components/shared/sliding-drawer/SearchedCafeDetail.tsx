@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useRef, useMemo, RefObject } from 'react';
 import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
-import { useCollectedCafeFormForUpload } from '@/hooks/supabase/useCollectedCafes';
+import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import { useSearchedResultStore, useMapStore, useUIStore, useUserStore } from '@/stores';
 import { scrollThumbnails } from '@/utils/shared/detail';
 import { getDetailBodyStyle } from '@/utils/styles';
@@ -33,7 +33,7 @@ export default function SearchedCafeDetail({ cafeId, setIsRecommendFormOpenActio
   const searchResult = useSearchedResultStore(state => state.searchResult);
   const isCollected = useMapStore(state => state.isCollected);
 
-  const { handleCollectClick } = useCollectedCafeFormForUpload();
+  const { selectTargetCafeForCollect } = useCreateCollectedCafe();
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -233,7 +233,7 @@ export default function SearchedCafeDetail({ cafeId, setIsRecommendFormOpenActio
         {/* 액션 버튼들 */}
         <section className="flex gap-2">
           <Button
-            onClick={() => handleCollectClick({
+            onClick={() => selectTargetCafeForCollect({
               name: detail.name,
               coordX: currentCoordX,
               coordY: currentCoordY,

@@ -1,24 +1,24 @@
 'use client';
 
+import { RefObject, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUIStore, useUserStore } from 'stores';
-import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
-import { useCollectedCafeFormForUpload } from '@/hooks/supabase/useCollectedCafes';
+import { useCollectionStore } from '@/stores/collection';
+import { useCollectedCafes } from '@/hooks/supabase/collection';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
+import { scrollThumbnails } from '@/utils/shared/detail';
 import { CircleX } from 'lucide-react';
 import Image from 'next/image';
-import Ratings from './Ratings';
-import Location from './Location';
-import PhoneNumber from './PhoneNumber';
-import Comment from './Comment';
-import EatenMenus from './EatenMenus';
-import Pros from './Pros';
-import Cons from './Cons';
-import OpenTime from './OpenTime';
-import Categories from './Categories';
+import Ratings from '@/components/shared/sliding-drawer/Ratings';
+import Location from '@/components/shared/sliding-drawer/Location';
+import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
+import Comment from '@/components/shared/sliding-drawer/Comment';
+import EatenMenus from '@/components/shared/sliding-drawer/EatenMenus';
+import Pros from '@/components/shared/sliding-drawer/Pros';
+import Cons from '@/components/shared/sliding-drawer/Cons';
+import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
+import Categories from '@/components/shared/sliding-drawer/Categories';
 import Button from '@/components/shared/sliding-drawer/Button';
-import { RefObject, useRef } from 'react';
-import { scrollThumbnails } from '@/utils/shared/detail';
 
 export default function CollectedCafeDetail({ cafeId }: { cafeId: number }) {
   const router = useRouter();
@@ -26,8 +26,9 @@ export default function CollectedCafeDetail({ cafeId }: { cafeId: number }) {
   const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
+  const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
+  const setEditingCafe = useCollectionStore(state => state.setEditingCafe);
 
-  const { handleCollectClick } = useCollectedCafeFormForUpload();
   const { filteredCollectedCafes } = useCollectedCafes(userId);
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -151,16 +152,10 @@ export default function CollectedCafeDetail({ cafeId }: { cafeId: number }) {
         </section>
 
         <Button
-          onClick={() => handleCollectClick({
-            name: collectedCafeDetail.name,
-            coordX: collectedCafeDetail.coordX,
-            coordY: collectedCafeDetail.coordY,
-            address: collectedCafeDetail.address,
-            image: collectedCafeDetail.image,
-            extra_images: collectedCafeDetail.extra_images || [],
-            phone_number: collectedCafeDetail.phone_number,
-            opening_time: collectedCafeDetail.opening_time,
-          })}
+          onClick={() => {
+            setEditingCafe(collectedCafeDetail);
+            setIsCollectFormOpen(true);
+          }}
         >
           수정하기
         </Button>

@@ -17,6 +17,7 @@ interface IUIStore {
 
   // 수집 폼 상태
   isCollectFormOpen: boolean;
+  isRecommendFormOpen: boolean;
 
   // 다크모드 액션
   setIsDarkTheme: () => void;
@@ -31,6 +32,7 @@ interface IUIStore {
 
   // 수집 폼 액션
   setIsCollectFormOpen: (isOpen: boolean) => void;
+  setIsRecommendFormOpen: (isOpen: boolean) => void;
 }
 
 export const useUIStore = create<IUIStore>()(
@@ -43,6 +45,7 @@ export const useUIStore = create<IUIStore>()(
       isExtend: false,
       isExtendComplete: false,
       isCollectFormOpen: false,
+      isRecommendFormOpen: false,
 
       setIsDarkTheme: () => set(state => ({ isDarkTheme: !state.isDarkTheme })),
 
@@ -53,6 +56,7 @@ export const useUIStore = create<IUIStore>()(
       setIsExtendComplete: () => set(state => ({ isExtendComplete: !state.isExtendComplete })),
 
       setIsCollectFormOpen: isOpen => set({ isCollectFormOpen: isOpen }),
+      setIsRecommendFormOpen: isOpen => set({ isRecommendFormOpen: isOpen }),
     }),
     { name: 'UIStore' },
   ),

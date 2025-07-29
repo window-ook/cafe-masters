@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafes';
-import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
+import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
 import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
 import { useSearchedResultStore, useUIStore, useUserStore } from '@/stores';
 import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';

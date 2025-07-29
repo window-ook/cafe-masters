@@ -4,7 +4,7 @@ import { RefObject, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/bookmark';
 import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
-import { useCollectedCafeFormForUpload } from '@/hooks/supabase/useCollectedCafes';
+import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import { useMapStore, useUIStore, useUserStore } from 'stores';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 import { scrollThumbnails } from '@/utils/shared/detail';
@@ -35,7 +35,7 @@ export default function BookmarkedCafeDetail({ cafeId, setIsRecommendFormOpenAct
 
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
   const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
-  const { handleCollectClick } = useCollectedCafeFormForUpload();
+  const { selectTargetCafeForCollect } = useCreateCollectedCafe();
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -170,7 +170,7 @@ export default function BookmarkedCafeDetail({ cafeId, setIsRecommendFormOpenAct
           {/* 액션 버튼들 */}
           <section className="flex gap-2">
             <Button
-              onClick={() => handleCollectClick({
+              onClick={() => selectTargetCafeForCollect({
                 name: detail.name,
                 coordX: detail.coordX,
                 coordY: detail.coordY,

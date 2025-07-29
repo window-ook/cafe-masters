@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useFilterStore, useUIStore, useUserStore } from '@/stores';
 import { useSearchedResultStore } from '@/stores/searched-result';
 import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
-import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
+import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
 import Image from 'next/image';
 import Link from 'next/link';
 import Search from '@/components/shared/sidebar/SearchBar';

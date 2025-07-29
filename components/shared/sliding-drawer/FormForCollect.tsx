@@ -2,21 +2,37 @@
 
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { usePathname } from 'next/navigation';
 import { useUIStore } from '@/stores';
-import { useCollectedCafeFormForUploadStore } from '@/stores/cafe-collection';
+import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { createCollectedCafe } from '@/actions/supabase/collection';
+import { useUpdateCollectedCafe } from '@/hooks/supabase/collection/useUpdateCollectedCafe';
 import CategorySelector from './CategorySelector';
 import RatingsSelector from './RatingsSelector';
 
 export default function FormForCollect() {
+  const pathname = usePathname();
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
-  const targetCafe = useCollectedCafeFormForUploadStore(state => state.targetCafe);
+  const targetCafe = useCollectionStore(state => state.targetCafe);
+  const editingCafe = useCollectionStore(state => state.editingCafe);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
+  const clearEditingCafe = useCollectionStore(state => state.clearEditingCafe);
+  const { updateCollectedCafe } = useUpdateCollectedCafe();
+
+  // 편집 모드 감지
+  const isEditMode = pathname?.startsWith('/collected/detail/') && editingCafe;
 
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<CollectionFormData>({
     resolver: zodResolver(collectionFormSchema),
-    defaultValues: {
+    defaultValues: isEditMode ? {
+      rating: editingCafe?.ratings || 0,
+      categories: editingCafe?.categories || [],
+      comment: editingCafe?.comment || '',
+      eaten_menus: editingCafe?.eaten_menus || '',
+      pros: editingCafe?.pros || '',
+      cons: editingCafe?.cons || '',
+    } : {
       rating: 0,
       categories: [],
       comment: '',
@@ -27,40 +43,74 @@ export default function FormForCollect() {
   });
 
   const onFormSubmit = async (data: CollectionFormData) => {
-    if (!targetCafe) {
-      alert('카페 정보가 없습니다. 다시 시도해주세요.');
-      return;
-    }
+    if (isEditMode) {
+      // 편집 모드: 기존 카페 업데이트
+      if (!editingCafe) {
+        alert('편집할 카페 정보가 없습니다. 다시 시도해주세요.');
+        return;
+      }
 
-    try {
-      // 완전한 수집 데이터 생성
-      const collectionData = {
-        name: targetCafe.name,
-        coordX: targetCafe.coordX,
-        coordY: targetCafe.coordY,
-        address: targetCafe.address,
-        image: targetCafe.image,
-        extra_images: JSON.stringify(targetCafe.extra_images || []),
-        phone_number: targetCafe.phone_number,
-        opening_time: targetCafe.opening_time,
-        ratings: data.rating,
-        categories: JSON.stringify(data.categories),
-        comment: data.comment,
-        eaten_menus: data.eaten_menus,
-        pros: data.pros || '',
-        cons: data.cons || '',
-      };
+      try {
+        const updateData = {
+          ratings: data.rating,
+          categories: JSON.stringify(data.categories),
+          comment: data.comment,
+          eaten_menus: data.eaten_menus,
+          pros: data.pros || '',
+          cons: data.cons || '',
+        };
 
-      // 서버 액션 호출
-      await createCollectedCafe(collectionData);
+        // 업데이트 액션 호출
+        updateCollectedCafe(updateData);
 
-      // 성공 시 폼 닫기
-      setIsCollectFormOpen(false);
-      alert('카페가 성공적으로 수집되었습니다!');
+        // 성공 시 폼 닫기 및 편집 상태 초기화
+        clearEditingCafe();
+        setIsCollectFormOpen(false);
+        alert('카페 정보가 성공적으로 수정되었습니다!');
 
-    } catch (error) {
-      console.error('카페 수집 실패:', error);
-      alert(error instanceof Error ? error.message : '카페 수집에 실패했습니다.');
+      } catch (error) {
+        console.error('카페 수정 실패:', error);
+        alert(error instanceof Error ? error.message : '카페 수정에 실패했습니다.');
+        clearEditingCafe();
+        setIsCollectFormOpen(false);
+      }
+    } else {
+      // 생성 모드: 새 카페 수집
+      if (!targetCafe) {
+        alert('카페 정보가 없습니다. 다시 시도해주세요.');
+        return;
+      }
+
+      try {
+        // 완전한 수집 데이터 생성
+        const collectionData = {
+          name: targetCafe.name,
+          coordX: targetCafe.coordX,
+          coordY: targetCafe.coordY,
+          address: targetCafe.address,
+          image: targetCafe.image,
+          extra_images: JSON.stringify(targetCafe.extra_images || []),
+          phone_number: targetCafe.phone_number,
+          opening_time: targetCafe.opening_time,
+          ratings: data.rating,
+          categories: JSON.stringify(data.categories),
+          comment: data.comment,
+          eaten_menus: data.eaten_menus,
+          pros: data.pros || '',
+          cons: data.cons || '',
+        };
+
+        // 서버 액션 호출
+        await createCollectedCafe(collectionData);
+
+        // 성공 시 폼 닫기
+        setIsCollectFormOpen(false);
+        alert('카페가 성공적으로 수집되었습니다!');
+
+      } catch (error) {
+        console.error('카페 수집 실패:', error);
+        alert(error instanceof Error ? error.message : '카페 수집에 실패했습니다.');
+      }
     }
   };
 
@@ -72,11 +122,16 @@ export default function FormForCollect() {
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
-        <p className=" text-2xl font-semibold">{targetCafe?.name}</p>
+        <p className=" text-2xl font-semibold">
+          {isEditMode ? editingCafe?.name : targetCafe?.name}
+        </p>
         <button
           type="button"
-          aria-label="카드 수집 취소 버튼"
-          onClick={() => setIsCollectFormOpen(false)}
+          aria-label={isEditMode ? "카드 수정 취소 버튼" : "카드 수집 취소 버튼"}
+          onClick={() => {
+            if (isEditMode) clearEditingCafe();
+            setIsCollectFormOpen(false);
+          }}
           className={memoBackStyle}
         >
           <span>Back</span>
@@ -197,12 +252,12 @@ export default function FormForCollect() {
       <button
         type="submit"
         data-cy="memo-button"
-        aria-label="카드 수집 완료 버튼"
+        aria-label={isEditMode ? "카드 수정 완료 버튼" : "카드 수집 완료 버튼"}
         disabled={isSubmitting}
         className={memoSubmitStyle}
       >
         <span className="text-lg">
-          {isSubmitting ? '저장 중...' : '완료'}
+          {isSubmitting ? (isEditMode ? '수정 중...' : '저장 중...') : '완료'}
         </span>
       </button>
     </form>

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 
 export interface ITargetCafe {
   name: string;
@@ -11,21 +12,22 @@ export interface ITargetCafe {
   opening_time?: string | null;
 }
 
-interface ICafeCollectionStore {
-  // 수집 대상 카페 정보
+interface ICollectionStore {
   targetCafe: ITargetCafe | null;
+  editingCafe: ISupabaseCollectedCafe | null;
 
-  // 수집 대상 설정
   setTargetCafe: (cafe: ITargetCafe) => void;
-
-  // 수집 대상 초기화
   clearTargetCafe: () => void;
+  setEditingCafe: (cafe: ISupabaseCollectedCafe | null) => void;
+  clearEditingCafe: () => void;
 }
 
-export const useCollectedCafeFormForUploadStore = create<ICafeCollectionStore>((set) => ({
+export const useCollectionStore = create<ICollectionStore>((set) => ({
   targetCafe: null,
+  editingCafe: null,
 
   setTargetCafe: (cafe: ITargetCafe) => set({ targetCafe: cafe }),
-
   clearTargetCafe: () => set({ targetCafe: null }),
+  setEditingCafe: (cafe: ISupabaseCollectedCafe | null) => set({ editingCafe: cafe }),
+  clearEditingCafe: () => set({ editingCafe: null }),
 }));

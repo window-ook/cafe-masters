@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
+import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
 import { useUIStore, useUserStore } from '@/stores';
 import TierBadge from './TierBadge';
 import Image from 'next/image';
