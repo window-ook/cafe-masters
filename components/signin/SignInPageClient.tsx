@@ -11,7 +11,7 @@ export default function SignInPageClient() {
             <section className="flex flex-col items-center gap-4">
                 <header className="flex">
                     <Image
-                        src="/image/logo.avif"
+                        src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//card_logo.avif"
                         width={100}
                         height={100}
                         alt="로고 아이콘"

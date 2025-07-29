@@ -67,7 +67,7 @@ export default function CollectedCafeDetail({ cafeId, setIsCollectedFormOpenActi
           >
             <Image
               src={
-                collectedCafeDetail?.image ?? '/image/cafe_thumbnail.avif'
+                collectedCafeDetail?.image ?? 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'
               }
               alt="카페 썸네일"
               className="rounded-md w-auto h-auto"

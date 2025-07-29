@@ -45,15 +45,15 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
         toast.success('북마크에서 제거되었습니다.');
       } else {
         await uploadBookmarkedCafe({
-          user_id: userId,
           id: bookmarkData.id,
+          user_id: userId,
+          coordX: bookmarkData.coordX,
+          coordY: bookmarkData.coordY,
+          image: bookmarkData.image || '',
+          extra_images: bookmarkData.extra_images ? JSON.stringify(bookmarkData.extra_images) : null,
           name: bookmarkData.name,
           address: bookmarkData.address,
           phone_number: bookmarkData.phone_number || '',
-          image: bookmarkData.image || '',
-          coordX: bookmarkData.coordX,
-          coordY: bookmarkData.coordY,
-          extra_images: bookmarkData.extra_images ? JSON.stringify(bookmarkData.extra_images) : null,
           opening_time: bookmarkData.opening_time || null,
           menus: bookmarkData.menus ? JSON.stringify(bookmarkData.menus) : null,
         });

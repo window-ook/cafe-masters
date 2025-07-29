@@ -16,7 +16,7 @@ export default function Profile() {
   const { collectedCounts } = useCollectedCafesCounts(userId);
 
   useEffect(() => {
-    if (collectedCounts && collectedCounts === 40) setUserTier('MASTER');
+    if (collectedCounts && collectedCounts >= 40) setUserTier('MASTER');
     else if (collectedCounts && collectedCounts < 40 && collectedCounts >= 30) setUserTier('EXPERT');
     else if (collectedCounts && collectedCounts < 30 && collectedCounts >= 20) setUserTier('SENIOR');
     else if (collectedCounts && collectedCounts < 20 && collectedCounts >= 10) setUserTier('JUNIOR');
@@ -32,7 +32,7 @@ export default function Profile() {
       >
         <div className="w-6 h-6 rounded-full bg-main-light flex items-center justify-center">
           <Image
-            src={'/image/profile_logo.avif'}
+            src='https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//user_icon.gif'
             alt="유저 프로필 이미지"
             width={20}
             height={20}

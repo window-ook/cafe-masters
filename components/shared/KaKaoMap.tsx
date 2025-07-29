@@ -80,10 +80,10 @@ export default function KakaoMap() {
   }, []);
 
   // 마커 제거
-  const removeMarkers = () => {
-    markersRef.current.forEach(marker => marker.setMap(null));
-    markersRef.current = [];
-  };
+  // const removeMarkers = () => {
+  //   markersRef.current.forEach(marker => marker.setMap(null));
+  //   markersRef.current = [];
+  // };
 
   // 정보창 제거
   const removeInfoWindows = () => {
@@ -186,11 +186,6 @@ export default function KakaoMap() {
 
       ps.keywordSearch(query, handleSearch);
     };
-
-    if (pathname === '/main') {
-      removeMarkers();
-      removeInfoWindows();
-    }
 
     if (pathname === '/search') {
       const query = keyword.includes('카페') ? keyword : `${keyword} 카페`;

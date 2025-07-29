@@ -91,7 +91,7 @@ export default function TierDialog({
                   <span className="text-sm ">MASTER</span>
                 </p>
                 <p className="z-10 relative text-xl font-bold font-pretendard">
-                  40
+                  40+
                 </p>
               </div>
               <p className={TIER_DESC_STYLE}>

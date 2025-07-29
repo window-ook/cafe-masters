@@ -168,7 +168,7 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
                   >
                     <ImageWithFallback
                       src={searchedCafeDetail.image}
-                      fallbackSrc={'/image/cafe_thumbnail.avif'}
+                      fallbackSrc={'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'}
                       alt="카페 썸네일"
                       width={340}
                       height={240}
@@ -184,7 +184,7 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
                     <ImageWithFallback
                       alt="카페 썸네일"
                       src={photo}
-                      fallbackSrc={'/image/cafe_thumbnail.avif'}
+                      fallbackSrc={'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'}
                       width={340}
                       height={240}
                       className="slide-images"

@@ -45,7 +45,7 @@ export default function CafeItem({
         </div>
         <div className="h-full flex items-center justify-center">
           <Image
-            src={image || '/image/cafe_thumbnail.avif'}
+            src={image ?? 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'}
             alt="카페 썸네일"
             width={100}
             height={50}

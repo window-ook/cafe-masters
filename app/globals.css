@@ -395,7 +395,7 @@ body {
   position: absolute;
   inset: 0;
   background-repeat: no-repeat;
-  background-image: url("/image/pattern_diagonal_1.gif");
+  background-image: url("https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//pattern_diagonal.gif");
   background-position: 50% 50%;
   background-size: 160%;
   background-blend-mode: normal;
@@ -457,7 +457,7 @@ body {
 
 .card-hidden:after {
   background-image:
-    url("/image/pattern_diagonal_1.gif"),
+    url("https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//pattern_diagonal.gif"),
     url("https://assets.codepen.io/13471/sparkles.gif"),
     linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
   background-position: 50% 50%;
@@ -496,7 +496,7 @@ body {
   list-style: none;
   width: 1.25rem;
   height: 1.25rem;
-  background-image: url('/image/logo.avif');
+  background-image: url('https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//card_logo.avif');
   background-size: cover;
   background-position: center;
   animation: rising 25s linear infinite;

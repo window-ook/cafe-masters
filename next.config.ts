@@ -1,18 +1,7 @@
-import withBundleAnalyzer from '@next/bundle-analyzer';
+import type { NextConfig } from 'next';
+import type { Configuration } from 'webpack';
 
-const bundleAnalyzer = withBundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-});
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  webpack: (config: any, { isServer }: { isServer: any }) => {
-    if (isServer) {
-      config.externals.push('chrome-aws-lambda', 'puppeteer-core');
-    }
-    return config;
-  },
-
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
@@ -51,10 +40,39 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
-    ] as any,
+      {
+        protocol: 'https',
+        hostname: 'vsemazasjbizehcambul.supabase.co',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
-  
   compress: true,
+  webpack: (
+    config: Configuration,
+    { isServer }: { isServer: boolean },
+  ): Configuration => {
+    if (!isServer && config.resolve) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        'chrome-aws-lambda': false,
+        'puppeteer-core': false,
+      };
+    }
+
+    if (config.module) {
+      if (!config.module.rules) {
+        config.module.rules = [];
+      }
+      config.module.rules.push({
+        test: /\.node$/,
+        use: 'node-loader',
+      });
+    }
+
+    return config;
+  },
 };
 
-export default bundleAnalyzer(nextConfig);
+export default nextConfig;

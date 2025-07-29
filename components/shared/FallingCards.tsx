@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 export default function FallingCards() {
-  const imageSrc = '/image/logo.avif';
+  const imageSrc = 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//card_logo.avif';
 
   return (
     <section className="circles">
