@@ -2,7 +2,7 @@
 
 import { useEffect, use } from 'react';
 import { useMapStore, useUserStore } from '@/stores';
-import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
+import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
 import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 

@@ -2,8 +2,8 @@
 
 import { RefObject, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
-import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
+import { useDeleteBookmarkedCafe } from '@/hooks/supabase/bookmark';
+import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
 import { useCollectedCafeFormForUpload } from '@/hooks/supabase/useCollectedCafes';
 import { useMapStore, useUIStore, useUserStore } from 'stores';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';

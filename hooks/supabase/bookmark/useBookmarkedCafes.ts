@@ -2,9 +2,9 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useFilterStore } from 'stores/filter';
-import { getBookmarkedCafes, getBookmarkedCafesCounts } from '@/actions/supabase/bookmark';
-import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 import { bookmarkedCafeQuery } from '@/queries/supabase/bookmark';
+import { getBookmarkedCafes } from '@/actions/supabase/bookmark';
+import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 
 interface IBookmarkedCafes {
   bookmarkedCafes: ISupabaseBookmarkedCafe[];
@@ -94,18 +94,4 @@ export function useBookmarkedCafes(
   ]);
 
   return { ...paginationData, isLoading: queryData.isLoading, isError: queryData.isError, error: queryData.error };
-}
-
-/** 모든 북마크 카페 수 조회 훅
- * @param userId 유저 ID
- * @returns 북마크 카페 수
- */
-export function useBookmarkedCafesCounts(userId: string) {
-  const { data, isError, error, isLoading } = useQuery({
-    enabled: !!userId,
-    queryKey: bookmarkedCafeQuery.counts(userId),
-    queryFn: () => getBookmarkedCafesCounts(userId),
-  });
-
-  return { bookmarkedCounts: data, isError, error, isLoading };
 }

@@ -1,7 +1,6 @@
 'use client';
 
-import { useUploadBookmarkedCafe } from '@/hooks/supabase/useUploadBookmarkedCafe';
-import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
+import { useCreateBookmarkedCafe, useDeleteBookmarkedCafe } from '@/hooks/supabase/bookmark';
 import { useMapStore, useUserStore } from '@/stores';
 import { Bookmark } from 'lucide-react';
 import { toast } from 'react-toastify';
@@ -29,7 +28,7 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
   const isBookmarked = useMapStore(state => state.isBookmarked);
   const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
 
-  const { uploadBookmarkedCafe } = useUploadBookmarkedCafe();
+  const { uploadBookmarkedCafe } = useCreateBookmarkedCafe();
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
 
   const handleBookmarkToggle = async () => {

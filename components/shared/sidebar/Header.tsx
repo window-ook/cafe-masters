@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useFilterStore, useUIStore, useUserStore } from '@/stores';
 import { useSearchedResultStore } from '@/stores/searched-result';
-import { useBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCafes';
+import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
 import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
 import Image from 'next/image';
 import Link from 'next/link';

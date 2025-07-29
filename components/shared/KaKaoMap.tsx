@@ -6,7 +6,7 @@ import { useMapStore, useSearchedResultStore, useFilterStore, useUserStore } fro
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { toast } from 'react-toastify';
 import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
-import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
+import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

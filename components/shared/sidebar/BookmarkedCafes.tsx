@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useUIStore, useUserStore } from 'stores';
-import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
+import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import CafeItem from '@/components/shared/sidebar/CafeItem';

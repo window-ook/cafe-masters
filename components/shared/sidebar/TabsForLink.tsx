@@ -3,7 +3,7 @@
 import { ReactNode } from 'react';
 import { useRecommendedCafesCounts } from '@/hooks/supabase/useRecommendedCafes';
 import { useCollectedCafesCounts } from '@/hooks/supabase/useCollectedCafes';
-import { useBookmarkedCafesCounts } from '@/hooks/supabase/useBookmarkedCafes';
+import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
 import { useSearchedResultStore, useUIStore, useUserStore } from '@/stores';
 import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
 import { FaCheckCircle } from 'react-icons/fa';
