@@ -2,7 +2,7 @@ import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useUserStore, useFilterStore } from '@/stores';
 import { useMutation } from '@tanstack/react-query';
-import { getAdminUser } from '@/actions/supabase/user';
+import { getIsAdmin } from '@/actions/supabase/user';
 
 export function useSignIn() {
   const supabase = createBrowserSupabaseClient();
@@ -38,7 +38,7 @@ export function useSignIn() {
       setUserEmail(user.email ?? '');
 
       // 관리자 여부 체크
-      const isAdmin = await getAdminUser(user.id);
+      const isAdmin = await getIsAdmin(user.id);
       if (isAdmin) setAdmin(true);
 
       // 세션 새로고침
