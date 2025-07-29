@@ -2,8 +2,8 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useFilterStore } from '@/stores/filter';
-import { bookmarkedCafeQuery } from '@/queries/supabase/bookmark';
 import { getBookmarkedCafes } from '@/actions/supabase/bookmark';
+import { bookmarkedCafeQuery } from '@/queries/supabase/bookmark';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 
 interface IBookmarkedCafes {

@@ -1,6 +1,6 @@
+import { getBookmarkedCafesCounts } from "@/actions/supabase/bookmark";
 import { useQuery } from "@tanstack/react-query";
 import { bookmarkedCafeQuery } from "@/queries/supabase/bookmark";
-import { getBookmarkedCafesCounts } from "@/actions/supabase/bookmark";
 
 /** 모든 북마크 카페 수 조회 훅
  * @param userId 유저 ID
