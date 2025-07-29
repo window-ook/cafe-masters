@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, use } from 'react';
-import { useMapStore, useUserStore } from '@/stores';
+import { useCurrentCafeStore, useUserStore } from '@/stores';
 import { useBookmarkedCafes } from '@/hooks/supabase/bookmark';
 import { useCollectedCafes } from '@/hooks/supabase/collection';
 import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
@@ -15,10 +15,10 @@ export default function SearchedDetailClient({ params }: { params: Promise<{ id:
   const numericId = Number(id);
 
   const userId = useUserStore(state => state.userId);
-  const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
-  const setIsCollected = useMapStore(state => state.setIsCollected);
-  const setIsRecommended = useMapStore(state => state.setIsRecommended);
-  const setCurrentCafeId = useMapStore(state => state.setCurrentCafeId);
+  const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
+  const setIsCollected = useCurrentCafeStore(state => state.setIsCollected);
+  const setIsRecommended = useCurrentCafeStore(state => state.setIsRecommended);
+  const setCurrentCafeId = useCurrentCafeStore(state => state.setCurrentCafeId);
 
   const { collectedCafes } = useCollectedCafes(userId, true);
   const { bookmarkedCafes } = useBookmarkedCafes(userId);

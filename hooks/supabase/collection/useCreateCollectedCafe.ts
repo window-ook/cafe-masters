@@ -1,7 +1,7 @@
 'use client';
 
 import { useUIStore } from "@/stores";
-import { useCollectionStore, IFormDataForCollect } from "@/stores/collectionStore";
+import { useCollectionStore, IFormDataForCollect } from "@/stores/collection";
 
 /**
  * 수집할 카페의 데이터를 상태로 동기화하는 커스텀 훅

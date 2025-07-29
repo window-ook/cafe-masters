@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useUIStore } from 'stores';
-import { useFilterStore } from '@/stores/filterStore';
+import { useFilterStore } from '@/stores/filter';
 import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';

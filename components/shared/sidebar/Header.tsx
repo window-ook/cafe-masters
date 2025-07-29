@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useFilterStore, useUIStore, useUserStore } from '@/stores';
-import { useSearchedResultStore } from '@/stores/searchedResultStore';
+import { useSearchedResultStore } from '@/stores/search';
 import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
 import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
 import Image from 'next/image';

@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { useMapStore, useSearchedResultStore, useFilterStore, useUserStore } from '@/stores';
+import { useCurrentCafeStore, useSearchedResultStore, useFilterStore, useUserStore } from '@/stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { toast } from 'react-toastify';
 import { useCollectedCafes } from '@/hooks/supabase/collection';
@@ -29,8 +29,8 @@ export default function KakaoMap() {
   const keyword = useFilterStore(state => state.keyword);
   const searchResult = useSearchedResultStore(state => state.searchResult);
   const setSearchResult = useSearchedResultStore(state => state.setSearchResult);
-  const currentCoordX = useMapStore(state => state.currentCoordX);
-  const currentCoordY = useMapStore(state => state.currentCoordY);
+  const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
+  const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);
 
   const { filteredCollectedCafes } = useCollectedCafes(userId);
   const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);

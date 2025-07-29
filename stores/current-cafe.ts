@@ -1,15 +1,11 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface IMapStore {
-  // 현재 선택된 카페 좌표
+interface ICurrentCafeStore {
   currentCoordX: number;
   currentCoordY: number;
-
-  // 현재 선택된 카페 ID, 썸네일 URL
   currentCafeId: number;
 
-  // 카페 상태 플래그
   isCollected: boolean;
   isBookmarked: boolean;
   isRecommended: boolean;
@@ -21,7 +17,7 @@ interface IMapStore {
   setIsRecommended: (isRecommended: boolean) => void;
   setCurrentCafeId: (id: number) => void;
 }
-export const useMapStore = create<IMapStore>()(
+export const useCurrentCafeStore = create<ICurrentCafeStore>()(
 
   persist(
     set => ({

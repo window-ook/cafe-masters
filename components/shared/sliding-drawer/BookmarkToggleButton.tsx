@@ -1,7 +1,7 @@
 'use client';
 
 import { useCreateBookmarkedCafe, useDeleteBookmarkedCafe } from '@/hooks/supabase/bookmark';
-import { useMapStore, useUserStore } from '@/stores';
+import { useCurrentCafeStore, useUserStore } from '@/stores';
 import { Bookmark } from 'lucide-react';
 import { toast } from 'react-toastify';
 
@@ -25,8 +25,8 @@ interface IBookmarkToggleButton {
 
 export default function BookmarkToggleButton({ bookmarkData, className = '' }: IBookmarkToggleButton) {
   const userId = useUserStore(state => state.userId);
-  const isBookmarked = useMapStore(state => state.isBookmarked);
-  const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
+  const isBookmarked = useCurrentCafeStore(state => state.isBookmarked);
+  const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
 
   const { uploadBookmarkedCafe } = useCreateBookmarkedCafe();
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();

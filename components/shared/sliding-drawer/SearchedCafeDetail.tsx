@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useRef, useMemo, RefObject } from 'react';
 import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
 import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
-import { useSearchedResultStore, useMapStore, useUIStore, useUserStore } from '@/stores';
-import { useRecommendationStore } from '@/stores/recommendationStore';
+import { useSearchedResultStore, useCurrentCafeStore, useUIStore, useUserStore } from '@/stores';
+import { useRecommendationStore } from '@/stores/recommendation';
 import { scrollThumbnails } from '@/utils/shared/detail';
 import { getDetailBodyStyle } from '@/utils/styles';
 import { CircleX, FolderCheck } from 'lucide-react';
@@ -29,10 +29,10 @@ export default function SearchedCafeDetail({ cafeId, setIsRecommendFormOpenActio
   const admin = useUserStore(state => state.admin);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
-  const currentCoordX = useMapStore(state => state.currentCoordX);
-  const currentCoordY = useMapStore(state => state.currentCoordY);
+  const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
+  const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);
   const searchResult = useSearchedResultStore(state => state.searchResult);
-  const isCollected = useMapStore(state => state.isCollected);
+  const isCollected = useCurrentCafeStore(state => state.isCollected);
 
   const { selectTargetCafeForCollect } = useCreateCollectedCafe();
   const { setTargetCafe } = useRecommendationStore();

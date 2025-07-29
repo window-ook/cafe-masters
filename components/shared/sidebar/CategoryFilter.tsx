@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useFilterStore } from '@/stores/filterStore';
+import { useFilterStore } from '@/stores/filter';
 import { CATEGORIES } from '@/utils/constants/categories';
 import { RiResetLeftFill } from 'react-icons/ri';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';

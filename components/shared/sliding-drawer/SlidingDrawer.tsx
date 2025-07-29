@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, Suspense } from 'react';
-import { useMapStore, useUIStore } from '@/stores';
+import { useCurrentCafeStore, useUIStore } from '@/stores';
 import { usePathname } from 'next/navigation';
 import SearchedCafeDetail from '@/components/shared/sliding-drawer/SearchedCafeDetail';
 import CafeDetailSkeleton from '@/components/shared/sliding-drawer/CafeDetailSkeleton';
@@ -18,7 +18,7 @@ export default function SlidingDrawer() {
     const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
     const isDarkTheme = useUIStore(state => state.isDarkTheme);
     const isExtend = useUIStore(state => state.isExtend);
-    const currentCafeId = useMapStore(state => state.currentCafeId);
+    const currentCafeId = useCurrentCafeStore(state => state.currentCafeId);
     const isCollectFormOpen = useUIStore(state => state.isCollectFormOpen);
 
     const [isRecommendFormOpen, setIsRecommendFormOpenAction] = useState(false);

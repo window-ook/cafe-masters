@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useUIStore } from '@/stores/UIStore';
-import { useMapStore } from '@/stores/mapStore';
+import { useUIStore } from '@/stores/ui';
+import { useCurrentCafeStore } from '@/stores/current-cafe';
 
 /**
  * 카페 클릭 핸들러 공통 타입 인터페이스
@@ -38,10 +38,10 @@ export function useCafeClick<T extends ICafeClickData>(
   const pathname = usePathname();
 
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
-  const currentCafeId = useMapStore(state => state.currentCafeId);
-  const setCurrentCafeId = useMapStore(state => state.setCurrentCafeId);
-  const setCurrentCoordX = useMapStore(state => state.setCurrentCoordX);
-  const setCurrentCoordY = useMapStore(state => state.setCurrentCoordY);
+  const currentCafeId = useCurrentCafeStore(state => state.currentCafeId);
+  const setCurrentCafeId = useCurrentCafeStore(state => state.setCurrentCafeId);
+  const setCurrentCoordX = useCurrentCafeStore(state => state.setCurrentCoordX);
+  const setCurrentCoordY = useCurrentCafeStore(state => state.setCurrentCoordY);
 
   const { routePath, shouldSetCurrentCafeId = false } = options;
 

@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useUIStore } from '@/stores';
 import { useCreateRecommendedCafe } from '@/hooks/supabase/recommendation/useCreateRecommendedCafe';
-import { useRecommendationStore } from '@/stores/recommendationStore';
+import { useRecommendationStore } from '@/stores/recommendation';
 import { recommendationFormSchema, RecommendationFormData } from '@/schema/recommendation';
 import { RecommendationRowInsert } from '@/actions/supabase/recommendation';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';

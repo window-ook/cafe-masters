@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname } from 'next/navigation';
 import { useUIStore } from '@/stores';
-import { useCollectionStore } from '@/stores/collectionStore';
+import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { createCollectedCafe } from '@/actions/supabase/collection';
 import { useUpdateCollectedCafe } from '@/hooks/supabase/collection/useUpdateCollectedCafe';

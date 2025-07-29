@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useMapStore, useUIStore } from 'stores';
+import { useCurrentCafeStore, useUIStore } from 'stores';
 import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
 import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
@@ -21,7 +21,7 @@ export default function RecommendedCafeDetail({ cafeId }: { cafeId: number }) {
 
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
-  const isCollected = useMapStore(state => state.isCollected);
+  const isCollected = useCurrentCafeStore(state => state.isCollected);
 
   const { recommendedCafes } = useRecommendedCafes();
   const { selectTargetCafeForCollect } = useCreateCollectedCafe();

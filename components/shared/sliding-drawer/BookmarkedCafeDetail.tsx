@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/bookmark';
 import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
 import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
-import { useMapStore, useUIStore, useUserStore } from 'stores';
+import { useCurrentCafeStore, useUIStore, useUserStore } from 'stores';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 import { scrollThumbnails } from '@/utils/shared/detail';
 import { Bookmark, CircleX } from 'lucide-react';
@@ -24,8 +24,8 @@ export default function BookmarkedCafeDetail({ cafeId }: { cafeId: number }) {
   const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
-  const isCollected = useMapStore(state => state.isCollected);
-  const setIsBookmarked = useMapStore(state => state.setIsBookmarked);
+  const isCollected = useCurrentCafeStore(state => state.isCollected);
+  const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
 
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
   const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
