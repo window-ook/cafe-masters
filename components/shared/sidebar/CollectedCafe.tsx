@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useUIStore } from '@/stores';
-import { ratingCircleStyle } from '@/utils/styles';
 import { FaStar } from 'react-icons/fa6';
 import Image from 'next/image';
 
@@ -197,7 +196,7 @@ export default function CollectedCafe({
             {Array(ratings)
               .fill(0)
               .map((_, index) => (
-                <div key={index} className={ratingCircleStyle}>
+                <div key={index} className="rating-red-circle">
                   <FaStar className="fa-solid fa-star absolute text-yellow-300 text-xs" />
                 </div>
               ))}

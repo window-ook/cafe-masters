@@ -1,6 +1,5 @@
 'use client';
 
-import { getDetailBodyStyle, getDetailHeaderStyle } from 'utils/styles';
 import { IoMdClock } from 'react-icons/io';
 import { IoBookmark, IoLocation, IoCloseCircle } from 'react-icons/io5';
 import { FaPhoneSquare } from 'react-icons/fa';
@@ -12,7 +11,7 @@ export default function Loading() {
 
   return (
     <div className={`flex flex-col p-2 gap-4`}>
-      <div className={getDetailHeaderStyle(isDarkTheme)}>
+      <div className={`p-2 shadow-md rounded-md ${isDarkTheme ? 'shadow-main-shadow' : ''} flex justify-between items-center`}>
         <div className="flex items-end">
           <IoBookmark
             className={`pr-2 text-3xl ${isDarkTheme ? 'text-white' : ''}`}
@@ -33,7 +32,7 @@ export default function Loading() {
         </div>
       </div>
 
-      <div className={getDetailBodyStyle(isDarkTheme)}>
+      <div className={`p-2 ${isDarkTheme ? 'shadow-main-shadow' : ''} flex flex-col gap-4 shadow-md rounded-md`}>
         <div className="flex flex-col items-center">
           <Spinner width="w-16" height="h-16" border="border-8" />
         </div>

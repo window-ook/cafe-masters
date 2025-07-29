@@ -1,13 +1,11 @@
 'use client';
 
 import { RefObject, useRef } from 'react';
-import { useRouter } from 'next/navigation';
 import { useUIStore, useUserStore } from 'stores';
 import { useCollectionStore } from '@/stores/collection';
 import { useCollectedCafes } from '@/hooks/supabase/collection';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { scrollThumbnails } from '@/utils/shared/detail';
-import { CircleX } from 'lucide-react';
 import Image from 'next/image';
 import Ratings from '@/components/shared/sliding-drawer/Ratings';
 import Location from '@/components/shared/sliding-drawer/Location';
@@ -19,13 +17,11 @@ import Cons from '@/components/shared/sliding-drawer/Cons';
 import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
 import Categories from '@/components/shared/sliding-drawer/Categories';
 import Button from '@/components/shared/sliding-drawer/Button';
+import SimpleHeader from './SimpleHeader';
 
 export default function CollectedCafeDetail({ cafeId }: { cafeId: number }) {
-  const router = useRouter();
-
   const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
-  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const setEditingCafe = useCollectionStore(state => state.setEditingCafe);
 
@@ -43,29 +39,15 @@ export default function CollectedCafeDetail({ cafeId }: { cafeId: number }) {
     );
   }
 
-  const handleSetIsSubSidebarOpen = () => {
-    setIsSlidingDrawerOpen(false);
-    router.back();
-  };
-
   return (
-    <div className={`h-full rounded-md flex flex-col ${isDarkTheme ? 'bg-main-dark text-white' : ''}`}>
-      {/* 헤더 */}
-      <header className={`w-full p-4 flex justify-between items-center ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
-        <div />
-        <button
-          onClick={handleSetIsSubSidebarOpen}
-          className='cursor-pointer'
-          type="button"
-          aria-label="수집한 카드 상세 정보 보기 취소 버튼"
-        >
-          <CircleX className='size-8' />
-        </button>
-      </header>
+    <div className="h-full rounded-md flex flex-col">
+      <SimpleHeader isDarkTheme={isDarkTheme} />
 
       {/* 바디 */}
       <main className={`overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
-        <section key={`${cafeId}-image-section`} className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4 ">
+        <section
+          key={`${cafeId}-image-section`}
+          className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4 ">
           <button
             type="button"
             aria-label="카페 이미지 슬라이드 왼쪽으로 이동"

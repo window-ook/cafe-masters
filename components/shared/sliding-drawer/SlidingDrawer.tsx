@@ -1,8 +1,9 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useState, Suspense } from 'react';
 import { useCurrentCafeStore, useUIStore } from '@/stores';
-import { usePathname } from 'next/navigation';
+import { ErrorBoundary } from 'react-error-boundary';
 import SearchedCafeDetail from '@/components/shared/sliding-drawer/SearchedCafeDetail';
 import CafeDetailSkeleton from '@/components/shared/sliding-drawer/CafeDetailSkeleton';
 import CollectedCafeDetail from '@/components/shared/sliding-drawer/CollectedCafeDetail';
@@ -10,6 +11,7 @@ import BookmarkedCafeDetail from '@/components/shared/sliding-drawer/BookmarkedC
 import RecommendedCafeDetail from '@/components/shared/sliding-drawer/RecommendedCafeDetail';
 import FormForCollect from '@/components/shared/sliding-drawer/FormForCollect';
 import FormForRecommend from '@/components/shared/sliding-drawer/FormForRecommend';
+import DetailErrorFallback from '@/components/shared/sliding-drawer/DetailErrorFallback';
 
 /** 각 도메인별 상세 정보 페이지를 표시하는 슬라이딩 드로어 */
 export default function SlidingDrawer() {
@@ -39,12 +41,14 @@ export default function SlidingDrawer() {
 
     if (!isCollectFormOpen && !isRecommendFormOpen) return (
         <div className={SLIDING_DRAWER_STYLE}>
-            <Suspense fallback={<CafeDetailSkeleton />}>
-                {PATHS.SEARCH && <SearchedCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
-                {PATHS.COLLECTED && <CollectedCafeDetail cafeId={currentCafeId} />}
-                {PATHS.BOOKMARKED && <BookmarkedCafeDetail cafeId={currentCafeId} />}
-                {PATHS.RECOMMENDED && <RecommendedCafeDetail cafeId={currentCafeId} />}
-            </Suspense>
+            <ErrorBoundary fallback={<DetailErrorFallback />}>
+                <Suspense fallback={<CafeDetailSkeleton />}>
+                    {PATHS.SEARCH && <SearchedCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+                    {PATHS.COLLECTED && <CollectedCafeDetail cafeId={currentCafeId} />}
+                    {PATHS.BOOKMARKED && <BookmarkedCafeDetail cafeId={currentCafeId} />}
+                    {PATHS.RECOMMENDED && <RecommendedCafeDetail cafeId={currentCafeId} />}
+                </Suspense>
+            </ErrorBoundary>
         </div>
     );
 

@@ -4,12 +4,6 @@ import React, { useState } from 'react';
 import { useSignIn } from '@/hooks/supabase/user';
 import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
 import { validateEmailByRegex } from '@/utils/shared/auth';
-import {
-  authFormCardStyle,
-  authFormMentionStyle,
-  authFormTitleStyle,
-  kakaoButtonStyle,
-} from '@/utils/styles';
 import Link from 'next/link';
 import UserForm from '@/components/shared/UserForm';
 import ResetpasswordForm from './ResetPasswordForm';
@@ -41,10 +35,10 @@ export default function SignInForm() {
   };
 
   return (
-    <main className={authFormCardStyle}>
+    <main className="auth-form-layout">
       {!resetRequired ? (
         <div>
-          <p className={authFormTitleStyle}>로그인</p>
+          <p className="auth-form-title">로그인</p>
           <form
             className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
             onKeyDown={e => {
@@ -81,12 +75,12 @@ export default function SignInForm() {
               type="button"
               data-cy="kakaosignin-button"
               aria-label="카카오 로그인 버튼"
-              className={kakaoButtonStyle}
+              className="kakao-signin-button"
               onClick={() => signinWithKakao()}
             >
               <span className=" text-white">카카오 로그인</span>
             </button>
-            <span color="gray" className={authFormMentionStyle}>
+            <span color="gray" className="auth-form-mention">
               계정이 없으신가요?{' '}
               <Link
                 href="/signup"

@@ -17,7 +17,7 @@ body {
 
   /* 폰트 */
   --font-pretendard: var(--font-pretendard);
-  --: var(--font-dunggeunmo);
+  --font-dunggeunmo: var(--font-dunggeunmo);
 
   /* 폰트 사이즈 */
   --text-2xs: 0.3rem;
@@ -213,17 +213,17 @@ body {
 
   /* 카페 상세 정보 페이지의 썸네일 슬라이드 */
   .slide-images {
-    @apply w-80 max-w-full h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer;
+    @apply w-80 max-w-full h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 cursor-pointer;
   }
 
-  /* Expert 티어 뱃지 그라데이션 */
-  .expert-gradient {
-    @apply bg-gradient-to-r from-expert-via to-expert-side;
+  /* Master 티어 Footer 뱃지 */
+  .master-badge {
+    @apply w-full z-0 absolute inset-0 h-9 bg-linear-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm;
   }
 
-  /* Master 티어 뱃지 그라데이션 */
-  .master-gradient {
-    @apply bg-gradient-to-r from-master-via to-master-side;
+  /* Master 티어 Dialog 뱃지 */
+  .master-dialog-badge {
+    @apply w-[27%] sm:w-[10%] z-0 -top-0.5 inset-0 h-9 absolute bg-linear-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm
   }
 
   /* 버튼 hover */
@@ -231,6 +231,35 @@ body {
     @apply cursor-pointer hover:bg-button-hover transition duration-150 ease-in;
   }
 
+  /* 별점 빨간색 배경 */
+  .rating-red-circle {
+    @apply relative size-5 rounded-full shadow-md shadow-yellow-100 flex items-center justify-center bg-red-500;
+  }
+
+  /* 별점 빨간색 배경 속 별 */
+  .rating-yellow-star {
+    @apply absolute text-yellow-300 text-xs;
+  }
+
+  /* 카카오 로그인 버튼 */
+  .kakao-signin-button {
+    @apply w-full py-1 bg-yellow-500 cursor-pointer;
+  }
+
+  /* 로그인 폼 카드 */
+  .auth-form-layout {
+    @apply z-10 p-5 rounded-xl shadow-main-shadow bg-white;
+  }
+
+  /* 로그인 폼 타이틀 */
+  .auth-form-title {
+    @apply text-3xl font-bold text-center;
+  }
+
+  /* 로그인 폼 멘션 */
+  .auth-form-mention {
+    @apply flex items-center justify-center gap-4 text-center;
+  }
 }
 
 /* 
