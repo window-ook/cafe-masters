@@ -31,6 +31,7 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
     try {
       // 추천 데이터 생성
       const recommendationData: RecommendationRowInsert = {
+        id: targetCafe.id,
         name: targetCafe.name,
         address: targetCafe.address,
         coordX: targetCafe.coordX,
