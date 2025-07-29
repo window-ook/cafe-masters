@@ -36,7 +36,7 @@ export default function FormForCollect({ setIsCollectFormOpenAction }: { setIsCo
     if (pathname.startsWith('/search')) return searchResult[0]?.place_name || '';
     if (pathname.startsWith('/collected')) return collectedCafeDetail?.name || '';
     if (pathname.startsWith('/bookmarked')) return bookmarkedCafeDetail?.name || '';
-    if (pathname.startsWith('/cafe/recommended')) return recommendedCafeDetail?.name || '';
+    if (pathname.startsWith('/main/recommended')) return recommendedCafeDetail?.name || '';
     return '';
   };
 

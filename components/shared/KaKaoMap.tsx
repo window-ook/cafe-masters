@@ -187,7 +187,7 @@ export default function KakaoMap() {
       ps.keywordSearch(query, handleSearch);
     };
 
-    if (pathname === '/cafe') {
+    if (pathname === '/main') {
       removeMarkers();
       removeInfoWindows();
     }

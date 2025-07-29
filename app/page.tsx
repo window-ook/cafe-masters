@@ -249,7 +249,7 @@ const CategorySection = () => {
 
         <div className="text-center mt-12">
           <Link
-            href="/cafe"
+            href="/main"
             className="inline-block px-8 py-4 bg-main hover:bg-main-dark text-white font-bold rounded-xl transition-all duration-300 hover:-translate-y-1"
           >
             모든 카테고리 보기

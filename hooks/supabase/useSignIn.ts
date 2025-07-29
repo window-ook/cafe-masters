@@ -43,7 +43,7 @@ export function useSignIn() {
 
       // 세션 새로고침
       await supabase.auth.refreshSession();
-      router.replace('/cafe');
+      router.replace('/main');
     },
 
     onError: error => {

@@ -21,7 +21,7 @@ export function useSignUp() {
 
     onSuccess: async () => {
       await supabase.auth.refreshSession();
-      router.replace('/cafe');
+      router.replace('/main');
     },
 
     onError: error => console.error(error),
