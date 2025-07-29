@@ -1,7 +1,7 @@
 /** Supabase 추천 카페 */
 export interface ISupabaseRecommendedCafe {
     id: number;
-    categories: string;
+    categories: string[];
     coordX: number;
     coordY: number;
     name: string;

@@ -94,7 +94,7 @@ export default function RecommendedCafeDetail({ cafeId }: { cafeId: number }) {
           {/* 카페 정보 */}
           <div className="space-y-4">
             <h1 className="text-2xl font-bold">{recommendedCafedetail.name}</h1>
-            <Categories categories={recommendedCafedetail.categories.split(',')} />
+            <Categories categories={recommendedCafedetail.categories} />
             <Location address={recommendedCafedetail.address} />
             <PhoneNumber phone_number={recommendedCafedetail.phone_number!} />
             <OpenTime opening_time={recommendedCafedetail.opening_time || ''} />

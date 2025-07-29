@@ -32,10 +32,10 @@ export async function getCollectedCafes(user_id: string, offset: number = 0, lim
   const safeData = (data ?? []).map(item => ({
     ...item,
     extra_images: item.extra_images ? JSON.parse(item.extra_images) : undefined,
+    categories: item.categories ? JSON.parse(item.categories) : undefined,
     opening_time: item.opening_time ?? undefined,
     phone_number: item.phone_number ?? undefined,
     eaten_menus: item.eaten_menus ?? undefined,
-    categories: item.categories ? JSON.parse(item.categories) : undefined,
   }));
 
   const nextCursor = data && data.length === limit ? offset + limit : null;

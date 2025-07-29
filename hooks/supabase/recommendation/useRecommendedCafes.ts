@@ -31,7 +31,7 @@ export function useRecommendedCafes(selectedCategories?: string[]) {
       if (selectedCategories.length === 0) return true;
 
       try {
-        const parsedCategory = JSON.parse(cafe.categories) as string[];
+        const parsedCategory = cafe.categories;
         return selectedCategories.every(selected => parsedCategory.includes(selected));
       } catch (error) {
         console.error('카테고리 parsing error:', error);

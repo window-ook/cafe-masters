@@ -39,7 +39,7 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
         image: targetCafe.image || '',
         phone_number: targetCafe.phone_number || null,
         opening_time: targetCafe.opening_time || null,
-        extra_images: null,
+        extra_images: JSON.stringify(targetCafe.extra_images || []),
         menus: null,
       };
 
