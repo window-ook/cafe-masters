@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useSignIn } from '@/hooks/supabase/useSignIn';
 import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
-import { handleEmailValid } from '@/utils/shared/auth';
+import { validateEmailByRegex } from '@/utils/shared/auth';
 import {
   authFormCardStyle,
   authFormMentionStyle,
@@ -25,7 +25,7 @@ export default function SignInForm() {
   const handleEmail = () => {
     let isValid = true;
 
-    if (!handleEmailValid(email)) {
+    if (!validateEmailByRegex(email)) {
       setEmailError('유효하지 않은 이메일 형식입니다.');
       isValid = false;
     } else setEmailError(null);

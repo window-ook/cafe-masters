@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useUIStore, useUserStore } from 'stores';
 import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
-import { useCafeClickHandler } from '@/hooks/ui/useCafeClickHandler';
+import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import CafeItem from '@/components/shared/sidebar/CafeItem';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
@@ -38,7 +38,7 @@ export default function BookmarkedCafes() {
     if (hasPreviousPage) setCurrentPage(prev => prev - 1);
   };
 
-  const handleBookmarkedCafeClick = useCafeClickHandler<ISupabaseBookmarkedCafe>({
+  const handleBookmarkedCafeClick = useCafeClick<ISupabaseBookmarkedCafe>({
     routePath: 'bookmarked',
     shouldSetCurrentCafeId: true,
   });

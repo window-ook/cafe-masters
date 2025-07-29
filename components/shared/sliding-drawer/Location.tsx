@@ -1,4 +1,4 @@
-import { handleCopyClick } from '@/utils/shared/copy';
+import { copyText } from '@/utils/shared/detail';
 import { MapPin, CopyCheck } from 'lucide-react';
 
 export default function Location({ address }: { address: string }) {
@@ -12,7 +12,7 @@ export default function Location({ address }: { address: string }) {
         <p className="text-sm">{address}</p>
         <button
           type="button"
-          onClick={() => handleCopyClick(address)}
+          onClick={() => copyText(address)}
           className="cursor-pointer hover:opacity-50"
         >
           <CopyCheck className='size-4' />

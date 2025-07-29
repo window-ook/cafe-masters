@@ -5,7 +5,7 @@ import { useUserStore } from 'stores';
 import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
 import { useInView } from 'react-intersection-observer';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
-import { useCafeClickHandler } from '@/hooks/ui/useCafeClickHandler';
+import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import CollectedCafe from '@/components/shared/sidebar/CollectedCafe';
 import PulseDot from '@/components/shared/sliding-drawer/PulseDot';
 
@@ -30,7 +30,7 @@ export default function CollectedCafes() {
     if (collectedInView && hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [collectedInView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
-  const handleCollectedCafeClick = useCafeClickHandler<ISupabaseCollectedCafe>({
+  const handleCollectedCafeClick = useCafeClick<ISupabaseCollectedCafe>({
     routePath: 'collected',
     shouldSetCurrentCafeId: true,
   });

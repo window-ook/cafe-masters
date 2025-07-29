@@ -4,7 +4,7 @@ export interface ISupabaseBookmarkedCafe {
     user_id: string;
     coordX: number;
     coordY: number;
-    image?: string | null;
+    image: string;
     extra_images?: string[] | null;
     name: string;
     address: string;

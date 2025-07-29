@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useMapStore, useUIStore, useUserStore } from 'stores';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
+import { useCollectedCafeFormForUpload } from '@/hooks/supabase/useCollectedCafes';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 import { CircleX } from 'lucide-react';
 import Image from 'next/image';
@@ -17,13 +18,11 @@ import Menus from './Menus';
 
 interface IRecommendedCafeDetail {
   cafeId: number;
-  setIsCollectedFormOpenAction: (open: boolean) => void;
   setIsRecommendFormOpenAction: (open: boolean) => void;
 }
 
 export default function RecommendedCafeDetail({
   cafeId,
-  setIsCollectedFormOpenAction,
   setIsRecommendFormOpenAction,
 }: IRecommendedCafeDetail) {
   const router = useRouter();
@@ -34,6 +33,7 @@ export default function RecommendedCafeDetail({
   const isCollected = useMapStore(state => state.isCollected);
 
   const { recommendedCafes } = useRecommendedCafes();
+  const { handleCollectClick } = useCollectedCafeFormForUpload();
 
   const recommendedCafedetail = recommendedCafes?.find((cafe: ISupabaseRecommendedCafe) => cafe.id === cafeId);
 
@@ -112,7 +112,16 @@ export default function RecommendedCafeDetail({
           {/* 액션 버튼들 */}
           <div className="flex gap-2">
             <Button
-              onClick={() => setIsCollectedFormOpenAction(true)}
+              onClick={() => handleCollectClick({
+                name: recommendedCafedetail.name,
+                coordX: recommendedCafedetail.coordX,
+                coordY: recommendedCafedetail.coordY,
+                address: recommendedCafedetail.address,
+                image: recommendedCafedetail.image,
+                extra_images: recommendedCafedetail.extra_images || [],
+                phone_number: recommendedCafedetail.phone_number,
+                opening_time: recommendedCafedetail.opening_time,
+              })}
               customClassName='flex-1'
             >
               수집하기

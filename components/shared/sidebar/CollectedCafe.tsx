@@ -206,7 +206,7 @@ export default function CollectedCafe({
 
         <div className="h-44 bg-gray-700 rounded-lg flex flex-col">
           <Image
-            src={image ?? 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'}
+            src={image || 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'}
             alt="카페 썸네일"
             priority={true}
             width={100}

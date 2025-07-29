@@ -1,9 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, RefObject } from 'react';
 import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
+import { useCollectedCafeFormForUpload } from '@/hooks/supabase/useCollectedCafes';
 import { useSearchedResultStore, useMapStore, useUIStore, useUserStore } from '@/stores';
+import { scrollThumbnails } from '@/utils/shared/detail';
 import { getDetailBodyStyle } from '@/utils/styles';
 import { CircleX, FolderCheck } from 'lucide-react';
 import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
@@ -17,11 +19,10 @@ import BookmarkToggleButton from './BookmarkToggleButton';
 
 interface ISearchedCafeDetail {
   cafeId: number;
-  setIsCollectedFormOpenAction: (isMemoOpen: boolean) => void;
   setIsRecommendFormOpenAction: (isMemoOpen: boolean) => void;
 }
 
-export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenAction, setIsRecommendFormOpenAction }: ISearchedCafeDetail) {
+export default function SearchedCafeDetail({ cafeId, setIsRecommendFormOpenAction }: ISearchedCafeDetail) {
   const router = useRouter();
 
   const admin = useUserStore(state => state.admin);
@@ -32,12 +33,12 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
   const searchResult = useSearchedResultStore(state => state.searchResult);
   const isCollected = useMapStore(state => state.isCollected);
 
+  const { handleCollectClick } = useCollectedCafeFormForUpload();
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // React Query로 카페 상세 정보 가져오기
   const { searchedCafeDetail } = useSearchedCafeDetail(cafeId.toString());
 
-  // searchResult에서 cafeId에 해당하는 카페 찾기
   const detail = useMemo(() => {
     const foundCafe = searchResult.find(cafe => Number(cafe.id) === cafeId);
 
@@ -56,28 +57,13 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
     return {
       id: foundCafe.id,
       name: foundCafe.place_name,
-      image: '', // 카카오맵 API에서는 이미지를 제공하지 않음
-      address: foundCafe.road_address_name || foundCafe.address_name,
-      phone_number: foundCafe.phone || '',
+      image: '',
+      address: foundCafe.road_address_name ?? foundCafe.address_name,
+      phone_number: foundCafe.phone ?? '',
       categories: foundCafe.category_name ? foundCafe.category_name.split(' > ') : [],
-      open_time: '', // 카카오맵 API에서는 운영시간을 제공하지 않음
+      open_time: '',
     };
   }, [searchResult, cafeId]);
-
-  const handleScroll = (direction: 'left' | 'right') => {
-    if (!scrollRef.current) return;
-
-    const { scrollLeft, clientWidth } = scrollRef.current;
-    const scrollAmount = clientWidth * 0.9;
-    scrollRef.current.scrollTo({
-      left:
-        direction === 'left'
-          ? scrollLeft - scrollAmount
-          : scrollLeft + scrollAmount * 0.6,
-      behavior: 'smooth',
-    });
-  };
-
 
   const handleClose = () => {
     setIsSlidingDrawerOpen(false);
@@ -120,12 +106,12 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
               name: detail.name,
               address: detail.address,
               phone_number: detail.phone_number,
-              image: detail.image,
+              image: searchedCafeDetail?.image ?? 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif', // 이미지는 무조건 있어야 함
               coordX: currentCoordX,
               coordY: currentCoordY,
-              extra_images: searchedCafeDetail?.extra_images || null,
-              opening_time: searchedCafeDetail?.opening_time || null,
-              menus: searchedCafeDetail?.menus || null,
+              extra_images: searchedCafeDetail?.extra_images ?? null,
+              opening_time: searchedCafeDetail?.opening_time ?? null,
+              menus: searchedCafeDetail?.menus ?? null,
             }}
           />
           {/* 수집 상태 배지 */}
@@ -140,11 +126,11 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
       <main className={`overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
         {/* 카페 이미지 */}
         {searchedCafeDetail.image && (
-          <section className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4 ">
+          <section key={`${cafeId}-image-section`} className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4 ">
             <button
               type="button"
               aria-label="카페 이미지 슬라이드 왼쪽으로 이동"
-              onClick={() => handleScroll('left')}
+              onClick={() => scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)}
               className={`absolute left-0 z-10 top-1/2 transform -translate-y-1/2 px-2 py-1 shadow-md rounded-md ${isDarkTheme ? 'bg-main' : 'bg-white/30'} cursor-pointer`}
             >
               <span className={`${isDarkTheme ? '' : 'text-main'}`}>◀</span>
@@ -167,9 +153,10 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
                     }
                   >
                     <ImageWithFallback
+                      key={`${cafeId}-main-image`}
+                      alt="카페 썸네일"
                       src={searchedCafeDetail.image}
                       fallbackSrc={'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'}
-                      alt="카페 썸네일"
                       width={340}
                       height={240}
                       priority={true}
@@ -180,14 +167,16 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
               </div>
               {searchedCafeDetail?.extra_images?.map((photo, i) => {
                 return (
-                  <div key={i} className="h-60 py-2 snap-center shrink-0">
+                  <div
+                    key={`${cafeId}-extra-${i}`}
+                    className="h-60 py-2 snap-center shrink-0">
                     <ImageWithFallback
+                      key={`${cafeId}-extra-image-${i}`}
                       alt="카페 썸네일"
                       src={photo}
                       fallbackSrc={'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'}
                       width={340}
                       height={240}
-                      className="slide-images"
                       priority={true}
                       onClick={() =>
                         window.open(
@@ -195,13 +184,14 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
                           '_blank',
                         )
                       }
+                      className="slide-images"
                     />
                   </div>
                 );
               })}
               <button
                 className={`absolute right-0 z-10 px-2 py-1 top-1/2 transform -translate-y-1/2 shadow-md rounded-md ${isDarkTheme ? 'bg-main' : 'bg-white/30'} cursor-pointer`}
-                onClick={() => handleScroll('right')}
+                onClick={() => scrollThumbnails('right', scrollRef as RefObject<HTMLDivElement>)}
               >
                 <span className={`${isDarkTheme ? '' : 'text-main'}`}>▶</span>
               </button>
@@ -217,7 +207,7 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
           <Location address={detail.address} />
           {/* 전화번호 */}
           <PhoneNumber phone_number={detail.phone_number} />
-          {/* 분류 */}
+          {/* 카카오맵 분류 */}
           {detail.categories && detail.categories.length > 0 && (
             <div className="col-span-2 grid grid-cols-3">
               <div className='flex items-center gap-2'>
@@ -237,12 +227,26 @@ export default function SearchedCafeDetail({ cafeId, setIsCollectedFormOpenActio
             </div>
           )}
           {/* 운영시간 */}
-          <OpenTime opening_time={searchedCafeDetail.opening_time || ''} />
+          <OpenTime opening_time={searchedCafeDetail.opening_time ?? ''} />
         </section>
 
         {/* 액션 버튼들 */}
         <section className="flex gap-2">
-          <Button onClick={() => setIsCollectedFormOpenAction(true)} customClassName='flex-1'>수집하기</Button>
+          <Button
+            onClick={() => handleCollectClick({
+              name: detail.name,
+              coordX: currentCoordX,
+              coordY: currentCoordY,
+              address: detail.address,
+              image: searchedCafeDetail?.image || 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif',
+              extra_images: searchedCafeDetail?.extra_images || [],
+              phone_number: detail.phone_number,
+              opening_time: searchedCafeDetail?.opening_time || null,
+            })}
+            customClassName='flex-1'
+          >
+            수집하기
+          </Button>
           {admin && <Button onClick={() => setIsRecommendFormOpenAction(true)} customClassName='flex-1 bg-blue-600'>추천하기</Button>}
         </section>
 

@@ -5,7 +5,7 @@ export interface ISupabaseRecommendedCafe {
     coordX: number;
     coordY: number;
     name: string;
-    image?: string | null;
+    image: string;
     extra_images?: string[] | null;
     opening_time?: string | undefined;
     address: string;

@@ -211,7 +211,7 @@ body {
     @apply my-8 px-8 flex flex-col gap-8;
   }
 
-  /* 상세 페이지 슬라이드의 카페 이미지 */
+  /* 카페 상세 정보 페이지의 썸네일 슬라이드 */
   .slide-images {
     @apply w-80 max-w-full h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 hover:cursor-pointer;
   }

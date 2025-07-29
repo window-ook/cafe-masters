@@ -103,7 +103,7 @@ export function useBookmarkedCafes(
 export function useBookmarkedCafesCounts(userId: string) {
   const { data, isError, error, isLoading } = useQuery({
     enabled: !!userId,
-    queryKey: ['bookmarkedCafesCounts', userId],
+    queryKey: bookmarkedCafeQuery.counts(userId),
     queryFn: () => getBookmarkedCafesCounts(userId),
   });
 

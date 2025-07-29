@@ -22,7 +22,7 @@ export type Database = {
           created_at: string
           extra_images: string | null
           id: number
-          image: string | null
+          image: string
           menus: string | null
           name: string
           opening_time: string | null
@@ -36,7 +36,7 @@ export type Database = {
           created_at?: string
           extra_images?: string | null
           id?: number
-          image?: string | null
+          image: string
           menus?: string | null
           name: string
           opening_time?: string | null
@@ -50,7 +50,7 @@ export type Database = {
           created_at?: string
           extra_images?: string | null
           id?: number
-          image?: string | null
+          image?: string
           menus?: string | null
           name?: string
           opening_time?: string | null
@@ -131,7 +131,7 @@ export type Database = {
           created_at: string
           extra_images: string | null
           id: number
-          image: string | null
+          image: string
           menus: string | null
           name: string
           opening_time: string | null
@@ -145,7 +145,7 @@ export type Database = {
           created_at?: string
           extra_images?: string | null
           id?: number
-          image?: string | null
+          image: string
           menus?: string | null
           name: string
           opening_time?: string | null
@@ -159,7 +159,7 @@ export type Database = {
           created_at?: string
           extra_images?: string | null
           id?: number
-          image?: string | null
+          image?: string
           menus?: string | null
           name?: string
           opening_time?: string | null

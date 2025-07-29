@@ -8,7 +8,6 @@ interface IMapStore {
 
   // 현재 선택된 카페 ID, 썸네일 URL
   currentCafeId: number;
-  currentCafeThumbnail: string;
 
   // 카페 상태 플래그
   isCollected: boolean;
@@ -21,7 +20,6 @@ interface IMapStore {
   setIsBookmarked: (isBookmarked: boolean) => void;
   setIsRecommended: (isRecommended: boolean) => void;
   setCurrentCafeId: (id: number) => void;
-  setCurrentCafeThumbnail: (url: string) => void;
 }
 export const useMapStore = create<IMapStore>()(
 
@@ -31,7 +29,6 @@ export const useMapStore = create<IMapStore>()(
       currentCoordX: 127.04663357436208,
       currentCoordY: 37.54715716085294,
       currentCafeId: 12345678,
-      currentCafeThumbnail: '',
       isCollected: false,
       isBookmarked: false,
       isRecommended: false,
@@ -42,7 +39,6 @@ export const useMapStore = create<IMapStore>()(
       setCurrentCoordX: x => set({ currentCoordX: x }),
       setCurrentCoordY: y => set({ currentCoordY: y }),
       setCurrentCafeId: id => set({ currentCafeId: id }),
-      setCurrentCafeThumbnail: url => set({ currentCafeThumbnail: url }),
     }),
     { name: 'mapStore' },
   ),

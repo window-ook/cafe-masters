@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchedResultStore, useUIStore } from 'stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
-import { useCafeClickHandler } from '@/hooks/ui/useCafeClickHandler';
+import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import SearchResult from '@/components/shared/sidebar/SearchResult';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
@@ -27,7 +27,7 @@ export default function SearchedCafes() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleSearchedCafeClick = useCafeClickHandler<IKakaoSearchResult>({
+  const handleSearchedCafeClick = useCafeClick<IKakaoSearchResult>({
     routePath: 'search',
     shouldSetCurrentCafeId: false,
   });

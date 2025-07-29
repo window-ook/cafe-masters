@@ -1,27 +1,29 @@
 'use client';
 
+import { RefObject, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/useDeleteBookmarkedCafe';
 import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
+import { useCollectedCafeFormForUpload } from '@/hooks/supabase/useCollectedCafes';
 import { useMapStore, useUIStore, useUserStore } from 'stores';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
+import { scrollThumbnails } from '@/utils/shared/detail';
 import { Bookmark, CircleX } from 'lucide-react';
 import { toast } from 'react-toastify';
-import Image from 'next/image';
 import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 import Location from '@/components/shared/sliding-drawer/Location';
 import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
 import Button from '@/components/shared/sliding-drawer/Button';
 import OpenTime from './OpenTime';
 import Menus from './Menus';
+import ImageWithFallback from '../ImageWithFallback';
 
 interface IBookmarkedCafeDetail {
   cafeId: number;
-  setIsCollectedFormOpenAction: (open: boolean) => void;
   setIsRecommendFormOpenAction: (open: boolean) => void;
 }
 
-export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAction, setIsRecommendFormOpenAction }: IBookmarkedCafeDetail) {
+export default function BookmarkedCafeDetail({ cafeId, setIsRecommendFormOpenAction }: IBookmarkedCafeDetail) {
   const router = useRouter();
 
   const admin = useUserStore(state => state.admin);
@@ -33,6 +35,9 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
 
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
   const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
+  const { handleCollectClick } = useCollectedCafeFormForUpload();
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const detail = filteredBookmarkedCafes.find((cafe: ISupabaseBookmarkedCafe) => cafe.id === Number(cafeId));
 
@@ -83,14 +88,75 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
         <div className="space-y-6">
           {/* 카페 이미지 */}
           {detail.image && (
-            <div className="relative w-full h-48 rounded-lg overflow-hidden">
-              <Image
-                src={detail.image}
-                alt={detail.name}
-                fill
-                className="object-cover"
-              />
-            </div>
+            <section className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4 ">
+              <button
+                type="button"
+                aria-label="카페 이미지 슬라이드 왼쪽으로 이동"
+                onClick={() => scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)}
+                className={`absolute left-0 z-10 top-1/2 transform -translate-y-1/2 px-2 py-1 shadow-md rounded-md ${isDarkTheme ? 'bg-main' : 'bg-white/30'} cursor-pointer`}
+              >
+                <span className={`${isDarkTheme ? '' : 'text-main'}`}>◀</span>
+              </button>
+              {/* 카페 이미지 슬라이드 */}
+              <div
+                ref={scrollRef}
+                className="w-full max-w-full overflow-x-auto overflow-y-hidden flex gap-4 scrollbar-hide snap-x snap-mandatory"
+              >
+                <div className="h-60 py-2 snap-center shrink-0">
+                  {detail?.image && (
+                    <a
+                      type="button"
+                      aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
+                      onClick={() =>
+                        window.open(
+                          `http://place.map.kakao.com/${detail?.id}`,
+                          '_blank',
+                        )
+                      }
+                    >
+                      <ImageWithFallback
+                        alt="카페 썸네일"
+                        src={detail.image}
+                        fallbackSrc={'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'}
+                        width={340}
+                        height={240}
+                        priority={true}
+                        className="slide-images"
+                      />
+                    </a>
+                  )}
+                </div>
+                {detail?.extra_images?.map((photo, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="h-60 py-2 snap-center shrink-0">
+                      <ImageWithFallback
+                        alt="카페 썸네일"
+                        src={photo}
+                        fallbackSrc={'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'}
+                        width={340}
+                        height={240}
+                        priority={true}
+                        onClick={() =>
+                          window.open(
+                            `http://place.map.kakao.com/${detail?.id}`,
+                            '_blank',
+                          )
+                        }
+                        className="slide-images"
+                      />
+                    </div>
+                  );
+                })}
+                <button
+                  className={`absolute right-0 z-10 px-2 py-1 top-1/2 transform -translate-y-1/2 shadow-md rounded-md ${isDarkTheme ? 'bg-main' : 'bg-white/30'} cursor-pointer`}
+                  onClick={() => scrollThumbnails('right', scrollRef as RefObject<HTMLDivElement>)}
+                >
+                  <span className={`${isDarkTheme ? '' : 'text-main'}`}>▶</span>
+                </button>
+              </div>
+            </section>
           )}
 
           {/* 카페 정보 */}
@@ -103,7 +169,21 @@ export default function BookmarkedCafeDetail({ cafeId, setIsCollectedFormOpenAct
 
           {/* 액션 버튼들 */}
           <section className="flex gap-2">
-            <Button onClick={() => setIsCollectedFormOpenAction(true)} customClassName='flex-1'>수집하기</Button>
+            <Button
+              onClick={() => handleCollectClick({
+                name: detail.name,
+                coordX: detail.coordX,
+                coordY: detail.coordY,
+                address: detail.address,
+                image: detail.image,
+                extra_images: detail.extra_images || [],
+                phone_number: detail.phone_number,
+                opening_time: detail.opening_time,
+              })}
+              customClassName='flex-1'
+            >
+              수집하기
+            </Button>
             {admin && <Button onClick={() => setIsRecommendFormOpenAction(true)} customClassName='flex-1 bg-blue-600'>추천하기</Button>}
           </section>
 

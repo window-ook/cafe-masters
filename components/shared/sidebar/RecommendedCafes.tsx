@@ -5,7 +5,7 @@ import { useUIStore } from 'stores';
 import { useFilterStore } from 'stores/filter';
 import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
-import { useCafeClickHandler } from '@/hooks/ui/useCafeClickHandler';
+import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import CafeItem from '@/components/shared/sidebar/CafeItem';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
@@ -31,7 +31,7 @@ export default function RecommendedCafes() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleRecommendedCafeClick = useCafeClickHandler<ISupabaseRecommendedCafe>({
+  const handleRecommendedCafeClick = useCafeClick<ISupabaseRecommendedCafe>({
     routePath: 'recommended',
     shouldSetCurrentCafeId: true,
   });

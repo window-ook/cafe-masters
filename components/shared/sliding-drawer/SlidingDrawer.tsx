@@ -19,8 +19,8 @@ export default function SlidingDrawer() {
     const isDarkTheme = useUIStore(state => state.isDarkTheme);
     const isExtend = useUIStore(state => state.isExtend);
     const currentCafeId = useMapStore(state => state.currentCafeId);
+    const isCollectFormOpen = useUIStore(state => state.isCollectFormOpen);
 
-    const [isCollectFormOpen, setIsCollectFormOpenAction] = useState(false);
     const [isRecommendFormOpen, setIsRecommendFormOpenAction] = useState(false);
 
     const PATHS = {
@@ -40,17 +40,17 @@ export default function SlidingDrawer() {
     if (!isCollectFormOpen && !isRecommendFormOpen) return (
         <div className={SLIDING_DRAWER_STYLE}>
             <Suspense fallback={<CafeDetailSkeleton />}>
-                {PATHS.SEARCH && <SearchedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
-                {PATHS.COLLECTED && <CollectedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} />}
-                {PATHS.BOOKMARKED && <BookmarkedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
-                {PATHS.RECOMMENDED && <RecommendedCafeDetail cafeId={currentCafeId} setIsCollectedFormOpenAction={setIsCollectFormOpenAction} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+                {PATHS.SEARCH && <SearchedCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+                {PATHS.COLLECTED && <CollectedCafeDetail cafeId={currentCafeId} />}
+                {PATHS.BOOKMARKED && <BookmarkedCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+                {PATHS.RECOMMENDED && <RecommendedCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
             </Suspense>
         </div>
     );
 
     if (isCollectFormOpen) return (
         <div className={SLIDING_DRAWER_STYLE}>
-            <FormForCollect setIsCollectFormOpenAction={setIsCollectFormOpenAction} />
+            <FormForCollect />
         </div>
     );
 

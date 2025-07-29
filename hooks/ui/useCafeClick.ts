@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useUIStore } from '@/stores/ui';
 import { useMapStore } from '@/stores/map';
 
@@ -31,10 +31,11 @@ interface ICafeClickHandlerOptions {
  * @param options - 핸들러 옵션
  * @returns 카페 클릭 핸들러 함수
  */
-export function useCafeClickHandler<T extends ICafeClickData>(
+export function useCafeClick<T extends ICafeClickData>(
   options: ICafeClickHandlerOptions
 ) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
   const currentCafeId = useMapStore(state => state.currentCafeId);
@@ -49,8 +50,8 @@ export function useCafeClickHandler<T extends ICafeClickData>(
     const cafeId = typeof cafe.id === 'string' ? cafe.id : Number(cafe.id);
     const currentId = typeof currentCafeId === 'string' ? currentCafeId : Number(currentCafeId);
 
-    // 중복 클릭 방지
-    if (cafeId === currentId) return;
+    // 동일한 카페를 이미 보고 있을 때만 클릭 방지
+    if (cafeId === currentId && pathname === `/${routePath}/detail/${cafe.id}`) return;
 
     // 슬라이딩 드로어 열기
     setIsSlidingDrawerOpen(true);
@@ -74,6 +75,7 @@ export function useCafeClickHandler<T extends ICafeClickData>(
     router,
     routePath,
     shouldSetCurrentCafeId,
+    pathname,
     setIsSlidingDrawerOpen,
     setCurrentCafeId,
     setCurrentCoordX,

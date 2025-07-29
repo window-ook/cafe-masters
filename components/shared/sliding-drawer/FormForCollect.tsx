@@ -2,43 +2,17 @@
 
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { usePathname } from 'next/navigation';
-import { useSearchedResultStore } from '@/stores/searched-result';
+import { useUIStore } from '@/stores';
+import { useCollectedCafeFormForUploadStore } from '@/stores/cafe-collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
+import { createCollectedCafe } from '@/actions/supabase/collection';
 import CategorySelector from './CategorySelector';
 import RatingsSelector from './RatingsSelector';
-import { useMapStore, useUIStore, useUserStore } from '@/stores';
-import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
-import { useRecommendedCafes } from '@/hooks/supabase/useRecommendedCafes';
-import { useBookmarkedCafes } from '@/hooks/supabase/useBookmarkedCafes';
-import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
-import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
-import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 
-export default function FormForCollect({ setIsCollectFormOpenAction }: { setIsCollectFormOpenAction: (isCollectFormOpen: boolean) => void }) {
-  const pathname = usePathname();
-
-  const userId = useUserStore(state => state.userId);
-  const searchResult = useSearchedResultStore(state => state.searchResult);
-  const currentCafeId = useMapStore(state => state.currentCafeId);
+export default function FormForCollect() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
-
-  const { collectedCafes } = useCollectedCafes(userId);
-  const { bookmarkedCafes } = useBookmarkedCafes(userId);
-  const { recommendedCafes } = useRecommendedCafes();
-
-  const collectedCafeDetail = collectedCafes.find((cafe: ISupabaseCollectedCafe) => cafe.id === currentCafeId);
-  const bookmarkedCafeDetail = bookmarkedCafes.find((cafe: ISupabaseBookmarkedCafe) => cafe.id === currentCafeId);
-  const recommendedCafeDetail = recommendedCafes.find((cafe: ISupabaseRecommendedCafe) => cafe.id === currentCafeId);
-
-  // 현재 페이지에 따라 카페 이름 결정
-  const getCafeName = () => {
-    if (pathname.startsWith('/search')) return searchResult[0]?.place_name || '';
-    if (pathname.startsWith('/collected')) return collectedCafeDetail?.name || '';
-    if (pathname.startsWith('/bookmarked')) return bookmarkedCafeDetail?.name || '';
-    if (pathname.startsWith('/main/recommended')) return recommendedCafeDetail?.name || '';
-    return '';
-  };
+  const targetCafe = useCollectedCafeFormForUploadStore(state => state.targetCafe);
+  const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
 
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<CollectionFormData>({
     resolver: zodResolver(collectionFormSchema),
@@ -52,7 +26,43 @@ export default function FormForCollect({ setIsCollectFormOpenAction }: { setIsCo
     },
   });
 
-  const onFormSubmit = (data: CollectionFormData) => console.log(data);
+  const onFormSubmit = async (data: CollectionFormData) => {
+    if (!targetCafe) {
+      alert('카페 정보가 없습니다. 다시 시도해주세요.');
+      return;
+    }
+
+    try {
+      // 완전한 수집 데이터 생성
+      const collectionData = {
+        name: targetCafe.name,
+        coordX: targetCafe.coordX,
+        coordY: targetCafe.coordY,
+        address: targetCafe.address,
+        image: targetCafe.image,
+        extra_images: JSON.stringify(targetCafe.extra_images || []),
+        phone_number: targetCafe.phone_number,
+        opening_time: targetCafe.opening_time,
+        ratings: data.rating,
+        categories: JSON.stringify(data.categories),
+        comment: data.comment,
+        eaten_menus: data.eaten_menus,
+        pros: data.pros || '',
+        cons: data.cons || '',
+      };
+
+      // 서버 액션 호출
+      await createCollectedCafe(collectionData);
+
+      // 성공 시 폼 닫기
+      setIsCollectFormOpen(false);
+      alert('카페가 성공적으로 수집되었습니다!');
+
+    } catch (error) {
+      console.error('카페 수집 실패:', error);
+      alert(error instanceof Error ? error.message : '카페 수집에 실패했습니다.');
+    }
+  };
 
   const memoInputStyle = `${isDarkTheme ? 'text-black' : ''} px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent`;
   const memoSubmitStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} p-4 shadow-sm rounded-xl bg-main text-white cursor-pointer hover:bg-opacity-70 disabled:opacity-50 disabled:cursor-not-allowed transition-all`;
@@ -62,13 +72,11 @@ export default function FormForCollect({ setIsCollectFormOpenAction }: { setIsCo
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
-        <p className=" text-2xl font-semibold">
-          {getCafeName()}
-        </p>
+        <p className=" text-2xl font-semibold">{targetCafe?.name}</p>
         <button
           type="button"
           aria-label="카드 수집 취소 버튼"
-          onClick={() => setIsCollectFormOpenAction(false)}
+          onClick={() => setIsCollectFormOpen(false)}
           className={memoBackStyle}
         >
           <span>Back</span>
@@ -92,9 +100,7 @@ export default function FormForCollect({ setIsCollectFormOpenAction }: { setIsCo
             )}
           />
         </div>
-        {errors.rating && (
-          <span className={errorStyle}>{errors.rating.message}</span>
-        )}
+        {errors.rating && <span className={errorStyle}>{errors.rating.message}</span>}
       </div>
 
       {/* 카테고리 선택 */}

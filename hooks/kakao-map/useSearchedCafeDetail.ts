@@ -30,7 +30,7 @@ export function useSearchedCafeDetail(cafeId: string) {
 
       return {
         image: data.image || null,
-        extra_images: Array.isArray(data.extra_images) ? data.extra_images : [],
+        extra_images: data.extra_images || null,
         opening_time: data.opening_time || '',
         menus: Array.isArray(data.menus) ? data.menus : [],
       };

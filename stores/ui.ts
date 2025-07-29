@@ -15,6 +15,9 @@ interface IUIStore {
   isExtend: boolean;
   isExtendComplete: boolean;
 
+  // 수집 폼 상태
+  isCollectFormOpen: boolean;
+
   // 다크모드 액션
   setIsDarkTheme: () => void;
 
@@ -25,6 +28,9 @@ interface IUIStore {
   setIsMenuOpen: (isOpen: boolean) => void;
   setIsExtend: () => void;
   setIsExtendComplete: () => void;
+
+  // 수집 폼 액션
+  setIsCollectFormOpen: (isOpen: boolean) => void;
 }
 
 export const useUIStore = create<IUIStore>()(
@@ -36,6 +42,7 @@ export const useUIStore = create<IUIStore>()(
       isMenuOpen: false,
       isExtend: false,
       isExtendComplete: false,
+      isCollectFormOpen: false,
 
       setIsDarkTheme: () => set(state => ({ isDarkTheme: !state.isDarkTheme })),
 
@@ -44,6 +51,8 @@ export const useUIStore = create<IUIStore>()(
       setIsMenuOpen: isOpen => set({ isMenuOpen: isOpen }),
       setIsExtend: () => set(state => ({ isExtend: !state.isExtend })),
       setIsExtendComplete: () => set(state => ({ isExtendComplete: !state.isExtendComplete })),
+
+      setIsCollectFormOpen: isOpen => set({ isCollectFormOpen: isOpen }),
     }),
     { name: 'UIStore' },
   ),

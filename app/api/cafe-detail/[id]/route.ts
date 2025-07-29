@@ -68,6 +68,8 @@ export async function GET(
       console.error(e);
     }
 
+    console.log('✅ 선택한 카페의 상세 정보 조회 시작');
+
     // 추출
     const data = await page.evaluate(() => {
       const toAbsoluteUrl = (src: string | null) =>
@@ -106,11 +108,11 @@ export async function GET(
 
       return { image, extra_images, opening_time, menus };
     });
-    console.log(`✅ 검색한 카페 상세 정보: `, data);
+    console.log(`✅ 선택한 카페 상세 정보: `, data);
     await browser.close();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('검색한 카페 상세 정보 조회 중 에러:', error);
+    console.error('선택한 카페 상세 정보 조회 중 에러:', error);
     return NextResponse.json({ status: 500, error: 'Internal Server Error' });
   }
 }

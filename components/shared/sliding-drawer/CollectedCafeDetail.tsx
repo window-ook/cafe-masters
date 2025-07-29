@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useUIStore, useUserStore } from 'stores';
 import { useCollectedCafes } from '@/hooks/supabase/useCollectedCafes';
+import { useCollectedCafeFormForUpload } from '@/hooks/supabase/useCollectedCafes';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { CircleX } from 'lucide-react';
 import Image from 'next/image';
@@ -16,15 +17,20 @@ import Cons from './Cons';
 import OpenTime from './OpenTime';
 import Categories from './Categories';
 import Button from '@/components/shared/sliding-drawer/Button';
+import { RefObject, useRef } from 'react';
+import { scrollThumbnails } from '@/utils/shared/detail';
 
-export default function CollectedCafeDetail({ cafeId, setIsCollectedFormOpenAction }: { cafeId: number; setIsCollectedFormOpenAction: (open: boolean) => void }) {
+export default function CollectedCafeDetail({ cafeId }: { cafeId: number }) {
   const router = useRouter();
 
   const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
 
+  const { handleCollectClick } = useCollectedCafeFormForUpload();
   const { filteredCollectedCafes } = useCollectedCafes(userId);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const collectedCafeDetail = filteredCollectedCafes.find((cafe: ISupabaseCollectedCafe) => cafe.id === cafeId);
 
@@ -58,24 +64,74 @@ export default function CollectedCafeDetail({ cafeId, setIsCollectedFormOpenActi
 
       {/* 바디 */}
       <main className={`overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
-        <section className="flex flex-col items-center">
-          <a
-            href={`http://place.map.kakao.com/${collectedCafeDetail?.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block transform duration-300 ease-out hover:opacity-30"
+        <section key={`${cafeId}-image-section`} className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4 ">
+          <button
+            type="button"
+            aria-label="카페 이미지 슬라이드 왼쪽으로 이동"
+            onClick={() => scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)}
+            className={`absolute left-0 z-10 top-1/2 transform -translate-y-1/2 px-2 py-1 shadow-md rounded-md ${isDarkTheme ? 'bg-main' : 'bg-white/30'} cursor-pointer`}
           >
-            <Image
-              src={
-                collectedCafeDetail?.image ?? 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'
-              }
-              alt="카페 썸네일"
-              className="rounded-md w-auto h-auto"
-              width={160}
-              height={30}
-              priority={true}
-            />
-          </a>
+            <span className={`${isDarkTheme ? '' : 'text-main'}`}>◀</span>
+          </button>
+          {/* 카페 이미지 슬라이드 */}
+          <div
+            ref={scrollRef}
+            className="w-full max-w-full overflow-x-auto overflow-y-hidden flex gap-4 scrollbar-hide snap-x snap-mandatory"
+          >
+            <div className="h-60 py-2 snap-center shrink-0">
+              {collectedCafeDetail?.image && (
+                <a
+                  type="button"
+                  aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
+                  onClick={() =>
+                    window.open(
+                      `http://place.map.kakao.com/${collectedCafeDetail?.id}`,
+                      '_blank',
+                    )
+                  }
+                >
+                  <Image
+                    key={`${cafeId}-main-image`}
+                    alt="카페 썸네일"
+                    src={collectedCafeDetail.image}
+                    width={340}
+                    height={240}
+                    priority={true}
+                    className="slide-images"
+                  />
+                </a>
+              )}
+            </div>
+            {collectedCafeDetail?.extra_images && Array.isArray(collectedCafeDetail.extra_images) && collectedCafeDetail.extra_images.length > 0 && collectedCafeDetail.extra_images.map((photo, i) => {
+              return (
+                <div
+                  key={`${cafeId}-extra-${i}`}
+                  className="h-60 py-2 snap-center shrink-0">
+                  <Image
+                    key={`${cafeId}-extra-image-${i}`}
+                    alt="카페 썸네일"
+                    src={photo}
+                    width={340}
+                    height={240}
+                    priority={true}
+                    onClick={() =>
+                      window.open(
+                        `http://place.map.kakao.com/${collectedCafeDetail?.id}`,
+                        '_blank',
+                      )
+                    }
+                    className="slide-images"
+                  />
+                </div>
+              );
+            })}
+            <button
+              className={`absolute right-0 z-10 px-2 py-1 top-1/2 transform -translate-y-1/2 shadow-md rounded-md ${isDarkTheme ? 'bg-main' : 'bg-white/30'} cursor-pointer`}
+              onClick={() => scrollThumbnails('right', scrollRef as RefObject<HTMLDivElement>)}
+            >
+              <span className={`${isDarkTheme ? '' : 'text-main'}`}>▶</span>
+            </button>
+          </div>
         </section>
 
         <section className="space-y-4">
@@ -95,7 +151,16 @@ export default function CollectedCafeDetail({ cafeId, setIsCollectedFormOpenActi
         </section>
 
         <Button
-          onClick={() => setIsCollectedFormOpenAction(true)}
+          onClick={() => handleCollectClick({
+            name: collectedCafeDetail.name,
+            coordX: collectedCafeDetail.coordX,
+            coordY: collectedCafeDetail.coordY,
+            address: collectedCafeDetail.address,
+            image: collectedCafeDetail.image,
+            extra_images: collectedCafeDetail.extra_images || [],
+            phone_number: collectedCafeDetail.phone_number,
+            opening_time: collectedCafeDetail.opening_time,
+          })}
         >
           수정하기
         </Button>

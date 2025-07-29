@@ -1,4 +1,4 @@
-import { handleCopyClick } from '@//utils/shared/copy';
+import { copyText } from '@/utils/shared/detail';
 import { PhoneCall, CopyCheck } from 'lucide-react';
 
 export default function PhoneNumber({ phone_number }: { phone_number: string | null }) {
@@ -12,7 +12,7 @@ export default function PhoneNumber({ phone_number }: { phone_number: string | n
         <p className='text-sm'>{phone_number || '등록 X'}</p>
         <button
           type="button"
-          onClick={() => handleCopyClick(phone_number ?? '')}
+          onClick={() => copyText(phone_number ?? '')}
           className="cursor-pointer hover:opacity-50"
         >
           <CopyCheck className='size-4' />

@@ -5,6 +5,8 @@ import { useFilterStore } from 'stores/filter';
 import { getCollectedCafes, getCollectedCafesCounts } from '@/actions/supabase/collection';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { collectedCafeQuery } from '@/queries/supabase/collection';
+import { ITargetCafe, useCollectedCafeFormForUploadStore } from '@/stores/cafe-collection';
+import { useUIStore } from '@/stores';
 
 /**
  * 모든 수집 카페 조회 훅
@@ -78,4 +80,28 @@ export function useCollectedCafesCounts(userId: string) {
   });
 
   return { collectedCounts: data, isError, error, isLoading };
+}
+
+/**
+ * 카페 수집하기 로직을 관리하는 커스텀 훅
+ * @description 3개의 상세 페이지에서 공통으로 사용되는 수집하기 버튼 로직을 제공합니다.
+ */
+export function useCollectedCafeFormForUpload() {
+  const { setTargetCafe, clearTargetCafe } = useCollectedCafeFormForUploadStore();
+  const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
+
+  const handleCollectClick = (cafeData: ITargetCafe) => {
+    setTargetCafe(cafeData);
+    setIsCollectFormOpen(true);
+  };
+
+  const handleCollectFormClose = () => {
+    clearTargetCafe();
+    setIsCollectFormOpen(false);
+  };
+
+  return {
+    handleCollectClick,
+    handleCollectFormClose,
+  };
 }

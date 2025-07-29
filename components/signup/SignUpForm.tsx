@@ -10,7 +10,7 @@ import {
   authFormTitleStyle,
   kakaoButtonStyle,
 } from '@/utils/styles';
-import { handleEmailValid } from '@/utils/shared/auth';
+import { validateEmailByRegex } from '@/utils/shared/auth';
 import Link from 'next/link';
 import UserForm from '@/components/shared/UserForm';
 import CodeForm from '@/components/signup/CodeForm';
@@ -28,7 +28,7 @@ export default function SignUpForm() {
   const handleEmail = () => {
     let isValid = true;
 
-    if (!handleEmailValid(email)) {
+    if (!validateEmailByRegex(email)) {
       setEmailError('유효하지 않은 이메일 형식입니다.');
       isValid = false;
     } else setEmailError(null);
