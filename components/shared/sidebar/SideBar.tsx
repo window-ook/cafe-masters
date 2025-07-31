@@ -7,10 +7,10 @@ import TabsForLink from '@/components/shared/sidebar/TabsForLink';
 import Footer from '@/components/shared/sidebar/Footer';
 import HelpCenter from '@/components/shared/sidebar/HelpCenter';
 import Header from '@/components/shared/sidebar/Header';
-import SearchedCafes from '@/components/shared/sidebar/SearchedCafes';
-import BookmarkedCafes from '@/components/shared/sidebar/BookmarkedCafes';
-import RecommendedCafes from '@/components/shared/sidebar/RecommendedCafes';
-import CollectedCafes from '@/components/shared/sidebar/CollectedCafes';
+import SearchedCafes from '@/components/search/SearchedCafes';
+import BookmarkedCafes from '@/components/bookmark/BookmarkedCafes';
+import RecommendedCafes from '@/components/recommendation/RecommendedCafes';
+import CollectedCafes from '@/components/collection/CollectedCafes';
 import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
 
 export default function Sidebar() {

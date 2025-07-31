@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { useFilterStore, useUIStore } from '@/stores';
 
-export default function SearchBar() {
+export default function SearchInput() {
   const router = useRouter();
 
   const keyword = useFilterStore(state => state.keyword);

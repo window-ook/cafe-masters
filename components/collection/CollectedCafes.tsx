@@ -6,8 +6,8 @@ import { useCollectedCafes } from '@/hooks/supabase/collection';
 import { useInView } from 'react-intersection-observer';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
-import CollectedCafe from '@/components/shared/sidebar/CollectedCafe';
-import PulseDot from '@/components/shared/sliding-drawer/PulseDot';
+import CollectedCafe from '@/components/collection/CollectedCafe';
+import PulseDot from '@/components/shared/sidebar/PulseDot';
 
 export default function CollectedCafes() {
   const userId = useUserStore(state => state.userId);

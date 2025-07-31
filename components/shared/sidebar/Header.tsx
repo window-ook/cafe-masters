@@ -8,7 +8,7 @@ import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
 import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
 import Image from 'next/image';
 import Link from 'next/link';
-import Search from '@/components/shared/sidebar/SearchBar';
+import Search from '@/components/shared/sidebar/SearchInput';
 import ThemeToggleButton from '@/components/shared/sidebar/ThemeToggleButton';
 import Tooltip from '@/components/shared/TooltipContainer';
 import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';

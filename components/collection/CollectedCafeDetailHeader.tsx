@@ -8,7 +8,7 @@ interface ISimpleHeader {
   isDarkTheme?: boolean;
 }
 
-export default function SimpleHeader({ isDarkTheme = false }: ISimpleHeader) {
+export default function CollectedCafeDetailHeader({ isDarkTheme = false }: ISimpleHeader) {
   const router = useRouter();
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
 

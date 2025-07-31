@@ -3,9 +3,9 @@
 import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
 import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
-import Button from '@/components/shared/sliding-drawer/Button';
-import CafeDetailHeader from './CafeDetailHeader';
-import CafeDetailBody from './CafeDetailBody';
+import Button from '@/components/shared/Button';
+import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
+import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
 
 export default function RecommendedCafeDetail({ cafeId }: { cafeId: number }) {
   const { recommendedCafes } = useRecommendedCafes();

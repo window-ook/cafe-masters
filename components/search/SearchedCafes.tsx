@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchedResultStore, useUIStore } from 'stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
-import SearchResult from '@/components/shared/sidebar/SearchResult';
+import SearchResult from '@/components/search/SearchResult';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
 export default function SearchedCafes() {

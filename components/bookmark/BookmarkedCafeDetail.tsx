@@ -3,14 +3,14 @@
 import { useRouter } from 'next/navigation';
 import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
 import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
+import { useDeleteBookmarkedCafe } from '@/hooks/supabase/bookmark';
 import { useCurrentCafeStore, useUIStore, useUserStore } from 'stores';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
-import { Bookmark, CircleX } from 'lucide-react';
-import Button from '@/components/shared/sliding-drawer/Button';
-import CafeDetailBody from './CafeDetailBody';
-import CollectedBadge from './CollectedBadge';
-import { useDeleteBookmarkedCafe } from '@/hooks/supabase/bookmark';
 import { toast } from 'react-toastify';
+import { Bookmark, CircleX } from 'lucide-react';
+import Button from '@/components/shared/Button';
+import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
+import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 
 export default function BookmarkedCafeDetail({ cafeId }: { cafeId: number }) {
   const router = useRouter();

@@ -7,7 +7,7 @@ export default function Ratings({ rating }: { rating: number }) {
         <div className="rating-red-circle">
           <FaStar className="rating-yellow-star" />
         </div>
-        <span className="">{rating}</span>
+        <span>{rating}</span>
       </div>
     </span>
   );

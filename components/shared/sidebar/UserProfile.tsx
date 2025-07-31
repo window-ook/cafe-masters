@@ -6,7 +6,7 @@ import { useUIStore, useUserStore } from '@/stores';
 import TierBadge from './TierBadge';
 import Image from 'next/image';
 
-export default function Profile() {
+export default function UserProfile() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const userId = useUserStore(state => state.userId);
   const userEmail = useUserStore(state => state.userEmail);
@@ -36,7 +36,7 @@ export default function Profile() {
             alt="유저 프로필 이미지"
             width={20}
             height={20}
-            className="inline-block object-cover object-center rounded-lg w-4 h-auto"
+            className="inline-block object-cover object-center w-4 h-auto rounded-lg"
           />
         </div>
         <p className="pl-4 font-bold font-pretendard text-[0.5rem] sm:text-[1rem]">
