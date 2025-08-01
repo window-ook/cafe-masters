@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { useUIStore, useCurrentCafeStore } from '@/stores';
 import { CircleX } from 'lucide-react';
-import CollectedBadge from './CollectedBadge';
-import BookmarkToggleButton from './BookmarkToggleButton';
+import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
+import BookmarkToggleButton from '@/components/shared/sliding-drawer/BookmarkToggleButton';
 
 interface ICafeDetailHeader {
   bookmarkData: {

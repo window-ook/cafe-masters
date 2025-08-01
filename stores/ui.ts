@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { useCurrentCafeStore } from './current-cafe';
+import { useCurrentCafeStore } from '@/stores/current-cafe';
 
 interface IUIStore {
   // 다크모드
@@ -66,13 +66,13 @@ export const useUIStore = create<IUIStore>()(
       // 통합 액션 구현
       openCafeDetail: (cafeId: number) => {
         useCurrentCafeStore.getState().setCurrentCafeId(cafeId);
-        set({ 
-          isSlidingDrawerOpen: true, 
+        set({
+          isSlidingDrawerOpen: true,
           isCollectFormOpen: false,
-          isRecommendFormOpen: false 
+          isRecommendFormOpen: false
         });
       },
-      
+
       closeSlidingDrawer: () => {
         set({ isSlidingDrawerOpen: false });
         // 필요시 cafeId도 초기화 가능

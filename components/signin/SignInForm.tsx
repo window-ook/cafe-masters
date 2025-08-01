@@ -6,7 +6,7 @@ import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
 import { validateEmailByRegex } from '@/utils/shared/auth';
 import Link from 'next/link';
 import UserForm from '@/components/shared/UserForm';
-import ResetpasswordForm from './ResetPasswordForm';
+import ResetPasswordForm from '@/components/signin/ResetPasswordForm';
 
 export default function SignInForm() {
   const [email, setEmail] = useState<string>('');
@@ -92,7 +92,7 @@ export default function SignInForm() {
           </form>
         </div>
       ) : (
-        <ResetpasswordForm
+        <ResetPasswordForm
         />
       )}
     </main>

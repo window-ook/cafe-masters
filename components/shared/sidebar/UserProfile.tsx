@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
 import { useUIStore, useUserStore } from '@/stores';
-import TierBadge from './TierBadge';
+import TierBadge from '@/components/shared/sidebar/TierBadge';
 import Image from 'next/image';
 
 export default function UserProfile() {

@@ -3,12 +3,12 @@
 import { RefObject, useRef, ReactNode } from 'react';
 import { scrollThumbnails } from '@/utils/shared/detail';
 import { FolderCheck } from 'lucide-react';
-import Location from './Location';
-import PhoneNumber from './PhoneNumber';
-import OpenTime from './OpenTime';
-import Menus from './Menus';
-import Categories from './Categories';
-import ImageWithFallback from '../ImageWithFallback';
+import Location from '@/components/shared/sliding-drawer/Location';
+import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
+import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
+import Menus from '@/components/shared/sliding-drawer/Menus';
+import Categories from '@/components/shared/sliding-drawer/Categories';
+import ImageWithFallback from '@/components/shared/ImageWithFallback';
 import Image from 'next/image';
 
 interface ICafeDetailBody {

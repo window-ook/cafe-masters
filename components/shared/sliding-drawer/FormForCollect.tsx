@@ -8,8 +8,8 @@ import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { createCollectedCafe } from '@/actions/supabase/collection';
 import { useUpdateCollectedCafe } from '@/hooks/supabase/collection/useUpdateCollectedCafe';
-import CategorySelector from './CategorySelector';
-import RatingsSelector from './RatingsSelector';
+import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
+import RatingsSelector from '@/components/shared/sliding-drawer/RatingsSelector';
 
 export default function FormForCollect() {
   const pathname = usePathname();

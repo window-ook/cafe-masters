@@ -23,6 +23,7 @@ export default function Header() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setSearchTermInCollectedCafe = useFilterStore(state => state.setSearchTermInCollectedCafe);
   const setSearchTermInBookmarkedCafe = useFilterStore(state => state.setSearchTermInBookmarkedCafe);
+  const closeSlidingDrawer = useUIStore(state => state.closeSlidingDrawer);
 
   const [collectedInput, setCollectedInput] = useState<string>('');
   const [bookmarkedInput, setBookmarkedInput] = useState<string>('');
@@ -40,9 +41,10 @@ export default function Header() {
   const handleCollectedSearch = () => setSearchTermInCollectedCafe(collectedInput);
   const handleBookmarkedSearch = () => setSearchTermInBookmarkedCafe(bookmarkedInput);
 
-  const handleResetInput = () => {
+  const handleReset = () => {
     setBookmarkedInput('');
     setCollectedInput('');
+    closeSlidingDrawer();
   };
 
   return (
@@ -57,7 +59,7 @@ export default function Header() {
               href="/main"
               aria-label="홈페이지 이동 버튼"
               className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-300"
-              onClick={handleResetInput}
+              onClick={handleReset}
             >
               <Image
                 src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//card_logo.avif"
