@@ -18,7 +18,6 @@ interface ICafeClickData {
  * 카페 클릭 핸들러 옵션
  */
 interface ICafeClickHandlerOptions {
-  /** 라우팅 경로 (예: 'recommended', 'collected', 'bookmarked', 'search') */
   routePath: string;
 }
 

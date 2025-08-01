@@ -17,10 +17,9 @@ import Cons from '@/components/shared/sliding-drawer/Cons';
 import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
 import Categories from '@/components/shared/sliding-drawer/Categories';
 import Button from '@/components/shared/Button';
-import CollectedCafeDetailHeader from '@/components/collection/detail/CollectedCafeDetailHeader';
+import CollectionCafeDetailHeader from '@/components/collection/detail/CollectionCafeDetailHeader';
 
-
-export default function CollectedCafeDetail({ cafeId }: { cafeId: number }) {
+export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
   const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
@@ -42,7 +41,7 @@ export default function CollectedCafeDetail({ cafeId }: { cafeId: number }) {
 
   return (
     <div className="h-full rounded-md flex flex-col">
-      <CollectedCafeDetailHeader isDarkTheme={isDarkTheme} />
+      <CollectionCafeDetailHeader isDarkTheme={isDarkTheme} />
 
       {/* 바디 */}
       <main className={`overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>

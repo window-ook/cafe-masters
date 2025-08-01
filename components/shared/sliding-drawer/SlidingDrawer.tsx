@@ -5,11 +5,11 @@ import { useCurrentCafeStore, useUIStore } from '@/stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { ErrorBoundary } from 'react-error-boundary';
 import clsx from 'clsx';
-import SearchedCafeDetail from '@/components/search/detail/SearchedCafeDetail';
+import SearchCafeDetail from '@/components/search/detail/SearchCafeDetail';
 import CafeDetailSkeleton from '@/components/shared/sliding-drawer/CafeDetailSkeleton';
-import CollectedCafeDetail from '@/components/collection/detail/CollectedCafeDetail';
-import BookmarkedCafeDetail from '@/components/bookmark/detail/BookmarkedCafeDetail';
-import RecommendedCafeDetail from '@/components/recommendation/detail/RecommendedCafeDetail';
+import CollectionCafeDetail from '@/components/collection/detail/CollectionCafeDetail';
+import BookmarkCafeDetail from '@/components/bookmark/detail/BookmarkCafeDetail';
+import RecommendationCafeDetail from '@/components/recommendation/detail/RecommendationCafeDetail';
 import FormForCollect from '@/components/shared/sliding-drawer/FormForCollect';
 import FormForRecommend from '@/components/shared/sliding-drawer/FormForRecommend';
 import DetailErrorFallback from '@/components/shared/sliding-drawer/DetailErrorFallback';
@@ -50,10 +50,10 @@ export default function SlidingDrawer() {
         return (
             <ErrorBoundary fallback={<DetailErrorFallback />}>
                 <Suspense fallback={<CafeDetailSkeleton />}>
-                    {paths.isSearchDetail && <SearchedCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
-                    {paths.isCollectedDetail && <CollectedCafeDetail cafeId={currentCafeId} />}
-                    {paths.isBookmarkedDetail && <BookmarkedCafeDetail cafeId={currentCafeId} />}
-                    {paths.isRecommendedDetail && <RecommendedCafeDetail cafeId={currentCafeId} />}
+                    {paths.isSearchDetail && <SearchCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+                    {paths.isCollectedDetail && <CollectionCafeDetail cafeId={currentCafeId} />}
+                    {paths.isBookmarkedDetail && <BookmarkCafeDetail cafeId={currentCafeId} />}
+                    {paths.isRecommendedDetail && <RecommendationCafeDetail cafeId={currentCafeId} />}
                 </Suspense>
             </ErrorBoundary>
         );

@@ -32,9 +32,9 @@ export default function Header() {
 
   const PATHS = {
     SEARCH: pathname.startsWith('/search'),
-    COLLECTED: pathname.startsWith('/collected'),
-    BOOKMARKED: pathname.startsWith('/bookmarked'),
-    RECOMMENDED: pathname.startsWith('/recommended'),
+    COLLECTED: pathname.startsWith('/collection'),
+    BOOKMARKED: pathname.startsWith('/bookmark'),
+    RECOMMENDED: pathname.startsWith('/recommendation'),
   };
 
   const handleCollectedSearch = () => setSearchTermInCollectedCafe(collectedInput);

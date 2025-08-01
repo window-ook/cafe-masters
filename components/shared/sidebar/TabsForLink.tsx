@@ -21,7 +21,7 @@ interface ISideBarTab {
 
 const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => {
   const closeSlidingDrawer = useUIStore(state => state.closeSlidingDrawer);
-  
+
   const handleNavClick = () => {
     closeSlidingDrawer();
   };
@@ -76,21 +76,21 @@ export default function TabsForLink() {
           />
         }
         title={'내가 수집한 카페'}
-        path={'/collected'}
+        path={'/collection'}
         isDarkTheme={isDarkTheme}
         counts={collectedCounts!}
       />
       <SideBarTab
         icon={<MdCollectionsBookmark className={`text-yellow-500 text-3xl`} />}
         title={'북마크한 카페'}
-        path={'/bookmarked'}
+        path={'/bookmark'}
         isDarkTheme={isDarkTheme}
         counts={bookmarkedCounts!}
       />
       <SideBarTab
         icon={<FaCheckCircle className={`text-recommended text-3xl`} />}
         title={'개발자가 추천하는 카페'}
-        path={'/recommended'}
+        path={'/recommendation'}
         isDarkTheme={isDarkTheme}
         counts={recommendedCounts!}
       />

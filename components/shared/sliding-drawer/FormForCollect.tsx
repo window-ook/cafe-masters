@@ -22,7 +22,7 @@ export default function FormForCollect() {
   const { updateCollectedCafe } = useUpdateCollectedCafe();
 
   // 편집 모드 감지
-  const isEditMode = pathname?.startsWith('/collected/detail/') && editingCafe;
+  const isEditMode = pathname?.startsWith('/collection/detail/') && editingCafe;
 
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<CollectionFormData>({
     resolver: zodResolver(collectionFormSchema),

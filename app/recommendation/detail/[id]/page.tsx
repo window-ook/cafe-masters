@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   description: `추천 카페의 상세 정보를 확인해보세요.`,
 };
 
-export default function RecommendedDetailPage() {
+export default function RecommendationDetailPage() {
   return null;
 }

@@ -105,7 +105,7 @@ export default function CategorySection() {
                     <div className="group relative inline-block">
                         <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-main/20 via-purple-300/20 to-main/20 opacity-0 blur transition duration-1000 group-hover:opacity-100" />
                         <Link
-                            href="/recommended"
+                            href="/recommendation"
                             className="relative inline-block rounded-xl bg-main px-8 py-4 font-bold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-main-dark"
                         >
                             모든 카테고리 보기

@@ -10,7 +10,7 @@ import PageConverter from '@/components/shared/sidebar/PageConverter';
 
 const BOOKMARKED_CAFES_PER_PAGE = 8 as const;
 
-export default function BookmarkedCafes() {
+export default function BookmarkCafes() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const userId = useUserStore(state => state.userId);
 
@@ -39,7 +39,7 @@ export default function BookmarkedCafes() {
   };
 
   const handleBookmarkedCafeClick = useCafeClick<ISupabaseBookmarkedCafe>({
-    routePath: 'bookmarked',
+    routePath: 'bookmark',
   });
 
   // 로딩 상태 처리

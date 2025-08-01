@@ -8,15 +8,15 @@ export function usePathMatcher() {
         // 기본
         isMain: pathname === '/main',
         isSearch: pathname.startsWith('/search'),
-        isCollected: pathname.startsWith('/collected'),
-        isBookmarked: pathname.startsWith('/bookmarked'),
-        isRecommended: pathname.startsWith('/recommended'),
+        isCollected: pathname.startsWith('/collection'),
+        isBookmarked: pathname.startsWith('/bookmark'),
+        isRecommended: pathname.startsWith('/recommendation'),
         isHelp: pathname.startsWith('/help'),
         // 상세 페이지
         isSearchDetail: pathname.startsWith('/search/detail/'),
-        isCollectedDetail: pathname.startsWith('/collected/detail/'),
-        isBookmarkedDetail: pathname.startsWith('/bookmarked/detail/'),
-        isRecommendedDetail: pathname.startsWith('/recommended/detail/')
+        isCollectedDetail: pathname.startsWith('/collection/detail/'),
+        isBookmarkedDetail: pathname.startsWith('/bookmark/detail/'),
+        isRecommendedDetail: pathname.startsWith('/recommendation/detail/')
     }), [pathname]);
 
     return paths;

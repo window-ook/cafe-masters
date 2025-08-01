@@ -9,7 +9,7 @@ import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommen
 /** 검색 카페 상세 페이지 클라이언트 컴포넌트
  * @description 카페 ID 동기화 / 북마크, 수집, 추천된 건지 확인하고 상태 업데이트
  */
-export default function SearchedDetailClient({ params }: { params: Promise<{ id: string }> }) {
+export default function SearchDetailClient({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const { id } = resolvedParams;
   const numericId = Number(id);

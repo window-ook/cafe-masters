@@ -14,7 +14,7 @@ interface ISearchedCafeDetail {
   setIsRecommendFormOpenAction: (isMemoOpen: boolean) => void;
 }
 
-export default function SearchedCafeDetail({ cafeId, setIsRecommendFormOpenAction }: ISearchedCafeDetail) {
+export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction }: ISearchedCafeDetail) {
   const admin = useUserStore(state => state.admin);
   const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
   const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);

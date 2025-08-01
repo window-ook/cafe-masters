@@ -17,8 +17,8 @@ const RULES = [
   { path: '/signup/confirm', requireAuth: false, blockIfAuth: true },
   { path: '/reset-password', requireAuth: false, blockIfAuth: true },
   { path: '/reset-password/complete', requireAuth: false, blockIfAuth: true },
-  { path: '/collected/detail', requireAuth: true, blockIfAuth: false },
-  { path: '/bookmarked/detail', requireAuth: true, blockIfAuth: false },
+  { path: '/collection/detail', requireAuth: true, blockIfAuth: false },
+  { path: '/bookmark/detail', requireAuth: true, blockIfAuth: false },
 ];
 
 const matchRule = (pathname: string) => RULES.find(rule => pathname === rule.path);

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import SearchedDetailClient from '@/components/search/detail/SearchedDetailClient';
+import SearchDetailClient from '@/components/search/detail/SearchDetailClient';
 
 export const metadata: Metadata = {
   title: `카페 상세 정보 : Cafe Masters`,
@@ -12,5 +12,5 @@ interface IPageProps {
 }
 
 export default function SearchDetailPage(props: IPageProps) {
-  return <SearchedDetailClient {...props} />;
+  return <SearchDetailClient {...props} />;
 }

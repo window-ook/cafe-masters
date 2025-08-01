@@ -7,7 +7,7 @@ import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
 
-export default function RecommendedCafeDetail({ cafeId }: { cafeId: number }) {
+export default function RecommendationCafeDetail({ cafeId }: { cafeId: number }) {
   const { recommendedCafes } = useRecommendedCafes();
   const { selectTargetCafeForCollect } = useCreateCollectedCafe();
 

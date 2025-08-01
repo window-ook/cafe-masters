@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   description: `북마크한 카페의 상세 정보를 확인해보세요.`,
 };
 
-export default function BookmarkedDetailPage() {
+export default function BookmarkDetailPage() {
   return null;
 }

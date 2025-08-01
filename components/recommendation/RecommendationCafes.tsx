@@ -9,7 +9,7 @@ import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import CafeItem from '@/components/shared/sidebar/CafeItem';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
-export default function RecommendedCafes() {
+export default function RecommendationCafes() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const selectedCategories = useFilterStore(state => state.selectedCategories);
 
@@ -32,7 +32,7 @@ export default function RecommendedCafes() {
   };
 
   const handleRecommendedCafeClick = useCafeClick<ISupabaseRecommendedCafe>({
-    routePath: 'recommended',
+    routePath: 'recommendation',
   });
 
   return (

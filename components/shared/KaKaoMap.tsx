@@ -200,7 +200,7 @@ export default function KakaoMap() {
       );
     }
 
-    if (pathname.startsWith('/collected')) {
+    if (pathname.startsWith('/collection')) {
       updateMarkers(
         filteredCollectedCafes,
         cafe => cafe.coordY,
@@ -208,7 +208,7 @@ export default function KakaoMap() {
       );
     }
 
-    if (pathname.startsWith('/bookmarked')) {
+    if (pathname.startsWith('/bookmark')) {
       updateMarkers(
         filteredBookmarkedCafes,
         cafe => cafe.coordY,
@@ -216,7 +216,7 @@ export default function KakaoMap() {
       );
     }
 
-    if (pathname.startsWith('/recommended')) {
+    if (pathname.startsWith('/recommendation')) {
       if (!isRecommendedCafesLoading && recommendedCafes) {
         updateMarkers(
           recommendedCafes,
@@ -228,9 +228,9 @@ export default function KakaoMap() {
 
     if (
       pathname.startsWith('/search/detail') ||
-      pathname.startsWith('/collected/detail') ||
-      pathname.startsWith('/bookmarked/detail') ||
-      pathname.startsWith('/recommended/detail')
+      pathname.startsWith('/collection/detail') ||
+      pathname.startsWith('/bookmark/detail') ||
+      pathname.startsWith('/recommendation/detail')
     ) {
       mapRef.current.setCenter(
         new window.kakao.maps.LatLng(currentCoordY, currentCoordX),

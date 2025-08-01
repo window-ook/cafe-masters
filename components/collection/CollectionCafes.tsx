@@ -6,10 +6,10 @@ import { useCollectedCafes } from '@/hooks/supabase/collection';
 import { useInView } from 'react-intersection-observer';
 import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
-import CollectedCafe from '@/components/collection/CollectedCafe';
+import CollectionCafe from '@/components/collection/CollectionCafe';
 import PulseDot from '@/components/shared/sidebar/PulseDot';
 
-export default function CollectedCafes() {
+export default function CollectionCafes() {
   const userId = useUserStore(state => state.userId);
 
   const { ref: collectedRef, inView: collectedInView } = useInView({
@@ -31,7 +31,7 @@ export default function CollectedCafes() {
   }, [collectedInView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   const handleCollectedCafeClick = useCafeClick<ISupabaseCollectedCafe>({
-    routePath: 'collected',
+    routePath: 'collection',
   });
 
   // 로그인 확인
@@ -93,7 +93,7 @@ export default function CollectedCafes() {
       <section className="flex-1 overflow-y-auto overflow-x-hidden">
         <ul className="pagination-sidebar-list">
           {filteredCollectedCafes.map((cafe: ISupabaseCollectedCafe) => (
-            <CollectedCafe
+            <CollectionCafe
               key={cafe.id}
               name={cafe.name}
               ratings={cafe.ratings!}

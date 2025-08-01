@@ -7,7 +7,7 @@ import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 import CafeItem from '@/components/shared/sidebar/CafeItem';
 
-export default function SearchedCafes() {
+export default function SearchCafes() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const searchResult = useSearchedResultStore(state => state.searchResult);
 

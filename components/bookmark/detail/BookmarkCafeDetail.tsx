@@ -12,7 +12,7 @@ import Button from '@/components/shared/Button';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
 import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 
-export default function BookmarkedCafeDetail({ cafeId }: { cafeId: number }) {
+export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   const router = useRouter();
 
   const userId = useUserStore(state => state.userId);

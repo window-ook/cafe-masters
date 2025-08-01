@@ -7,10 +7,10 @@ import TabsForLink from '@/components/shared/sidebar/TabsForLink';
 import Footer from '@/components/shared/sidebar/Footer';
 import HelpCenter from '@/components/shared/sidebar/HelpCenter';
 import Header from '@/components/shared/sidebar/Header';
-import SearchedCafes from '@/components/search/SearchedCafes';
-import BookmarkedCafes from '@/components/bookmark/BookmarkedCafes';
-import RecommendedCafes from '@/components/recommendation/RecommendedCafes';
-import CollectedCafes from '@/components/collection/CollectedCafes';
+import SearchedCafes from '@/components/search/SearchCafes';
+import BookmarkCafes from '@/components/bookmark/BookmarkCafes';
+import RecommendationCafes from '@/components/recommendation/RecommendationCafes';
+import CollectionCafes from '@/components/collection/CollectionCafes';
 import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
 import ListSkeleton from '@/components/shared/sidebar/ListSkeleton';
 
@@ -51,7 +51,7 @@ export default function Sidebar() {
           {paths.isCollected && (
             <main className="flex-1 min-h-0">
               <Suspense fallback={<ListSkeleton />}>
-                <CollectedCafes />
+                <CollectionCafes />
               </Suspense>
             </main>
           )}
@@ -59,7 +59,7 @@ export default function Sidebar() {
           {paths.isBookmarked && (
             <main className="flex-1 min-h-0">
               <Suspense fallback={<ListSkeleton />}>
-                <BookmarkedCafes />
+                <BookmarkCafes />
               </Suspense>
             </main>
           )}
@@ -67,7 +67,7 @@ export default function Sidebar() {
           {paths.isRecommended && (
             <main className="flex-1 min-h-0">
               <Suspense fallback={<ListSkeleton />}>
-                <RecommendedCafes />
+                <RecommendationCafes />
               </Suspense>
             </main>
           )}

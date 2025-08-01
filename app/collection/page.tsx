@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   description: '수집한 카페를 확인해보세요.',
 };
 
-export default function CollectedPage() {
+export default function CollectionPage() {
   return;
 }
