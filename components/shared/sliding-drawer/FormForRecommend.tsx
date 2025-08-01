@@ -106,7 +106,6 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
       {/* 제출 버튼 */}
       <button
         type="submit"
-        data-cy="recommend-button"
         aria-label="추천 완료 버튼"
         disabled={isSubmitting}
         className={memoSubmitStyle}

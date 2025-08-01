@@ -149,7 +149,6 @@ export default function FormForCollect() {
             control={control}
             render={({ field }) => (
               <RatingsSelector
-                data-cy="memo-rating"
                 aria-label="카페의 별점을 매기는 라디오 그룹"
                 value={field.value}
                 onChange={field.onChange}
@@ -182,7 +181,6 @@ export default function FormForCollect() {
           render={({ field }) => (
             <input
               {...field}
-              data-cy="memo-comment"
               placeholder="*코멘트"
               className={memoInputStyle}
             />
@@ -201,7 +199,6 @@ export default function FormForCollect() {
           render={({ field }) => (
             <input
               {...field}
-              data-cy="memo-eaten"
               placeholder="*먹은 메뉴"
               className={memoInputStyle}
             />
@@ -220,7 +217,6 @@ export default function FormForCollect() {
           render={({ field }) => (
             <input
               {...field}
-              data-cy="memo-pros"
               placeholder="좋은 점"
               className={memoInputStyle}
             />
@@ -239,7 +235,6 @@ export default function FormForCollect() {
           render={({ field }) => (
             <input
               {...field}
-              data-cy="memo-cons"
               placeholder="아쉬운 점"
               className={memoInputStyle}
             />
@@ -253,7 +248,6 @@ export default function FormForCollect() {
       {/* 제출 버튼 */}
       <button
         type="submit"
-        data-cy="memo-button"
         aria-label={isEditMode ? "카드 수정 완료 버튼" : "카드 수집 완료 버튼"}
         disabled={isSubmitting}
         className={memoSubmitStyle}

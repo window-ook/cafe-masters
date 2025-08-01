@@ -54,7 +54,6 @@ export default function SignInForm() {
             <p className="text-red-500">{emailError}</p>
             <button
               type="button"
-              data-cy="signin-button"
               aria-label="로그인 버튼"
               className="w-full py-1 bg-main hover:bg-opacity-70 hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
               onClick={handleSignin}
@@ -64,7 +63,6 @@ export default function SignInForm() {
             </button>
             <button
               type="button"
-              data-cy="open-reset-button"
               aria-label="비밀번호 재설정 폼 열기 버튼"
               className="bg-blue-600 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
               onClick={() => setResetRequired(true)}
@@ -73,7 +71,6 @@ export default function SignInForm() {
             </button>
             <button
               type="button"
-              data-cy="kakaosignin-button"
               aria-label="카카오 로그인 버튼"
               className="kakao-signin-button"
               onClick={() => signinWithKakao()}
@@ -84,7 +81,6 @@ export default function SignInForm() {
               계정이 없으신가요?{' '}
               <Link
                 href="/signup"
-                data-cy="open-signup-button"
                 aria-label="회원가입 페이지로 이동 버튼"
                 className="hover:cursor-pointer hover:bg-gray-100"
               >

@@ -66,7 +66,6 @@ export default function SignUpForm() {
         <p>*비밀번호는 최소 6자 이상 입력해야 합니다.</p>
         <button
           type="button"
-          data-cy="otp-signup-button"
           aria-label="인증 코드 확인 버튼 | 회원가입 요청 버튼"
           className="w-full py-1 bg-main hover:bg-opacity-70 hover:cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
           onClick={handleVerifyOtp}
@@ -94,7 +93,6 @@ export default function SignUpForm() {
           이미 계정이 있으신가요?{' '}
           <Link
             href="/signin"
-            data-cy="open-signin-button"
             aria-label="로그인 페이지로 이동 버튼"
             className="hover:cursor-pointer hover:bg-gray-100"
           >

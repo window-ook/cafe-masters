@@ -9,7 +9,7 @@ export default function Comment({ comment }: { comment: string }) {
         <FaPencilAlt className="pt-1" />
         <span className="">코멘트</span>
       </div>
-      <div data-cy="collected-comment" className="col-span-2 text-md">
+      <div className="col-span-2 text-md">
         {comment}
       </div>
     </div>

@@ -37,10 +37,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const shouldHideComponents = hiddenPages.includes(pathname);
 
   return (
-    <main
-      data-cy="main-layout"
-      className={shouldHideComponents ? "w-full" : "flex h-screen overflow-hidden"}
-    >
+    <main className={shouldHideComponents ? "w-full" : "flex h-screen overflow-hidden"}>
       <QueryClientProvider client={queryClient}>
         {!shouldHideComponents && <Sidebar />}
         {children}
