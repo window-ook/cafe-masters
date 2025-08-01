@@ -3,7 +3,6 @@
 import { useState, Suspense } from 'react';
 import { useCurrentCafeStore, useUIStore } from '@/stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
-import { ErrorBoundary } from 'react-error-boundary';
 import clsx from 'clsx';
 import SearchCafeDetail from '@/components/search/detail/SearchCafeDetail';
 import CafeDetailSkeleton from '@/components/shared/sliding-drawer/CafeDetailSkeleton';
@@ -12,7 +11,6 @@ import BookmarkCafeDetail from '@/components/bookmark/detail/BookmarkCafeDetail'
 import RecommendationCafeDetail from '@/components/recommendation/detail/RecommendationCafeDetail';
 import FormForCollect from '@/components/shared/sliding-drawer/FormForCollect';
 import FormForRecommend from '@/components/shared/sliding-drawer/FormForRecommend';
-import DetailErrorFallback from '@/components/shared/sliding-drawer/DetailErrorFallback';
 
 /** 각 도메인별 상세 정보 페이지를 표시하는 슬라이딩 드로어
  * @renderContent 수집하기 폼, 추천하기 폼, 각 도메인별 카페 상세 정보
@@ -48,14 +46,12 @@ export default function SlidingDrawer() {
         }
 
         return (
-            <ErrorBoundary fallback={<DetailErrorFallback />}>
-                <Suspense fallback={<CafeDetailSkeleton />}>
-                    {paths.isSearchDetail && <SearchCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
-                    {paths.isCollectedDetail && <CollectionCafeDetail cafeId={currentCafeId} />}
-                    {paths.isBookmarkedDetail && <BookmarkCafeDetail cafeId={currentCafeId} />}
-                    {paths.isRecommendedDetail && <RecommendationCafeDetail cafeId={currentCafeId} />}
-                </Suspense>
-            </ErrorBoundary>
+            <Suspense fallback={<CafeDetailSkeleton />}>
+                {paths.isSearchDetail && <SearchCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
+                {paths.isCollectionDetail && <CollectionCafeDetail cafeId={currentCafeId} />}
+                {paths.isBookmarkDetail && <BookmarkCafeDetail cafeId={currentCafeId} />}
+                {paths.isRecommendationDetail && <RecommendationCafeDetail cafeId={currentCafeId} />}
+            </Suspense>
         );
     };
 

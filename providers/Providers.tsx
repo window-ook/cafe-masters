@@ -3,9 +3,10 @@
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
 import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
-import Sidebar from '@/components/shared/sidebar/SideBar';
+import SideBar from '@/components/shared/sidebar/SideBar';
 
 const ReactQueryDevtools = dynamic(() => import('@tanstack/react-query-devtools').then(mod => mod.ReactQueryDevtools), { ssr: false });
 const ToastContainer = dynamic(() => import('react-toastify').then(mod => mod.ToastContainer), { ssr: false });
@@ -39,7 +40,14 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <main className={shouldHideComponents ? "w-full" : "flex h-screen overflow-hidden"}>
       <QueryClientProvider client={queryClient}>
-        {!shouldHideComponents && <Sidebar />}
+        {!shouldHideComponents && (
+          <ErrorBoundaryWrapper
+            featureName="사이드바"
+            message="사이드바를 불러오는 중 에러가 발생했습니다."
+          >
+            <SideBar />
+          </ErrorBoundaryWrapper>
+        )}
         {children}
         {!shouldHideComponents && <KakaoMap />}
         <ToastContainer

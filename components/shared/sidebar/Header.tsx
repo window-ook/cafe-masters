@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname } from 'next/navigation';
 import { useFilterStore, useUIStore, useUserStore } from '@/stores';
 import { useSearchedResultStore } from '@/stores/search';
 import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
 import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
+import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import Image from 'next/image';
 import Link from 'next/link';
 import Search from '@/components/shared/sidebar/SearchInput';
@@ -16,7 +16,6 @@ import RegionFilter from '@/components/shared/sidebar/RegionsFilter';
 import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
 
 export default function Header() {
-  const pathname = usePathname();
 
   const searchResult = useSearchedResultStore(state => state.searchResult);
   const userId = useUserStore(state => state.userId);
@@ -31,12 +30,7 @@ export default function Header() {
   const { collectedCounts } = useCollectedCafesCounts(userId);
   const { bookmarkedCounts } = useBookmarkedCafesCounts(userId);
 
-  const PATHS = {
-    SEARCH: pathname.startsWith('/search'),
-    COLLECTED: pathname.startsWith('/collection'),
-    BOOKMARKED: pathname.startsWith('/bookmark'),
-    RECOMMENDED: pathname.startsWith('/recommendation'),
-  };
+  const paths = usePathMatcher();
 
   const handleCollectedSearch = () => setSearchTermInCollectedCafe(collectedInput);
   const handleBookmarkedSearch = () => setSearchTermInBookmarkedCafe(bookmarkedInput);
@@ -79,7 +73,7 @@ export default function Header() {
       </div>
       <Search />
 
-      {PATHS.SEARCH && (
+      {paths.isSearch && (
         <div className="flex justify-center items-center">
           <p className="text-xl">
             <span className={`font-semibold ${isDarkTheme ? 'text-white' : 'text-main'}`}>
@@ -90,7 +84,7 @@ export default function Header() {
         </div>
       )}
 
-      {PATHS.COLLECTED && (
+      {paths.isCollection && (
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="w-full flex items-center gap-2">
             <input
@@ -130,7 +124,7 @@ export default function Header() {
         </div>
       )}
 
-      {PATHS.BOOKMARKED && (
+      {paths.isBookmark && (
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="w-full flex items-center gap-2">
             <input
@@ -169,7 +163,7 @@ export default function Header() {
         </div>
       )}
 
-      {PATHS.RECOMMENDED && <CategoryFilter />}
+      {paths.isRecommendation && <CategoryFilter />}
     </header>
   );
 }
