@@ -20,9 +20,16 @@ interface ISideBarTab {
 }
 
 const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => {
+  const closeSlidingDrawer = useUIStore(state => state.closeSlidingDrawer);
+  
+  const handleNavClick = () => {
+    closeSlidingDrawer();
+  };
+
   return (
     <Link
       href={path}
+      onClick={handleNavClick}
       className={`group w-full px-3 py-4 rounded-lg ${isDarkTheme ? 'hover:bg-main-light' : 'hover:bg-white'} flex justify-between cursor-pointer hover:shadow-md transition duration-150 ease-in`}
     >
       <div className="flex justify-between w-full">

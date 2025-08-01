@@ -1,8 +1,8 @@
 'use client';
 
-import { Suspense, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { Suspense } from 'react';
 import { useUIStore } from 'stores';
+import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import TabsForLink from '@/components/shared/sidebar/TabsForLink';
 import Footer from '@/components/shared/sidebar/Footer';
 import HelpCenter from '@/components/shared/sidebar/HelpCenter';
@@ -12,81 +12,69 @@ import BookmarkedCafes from '@/components/bookmark/BookmarkedCafes';
 import RecommendedCafes from '@/components/recommendation/RecommendedCafes';
 import CollectedCafes from '@/components/collection/CollectedCafes';
 import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
+import ListSkeleton from '@/components/shared/sidebar/ListSkeleton';
 
 export default function Sidebar() {
-  const pathname = usePathname();
-
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
-  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
 
-  const PATHS = {
-    MAIN: pathname === '/main',
-    SEARCH: pathname.startsWith('/search'),
-    COLLECTED: pathname.startsWith('/collected'),
-    BOOKMARKED: pathname.startsWith('/bookmarked'),
-    RECOMMENDED: pathname.startsWith('/recommended'),
-    HELP: pathname.startsWith('/help'),
-  };
-
-  useEffect(() => { if (PATHS.MAIN) setIsSlidingDrawerOpen(false); }, [pathname, PATHS.MAIN, setIsSlidingDrawerOpen]);
+  const paths = usePathMatcher();
 
   return (
     <nav className="relative flex">
       {/* 사이드바 컨테이너 */}
       <div
         className={`z-10 relative w-screen h-screen max-w-108 px-1 rounded-none shadow-xl shadow-main-shadow 
-          ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'} 
+          ${isDarkTheme
+            ? 'bg-main-dark text-white' : 'bg-gray-100'} 
           ${isSlidingDrawerOpen && 'hidden sm:block'}`}
       >
         {/* 사이드바 컨텐츠 */}
         <section className="h-full flex flex-col">
           <Header />
 
-          {PATHS.MAIN && (
+          {paths.isMain && (
             <>
               <TabsForLink />
               <Footer />
             </>
           )}
 
-          {PATHS.SEARCH && (
+          {paths.isSearch && (
             <main className="flex-1 min-h-0">
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<ListSkeleton />}>
                 <SearchedCafes />
               </Suspense>
             </main>
           )}
 
-          {PATHS.COLLECTED && (
+          {paths.isCollected && (
             <main className="flex-1 min-h-0">
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<ListSkeleton />}>
                 <CollectedCafes />
               </Suspense>
             </main>
           )}
 
-          {PATHS.BOOKMARKED && (
+          {paths.isBookmarked && (
             <main className="flex-1 min-h-0">
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<ListSkeleton />}>
                 <BookmarkedCafes />
               </Suspense>
             </main>
           )}
 
-          {PATHS.RECOMMENDED && (
+          {paths.isRecommended && (
             <main className="flex-1 min-h-0">
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<ListSkeleton />}>
                 <RecommendedCafes />
               </Suspense>
             </main>
           )}
 
-          {PATHS.HELP && (
+          {paths.isHelp && (
             <main className="flex-1 min-h-0">
-              <Suspense fallback={<div>Loading...</div>}>
-                <HelpCenter />
-              </Suspense>
+              <HelpCenter />
             </main>
           )}
         </section>

@@ -33,7 +33,6 @@ export default function RecommendedCafes() {
 
   const handleRecommendedCafeClick = useCafeClick<ISupabaseRecommendedCafe>({
     routePath: 'recommended',
-    shouldSetCurrentCafeId: true,
   });
 
   return (

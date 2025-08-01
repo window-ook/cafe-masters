@@ -17,7 +17,8 @@ import Cons from '@/components/shared/sliding-drawer/Cons';
 import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
 import Categories from '@/components/shared/sliding-drawer/Categories';
 import Button from '@/components/shared/Button';
-import CollectedCafeDetailHeader from '@/components/collection/CollectedCafeDetailHeader';
+import CollectedCafeDetailHeader from '@/components/collection/detail/CollectedCafeDetailHeader';
+
 
 export default function CollectedCafeDetail({ cafeId }: { cafeId: number }) {
   const userId = useUserStore(state => state.userId);

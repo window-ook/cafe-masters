@@ -31,8 +31,8 @@ export default function SearchInput() {
     <search className="w-full rounded-xl flex gap-2 font-dunggeunmo">
       <input
         data-cy="search-input"
-        className={`w-5/6 pl-3 pr-28 py-4 bg-transparent border border-slate-200 rounded-md shadow-sm font-bold text-xl sm:text-md ${isDarkTheme ? 'placeholder:text-gray-300 text-white' : 'placeholder:text-slate-400 text-slate-700'} transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 focus:shadow`}
-        placeholder="성수, 밀림, 전포 감성 ..."
+        className={`w-5/6 pl-3 pr-28 py-4 bg-transparent border border-slate-200 rounded-md shadow-sm font-bold text-lg sm:text-md ${isDarkTheme ? 'placeholder:text-gray-300 text-white' : 'placeholder:text-slate-400 text-slate-700'} transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 focus:shadow`}
+        placeholder="찾으시는 곳을 입력하세요"
         value={localKeyword}
         onChange={e => setLocalKeyword(e.target.value)}
         onKeyDown={handleKeyDown}

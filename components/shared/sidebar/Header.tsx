@@ -80,11 +80,10 @@ export default function Header() {
       {PATHS.SEARCH && (
         <div className="flex justify-center items-center">
           <p className="text-xl">
-            <span>검색 결과 </span>
             <span className={`font-semibold ${isDarkTheme ? 'text-white' : 'text-main'}`}>
               {searchResult.length}
             </span>
-            개
+            <span>개의 검색 결과</span>
           </p>
         </div>
       )}
@@ -117,12 +116,12 @@ export default function Header() {
             </button>
           </div>
           <div className="flex gap-4">
-            <span className="text-xl">
-              TOTAL{' '}
-              <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
+            <div className="flex items-center text-xl">
+              <span className={`${isDarkTheme ? 'text-white' : 'text-main'} font-bold`}>
                 {collectedCounts}
               </span>
-            </span>
+              개
+            </div>
             <RegionFilter />
             <RatingsFilter />
           </div>
@@ -157,12 +156,12 @@ export default function Header() {
             </button>
           </div>
           <div className="w-full px-2 flex gap-4">
-            <span className="text-xl">
-              TOTAL{' '}
-              <span className={`${isDarkTheme ? 'text-white' : 'text-main'}`}>
+            <div className="flex items-center text-xl">
+              <span className={`${isDarkTheme ? 'text-white' : 'text-main'} font-bold`}>
                 {bookmarkedCounts}
               </span>
-            </span>
+              개
+            </div>
             <RegionFilter />
           </div>
         </div>

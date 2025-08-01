@@ -6,8 +6,8 @@ import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import { useSearchedResultStore, useCurrentCafeStore, useUserStore } from '@/stores';
 import { useRecommendationStore } from '@/stores/recommendation';
 import Button from '@/components/shared/Button';
-import CafeDetailHeader from './CafeDetailHeader';
-import CafeDetailBody from './CafeDetailBody';
+import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
+import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
 
 interface ISearchedCafeDetail {
   cafeId: number;

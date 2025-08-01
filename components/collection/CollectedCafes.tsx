@@ -32,7 +32,6 @@ export default function CollectedCafes() {
 
   const handleCollectedCafeClick = useCafeClick<ISupabaseCollectedCafe>({
     routePath: 'collected',
-    shouldSetCurrentCafeId: true,
   });
 
   // 로그인 확인

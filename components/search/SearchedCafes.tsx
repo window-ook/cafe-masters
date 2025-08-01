@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useSearchedResultStore, useUIStore } from 'stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
-import SearchResult from '@/components/search/SearchResult';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
+import CafeItem from '@/components/shared/sidebar/CafeItem';
 
 export default function SearchedCafes() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -29,7 +29,6 @@ export default function SearchedCafes() {
 
   const handleSearchedCafeClick = useCafeClick<IKakaoSearchResult>({
     routePath: 'search',
-    shouldSetCurrentCafeId: false,
   });
 
   return (
@@ -37,11 +36,12 @@ export default function SearchedCafes() {
       <section className="flex-1 overflow-y-auto overflow-x-hidden">
         <ul className="pagination-sidebar-list">
           {paginatedResult.map((cafe: IKakaoSearchResult) => (
-            <SearchResult
+            <CafeItem
               key={cafe.id}
               name={cafe.place_name}
               address={cafe.road_address_name}
               phone_number={cafe.phone}
+              image='https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'
               onClickAction={() => handleSearchedCafeClick(cafe)}
             />
           ))}

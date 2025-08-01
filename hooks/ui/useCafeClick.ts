@@ -20,8 +20,6 @@ interface ICafeClickData {
 interface ICafeClickHandlerOptions {
   /** 라우팅 경로 (예: 'recommended', 'collected', 'bookmarked', 'search') */
   routePath: string;
-  /** 현재 카페 ID 설정 여부 (기본값: false) */
-  shouldSetCurrentCafeId?: boolean;
 }
 
 /**
@@ -37,13 +35,12 @@ export function useCafeClick<T extends ICafeClickData>(
   const router = useRouter();
   const pathname = usePathname();
 
-  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
+  const openCafeDetail = useUIStore(state => state.openCafeDetail);
   const currentCafeId = useCurrentCafeStore(state => state.currentCafeId);
-  const setCurrentCafeId = useCurrentCafeStore(state => state.setCurrentCafeId);
   const setCurrentCoordX = useCurrentCafeStore(state => state.setCurrentCoordX);
   const setCurrentCoordY = useCurrentCafeStore(state => state.setCurrentCoordY);
 
-  const { routePath, shouldSetCurrentCafeId = false } = options;
+  const { routePath } = options;
 
   const handleCafeClick = useCallback((cafe: T) => {
     // ID 타입에 따른 비교 (string 또는 number)
@@ -53,31 +50,24 @@ export function useCafeClick<T extends ICafeClickData>(
     // 동일한 카페를 이미 보고 있을 때만 클릭 방지
     if (cafeId === currentId && pathname === `/${routePath}/detail/${cafe.id}`) return;
 
-    // 슬라이딩 드로어 열기
-    setIsSlidingDrawerOpen(true);
-
-    // 라우팅
-    router.push(`/${routePath}/detail/${cafe.id}`);
-
     // 좌표 설정 (coordX/coordY 또는 x/y 지원)
     const coordX = cafe.coordX ?? cafe.x ?? 0;
     const coordY = cafe.coordY ?? cafe.y ?? 0;
     setCurrentCoordX(coordX);
     setCurrentCoordY(coordY);
 
-    // 현재 카페 ID 설정 (옵션)
-    if (shouldSetCurrentCafeId) {
-      const cafeIdAsNumber = typeof cafe.id === 'string' ? parseInt(cafe.id) : cafe.id;
-      setCurrentCafeId(cafeIdAsNumber);
-    }
+    // 통합 액션: 카페 상세 열기 (카페 ID 설정 + 슬라이딩 드로어 열기)
+    const cafeIdAsNumber = typeof cafe.id === 'string' ? parseInt(cafe.id) : cafe.id;
+    openCafeDetail(cafeIdAsNumber);
+
+    // 라우팅
+    router.push(`/${routePath}/detail/${cafe.id}`);
   }, [
     currentCafeId,
     router,
     routePath,
-    shouldSetCurrentCafeId,
     pathname,
-    setIsSlidingDrawerOpen,
-    setCurrentCafeId,
+    openCafeDetail,
     setCurrentCoordX,
     setCurrentCoordY
   ]);

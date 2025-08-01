@@ -48,8 +48,9 @@ next-env.d.ts
 !.yarn/sdks
 !.yarn/versions
 
-# cursor, claude
+# cursor, claude, gemini
 .cursor/
 .claude/
 CLAUDE.md
+GEMINI.md
 docs/

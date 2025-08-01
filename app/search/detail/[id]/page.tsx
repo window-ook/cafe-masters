@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import SearchedDetailClient from '@/components/search/SearchedDetailClient';
+import SearchedDetailClient from '@/components/search/detail/SearchedDetailClient';
 
 export const metadata: Metadata = {
   title: `카페 상세 정보 : Cafe Masters`,

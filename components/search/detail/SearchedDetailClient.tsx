@@ -47,7 +47,7 @@ export default function SearchedDetailClient({ params }: { params: Promise<{ id:
       setIsRecommended(isRecommended);
     };
 
-    // setTimeout을 사용하여 중복 호출 방지
+    // 중복 호출 방지
     const timeoutId = setTimeout(updateStates, 0);
     return () => clearTimeout(timeoutId);
     // eslint-disable-next-line react-hooks/exhaustive-deps

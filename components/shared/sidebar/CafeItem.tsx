@@ -1,7 +1,7 @@
 'use client';
 
 import { useUIStore } from '@/stores';
-import ImageWithFallback from '../ImageWithFallback';
+import ImageWithFallback from '@/components/shared/ImageWithFallback';
 
 interface ICafeItem {
   name: string | undefined;
@@ -13,16 +13,15 @@ interface ICafeItem {
 
 export default function CafeItem({
   name,
-  image,
   address,
   phone_number,
+  image,
   onClickAction
 }: ICafeItem) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   return (
     <li
-      data-cy="normal-cafe"
       className={`${isDarkTheme ? 'bg-main-dark text-white shadow-main-shadow' : ''} h-24 p-2 rounded-sm shadow-md list-none cursor-pointer hover:opacity-50 transition duration-150 ease`}
     >
       <button

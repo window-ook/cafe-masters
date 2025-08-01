@@ -40,7 +40,6 @@ export default function BookmarkedCafes() {
 
   const handleBookmarkedCafeClick = useCafeClick<ISupabaseBookmarkedCafe>({
     routePath: 'bookmarked',
-    shouldSetCurrentCafeId: true,
   });
 
   // 로딩 상태 처리
