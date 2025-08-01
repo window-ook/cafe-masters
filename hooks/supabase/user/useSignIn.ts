@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useUserStore, useFilterStore } from '@/stores';
 import { useMutation } from '@tanstack/react-query';
 import { getIsAdmin } from '@/actions/supabase/user';
+import { getAuthErrorMessage } from '@/utils/shared/authErrorHandler';
 
 export function useSignIn() {
   const supabase = createBrowserSupabaseClient();
@@ -14,7 +15,7 @@ export function useSignIn() {
     mutationFn: async ({ email, password }: { email: string; password: string }) => {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-      if (error) throw new Error(error.message);
+      if (error) throw error;
       return data.session;
     },
 
@@ -47,8 +48,8 @@ export function useSignIn() {
     },
 
     onError: error => {
-      if (error) alert(error.message);
-      else alert('서버에 에러가 발생했습니다.');
+      const errorMessage = getAuthErrorMessage(error);
+      alert(errorMessage);
     },
   });
 

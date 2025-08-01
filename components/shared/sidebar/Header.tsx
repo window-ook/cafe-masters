@@ -14,6 +14,7 @@ import Tooltip from '@/components/shared/TooltipContainer';
 import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
 import RegionFilter from '@/components/shared/sidebar/RegionsFilter';
 import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
+import Button from '../Button';
 
 export default function Header() {
 
@@ -52,7 +53,7 @@ export default function Header() {
             <Link
               href="/main"
               aria-label="홈페이지 이동 버튼"
-              className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-300"
+              className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-150"
               onClick={handleReset}
             >
               <Image
@@ -101,15 +102,12 @@ export default function Header() {
                 if (e.key === 'Enter') handleCollectedSearch();
               }}
             />
-            <button
-              onClick={handleCollectedSearch}
-              className="w-1/6 py-4 px-1 rounded-sm bg-gray-300 hover:bg-main-light transition duration-200 ease-in"
+            <Button
               aria-label="검색"
-            >
-              <span className="font-pretendard text-center text-sm text-slate-700">
-                검색
-              </span>
-            </button>
+              onClick={handleCollectedSearch}
+              text='검색'
+              customClassName="w-1/6 py-4 px-1"
+            />
           </div>
           <div className="flex gap-4">
             <div className="flex items-center text-xl">
@@ -141,15 +139,12 @@ export default function Header() {
                 if (e.key === 'Enter') handleBookmarkedSearch();
               }}
             />
-            <button
-              onClick={handleBookmarkedSearch}
-              className="w-1/6 py-4 px-1 rounded-sm bg-gray-300 hover:bg-main-light transition duration-200 ease-in"
+            <Button
               aria-label="검색"
-            >
-              <span className="font-pretendard text-center text-sm text-slate-700">
-                검색
-              </span>
-            </button>
+              onClick={handleBookmarkedSearch}
+              text='검색'
+              customClassName="w-1/6 py-4 px-1"
+            />
           </div>
           <div className="w-full px-2 flex gap-4">
             <div className="flex items-center text-xl">

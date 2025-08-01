@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { getAuthErrorMessage } from '@/utils/shared/authErrorHandler';
 
 export function useFinishResetPassword() {
   const supabase = createBrowserSupabaseClient();
@@ -10,14 +11,14 @@ export function useFinishResetPassword() {
         password: newPassword,
       });
 
-      if (error) throw new Error(error.message);
+      if (error) throw error;
     },
     onSuccess: async () => {
       await supabase.auth.signOut();
     },
     onError: error => {
-      console.error(error);
-      alert('새로운 비밀번호는 기존 비밀번호와 달라야합니다.');
+      const errorMessage = getAuthErrorMessage(error);
+      alert(errorMessage);
     },
   });
 

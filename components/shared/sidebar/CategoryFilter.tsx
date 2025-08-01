@@ -42,7 +42,7 @@ export default function CategoryFilter() {
           ))}
           <button
             type="button"
-            className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center transform duration-300 hover:opacity-60"
+            className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center transform duration-150 hover:opacity-60"
             onClick={resetCategories}
           >
             <RiResetLeftFill />
@@ -51,7 +51,7 @@ export default function CategoryFilter() {
       )}
       <button
         onClick={toggleExpand}
-        className="w-full px-4 py-2 rounded-full flex justify-center items-center text-gray-700 hover:text-main transition"
+        className="w-full px-4 py-2 rounded-full flex justify-center items-center text-gray-700 hover:text-main transition duration-150"
       >
         {isExpanded ? (
           <p className="flex items-center gap-1 ">

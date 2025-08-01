@@ -2,15 +2,14 @@
 
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useUIStore } from '@/stores';
 import { useCreateRecommendedCafe } from '@/hooks/supabase/recommendation/useCreateRecommendedCafe';
 import { useRecommendationStore } from '@/stores/recommendation';
 import { recommendationFormSchema, RecommendationFormData } from '@/schema/recommendation';
 import { RecommendationRowInsert } from '@/actions/supabase/recommendation';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
+import Button from '../Button';
 
 export default function FormForRecommend({ setIsRecommendFormOpenAction }: { setIsRecommendFormOpenAction: (open: boolean) => void }) {
-  const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const targetCafe = useRecommendationStore(state => state.targetCafe);
 
   const { createRecommendedCafe } = useCreateRecommendedCafe();
@@ -53,8 +52,6 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
     }
   };
 
-  const memoSubmitStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} p-4 shadow-sm rounded-xl bg-main text-white cursor-pointer hover:bg-opacity-70 disabled:opacity-50 disabled:cursor-not-allowed transition-all`;
-  const memoBackStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} py-2 px-6 shadow-sm rounded-xl bg-main text-white cursor-pointer hover:bg-opacity-70 transition-all`;
   const errorStyle = 'text-red-500 text-sm mt-1 block';
 
   return (
@@ -63,14 +60,12 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
         <p className="text-2xl font-semibold">
           {targetCafe?.name || '카페 추천'}
         </p>
-        <button
+        <Button
           type="button"
           aria-label="추천 취소 버튼"
+          text='Back'
           onClick={() => setIsRecommendFormOpenAction(false)}
-          className={memoBackStyle}
-        >
-          <span>Back</span>
-        </button>
+        />
       </div>
 
       {/* 카페 정보 표시 */}
@@ -104,16 +99,12 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
       </div>
 
       {/* 제출 버튼 */}
-      <button
+      <Button
         type="submit"
         aria-label="추천 완료 버튼"
         disabled={isSubmitting}
-        className={memoSubmitStyle}
-      >
-        <span className="text-lg">
-          {isSubmitting ? '추천 중...' : '추천 완료'}
-        </span>
-      </button>
+        text={isSubmitting ? '추천 중...' : '추천 완료'}
+      />
     </form>
   );
 }

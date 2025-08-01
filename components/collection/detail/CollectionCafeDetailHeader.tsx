@@ -21,10 +21,10 @@ export default function CollectionCafeDetailHeader({ isDarkTheme = false }: ISim
     <header className={`w-full p-4 flex justify-between items-center ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
       <div />
       <button
-        onClick={handleClose}
-        className='cursor-pointer'
         type="button"
         aria-label="카페 상세 정보 보기 취소 버튼"
+        onClick={handleClose}
+        className='cursor-pointer'
       >
         <CircleX className='size-8' />
       </button>

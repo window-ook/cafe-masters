@@ -11,7 +11,7 @@ interface IButton {
     variant?: ButtonVariant;
     disabled?: boolean;
     customClassName?: string;
-    onClick?: () => void | Promise<void>;
+    onClick?: () => void | Promise<void> | Window | null;
     children?: React.ReactNode;
 }
 
@@ -33,7 +33,7 @@ export default function Button({
     children,
 }: IButton) {
     const getVariantClasses = (variant: ButtonVariant): string => {
-        const baseClasses = `hover-button px-4 py-2 rounded-lg font-semibold disabled:bg-button-disabled ${customClassName.includes('bg-') ? '' : 'bg-button'} text-button-text disabled:cursor-not-allowed`;
+        const baseClasses = `hover-button px-4 py-2 rounded-lg font-semibold disabled:bg-button-disabled ${customClassName.includes('bg-') ? '' : 'bg-button'} text-button-text hover:bg-button-hover disabled:cursor-not-allowed`;
         switch (variant) {
             case 'default':
                 return `${baseClasses}`;

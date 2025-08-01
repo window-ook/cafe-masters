@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { getAuthErrorMessage } from '@/utils/shared/authErrorHandler';
 
 export function useVerifyOtpCode() {
   const supabase = createBrowserSupabaseClient();
@@ -12,10 +13,13 @@ export function useVerifyOtpCode() {
         token: otp,
       });
 
-      if (error) throw new Error(error.message);
+      if (error) throw error;
     },
 
-    onError: error => console.error(error),
+    onError: error => {
+      const errorMessage = getAuthErrorMessage(error);
+      alert(errorMessage);
+    },
   });
 
   return { verifyOtpCode: verifyOtpCode.mutate, verifyOtpPending: verifyOtpCode.isPending };

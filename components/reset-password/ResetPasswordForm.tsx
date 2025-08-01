@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useFinishResetPassword } from '@/hooks/supabase/user';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import BackgroundCards from '@/components/shared/FallingCards';
+import Button from '../shared/Button';
 
 export default function ResetPasswordForm() {
   const supabase = createBrowserSupabaseClient();
@@ -58,23 +59,20 @@ export default function ResetPasswordForm() {
                 onChange={e => setNewPasswordConfirm(e.target.value)}
               />
             </div>
-            <button
+            <Button
               type="button"
-              className="bg-main w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
+              aria-label="완료 버튼, 재설정 완료 화면으로 이동합니다."
               disabled={newPassword !== newPasswordConfirm}
               onClick={handleSubmit}
-              aria-label="완료 버튼, 재설정 완료 화면으로 이동합니다."
-            >
-              <span className=" text-lg text-white">완료</span>
-            </button>
-            <button
+              text='완료'
+            />
+            <Button
               type="button"
-              onClick={handleCancel}
-              className="bg-blue-500 w-full py-1 hover:bg-opacity-70 hover:cursor-pointer"
               aria-label="취소 버튼, 초기 화면으로 돌아갑니다."
-            >
-              <span className=" text-lg text-white">취소</span>
-            </button>
+              onClick={handleCancel}
+              customClassName="bg-blue-500"
+              text='취소'
+            />
           </form>
         </div>
       </div>

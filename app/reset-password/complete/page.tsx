@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import ResetPasswordCompleteForm from '@/components/signin/ResetPasswordCompleteForm';
+import ResetPasswordCompleteForm from '@/components/reset-password/ResetPasswordCompleteForm';
 
 export const metadata: Metadata = {
   title: '비밀번호 재설정 완료 : Cafe Masters',

@@ -33,7 +33,7 @@ export default function CategorySelector({
       ))}
       <button
         type="button"
-        className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center transform duration-300 hover:opacity-60"
+        className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center transform duration-150 hover:opacity-60"
         onClick={resetCategories}
       >
         <RiResetLeftFill />

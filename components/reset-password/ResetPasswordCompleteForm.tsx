@@ -2,6 +2,7 @@
 
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import BackgroundCards from '@/components/shared/FallingCards';
+import Button from '../shared/Button';
 
 export default function ResetPasswordCompleteForm() {
     const supabase = createBrowserSupabaseClient();
@@ -26,14 +27,13 @@ export default function ResetPasswordCompleteForm() {
                         <span className="text-lg ">
                             초기 화면으로 돌아가 다시 로그인하세요!
                         </span>
-                        <button
+                        <Button
                             type="button"
-                            className="bg-main w-full hover:bg-opacity-70 hover:cursor-pointer"
-                            onClick={handleWindow}
                             aria-label="돌아가기 버튼, 초기 화면으로 돌아갑니다."
-                        >
-                            <span className="text-white ">돌아가기</span>
-                        </button>
+                            onClick={handleWindow}
+                            text='돌아가기'
+                            customClassName='w-full'
+                        />
                     </div>
                 </div>
             </div>

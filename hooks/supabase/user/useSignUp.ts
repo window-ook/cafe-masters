@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { getAuthErrorMessage } from '@/utils/shared/authErrorHandler';
 
 export function useSignUp() {
   const supabase = createBrowserSupabaseClient();
@@ -16,7 +17,7 @@ export function useSignUp() {
         },
       });
 
-      if (error) throw new Error(error.message);
+      if (error) throw error;
     },
 
     onSuccess: async () => {
@@ -24,7 +25,10 @@ export function useSignUp() {
       router.replace('/main');
     },
 
-    onError: error => console.error(error),
+    onError: error => {
+      const errorMessage = getAuthErrorMessage(error);
+      alert(errorMessage);
+    },
   });
 
   return { signUp: signUp.mutate, signUpPending: signUp.isPending };

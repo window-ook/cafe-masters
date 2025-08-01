@@ -8,12 +8,13 @@ import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { createCollectedCafe } from '@/actions/supabase/collection';
 import { useUpdateCollectedCafe } from '@/hooks/supabase/collection/useUpdateCollectedCafe';
+import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
 import RatingsSelector from '@/components/shared/sliding-drawer/RatingsSelector';
+import Button from '../Button';
 
 export default function FormForCollect() {
   const pathname = usePathname();
-  const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const targetCafe = useCollectionStore(state => state.targetCafe);
   const editingCafe = useCollectionStore(state => state.editingCafe);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
@@ -116,28 +117,21 @@ export default function FormForCollect() {
     }
   };
 
-  const memoInputStyle = `${isDarkTheme ? 'text-black' : ''} px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent`;
-  const memoSubmitStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} p-4 shadow-sm rounded-xl bg-main text-white cursor-pointer hover:bg-opacity-70 disabled:opacity-50 disabled:cursor-not-allowed transition-all`;
-  const memoBackStyle = `${isDarkTheme ? 'shadow-main-shadow' : ''} py-2 px-6 shadow-sm rounded-xl bg-main text-white cursor-pointer hover:bg-opacity-70 transition-all`;
-  const errorStyle = 'text-red-500 text-sm mt-1 block';
-
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
         <p className=" text-2xl font-semibold">
           {isEditMode ? editingCafe?.name : targetCafe?.name}
         </p>
-        <button
+        <Button
           type="button"
           aria-label={isEditMode ? "카드 수정 취소 버튼" : "카드 수집 취소 버튼"}
+          text='Back'
           onClick={() => {
             if (isEditMode) clearEditingCafe();
             setIsCollectFormOpen(false);
           }}
-          className={memoBackStyle}
-        >
-          <span>Back</span>
-        </button>
+        />
       </div>
 
       {/* 별점 선택 */}
@@ -156,7 +150,7 @@ export default function FormForCollect() {
             )}
           />
         </div>
-        {errors.rating && <span className={errorStyle}>{errors.rating.message}</span>}
+        {errors.rating && <span className="text-red-500 text-sm mt-1 block">{errors.rating.message}</span>}
       </div>
 
       {/* 카테고리 선택 */}
@@ -174,88 +168,80 @@ export default function FormForCollect() {
       </div>
 
       {/* 코멘트 입력 */}
-      <div className="flex flex-col gap-2">
-        <Controller
-          name="comment"
-          control={control}
-          render={({ field }) => (
-            <input
-              {...field}
-              placeholder="*코멘트"
-              className={memoInputStyle}
-            />
-          )}
-        />
-        {errors.comment && (
-          <span className={errorStyle}>{errors.comment.message}</span>
+      <Controller
+        name="comment"
+        control={control}
+        render={({ field }) => (
+          <InputField
+            {...field}
+            id="comment"
+            type="text"
+            label="코멘트"
+            placeholder="*코멘트"
+            disabled={isSubmitting}
+            isError={errors.comment?.message}
+          />
         )}
-      </div>
+      />
 
       {/* 먹은 메뉴 입력 */}
-      <div className="flex flex-col gap-2">
-        <Controller
-          name="eaten_menus"
-          control={control}
-          render={({ field }) => (
-            <input
-              {...field}
-              placeholder="*먹은 메뉴"
-              className={memoInputStyle}
-            />
-          )}
-        />
-        {errors.eaten_menus && (
-          <span className={errorStyle}>{errors.eaten_menus.message}</span>
+      <Controller
+        name="eaten_menus"
+        control={control}
+        render={({ field }) => (
+          <InputField
+            {...field}
+            id="eaten_menus"
+            type="text"
+            label="먹은 메뉴"
+            placeholder="*먹은 메뉴"
+            disabled={isSubmitting}
+            isError={errors.eaten_menus?.message}
+          />
         )}
-      </div>
+      />
 
       {/* 좋은 점 입력 */}
-      <div className="flex flex-col gap-2">
-        <Controller
-          name="pros"
-          control={control}
-          render={({ field }) => (
-            <input
-              {...field}
-              placeholder="좋은 점"
-              className={memoInputStyle}
-            />
-          )}
-        />
-        {errors.pros && (
-          <span className={errorStyle}>{errors.pros.message}</span>
+      <Controller
+        name="pros"
+        control={control}
+        render={({ field }) => (
+          <InputField
+            {...field}
+            id="pros"
+            type="text"
+            label="좋은 점"
+            placeholder="좋은 점"
+            disabled={isSubmitting}
+            isError={errors.pros?.message}
+          />
         )}
-      </div>
+      />
 
       {/* 아쉬운 점 입력 */}
-      <div className="flex flex-col gap-2">
-        <Controller
-          name="cons"
-          control={control}
-          render={({ field }) => (
-            <input
-              {...field}
-              placeholder="아쉬운 점"
-              className={memoInputStyle}
-            />
-          )}
-        />
-        {errors.cons && (
-          <span className={errorStyle}>{errors.cons.message}</span>
+      <Controller
+        name="cons"
+        control={control}
+        render={({ field }) => (
+          <InputField
+            {...field}
+            id="cons"
+            type="text"
+            label="아쉬운 점"
+            placeholder="아쉬운 점"
+            disabled={isSubmitting}
+            isError={errors.cons?.message}
+          />
         )}
-      </div>
+      />
 
       {/* 제출 버튼 */}
-      <button
+      <Button
         type="submit"
         aria-label={isEditMode ? "카드 수정 완료 버튼" : "카드 수집 완료 버튼"}
         disabled={isSubmitting}
-        className={memoSubmitStyle}
-      >
-        <span className="text-lg">
-          {isSubmitting ? (isEditMode ? '수정 중...' : '저장 중...') : '완료'}
-        </span>
-      </button>
+        text={isSubmitting ? (isEditMode ? '수정 중...' : '저장 중...') : '완료'}
+      />
     </form>
   );
 }

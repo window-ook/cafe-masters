@@ -52,7 +52,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
             type="button"
             aria-label="카페 이미지 슬라이드 왼쪽으로 이동"
             onClick={() => scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)}
-            className={`absolute left-0 z-10 top-1/2 transform -translate-y-1/2 px-2 py-1 shadow-md rounded-md ${isDarkTheme ? 'bg-main' : 'bg-white/30'} cursor-pointer`}
+            className={`slide-images-button left-0 ${isDarkTheme ? 'bg-main' : 'bg-white/30'}`}
           >
             <span className={`${isDarkTheme ? '' : 'text-main'}`}>◀</span>
           </button>
@@ -109,7 +109,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
               );
             })}
             <button
-              className={`absolute right-0 z-10 px-2 py-1 top-1/2 transform -translate-y-1/2 shadow-md rounded-md ${isDarkTheme ? 'bg-main' : 'bg-white/30'} cursor-pointer`}
+              className={`slide-images-button right-0 ${isDarkTheme ? 'bg-main' : 'bg-white/30'}`}
               onClick={() => scrollThumbnails('right', scrollRef as RefObject<HTMLDivElement>)}
             >
               <span className={`${isDarkTheme ? '' : 'text-main'}`}>▶</span>
