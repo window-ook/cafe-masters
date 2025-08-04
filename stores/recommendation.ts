@@ -13,15 +13,15 @@ export interface IFormDataForRecommend {
 }
 
 interface IRecommendationStore {
-    targetCafe: IFormDataForRecommend | null;
+    targetCafeForRecommend: IFormDataForRecommend | null;
 
-    setTargetCafe: (cafe: IFormDataForRecommend) => void;
+    setTargetCafeForRecommend: (cafe: IFormDataForRecommend) => void;
     clearTargetCafe: () => void;
 }
 
 export const useRecommendationStore = create<IRecommendationStore>((set) => ({
-    targetCafe: null,
+    targetCafeForRecommend: null,
 
-    setTargetCafe: (cafe: IFormDataForRecommend) => set({ targetCafe: cafe }),
-    clearTargetCafe: () => set({ targetCafe: null }),
+    setTargetCafeForRecommend: (cafe: IFormDataForRecommend) => set({ targetCafeForRecommend: cafe }),
+    clearTargetCafe: () => set({ targetCafeForRecommend: null }),
 }));

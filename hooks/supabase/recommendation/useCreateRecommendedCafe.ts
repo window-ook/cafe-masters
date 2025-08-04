@@ -1,8 +1,5 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import {
-  RecommendationRowInsert,
-  createRecommendedCafe,
-} from '@/actions/supabase/recommendation';
+import { RecommendationRowInsert, createRecommendedCafe, } from '@/actions/supabase/recommendation';
 import { recommendedCafeQuery } from '@/queries/supabase/recommendation';
 
 /** 추천 카페 추가 훅 */

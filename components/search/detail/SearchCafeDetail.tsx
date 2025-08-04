@@ -2,8 +2,8 @@
 
 import { useMemo } from 'react';
 import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
-import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
-import { useSearchedResultStore, useCurrentCafeStore, useUserStore } from '@/stores';
+import { useSearchedResultStore, useCurrentCafeStore, useUserStore, useUIStore } from '@/stores';
+import { useCollectionStore } from '@/stores/collection';
 import { useRecommendationStore } from '@/stores/recommendation';
 import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
@@ -18,11 +18,13 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   const admin = useUserStore(state => state.admin);
   const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
   const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);
+  const isCollected = useCurrentCafeStore(state => state.isCollected);
+  const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const searchResult = useSearchedResultStore(state => state.searchResult);
-  const setTargetCafe = useRecommendationStore(state => state.setTargetCafe);
+  const setTargetCafeForRecommend = useRecommendationStore(state => state.setTargetCafeForRecommend);
+  const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
 
   const { searchedCafeDetail } = useSearchedCafeDetail(cafeId.toString());
-  const { selectTargetCafeForCollect } = useCreateCollectedCafe();
 
   const searchedDetail = useMemo(() => {
     const foundCafe = searchResult.find(cafe => Number(cafe.id) === cafeId);
@@ -58,25 +60,28 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   const actionButtons = (
     <>
       <Button
-        onClick={() => selectTargetCafeForCollect({
-          id: Number(searchedDetail.id),
-          name: searchedDetail.name,
-          coordX: currentCoordX,
-          coordY: currentCoordY,
-          address: searchedDetail.address,
-          image: searchedDetail.image,
-          extra_images: searchedDetail.extra_images || [],
-          phone_number: searchedDetail.phone_number,
-          opening_time: searchedDetail.opening_time,
-        })}
+        onClick={() => {
+          setTargetCafeForCollect({
+            id: Number(searchedDetail.id),
+            name: searchedDetail.name,
+            coordX: currentCoordX,
+            coordY: currentCoordY,
+            address: searchedDetail.address,
+            image: searchedDetail.image,
+            extra_images: searchedDetail.extra_images || [],
+            phone_number: searchedDetail.phone_number,
+            opening_time: searchedDetail.opening_time,
+          });
+          setIsCollectFormOpen(true);
+        }}
         customClassName='flex-1'
       >
-        수집하기
+        {isCollected ? '수정하기' : '수집하기'}
       </Button>
       {admin && (
         <Button
           onClick={() => {
-            setTargetCafe({
+            setTargetCafeForRecommend({
               id: Number(searchedDetail.id),
               name: searchedDetail.name,
               coordX: currentCoordX,

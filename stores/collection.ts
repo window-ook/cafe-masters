@@ -14,21 +14,21 @@ export interface IFormDataForCollect {
 }
 
 interface ICollectionStore {
-  targetCafe: IFormDataForCollect | null;
+  targetCafeForCollect: IFormDataForCollect | null;
   editingCafe: ISupabaseCollectedCafe | null;
 
-  setTargetCafe: (cafe: IFormDataForCollect) => void;
+  setTargetCafeForCollect: (cafe: IFormDataForCollect) => void;
   clearTargetCafe: () => void;
-  setEditingCafe: (cafe: ISupabaseCollectedCafe | null) => void;
+  setEditingCafeForCollect: (cafe: ISupabaseCollectedCafe | null) => void;
   clearEditingCafe: () => void;
 }
 
 export const useCollectionStore = create<ICollectionStore>((set) => ({
-  targetCafe: null,
+  targetCafeForCollect: null,
   editingCafe: null,
 
-  setTargetCafe: (cafe: IFormDataForCollect) => set({ targetCafe: cafe }),
-  clearTargetCafe: () => set({ targetCafe: null }),
-  setEditingCafe: (cafe: ISupabaseCollectedCafe | null) => set({ editingCafe: cafe }),
+  setTargetCafeForCollect: (cafe: IFormDataForCollect) => set({ targetCafeForCollect: cafe }),
+  clearTargetCafe: () => set({ targetCafeForCollect: null }),
+  setEditingCafeForCollect: (cafe: ISupabaseCollectedCafe | null) => set({ editingCafe: cafe }),
   clearEditingCafe: () => set({ editingCafe: null }),
 }));

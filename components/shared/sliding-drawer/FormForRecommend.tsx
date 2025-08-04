@@ -10,7 +10,7 @@ import CategorySelector from '@/components/shared/sliding-drawer/CategorySelecto
 import Button from '../Button';
 
 export default function FormForRecommend({ setIsRecommendFormOpenAction }: { setIsRecommendFormOpenAction: (open: boolean) => void }) {
-  const targetCafe = useRecommendationStore(state => state.targetCafe);
+  const targetCafeForRecommend = useRecommendationStore(state => state.targetCafeForRecommend);
 
   const { createRecommendedCafe } = useCreateRecommendedCafe();
 
@@ -22,7 +22,7 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
   });
 
   const onFormSubmit = async (data: RecommendationFormData) => {
-    if (!targetCafe) {
+    if (!targetCafeForRecommend) {
       alert('추천할 카페 정보가 없습니다. 다시 시도해주세요.');
       return;
     }
@@ -30,16 +30,16 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
     try {
       // 추천 데이터 생성
       const recommendationData: RecommendationRowInsert = {
-        id: targetCafe.id,
-        name: targetCafe.name,
-        address: targetCafe.address,
-        coordX: targetCafe.coordX,
-        coordY: targetCafe.coordY,
+        id: targetCafeForRecommend.id,
+        name: targetCafeForRecommend.name,
+        address: targetCafeForRecommend.address,
+        coordX: targetCafeForRecommend.coordX,
+        coordY: targetCafeForRecommend.coordY,
         categories: JSON.stringify(data.categories),
-        image: targetCafe.image || '',
-        phone_number: targetCafe.phone_number || null,
-        opening_time: targetCafe.opening_time || null,
-        extra_images: JSON.stringify(targetCafe.extra_images || []),
+        image: targetCafeForRecommend.image || '',
+        phone_number: targetCafeForRecommend.phone_number || null,
+        opening_time: targetCafeForRecommend.opening_time || null,
+        extra_images: JSON.stringify(targetCafeForRecommend.extra_images || []),
         menus: null,
       };
 
@@ -58,7 +58,7 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
     <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
         <p className="text-2xl font-semibold">
-          {targetCafe?.name || '카페 추천'}
+          {targetCafeForRecommend?.name || '카페 추천'}
         </p>
         <Button
           type="button"
@@ -69,14 +69,14 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
       </div>
 
       {/* 카페 정보 표시 */}
-      {targetCafe && (
+      {targetCafeForRecommend && (
         <div className="p-3 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-600">{targetCafe.address}</p>
-          {targetCafe.phone_number && (
-            <p className="text-sm text-gray-600">{targetCafe.phone_number}</p>
+          <p className="text-sm text-gray-600">{targetCafeForRecommend.address}</p>
+          {targetCafeForRecommend.phone_number && (
+            <p className="text-sm text-gray-600">{targetCafeForRecommend.phone_number}</p>
           )}
-          {targetCafe.opening_time && (
-            <p className="text-sm text-gray-600">{targetCafe.opening_time}</p>
+          {targetCafeForRecommend.opening_time && (
+            <p className="text-sm text-gray-600">{targetCafeForRecommend.opening_time}</p>
           )}
         </div>
       )}

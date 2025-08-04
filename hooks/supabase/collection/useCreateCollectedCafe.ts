@@ -1,28 +1,23 @@
 'use client';
 
-import { useUIStore } from "@/stores";
-import { useCollectionStore, IFormDataForCollect } from "@/stores/collection";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { CollectedRowInsert, createCollectedCafe } from '@/actions/supabase/collection';
+import { useUserStore } from '@/stores';
+import { collectedCafeQuery } from '@/queries/supabase/collection';
 
-/**
- * 수집할 카페의 데이터를 상태로 동기화하는 커스텀 훅
- * @description 3개의 상세 페이지에서 공통으로 사용되는 수집하기 버튼 로직을 제공합니다.
- */
+/** 수집한 카페 추가 훅 */
 export function useCreateCollectedCafe() {
-    const { setTargetCafe, clearTargetCafe } = useCollectionStore();
-    const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
+    const queryClient = useQueryClient();
+    const { userId } = useUserStore();
 
-    const selectTargetCafeForCollect = (cafeData: IFormDataForCollect) => {
-        setTargetCafe(cafeData);
-        setIsCollectFormOpen(true);
-    };
+    const uploadCollectedCafe = useMutation({
+        mutationFn: async (detail: CollectedRowInsert) => await createCollectedCafe(detail),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: collectedCafeQuery.all(userId) });
+            queryClient.invalidateQueries({ queryKey: collectedCafeQuery.counts(userId) });
+        },
+        onError: error => console.error(error),
+    });
 
-    const clearTargetCafeForCollect = () => {
-        clearTargetCafe();
-        setIsCollectFormOpen(false);
-    };
-
-    return {
-        selectTargetCafeForCollect,
-        clearTargetCafeForCollect,
-    };
+    return { createCollectedCafe: uploadCollectedCafe.mutate };
 }

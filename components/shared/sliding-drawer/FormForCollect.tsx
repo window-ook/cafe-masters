@@ -6,8 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useUIStore } from '@/stores';
 import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
-import { createCollectedCafe } from '@/actions/supabase/collection';
 import { useUpdateCollectedCafe } from '@/hooks/supabase/collection/useUpdateCollectedCafe';
+import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
 import RatingsSelector from '@/components/shared/sliding-drawer/RatingsSelector';
@@ -15,12 +15,13 @@ import Button from '../Button';
 
 export default function FormForCollect() {
   const pathname = usePathname();
-  const targetCafe = useCollectionStore(state => state.targetCafe);
+  const targetCafeForCollect = useCollectionStore(state => state.targetCafeForCollect);
   const editingCafe = useCollectionStore(state => state.editingCafe);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const clearEditingCafe = useCollectionStore(state => state.clearEditingCafe);
 
   const { updateCollectedCafe } = useUpdateCollectedCafe();
+  const { createCollectedCafe } = useCreateCollectedCafe();
 
   // 편집 모드 감지
   const isEditMode = pathname?.startsWith('/collection/detail/') && editingCafe;
@@ -78,7 +79,7 @@ export default function FormForCollect() {
       }
     } else {
       // 생성 모드: 새 카페 수집
-      if (!targetCafe) {
+      if (!targetCafeForCollect) {
         alert('카페 정보가 없습니다. 다시 시도해주세요.');
         return;
       }
@@ -86,15 +87,15 @@ export default function FormForCollect() {
       try {
         // 완전한 수집 데이터 생성
         const collectionData = {
-          id: targetCafe.id,
-          name: targetCafe.name,
-          coordX: targetCafe.coordX,
-          coordY: targetCafe.coordY,
-          address: targetCafe.address,
-          image: targetCafe.image,
-          extra_images: JSON.stringify(targetCafe.extra_images || []),
-          phone_number: targetCafe.phone_number,
-          opening_time: targetCafe.opening_time,
+          id: targetCafeForCollect.id,
+          name: targetCafeForCollect.name,
+          coordX: targetCafeForCollect.coordX,
+          coordY: targetCafeForCollect.coordY,
+          address: targetCafeForCollect.address,
+          image: targetCafeForCollect.image,
+          extra_images: JSON.stringify(targetCafeForCollect.extra_images || []),
+          phone_number: targetCafeForCollect.phone_number,
+          opening_time: targetCafeForCollect.opening_time,
           ratings: data.rating,
           categories: JSON.stringify(data.categories),
           comment: data.comment,
@@ -103,10 +104,7 @@ export default function FormForCollect() {
           cons: data.cons || '',
         };
 
-        // 서버 액션 호출
-        await createCollectedCafe(collectionData);
-
-        // 성공 시 폼 닫기
+        createCollectedCafe(collectionData);
         setIsCollectFormOpen(false);
         alert('카페가 성공적으로 수집되었습니다!');
 
@@ -121,7 +119,7 @@ export default function FormForCollect() {
     <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col p-2 gap-4">
       <div className="flex justify-between items-center">
         <p className=" text-2xl font-semibold">
-          {isEditMode ? editingCafe?.name : targetCafe?.name}
+          {isEditMode ? editingCafe?.name : targetCafeForCollect?.name}
         </p>
         <Button
           type="button"

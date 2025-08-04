@@ -23,7 +23,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
   const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
-  const setEditingCafe = useCollectionStore(state => state.setEditingCafe);
+  const setEditingCafeForCollect = useCollectionStore(state => state.setEditingCafeForCollect);
 
   const { filteredCollectedCafes } = useCollectedCafes(userId);
 
@@ -135,7 +135,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
 
         <Button
           onClick={() => {
-            setEditingCafe(collectedCafeDetail);
+            setEditingCafeForCollect(collectedCafeDetail);
             setIsCollectFormOpen(true);
           }}
         >

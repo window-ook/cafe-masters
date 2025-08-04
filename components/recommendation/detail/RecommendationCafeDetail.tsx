@@ -1,7 +1,7 @@
 'use client';
 
+import { useCollectionStore } from '@/stores/collection';
 import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
-import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
 import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
@@ -9,7 +9,7 @@ import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
 
 export default function RecommendationCafeDetail({ cafeId }: { cafeId: number }) {
   const { recommendedCafes } = useRecommendedCafes();
-  const { selectTargetCafeForCollect } = useCreateCollectedCafe();
+  const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
 
   const recommendedCafedetail = recommendedCafes?.find((cafe: ISupabaseRecommendedCafe) => cafe.id === cafeId);
 
@@ -48,7 +48,7 @@ export default function RecommendationCafeDetail({ cafeId }: { cafeId: number })
   const actionButtons = (
     <Button
       onClick={() =>
-        selectTargetCafeForCollect({
+        setTargetCafeForCollect({
           id: recommendedCafedetail.id,
           name: recommendedCafedetail.name,
           coordX: recommendedCafedetail.coordX,

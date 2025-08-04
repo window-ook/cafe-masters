@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
-import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
 import { useDeleteBookmarkedCafe } from '@/hooks/supabase/bookmark';
-import { useCurrentCafeStore, useUIStore, useUserStore } from 'stores';
+import { useCollectionStore } from '@/stores/collection';
+import { useCurrentCafeStore, useUIStore, useUserStore } from '@/stores';
 import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
 import { toast } from 'react-toastify';
 import { Bookmark, CircleX } from 'lucide-react';
@@ -19,6 +19,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   const isCollected = useCurrentCafeStore(state => state.isCollected);
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
   const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
+  const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
 
   const handleClose = () => {
     setIsSlidingDrawerOpen(false);
@@ -26,7 +27,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   };
 
   const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
-  const { selectTargetCafeForCollect } = useCreateCollectedCafe();
+
   const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
 
 
@@ -71,7 +72,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
 
   const actionButtons = (
     <Button
-      onClick={() => selectTargetCafeForCollect({
+      onClick={() => setTargetCafeForCollect({
         id: detail.id,
         name: detail.name,
         coordX: detail.coordX,
