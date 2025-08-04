@@ -8,7 +8,10 @@ export function useCreateRecommendedCafe() {
 
   const createRecommended = useMutation({
     mutationFn: async (memo: RecommendationRowInsert) => await createRecommendedCafe(memo),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: recommendedCafeQuery.all() }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: recommendedCafeQuery.all() });
+      queryClient.invalidateQueries({ queryKey: recommendedCafeQuery.counts() });
+    },
     onError: error => console.error(error),
   });
 

@@ -182,7 +182,7 @@ export default function CollectedCafe({
         <div className="flex flex-col gap-2">
           <div>
             <p
-              className={`whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-4 ${isHiddenCard ? '' : 'group-hover:text-main group-hover:font-bold transition-all duration-300 ease-in-out'} font-pretendard font-extrabold text-lg`}
+              className={`whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-4 ${isHiddenCard ? '' : 'group-hover:text-main group-hover:font-bold transition-all duration-300 ease-in-out'} font-dunggeunmo font-semibold text-lg`}
             >
               {name}{' '}
               {isHiddenCard && (
@@ -219,10 +219,10 @@ export default function CollectedCafe({
         <div
           className={`px-2 rounded-md border-[0.1rem] ${isHiddenCard ? 'border-main' : 'border-gray-500'} group-hover:border-main flex flex-col`}
         >
-          <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+          <p className="whitespace-nowrap overflow-hidden text-sm text-ellipsis font-medium">
             {address}
           </p>
-          <p className="whitespace-nowrap overflow-hidden text-ellipsis ">
+          <p className="whitespace-nowrap overflow-hidden text-ellipsis font-medium">
             {phone_number}
           </p>
         </div>
