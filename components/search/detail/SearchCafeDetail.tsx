@@ -19,6 +19,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
   const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);
   const isCollected = useCurrentCafeStore(state => state.isCollected);
+  const isRecommended = useCurrentCafeStore(state => state.isRecommended);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const searchResult = useSearchedResultStore(state => state.searchResult);
   const setTargetCafeForRecommend = useRecommendationStore(state => state.setTargetCafeForRecommend);
@@ -78,7 +79,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
       >
         {isCollected ? '수정하기' : '수집하기'}
       </Button>
-      {admin && (
+      {admin && !isRecommended && (
         <Button
           onClick={() => {
             setTargetCafeForRecommend({
@@ -103,7 +104,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   );
 
   return (
-    <div className="h-full rounded-md flex flex-col">
+    <article className="h-full rounded-md flex flex-col">
       <CafeDetailHeader
         bookmarkData={bookmarkData}
       />
@@ -113,6 +114,6 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
         actionButtons={actionButtons}
         useImageWithFallback={true}
       />
-    </div>
+    </article>
   );
 }

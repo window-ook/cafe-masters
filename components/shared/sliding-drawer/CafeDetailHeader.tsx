@@ -5,6 +5,7 @@ import { useUIStore, useCurrentCafeStore } from '@/stores';
 import { CircleX } from 'lucide-react';
 import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 import BookmarkToggleButton from '@/components/shared/sliding-drawer/BookmarkToggleButton';
+import RecommendedBadge from '@/components/shared/sliding-drawer/RecommendedBadge';
 
 interface ICafeDetailHeader {
   bookmarkData: {
@@ -25,6 +26,7 @@ export default function CafeDetailHeader({ bookmarkData }: ICafeDetailHeader) {
   const router = useRouter();
   const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
   const isCollected = useCurrentCafeStore(state => state.isCollected);
+  const isRecommended = useCurrentCafeStore(state => state.isRecommended);
 
   const handleClose = () => {
     setIsSlidingDrawerOpen(false);
@@ -36,6 +38,7 @@ export default function CafeDetailHeader({ bookmarkData }: ICafeDetailHeader) {
       <div className='flex items-center gap-2'>
         <BookmarkToggleButton bookmarkData={bookmarkData} />
         {isCollected && <CollectedBadge />}
+        {isRecommended && <RecommendedBadge />}
       </div>
       <button onClick={handleClose} className='cursor-pointer'>
         <CircleX className='size-8' />

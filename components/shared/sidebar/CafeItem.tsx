@@ -26,6 +26,7 @@ export default function CafeItem({
     >
       <button
         type="button"
+        aria-label="카페 상세 정보 열기 버튼"
         onClick={onClickAction}
         className="w-full h-full flex justify-between items-center text-left"
       >

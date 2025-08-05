@@ -22,28 +22,28 @@ interface ISideBarTab {
 const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => {
   const closeSlidingDrawer = useUIStore(state => state.closeSlidingDrawer);
 
-  const handleNavClick = () => {
-    closeSlidingDrawer();
-  };
+  const handleNavClick = () => closeSlidingDrawer();
 
   return (
-    <Link
-      href={path}
-      onClick={handleNavClick}
-      className={`group w-full px-3 py-4 rounded-lg ${isDarkTheme ? 'hover:bg-main-light' : 'hover:bg-white'} flex justify-between cursor-pointer hover:shadow-md transition duration-150 ease-in`}
-    >
-      <div className="flex justify-between w-full">
-        <div className="flex items-center gap-2">
-          <p>{icon}</p>
-          <p className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}>
-            {title}
+    <li>
+      <Link
+        href={path}
+        onClick={handleNavClick}
+        className={`group w-full px-3 py-4 rounded-lg ${isDarkTheme ? 'hover:bg-main-light' : 'hover:bg-white'} flex justify-between cursor-pointer hover:shadow-md transition duration-150 ease-in`}
+      >
+        <div className="flex justify-between w-full">
+          <div className="flex items-center gap-2">
+            <p>{icon}</p>
+            <p className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}>
+              {title}
+            </p>
+          </div>
+          <p className="font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+            {counts}
           </p>
         </div>
-        <p className="font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
-          {counts}
-        </p>
-      </div>
-    </Link>
+      </Link>
+    </li>
   );
 };
 
@@ -57,7 +57,7 @@ export default function TabsForLink() {
   const { recommendationCounts } = useRecommendationCounts();
 
   return (
-    <ul className="flex-1 flex flex-col items-center">
+    <ul className="flex-1 flex flex-col">
       <SideBarTab
         icon={
           <IoMdCafe

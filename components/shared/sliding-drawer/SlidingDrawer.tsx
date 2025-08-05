@@ -56,7 +56,7 @@ export default function SlidingDrawer() {
     };
 
     return (
-        <div className={SLIDING_DRAWER_STYLE}>
+        <div role="dialog" aria-modal="true" className={SLIDING_DRAWER_STYLE}>
             {renderContent()}
         </div>
     );

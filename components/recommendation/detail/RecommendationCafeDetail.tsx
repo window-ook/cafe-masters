@@ -66,7 +66,7 @@ export default function RecommendationCafeDetail({ cafeId }: { cafeId: number })
   );
 
   return (
-    <div className="h-full rounded-md flex flex-col">
+    <article className="h-full rounded-md flex flex-col">
       <CafeDetailHeader
         bookmarkData={bookmarkData}
       />
@@ -76,6 +76,6 @@ export default function RecommendationCafeDetail({ cafeId }: { cafeId: number })
         actionButtons={actionButtons}
         useImageWithFallback={false}
       />
-    </div>
+    </article>
   );
 }

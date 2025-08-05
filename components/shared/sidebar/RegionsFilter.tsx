@@ -36,6 +36,7 @@ export default function RegionFilter() {
   return (
     <div>
       <select
+        aria-label="지역 선택 드롭다운"
         className="block w-full py-2 pl-3 pr-10 text-base rounded-md border-gray-300 bg-gray-100 focus:border-main focus:outline-none focus:ring-main text-black sm:text-sm"
         onChange={handleChange}
         value={selectedRegion}

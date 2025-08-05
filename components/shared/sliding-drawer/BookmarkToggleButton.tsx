@@ -65,7 +65,12 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
   };
 
   return (
-    <button onClick={handleBookmarkToggle} className={`cursor-pointer ${className}`}>
+    <button
+      type="button"
+      aria-label="북마크 토글 버튼"
+      onClick={handleBookmarkToggle}
+      className={`cursor-pointer ${className}`}
+    >
       <Bookmark
         className={`size-8 ${isBookmarked ? 'text-bookmark fill-bookmark' : 'text-unbookmark'}`}
       />

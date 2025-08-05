@@ -96,7 +96,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   };
 
   return (
-    <div className="h-full rounded-md flex flex-col">
+    <article className="h-full rounded-md flex flex-col">
       <header className="w-full p-4 flex justify-between items-center">
         <div className='flex items-center gap-2'>
           <button
@@ -118,6 +118,6 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
         actionButtons={actionButtons}
         useImageWithFallback={true}
       />
-    </div>
+    </article>
   );
 }

@@ -24,7 +24,7 @@ export function ErrorFallback({ featureName, message, error }: IErrorFallback) {
     const handleRefreshPage = () => router.refresh();
 
     return (
-        <div className="w-full h-full flex flex-col">
+        <div role="alert" aria-live="assertive" className="w-full h-full flex flex-col">
             <div className="flex items-center gap-2 text-error">
                 <TriangleAlert className="size-6" />
                 <h3 className="text-lg font-semibold">{featureName} 조회 에러</h3>

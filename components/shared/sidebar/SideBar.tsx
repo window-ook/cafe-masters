@@ -41,41 +41,41 @@ export default function SideBar() {
           )}
 
           {paths.isSearch && (
-            <main className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0">
               <Suspense fallback={<ListSkeleton />}>
                 <SearchedCafes />
               </Suspense>
-            </main>
+            </div>
           )}
 
           {paths.isCollection && (
-            <main className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0">
               <Suspense fallback={<ListSkeleton />}>
                 <CollectionCafes />
               </Suspense>
-            </main>
+            </div>
           )}
 
           {paths.isBookmark && (
-            <main className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0">
               <Suspense fallback={<ListSkeleton />}>
                 <BookmarkCafes />
               </Suspense>
-            </main>
+            </div>
           )}
 
           {paths.isRecommendation && (
-            <main className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0">
               <Suspense fallback={<ListSkeleton />}>
                 <RecommendationCafes />
               </Suspense>
-            </main>
+            </div>
           )}
 
           {paths.isHelp && (
-            <main className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0">
               <HelpCenter />
-            </main>
+            </div>
           )}
         </section>
       </div>

@@ -40,7 +40,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
   }
 
   return (
-    <div className="h-full rounded-md flex flex-col">
+    <article className="h-full rounded-md flex flex-col">
       <CollectionCafeDetailHeader isDarkTheme={isDarkTheme} />
 
       {/* 바디 */}
@@ -142,6 +142,6 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
           수정하기
         </Button>
       </main>
-    </div>
+    </article>
   );
 }

@@ -27,7 +27,9 @@ export default function CategoryFilter() {
       {isExpanded && (
         <>
           {CATEGORIES.map(category => (
-            <a
+            <button
+              type="button"
+              aria-label={`카테고리 '${category}' 선택 버튼`}
               key={category}
               onClick={() => toggleCategories(category)}
               className={`px-4 py-2 rounded-full border transition text-sm cursor-pointer
@@ -38,7 +40,7 @@ export default function CategoryFilter() {
               `}
             >
               {category}
-            </a>
+            </button>
           ))}
           <button
             type="button"
@@ -50,6 +52,8 @@ export default function CategoryFilter() {
         </>
       )}
       <button
+        type="button"
+        aria-expanded={isExpanded}
         onClick={toggleExpand}
         className="w-full px-4 py-2 rounded-full flex justify-center items-center text-gray-700 hover:text-main transition duration-150"
       >

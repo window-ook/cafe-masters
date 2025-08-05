@@ -18,7 +18,9 @@ export default function CategorySelector({
   return (
     <div className="flex flex-wrap gap-2">
       {CATEGORIES.map(category => (
-        <a
+        <button
+          type="button"
+          aria-label={`카테고리 '${category}' 선택 버튼`}
           key={category}
           onClick={() => toggleCategories(category)}
           className={`px-4 py-2 rounded-full border transition text-sm cursor-pointer
@@ -29,7 +31,7 @@ export default function CategorySelector({
           `}
         >
           {category}
-        </a>
+        </button>
       ))}
       <button
         type="button"
