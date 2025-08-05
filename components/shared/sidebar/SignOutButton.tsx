@@ -1,17 +1,21 @@
 'use client';
 
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { useUserStore } from '@/stores/user';
 import Button from '@/components/shared/Button';
 
 export default function SignOutButton() {
   const supabase = createBrowserSupabaseClient();
 
+  const { resetUser } = useUserStore();
+
   const handleSignOut = async () => {
-    localStorage.removeItem('checkStore');
-    localStorage.removeItem('mapStore');
-    localStorage.removeItem('subSidebarStore');
-    localStorage.removeItem('userStore');
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+      resetUser();
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+    }
   };
 
   return (
