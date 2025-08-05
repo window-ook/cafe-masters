@@ -3,9 +3,9 @@
 import { useMemo } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useFilterStore } from '@/stores/filter';
-import { getCollectedCafes } from '@/actions/supabase/collection';
-import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
-import { collectedCafeQuery } from '@/queries/supabase/collection';
+import { getCollectionCafes } from '@/actions/supabase/collection';
+import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
+import { collectionCafeQuery } from '@/queries/supabase/collection';
 
 /**
  * 모든 수집 카페 조회 훅
@@ -13,15 +13,15 @@ import { collectedCafeQuery } from '@/queries/supabase/collection';
  * @param isActive 활성화 여부
  * @returns 수집 카페 데이터와 로딩 상태
  */
-export function useCollectedCafes(userId: string, isActive: boolean = true) {
-  const { selectedRegion, selectedRating, searchTermInCollectedCafe } = useFilterStore();
+export function useCollectionCafes(userId: string, isActive: boolean = true) {
+  const { selectedRegion, selectedRating, searchTermInCollectionCafe } = useFilterStore();
 
   const infiniteQuery = useInfiniteQuery({
     enabled: isActive && !!userId,
-    queryKey: collectedCafeQuery.all(userId),
+    queryKey: collectionCafeQuery.all(userId),
     initialPageParam: 0,
     queryFn: async ({ pageParam }) => {
-      const response = await getCollectedCafes(userId, pageParam, 4);
+      const response = await getCollectionCafes(userId, pageParam, 4);
       return response;
     },
     getNextPageParam: lastPage => {
@@ -30,19 +30,19 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
   });
 
   // 모든 페이지의 데이터를 하나의 배열로 합치고 필터링 적용
-  const { collectedCafes, filteredCollectedCafes } = useMemo(() => {
-    if (!infiniteQuery.data) return { collectedCafes: [], filteredCollectedCafes: [] };
+  const { collectionCafes, filteredCollectionCafes } = useMemo(() => {
+    if (!infiniteQuery.data) return { collectionCafes: [], filteredCollectionCafes: [] };
 
-    const collectedCafes = infiniteQuery.data.pages.flatMap(page => page.data);
+    const collectionCafes = infiniteQuery.data.pages.flatMap(page => page.data);
 
     // 필터링 적용
-    const filteredCollectedCafes = collectedCafes.filter((cafe: ISupabaseCollectedCafe) => {
+    const filteredCollectionCafes = collectionCafes.filter((cafe: ISupabaseCollectionCafe) => {
       // 검색어 필터링
       const matchesSearch =
-        !searchTermInCollectedCafe ||
+        !searchTermInCollectionCafe ||
         cafe.name
           ?.toLowerCase()
-          .includes(searchTermInCollectedCafe.toLowerCase());
+          .includes(searchTermInCollectionCafe.toLowerCase());
 
       // 지역 필터링
       const matchesRegion =
@@ -56,13 +56,13 @@ export function useCollectedCafes(userId: string, isActive: boolean = true) {
       return matchesSearch && matchesRegion && matchesRating;
     });
 
-    return { collectedCafes, filteredCollectedCafes };
+    return { collectionCafes, filteredCollectionCafes };
   }, [
     infiniteQuery.data,
     selectedRegion,
     selectedRating,
-    searchTermInCollectedCafe,
+    searchTermInCollectionCafe,
   ]);
 
-  return { ...infiniteQuery, collectedCafes, filteredCollectedCafes };
+  return { ...infiniteQuery, collectionCafes, filteredCollectionCafes };
 }

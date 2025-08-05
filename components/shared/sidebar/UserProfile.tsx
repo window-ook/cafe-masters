@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
+import { useCollectionCounts } from '@/hooks/supabase/collection';
 import { useUIStore, useUserStore } from '@/stores';
 import TierBadge from '@/components/shared/sidebar/TierBadge';
 import Image from 'next/image';
@@ -13,15 +13,15 @@ export default function UserProfile() {
   const userTier = useUserStore(state => state.userTier);
   const setUserTier = useUserStore(state => state.setUserTier);
 
-  const { collectedCounts } = useCollectedCafesCounts(userId);
+  const { collectionCounts } = useCollectionCounts(userId);
 
   useEffect(() => {
-    if (collectedCounts && collectedCounts >= 40) setUserTier('MASTER');
-    else if (collectedCounts && collectedCounts < 40 && collectedCounts >= 30) setUserTier('EXPERT');
-    else if (collectedCounts && collectedCounts < 30 && collectedCounts >= 20) setUserTier('SENIOR');
-    else if (collectedCounts && collectedCounts < 20 && collectedCounts >= 10) setUserTier('JUNIOR');
-    else if (collectedCounts && collectedCounts < 10) setUserTier('BEGINNER');
-  }, [collectedCounts, setUserTier]);
+    if (collectionCounts && collectionCounts >= 40) setUserTier('MASTER');
+    else if (collectionCounts && collectionCounts < 40 && collectionCounts >= 30) setUserTier('EXPERT');
+    else if (collectionCounts && collectionCounts < 30 && collectionCounts >= 20) setUserTier('SENIOR');
+    else if (collectionCounts && collectionCounts < 20 && collectionCounts >= 10) setUserTier('JUNIOR');
+    else if (collectionCounts && collectionCounts < 10) setUserTier('BEGINNER');
+  }, [collectionCounts, setUserTier]);
 
   if (!userEmail) return;
 

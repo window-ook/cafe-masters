@@ -1,44 +1,44 @@
 'use client';
 
 import { useCollectionStore } from '@/stores/collection';
-import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
-import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
+import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
+import { ISupabaseRecommendationCafe } from '@/types/supabase/recommendation';
 import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
 
 export default function RecommendationCafeDetail({ cafeId }: { cafeId: number }) {
-  const { recommendedCafes } = useRecommendedCafes();
+  const { recommendationCafes } = useRecommendationCafes();
   const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
 
-  const recommendedCafedetail = recommendedCafes?.find((cafe: ISupabaseRecommendedCafe) => cafe.id === cafeId);
+  const recommendationCafedetail = recommendationCafes?.find((cafe: ISupabaseRecommendationCafe) => cafe.id === cafeId);
 
-  if (!recommendedCafedetail) throw new Error('추천 카페의 상세 정보를 찾을 수 없습니다');
+  if (!recommendationCafedetail) throw new Error('추천 카페의 상세 정보를 찾을 수 없습니다');
 
   const bookmarkData = {
-    id: recommendedCafedetail.id,
-    name: recommendedCafedetail.name,
-    address: recommendedCafedetail.address,
-    phone_number: recommendedCafedetail.phone_number || '',
-    image: recommendedCafedetail.image || '',
-    coordX: recommendedCafedetail.coordX,
-    coordY: recommendedCafedetail.coordY,
-    extra_images: recommendedCafedetail.extra_images || null,
-    opening_time: recommendedCafedetail.opening_time || null,
-    menus: recommendedCafedetail.menus ? JSON.parse(recommendedCafedetail.menus) : null,
+    id: recommendationCafedetail.id,
+    name: recommendationCafedetail.name,
+    address: recommendationCafedetail.address,
+    phone_number: recommendationCafedetail.phone_number || '',
+    image: recommendationCafedetail.image || '',
+    coordX: recommendationCafedetail.coordX,
+    coordY: recommendationCafedetail.coordY,
+    extra_images: recommendationCafedetail.extra_images || null,
+    opening_time: recommendationCafedetail.opening_time || null,
+    menus: recommendationCafedetail.menus ? JSON.parse(recommendationCafedetail.menus) : null,
   };
 
   const cafeData = {
-    name: recommendedCafedetail.name,
-    address: recommendedCafedetail.address,
-    phone_number: recommendedCafedetail.phone_number || '',
-    image: recommendedCafedetail.image || '',
-    extra_images: recommendedCafedetail.extra_images || [],
-    opening_time: recommendedCafedetail.opening_time || null,
-    categories: recommendedCafedetail.categories,
-    menus: recommendedCafedetail.menus ? (() => {
+    name: recommendationCafedetail.name,
+    address: recommendationCafedetail.address,
+    phone_number: recommendationCafedetail.phone_number || '',
+    image: recommendationCafedetail.image || '',
+    extra_images: recommendationCafedetail.extra_images || [],
+    opening_time: recommendationCafedetail.opening_time || null,
+    categories: recommendationCafedetail.categories,
+    menus: recommendationCafedetail.menus ? (() => {
       try {
-        return JSON.parse(recommendedCafedetail.menus);
+        return JSON.parse(recommendationCafedetail.menus);
       } catch {
         return null;
       }
@@ -49,15 +49,15 @@ export default function RecommendationCafeDetail({ cafeId }: { cafeId: number })
     <Button
       onClick={() =>
         setTargetCafeForCollect({
-          id: recommendedCafedetail.id,
-          name: recommendedCafedetail.name,
-          coordX: recommendedCafedetail.coordX,
-          coordY: recommendedCafedetail.coordY,
-          address: recommendedCafedetail.address,
-          image: recommendedCafedetail.image,
-          extra_images: recommendedCafedetail.extra_images || [],
-          phone_number: recommendedCafedetail.phone_number,
-          opening_time: recommendedCafedetail.opening_time,
+          id: recommendationCafedetail.id,
+          name: recommendationCafedetail.name,
+          coordX: recommendationCafedetail.coordX,
+          coordY: recommendationCafedetail.coordY,
+          address: recommendationCafedetail.address,
+          image: recommendationCafedetail.image,
+          extra_images: recommendationCafedetail.extra_images || [],
+          phone_number: recommendationCafedetail.phone_number,
+          opening_time: recommendationCafedetail.opening_time,
         })}
       customClassName='flex-1'
     >

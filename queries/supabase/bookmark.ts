@@ -1,4 +1,4 @@
-export const bookmarkedCafeQuery = {
-    all: (user_id: string) => ['bookmarkedCafe', user_id],
-    counts: (user_id: string) => ['bookmarkedCafeCounts', user_id],
+export const bookmarkCafeQuery = {
+    all: (user_id: string) => ['bookmarkCafe', user_id],
+    counts: (user_id: string) => ['bookmarkCafeCounts', user_id],
 } as const;

@@ -1,3 +1,3 @@
-export { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
-export { useRecommendedCafesCounts } from '@/hooks/supabase/recommendation/useRecommendedCafesCounts';
-export { useCreateRecommendedCafe } from '@/hooks/supabase/recommendation/useCreateRecommendedCafe';
+export { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
+export { useRecommendationCounts } from '@/hooks/supabase/recommendation/useRecommendationCounts';
+export { useCreateRecommendationCafe } from '@/hooks/supabase/recommendation/useCreateRecommendationCafe';

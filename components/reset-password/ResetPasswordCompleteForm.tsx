@@ -2,7 +2,7 @@
 
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import BackgroundCards from '@/components/shared/FallingCards';
-import Button from '../shared/Button';
+import Button from '@/components/shared/Button';
 
 export default function ResetPasswordCompleteForm() {
     const supabase = createBrowserSupabaseClient();

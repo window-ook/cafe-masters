@@ -1,7 +1,7 @@
 'use server';
 
 import { createServerSupabaseClient } from "utils/supabase/server";
-import { ISupabaseCollectedCafe } from "@/types/supabase/collection";
+import { ISupabaseCollectionCafe } from "@/types/supabase/collection";
 
 /** 수집한 카페 목록 조회
  * @param user_id 유저 ID
@@ -9,8 +9,8 @@ import { ISupabaseCollectedCafe } from "@/types/supabase/collection";
  * @param limit 한 번에 가져올 카페 수
  * @returns 수집한 카페 목록과 다음 커서
  */
-export async function getCollectedCafes(user_id: string, offset: number = 0, limit: number = 4)
-    : Promise<{ data: ISupabaseCollectedCafe[]; nextCursor: number | null }> {
+export async function getCollectionCafes(user_id: string, offset: number = 0, limit: number = 4)
+    : Promise<{ data: ISupabaseCollectionCafe[]; nextCursor: number | null }> {
     if (!user_id) throw new Error('유저 ID가 유효하지 않습니다.');
 
     const supabase = await createServerSupabaseClient();

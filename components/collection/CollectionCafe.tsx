@@ -5,7 +5,7 @@ import { useUIStore } from '@/stores';
 import { FaStar } from 'react-icons/fa6';
 import Image from 'next/image';
 
-interface ICollectedCafe {
+interface ICollectionCafe {
   name: string | undefined;
   address: string;
   phone_number: string | null;
@@ -26,14 +26,14 @@ let COLOR_BY_RATING = '';
 let HOVER_BORDER_BY_RATING = '';
 let NORMAL_CARD_BACK_EFFECT = '';
 
-export default function CollectedCafe({
+export default function CollectionCafe({
   name,
   image,
   address,
   phone_number,
   ratings,
   onClickAction,
-}: ICollectedCafe) {
+}: ICollectionCafe) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   const cardRef = useRef<HTMLButtonElement>(null);

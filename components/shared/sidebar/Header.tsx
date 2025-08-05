@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useFilterStore, useUIStore, useUserStore } from '@/stores';
 import { useSearchedResultStore } from '@/stores/search';
-import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
-import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
+import { useBookmarkCounts } from '@/hooks/supabase/bookmark';
+import { useCollectionCounts } from '@/hooks/supabase/collection';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,31 +14,31 @@ import Tooltip from '@/components/shared/TooltipContainer';
 import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
 import RegionFilter from '@/components/shared/sidebar/RegionsFilter';
 import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
-import Button from '../Button';
+import Button from '@/components/shared/Button';
 
 export default function Header() {
 
   const searchResult = useSearchedResultStore(state => state.searchResult);
   const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
-  const setSearchTermInCollectedCafe = useFilterStore(state => state.setSearchTermInCollectedCafe);
-  const setSearchTermInBookmarkedCafe = useFilterStore(state => state.setSearchTermInBookmarkedCafe);
+  const setSearchTermInCollectionCafe = useFilterStore(state => state.setSearchTermInCollectionCafe);
+  const setSearchTermInBookmarkCafe = useFilterStore(state => state.setSearchTermInBookmarkCafe);
   const closeSlidingDrawer = useUIStore(state => state.closeSlidingDrawer);
 
-  const [collectedInput, setCollectedInput] = useState<string>('');
-  const [bookmarkedInput, setBookmarkedInput] = useState<string>('');
+  const [collectionInput, setCollectionInput] = useState<string>('');
+  const [bookmarkInput, setBookmarkInput] = useState<string>('');
 
-  const { collectedCounts } = useCollectedCafesCounts(userId);
-  const { bookmarkedCounts } = useBookmarkedCafesCounts(userId);
+  const { collectionCounts } = useCollectionCounts(userId);
+  const { bookmarkCounts } = useBookmarkCounts(userId);
 
   const paths = usePathMatcher();
 
-  const handleCollectedSearch = () => setSearchTermInCollectedCafe(collectedInput);
-  const handleBookmarkedSearch = () => setSearchTermInBookmarkedCafe(bookmarkedInput);
+  const handleCollectionSearch = () => setSearchTermInCollectionCafe(collectionInput);
+  const handleBookmarkSearch = () => setSearchTermInBookmarkCafe(bookmarkInput);
 
   const handleReset = () => {
-    setBookmarkedInput('');
-    setCollectedInput('');
+    setBookmarkInput('');
+    setCollectionInput('');
     closeSlidingDrawer();
   };
 
@@ -96,15 +96,15 @@ export default function Header() {
                 ? 'bg-main-dark border-gray-600 text-white'
                 : 'bg-gray-100 border-gray-300 text-slate-700'
                 } placeholder:text-slate-400 focus:outline-none focus:ring-0`}
-              value={collectedInput}
-              onChange={e => setCollectedInput(e.target.value)}
+              value={collectionInput}
+              onChange={e => setCollectionInput(e.target.value)}
               onKeyDown={e => {
-                if (e.key === 'Enter') handleCollectedSearch();
+                if (e.key === 'Enter') handleCollectionSearch();
               }}
             />
             <Button
               aria-label="검색"
-              onClick={handleCollectedSearch}
+              onClick={handleCollectionSearch}
               text='검색'
               customClassName="w-1/6 py-4 px-1"
             />
@@ -112,7 +112,7 @@ export default function Header() {
           <div className="flex gap-4">
             <div className="flex items-center text-xl">
               <span className={`${isDarkTheme ? 'text-white' : 'text-main'} font-bold`}>
-                {collectedCounts}
+                {collectionCounts}
               </span>
               개
             </div>
@@ -133,15 +133,15 @@ export default function Header() {
                 ? 'bg-main-dark border-gray-600 text-white'
                 : 'bg-gray-100 border-gray-300 text-slate-700'
                 } placeholder:text-slate-400 focus:outline-none focus:ring-0`}
-              value={bookmarkedInput}
-              onChange={e => setBookmarkedInput(e.target.value)}
+              value={bookmarkInput}
+              onChange={e => setBookmarkInput(e.target.value)}
               onKeyDown={e => {
-                if (e.key === 'Enter') handleBookmarkedSearch();
+                if (e.key === 'Enter') handleBookmarkSearch();
               }}
             />
             <Button
               aria-label="검색"
-              onClick={handleBookmarkedSearch}
+              onClick={handleBookmarkSearch}
               text='검색'
               customClassName="w-1/6 py-4 px-1"
             />
@@ -149,7 +149,7 @@ export default function Header() {
           <div className="w-full px-2 flex gap-4">
             <div className="flex items-center text-xl">
               <span className={`${isDarkTheme ? 'text-white' : 'text-main'} font-bold`}>
-                {bookmarkedCounts}
+                {bookmarkCounts}
               </span>
               개
             </div>

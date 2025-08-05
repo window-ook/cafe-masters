@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface IStatCardProps {
+interface IStatCard {
     number: string;
     label: string;
 }
 
-const StatCard: React.FC<IStatCardProps> = ({ number, label }) => {
+const StatCard: React.FC<IStatCard> = ({ number, label }) => {
     return (
         <div className="group relative">
             {/* Backlight Effect */}

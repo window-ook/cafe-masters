@@ -1,7 +1,7 @@
 'use client';
 
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
-import Button from '../Button';
+import Button from '@/components/shared/Button';
 
 export default function SignOutButton() {
   const supabase = createBrowserSupabaseClient();

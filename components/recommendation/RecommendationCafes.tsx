@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useUIStore } from 'stores';
 import { useFilterStore } from '@/stores/filter';
-import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
-import { ISupabaseRecommendedCafe } from '@/types/supabase/recommendation';
+import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
+import { ISupabaseRecommendationCafe } from '@/types/supabase/recommendation';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import CafeItem from '@/components/shared/sidebar/CafeItem';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
@@ -15,13 +15,13 @@ export default function RecommendationCafes() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { filteredRecommendedCafes } = useRecommendedCafes(selectedCategories);
+  const { filteredRecommendationCafes } = useRecommendationCafes(selectedCategories);
 
-  const recommendedPerPage = 5;
-  const totalRecommendedPages = Math.ceil((filteredRecommendedCafes?.length || 0) / recommendedPerPage);
-  const paginatedRecommend = filteredRecommendedCafes?.slice((currentPage - 1) * recommendedPerPage, currentPage * recommendedPerPage) || [];
+  const recommendationPerPage = 5;
+  const totalRecommendedPages = Math.ceil((filteredRecommendationCafes?.length || 0) / recommendationPerPage);
+  const paginatedRecommend = filteredRecommendationCafes?.slice((currentPage - 1) * recommendationPerPage, currentPage * recommendationPerPage) || [];
 
-  useEffect(() => { setCurrentPage(1); }, [filteredRecommendedCafes]);
+  useEffect(() => { setCurrentPage(1); }, [filteredRecommendationCafes]);
 
   const handleNextRecommendedPage = () => {
     if (currentPage < totalRecommendedPages) setCurrentPage(currentPage + 1);
@@ -31,7 +31,7 @@ export default function RecommendationCafes() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleRecommendedCafeClick = useCafeClick<ISupabaseRecommendedCafe>({
+  const handleRecommendedCafeClick = useCafeClick<ISupabaseRecommendationCafe>({
     routePath: 'recommendation',
   });
 
@@ -39,7 +39,7 @@ export default function RecommendationCafes() {
     <div className="h-full flex flex-col">
       <section className='flex-1 overflow-y-auto overflow-x-hidden'>
         <ul className="pagination-sidebar-list">
-          {paginatedRecommend.map((cafe: ISupabaseRecommendedCafe) => (
+          {paginatedRecommend.map((cafe: ISupabaseRecommendationCafe) => (
             <CafeItem
               key={cafe.id}
               name={cafe.name}

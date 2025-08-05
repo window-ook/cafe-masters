@@ -1,9 +1,9 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { useRecommendedCafesCounts } from '@/hooks/supabase/recommendation';
-import { useCollectedCafesCounts } from '@/hooks/supabase/collection';
-import { useBookmarkedCafesCounts } from '@/hooks/supabase/bookmark';
+import { useRecommendationCounts } from '@/hooks/supabase/recommendation';
+import { useCollectionCounts } from '@/hooks/supabase/collection';
+import { useBookmarkCounts } from '@/hooks/supabase/bookmark';
 import { useSearchedResultStore, useUIStore, useUserStore } from '@/stores';
 import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
 import { FaCheckCircle } from 'react-icons/fa';
@@ -52,9 +52,9 @@ export default function TabsForLink() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const searchResult = useSearchedResultStore(state => state.searchResult);
 
-  const { bookmarkedCounts } = useBookmarkedCafesCounts(userId);
-  const { collectedCounts } = useCollectedCafesCounts(userId);
-  const { recommendedCounts } = useRecommendedCafesCounts();
+  const { bookmarkCounts } = useBookmarkCounts(userId);
+  const { collectionCounts } = useCollectionCounts(userId);
+  const { recommendationCounts } = useRecommendationCounts();
 
   return (
     <ul className="flex-1 flex flex-col items-center">
@@ -78,21 +78,21 @@ export default function TabsForLink() {
         title={'내가 수집한 카페'}
         path={'/collection'}
         isDarkTheme={isDarkTheme}
-        counts={collectedCounts!}
+        counts={collectionCounts!}
       />
       <SideBarTab
         icon={<MdCollectionsBookmark className={`text-yellow-500 text-3xl`} />}
         title={'북마크한 카페'}
         path={'/bookmark'}
         isDarkTheme={isDarkTheme}
-        counts={bookmarkedCounts!}
+        counts={bookmarkCounts!}
       />
       <SideBarTab
-        icon={<FaCheckCircle className={`text-recommended text-3xl`} />}
+        icon={<FaCheckCircle className={`text-recommendation text-3xl`} />}
         title={'개발자가 추천하는 카페'}
         path={'/recommendation'}
         isDarkTheme={isDarkTheme}
-        counts={recommendedCounts!}
+        counts={recommendationCounts!}
       />
       <SideBarTab
         icon={<FaRegCircleQuestion className={`text-gray-500 text-3xl`} />}

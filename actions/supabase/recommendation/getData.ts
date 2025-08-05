@@ -1,12 +1,12 @@
 'use server';
 
 import { createServerSupabaseClient } from "utils/supabase/server";
-import { ISupabaseRecommendedCafe } from "@/types/supabase/recommendation";
+import { ISupabaseRecommendationCafe } from "@/types/supabase/recommendation";
 
 /** 추천 카페 목록 조회
  * @returns 추천 카페 목록
  */
-export async function getRecommendedCafes(): Promise<{ data: ISupabaseRecommendedCafe[] }> {
+export async function getRecommendationCafes(): Promise<{ data: ISupabaseRecommendationCafe[] }> {
     const supabase = await createServerSupabaseClient();
 
     const { data, error } = await supabase

@@ -3,8 +3,8 @@
 import { RefObject, useRef } from 'react';
 import { useUIStore, useUserStore } from 'stores';
 import { useCollectionStore } from '@/stores/collection';
-import { useCollectedCafes } from '@/hooks/supabase/collection';
-import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
+import { useCollectionCafes } from '@/hooks/supabase/collection';
+import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
 import { scrollThumbnails } from '@/utils/shared/detail';
 import Image from 'next/image';
 import Ratings from '@/components/shared/sliding-drawer/Ratings';
@@ -25,13 +25,13 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const setEditingCafeForCollect = useCollectionStore(state => state.setEditingCafeForCollect);
 
-  const { filteredCollectedCafes } = useCollectedCafes(userId);
+  const { filteredCollectionCafes } = useCollectionCafes(userId);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const collectedCafeDetail = filteredCollectedCafes.find((cafe: ISupabaseCollectedCafe) => cafe.id === cafeId);
+  const collectionCafeDetail = filteredCollectionCafes.find((cafe: ISupabaseCollectionCafe) => cafe.id === cafeId);
 
-  if (!collectedCafeDetail) {
+  if (!collectionCafeDetail) {
     return (
       <div className="h-full flex items-center justify-center">
         <p>카페 정보를 찾을 수 없습니다.</p>
@@ -62,13 +62,13 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
             className="w-full max-w-full overflow-x-auto overflow-y-hidden flex gap-4 scrollbar-hide snap-x snap-mandatory"
           >
             <div className="h-60 py-2 snap-center shrink-0">
-              {collectedCafeDetail?.image && (
+              {collectionCafeDetail?.image && (
                 <a
                   type="button"
                   aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
                   onClick={() =>
                     window.open(
-                      `http://place.map.kakao.com/${collectedCafeDetail?.id}`,
+                      `http://place.map.kakao.com/${collectionCafeDetail?.id}`,
                       '_blank',
                     )
                   }
@@ -76,7 +76,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
                   <Image
                     key={`${cafeId}-main-image`}
                     alt="카페 썸네일"
-                    src={collectedCafeDetail.image}
+                    src={collectionCafeDetail.image}
                     width={340}
                     height={240}
                     priority={true}
@@ -85,7 +85,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
                 </a>
               )}
             </div>
-            {collectedCafeDetail?.extra_images && Array.isArray(collectedCafeDetail.extra_images) && collectedCafeDetail.extra_images.length > 0 && collectedCafeDetail.extra_images.map((photo, i) => {
+            {collectionCafeDetail?.extra_images && Array.isArray(collectionCafeDetail.extra_images) && collectionCafeDetail.extra_images.length > 0 && collectionCafeDetail.extra_images.map((photo, i) => {
               return (
                 <div
                   key={`${cafeId}-extra-${i}`}
@@ -99,7 +99,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
                     priority={true}
                     onClick={() =>
                       window.open(
-                        `http://place.map.kakao.com/${collectedCafeDetail?.id}`,
+                        `http://place.map.kakao.com/${collectionCafeDetail?.id}`,
                         '_blank',
                       )
                     }
@@ -119,23 +119,23 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
 
         <section className="space-y-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold">{collectedCafeDetail?.name}</h1>
-            <Ratings rating={collectedCafeDetail?.ratings ?? 0} />
+            <h1 className="text-2xl font-semibold">{collectionCafeDetail?.name}</h1>
+            <Ratings rating={collectionCafeDetail?.ratings ?? 0} />
           </div>
-          <Categories categories={collectedCafeDetail?.categories} />
-          <OpenTime opening_time={collectedCafeDetail?.opening_time || ''} />
-          <Location address={collectedCafeDetail?.address} />
-          <PhoneNumber phone_number={collectedCafeDetail?.phone_number || ''} />
+          <Categories categories={collectionCafeDetail?.categories} />
+          <OpenTime opening_time={collectionCafeDetail?.opening_time || ''} />
+          <Location address={collectionCafeDetail?.address} />
+          <PhoneNumber phone_number={collectionCafeDetail?.phone_number || ''} />
 
-          <Comment comment={collectedCafeDetail?.comment} />
-          <EatenMenus eaten={collectedCafeDetail?.eaten_menus ?? ''} />
-          <Pros pros={collectedCafeDetail?.pros ?? ''} />
-          <Cons cons={collectedCafeDetail?.cons ?? ''} />
+          <Comment comment={collectionCafeDetail?.comment} />
+          <EatenMenus eaten={collectionCafeDetail?.eaten_menus ?? ''} />
+          <Pros pros={collectionCafeDetail?.pros ?? ''} />
+          <Cons cons={collectionCafeDetail?.cons ?? ''} />
         </section>
 
         <Button
           onClick={() => {
-            setEditingCafeForCollect(collectedCafeDetail);
+            setEditingCafeForCollect(collectionCafeDetail);
             setIsCollectFormOpen(true);
           }}
         >

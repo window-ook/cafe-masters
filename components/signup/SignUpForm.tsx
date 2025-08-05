@@ -9,7 +9,7 @@ import { useVerifyOtpCode } from '@/hooks/supabase/user';
 import { signUpFormSchema, SignUpFormData, otpFormSchema, OtpFormData } from '@/schema/auth';
 import Link from 'next/link';
 import InputField from '@/components/shared/InputField';
-import Button from '../shared/Button';
+import Button from '@/components/shared/Button';
 
 export default function SignUpForm() {
   const [confirmationRequired, setConfirmationRequired] = useState<boolean>(false);

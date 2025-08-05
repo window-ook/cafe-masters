@@ -1,5 +1,5 @@
 /** Supabase 북마크한 카페 */
-export interface ISupabaseBookmarkedCafe {
+export interface ISupabaseBookmarkCafe {
     id: number;
     user_id: string;
     coordX: number;

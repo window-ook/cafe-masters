@@ -6,7 +6,7 @@ import { createServerSupabaseClient } from "utils/supabase/server";
  * @param user_id 유저 ID
  * @returns 추천 카페 수
  */
-export async function getRecommendedCafesCounts(): Promise<number> {
+export async function getRecommendationCounts(): Promise<number> {
     const supabase = await createServerSupabaseClient();
 
     const { data, error } = await supabase

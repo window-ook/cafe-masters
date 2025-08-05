@@ -1,5 +1,5 @@
 /** Supabase 수집한 카페 */
-export interface ISupabaseCollectedCafe {
+export interface ISupabaseCollectionCafe {
     id: number;
     user_id: string;
     name: string;

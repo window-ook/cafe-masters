@@ -1,11 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
-import { useDeleteBookmarkedCafe } from '@/hooks/supabase/bookmark';
+import { useBookmarkCafes } from '@/hooks/supabase/bookmark/useBookmarkCafes';
+import { useDeleteBookmarkCafe } from '@/hooks/supabase/bookmark';
 import { useCollectionStore } from '@/stores/collection';
 import { useCurrentCafeStore, useUIStore, useUserStore } from '@/stores';
-import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
+import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
 import { toast } from 'react-toastify';
 import { Bookmark, CircleX } from 'lucide-react';
 import Button from '@/components/shared/Button';
@@ -26,12 +26,12 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
     router.back();
   };
 
-  const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
+  const { filteredBookmarkCafes } = useBookmarkCafes(userId);
 
-  const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
+  const { deleteBookmarkCafe } = useDeleteBookmarkCafe();
 
 
-  const detail = filteredBookmarkedCafes.find((cafe: ISupabaseBookmarkedCafe) => cafe.id === Number(cafeId));
+  const detail = filteredBookmarkCafes.find((cafe: ISupabaseBookmarkCafe) => cafe.id === Number(cafeId));
 
   if (!detail) {
     return (
@@ -90,7 +90,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   );
 
   const handleBookmarkDeletion = async () => {
-    await deleteBookmarkedCafe(bookmarkData.id);
+    await deleteBookmarkCafe(bookmarkData.id);
     setIsBookmarked(false);
     toast.success('북마크에서 제거되었습니다.');
   };

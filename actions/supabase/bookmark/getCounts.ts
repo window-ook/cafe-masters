@@ -6,7 +6,7 @@ import { createServerSupabaseClient } from "utils/supabase/server";
  * @param user_id 유저 ID
  * @returns 북마크 카페 수
  */
-export async function getBookmarkedCafesCounts(user_id: string): Promise<number> {
+export async function getBookmarkCounts(user_id: string): Promise<number> {
     if (!user_id) throw new Error('유저 ID가 유효하지 않습니다.');
 
     const supabase = await createServerSupabaseClient();

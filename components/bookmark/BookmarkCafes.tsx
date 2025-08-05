@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { useUIStore, useUserStore } from 'stores';
-import { useBookmarkedCafes } from '@/hooks/supabase/bookmark/useBookmarkedCafes';
-import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
+import { useBookmarkCafes } from '@/hooks/supabase/bookmark/useBookmarkCafes';
+import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import CafeItem from '@/components/shared/sidebar/CafeItem';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
-const BOOKMARKED_CAFES_PER_PAGE = 8 as const;
+const BOOKMARK_CAFES_PER_PAGE = 8 as const;
 
 export default function BookmarkCafes() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -17,8 +17,8 @@ export default function BookmarkCafes() {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const {
-    bookmarkedCafes,
-    paginatedData: paginatedBookmarkedCafes,
+    bookmarkCafes,
+    paginatedData: paginatedBookmarkCafes,
     totalPages,
     totalFilteredCount,
     hasNextPage,
@@ -26,11 +26,11 @@ export default function BookmarkCafes() {
     isLoading,
     isError,
     error,
-  } = useBookmarkedCafes(userId, currentPage, BOOKMARKED_CAFES_PER_PAGE);
+  } = useBookmarkCafes(userId, currentPage, BOOKMARK_CAFES_PER_PAGE);
 
   useEffect(() => { setCurrentPage(1); }, [totalFilteredCount]);
 
-  const handleNextBookmarkedCafePage = () => {
+  const handleNextBookmarkCafePage = () => {
     if (hasNextPage) setCurrentPage(prev => prev + 1);
   };
 
@@ -38,7 +38,7 @@ export default function BookmarkCafes() {
     if (hasPreviousPage) setCurrentPage(prev => prev - 1);
   };
 
-  const handleBookmarkedCafeClick = useCafeClick<ISupabaseBookmarkedCafe>({
+  const handleBookmarkCafeClick = useCafeClick<ISupabaseBookmarkCafe>({
     routePath: 'bookmark',
   });
 
@@ -48,7 +48,7 @@ export default function BookmarkCafes() {
       <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="my-8 px-8 flex flex-col gap-8">
-            {Array.from({ length: BOOKMARKED_CAFES_PER_PAGE }).map((_, index) => (
+            {Array.from({ length: BOOKMARK_CAFES_PER_PAGE }).map((_, index) => (
               <div
                 key={index}
                 className="h-20 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"
@@ -101,7 +101,7 @@ export default function BookmarkCafes() {
   }
 
   // 전체 데이터가 없는 경우 vs 필터링 결과가 없는 경우 구분
-  if (bookmarkedCafes?.length === 0) {
+  if (bookmarkCafes?.length === 0) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">
@@ -144,14 +144,14 @@ export default function BookmarkCafes() {
     <div className="h-full flex flex-col">
       <section className="flex-1 overflow-y-auto overflow-x-hidden">
         <ul className="pagination-sidebar-list">
-          {paginatedBookmarkedCafes.map((cafe: ISupabaseBookmarkedCafe) => (
+          {paginatedBookmarkCafes.map((cafe: ISupabaseBookmarkCafe) => (
             <CafeItem
               key={cafe.id}
               name={cafe.name}
               address={cafe.address}
               phone_number={cafe.phone_number}
               image={cafe.image}
-              onClickAction={() => handleBookmarkedCafeClick(cafe)}
+              onClickAction={() => handleBookmarkCafeClick(cafe)}
             />
           ))}
         </ul>
@@ -160,7 +160,7 @@ export default function BookmarkCafes() {
       <PageConverter
         isDarkTheme={isDarkTheme}
         handlePreviousPageAction={handlePreviousPageAction}
-        handleNextPageAction={handleNextBookmarkedCafePage}
+        handleNextPageAction={handleNextBookmarkCafePage}
         currentPage={currentPage}
         totalPages={totalPages}
       />

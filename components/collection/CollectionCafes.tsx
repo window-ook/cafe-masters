@@ -2,9 +2,9 @@
 
 import React, { useEffect } from 'react';
 import { useUserStore } from 'stores';
-import { useCollectedCafes } from '@/hooks/supabase/collection';
+import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useInView } from 'react-intersection-observer';
-import { ISupabaseCollectedCafe } from '@/types/supabase/collection';
+import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import CollectionCafe from '@/components/collection/CollectionCafe';
 import PulseDot from '@/components/shared/sidebar/PulseDot';
@@ -12,25 +12,25 @@ import PulseDot from '@/components/shared/sidebar/PulseDot';
 export default function CollectionCafes() {
   const userId = useUserStore(state => state.userId);
 
-  const { ref: collectedRef, inView: collectedInView } = useInView({
+  const { ref: collectionRef, inView: collectionInView } = useInView({
     threshold: 0.1,
   });
 
   const {
-    filteredCollectedCafes,
+    filteredCollectionCafes,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isLoading,
     isError,
     error,
-  } = useCollectedCafes(userId, true);
+  } = useCollectionCafes(userId, true);
 
   useEffect(() => {
-    if (collectedInView && hasNextPage && !isFetchingNextPage) fetchNextPage();
-  }, [collectedInView, hasNextPage, fetchNextPage, isFetchingNextPage]);
+    if (collectionInView && hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [collectionInView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
-  const handleCollectedCafeClick = useCafeClick<ISupabaseCollectedCafe>({
+  const handleCollectionCafeClick = useCafeClick<ISupabaseCollectionCafe>({
     routePath: 'collection',
   });
 
@@ -75,7 +75,7 @@ export default function CollectionCafes() {
   }
 
   // 빈 데이터 상태
-  if (!filteredCollectedCafes || filteredCollectedCafes.length === 0) {
+  if (!filteredCollectionCafes || filteredCollectionCafes.length === 0) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
         <div className="flex flex-col items-center justify-center h-full py-16 px-8">
@@ -92,7 +92,7 @@ export default function CollectionCafes() {
     <div className="h-full flex flex-col">
       <section className="flex-1 overflow-y-auto overflow-x-hidden">
         <ul className="pagination-sidebar-list">
-          {filteredCollectedCafes.map((cafe: ISupabaseCollectedCafe) => (
+          {filteredCollectionCafes.map((cafe: ISupabaseCollectionCafe) => (
             <CollectionCafe
               key={cafe.id}
               name={cafe.name}
@@ -100,12 +100,12 @@ export default function CollectionCafes() {
               image={cafe.image}
               address={cafe.address}
               phone_number={cafe.phone_number!}
-              onClickAction={() => handleCollectedCafeClick(cafe)}
+              onClickAction={() => handleCollectionCafeClick(cafe)}
             />
           ))}
         </ul>
         {isFetchingNextPage && <PulseDot />}
-        <div ref={collectedRef} className="h-8 w-full bg-transparent"></div>
+        <div ref={collectionRef} className="h-8 w-full bg-transparent"></div>
       </section>
     </div>
   );

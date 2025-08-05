@@ -1,5 +1,5 @@
 /** Supabase 추천 카페 */
-export interface ISupabaseRecommendedCafe {
+export interface ISupabaseRecommendationCafe {
     id: number;
     categories: string[];
     coordX: number;

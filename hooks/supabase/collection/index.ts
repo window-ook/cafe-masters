@@ -1,3 +1,3 @@
-export { useCollectedCafes } from '@/hooks/supabase/collection/useCollectedCafes';
-export { useCollectedCafesCounts } from '@/hooks/supabase/collection/useCollectedCafesCounts';
-export { useCreateCollectedCafe } from '@/hooks/supabase/collection/useCreateCollectedCafe';
+export { useCollectionCafes } from '@/hooks/supabase/collection/useCollectionCafes';
+export { useCollectionCounts } from '@/hooks/supabase/collection/useCollectionCounts';
+export { useCreateCollectionCafe } from '@/hooks/supabase/collection/useCreateCollectionCafe';

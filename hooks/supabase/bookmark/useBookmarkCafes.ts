@@ -2,14 +2,14 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useFilterStore } from '@/stores/filter';
-import { getBookmarkedCafes } from '@/actions/supabase/bookmark';
-import { bookmarkedCafeQuery } from '@/queries/supabase/bookmark';
-import { ISupabaseBookmarkedCafe } from '@/types/supabase/bookmark';
+import { getBookmarkCafes } from '@/actions/supabase/bookmark';
+import { bookmarkCafeQuery } from '@/queries/supabase/bookmark';
+import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
 
-interface IBookmarkedCafes {
-  bookmarkedCafes: ISupabaseBookmarkedCafe[];
-  filteredBookmarkedCafes: ISupabaseBookmarkedCafe[];
-  paginatedData: ISupabaseBookmarkedCafe[];
+interface IBookmarkCafes {
+  bookmarkCafes: ISupabaseBookmarkCafe[];
+  filteredBookmarkCafes: ISupabaseBookmarkCafe[];
+  paginatedData: ISupabaseBookmarkCafe[];
   totalPages: number;
   totalFilteredCount: number;
   hasNextPage: boolean;
@@ -22,32 +22,32 @@ interface IBookmarkedCafes {
  * @param itemsPerPage 페이지당 아이템 수
  * @returns 북마크 카페 데이터와 페이지네이션 정보
  */
-export function useBookmarkedCafes(
+export function useBookmarkCafes(
   userId: string,
   currentPage: number = 1,
   itemsPerPage: number = 8
-): IBookmarkedCafes & {
+): IBookmarkCafes & {
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
 } {
-  const { selectedRegion, searchTermInBookmarkedCafe } = useFilterStore();
+  const { selectedRegion, searchTermInBookmarkCafe } = useFilterStore();
 
   const queryData = useQuery({
     enabled: !!userId,
-    queryKey: bookmarkedCafeQuery.all(userId),
+    queryKey: bookmarkCafeQuery.all(userId),
     queryFn: async () => {
-      const response = await getBookmarkedCafes(userId);
+      const response = await getBookmarkCafes(userId);
       return response;
     },
   });
 
   // 필터링 및 페이지네이션 계산을 useMemo로 최적화
-  const paginationData = useMemo((): IBookmarkedCafes => {
+  const paginationData = useMemo((): IBookmarkCafes => {
     if (!queryData.data?.data) {
       return {
-        bookmarkedCafes: [],
-        filteredBookmarkedCafes: [],
+        bookmarkCafes: [],
+        filteredBookmarkCafes: [],
         paginatedData: [],
         totalPages: 0,
         totalFilteredCount: 0,
@@ -56,29 +56,29 @@ export function useBookmarkedCafes(
       };
     }
 
-    const bookmarkedCafes = queryData.data.data;
+    const bookmarkCafes = queryData.data.data;
 
     // 필터링 적용
-    const filteredBookmarkedCafes = bookmarkedCafes.filter((cafe: ISupabaseBookmarkedCafe) => {
-      const matchesSearch = !searchTermInBookmarkedCafe || cafe.name?.toLowerCase().includes(searchTermInBookmarkedCafe.toLowerCase());
+    const filteredBookmarkCafes = bookmarkCafes.filter((cafe: ISupabaseBookmarkCafe) => {
+      const matchesSearch = !searchTermInBookmarkCafe || cafe.name?.toLowerCase().includes(searchTermInBookmarkCafe.toLowerCase());
       const matchesRegion = selectedRegion === 'all' || (cafe.address && cafe.address.split(' ')[0] === selectedRegion);
       return matchesSearch && matchesRegion;
     });
 
     // 페이지네이션 계산
-    const totalFilteredCount = filteredBookmarkedCafes.length;
+    const totalFilteredCount = filteredBookmarkCafes.length;
     const totalPages = Math.ceil(totalFilteredCount / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const paginatedData = filteredBookmarkedCafes.slice(startIndex, endIndex);
+    const paginatedData = filteredBookmarkCafes.slice(startIndex, endIndex);
 
     // 페이지네이션 상태
     const hasNextPage = currentPage < totalPages;
     const hasPreviousPage = currentPage > 1;
 
     return {
-      bookmarkedCafes,
-      filteredBookmarkedCafes,
+      bookmarkCafes,
+      filteredBookmarkCafes,
       paginatedData,
       totalPages,
       totalFilteredCount,
@@ -88,7 +88,7 @@ export function useBookmarkedCafes(
   }, [
     queryData.data,
     selectedRegion,
-    searchTermInBookmarkedCafe,
+    searchTermInBookmarkCafe,
     currentPage,
     itemsPerPage,
   ]);

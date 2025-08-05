@@ -1,5 +1,5 @@
-export const recommendedCafeQuery = {
-    all: () => ['recommendedCafe'],
-    detail: (id: number) => ['recommendedCafe', 'detail', id],
-    counts: () => ['recommendedCafe', 'counts'],
+export const recommendationCafeQuery = {
+    all: () => ['recommendationCafe'],
+    detail: (id: number) => ['recommendationCafe', 'detail', id],
+    counts: () => ['recommendationCafe', 'counts'],
 } as const;

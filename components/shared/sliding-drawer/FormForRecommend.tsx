@@ -2,17 +2,17 @@
 
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCreateRecommendedCafe } from '@/hooks/supabase/recommendation/useCreateRecommendedCafe';
+import { useCreateRecommendationCafe } from '@/hooks/supabase/recommendation/useCreateRecommendationCafe';
 import { useRecommendationStore } from '@/stores/recommendation';
 import { recommendationFormSchema, RecommendationFormData } from '@/schema/recommendation';
 import { RecommendationRowInsert } from '@/actions/supabase/recommendation';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
-import Button from '../Button';
+import Button from '@/components/shared/Button';
 
 export default function FormForRecommend({ setIsRecommendFormOpenAction }: { setIsRecommendFormOpenAction: (open: boolean) => void }) {
   const targetCafeForRecommend = useRecommendationStore(state => state.targetCafeForRecommend);
 
-  const { createRecommendedCafe } = useCreateRecommendedCafe();
+  const { createRecommendationCafe } = useCreateRecommendationCafe();
 
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<RecommendationFormData>({
     resolver: zodResolver(recommendationFormSchema),
@@ -43,7 +43,7 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
         menus: null,
       };
 
-      createRecommendedCafe(recommendationData);
+      createRecommendationCafe(recommendationData);
       setIsRecommendFormOpenAction(false);
       alert('추천 카페로 추가했습니다!');
     } catch (error) {

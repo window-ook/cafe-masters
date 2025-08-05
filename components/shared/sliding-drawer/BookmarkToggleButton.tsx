@@ -1,6 +1,6 @@
 'use client';
 
-import { useCreateBookmarkedCafe, useDeleteBookmarkedCafe } from '@/hooks/supabase/bookmark';
+import { useCreateBookmarkCafe, useDeleteBookmarkCafe } from '@/hooks/supabase/bookmark';
 import { useCurrentCafeStore, useUserStore } from '@/stores';
 import { Bookmark } from 'lucide-react';
 import { toast } from 'react-toastify';
@@ -28,8 +28,8 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
   const isBookmarked = useCurrentCafeStore(state => state.isBookmarked);
   const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
 
-  const { uploadBookmarkedCafe } = useCreateBookmarkedCafe();
-  const { deleteBookmarkedCafe } = useDeleteBookmarkedCafe();
+  const { createBookmarkCafe } = useCreateBookmarkCafe();
+  const { deleteBookmarkCafe } = useDeleteBookmarkCafe();
 
   const handleBookmarkToggle = async () => {
     if (!userId) {
@@ -39,11 +39,11 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
 
     try {
       if (isBookmarked) {
-        await deleteBookmarkedCafe(bookmarkData.id);
+        await deleteBookmarkCafe(bookmarkData.id);
         setIsBookmarked(false);
         toast.success('북마크에서 제거되었습니다.');
       } else {
-        await uploadBookmarkedCafe({
+        await createBookmarkCafe({
           id: bookmarkData.id,
           user_id: userId,
           coordX: bookmarkData.coordX,

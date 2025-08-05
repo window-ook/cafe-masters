@@ -2,7 +2,7 @@ import { createServerSupabaseClient } from '@/utils/supabase/server';
 import { Coffee } from 'lucide-react';
 import Link from 'next/link';
 
-async function getCollectedCafesCounts() {
+async function getCollectionCounts() {
     const supabase = await createServerSupabaseClient();
     const { data, error } = await supabase
         .from('collection')
@@ -14,7 +14,7 @@ async function getCollectedCafesCounts() {
 }
 
 export default async function HeroSection() {
-    const collectedCafesCounts = await getCollectedCafesCounts();
+    const collectionCafesCounts = await getCollectionCounts();
     return (
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
             {/* Gradient Background */}
@@ -31,7 +31,7 @@ export default async function HeroSection() {
                         <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-main/20 via-purple-300/20 to-main/20 opacity-0 blur transition duration-1000 group-hover:opacity-100" />
                         <span className="relative inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-medium text-main-light backdrop-blur-xl">
                             <Coffee className="h-4 w-4" />
-                            총 수집된 카드 {collectedCafesCounts}개
+                            총 수집된 카드 {collectionCafesCounts}개
                         </span>
                     </div>
                 </div>

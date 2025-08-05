@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useCurrentCafeStore, useSearchedResultStore, useFilterStore, useUserStore } from '@/stores';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { toast } from 'react-toastify';
-import { useCollectedCafes } from '@/hooks/supabase/collection';
-import { useBookmarkedCafes } from '@/hooks/supabase/bookmark';
-import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
+import { useCollectionCafes } from '@/hooks/supabase/collection';
+import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
+import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
@@ -32,9 +32,9 @@ export default function KakaoMap() {
   const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
   const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);
 
-  const { filteredCollectedCafes } = useCollectedCafes(userId);
-  const { filteredBookmarkedCafes } = useBookmarkedCafes(userId);
-  const { recommendedCafes, isLoading: isRecommendedCafesLoading } = useRecommendedCafes();
+  const { filteredCollectionCafes } = useCollectionCafes(userId);
+  const { filteredBookmarkCafes } = useBookmarkCafes(userId);
+  const { recommendationCafes, isLoading: isRecommendedCafesLoading } = useRecommendationCafes();
 
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 
@@ -202,7 +202,7 @@ export default function KakaoMap() {
 
     if (pathname.startsWith('/collection')) {
       updateMarkers(
-        filteredCollectedCafes,
+        filteredCollectionCafes,
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
@@ -210,16 +210,16 @@ export default function KakaoMap() {
 
     if (pathname.startsWith('/bookmark')) {
       updateMarkers(
-        filteredBookmarkedCafes,
+        filteredBookmarkCafes,
         cafe => cafe.coordY,
         cafe => cafe.coordX,
       );
     }
 
     if (pathname.startsWith('/recommendation')) {
-      if (!isRecommendedCafesLoading && recommendedCafes) {
+      if (!isRecommendedCafesLoading && recommendationCafes) {
         updateMarkers(
-          recommendedCafes,
+          recommendationCafes,
           cafe => cafe.coordY,
           cafe => cafe.coordX,
         );
@@ -244,9 +244,9 @@ export default function KakaoMap() {
     pathname,
     setSearchResult,
     searchResult,
-    filteredBookmarkedCafes,
-    filteredCollectedCafes,
-    recommendedCafes,
+    filteredBookmarkCafes,
+    filteredCollectionCafes,
+    recommendationCafes,
     isRecommendedCafesLoading,
   ]);
 

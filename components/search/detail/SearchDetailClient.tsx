@@ -2,9 +2,9 @@
 
 import { useEffect, use } from 'react';
 import { useCurrentCafeStore, useUserStore } from '@/stores';
-import { useBookmarkedCafes } from '@/hooks/supabase/bookmark';
-import { useCollectedCafes } from '@/hooks/supabase/collection';
-import { useRecommendedCafes } from '@/hooks/supabase/recommendation/useRecommendedCafes';
+import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
+import { useCollectionCafes } from '@/hooks/supabase/collection';
+import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
 
 /** 검색 카페 상세 페이지 클라이언트 컴포넌트
  * @description 카페 ID 동기화 / 북마크, 수집, 추천된 건지 확인하고 상태 업데이트
@@ -20,9 +20,9 @@ export default function SearchDetailClient({ params }: { params: Promise<{ id: s
   const setIsRecommended = useCurrentCafeStore(state => state.setIsRecommended);
   const setCurrentCafeId = useCurrentCafeStore(state => state.setCurrentCafeId);
 
-  const { collectedCafes } = useCollectedCafes(userId, true);
-  const { bookmarkedCafes } = useBookmarkedCafes(userId);
-  const { recommendedCafes } = useRecommendedCafes();
+  const { collectionCafes } = useCollectionCafes(userId, true);
+  const { bookmarkCafes } = useBookmarkCafes(userId);
+  const { recommendationCafes } = useRecommendationCafes();
 
   // 카페 ID 설정 - 페이지 로드시 1회만 실행
   useEffect(() => {
@@ -36,9 +36,9 @@ export default function SearchDetailClient({ params }: { params: Promise<{ id: s
     if (!numericId) return;
 
     // 현재 상태와 비교하여 실제 변경이 있을 때만 업데이트
-    const isCollected = collectedCafes.some(cafe => cafe.id === numericId);
-    const isBookmarked = bookmarkedCafes.some(cafe => cafe.id === numericId);
-    const isRecommended = recommendedCafes?.some(cafe => cafe.id === numericId) || false;
+    const isCollected = collectionCafes.some(cafe => cafe.id === numericId);
+    const isBookmarked = bookmarkCafes.some(cafe => cafe.id === numericId);
+    const isRecommended = recommendationCafes?.some(cafe => cafe.id === numericId) || false;
 
     // 배치 업데이트로 한 번에 처리
     const updateStates = () => {
@@ -51,7 +51,7 @@ export default function SearchDetailClient({ params }: { params: Promise<{ id: s
     const timeoutId = setTimeout(updateStates, 0);
     return () => clearTimeout(timeoutId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numericId, bookmarkedCafes, collectedCafes, recommendedCafes]);
+  }, [numericId, bookmarkCafes, collectionCafes, recommendationCafes]);
 
   return null;
 }

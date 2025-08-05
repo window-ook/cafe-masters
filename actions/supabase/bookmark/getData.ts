@@ -1,7 +1,7 @@
 'use server';
 
 import { createServerSupabaseClient } from "utils/supabase/server";
-import { ISupabaseBookmarkedCafe } from "@/types/supabase/bookmark";
+import { ISupabaseBookmarkCafe } from "@/types/supabase/bookmark";
 
 /** 북마크한 카페 조회
  * @param user_id 유저 ID
@@ -9,7 +9,7 @@ import { ISupabaseBookmarkedCafe } from "@/types/supabase/bookmark";
  * @param limit 한 번에 가져올 카페 수
  * @returns 북마크 카페 목록과 다음 커서
  */
-export async function getBookmarkedCafes(user_id: string): Promise<{ data: ISupabaseBookmarkedCafe[] }> {
+export async function getBookmarkCafes(user_id: string): Promise<{ data: ISupabaseBookmarkCafe[] }> {
     if (!user_id) throw new Error('유저 ID가 유효하지 않습니다.');
 
     const supabase = await createServerSupabaseClient();

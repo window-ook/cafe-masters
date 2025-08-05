@@ -6,12 +6,12 @@ import { usePathname } from 'next/navigation';
 import { useUIStore } from '@/stores';
 import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
-import { useUpdateCollectedCafe } from '@/hooks/supabase/collection/useUpdateCollectedCafe';
-import { useCreateCollectedCafe } from '@/hooks/supabase/collection';
+import { useUpdateCollectionCafe } from '@/hooks/supabase/collection/useUpdateCollectionCafe';
+import { useCreateCollectionCafe } from '@/hooks/supabase/collection';
 import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
 import RatingsSelector from '@/components/shared/sliding-drawer/RatingsSelector';
-import Button from '../Button';
+import Button from '@/components/shared/Button';
 
 export default function FormForCollect() {
   const pathname = usePathname();
@@ -20,8 +20,8 @@ export default function FormForCollect() {
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const clearEditingCafe = useCollectionStore(state => state.clearEditingCafe);
 
-  const { updateCollectedCafe } = useUpdateCollectedCafe();
-  const { createCollectedCafe } = useCreateCollectedCafe();
+  const { updateCollectionCafe } = useUpdateCollectionCafe();
+  const { createCollectionCafe } = useCreateCollectionCafe();
 
   // 편집 모드 감지
   const isEditMode = pathname?.startsWith('/collection/detail/') && editingCafe;
@@ -64,7 +64,7 @@ export default function FormForCollect() {
         };
 
         // 업데이트 액션 호출
-        updateCollectedCafe(updateData);
+        updateCollectionCafe(updateData);
 
         // 성공 시 폼 닫기 및 편집 상태 초기화
         clearEditingCafe();
@@ -104,7 +104,7 @@ export default function FormForCollect() {
           cons: data.cons || '',
         };
 
-        createCollectedCafe(collectionData);
+        createCollectionCafe(collectionData);
         setIsCollectFormOpen(false);
         alert('카페가 성공적으로 수집되었습니다!');
 

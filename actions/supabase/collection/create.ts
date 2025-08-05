@@ -1,12 +1,12 @@
 'use server';
 
 import { createServerSupabaseClient } from "utils/supabase/server";
-import { CollectedRowInsert } from ".";
+import { CollectionRowInsert } from ".";
 
 /** 수집한 카페 추가
  * @param cafe 카페 데이터
  */
-export async function createCollectedCafe(cafe: CollectedRowInsert): Promise<boolean> {
+export async function createCollectionCafe(cafe: CollectionRowInsert): Promise<boolean> {
     // 1. 인증 검증 (필수)
     const supabase = await createServerSupabaseClient();
     const user = await supabase.auth.getUser();
