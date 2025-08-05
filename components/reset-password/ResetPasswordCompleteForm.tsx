@@ -16,7 +16,7 @@ export default function ResetPasswordCompleteForm() {
         <main className="area h-screen w-screen flex justify-center items-center">
             <BackgroundCards />
             <div className="flex flex-col items-center gap-4">
-                <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
+                <span className="text-3xl text-white text-shadow-black font-bold">
                     Cafe Masters
                 </span>
                 <div className="z-10 p-5 rounded-xl bg-white shadow-main-shadow">

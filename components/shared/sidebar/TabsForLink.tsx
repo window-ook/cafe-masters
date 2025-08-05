@@ -39,7 +39,7 @@ const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => 
             {title}
           </p>
         </div>
-        <p className="font-pretendard font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+        <p className="font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
           {counts}
         </p>
       </div>

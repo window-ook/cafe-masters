@@ -34,10 +34,10 @@ export default function CafeItem({
             {name}
           </span>
           <div>
-            <p className="font-pretendard text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+            <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
               {address}
             </p>
-            <p className="font-pretendard text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+            <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
               {phone_number}
             </p>
           </div>

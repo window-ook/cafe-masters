@@ -17,7 +17,7 @@ export default function SignInPageClient() {
                         alt="로고 아이콘"
                         className="w-8 h-auto"
                     />
-                    <span className="text-3xl text-white text-shadow-black font-pretendard font-bold">
+                    <span className="text-3xl text-white text-shadow-black font-bold">
                         Cafe Masters
                     </span>
                 </header>

@@ -38,7 +38,7 @@ export default function TierDialog({
             className={`${isDarkTheme ? 'bg-main-dark text-white border-main-dark-border border-4' : 'bg-white border-main-shadow border-4'} absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center`}
           >
             <div className="flex items-end gap-2">
-              <p className="font-pretendard font-extrabold text-2xl md:text-3xl">
+              <p className="font-extrabold text-2xl md:text-3xl">
                 TIER INFORMATION
               </p>
               <p className='font-medium'>
@@ -82,7 +82,7 @@ export default function TierDialog({
               <p className={`${BADGE_STYLE} z-10 relative bg-linear-to-r from-master-side via-master-via to-master-side bg-size-[200%_200%] animate-gradient text-white shadow-md`}>
                 <span className="text-sm font-dunggeunmo">MASTER</span>
               </p>
-              <p className="z-10 relative text-xl font-bold font-pretendard">
+              <p className="z-10 relative text-xl font-bold">
                 40+
               </p>
             </div>

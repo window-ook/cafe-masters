@@ -39,7 +39,7 @@ export default function UserProfile() {
             className="inline-block object-cover object-center w-4 h-auto rounded-lg"
           />
         </div>
-        <p className="pl-4 font-bold font-pretendard text-[0.5rem] sm:text-[1rem]">
+        <p className="pl-4 font-bold text-[0.5rem] sm:text-[1rem]">
           {userEmail}
         </p>
       </div>
