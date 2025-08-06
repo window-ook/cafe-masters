@@ -3,11 +3,13 @@
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useUserStore } from '@/stores/user';
 import Button from '@/components/shared/Button';
+import { useUIStore } from '@/stores';
 
 export default function SignOutButton() {
   const supabase = createBrowserSupabaseClient();
 
   const { resetUser } = useUserStore();
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   const handleSignOut = async () => {
     try {
@@ -24,7 +26,7 @@ export default function SignOutButton() {
       aria-label="로그아웃 버튼"
       onClick={handleSignOut}
       text='로그아웃'
-      customClassName='w-full'
+      customClassName={`w-full ${isDarkTheme ? 'bg-main-dark' : 'bg-sidebar-background'}`}
     />
   );
 }

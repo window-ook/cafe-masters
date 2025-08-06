@@ -17,7 +17,6 @@ import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
 import Button from '@/components/shared/Button';
 
 export default function Header() {
-
   const searchResult = useSearchedResultStore(state => state.searchResult);
   const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -44,7 +43,7 @@ export default function Header() {
 
   return (
     <header
-      className={`flex-none ${isDarkTheme ? 'bg-main-dark' : 'bg-gray-100'} top-0 py-4 w-full max-w-108 flex flex-col gap-2`}
+      className={`top-0 w-full max-w-108 py-4 flex-none ${isDarkTheme ? 'bg-dark-background' : 'bg-sidebar-background'} flex flex-col gap-2`}
     >
       <div className="flex justify-between items-center mb-2">
         <Tooltip
@@ -72,6 +71,7 @@ export default function Header() {
         />
         <ThemeToggleButton />
       </div>
+
       <Search />
 
       {paths.isSearch && (
@@ -93,7 +93,7 @@ export default function Header() {
               placeholder="카드 이름으로 검색"
               aria-label="수집한 카페 중 카페 이름 검색하기"
               className={`w-5/6 py-4 border-0 border-b-2 ${isDarkTheme
-                ? 'bg-main-dark border-gray-600 text-white'
+                ? 'bg-dark-background border-gray-600 text-white'
                 : 'bg-gray-100 border-gray-300 text-slate-700'
                 } placeholder:text-slate-400 focus:outline-none focus:ring-0`}
               value={collectionInput}
@@ -106,16 +106,16 @@ export default function Header() {
               aria-label="검색"
               onClick={handleCollectionSearch}
               text='검색'
-              customClassName="w-1/6 py-4 px-1"
+              customClassName={`w-1/6 py-4 px-1 ${isDarkTheme ? 'bg-main-dark' : 'bg-sidebar-background'}`}
             />
           </div>
           <div className="flex gap-4">
-            <div className="flex items-center text-xl">
+            {userId && <div className="flex items-center text-xl">
               <span className={`${isDarkTheme ? 'text-white' : 'text-main'} font-bold`}>
                 {collectionCounts}
               </span>
               개
-            </div>
+            </div>}
             <RegionFilter />
             <RatingsFilter />
           </div>
@@ -130,7 +130,7 @@ export default function Header() {
               placeholder="카페 이름으로 검색"
               aria-label="북마크한 카페 중 이름 검색"
               className={`w-5/6 py-4 border-0 border-b-2 ${isDarkTheme
-                ? 'bg-main-dark border-gray-600 text-white'
+                ? 'bg-dark-background border-gray-600 text-white'
                 : 'bg-gray-100 border-gray-300 text-slate-700'
                 } placeholder:text-slate-400 focus:outline-none focus:ring-0`}
               value={bookmarkInput}
@@ -143,16 +143,16 @@ export default function Header() {
               aria-label="검색"
               onClick={handleBookmarkSearch}
               text='검색'
-              customClassName="w-1/6 py-4 px-1"
+              customClassName={`w-1/6 py-4 px-1 ${isDarkTheme ? 'bg-main-dark' : 'bg-sidebar-background'}`}
             />
           </div>
           <div className="w-full px-2 flex gap-4">
-            <div className="flex items-center text-xl">
+            {userId && <div className="flex items-center text-xl">
               <span className={`${isDarkTheme ? 'text-white' : 'text-main'} font-bold`}>
                 {bookmarkCounts}
               </span>
               개
-            </div>
+            </div>}
             <RegionFilter />
           </div>
         </div>

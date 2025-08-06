@@ -171,7 +171,7 @@ export default function CollectionCafe({
         className={
           isHiddenCard
             ? `${HIDDEN_CARD} hidden-card`
-            : `card-tilt w-full h-full p-4 border-4 ${COLOR_BY_RATING} ${HOVER_BORDER_BY_RATING} ${isDarkTheme ? 'border-main-shadow' : 'border-gray-600'} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`
+            : `card-tilt w-full h-full p-4 border-4 ${COLOR_BY_RATING} ${HOVER_BORDER_BY_RATING} ${isDarkTheme ? 'border-dark-border' : 'border-slate-500'} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`
         }
       >
         {/* 빛 반사 효과 */}

@@ -14,7 +14,7 @@ export default function PageConverter({
   handleNextPageAction,
 }: IPageConverter) {
   return (
-    <nav aria-label="페이지 이동" className={`w-full py-4 ${isDarkTheme ? 'bg-main-dark' : 'bg-gray-100'} font-dunggeunmo`}>
+    <nav aria-label="페이지 이동" className={`w-full py-4 ${isDarkTheme ? 'bg-dark-background' : 'bg-sidebar-background'} font-dunggeunmo`}>
       <div className="flex justify-between items-center">
         <button
           type="button"

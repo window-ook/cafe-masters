@@ -6,9 +6,10 @@ interface IMenus {
         price: string;
         description?: string;
     }>;
+    isDarkTheme: boolean;
 }
 
-export default function Menus({ menus }: IMenus) {
+export default function Menus({ menus, isDarkTheme }: IMenus) {
     if (!menus || menus.length === 0) {
         return (
             <div className="w-full p-4 text-center text-description">
@@ -29,7 +30,7 @@ export default function Menus({ menus }: IMenus) {
                             {menus.map((menu, index) => (
                                 <div
                                     key={index}
-                                    className="flex flex-col gap-1 p-3 shadow-md rounded-lg"
+                                    className={`flex flex-col gap-1 p-3 shadow-md ${isDarkTheme ? 'shadow-dark-shadow' : ''} rounded-lg`}
                                 >
                                     <div className="flex justify-between items-start">
                                         <h4 className="font-medium text-base">{menu.name}</h4>

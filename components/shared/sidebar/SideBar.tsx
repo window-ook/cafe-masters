@@ -22,11 +22,11 @@ export default function SideBar() {
   const paths = usePathMatcher();
 
   return (
-    <nav className="relative flex">
+    <nav className="flex">
       {/* 사이드바 컨테이너 */}
       <div
-        className={`z-10 relative w-screen h-screen max-w-108 px-1 rounded-none shadow-xl shadow-main-shadow 
-          ${isDarkTheme ? 'bg-main-dark text-white' : 'bg-gray-100'} 
+        className={`z-10 relative w-screen h-screen max-w-108 px-1 rounded-none border-r-1 border-main-400/20
+          ${isDarkTheme ? 'bg-dark-background text-dark-text' : 'bg-sidebar-background'} 
           ${isSlidingDrawerOpen && 'hidden sm:block'}`}
       >
         {/* 사이드바 컨텐츠 */}

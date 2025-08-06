@@ -33,15 +33,25 @@ body {
   --color-main-800: oklch(45.17% 0.15 29.84);
   --color-main-900: oklch(39.64% 0.137 30.13);
 
-  --color-bookmark: var(--color-yellow-400);
-  --color-unbookmark: var(--color-gray-400);
-  --color-recommendation: oklch(79.32% 0.196 159.88);
-
   --color-main: var(--color-main-500);
   --color-main-light: var(--color-main-100);
   --color-main-shadow: var(--color-main-600);
   --color-main-dark: var(--color-main-900);
-  --color-main-dark-border: var(--color-main-800);
+
+  /* 컨테이너 */
+  --color-sidebar-background: var(--color-gray-100);
+
+  /* 아이콘, 뱃지 */
+  --color-bookmark: var(--color-yellow-400);
+  --color-unbookmark: var(--color-gray-400);
+  --color-recommendation: oklch(79.32% 0.196 159.88);
+
+  /* 다크 모드 */
+  --color-dark-text: var(--color-white);
+  --color-dark-background: var(--color-slate-800);
+  --color-dark-border: var(--color-main-800);
+  --color-dark-shadow: var(--color-slate-600);
+
   --color-collection-side: oklch(87.84% 0.279 145.33);
   --color-collection-center: oklch(60.39% 0.239 279.53);
   --color-beginner: oklch(64.33% 0.023 259.32);

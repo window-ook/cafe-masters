@@ -27,10 +27,10 @@ export default function SlidingDrawer() {
     const paths = usePathMatcher();
 
     const SLIDING_DRAWER_STYLE = clsx(
-        'static left-0 z-10 translate-y-4 w-screen max-w-108 p-2 overflow-x-hidden overflow-y-auto shadow-md transition-transform duration-300 ease-in-out',
-        isDarkTheme ? 'bg-main-dark text-white' : 'bg-white/20 text-black backdrop-blur-lg',
+        'static z-10 left-0 w-screen max-w-108 p-2 overflow-x-hidden overflow-y-auto shadow-md transition-transform duration-300 ease-in-out',
+        isDarkTheme ? 'bg-dark-background text-white' : 'bg-white/20 text-black backdrop-blur-lg',
         {
-            'hidden sm:block sm:pointer-events-none opacity-0': !isSlidingDrawerOpen,
+            'hidden sm:block sm:pointer-events-none': !isSlidingDrawerOpen,
             'rounded-t-3xl opacity-100 sm:h-[90vh] sm:translate-y-4 sm:translate-x-8 sm:rounded-md': isSlidingDrawerOpen,
             'translate-y-52 h-[calc(100vh-13rem)]': isSlidingDrawerOpen && isExtend,
             'translate-y-140': isSlidingDrawerOpen && !isExtend,

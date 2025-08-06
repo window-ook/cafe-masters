@@ -49,7 +49,7 @@ export default function TierDialog({
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className={`${isDarkTheme ? 'bg-main-dark text-white border-main-dark-border border-4' : 'bg-white border-main-shadow border-4'} relative sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center rounded-lg max-h-[90vh] overflow-y-auto`}
+          className={`${isDarkTheme ? 'bg-dark-background text-white border-dark-border border-4' : 'bg-white border-main-shadow border-4'} relative sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center rounded-lg max-h-[90vh] overflow-y-auto`}
         >
           <div className="flex items-end gap-2">
             <p className="font-extrabold text-2xl md:text-3xl">

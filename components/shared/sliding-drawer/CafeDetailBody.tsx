@@ -10,6 +10,7 @@ import Menus from '@/components/shared/sliding-drawer/Menus';
 import Categories from '@/components/shared/sliding-drawer/Categories';
 import ImageWithFallback from '@/components/shared/ImageWithFallback';
 import Image from 'next/image';
+import { useUIStore } from '@/stores';
 
 interface ICafeDetailBody {
   cafeId: number;
@@ -34,6 +35,8 @@ export default function CafeDetailBody({
   actionButtons,
   useImageWithFallback = false
 }: ICafeDetailBody) {
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -182,7 +185,7 @@ export default function CafeDetailBody({
       </section>
 
       {/* 메뉴 */}
-      <Menus menus={cafeData.menus} />
+      <Menus menus={cafeData.menus} isDarkTheme={isDarkTheme} />
     </main>
   );
 }

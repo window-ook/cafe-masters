@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSearchedResultStore, useUIStore } from 'stores';
-import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
+import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 import CafeItem from '@/components/shared/sidebar/CafeItem';
 

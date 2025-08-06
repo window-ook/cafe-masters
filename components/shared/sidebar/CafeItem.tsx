@@ -22,13 +22,13 @@ export default function CafeItem({
 
   return (
     <li
-      className={`${isDarkTheme ? 'bg-main-dark text-white shadow-main-shadow' : ''} h-24 p-2 rounded-sm shadow-md list-none hover:opacity-50 transition duration-150 ease`}
+      className={`h-24 p-2 rounded-sm shadow-md list-none ${isDarkTheme ? 'bg-dark-background text-white shadow-dark-shadow' : ''} hover:opacity-50 transition duration-150 ease`}
     >
       <button
         type="button"
         aria-label="카페 상세 정보 열기 버튼"
         onClick={onClickAction}
-        className="w-full h-full flex justify-between items-center text-left"
+        className="w-full h-full flex justify-between items-center gap-2 text-left"
       >
         <div className="h-full flex flex-col justify-center gap-1">
           <span className="whitespace-nowrap overflow-hidden text-ellipsis  font-bold text-xl">

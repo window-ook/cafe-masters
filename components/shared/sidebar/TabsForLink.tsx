@@ -29,7 +29,7 @@ const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => 
       <Link
         href={path}
         onClick={handleNavClick}
-        className={`group w-full px-3 py-4 rounded-lg ${isDarkTheme ? 'hover:bg-main-light' : 'hover:bg-white'} flex justify-between cursor-pointer hover:shadow-md transition duration-150 ease-in`}
+        className={`group w-full px-3 py-4 rounded-lg ${isDarkTheme ? 'hover:bg-main' : 'hover:bg-white'} flex justify-between cursor-pointer hover:shadow-md transition duration-150 ease-in`}
       >
         <div className="flex justify-between w-full">
           <div className="flex items-center gap-2">
@@ -38,12 +38,12 @@ const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => 
               {title}
             </p>
           </div>
-          <p className="font-bold text-lg text-gray-500 group-hover:text-main transition duration-150 ease-in">
+          <p className={`font-bold text-lg text-gray-500 ${isDarkTheme ? 'group-hover:text-white' : 'group-hover:text-main'} transition duration-150 ease-in`}>
             {counts}
           </p>
         </div>
       </Link>
-    </li>
+    </li >
   );
 };
 

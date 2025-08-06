@@ -5,10 +5,12 @@ import { useFilterStore } from '@/stores/filter';
 import { CATEGORIES } from '@/utils/constants/categories';
 import { RiResetLeftFill } from 'react-icons/ri';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
+import { useUIStore } from '@/stores';
 
 export default function CategoryFilter() {
   const selectedCategories = useFilterStore(state => state.selectedCategories);
   const setSelectedCategories = useFilterStore(state => state.setSelectedCategories);
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -55,7 +57,7 @@ export default function CategoryFilter() {
         type="button"
         aria-expanded={isExpanded}
         onClick={toggleExpand}
-        className="w-full px-4 py-2 rounded-full flex justify-center items-center text-gray-700 hover:text-main transition duration-150"
+        className={`w-full px-4 py-2 rounded-full flex justify-center items-center ${isDarkTheme ? 'text-white' : 'text-gray-700'} hover:text-main cursor-pointer transition duration-150`}
       >
         {isExpanded ? (
           <p className="flex items-center gap-1 ">
