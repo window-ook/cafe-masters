@@ -23,14 +23,14 @@ const ContactCard = ({ title, description, icon: Icon, onClick }: IContactCard) 
             {/* Main Card */}
             <div className="relative flex h-40 cursor-pointer flex-col justify-center rounded-xl border border-white/20 bg-white/10 p-4 shadow-xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
                 <div className="flex justify-between">
-                    <span className="font-bold text-white text-2xl max-[690px]:text-xl max-[560px]:text-xs">
+                    <span className="font-bold text-white text-xs sm:text-xl">
                         {title}
                     </span>
-                    <div className="text-white transition-transform duration-300 group-hover:scale-110">
-                        <Icon className="h-6 w-6 text-white max-[690px]:h-4 max-[690px]:w-4" />
+                    <div className="hidden sm:block text-white transition-transform duration-300 group-hover:scale-110">
+                        <Icon className="size-4 sm:size-6 text-white" />
                     </div>
                 </div>
-                <span className="text-left font-bold text-main-light text-[1rem] transition-colors duration-300 hover:text-gray-200 max-[690px]:text-sm max-[560px]:text-xs">
+                <span className="text-left font-bold text-main-light text-xs sm:text-xl transition-colors duration-300 hover:text-gray-200">
                     {description}
                 </span>
             </div>
@@ -55,7 +55,7 @@ export default function ContactSection() {
 
             <div className="relative">
                 <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-10 transition-all duration-1000 ease-out sm:px-16 md:px-20 lg:px-24 xl:px-32">
-                    <span className="bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-5xl font-bold text-transparent max-lg:text-4xl max-md:text-2xl max-sm:text-lg">
+                    <span className="bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-2xl sm:text-5xl font-bold text-transparent">
                         Contact me<span className="text-main">.</span>
                     </span>
 

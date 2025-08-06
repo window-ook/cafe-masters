@@ -79,14 +79,14 @@ export default function CategorySection() {
 
             <div className="relative mx-auto max-w-7xl px-6">
                 <div className="mb-16 text-center">
-                    <h2 className="mb-4 text-4xl font-bold text-gray-900 max-md:text-3xl">
+                    <h2 className="mb-4 text-2xl sm:text-4xl font-bold text-gray-900">
                         카테고리로 편하게 카페 찾기
                     </h2>
-                    <p className="mx-auto max-w-2xl text-xl text-gray-600">
-                        원하는 분위기와 목적에 맞는 카페를 카테고리별로 쉽게 찾아보세요
+                    <p className="mx-auto max-w-2xl text-sm sm:text-xl text-gray-600">
+                        원하는 분위기와 목적에 맞는 카페를 <br className='block sm:hidden' />카테고리별로 쉽게 찾아보세요
                     </p>
-                    <p className="mx-auto max-w-2xl text-xl text-gray-600">
-                        여러분이 수집한 카드에도 등록한 카테고리로 컬렉션에서 볼 수 있어요
+                    <p className="mx-auto max-w-2xl text-sm sm:text-xl text-gray-600">
+                        여러분이 수집한 카드에도 <br className='block sm:hidden' />카테고리를 등록해서 확인할 수 있어요
                     </p>
                 </div>
 

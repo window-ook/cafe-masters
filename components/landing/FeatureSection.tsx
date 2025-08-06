@@ -71,11 +71,12 @@ export default function FeatureSection() {
                     <h2 className="mb-4 text-4xl font-bold text-gray-900 max-md:text-3xl">
                         여러분에게 제공하는 기능
                     </h2>
-                    <p className="mx-auto max-w-2xl text-xl text-gray-600">
-                        우리가 평소에 카페를 이용하면서 불편했던 점을 해결하기 위해 만들었어요
+                    <p className="mx-auto max-w-2xl text-sm sm:text-xl text-gray-600">
+                        우리가 평소에 카페를 이용하면서 불편했던 점을<br className='block sm:hidden' />해결하기 위해 만들었어요
                     </p>
-                    <p className="mx-auto max-w-2xl text-xl text-gray-600">
-                        메모장에 따로 저장하지 말고 카페 마스터즈에서 쉽게 관리해보세요
+                    <br className='block sm:hidden' />
+                    <p className="mx-auto max-w-2xl text-sm sm:text-xl text-gray-600">
+                        메모장에 따로 저장하지 말고 <br className='block sm:hidden' />카페 마스터즈에서 쉽게 관리해보세요
                     </p>
                 </div>
 

@@ -36,7 +36,7 @@ export default async function HeroSection() {
                     </div>
                 </div>
 
-                <h1 className="mb-6 text-6xl font-bold leading-tight text-white max-lg:text-5xl max-md:text-4xl max-sm:text-3xl">
+                <h1 className="mb-6 text-2xl sm:text-6xl font-bold leading-tight text-white">
                     카페 컬렉션의 새로운 경험을
                     <br />
                     <span className="bg-gradient-to-r from-main-light to-main bg-clip-text text-transparent">
@@ -44,8 +44,8 @@ export default async function HeroSection() {
                     </span>
                 </h1>
 
-                <p className="mx-auto mb-8 max-w-2xl text-xl leading-relaxed text-gray-300 max-md:text-lg">
-                    나만의 카페 카드를 수집하고 가고 싶은 카페는 북마크 해보세요
+                <p className="mx-auto mb-8 max-w-2xl text-sm sm:text-xl leading-relaxed text-gray-300">
+                    나만의 카페 카드를 수집하고 <br className='block sm:hidden' />가고 싶은 카페는 북마크 해보세요
                     <br />
                     개발자가 직접 가보고 추천하는 카페도 있어요
                 </p>
@@ -55,7 +55,7 @@ export default async function HeroSection() {
                         <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-main/20 via-purple-300/20 to-main/20 opacity-0 blur transition duration-1000 group-hover:opacity-100" />
                         <Link
                             href="/main"
-                            className="relative rounded-xl bg-main px-8 py-4 font-bold text-xl text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-main-dark hover:shadow-2xl"
+                            className="relative rounded-xl bg-main px-12 py-4 font-bold text-xl text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-main-dark hover:shadow-2xl"
                         >
                             입장하기
                         </Link>

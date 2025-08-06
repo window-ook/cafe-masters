@@ -23,7 +23,7 @@ const BenefitCard: React.FC<IBenefitCard> = ({ icon: Icon, title, description })
                     {title}
                 </h3>
 
-                <p className="leading-relaxed text-gray-300">
+                <p className="leading-relaxed text-gray-300 text-sm sm:text-base">
                     {description}
                 </p>
             </div>
@@ -77,11 +77,11 @@ export default function BenefitsSection() {
             <div className="relative mx-auto max-w-7xl px-6 text-white">
                 <div className="mb-16 text-center">
                     <span className="font-semibold text-lg text-main-light">놓치지 마세요</span>
-                    <h2 className="mb-4 mt-2 text-4xl font-bold text-white max-md:text-3xl">
+                    <h2 className="mb-4 mt-2 text-2xl sm:text-4xl font-bold text-white">
                         카페 마스터즈만의 특별한 경험
                     </h2>
-                    <p className="mx-auto max-w-2xl text-xl text-main-light">
-                        다른 서비스에서는 경험할 수 없는 카페 마스터즈만의 풍부한 혜택들을 즐겨보세요
+                    <p className="mx-auto max-w-2xl text-sm sm:text-xl text-main-light">
+                        다른 서비스에서는 경험할 수 없는 <br className='block sm:hidden' />카페 마스터즈만의 풍부한 혜택들을 즐겨보세요
                     </p>
                 </div>
 

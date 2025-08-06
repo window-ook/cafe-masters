@@ -12,11 +12,11 @@ export default function CTASection() {
             <div className="absolute bottom-10 right-10 h-80 w-80 animate-pulse rounded-full bg-purple-200/20 blur-3xl delay-500" />
 
             <div className="relative mx-auto max-w-4xl px-6 text-center text-white">
-                <h2 className="mb-6 text-5xl font-bold max-md:text-4xl">
+                <h2 className="mb-6 text-2xl sm:text-5xl font-bold">
                     마스터가 될 준비가 되셨나요?
                 </h2>
 
-                <p className="mb-8 text-xl leading-relaxed text-main-super-light">
+                <p className="mb-8 text-sm sm:text-xl leading-relaxed text-main-super-light">
                     지금 시작해서 나만의 카페 컬렉션을 만들고,
                     <br />
                     새로운 카페 경험의 세계로 떠나보세요.
@@ -29,7 +29,7 @@ export default function CTASection() {
                     {/* Main Button */}
                     <Link
                         href="/signin"
-                        className="relative inline-block rounded-xl bg-white px-12 py-4 text-xl font-bold text-main shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-gray-100 hover:shadow-2xl"
+                        className="relative inline-block rounded-xl bg-white px-12 sm:px-8 py-4 sm:text-xl font-bold text-main shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-gray-100 hover:shadow-2xl"
                     >
                         지금 시작하기
                     </Link>
