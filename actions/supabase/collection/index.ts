@@ -1,6 +1,6 @@
 import { Database } from 'types_db';
 
-export { getCollectionCafes } from '@/actions/supabase/collection/getData';
+export { getCollectionCafes, getCollectionCafeById } from '@/actions/supabase/collection/getData';
 export { getCollectionCounts } from '@/actions/supabase/collection/getCounts';
 export { createCollectionCafe } from '@/actions/supabase/collection/create';
 export { updateCollectionCafe } from '@/actions/supabase/collection/update';

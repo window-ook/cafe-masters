@@ -25,30 +25,31 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
   ),
   title: 'Cafe Masters',
-  description: '카드를 모으며 카페 마스터가 되어보세요!',
+  description: '카페를 자주 다니는 사람들을 위한 플랫폼',
   keywords: [
     '카페 마스터즈',
     '카페 마스터',
-    '카페 추천',
-    '카페 수집',
-    '카페 카드',
     'Cafe Masters',
-    'CafeMasters',
     'cafe masters',
+    'CafeMasters',
+    'cafemasters',
   ],
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    title: '카페 마스터즈 Cafe Masters',
-    description: '카드를 수집하고 카페 마스터가 되어보세요!',
-    images: [
-      {
-        url: '/image/og_image.avif',
-        width: 2000,
-        height: 1500,
-        alt: 'OG image Alt 2000*1500(4:3)',
-      },
-    ],
+    title: 'Cafe Masters',
+    siteName: 'Cafe Masters',
+    description: '카페를 자주 다니는 사람들을 위한 플랫폼',
+    images: ['https://app.cafe-masters.co/opengraph-image.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cafe Masters',
+    description: '카페를 자주 다니는 사람들을 위한 플랫폼',
+    images: ['https://app.cafe-masters.co/opengraph-image.png'],
+  },
+  alternates: {
+    canonical: '/',
   },
 };
 

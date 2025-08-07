@@ -17,8 +17,8 @@ interface ICurrentCafeStore {
   setIsRecommended: (isRecommended: boolean) => void;
   setCurrentCafeId: (id: number) => void;
 }
-export const useCurrentCafeStore = create<ICurrentCafeStore>()(
 
+export const useCurrentCafeStore = create<ICurrentCafeStore>()(
   persist(
     set => ({
       // 기본 좌표 '성수'

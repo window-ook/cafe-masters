@@ -3,6 +3,8 @@ import type { Configuration } from 'webpack';
 
 const nextConfig: NextConfig = {
   images: {
+    formats: ['image/avif', 'image/webp'],
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: 'http',
@@ -68,6 +70,11 @@ const nextConfig: NextConfig = {
       config.module.rules.push({
         test: /\.node$/,
         use: 'node-loader',
+      });
+      config.module.rules.push({
+        test: /\.svg$/,
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack'],
       });
     }
 

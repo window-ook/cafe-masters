@@ -1,6 +1,6 @@
 import { Database } from '@/types_db';
 
-export { getBookmarkCafes } from '@/actions/supabase/bookmark/getData';
+export { getBookmarkCafes, getBookmarkCafeById } from '@/actions/supabase/bookmark/getData';
 export { getBookmarkCounts } from '@/actions/supabase/bookmark/getCounts';
 export { createBookmarkCafe } from '@/actions/supabase/bookmark/create';
 export { deleteBookmarkCafe } from '@/actions/supabase/bookmark/delete';

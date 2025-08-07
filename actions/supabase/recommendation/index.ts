@@ -1,6 +1,6 @@
 import { Database } from 'types_db';
 
-export { getRecommendationCafes } from '@/actions/supabase/recommendation/getData';
+export { getRecommendationCafes, getRecommendationCafeById } from '@/actions/supabase/recommendation/getData';
 export { getRecommendationCounts } from '@/actions/supabase/recommendation/getCounts';
 export { createRecommendationCafe } from '@/actions/supabase/recommendation/create';
 export { deleteRecommendationCafe } from '@/actions/supabase/recommendation/delete';

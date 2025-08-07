@@ -8,6 +8,7 @@ import { useCurrentCafeStore } from '@/stores/current-cafe';
  */
 interface ICafeClickData {
   id: string | number;
+  place_name?: string;
   coordX?: number;
   coordY?: number;
   x?: number;
@@ -59,8 +60,12 @@ export function useCafeClick<T extends ICafeClickData>(
     const cafeIdAsNumber = typeof cafe.id === 'string' ? parseInt(cafe.id) : cafe.id;
     openCafeDetail(cafeIdAsNumber);
 
-    // 라우팅
-    router.push(`/${routePath}/detail/${cafe.id}`);
+    // 라우팅 (카페 이름을 쿼리 파라미터로 포함)
+    const cafeName = cafe.place_name;
+    const url = cafeName 
+      ? `/${routePath}/detail/${cafe.id}?name=${encodeURIComponent(cafeName)}`
+      : `/${routePath}/detail/${cafe.id}`;
+    router.push(url);
   }, [
     currentCafeId,
     router,

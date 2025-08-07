@@ -4,8 +4,9 @@ import { use, useEffect } from 'react';
 import { useCurrentCafeStore, useUserStore } from '@/stores';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation';
+import { IPageParams } from '@/types/shared/page';
 
-export default function BookmarkDetailClient({ params }: { params: Promise<{ id: string }> }) {
+export default function BookmarkDetailClient({ params }: IPageParams) {
     const resolvedParams = use(params);
     const { id } = resolvedParams;
     const numericId = Number(id);
