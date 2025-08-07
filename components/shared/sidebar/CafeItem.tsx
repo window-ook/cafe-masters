@@ -28,7 +28,7 @@ export default function CafeItem({
         type="button"
         aria-label="카페 상세 정보 열기 버튼"
         onClick={onClickAction}
-        className="w-full h-full flex justify-between items-center gap-2 text-left"
+        className="w-full h-full flex justify-between items-center gap-2 text-left cursor-pointer"
       >
         <div className="h-full flex flex-col justify-center gap-1">
           <span className="whitespace-nowrap overflow-hidden text-ellipsis  font-bold text-xl">

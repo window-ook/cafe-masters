@@ -26,7 +26,7 @@ export default function SignOutButton() {
       aria-label="로그아웃 버튼"
       onClick={handleSignOut}
       text='로그아웃'
-      customClassName={`w-full ${isDarkTheme ? 'bg-main-dark' : 'bg-sidebar-background'}`}
+      customClassName={`w-full ${isDarkTheme ? 'bg-main-dark' : ''}`}
     />
   );
 }

@@ -40,7 +40,7 @@ export default function SearchInput() {
       <Button
         type="button"
         aria-label="검색 버튼"
-        customClassName={`w-1/6 py-4 px-1 text-2xl ${isDarkTheme ? 'bg-main-dark' : 'bg-sidebar-background'}`}
+        customClassName={`w-1/6 py-4 px-1 text-2xl ${isDarkTheme ? 'bg-main-dark' : ''}`}
         onClick={handleSearch}
         text='GO'
       />
