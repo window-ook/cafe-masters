@@ -8,7 +8,7 @@ export const signinWithKakao = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'kakao',
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_API_REQUEST_URI}/auth/callback`,
+      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`,
     },
   });
 

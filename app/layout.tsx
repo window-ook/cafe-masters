@@ -1,12 +1,10 @@
-import { createServerSupabaseClient } from 'utils/supabase/server';
 import { Metadata } from 'next';
+import { createServerSupabaseClient } from '@/utils/supabase/server';
 import './globals.css';
 import React from 'react';
-import ReactQueryClientProvider from 'config/react-query-client-provider';
-import AuthProvider from 'config/auth-provider';
-import MainLayout from 'components/layouts/main-layout';
 import localFont from 'next/font/local';
-import NoSessionLayout from 'components/layouts/no-session-layout';
+import AuthProvider from '@/providers/AuthProvider';
+import Providers from '@/providers/Providers';
 
 const pretendard = localFont({
   src: '../public/fonts/PretendardVariable.woff2',
@@ -24,34 +22,34 @@ const dunggeunmo = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_API_REQUEST_URI || 'http://localhost:3000',
+    process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
   ),
   title: 'Cafe Masters',
-  description: '카드를 모으며 카페 마스터가 되어보세요!',
+  description: '카페를 자주 다니는 사람들을 위한 플랫폼',
   keywords: [
     '카페 마스터즈',
     '카페 마스터',
-    '카페 추천',
-    '카페 수집',
-    '카페 카드',
     'Cafe Masters',
-    'CafeMasters',
     'cafe masters',
+    'CafeMasters',
     'cafemasters',
   ],
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    title: '카페 마스터즈 Cafe Masters',
-    description: '카드를 수집하고 카페 마스터가 되어보세요!',
-    images: [
-      {
-        url: '/image/og_image.avif',
-        width: 2000,
-        height: 1500,
-        alt: 'OG image Alt 2000*1500(4:3)',
-      },
-    ],
+    title: 'Cafe Masters',
+    siteName: 'Cafe Masters',
+    description: '카페를 자주 다니는 사람들을 위한 플랫폼',
+    images: ['https://app.cafe-masters.co/opengraph-image.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cafe Masters',
+    description: '카페를 자주 다니는 사람들을 위한 플랫폼',
+    images: ['https://app.cafe-masters.co/opengraph-image.png'],
+  },
+  alternates: {
+    canonical: '/',
   },
 };
 
@@ -67,23 +65,19 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="kr" className={`${pretendard.variable} ${dunggeunmo.variable}`}>
+    <html lang="kr">
       <head>
         <meta
           name="google-site-verification"
           content="uLLg7r0DwRzwQB1croiSmhHf5Krf4FaxC2Z2t0BX4JM"
         />
       </head>
-      <body className={`font-pretendard`}>
-        <ReactQueryClientProvider>
-          <AuthProvider accessToken={session?.access_token ?? 'no-token'}>
-            {session?.user ? (
-              <MainLayout>{children}</MainLayout>
-            ) : (
-              <NoSessionLayout>{children}</NoSessionLayout>
-            )}
-          </AuthProvider>
-        </ReactQueryClientProvider>
+      <body
+        className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
+      >
+        <AuthProvider accessToken={session?.access_token || null}>
+          <Providers>{children}</Providers>
+        </AuthProvider>
       </body>
     </html>
   );

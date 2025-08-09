@@ -1,6 +1,275 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+body {
+  overflow-x: hidden;
+}
+
+/* 
+* ===========================
+* Tailwind CSS 커스텀 컬러 설정
+* =========================== 
+*/
+@theme {
+  /* 브레이크 포인트 */
+  --breakpoint-sm: 401px;
+  --breakpoint-md: 801px;
+  --breakpoint-lg: 1201px;
+
+  /* 폰트 */
+  --font-pretendard: var(--font-pretendard);
+  --font-dunggeunmo: var(--font-dunggeunmo);
+
+  /* 폰트 사이즈 */
+  --text-2xs: 0.3rem;
+
+  /* 컬러 */
+  --color-main-100: oklch(84.11% 0.081 26.55);
+  --color-main-200: oklch(78.57% 0.111 27.15);
+  --color-main-300: oklch(72.8% 0.138 27.73);
+  --color-main-400: oklch(66.78% 0.163 28.3);
+  --color-main-500: oklch(60.49% 0.185 28.84);
+  --color-main-600: oklch(55.58% 0.174 29.2);
+  --color-main-700: oklch(50.48% 0.162 29.53);
+  --color-main-800: oklch(45.17% 0.15 29.84);
+  --color-main-900: oklch(39.64% 0.137 30.13);
+
+  --color-main: var(--color-main-500);
+  --color-main-light: var(--color-main-100);
+  --color-main-shadow: var(--color-main-600);
+  --color-main-dark: var(--color-main-900);
+
+  /* 컨테이너 */
+  --color-sidebar-background: var(--color-gray-100);
+
+  /* 아이콘, 뱃지 */
+  --color-bookmark: var(--color-yellow-400);
+  --color-unbookmark: var(--color-gray-400);
+  --color-recommendation: oklch(79.32% 0.196 159.88);
+
+  /* 다크 모드 */
+  --color-dark-text: var(--color-white);
+  --color-dark-background: var(--color-slate-800);
+  --color-dark-border: var(--color-main-800);
+  --color-dark-shadow: var(--color-slate-600);
+
+  --color-collection-side: oklch(87.84% 0.279 145.33);
+  --color-collection-center: oklch(60.39% 0.239 279.53);
+  --color-beginner: oklch(64.33% 0.023 259.32);
+  --color-junior: oklch(45.16% 0.316 269.89);
+  --color-senior: oklch(69.58% 0.222 53.94);
+  --color-expert-via: oklch(94.24% 0.226 109.1);
+  --color-expert-side: oklch(56.13% 0.131 90.83);
+  --color-master-via: oklch(62.84% 0.276 330.28);
+  --color-master-side: oklch(50.51% 0.256 300.23);
+  --color-master-effect-left: oklch(75.31% 0.173 229.86);
+  --color-master-effect-mid: oklch(67.16% 0.286 310.12);
+  --color-master-effect-right: oklch(69.1% 0.213 29.61);
+
+  --color-silver-base: oklch(91.51% 0.006 259.32);
+  --color-silver-via: oklch(69.78% 0.016 259.32);
+  --color-silver-side: oklch(45.54% 0.023 259.32);
+
+  --color-gold-base: oklch(93.08% 0.149 98.8);
+  --color-gold-via: oklch(85.86% 0.206 98.8);
+  --color-gold-side: oklch(56.93% 0.141 78.76);
+  --color-gold-effect-left: oklch(93.08% 0.149 98.8);
+  --color-gold-effect-mid: oklch(88.51% 0.189 98.8);
+  --color-gold-effect-right: oklch(75.48% 0.181 98.8);
+
+  --color-emerald-base: oklch(86.33% 0.154 159.88);
+  --color-emerald-via: oklch(79.32% 0.196 159.88);
+  --color-emerald-side: oklch(51.53% 0.101 179.88);
+  --color-emerald-effect-left: oklch(90.06% 0.204 179.88);
+  --color-emerald-effect-mid: oklch(61.53% 0.151 149.88);
+  --color-emerald-effect-right: oklch(22.5% 0.081 149.88);
+
+  --color-hidden-badge-left: oklch(65.8% 0.266 330.28);
+  --color-hidden-badge-mid: oklch(87.5% 0.101 310.12);
+  --color-hidden-badge-right: oklch(65.8% 0.266 330.28);
+  --color-hidden-effect-left: oklch(75.31% 0.173 229.86);
+  --color-hidden-effect-mid: oklch(67.16% 0.286 310.12);
+  --color-hidden-effect-right: oklch(69.1% 0.213 29.61);
+
+  --color-button: var(--color-main-500);
+  --color-button-text: var(--color-white);
+  --color-button-disabled: var(--color-gray-400);
+  --color-button-hover: var(--color-main-600);
+
+  /* 텍스트 그림자 */
+  --text-shadow-black: 0 2px 4px rgba(0, 0, 0, 0.8);
+  --text-shadow-main: 0 2px 4px rgba(135, 90, 173, 1);
+
+  /* 드롭 쉐도우 */
+  --drop-shadow-3xl: drop-shadow(14px 14px 11px -7px rgba(47, 49, 51, 0.75));
+
+  /* 애니메이션 */
+  --animate-gradient: gradient 3s ease infinite;
+  --animate-reveal: reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+  --animate-textReveal: textReveal 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  --animate-shine: shine 1.5s;
+  --animate-skeleton: skeleton 1s ease-in-out infinite alternate;
+
+  --animate-dotOne: dotOne 1s ease-in-out infinite;
+  --animate-dotTwo: dotTwo 1s ease-in-out infinite;
+  --animate-dotThree: dotThree 1s ease-in-out infinite;
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes dotOne {
+    '0%, 100%': {
+      opacity: '0'
+    }
+
+    '33%': {
+      opacity: '1'
+    }
+
+
+    '66%': {
+      opacity: '1'
+    }
+  }
+
+  @keyframes dotTwo {
+    '0%, 33%': {
+      opacity: '0'
+    }
+
+    '66%': {
+      opacity: '1'
+    }
+
+    '100%': {
+      opacity: '1'
+    }
+  }
+
+  @keyframes dotThree {
+    '0%, 66%': {
+      opacity: '0'
+    }
+
+    '100%': {
+      opacity: '1'
+    }
+  }
+
+  @keyframes reveal {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes textReveal {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    '0%': {
+      transform: 'translateY(0)'
+    }
+  }
+
+  @keyframes shine {
+    from: {
+      transform: 'translateX(-100%) rotate(45deg)',
+    }
+
+    to: {
+      transform: 'translateX(200%) rotate(45deg)',
+    }
+  }
+
+  @keyframes skeleton {
+    '0%': {
+      'background-color': var(--skeleton-start),
+    }
+
+    '100%': {
+      'background-color': var(--skeleton-end),
+    }
+  }
+}
+
+@layer components {
+
+  /* 페이지네이션 사이드바 리스트 */
+  .pagination-sidebar-list {
+    @apply my-8 px-8 flex flex-col gap-8;
+  }
+
+  /* 카페 상세 정보 페이지의 썸네일 슬라이드 */
+  .slide-images {
+    @apply w-80 max-w-full h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 cursor-pointer;
+  }
+
+  .slide-images-button {
+    @apply absolute z-10 top-1/2 transform -translate-y-1/2 px-2 py-1 shadow-md rounded-md cursor-pointer;
+  }
+
+  /* Master 티어 Footer 뱃지 */
+  .master-badge {
+    @apply w-full z-0 absolute inset-0 h-9 bg-linear-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm;
+  }
+
+  /* Master 티어 Dialog 뱃지 */
+  .master-dialog-badge {
+    @apply w-[27%] sm:w-[10%] z-0 -top-0.5 inset-0 h-9 absolute bg-linear-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm
+  }
+
+  /* 버튼 hover */
+  .hover-button {
+    @apply cursor-pointer hover:bg-button-hover transition duration-150 ease-in;
+  }
+
+  /* 별점 빨간색 배경 */
+  .rating-red-circle {
+    @apply relative size-5 rounded-full shadow-md shadow-yellow-100 flex items-center justify-center bg-red-500;
+  }
+
+  /* 별점 빨간색 배경 속 별 */
+  .rating-yellow-star {
+    @apply absolute text-yellow-300 text-xs;
+  }
+
+  /* 로그인 폼 카드 */
+  .auth-form-layout {
+    @apply z-10 p-5 rounded-xl shadow-main-shadow bg-white;
+  }
+
+  /* 로그인 폼 타이틀 */
+  .auth-form-title {
+    @apply text-3xl font-bold text-center;
+  }
+
+  /* 로그인 폼 멘션 */
+  .auth-form-mention {
+    @apply flex items-center justify-center gap-4 text-center;
+  }
+}
 
 /* 
 * ===========================
@@ -8,15 +277,20 @@
 * =========================== 
 */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #875aad;
+  background-color: var(--color-main-500);
   border-radius: 10px;
   border: 2px solid transparent;
 }
 
+/* 
+* ===========================
+* shadcn-ui 기본 컬러 설정
+* =========================== 
+*/
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -49,9 +323,9 @@
     --hidden-card-left: #5f018a;
     --hidden-card-mid: #8a24b9;
     --hidden-card-right: #f5248c;
-    --gold-left: '#fde68a',
-      --gold-via: '#facc15',
-      --gold-right: '#a16207',
+    --gold-left: #fde68a;
+    --gold-via: #facc15;
+    --gold-right: #a16207;
   }
 
   .dark {
@@ -82,31 +356,15 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-body {
-  font-family: 'Nanum Gothic', sans-serif;
-  overflow-x: hidden;
-}
-
 /* 
 * ===========================
-* 카드 디자인
+* 수집한 카페의 카드 디자인
 * =========================== 
 */
 .card-container {
   perspective: 500px;
 }
 
-/* 틸트 */
 .card-tilt {
   transition: transform 0.1s ease;
   will-change: transform;
@@ -175,7 +433,7 @@ body {
   position: absolute;
   inset: 0;
   background-repeat: no-repeat;
-  background-image: url("/image/pattern_diagonal_1.gif");
+  background-image: url("https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//pattern_diagonal.gif");
   background-position: 50% 50%;
   background-size: 160%;
   background-blend-mode: normal;
@@ -237,7 +495,7 @@ body {
 
 .card-hidden:after {
   background-image:
-    url("/image/pattern_diagonal_1.gif"),
+    url("https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//pattern_diagonal.gif"),
     url("https://assets.codepen.io/13471/sparkles.gif"),
     linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
   background-position: 50% 50%;
@@ -248,56 +506,11 @@ body {
   z-index: 2;
 }
 
-/* 랜딩 페이지 소개 섹션 애니메이션 */
-@-webkit-keyframes animatetop {
-  from {
-    top: -18.75rem;
-    opacity: 0;
-  }
-
-  to {
-    top: 0;
-    opacity: 1;
-  }
-}
-
-@keyframes animatetop {
-  from {
-    top: -18.75rem;
-    opacity: 0;
-  }
-
-  to {
-    top: 0;
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes zoomIn {
-  0% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes zoomIn {
-  0% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-/* 로그인, 회원가입, 비밀번호 재설정 페이지 배경 카드 애니메이션 */
+/*
+* ===========================
+* 배경 카드 라이징 애니메이션
+* =========================== 
+*/
 .area {
   background: #2a2b2b;
   width: 100%;
@@ -321,10 +534,10 @@ body {
   list-style: none;
   width: 1.25rem;
   height: 1.25rem;
-  background-image: url('/image/logo.avif');
+  background-image: url('https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//card_logo.avif');
   background-size: cover;
   background-position: center;
-  animation: animate 25s linear infinite;
+  animation: rising 25s linear infinite;
   bottom: -9.375rem;
 }
 
@@ -388,7 +601,7 @@ body {
   animation-duration: 8s;
 }
 
-@keyframes animate {
+@keyframes rising {
   0% {
     transform: translateY(0) rotate(0deg);
     opacity: 1;
