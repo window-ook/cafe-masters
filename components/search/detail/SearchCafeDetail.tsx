@@ -25,17 +25,21 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   const setTargetCafeForRecommend = useRecommendationStore(state => state.setTargetCafeForRecommend);
   const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
 
-  const { searchedCafeDetail } = useSearchedCafeDetail(cafeId.toString());
+  const { searchedCafeDetail, isLoading: isDetailLoading } = useSearchedCafeDetail(cafeId.toString());
 
+  // 즉시 렌더링: 검색 결과에 포함된 기본 정보(클라이언트 캐시)
+  const foundCafe = useMemo(() => {
+    const cafe = searchResult.find(cafe => Number(cafe.id) === cafeId);
+    if (!cafe) throw new Error('카페의 상세 정보를 찾을 수 없습니다');
+    return cafe;
+  }, [searchResult, cafeId]);
+
+  // 점진적 렌더링: 기본 정보 + 카페 상세 정보 데이터 업데이트(API 응답)
   const searchedDetail = useMemo(() => {
-    const foundCafe = searchResult.find(cafe => Number(cafe.id) === cafeId);
-
-    if (!foundCafe) throw new Error('카페의 상세 정보를 찾을 수 없습니다');
-
     return {
       id: foundCafe.id,
       name: foundCafe.place_name,
-      image: searchedCafeDetail?.image ?? 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif',
+      image: searchedCafeDetail?.image || 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif',
       address: foundCafe.road_address_name ?? foundCafe.address_name,
       phone_number: foundCafe.phone ?? '',
       kakaoCategories: foundCafe.category_name ? foundCafe.category_name.split(' > ') : [],
@@ -43,7 +47,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
       opening_time: searchedCafeDetail?.opening_time ?? null,
       menus: searchedCafeDetail?.menus ?? null,
     };
-  }, [searchResult, cafeId, searchedCafeDetail]);
+  }, [foundCafe, searchedCafeDetail]);
 
   const bookmarkData = {
     id: Number(searchedDetail.id),
@@ -105,14 +109,13 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
 
   return (
     <article className="h-full rounded-md flex flex-col">
-      <CafeDetailHeader
-        bookmarkData={bookmarkData}
-      />
+      <CafeDetailHeader bookmarkData={bookmarkData} />
       <CafeDetailBody
         cafeId={cafeId}
         cafeData={searchedDetail}
         actionButtons={actionButtons}
         useImageWithFallback={true}
+        isDetailLoading={isDetailLoading}
       />
     </article>
   );

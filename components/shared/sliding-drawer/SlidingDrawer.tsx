@@ -1,11 +1,10 @@
 'use client';
 
-import { useState, Suspense } from 'react';
+import { useState } from 'react';
 import { useCurrentCafeStore, useUIStore } from '@/stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import clsx from 'clsx';
 import SearchCafeDetail from '@/components/search/detail/SearchCafeDetail';
-import CafeDetailSkeleton from '@/components/shared/sliding-drawer/CafeDetailSkeleton';
 import CollectionCafeDetail from '@/components/collection/detail/CollectionCafeDetail';
 import BookmarkCafeDetail from '@/components/bookmark/detail/BookmarkCafeDetail';
 import RecommendationCafeDetail from '@/components/recommendation/detail/RecommendationCafeDetail';
@@ -46,12 +45,12 @@ export default function SlidingDrawer() {
         }
 
         return (
-            <Suspense fallback={<CafeDetailSkeleton />}>
+            <>
                 {paths.isSearchDetail && <SearchCafeDetail cafeId={currentCafeId} setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />}
                 {paths.isCollectionDetail && <CollectionCafeDetail cafeId={currentCafeId} />}
                 {paths.isBookmarkDetail && <BookmarkCafeDetail cafeId={currentCafeId} />}
                 {paths.isRecommendationDetail && <RecommendationCafeDetail cafeId={currentCafeId} />}
-            </Suspense>
+            </>
         );
     };
 

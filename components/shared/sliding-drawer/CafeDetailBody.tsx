@@ -1,6 +1,7 @@
 'use client';
 
 import { RefObject, useRef, ReactNode } from 'react';
+import { useUIStore } from '@/stores';
 import { scrollThumbnails } from '@/utils/shared/detail';
 import { FolderCheck } from 'lucide-react';
 import Location from '@/components/shared/sliding-drawer/Location';
@@ -10,7 +11,6 @@ import Menus from '@/components/shared/sliding-drawer/Menus';
 import Categories from '@/components/shared/sliding-drawer/Categories';
 import ImageWithFallback from '@/components/shared/ImageWithFallback';
 import Image from 'next/image';
-import { useUIStore } from '@/stores';
 
 interface ICafeDetailBody {
   cafeId: number;
@@ -21,19 +21,21 @@ interface ICafeDetailBody {
     image: string;
     extra_images?: string[];
     opening_time?: string | null;
-    menus?: { name: string; price: string; }[];
+    menus?: { name: string; price: string; description?: string; }[] | null;
     categories?: string[];
     kakaoCategories?: string[];
   };
   actionButtons: ReactNode;
   useImageWithFallback?: boolean;
+  isDetailLoading?: boolean;
 }
 
 export default function CafeDetailBody({
   cafeId,
   cafeData,
   actionButtons,
-  useImageWithFallback = false
+  useImageWithFallback = false,
+  isDetailLoading = false
 }: ICafeDetailBody) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
@@ -42,7 +44,7 @@ export default function CafeDetailBody({
   return (
     <main className="overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4 flex-1">
       {/* 카페 이미지 */}
-      {cafeData.image && (
+      {(cafeData.image || isDetailLoading) && (
         <section
           key={`${cafeId}-image-section`}
           className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4">
@@ -60,74 +62,82 @@ export default function CafeDetailBody({
             ref={scrollRef}
             className="w-full max-w-full overflow-x-auto overflow-y-hidden flex gap-4 scrollbar-hide snap-x snap-mandatory"
           >
-            <div className="h-60 py-2 snap-center shrink-0">
-              <a
-                type="button"
-                aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
-                onClick={() =>
-                  window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')
-                }
-              >
-                {useImageWithFallback ? (
-                  <ImageWithFallback
-                    key={`${cafeId}-main-image`}
-                    alt="카페 썸네일"
-                    src={cafeData.image}
-                    fallbackSrc="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif"
-                    width={340}
-                    height={240}
-                    priority={true}
-                    className="slide-images"
-                  />
-                ) : (
-                  <Image
-                    key={`${cafeId}-main-image`}
-                    alt="카페 썸네일"
-                    src={cafeData.image}
-                    width={340}
-                    height={240}
-                    priority={true}
-                    className="slide-images"
-                  />
-                )}
-              </a>
-            </div>
-
-            {cafeData.extra_images?.map((photo, i) => (
-              <div
-                key={`${cafeId}-extra-${i}`}
-                className="h-60 py-2 snap-center shrink-0"
-              >
-                {useImageWithFallback ? (
-                  <ImageWithFallback
-                    key={`${cafeId}-extra-image-${i}`}
-                    alt="카페 썸네일"
-                    src={photo}
-                    fallbackSrc="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif"
-                    width={340}
-                    height={240}
-                    priority={true}
-                    onClick={() =>
-                      window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')
-                    }
-                    className="slide-images"
-                  />
-                ) : (
-                  <Image
-                    key={`${cafeId}-extra-image-${i}`}
-                    alt="카페 썸네일"
-                    src={photo}
-                    width={340}
-                    height={240}
-                    priority={true}
-                    onClick={() =>
-                      window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')
-                    }
-                    className="slide-images"
-                  />
-                )}
+            {isDetailLoading && !cafeData.image ? (
+              <div className="h-60 py-2 snap-center shrink-0">
+                <div className="w-[340px] h-[240px] bg-gray-200 dark:bg-gray-700 animate-pulse rounded-md" />
               </div>
-            ))}
+            ) : (
+              <>
+                <div className="h-60 py-2 snap-center shrink-0">
+                  <a
+                    type="button"
+                    aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
+                    onClick={() =>
+                      window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')
+                    }
+                  >
+                    {useImageWithFallback ? (
+                      <ImageWithFallback
+                        key={`${cafeId}-main-image-${cafeData.image}`}
+                        alt="카페 썸네일"
+                        src={cafeData.image}
+                        fallbackSrc="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif"
+                        width={340}
+                        height={240}
+                        priority={true}
+                        className="slide-images"
+                      />
+                    ) : (
+                      <Image
+                        key={`${cafeId}-main-image-${cafeData.image}`}
+                        alt="카페 썸네일"
+                        src={cafeData.image}
+                        width={340}
+                        height={240}
+                        priority={true}
+                        className="slide-images"
+                      />
+                    )}
+                  </a>
+                </div>
+
+                {cafeData.extra_images?.map((photo, i) => (
+                  <div
+                    key={`${cafeId}-extra-${i}`}
+                    className="h-60 py-2 snap-center shrink-0"
+                  >
+                    {useImageWithFallback ? (
+                      <ImageWithFallback
+                        key={`${cafeId}-extra-image-${i}`}
+                        alt="카페 썸네일"
+                        src={photo}
+                        fallbackSrc="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif"
+                        width={340}
+                        height={240}
+                        priority={true}
+                        onClick={() =>
+                          window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')
+                        }
+                        className="slide-images"
+                      />
+                    ) : (
+                      <Image
+                        key={`${cafeId}-extra-image-${i}`}
+                        alt="카페 썸네일"
+                        src={photo}
+                        width={340}
+                        height={240}
+                        priority={true}
+                        onClick={() =>
+                          window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')
+                        }
+                        className="slide-images"
+                      />
+                    )}
+                  </div>
+                ))}
+              </>
+            )}
           </div>
 
           <button
@@ -176,7 +186,7 @@ export default function CafeDetailBody({
         )}
 
         {/* 운영시간 */}
-        <OpenTime opening_time={cafeData.opening_time ?? ''} />
+        <OpenTime opening_time={cafeData.opening_time ?? ''} isLoading={isDetailLoading} />
       </section>
 
       {/* 액션 버튼들 */}
@@ -185,7 +195,7 @@ export default function CafeDetailBody({
       </section>
 
       {/* 메뉴 */}
-      <Menus menus={cafeData.menus} isDarkTheme={isDarkTheme} />
+      <Menus menus={cafeData.menus} isDarkTheme={isDarkTheme} isLoading={isDetailLoading} />
     </main>
   );
 }
