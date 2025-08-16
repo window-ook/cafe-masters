@@ -1,6 +1,6 @@
 'use client';
 
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { ISearchedCafeDetail } from '@/types/kakao-map/kakao-map';
 import { searchCafeQuery } from '@/queries/kakao-map/search';
 
@@ -9,7 +9,7 @@ import { searchCafeQuery } from '@/queries/kakao-map/search';
  * @returns 카페 상세 정보 데이터
  */
 export function useSearchedCafeDetail(cafeId: string) {
-  const { data, isError, error } = useSuspenseQuery({
+  const { data, isError, error, isLoading } = useQuery({
     queryKey: searchCafeQuery.all(cafeId),
     queryFn: async (): Promise<ISearchedCafeDetail> => {
       const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -37,5 +37,5 @@ export function useSearchedCafeDetail(cafeId: string) {
     },
   });
 
-  return { searchedCafeDetail: data, isError, error };
+  return { searchedCafeDetail: data, isError, error, isLoading };
 }

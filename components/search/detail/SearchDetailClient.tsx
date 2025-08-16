@@ -5,13 +5,18 @@ import { useCurrentCafeStore, useUserStore } from '@/stores';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
-import { IPageParams } from '@/types/shared/page';
+
+interface ISearchDetailClientProps {
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}
 
 /** 검색 카페 상세 페이지 클라이언트 컴포넌트
  * @description 카페 ID 동기화 / 북마크, 수집, 추천된 건지 확인하고 상태 업데이트
  */
-export default function SearchDetailClient({ params }: IPageParams) {
+export default function SearchDetailClient({ params }: ISearchDetailClientProps) {
   const resolvedParams = use(params);
+
   const { id } = resolvedParams;
   const numericId = Number(id);
 
@@ -41,7 +46,6 @@ export default function SearchDetailClient({ params }: IPageParams) {
     const isBookmarked = bookmarkCafes.some(cafe => cafe.id === numericId);
     const isRecommended = recommendationCafes?.some(cafe => cafe.id === numericId) || false;
 
-    // 배치 업데이트로 한 번에 처리
     const updateStates = () => {
       setIsCollected(isCollected);
       setIsBookmarked(isBookmarked);

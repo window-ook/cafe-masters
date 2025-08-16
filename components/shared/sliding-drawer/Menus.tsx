@@ -5,11 +5,30 @@ interface IMenus {
         name: string;
         price: string;
         description?: string;
-    }>;
+    }> | null;
     isDarkTheme: boolean;
+    isLoading?: boolean;
 }
 
-export default function Menus({ menus, isDarkTheme }: IMenus) {
+export default function Menus({ menus, isDarkTheme, isLoading = false }: IMenus) {
+    if (isLoading && (!menus || menus.length === 0)) {
+        return (
+            <div className="w-full">
+                <div className="w-full h-12 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-lg mb-4" />
+                <div className="flex flex-col gap-3">
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className="p-3 shadow-md rounded-lg">
+                            <div className="flex justify-between items-start">
+                                <div className="h-5 bg-gray-200 dark:bg-gray-700 animate-pulse rounded w-24" />
+                                <div className="h-5 bg-gray-200 dark:bg-gray-700 animate-pulse rounded w-16" />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
     if (!menus || menus.length === 0) {
         return (
             <div className="w-full p-4 text-center text-description">
