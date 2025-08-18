@@ -2,9 +2,7 @@
 
 import { useMemo } from 'react';
 import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
-import { useSearchedResultStore, useCurrentCafeStore, useUserStore, useUIStore } from '@/stores';
-import { useCollectionStore } from '@/stores/collection';
-import { useRecommendationStore } from '@/stores/recommendation';
+import { useSearchedResultStore, useCurrentCafeStore, useUserStore, useUIStore, useCollectionStore, useRecommendationStore } from '@/stores';
 import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
@@ -29,13 +27,30 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
 
   // 즉시 렌더링: 검색 결과에 포함된 기본 정보(클라이언트 캐시)
   const foundCafe = useMemo(() => {
+    // 새로고침 시 searchResult가 비어있을 수 있으므로 안전하게 처리
+    if (!searchResult || searchResult.length === 0) {
+      return null;
+    }
     const cafe = searchResult.find(cafe => Number(cafe.id) === cafeId);
-    if (!cafe) throw new Error('카페의 상세 정보를 찾을 수 없습니다');
-    return cafe;
+    return cafe || null;
   }, [searchResult, cafeId]);
 
   // 점진적 렌더링: 기본 정보 + 카페 상세 정보 데이터 업데이트(API 응답)
   const searchedDetail = useMemo(() => {
+    if (!foundCafe) {
+      return {
+        id: cafeId.toString(),
+        name: '카페 정보 로딩 중...',
+        image: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif',
+        address: '',
+        phone_number: '',
+        kakaoCategories: [],
+        extra_images: searchedCafeDetail?.extra_images ?? [],
+        opening_time: searchedCafeDetail?.opening_time ?? null,
+        menus: searchedCafeDetail?.menus ?? null,
+      };
+    }
+
     return {
       id: foundCafe.id,
       name: foundCafe.place_name,
@@ -47,7 +62,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
       opening_time: searchedCafeDetail?.opening_time ?? null,
       menus: searchedCafeDetail?.menus ?? null,
     };
-  }, [foundCafe, searchedCafeDetail]);
+  }, [foundCafe, searchedCafeDetail, cafeId]);
 
   const bookmarkData = {
     id: Number(searchedDetail.id),

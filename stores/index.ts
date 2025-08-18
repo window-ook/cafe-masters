@@ -3,3 +3,5 @@ export { useFilterStore } from '@/stores/filter';
 export { useUIStore } from '@/stores/ui';
 export { useUserStore } from '@/stores/user';
 export { useSearchedResultStore } from '@/stores/search';
+export { useCollectionStore } from '@/stores/collection';
+export { useRecommendationStore } from '@/stores/recommendation';

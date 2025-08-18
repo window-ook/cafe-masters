@@ -75,8 +75,7 @@ export const useUIStore = create<IUIStore>()(
 
       closeSlidingDrawer: () => {
         set({ isSlidingDrawerOpen: false });
-        // 필요시 cafeId도 초기화 가능
-        // useCurrentCafeStore.getState().setCurrentCafeId(12345678);
+        useCurrentCafeStore.getState().setCurrentCafeId(12345678);
       },
     }),
     { name: 'UIStore' },
