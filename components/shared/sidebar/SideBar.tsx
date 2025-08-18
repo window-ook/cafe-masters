@@ -15,6 +15,7 @@ import CollectionCafes from '@/components/collection/CollectionCafes';
 import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
 import ListSkeleton from '@/components/shared/sidebar/ListSkeleton';
 
+/** 네비게이션 기능과 목록 표시 기능을 포함하는 Shell */
 export default function SideBar() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
@@ -23,13 +24,11 @@ export default function SideBar() {
 
   return (
     <nav className="flex">
-      {/* 사이드바 컨테이너 */}
       <div
         className={`z-10 relative w-screen h-screen max-w-108 px-1 rounded-none border-r-1 border-main-400/20
           ${isDarkTheme ? 'bg-dark-background text-dark-text' : 'bg-sidebar-background'} 
           ${isSlidingDrawerOpen && 'hidden sm:block'}`}
       >
-        {/* 사이드바 컨텐츠 */}
         <section className="h-full flex flex-col">
           <Header />
 
@@ -80,15 +79,13 @@ export default function SideBar() {
         </section>
       </div>
 
-      {/* 슬라이딩 드로어: 상세 정보 표시 */}
-      {isSlidingDrawerOpen && (
-        <ErrorBoundaryWrapper
-          featureName="상세 정보"
-          message="상세 정보를 불러오는 중 에러가 발생했습니다."
-        >
-          <SlidingDrawer />
-        </ErrorBoundaryWrapper>
-      )}
+      {/* 슬라이딩 드로어: 상세 정보 */}
+      <ErrorBoundaryWrapper
+        featureName="상세 정보"
+        message="상세 정보를 불러오는 중 에러가 발생했습니다."
+      >
+        <SlidingDrawer />
+      </ErrorBoundaryWrapper>
     </nav>
   );
 }

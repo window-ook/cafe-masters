@@ -11,38 +11,46 @@ import RecommendationCafeDetail from '@/components/recommendation/detail/Recomme
 import FormForCollect from '@/components/shared/sliding-drawer/FormForCollect';
 import FormForRecommend from '@/components/shared/sliding-drawer/FormForRecommend';
 
-/** 각 도메인별 상세 정보 페이지를 표시하는 슬라이딩 드로어
- * @renderContent 수집하기 폼, 추천하기 폼, 각 도메인별 카페 상세 정보
- */
+/** 상세 정보, 수집하기, 추천하기 폼을 표시하는 Shell */
 export default function SlidingDrawer() {
     const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
     const isDarkTheme = useUIStore(state => state.isDarkTheme);
     const isExtend = useUIStore(state => state.isExtend);
     const currentCafeId = useCurrentCafeStore(state => state.currentCafeId);
     const isCollectFormOpen = useUIStore(state => state.isCollectFormOpen);
+    const closeSlidingDrawer = useUIStore(state => state.closeSlidingDrawer);
 
     const [isRecommendFormOpen, setIsRecommendFormOpenAction] = useState(false);
 
     const paths = usePathMatcher();
 
+    if (paths.isMain && isSlidingDrawerOpen) closeSlidingDrawer();
+
     const SLIDING_DRAWER_STYLE = clsx(
-        'static z-10 left-0 w-screen max-w-108 p-2 overflow-x-hidden overflow-y-auto shadow-md transition-transform duration-300 ease-in-out',
+        'fixed z-10 w-screen max-w-108 p-2 overflow-x-hidden overflow-y-auto shadow-md transition-all duration-300 ease-in-out',
+        // 다크 모드
         isDarkTheme ? 'bg-dark-background text-white' : 'bg-white/20 text-black backdrop-blur-lg',
         {
-            'hidden sm:block sm:pointer-events-none': !isSlidingDrawerOpen,
-            'rounded-t-3xl opacity-100 sm:h-[90vh] sm:translate-y-4 sm:translate-x-8 sm:rounded-md': isSlidingDrawerOpen,
-            'translate-y-52 h-[calc(100vh-13rem)]': isSlidingDrawerOpen && isExtend,
-            'translate-y-140': isSlidingDrawerOpen && !isExtend,
+            // 모바일 닫힌 상태: 화면 아래로 숨김
+            'rounded-t-3xl bottom-0 left-0 h-[calc(100vh-13rem)] translate-y-full opacity-0 pointer-events-none': !isSlidingDrawerOpen && !isExtend,
+            'rounded-t-3xl bottom-0 left-0 h-[calc(100vh-3rem)] translate-y-full opacity-0 pointer-events-none': !isSlidingDrawerOpen && isExtend,
+
+            // 모바일 열린 상태: 아래에서 위로 슬라이드
+            'rounded-t-3xl bottom-0 left-0 h-[calc(100vh-13rem)] translate-y-0 opacity-100': isSlidingDrawerOpen && !isExtend,
+            'rounded-t-3xl bottom-0 left-0 h-[calc(100vh-3rem)] translate-y-0 opacity-100': isSlidingDrawerOpen && isExtend,
+
+            // 데스크톱 닫힌 상태: 사이드바 우측 영역에서 오른쪽으로 숨김
+            'sm:top-4 sm:left-[27rem] sm:h-[90vh] sm:rounded-md sm:bottom-auto sm:translate-y-0 sm:translate-x-0 sm:opacity-0 sm:pointer-events-none': !isSlidingDrawerOpen,
+
+            // 데스크톱 열린 상태: 사이드바 우측에서 12만큼 왼쪽으로 이동
+            'sm:top-4 sm:left-[27rem] sm:h-[90vh] sm:rounded-md sm:bottom-auto sm:translate-y-0 sm:translate-x-12 sm:opacity-100': isSlidingDrawerOpen,
         }
     );
 
     const renderContent = () => {
-        if (isCollectFormOpen) {
-            return <FormForCollect />;
-        }
-        if (isRecommendFormOpen) {
-            return <FormForRecommend setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />;
-        }
+        if (isCollectFormOpen) return <FormForCollect />;
+
+        if (isRecommendFormOpen) return <FormForRecommend setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />;
 
         return (
             <>
@@ -54,9 +62,5 @@ export default function SlidingDrawer() {
         );
     };
 
-    return (
-        <div role="dialog" aria-modal="true" className={SLIDING_DRAWER_STYLE}>
-            {renderContent()}
-        </div>
-    );
+    return <div role="dialog" aria-modal="true" className={SLIDING_DRAWER_STYLE}>{renderContent()}</div>;
 }
