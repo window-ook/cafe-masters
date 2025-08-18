@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { chromium } from 'playwright-core';
+import chromiumPkg from '@sparticuz/chromium';
 
 export const runtime = 'nodejs';
 
@@ -12,16 +13,20 @@ export async function GET(
   if (!id) return NextResponse.json({ error: 'Invalid cafe ID' }, { status: 400 });
 
   try {
-    // Playwright 브라우저 설정 - 최적화된 버전
+    // Vercel 환경을 위한 Chromium 설정
     const browser = await chromium.launch({
-      headless: true,
       args: [
+        ...chromiumPkg.args,
         '--no-sandbox',
         '--disable-dev-shm-usage',
         '--disable-background-timer-throttling',
         '--disable-renderer-backgrounding',
         '--disable-backgrounding-occluded-windows',
-      ]
+      ],
+      executablePath: process.env.NODE_ENV === 'production' 
+        ? await chromiumPkg.executablePath() 
+        : undefined,
+      headless: true,
     });
 
     const context = await browser.newContext({
