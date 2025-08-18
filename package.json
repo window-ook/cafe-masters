@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "analyze": "ANALYZE=true next build",
-    "generate-types": "npx supabase gen types typescript --project-id vsemazasjbizehcambul --schema public > types_db.ts"
+    "generate-types": "npx supabase gen types typescript --project-id vsemazasjbizehcambul --schema public > types_db.ts",
+    "test:playwright": "playwright test",
+    "test:playwright:ui": "playwright test --ui"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.11",
@@ -16,17 +18,14 @@
     "@next/bundle-analyzer": "^15.0.3",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-radio-group": "^1.2.3",
-    "@sparticuz/chromium": "^133.0.0",
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.4",
     "@tanstack/react-query": "^5.60.6",
-    "chrome-aws-lambda": "^10.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.483.0",
     "next": "^15.2.3",
-    "puppeteer": "^24.4.0",
-    "puppeteer-core": "^24.4.0",
+    "playwright-core": "^1.54.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-error-boundary": "^6.0.0",
@@ -40,6 +39,7 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.2",
     "@tailwindcss/postcss": "^4.1.11",
     "@tanstack/react-query-devtools": "5.60.6",
     "@types/node": "^22.14.1",
