@@ -52,24 +52,33 @@ export async function GET(
       }
     });
 
-    // 페이지 접속 - 타임아웃 단축
+    // 페이지 접속 - Vercel 환경에 맞게 타임아웃 증가
     await page.goto(`https://place.map.kakao.com/${id}`, {
-      waitUntil: 'domcontentloaded',
-      timeout: 3000,
+      waitUntil: 'networkidle',
+      timeout: 10000,
     });
 
     console.log(`✅ 카페 ${id} 상세정보 크롤링 시작`);
 
-    // 필요한 요소들 대기 - 타임아웃 단축
-    try {
-      await page.waitForSelector('.img-thumb.img_cfit', { timeout: 1000 });
-      // 메뉴 컨테이너 대기 (optional) - 타임아웃 단축
-      await page.waitForSelector('.list_goods', { timeout: 1000 }).catch(() => {
-        console.log('메뉴 정보 없음 또는 로딩 실패');
-      });
-    } catch (e) {
-      console.warn('요소 대기 시간 초과 - 현재 상태로 크롤링 진행:', e instanceof Error ? e.message : String(e));
-    }
+    // Vercel 환경에서 안전한 요소 대기 - 타임아웃 증가 및 재시도 로직
+    const waitForElementSafely = async (selector: string, timeout: number = 5000) => {
+      try {
+        await page.waitForSelector(selector, { timeout });
+        return true;
+      } catch (error) {
+        console.warn(`요소 ${selector} 대기 실패:`, error instanceof Error ? error.message : String(error));
+        return false;
+      }
+    };
+
+    // 필수 요소 대기 - 더 관대한 타임아웃
+    const imageReady = await waitForElementSafely('.img-thumb.img_cfit', 7000);
+    const menuReady = await waitForElementSafely('.list_goods', 3000);
+    
+    console.log(`요소 대기 결과: image=${imageReady}, menu=${menuReady}`);
+
+    // 추가 안전 대기 - DOM이 완전히 렌더링될 때까지
+    await page.waitForTimeout(2000);
 
     const data = await page.evaluate(() => {
       const toAbsoluteUrl = (src: string | null) =>
