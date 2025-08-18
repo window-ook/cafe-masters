@@ -24,7 +24,7 @@ export async function GET(
 
     const page = await browser.newPage();
 
-    await page.setDefaultNavigationTimeout(3000);
+    await page.setDefaultNavigationTimeout(5000);
     await page.setRequestInterception(true);
 
     page.on('request', request => {
@@ -54,21 +54,28 @@ export async function GET(
     // 접속
     const pageLoadPromise = page.goto(`https://place.map.kakao.com/${id}`, {
       waitUntil: 'domcontentloaded',
-      timeout: 3000,
+      timeout: 5000,
     });
 
     await Promise.race([
       pageLoadPromise,
-      new Promise(resolve => setTimeout(resolve, 3000)),
+      new Promise(resolve => setTimeout(resolve, 5000)),
     ]);
 
     // 필요한 요소만 기다림
     const mainSelector = '.img-thumb.img_cfit';
+    const menuSelector = '.list_goods';
     try {
       await page.waitForSelector(mainSelector, { timeout: 3000 });
+      await page.waitForSelector(menuSelector, { timeout: 5000 });
     } catch (e) {
-      console.error(e);
+      console.error('Selector wait error:', e);
     }
+
+    console.log('✅ 선택한 카페의 상세 정보 조회 시작');
+
+    // Chromium 환경에서 메뉴 로딩을 위한 추가 대기
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     const data = await page.evaluate(() => {
       const toAbsoluteUrl = (src: string | null) =>
@@ -95,25 +102,23 @@ export async function GET(
         : '';
       openingHours = openingHours.replace(/^매일\s+/, '').trim();
 
-      // 메뉴 3개
-      const menuItems = Array.from(
-        document.querySelectorAll('.list_goods > li'),
-      )
-        .slice(0, 3)
+      // 메뉴 4개 (로컬 버전과 동일하게)
+      const menuItems = Array.from(document.querySelectorAll('.list_goods li'))
+        .slice(0, 4)
         .map(el => ({
           name: el.querySelector('.tit_item')?.textContent?.trim() || '',
           price: el.querySelector('.desc_item')?.textContent?.trim() || '',
         }))
-        .filter(menu => menu.name !== '');
+        .filter(menu => menu.name && menu.price);
 
-      return { 
-        image: photo, 
-        extra_images: photoList, 
-        opening_time: openingHours, 
-        menus: menuItems 
+      return {
+        image: photo,
+        extra_images: photoList,
+        opening_time: openingHours,
+        menus: menuItems
       };
     });
-    console.log(`✅ 카페 상세 정보: `, data);
+    console.log(`✅ 선택한 카페 상세 정보: `, data);
     await browser.close();
     return NextResponse.json(data);
   } catch (error) {
