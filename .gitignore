@@ -54,3 +54,10 @@ next-env.d.ts
 CLAUDE.md
 GEMINI.md
 docs/
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
