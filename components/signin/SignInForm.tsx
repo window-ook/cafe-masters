@@ -9,9 +9,11 @@ import { signInFormSchema, SignInFormData } from '@/schema/auth';
 import Link from 'next/link';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
+import ResetPasswordRequestForm from './ResetPasswordRequestForm';
 
 export default function SignInForm() {
   const [resetRequired, setResetRequired] = useState<boolean>(false);
+  const [showResetForm, setShowResetForm] = useState<boolean>(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   const { signIn, isPending } = useSignIn();
@@ -24,9 +26,7 @@ export default function SignInForm() {
     },
   });
 
-  const handlePasswordVisibility = () => {
-    setIsPasswordVisible(prev => !prev);
-  };
+  const togglePasswordVisibility = () => setIsPasswordVisible(prev => !prev);
 
   const onFormSubmit = async (data: SignInFormData) => {
     const trimmedEmail = data.email.trim();
@@ -35,7 +35,15 @@ export default function SignInForm() {
 
   return (
     <main className="auth-form-layout">
-      {!resetRequired ? (
+      {showResetForm ? (
+        <ResetPasswordRequestForm
+          onBackAction={() => setShowResetForm(false)}
+          onSuccessAction={() => {
+            setShowResetForm(false);
+            setResetRequired(true);
+          }}
+        />
+      ) : !resetRequired ? (
         <div>
           <p className="auth-form-title">로그인</p>
           <form
@@ -71,7 +79,7 @@ export default function SignInForm() {
                   disabled={isSubmitting || isPending}
                   isError={errors.password?.message}
                   isPasswordVisible={isPasswordVisible}
-                  handlePasswordVisibility={handlePasswordVisibility}
+                  handlePasswordVisibility={togglePasswordVisibility}
                 />
               )}
             />
@@ -85,7 +93,7 @@ export default function SignInForm() {
             <Button
               type="button"
               aria-label="비밀번호 재설정 폼 열기 버튼"
-              onClick={() => setResetRequired(true)}
+              onClick={() => setShowResetForm(true)}
               customClassName='bg-blue-500'
               text='비밀번호 재설정'
             />

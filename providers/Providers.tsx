@@ -34,8 +34,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   // 카카오맵과 사이드바를 숨겨야 하는 페이지들
-  const hiddenPages = ['/', '/signin', '/signup', '/reset-password'];
-  const shouldHideComponents = hiddenPages.includes(pathname);
+  const hiddenPages = ['/'];
+  const authPages = ['/signin', '/signup', '/reset-password'];
+  const shouldHideComponents = hiddenPages.includes(pathname) || authPages.some(page => pathname.startsWith(page));
 
   return (
     <main className={shouldHideComponents ? "w-full" : "flex h-screen overflow-hidden"}>

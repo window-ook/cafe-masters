@@ -35,8 +35,24 @@ export default function AuthProvider({
     const {
       data: { subscription: authListner }, } = supabase.auth.onAuthStateChange((event, session) => {
         const rule = matchRule(pathname);
+
+        // 비밀번호 재설정 플로우인지 확인 (URL 파라미터나 현재 경로로 판단)
+        const isPasswordRecovery = event === 'PASSWORD_RECOVERY' ||
+          pathname === '/reset-password' ||
+          pathname === '/reset-password/complete' ||
+          (typeof window !== 'undefined' && window.location.search.includes('type=recovery'));
+
+        // 비밀번호 재설정 플로우인 경우 예외 처리
+        if (isPasswordRecovery) {
+          // recovery 상태일 때는 /reset-password로, 그 외에는 현재 경로 유지
+          if (event === 'PASSWORD_RECOVERY' && pathname !== '/reset-password') router.replace('/reset-password');
+          return;
+        }
+
         if (!session && rule?.requireAuth) router.replace('/signin');
-        if (session && rule?.blockIfAuth) router.replace('/main');
+        if (session && rule?.blockIfAuth) {
+          router.replace('/main');
+        }
       });
 
     return () => authListner.unsubscribe();
