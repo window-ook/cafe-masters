@@ -2,30 +2,49 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useFinishResetPassword } from '@/hooks/supabase/user';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
+import { resetPasswordFormSchema, ResetPasswordFormData } from '@/schema/auth';
 import BackgroundCards from '@/components/shared/FallingCards';
 import Button from '@/components/shared/Button';
+import InputField from '@/components/shared/InputField';
 
 export default function ResetPasswordForm() {
   const supabase = createBrowserSupabaseClient();
   const router = useRouter();
 
-  const [newPassword, setNewPassword] = useState<string>('');
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState<boolean>(false);
 
   const { finishResetPassword } = useFinishResetPassword();
 
-  const handleSubmit = () => {
-    finishResetPassword(newPassword);
-    alert('비밀번호를 재설정했습니다!');
-    router.push('/reset-password/complete');
+  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<ResetPasswordFormData>({
+    resolver: zodResolver(resetPasswordFormSchema),
+    defaultValues: {
+      newPassword: '',
+      newPasswordConfirm: '',
+    },
+  });
+
+  const onFormSubmit = async (data: ResetPasswordFormData) => {
+    try {
+      finishResetPassword(data.newPassword);
+      alert('비밀번호를 재설정했습니다!');
+      router.push('/reset-password/complete');
+    } catch (error) {
+      console.error('비밀번호 재설정 실패:', error);
+    }
   };
 
   const handleCancel = async () => {
     await supabase.auth.signOut();
     router.push('/signin');
   };
+
+  const togglePasswordVisibility = () => setIsPasswordVisible(prev => !prev);
+  const toggleConfirmPasswordVisibility = () => setIsConfirmPasswordVisible(prev => !prev);
 
   return (
     <main className="area h-screen w-screen flex justify-center items-center">
@@ -35,43 +54,66 @@ export default function ResetPasswordForm() {
           Cafe Masters
         </span>
         <div className="z-10 p-5 rounded-xl bg-white shadow-main-shadow">
-          <form className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4">
-            <p className="text-center text-3xl font-bold ">
+          <form
+            className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
+            onSubmit={handleSubmit(onFormSubmit)}
+          >
+            <p className="text-center text-3xl font-bold">
               비밀번호 재설정
             </p>
-            <div className="flex gap-4 justify-between items-center">
-              <span className=" text-lg">새 비밀번호</span>
-              <input
-                type="password"
-                value={newPassword}
-                placeholder="******"
-                className="border-gray-400"
-                onChange={e => setNewPassword(e.target.value)}
-              />
-            </div>
-            <div className="flex gap-4 justify-between items-center">
-              <span className=" text-lg">비밀번호 확인</span>
-              <input
-                type="password"
-                value={newPasswordConfirm}
-                placeholder="******"
-                className="border-gray-400"
-                onChange={e => setNewPasswordConfirm(e.target.value)}
-              />
-            </div>
-            <Button
-              type="button"
-              aria-label="완료 버튼, 재설정 완료 화면으로 이동합니다."
-              disabled={newPassword !== newPasswordConfirm}
-              onClick={handleSubmit}
-              text='완료'
+            <p className="text-sm text-gray-600 text-center">
+              새로운 비밀번호를 설정해주세요.
+            </p>
+
+            <Controller
+              name="newPassword"
+              control={control}
+              render={({ field }) => (
+                <InputField
+                  {...field}
+                  id="new-password"
+                  type="password"
+                  label="새 비밀번호"
+                  placeholder="영문+숫자 6자 이상"
+                  disabled={isSubmitting}
+                  isError={errors.newPassword?.message}
+                  isPasswordVisible={isPasswordVisible}
+                  handlePasswordVisibility={togglePasswordVisibility}
+                />
+              )}
             />
+
+            <Controller
+              name="newPasswordConfirm"
+              control={control}
+              render={({ field }) => (
+                <InputField
+                  {...field}
+                  id="confirm-password"
+                  type="password"
+                  label="비밀번호 확인"
+                  placeholder="비밀번호를 다시 입력하세요"
+                  disabled={isSubmitting}
+                  isError={errors.newPasswordConfirm?.message}
+                  isPasswordVisible={isConfirmPasswordVisible}
+                  handlePasswordVisibility={toggleConfirmPasswordVisibility}
+                />
+              )}
+            />
+
+            <Button
+              type="submit"
+              ariaLabel="완료 버튼, 재설정 완료 화면으로 이동합니다"
+              disabled={isSubmitting}
+              text={isSubmitting ? '변경 중...' : '완료'}
+            />
+
             <Button
               type="button"
-              aria-label="취소 버튼, 초기 화면으로 돌아갑니다."
+              ariaLabel="취소 버튼, 초기 화면으로 돌아갑니다"
               onClick={handleCancel}
-              customClassName="bg-blue-500"
-              text='취소'
+              customClassName="bg-gray-500"
+              text="취소"
             />
           </form>
         </div>

@@ -14,7 +14,7 @@ export function useRequestResetPassword() {
   const requestResetPassword = useMutation({
     mutationFn: async (email: string) => {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/resetpassword`,
+        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback?type=recovery`,
       });
       if (error) throw error;
       return '이메일의 보관함을 확인해주세요.';
