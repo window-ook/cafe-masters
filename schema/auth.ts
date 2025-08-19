@@ -44,10 +44,20 @@ export const otpFormSchema = z.object({
     .regex(/^\d{6}$/, '인증 코드는 숫자만 입력 가능합니다.'),
 });
 
+/** 비밀번호 재설정 요청 폼 스키마
+ * @description 이메일 형식 검증
+ */
+export const resetPasswordRequestSchema = z.object({
+  email: z
+    .string()
+    .min(1, '이메일을 입력해주세요')
+    .email('올바른 이메일 형식을 입력해주세요'),
+});
+
 /**
  * 비밀번호 재설정 폼 스키마
  * @description 새 비밀번호와 확인 비밀번호 일치 검증
- */
+*/
 export const resetPasswordFormSchema = z.object({
   newPassword: z
     .string()
@@ -68,4 +78,5 @@ export const resetPasswordFormSchema = z.object({
 export type SignInFormData = z.infer<typeof signInFormSchema>;
 export type SignUpFormData = z.infer<typeof signUpFormSchema>;
 export type OtpFormData = z.infer<typeof otpFormSchema>;
+export type ResetPasswordRequestData = z.infer<typeof resetPasswordRequestSchema>;
 export type ResetPasswordFormData = z.infer<typeof resetPasswordFormSchema>;
