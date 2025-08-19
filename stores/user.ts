@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Tier } from '@/types/shared/tier';
 
-interface UserStore {
+interface IUserStore {
   // 유저 정보 상태
   userId: string;
   userEmail: string;
@@ -19,7 +19,7 @@ interface UserStore {
   resetUser: () => void;
 }
 
-export const useUserStore = create<UserStore>()(
+export const useUserStore = create<IUserStore>()(
   persist(
     set => ({
       // 유저 상태 초기값
