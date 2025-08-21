@@ -10,9 +10,7 @@ let browserInitializing = false;
 
 async function getBrowserInstance(): Promise<Browser> {
   if (browserInitializing) {
-    while (browserInitializing) {
-      await new Promise(resolve => setTimeout(resolve, 100));
-    }
+    while (browserInitializing) await new Promise(resolve => setTimeout(resolve, 100));
     if (globalBrowser && globalBrowser.isConnected()) {
       return globalBrowser;
     }
@@ -25,7 +23,6 @@ async function getBrowserInstance(): Promise<Browser> {
   browserInitializing = true;
 
   try {
-    console.log('🚀 새 브라우저 인스턴스 생성');
     globalBrowser = await chromium.launch({
       args: [
         ...chromiumPkg.args,
@@ -39,13 +36,6 @@ async function getBrowserInstance(): Promise<Browser> {
         '--disable-images',
         '--disable-web-security',
         '--disable-features=VizDisplayCompositor',
-        '--disable-background-networking',
-        '--disable-sync',
-        '--disable-translate',
-        '--hide-scrollbars',
-        '--disable-ipc-flooding-protection',
-        '--disable-renderer-accessibility',
-        '--disable-client-side-phishing-detection',
       ],
       executablePath: process.env.NODE_ENV === 'production'
         ? await chromiumPkg.executablePath()
@@ -53,7 +43,6 @@ async function getBrowserInstance(): Promise<Browser> {
       headless: true,
     });
 
-    console.log('✅ 브라우저 인스턴스 생성 완료');
     return globalBrowser;
   } finally {
     browserInitializing = false;
@@ -72,11 +61,7 @@ export async function GET(
 
   try {
     const startTime = Date.now();
-
-    console.log(`🔍 브라우저 상태: globalBrowser=${!!globalBrowser}, isConnected=${globalBrowser?.isConnected()}`);
     const browser = await getBrowserInstance();
-    const browserTime = Date.now() - startTime;
-    console.log(`🔄 브라우저 인스턴스 준비 완료: ${browserTime}ms (재사용=${globalBrowser !== null})`);
 
     context = await browser.newContext({
       viewport: { width: 1280, height: 720 },
@@ -90,26 +75,21 @@ export async function GET(
     await page.route('**/*', (route) => {
       const resourceType = route.request().resourceType();
 
-      if (resourceType === 'image' || resourceType === 'font' || resourceType === 'stylesheet') {
-        route.abort();
-      } else {
-        route.continue();
-      }
+      if (resourceType === 'image' || resourceType === 'font' || resourceType === 'stylesheet') route.abort();
+      else route.continue();
     });
 
     await page.goto(`https://place.map.kakao.com/${id}`, {
-      waitUntil: 'domcontentloaded',
-      timeout: 5000,
+      waitUntil: 'networkidle',
+      timeout: 6000,
     });
 
-    // 더 적극적인 대기 전략
-    try {
-      await page.waitForSelector('.img-thumb.img_cfit', { timeout: 1500 });
-    } catch {
-      console.log('이미지 요소 대기 실패 - 계속 진행');
-    }
+    await Promise.race([
+      page.waitForSelector('.place_details', { timeout: 2000 }),
+      page.waitForSelector('.img-thumb', { timeout: 2000 }),
+      page.waitForTimeout(1500)
+    ]);
 
-    // 최소 대기 시간
     await page.waitForTimeout(500);
 
     const data = await page.evaluate(() => {
@@ -121,24 +101,19 @@ export async function GET(
       const photo = toAbsoluteUrl(imgElement?.getAttribute('src') || null);
 
       // 리뷰 이미지 2개
-      const photos = Array.from(
-        document.querySelectorAll(
-          '.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit',
-        ),
-      );
+      const photos = Array.from(document.querySelectorAll('.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit'));
       const photoList = photos
         .slice(0, 2)
         .map(el => toAbsoluteUrl(el.getAttribute('src')));
 
       // 영업 시간
       const timeElement = document.querySelector('.line_fold .txt_detail');
-      let openingHours = timeElement
-        ? timeElement.textContent?.trim().replace(/\s+/g, ' ') || ''
-        : '';
+      let openingHours = timeElement ? timeElement.textContent?.trim().replace(/\s+/g, ' ') || '' : '';
       openingHours = openingHours.replace(/^매일\s+/, '').trim();
 
       // 메뉴 4개
       let menuItems: Array<{ name: string; price: string }> = [];
+
       try {
         const menuContainer = document.querySelector('.list_goods');
         if (menuContainer) {
@@ -171,16 +146,13 @@ export async function GET(
       menuCount: data.menus.length
     });
 
-    // 성공 시 컨텍스트만 정리 (브라우저는 재사용을 위해 유지)
     if (context) await context.close().catch(() => { });
     return NextResponse.json(data);
   } catch (error) {
     console.error('카페 상세정보 크롤링 실패:', error);
 
-    // 에러 발생 시 컨텍스트만 정리 (브라우저는 유지)
     if (context) await context.close().catch(() => { });
 
-    // 구체적인 에러 타입별 처리
     if (error instanceof Error) {
       if (error.message.includes('timeout')) {
         return NextResponse.json({
