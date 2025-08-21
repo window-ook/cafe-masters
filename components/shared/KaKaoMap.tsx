@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
+import { EXTERNAL_PATHS } from '@/lib/paths';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
@@ -46,7 +47,7 @@ export default function KakaoMap() {
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false`;
+    script.src = EXTERNAL_PATHS.KAKAO_MAP_URL;
     script.async = true;
     script.defer = true;
     document.head.appendChild(script);

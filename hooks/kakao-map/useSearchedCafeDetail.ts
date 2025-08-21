@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { ISearchedCafeDetail } from '@/types/kakao-map/kakao-map';
 import { searchCafeQuery } from '@/queries/kakao-map/search';
+import { INTERNAL_PATHS } from '@/lib/paths';
 
 /** 검색된 카페 상세 정보 조회 훅
  * @param cafeId 카페 ID
@@ -14,8 +15,8 @@ export function useSearchedCafeDetail(cafeId: string) {
     queryFn: async (): Promise<ISearchedCafeDetail> => {
       const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
       const detailUrl = BASE_URL === 'http://localhost:3000'
-        ? `/api/cafe-detail/${cafeId}` // 로컬에서 조회
-        : `/api/cafe-detail/product/${cafeId}`; // Vercel에서 조회
+        ? INTERNAL_PATHS.CAFE_DETAIL_LOCAL(cafeId)
+        : INTERNAL_PATHS.CAFE_DETAIL(cafeId); // Vercel에서 조회
 
       const response = await fetch(detailUrl, {
         method: 'GET',

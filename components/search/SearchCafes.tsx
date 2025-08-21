@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchedResultStore, useUIStore } from 'stores';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
+import { IMAGE_PATHS } from '@/lib/paths';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 import CafeItem from '@/components/shared/sidebar/CafeItem';
 
@@ -41,7 +42,7 @@ export default function SearchCafes() {
               name={cafe.place_name}
               address={cafe.road_address_name}
               phone_number={cafe.phone}
-              image='https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'
+              image={IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
               onClickAction={() => handleSearchedCafeClick(cafe)}
             />
           ))}

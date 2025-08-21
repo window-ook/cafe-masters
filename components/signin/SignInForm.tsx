@@ -9,7 +9,7 @@ import { signInFormSchema, SignInFormData } from '@/schema/auth';
 import Link from 'next/link';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
-import ResetPasswordRequestForm from './ResetPasswordRequestForm';
+import ResetPasswordRequestForm from '@/components/signin/ResetPasswordRequestForm';
 
 export default function SignInForm() {
   const [resetRequired, setResetRequired] = useState<boolean>(false);

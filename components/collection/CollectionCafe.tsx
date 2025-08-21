@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useUIStore } from '@/stores';
 import { FaStar } from 'react-icons/fa6';
+import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 
 interface ICollectionCafe {
@@ -205,7 +206,7 @@ export default function CollectionCafe({
 
         <div className="h-44 bg-gray-700 rounded-lg flex flex-col">
           <Image
-            src={image || 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'}
+            src={image || IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
             alt="카페 썸네일"
             priority={true}
             width={100}

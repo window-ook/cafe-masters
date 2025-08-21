@@ -1,7 +1,8 @@
+import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 
 export default function FallingCards() {
-  const imageSrc = 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//card_logo.avif';
+  const imageSrc = IMAGE_PATHS.FALLING_CARDS_BACKGROUND;
 
   return (
     <section className="circles">

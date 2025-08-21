@@ -2,6 +2,7 @@
 
 import { useUIStore } from '@/stores';
 import ImageWithFallback from '@/components/shared/ImageWithFallback';
+import { IMAGE_PATHS } from '@/lib/paths';
 
 interface ICafeItem {
   name: string | undefined;
@@ -46,7 +47,7 @@ export default function CafeItem({
         <div className="h-full flex items-center justify-center">
           <ImageWithFallback
             src={image}
-            fallbackSrc='https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif'
+            fallbackSrc={IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
             alt="카페 썸네일"
             width={100}
             height={50}

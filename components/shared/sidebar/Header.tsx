@@ -15,6 +15,7 @@ import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
 import RegionFilter from '@/components/shared/sidebar/RegionsFilter';
 import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
 import Button from '@/components/shared/Button';
+import { IMAGE_PATHS } from '@/lib/paths';
 
 export default function Header() {
   const searchResult = useSearchedResultStore(state => state.searchResult);
@@ -56,7 +57,7 @@ export default function Header() {
               onClick={handleReset}
             >
               <Image
-                src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//card_logo.avif"
+                src={IMAGE_PATHS.FALLING_CARDS_BACKGROUND}
                 width={100}
                 height={100}
                 alt="로고 아이콘"

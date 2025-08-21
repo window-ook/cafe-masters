@@ -1,29 +1,20 @@
 import { NextResponse } from 'next/server';
-import { chromium, Browser } from 'playwright-core';
+import { chromium } from 'playwright-core';
+import { EXTERNAL_PATHS } from '@/lib/paths';
 import chromiumPkg from '@sparticuz/chromium';
 
 export const runtime = 'nodejs';
-export const maxDuration = 30;
 
-let globalBrowser: Browser | null = null;
-let browserInitializing = false;
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
 
-async function getBrowserInstance(): Promise<Browser> {
-  if (browserInitializing) {
-    while (browserInitializing) await new Promise(resolve => setTimeout(resolve, 100));
-    if (globalBrowser && globalBrowser.isConnected()) {
-      return globalBrowser;
-    }
-  }
-
-  if (globalBrowser && globalBrowser.isConnected()) {
-    return globalBrowser;
-  }
-
-  browserInitializing = true;
+  if (!id) return NextResponse.json({ error: 'Invalid cafe ID' }, { status: 400 });
 
   try {
-    globalBrowser = await chromium.launch({
+    const browser = await chromium.launch({
       args: [
         ...chromiumPkg.args,
         '--no-sandbox',
@@ -31,11 +22,6 @@ async function getBrowserInstance(): Promise<Browser> {
         '--disable-background-timer-throttling',
         '--disable-renderer-backgrounding',
         '--disable-backgrounding-occluded-windows',
-        '--disable-extensions',
-        '--disable-plugins',
-        '--disable-images',
-        '--disable-web-security',
-        '--disable-features=VizDisplayCompositor',
       ],
       executablePath: process.env.NODE_ENV === 'production'
         ? await chromiumPkg.executablePath()
@@ -43,54 +29,37 @@ async function getBrowserInstance(): Promise<Browser> {
       headless: true,
     });
 
-    return globalBrowser;
-  } finally {
-    browserInitializing = false;
-  }
-}
-
-export async function GET(
-  _req: Request,
-  { params }: { params: Promise<{ id: string }> },
-) {
-  const { id } = await params;
-
-  if (!id) return NextResponse.json({ error: 'Invalid cafe ID' }, { status: 400 });
-
-  let context = null;
-
-  try {
-    const startTime = Date.now();
-    const browser = await getBrowserInstance();
-
-    context = await browser.newContext({
-      viewport: { width: 1280, height: 720 },
-      ignoreHTTPSErrors: true,
-      bypassCSP: true,
-      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    const context = await browser.newContext({
+      viewport: { width: 800, height: 600 },
     });
 
     const page = await context.newPage();
 
     await page.route('**/*', (route) => {
+      const url = route.request().url();
       const resourceType = route.request().resourceType();
 
-      if (resourceType === 'image' || resourceType === 'font' || resourceType === 'stylesheet') route.abort();
+      // 카카오맵 이미지는 허용, 기타 외부 리소스 차단
+      const isKakaoResource = url.includes('kakao');
+      const isEssentialResource = ['document', 'xhr', 'fetch'].includes(resourceType);
+
+      if (!isKakaoResource && !isEssentialResource) route.abort();
       else route.continue();
     });
 
-    await page.goto(`https://place.map.kakao.com/${id}`, {
-      waitUntil: 'networkidle',
-      timeout: 6000,
+    await page.goto(EXTERNAL_PATHS.KAKAO_MAP_CAFE_DETAIL(id), {
+      waitUntil: 'domcontentloaded',
+      timeout: 3000,
     });
 
-    await Promise.race([
-      page.waitForSelector('.place_details', { timeout: 2000 }),
-      page.waitForSelector('.img-thumb', { timeout: 2000 }),
-      page.waitForTimeout(1500)
-    ]);
-
-    await page.waitForTimeout(500);
+    try {
+      await page.waitForSelector('.img-thumb.img_cfit', { timeout: 1000 });
+      await page.waitForSelector('.list_goods', { timeout: 1000 }).catch(() => {
+        console.log('메뉴 정보 없음 또는 로딩 실패');
+      });
+    } catch (e) {
+      console.warn('요소 대기 시간 초과 - 현재 상태로 크롤링 진행:', e instanceof Error ? e.message : String(e));
+    }
 
     const data = await page.evaluate(() => {
       const toAbsoluteUrl = (src: string | null) =>
@@ -101,14 +70,20 @@ export async function GET(
       const photo = toAbsoluteUrl(imgElement?.getAttribute('src') || null);
 
       // 리뷰 이미지 2개
-      const photos = Array.from(document.querySelectorAll('.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit'));
+      const photos = Array.from(
+        document.querySelectorAll(
+          '.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit',
+        ),
+      );
       const photoList = photos
         .slice(0, 2)
         .map(el => toAbsoluteUrl(el.getAttribute('src')));
 
       // 영업 시간
       const timeElement = document.querySelector('.line_fold .txt_detail');
-      let openingHours = timeElement ? timeElement.textContent?.trim().replace(/\s+/g, ' ') || '' : '';
+      let openingHours = timeElement
+        ? timeElement.textContent?.trim().replace(/\s+/g, ' ') || ''
+        : '';
       openingHours = openingHours.replace(/^매일\s+/, '').trim();
 
       // 메뉴 4개
@@ -138,20 +113,18 @@ export async function GET(
       };
     });
 
-    const totalTime = Date.now() - startTime;
-    console.log(`✅ 카페 ${id} 조회 완료 (총 ${totalTime}ms):`, {
+    console.log(`✅ 카페 ${id} 조회 완료:`, {
       image: !!data.image,
       extraImages: data.extra_images.length,
       hasOpeningTime: !!data.opening_time,
       menuCount: data.menus.length
     });
 
-    if (context) await context.close().catch(() => { });
+    await context.close();
+    await browser.close();
     return NextResponse.json(data);
   } catch (error) {
     console.error('카페 상세정보 크롤링 실패:', error);
-
-    if (context) await context.close().catch(() => { });
 
     if (error instanceof Error) {
       if (error.message.includes('timeout')) {

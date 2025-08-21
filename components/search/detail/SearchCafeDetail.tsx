@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
 import { useSearchedResultStore, useCurrentCafeStore, useUserStore, useUIStore, useCollectionStore, useRecommendationStore } from '@/stores';
+import { IMAGE_PATHS } from '@/lib/paths';
 import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
@@ -41,7 +42,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
       return {
         id: cafeId.toString(),
         name: '카페 정보 로딩 중...',
-        image: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif',
+        image: IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK,
         address: '',
         phone_number: '',
         kakaoCategories: [],
@@ -54,7 +55,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
     return {
       id: foundCafe.id,
       name: foundCafe.place_name,
-      image: searchedCafeDetail?.image || 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif',
+      image: searchedCafeDetail?.image || IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK,
       address: foundCafe.road_address_name ?? foundCafe.address_name,
       phone_number: foundCafe.phone ?? '',
       kakaoCategories: foundCafe.category_name ? foundCafe.category_name.split(' > ') : [],

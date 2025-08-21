@@ -5,6 +5,7 @@ import { useCollectionCounts } from '@/hooks/supabase/collection';
 import { useUIStore, useUserStore } from '@/stores';
 import TierBadge from '@/components/shared/sidebar/TierBadge';
 import Image from 'next/image';
+import { IMAGE_PATHS } from '@/lib/paths';
 
 export default function UserProfile() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -32,7 +33,7 @@ export default function UserProfile() {
       >
         <div className="w-6 h-6 rounded-full bg-main-light flex items-center justify-center">
           <Image
-            src='https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//user_icon.gif'
+            src={IMAGE_PATHS.USER_ICON}
             alt="유저 프로필 이미지"
             width={20}
             height={20}

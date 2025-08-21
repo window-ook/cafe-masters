@@ -11,6 +11,7 @@ import Menus from '@/components/shared/sliding-drawer/Menus';
 import Categories from '@/components/shared/sliding-drawer/Categories';
 import ImageWithFallback from '@/components/shared/ImageWithFallback';
 import Image from 'next/image';
+import { IMAGE_PATHS } from '@/lib/paths';
 
 interface ICafeDetailBody {
   cafeId: number;
@@ -81,7 +82,7 @@ export default function CafeDetailBody({
                         key={`${cafeId}-main-image-${cafeData.image}`}
                         alt="카페 썸네일"
                         src={cafeData.image}
-                        fallbackSrc="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif"
+                        fallbackSrc={IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
                         width={340}
                         height={240}
                         priority={true}
@@ -111,7 +112,7 @@ export default function CafeDetailBody({
                         key={`${cafeId}-extra-image-${i}`}
                         alt="카페 썸네일"
                         src={photo}
-                        fallbackSrc="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//cafe_thumbnail.avif"
+                        fallbackSrc={IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
                         width={340}
                         height={240}
                         priority={true}

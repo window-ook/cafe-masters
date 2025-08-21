@@ -1,5 +1,6 @@
 'use client';
 
+import { IMAGE_PATHS } from '@/lib/paths';
 import FallingCards from '@/components/shared/FallingCards';
 import Image from 'next/image';
 import SignInForm from '@/components/signin/SignInForm';
@@ -11,7 +12,7 @@ export default function SignInPageClient() {
             <section className="flex flex-col items-center gap-4">
                 <header className="flex">
                     <Image
-                        src="https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters//card_logo.avif"
+                        src={IMAGE_PATHS.FALLING_CARDS_BACKGROUND}
                         width={100}
                         height={100}
                         alt="로고 아이콘"

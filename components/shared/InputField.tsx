@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { escapeForXSS } from '@/utils/shared/escapeForXSS';
+import { IMAGE_PATHS } from '@/lib/paths';
 
 interface IInputField extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string;
@@ -71,7 +72,7 @@ const InputField = React.forwardRef<HTMLInputElement, IInputField>(
                             tabIndex={-1}
                         >
                             <Image
-                                src={isPasswordVisible ? "https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/visibility_on.svg" : "https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/visibility_off.svg"}
+                                src={isPasswordVisible ? IMAGE_PATHS.VISIBILITY_ON : IMAGE_PATHS.VISIBILITY_OFF}
                                 alt="비밀번호 보기 숨김"
                                 width={24}
                                 height={24}
