@@ -85,29 +85,29 @@ export async function GET(
         : '';
       openingHours = openingHours.replace(/^매일\s+/, '').trim();
 
-      // 메뉴 4개 (안전한 크롤링)
-      let menuItems: Array<{ name: string; price: string }> = [];
-      try {
-        const menuContainer = document.querySelector('.list_goods');
-        if (menuContainer) {
-          menuItems = Array.from(menuContainer.querySelectorAll('li'))
-            .slice(0, 4)
-            .map(el => ({
-              name: el.querySelector('.tit_item')?.textContent?.trim() || '',
-              price: el.querySelector('.desc_item')?.textContent?.trim() || '',
-            }))
-            .filter(menu => menu.name && menu.price);
-        }
-      } catch (menuError) {
-        console.error('Menu crawling error:', menuError);
-        menuItems = [];
-      }
+      // 메뉴 4개
+      // let menuItems: Array<{ name: string; price: string }> = [];
+      // try {
+      //   const menuContainer = document.querySelector('.list_goods');
+      //   if (menuContainer) {
+      //     menuItems = Array.from(menuContainer.querySelectorAll('li'))
+      //       .slice(0, 4)
+      //       .map(el => ({
+      //         name: el.querySelector('.tit_item')?.textContent?.trim() || '',
+      //         price: el.querySelector('.desc_item')?.textContent?.trim() || '',
+      //       }))
+      //       .filter(menu => menu.name && menu.price);
+      //   }
+      // } catch (menuError) {
+      //   console.error('Menu crawling error:', menuError);
+      //   menuItems = [];
+      // }
 
       return {
         image: photo,
         extra_images: photoList,
         opening_time: openingHours,
-        menus: menuItems
+        // menus: menuItems
       };
     });
 
@@ -115,7 +115,8 @@ export async function GET(
       image: !!data.image,
       extraImages: data.extra_images.length,
       hasOpeningTime: !!data.opening_time,
-      menuCount: data.menus.length
+      menuCount: 0
+      // menuCount: data.menus.length
     });
 
     await context.close();

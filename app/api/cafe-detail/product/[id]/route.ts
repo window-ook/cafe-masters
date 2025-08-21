@@ -5,13 +5,10 @@ import chromiumPkg from '@sparticuz/chromium';
 export const runtime = 'nodejs';
 export const maxDuration = 30;
 
-// 글로벌 브라우저 인스턴스 관리
 let globalBrowser: Browser | null = null;
 let browserInitializing = false;
 
-// 브라우저 인스턴스 가져오기 (재사용 또는 새로 생성)
 async function getBrowserInstance(): Promise<Browser> {
-  // 이미 초기화 중이면 대기
   if (browserInitializing) {
     while (browserInitializing) {
       await new Promise(resolve => setTimeout(resolve, 100));
@@ -21,15 +18,14 @@ async function getBrowserInstance(): Promise<Browser> {
     }
   }
 
-  // 기존 브라우저가 있고 연결되어 있으면 재사용
   if (globalBrowser && globalBrowser.isConnected()) {
     return globalBrowser;
   }
 
   browserInitializing = true;
-  
+
   try {
-    console.log('🚀 새 브라우저 인스턴스 생성 중...');
+    console.log('🚀 새 브라우저 인스턴스 생성');
     globalBrowser = await chromium.launch({
       args: [
         ...chromiumPkg.args,
@@ -43,13 +39,20 @@ async function getBrowserInstance(): Promise<Browser> {
         '--disable-images',
         '--disable-web-security',
         '--disable-features=VizDisplayCompositor',
+        '--disable-background-networking',
+        '--disable-sync',
+        '--disable-translate',
+        '--hide-scrollbars',
+        '--disable-ipc-flooding-protection',
+        '--disable-renderer-accessibility',
+        '--disable-client-side-phishing-detection',
       ],
       executablePath: process.env.NODE_ENV === 'production'
         ? await chromiumPkg.executablePath()
         : undefined,
       headless: true,
     });
-    
+
     console.log('✅ 브라우저 인스턴스 생성 완료');
     return globalBrowser;
   } finally {
@@ -66,14 +69,14 @@ export async function GET(
   if (!id) return NextResponse.json({ error: 'Invalid cafe ID' }, { status: 400 });
 
   let context = null;
-  
+
   try {
     const startTime = Date.now();
-    
-    // 글로벌 브라우저 인스턴스 재사용
+
+    console.log(`🔍 브라우저 상태: globalBrowser=${!!globalBrowser}, isConnected=${globalBrowser?.isConnected()}`);
     const browser = await getBrowserInstance();
     const browserTime = Date.now() - startTime;
-    console.log(`🔄 브라우저 인스턴스 준비 완료: ${browserTime}ms`);
+    console.log(`🔄 브라우저 인스턴스 준비 완료: ${browserTime}ms (재사용=${globalBrowser !== null})`);
 
     context = await browser.newContext({
       viewport: { width: 1280, height: 720 },
@@ -84,11 +87,9 @@ export async function GET(
 
     const page = await context.newPage();
 
-    // 리소스 차단을 최소화하여 필요한 스크립트 실행 허용
     await page.route('**/*', (route) => {
       const resourceType = route.request().resourceType();
-      
-      // 이미지, 폰트, CSS만 차단하고 JavaScript는 허용
+
       if (resourceType === 'image' || resourceType === 'font' || resourceType === 'stylesheet') {
         route.abort();
       } else {
@@ -97,19 +98,19 @@ export async function GET(
     });
 
     await page.goto(`https://place.map.kakao.com/${id}`, {
-      waitUntil: 'networkidle',
-      timeout: 8000,
+      waitUntil: 'domcontentloaded',
+      timeout: 5000,
     });
 
-    // 핵심 요소 대기 - 하나라도 성공하면 진행
-    await Promise.race([
-      page.waitForSelector('.place_details', { timeout: 2000 }),
-      page.waitForSelector('.img-thumb', { timeout: 2000 }),
-      page.waitForTimeout(1500)
-    ]);
+    // 더 적극적인 대기 전략
+    try {
+      await page.waitForSelector('.img-thumb.img_cfit', { timeout: 1500 });
+    } catch {
+      console.log('이미지 요소 대기 실패 - 계속 진행');
+    }
 
-    // 추가 대기 시간 - 동적 콘텐츠 로딩 완료
-    await page.waitForTimeout(1000);
+    // 최소 대기 시간
+    await page.waitForTimeout(500);
 
     const data = await page.evaluate(() => {
       const toAbsoluteUrl = (src: string | null) =>
@@ -136,7 +137,7 @@ export async function GET(
         : '';
       openingHours = openingHours.replace(/^매일\s+/, '').trim();
 
-      // 메뉴 4개 (안전한 크롤링)
+      // 메뉴 4개
       let menuItems: Array<{ name: string; price: string }> = [];
       try {
         const menuContainer = document.querySelector('.list_goods');
@@ -171,13 +172,13 @@ export async function GET(
     });
 
     // 성공 시 컨텍스트만 정리 (브라우저는 재사용을 위해 유지)
-    if (context) await context.close().catch(() => {});
+    if (context) await context.close().catch(() => { });
     return NextResponse.json(data);
   } catch (error) {
     console.error('카페 상세정보 크롤링 실패:', error);
-    
+
     // 에러 발생 시 컨텍스트만 정리 (브라우저는 유지)
-    if (context) await context.close().catch(() => {});
+    if (context) await context.close().catch(() => { });
 
     // 구체적인 에러 타입별 처리
     if (error instanceof Error) {
