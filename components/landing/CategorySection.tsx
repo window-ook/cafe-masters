@@ -43,7 +43,7 @@ const CATEGORIES = [
 
 const CategoryCard = ({ icon: Icon, title, description }: ICategoryCard) => {
     return (
-        <div className="group relative cursor-pointer" >
+        <div className="group relative" >
             {/* Backlight Effect */}
             <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-main/20 via-purple-300/20 to-main/20 opacity-0 blur transition duration-1000 group-hover:opacity-100" />
 

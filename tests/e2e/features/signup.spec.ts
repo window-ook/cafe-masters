@@ -28,7 +28,7 @@ const SELECTORS = {
 
 // 헬퍼 함수
 class SignupPageHelpers {
-  constructor(private page: Page) {}
+  constructor(private page: Page) { }
 
   async navigateToSignup() {
     await this.page.goto('http://localhost:3000/signup');
@@ -57,14 +57,14 @@ class SignupPageHelpers {
   async checkPasswordVisibilityToggle() {
     const passwordInput = this.page.locator(SELECTORS.PASSWORD_INPUT);
     const toggleButton = this.page.locator(SELECTORS.PASSWORD_TOGGLE);
-    
+
     // 초기 상태는 password 타입
     await expect(passwordInput).toHaveAttribute('type', 'password');
-    
+
     // 토글 클릭 후 text 타입으로 변경
     await toggleButton.click();
     await expect(passwordInput).toHaveAttribute('type', 'text');
-    
+
     // 다시 클릭하면 password 타입으로 복원
     await toggleButton.click();
     await expect(passwordInput).toHaveAttribute('type', 'password');
@@ -74,7 +74,7 @@ class SignupPageHelpers {
     await this.page.locator(SELECTORS.EMAIL_INPUT).focus();
     await this.page.keyboard.press('Tab');
     await expect(this.page.locator(SELECTORS.PASSWORD_INPUT)).toBeFocused();
-    
+
     await this.page.keyboard.press('Tab');
     await expect(this.page.locator(SELECTORS.SIGNUP_BUTTON)).toBeFocused();
   }
@@ -96,27 +96,21 @@ test.describe('회원가입 기능 테스트', () => {
       // When: 가입하기 버튼 클릭
       await helpers.submitForm();
 
-      // Then: 성공 처리 확인 (리다이렉트 또는 성공 메시지)
-      await Promise.race([
-        helpers.waitForRedirect(/\/(signin|dashboard|home)/),
-        page.waitForSelector(SELECTORS.SUCCESS_MESSAGE, { timeout: 5000 }),
-      ]);
-
       // 페이지가 리다이렉트되었거나 성공 메시지가 표시되어야 함
       const currentUrl = page.url();
       const hasSuccessMessage = await page.locator(SELECTORS.SUCCESS_MESSAGE).isVisible();
-      
+
       expect(
-        currentUrl.includes('/signin') || 
-        currentUrl.includes('/dashboard') || 
-        currentUrl.includes('/home') || 
+        currentUrl.includes('/signin') ||
+        currentUrl.includes('/dashboard') ||
+        currentUrl.includes('/home') ||
         hasSuccessMessage
       ).toBeTruthy();
     });
 
     test('회원가입 후 새 계정으로 로그인 가능해야 함', async ({ page }) => {
       const newEmail = TEST_DATA.VALID_EMAIL.replace('@example.com', `+${Date.now()}@example.com`);
-      
+
       // 회원가입 진행
       await helpers.fillSignupForm(newEmail, TEST_DATA.VALID_PASSWORD);
       await helpers.submitForm();
@@ -128,7 +122,7 @@ test.describe('회원가입 기능 테스트', () => {
         await page.fill(SELECTORS.EMAIL_INPUT, newEmail);
         await page.fill(SELECTORS.PASSWORD_INPUT, TEST_DATA.VALID_PASSWORD);
         await page.click('button[type="submit"]:has-text("접속하기")');
-        
+
         // 로그인 성공 확인
         await page.waitForURL(/\/(dashboard|home)/, { timeout: 10000 });
       }
@@ -181,13 +175,13 @@ test.describe('회원가입 기능 테스트', () => {
 
     test('유효한 비밀번호는 정상 처리되어야 함', async ({ page }) => {
       await helpers.fillSignupForm(TEST_DATA.VALID_EMAIL, TEST_DATA.VALID_PASSWORD);
-      
+
       // 비밀번호 입력 후 유효성 확인
       const passwordInput = page.locator(SELECTORS.PASSWORD_INPUT);
       await expect(passwordInput).not.toHaveClass(/invalid|error/);
     });
 
-    test('비밀번호 표시/숨김 기능이 동작해야 함', async ({ page }) => {
+    test('비밀번호 표시/숨김 기능이 동작해야 함', async () => {
       await helpers.fillSignupForm(TEST_DATA.VALID_EMAIL, TEST_DATA.VALID_PASSWORD);
       await helpers.checkPasswordVisibilityToggle();
     });
@@ -230,17 +224,17 @@ test.describe('회원가입 기능 테스트', () => {
 
     test('카카오 로그인 버튼 클릭 시 적절한 처리가 되어야 함', async ({ page }) => {
       const kakaoButton = page.locator(SELECTORS.KAKAO_LOGIN_BUTTON);
-      
+
       // 카카오 버튼 클릭
       await kakaoButton.click();
-      
+
       // 페이지 변화나 OAuth 리다이렉트 확인
       await page.waitForTimeout(1000);
-      
+
       // URL 변경 또는 새 창/팝업 확인
       const currentUrl = page.url();
       const hasChanged = !currentUrl.includes('/signup') || currentUrl.includes('kakao');
-      
+
       // OAuth 프로세스가 시작되었거나 처리되었음을 확인
       expect(hasChanged || await page.locator('.loading, .spinner').isVisible()).toBeTruthy();
     });
@@ -253,16 +247,16 @@ test.describe('회원가입 기능 테스트', () => {
       expect(page.url()).toContain('/signin');
     });
 
-    test('키보드 네비게이션이 올바르게 동작해야 함', async ({ page }) => {
+    test('키보드 네비게이션이 올바르게 동작해야 함', async () => {
       await helpers.testKeyboardNavigation();
     });
 
     test('엔터 키로 폼 제출이 가능해야 함', async ({ page }) => {
       await helpers.fillSignupForm(TEST_DATA.VALID_EMAIL, TEST_DATA.VALID_PASSWORD);
-      
+
       // 비밀번호 필드에서 엔터 키 입력
       await page.locator(SELECTORS.PASSWORD_INPUT).press('Enter');
-      
+
       // 폼이 제출되었는지 확인 (로딩 상태나 페이지 변경)
       await Promise.race([
         page.waitForURL(/\/(signin|dashboard|home)/, { timeout: 5000 }),
@@ -274,13 +268,13 @@ test.describe('회원가입 기능 테스트', () => {
     test('반응형 디자인이 모바일에서 올바르게 동작해야 함', async ({ page }) => {
       // 모바일 뷰포트로 변경
       await page.setViewportSize({ width: 375, height: 667 });
-      
+
       // 폼 요소들이 모바일에서 접근 가능한지 확인
       await expect(page.locator(SELECTORS.FORM)).toBeVisible();
       await expect(page.locator(SELECTORS.EMAIL_INPUT)).toBeVisible();
       await expect(page.locator(SELECTORS.PASSWORD_INPUT)).toBeVisible();
       await expect(page.locator(SELECTORS.SIGNUP_BUTTON)).toBeVisible();
-      
+
       // 터치 친화적 크기 확인 (최소 44px 높이)
       const buttonBox = await page.locator(SELECTORS.SIGNUP_BUTTON).boundingBox();
       expect(buttonBox!.height).toBeGreaterThanOrEqual(40);
@@ -289,10 +283,10 @@ test.describe('회원가입 기능 테스트', () => {
     test('포커스 인디케이터가 올바르게 표시되어야 함', async ({ page }) => {
       const emailInput = page.locator(SELECTORS.EMAIL_INPUT);
       const passwordInput = page.locator(SELECTORS.PASSWORD_INPUT);
-      
+
       await emailInput.focus();
       await expect(emailInput).toBeFocused();
-      
+
       await passwordInput.focus();
       await expect(passwordInput).toBeFocused();
     });
@@ -301,23 +295,23 @@ test.describe('회원가입 기능 테스트', () => {
   test.describe('시나리오 6: 에러 복구 및 재시도', () => {
     test('네트워크 오류 시뮬레이션 및 재시도', async ({ page }) => {
       await helpers.fillSignupForm(TEST_DATA.VALID_EMAIL, TEST_DATA.VALID_PASSWORD);
-      
+
       // 네트워크 연결 차단
       await page.route('**/*', route => route.abort());
-      
+
       try {
         await helpers.submitForm();
-        
+
         // 에러 상태 확인
         await page.waitForTimeout(2000);
-        
+
         // 네트워크 복구
         await page.unroute('**/*');
-        
+
         // 재시도 가능한지 확인
         await helpers.submitForm();
-        
-      } catch (error) {
+
+      } catch {
         // 네트워크 복구
         await page.unroute('**/*');
       }
@@ -326,13 +320,13 @@ test.describe('회원가입 기능 테스트', () => {
     test('폼 데이터가 에러 발생 후에도 보존되어야 함', async ({ page }) => {
       const testEmail = TEST_DATA.VALID_EMAIL;
       const testPassword = TEST_DATA.VALID_PASSWORD;
-      
+
       await helpers.fillSignupForm(testEmail, testPassword);
-      
+
       // 잘못된 비밀번호로 에러 유발
       await page.fill(SELECTORS.PASSWORD_INPUT, TEST_DATA.INVALID_PASSWORDS.TOO_SHORT);
       await helpers.submitForm();
-      
+
       // 이메일 필드는 보존되어야 함
       await expect(page.locator(SELECTORS.EMAIL_INPUT)).toHaveValue(testEmail);
     });
@@ -341,10 +335,10 @@ test.describe('회원가입 기능 테스트', () => {
       // 잘못된 비밀번호로 에러 유발
       await helpers.fillSignupForm(TEST_DATA.VALID_EMAIL, TEST_DATA.INVALID_PASSWORDS.TOO_SHORT);
       await helpers.submitForm();
-      
+
       // 올바른 비밀번호로 수정
       await page.fill(SELECTORS.PASSWORD_INPUT, TEST_DATA.VALID_PASSWORD);
-      
+
       // 에러 상태가 해제되었는지 확인
       const passwordInput = page.locator(SELECTORS.PASSWORD_INPUT);
       await expect(passwordInput).not.toHaveClass(/invalid|error/);

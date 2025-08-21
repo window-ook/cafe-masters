@@ -1,18 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
 
-/**
- * 카페 수집 기능 E2E 테스트
- * 
- * 테스트 범위:
- * 1. 카페 수집 기본 플로우
- * 2. 평점별 등급 시스템 (Under/Silver/Gold)
- * 3. 중복 수집 방지
- * 4. 컬렉션 페이지 연동
- * 5. 티어 시스템 진행도
- * 6. 에러 처리 및 데이터 검증
- * 7. 수집된 카페 상세 관리
- */
-
 const TEST_USER = {
   email: 'demouser@test.com',
   password: '1234uio!'

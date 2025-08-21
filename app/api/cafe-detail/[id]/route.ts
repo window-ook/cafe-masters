@@ -42,11 +42,8 @@ export async function GET(
       const isKakaoResource = url.includes('kakao');
       const isEssentialResource = ['document', 'xhr', 'fetch'].includes(resourceType);
 
-      if (!isKakaoResource && !isEssentialResource) {
-        route.abort();
-      } else {
-        route.continue();
-      }
+      if (!isKakaoResource && !isEssentialResource) route.abort();
+      else route.continue();
     });
 
     await page.goto(`https://place.map.kakao.com/${id}`, {

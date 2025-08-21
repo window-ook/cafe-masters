@@ -1,15 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
 
-/**
- * 사이드바 네비게이션 테스트 시나리오
- * - 사이드바 기본 표시 및 구조 검증
- * - 검색 기능 테스트
- * - 메뉴별 페이지 이동 테스트
- * - 로그인/로그아웃 상태별 처리
- * - 메뉴 개수 표시 동기화
- * - 반응형 디자인 및 키보드 접근성
- */
-
 test.describe('사이드바 네비게이션 테스트', () => {
   // 로그인이 필요한 테스트들을 위한 헬퍼 함수
   const performLogin = async (page: Page) => {
