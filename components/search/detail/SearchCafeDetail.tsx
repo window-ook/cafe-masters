@@ -80,7 +80,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
 
   const actionButtons = (
     <>
-      <Button
+      {!isCollected && <Button
         onClick={() => {
           setTargetCafeForCollect({
             id: Number(searchedDetail.id),
@@ -97,8 +97,8 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
         }}
         customClassName='flex-1'
       >
-        {isCollected ? '수정하기' : '수집하기'}
-      </Button>
+        수집하기
+      </Button>}
       {admin && !isRecommended && (
         <Button
           onClick={() => {

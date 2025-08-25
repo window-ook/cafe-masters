@@ -55,6 +55,9 @@ CLAUDE.md
 GEMINI.md
 docs/
 
+# MCP Server
+.mcp.json
+
 # Playwright
 node_modules/
 /test-results/

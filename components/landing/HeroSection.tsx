@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 async function getCollectionCounts() {
     const supabase = await createServerSupabaseClient();
+
     const { data, error } = await supabase
         .from('collection')
         .select('*', { count: 'exact' });

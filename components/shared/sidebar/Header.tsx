@@ -107,7 +107,7 @@ export default function Header() {
               aria-label="검색"
               onClick={handleCollectionSearch}
               text='검색'
-              customClassName={`w-1/6 py-4 px-1 ${isDarkTheme ? 'bg-main-dark' : 'bg-sidebar-background'}`}
+              customClassName={`w-1/6 py-4 px-1 ${isDarkTheme ? 'bg-main-dark' : ''}`}
             />
           </div>
           <div className="flex gap-4">
@@ -144,7 +144,7 @@ export default function Header() {
               aria-label="검색"
               onClick={handleBookmarkSearch}
               text='검색'
-              customClassName={`w-1/6 py-4 px-1 ${isDarkTheme ? 'bg-main-dark' : 'bg-sidebar-background'}`}
+              customClassName={`w-1/6 py-4 px-1 ${isDarkTheme ? 'bg-main-dark' : ''}`}
             />
           </div>
           <div className="w-full px-2 flex gap-4">

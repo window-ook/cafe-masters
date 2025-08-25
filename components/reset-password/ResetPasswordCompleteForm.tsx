@@ -48,7 +48,7 @@ export default function ResetPasswordCompleteForm() {
                                 로그인 페이지에서 새 비밀번호로 로그인해주세요.
                             </p>
                         </div>
-                        
+
                         <Button
                             type="button"
                             ariaLabel="로그인 페이지로 이동"

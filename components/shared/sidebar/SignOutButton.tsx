@@ -2,13 +2,13 @@
 
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useUserStore } from '@/stores/user';
-import Button from '@/components/shared/Button';
 import { useUIStore } from '@/stores';
+import Button from '@/components/shared/Button';
 
 export default function SignOutButton() {
   const supabase = createBrowserSupabaseClient();
 
-  const { resetUser } = useUserStore();
+  const resetUser = useUserStore(state => state.resetUser);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   const handleSignOut = async () => {

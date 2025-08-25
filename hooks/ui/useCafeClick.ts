@@ -24,7 +24,6 @@ interface ICafeClickHandlerOptions {
 
 /**
  * 카페 클릭 핸들러 제네릭 훅
- * 
  * @template T - 카페 데이터 타입 (ICafeClickData를 확장해야 함)
  * @param options - 핸들러 옵션
  * @returns 카페 클릭 핸들러 함수
@@ -62,7 +61,7 @@ export function useCafeClick<T extends ICafeClickData>(
 
     // 라우팅 (카페 이름을 쿼리 파라미터로 포함)
     const cafeName = cafe.place_name;
-    const url = cafeName 
+    const url = cafeName
       ? `/${routePath}/detail/${cafe.id}?name=${encodeURIComponent(cafeName)}`
       : `/${routePath}/detail/${cafe.id}`;
     router.push(url);
