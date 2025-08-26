@@ -28,13 +28,13 @@ export default function SearchCafes() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleSearchedCafeClick = useCafeClick<IKakaoSearchResult>({
-    routePath: 'search',
-  });
+  const handleSearchedCafeClick = useCafeClick<IKakaoSearchResult>({ routePath: 'search' });
 
   return (
     <div className="h-full flex flex-col">
-      <section className="flex-1 overflow-y-auto overflow-x-hidden">
+      <section
+        id="search-scroll-container"
+        className="flex-1 overflow-y-auto overflow-x-hidden">
         <ul className="pagination-sidebar-list">
           {paginatedResult.map((cafe: IKakaoSearchResult) => (
             <CafeItem
@@ -56,6 +56,7 @@ export default function SearchCafes() {
           handleNextPageAction={handleNextSearchResultPage}
           currentPage={currentPage}
           totalPages={totalSearchResultPages}
+          scrollContainerSelector="#search-scroll-container"
         />
       )}
     </div>

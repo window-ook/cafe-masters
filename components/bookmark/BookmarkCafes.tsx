@@ -142,7 +142,9 @@ export default function BookmarkCafes() {
 
   return (
     <div className="h-full flex flex-col">
-      <section className="flex-1 overflow-y-auto overflow-x-hidden">
+      <section
+        id="bookmark-scroll-container"
+        className="flex-1 overflow-y-auto overflow-x-hidden">
         <ul className="pagination-sidebar-list">
           {paginatedBookmarkCafes.map((cafe: ISupabaseBookmarkCafe) => (
             <CafeItem
@@ -163,6 +165,7 @@ export default function BookmarkCafes() {
         handleNextPageAction={handleNextBookmarkCafePage}
         currentPage={currentPage}
         totalPages={totalPages}
+        scrollContainerSelector="#bookmark-scroll-container"
       />
     </div>
   );

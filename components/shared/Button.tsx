@@ -33,7 +33,11 @@ export default function Button({
     children,
 }: IButton) {
     const getVariantClasses = (variant: ButtonVariant): string => {
-        const baseClasses = `hover-button px-4 py-2 rounded-lg font-semibold disabled:bg-button-disabled ${customClassName.includes('bg-') ? '' : 'bg-button'} text-button-text hover:bg-button-hover disabled:cursor-not-allowed`;
+        const hasCustomHover = customClassName.includes('hover:');
+        const hasCustomBg = customClassName.includes('bg-');
+
+        const baseClasses = `hover-button px-4 py-2 rounded-lg font-semibold disabled:bg-button-disabled ${hasCustomBg ? '' : 'bg-button'} text-button-text ${hasCustomHover ? '' : 'hover:bg-button-hover'} disabled:cursor-not-allowed`;
+
         switch (variant) {
             case 'default':
                 return `${baseClasses}`;
@@ -46,7 +50,7 @@ export default function Button({
         }
     };
 
-    const finalClassName = `${customClassName} ${getVariantClasses(variant)}`;
+    const finalClassName = `${getVariantClasses(variant)} ${customClassName}`;
     const isClickDisabled = disabled || variant === 'disabled';
 
     return (

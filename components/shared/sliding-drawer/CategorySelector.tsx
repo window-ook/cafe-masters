@@ -1,5 +1,5 @@
 import { CATEGORIES } from '@/utils/constants/categories';
-import { RiResetLeftFill } from 'react-icons/ri';
+import { RotateCcw } from 'lucide-react';
 import { ICategorySelector } from '@/types/shared/form';
 
 export default function CategorySelector({
@@ -35,10 +35,10 @@ export default function CategorySelector({
       ))}
       <button
         type="button"
-        className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center transform duration-150 hover:opacity-60"
+        className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center cursor-pointer transform duration-150 hover:opacity-60"
         onClick={resetCategories}
       >
-        <RiResetLeftFill />
+        <RotateCcw className="size-4" />
       </button>
     </div>
   );

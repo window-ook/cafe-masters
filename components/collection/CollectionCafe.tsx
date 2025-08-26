@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useUIStore } from '@/stores';
-import { FaStar } from 'react-icons/fa6';
+import { Star } from 'lucide-react';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 
@@ -198,7 +198,7 @@ export default function CollectionCafe({
               .fill(0)
               .map((_, index) => (
                 <div key={index} className="rating-red-circle">
-                  <FaStar className="fa-solid fa-star absolute text-yellow-300 text-xs" />
+                  <Star className="fill-rating-star text-rating-star size-3" />
                 </div>
               ))}
           </div>

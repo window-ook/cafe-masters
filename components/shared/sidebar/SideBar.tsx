@@ -1,6 +1,5 @@
 'use client';
 
-import { Suspense } from 'react';
 import { useUIStore } from 'stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
@@ -13,7 +12,6 @@ import BookmarkCafes from '@/components/bookmark/BookmarkCafes';
 import RecommendationCafes from '@/components/recommendation/RecommendationCafes';
 import CollectionCafes from '@/components/collection/CollectionCafes';
 import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
-import ListSkeleton from '@/components/shared/sidebar/ListSkeleton';
 
 /** 네비게이션, 리스트 표시 Shell Container */
 export default function SideBar() {
@@ -41,17 +39,13 @@ export default function SideBar() {
 
           {paths.isSearch && (
             <div className="flex-1 min-h-0">
-              <Suspense fallback={<ListSkeleton />}>
-                <SearchedCafes />
-              </Suspense>
+              <SearchedCafes />
             </div>
           )}
 
           {paths.isCollection && (
             <div className="flex-1 min-h-0">
-              <Suspense fallback={<ListSkeleton />}>
-                <CollectionCafes />
-              </Suspense>
+              <CollectionCafes />
             </div>
           )}
 
@@ -63,9 +57,7 @@ export default function SideBar() {
 
           {paths.isRecommendation && (
             <div className="flex-1 min-h-0">
-              <Suspense fallback={<ListSkeleton />}>
-                <RecommendationCafes />
-              </Suspense>
+              <RecommendationCafes />
             </div>
           )}
 

@@ -37,7 +37,9 @@ export default function RecommendationCafes() {
   if (isLoading) {
     return (
       <div className="h-full flex flex-col">
-        <section className="flex-1 overflow-y-auto overflow-x-hidden">
+        <section
+          id="recommendation-scroll-container"
+          className="flex-1 overflow-y-auto overflow-x-hidden">
           <ul className="pagination-sidebar-list">
             {Array.from({ length: recommendationPerPage }).map((_, index) => (
               <li
@@ -125,7 +127,9 @@ export default function RecommendationCafes() {
 
   return (
     <div className="h-full flex flex-col">
-      <section className='flex-1 overflow-y-auto overflow-x-hidden'>
+      <section
+        id="recommendation-scroll-container"
+        className="flex-1 overflow-y-auto overflow-x-hidden">
         <ul className="pagination-sidebar-list">
           {paginatedRecommend.map((cafe: ISupabaseRecommendationCafe) => (
             <CafeItem
@@ -147,6 +151,7 @@ export default function RecommendationCafes() {
           handleNextPageAction={handleNextRecommendedPage}
           currentPage={currentPage}
           totalPages={totalRecommendedPages}
+          scrollContainerSelector="#recommendation-scroll-container"
         />
       )}
     </div>

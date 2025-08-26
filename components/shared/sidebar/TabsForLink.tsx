@@ -5,10 +5,7 @@ import { useRecommendationCounts } from '@/hooks/supabase/recommendation';
 import { useCollectionCounts } from '@/hooks/supabase/collection';
 import { useBookmarkCounts } from '@/hooks/supabase/bookmark';
 import { useSearchedResultStore, useUIStore, useUserStore } from '@/stores';
-import { MdCollections, MdCollectionsBookmark } from 'react-icons/md';
-import { FaCheckCircle } from 'react-icons/fa';
-import { IoMdCafe } from 'react-icons/io';
-import { FaRegCircleQuestion } from 'react-icons/fa6';
+import { BookMarked, BookImage, SearchCode, ThumbsUp, Info } from 'lucide-react';
 import Link from 'next/link';
 
 interface ISideBarTab {
@@ -59,44 +56,36 @@ export default function TabsForLink() {
   return (
     <ul className="flex-1 flex flex-col">
       <SideBarTab
-        icon={
-          <IoMdCafe
-            className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} text-3xl`}
-          />
-        }
+        icon={<SearchCode className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} text-3xl`} />}
         title={'검색 결과'}
         path={'/search'}
         isDarkTheme={isDarkTheme}
         counts={searchResult.length}
       />
       <SideBarTab
-        icon={
-          <MdCollections
-            className={`${isDarkTheme ? 'text-main-shadow' : `text-main`} text-3xl`}
-          />
-        }
+        icon={<BookImage className={`${isDarkTheme ? 'text-main-shadow' : `text-main`} text-3xl`} />}
         title={'내가 수집한 카페'}
         path={'/collection'}
         isDarkTheme={isDarkTheme}
         counts={collectionCounts!}
       />
       <SideBarTab
-        icon={<MdCollectionsBookmark className={`text-yellow-500 text-3xl`} />}
+        icon={<BookMarked className={`text-yellow-500 text-3xl`} />}
         title={'북마크한 카페'}
         path={'/bookmark'}
         isDarkTheme={isDarkTheme}
         counts={bookmarkCounts!}
       />
       <SideBarTab
-        icon={<FaCheckCircle className={`text-recommendation text-3xl`} />}
-        title={'개발자가 추천하는 카페'}
+        icon={<ThumbsUp className={`text-recommendation text-3xl`} />}
+        title={'개발자 PICK 추천 카페'}
         path={'/recommendation'}
         isDarkTheme={isDarkTheme}
         counts={recommendationCounts!}
       />
       <SideBarTab
-        icon={<FaRegCircleQuestion className={`text-gray-500 text-3xl`} />}
-        title={'도움 센터'}
+        icon={<Info className={`text-gray-500 text-3xl`} />}
+        title={'도움말'}
         path={'/help'}
         isDarkTheme={isDarkTheme}
       />

@@ -1,8 +1,7 @@
 'use client';
 
 import { useUIStore } from '@/stores';
-import { MdSunny } from 'react-icons/md';
-import { FaMoon } from 'react-icons/fa';
+import { SunMedium, MoonStar } from 'lucide-react';
 
 export default function ThemeToggleButton() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -23,9 +22,9 @@ export default function ThemeToggleButton() {
         className={`z-10 w-8 h-8 rounded-full shadow-md transform transition-transform duration-300 ease-in-out flex items-center justify-center ${isDarkTheme ? 'translate-x-11 bg-gray-800' : 'translate-x-1 bg-white'}`}
       >
         {isDarkTheme ? (
-          <FaMoon className="text-white text-sm" />
+          <MoonStar className="text-white text-sm" />
         ) : (
-          <MdSunny className="text-main text-lg" />
+          <SunMedium className="text-main text-lg" />
         )}
       </div>
     </button>

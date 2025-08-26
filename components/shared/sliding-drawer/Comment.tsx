@@ -1,12 +1,12 @@
 'use client';
 
-import { FaPencilAlt } from 'react-icons/fa';
+import { MessageCircleMore } from 'lucide-react';
 
 export default function Comment({ comment }: { comment: string }) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 items-center">
-        <FaPencilAlt className="pt-1" />
+        <MessageCircleMore className="size-4" />
         <span className="">코멘트</span>
       </div>
       <div className="col-span-2 text-md">

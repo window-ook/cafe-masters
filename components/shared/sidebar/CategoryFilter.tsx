@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useFilterStore } from '@/stores/filter';
 import { useUIStore } from '@/stores';
 import { CATEGORIES } from '@/utils/constants/categories';
-import { RiResetLeftFill } from 'react-icons/ri';
-import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
+import { RotateCcw } from 'lucide-react';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 
 export default function CategoryFilter() {
   const selectedCategories = useFilterStore(state => state.selectedCategories);
@@ -44,10 +44,10 @@ export default function CategoryFilter() {
           ))}
           <button
             type="button"
-            className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center transform duration-150 hover:opacity-60"
+            className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center cursor-pointer transform duration-150 hover:opacity-60"
             onClick={resetCategories}
           >
-            <RiResetLeftFill />
+            <RotateCcw className="size-4" />
           </button>
         </div>
       </div>
@@ -60,12 +60,12 @@ export default function CategoryFilter() {
         {isExpanded ? (
           <p className="flex items-center gap-1">
             <span>카테고리 접기</span>
-            <FaChevronUp />
+            <ChevronUp />
           </p>
         ) : (
           <p className="flex items-center gap-1">
             <span>카테고리 펼치기</span>
-            <FaChevronDown />
+            <ChevronDown />
           </p>
         )}
       </button>

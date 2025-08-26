@@ -115,7 +115,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
             });
             setIsRecommendFormOpenAction(true);
           }}
-          customClassName='flex-1 bg-blue-600'
+          customClassName='flex-1 bg-blue-600 hover:bg-blue-800'
         >
           추천하기
         </Button>

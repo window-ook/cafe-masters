@@ -46,6 +46,8 @@ body {
   --color-unbookmark: var(--color-gray-400);
   --color-recommendation: oklch(79.32% 0.196 159.88);
 
+  --color-rating-star: var(--color-yellow-300);
+
   /* 다크 모드 */
   --color-dark-text: var(--color-white);
   --color-dark-background: var(--color-slate-800);
