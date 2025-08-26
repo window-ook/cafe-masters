@@ -3,9 +3,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useUIStore } from '@/stores/ui';
 import { useCurrentCafeStore } from '@/stores/current-cafe';
 
-/**
- * 카페 클릭 핸들러 공통 타입 인터페이스
- */
+/** 카페 클릭 핸들러 공통 타입 인터페이스 */
 interface ICafeClickData {
   id: string | number;
   place_name?: string;
@@ -15,9 +13,7 @@ interface ICafeClickData {
   y?: number;
 }
 
-/**
- * 카페 클릭 핸들러 옵션
- */
+/** 카페 클릭 핸들러 옵션 */
 interface ICafeClickHandlerOptions {
   routePath: string;
 }
@@ -55,11 +51,9 @@ export function useCafeClick<T extends ICafeClickData>(
     setCurrentCoordX(coordX);
     setCurrentCoordY(coordY);
 
-    // 통합 액션: 카페 상세 열기 (카페 ID 설정 + 슬라이딩 드로어 열기)
     const cafeIdAsNumber = typeof cafe.id === 'string' ? parseInt(cafe.id) : cafe.id;
     openCafeDetail(cafeIdAsNumber);
 
-    // 라우팅 (카페 이름을 쿼리 파라미터로 포함)
     const cafeName = cafe.place_name;
     const url = cafeName
       ? `/${routePath}/detail/${cafe.id}?name=${encodeURIComponent(cafeName)}`

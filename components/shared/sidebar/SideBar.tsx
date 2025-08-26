@@ -15,7 +15,7 @@ import CollectionCafes from '@/components/collection/CollectionCafes';
 import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
 import ListSkeleton from '@/components/shared/sidebar/ListSkeleton';
 
-/** 네비게이션 기능과 목록 표시 기능을 포함하는 Shell */
+/** 네비게이션, 리스트 표시 Shell Container */
 export default function SideBar() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
@@ -57,9 +57,7 @@ export default function SideBar() {
 
           {paths.isBookmark && (
             <div className="flex-1 min-h-0">
-              <Suspense fallback={<ListSkeleton />}>
-                <BookmarkCafes />
-              </Suspense>
+              <BookmarkCafes />
             </div>
           )}
 
@@ -79,7 +77,7 @@ export default function SideBar() {
         </section>
       </div>
 
-      {/* 슬라이딩 드로어: 상세 정보 */}
+      {/* 상세 정보 Shell Container */}
       <ErrorBoundaryWrapper
         featureName="상세 정보"
         message="상세 정보를 불러오는 중 에러가 발생했습니다."
