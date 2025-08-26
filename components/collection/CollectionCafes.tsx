@@ -1,98 +1,149 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { useUserStore } from 'stores';
+import React, { useState, useEffect } from 'react';
+import { useUIStore, useUserStore } from 'stores';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
-import { useInView } from 'react-intersection-observer';
 import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import CollectionCafe from '@/components/collection/CollectionCafe';
-import PulseDot from '@/components/shared/sidebar/PulseDot';
+import PageConverter from '@/components/shared/sidebar/PageConverter';
+
+const COLLECTION_CAFES_PER_PAGE = 8 as const;
 
 export default function CollectionCafes() {
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const userId = useUserStore(state => state.userId);
 
-  const { ref: collectionRef, inView: collectionInView } = useInView({
-    threshold: 0.1,
-  });
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const {
-    filteredCollectionCafes,
-    fetchNextPage,
+    collectionCafes,
+    paginatedData: paginatedCollectionCafes,
+    totalPages,
+    totalFilteredCount,
     hasNextPage,
-    isFetchingNextPage,
+    hasPreviousPage,
     isLoading,
     isError,
     error,
-  } = useCollectionCafes(userId, true);
+  } = useCollectionCafes(userId, currentPage, COLLECTION_CAFES_PER_PAGE, true);
 
-  useEffect(() => {
-    if (collectionInView && hasNextPage && !isFetchingNextPage) fetchNextPage();
-  }, [collectionInView, hasNextPage, fetchNextPage, isFetchingNextPage]);
+  useEffect(() => { setCurrentPage(1); }, [totalFilteredCount]);
+
+  const handleNextCollectionCafePage = () => {
+    if (hasNextPage) setCurrentPage(prev => prev + 1);
+  };
+
+  const handlePreviousPageAction = () => {
+    if (hasPreviousPage) setCurrentPage(prev => prev - 1);
+  };
 
   const handleCollectionCafeClick = useCafeClick<ISupabaseCollectionCafe>({
     routePath: 'collection',
   });
 
-  // 로그인 확인
-  if (!userId) {
-    return (
-      <div className="relative overflow-y-auto overflow-x-hidden">
-        <div className="flex flex-col items-center justify-center h-full py-16 px-8">
-          <div className="text-center text-gray-500">
-            <p className="text-lg font-medium mb-2">로그인이 필요합니다</p>
-            <p className="text-sm">수집한 카페를 확인하려면 로그인해주세요.</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // 에러 상태
-  if (isError) {
-    return (
-      <div className="relative overflow-y-auto overflow-x-hidden">
-        <div className="flex flex-col items-center justify-center h-full py-16 px-8">
-          <div className="text-center text-red-500">
-            <p className="text-lg font-medium mb-2">오류가 발생했습니다</p>
-            <p className="text-sm">{error?.message || '데이터를 불러올 수 없습니다.'}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // 로딩 상태
   if (isLoading) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
-        <div className="flex flex-col items-center justify-center h-full py-16">
-          <PulseDot />
-          <p className="text-center text-gray-500 mt-4">수집한 카페를 불러오는 중...</p>
-        </div>
+        <section className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="my-8 px-8 flex flex-col gap-8">
+            {Array.from({ length: COLLECTION_CAFES_PER_PAGE }).map((_, index) => (
+              <div
+                key={index}
+                className="h-20 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"
+              />
+            ))}
+          </div>
+        </section>
       </div>
     );
   }
 
-  // 빈 데이터 상태
-  if (!filteredCollectionCafes || filteredCollectionCafes.length === 0) {
+  if (isError) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
-        <div className="flex flex-col items-center justify-center h-full py-16 px-8">
-          <div className="text-center text-gray-500">
-            <p className="text-lg font-medium mb-2">수집한 카페가 없습니다</p>
-            <p className="text-sm">카페를 방문하여 수집해보세요!</p>
+        <section className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="my-8 px-8 flex items-center justify-center h-40">
+            <div className="text-center">
+              <p className="text-red-500 dark:text-red-400 mb-2">
+                수집 카페 목록을 불러오는 중 오류가 발생했습니다.
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                {error?.message || '알 수 없는 오류'}
+              </p>
+            </div>
           </div>
-        </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (!userId) {
+    return (
+      <div className="relative overflow-y-auto overflow-x-hidden">
+        <section className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="my-8 px-8 flex items-center justify-center h-40">
+            <div className="text-center">
+              <p className="text-gray-500 dark:text-gray-400 mb-2">
+                로그인이 필요합니다.
+              </p>
+              <p className="text-gray-400 dark:text-gray-500 text-sm">
+                수집한 카페를 확인하려면 로그인해주세요.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  // 전체 데이터가 없는 경우, 필터링 결과가 없는 경우 구분
+  if (collectionCafes?.length === 0) {
+    return (
+      <div className="relative overflow-y-auto overflow-x-hidden">
+        <section className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="my-8 px-8 flex items-center justify-center h-40">
+            <div className="text-center">
+              <p className="text-gray-500 dark:text-gray-400 mb-2">
+                수집한 카페가 없습니다.
+              </p>
+              <p className="text-gray-400 dark:text-gray-500 text-sm">
+                카페를 방문하여 수집해보세요!
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  // 필터링 결과만 없는 경우
+  if (totalFilteredCount === 0) {
+    return (
+      <div className="relative overflow-y-auto overflow-x-hidden">
+        <section className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="my-8 px-8 flex items-center justify-center h-40">
+            <div className="text-center">
+              <p className="text-gray-500 dark:text-gray-400 mb-2">
+                검색 조건에 맞는 카페가 없습니다.
+              </p>
+              <p className="text-gray-400 dark:text-gray-500 text-sm">
+                다른 검색어나 필터를 시도해보세요.
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }
 
   return (
     <div className="h-full flex flex-col">
-      <section className="flex-1 overflow-y-auto overflow-x-hidden">
+      <section
+        id="collection-scroll-container"
+        className="flex-1 overflow-y-auto overflow-x-hidden">
         <ul className="pagination-sidebar-list">
-          {filteredCollectionCafes.map((cafe: ISupabaseCollectionCafe) => (
+          {paginatedCollectionCafes.map((cafe: ISupabaseCollectionCafe) => (
             <CollectionCafe
               key={cafe.id}
               name={cafe.name}
@@ -104,9 +155,16 @@ export default function CollectionCafes() {
             />
           ))}
         </ul>
-        {isFetchingNextPage && <PulseDot />}
-        <div ref={collectionRef} className="h-8 w-full bg-transparent"></div>
       </section>
+
+      <PageConverter
+        isDarkTheme={isDarkTheme}
+        handlePreviousPageAction={handlePreviousPageAction}
+        handleNextPageAction={handleNextCollectionCafePage}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        scrollContainerSelector="#collection-scroll-container"
+      />
     </div>
   );
 }

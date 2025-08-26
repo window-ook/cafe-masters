@@ -15,7 +15,7 @@ export default function BookmarkDetailClient({ params }: IPageParams) {
     const setIsCollected = useCurrentCafeStore(state => state.setIsCollected);
     const setIsRecommended = useCurrentCafeStore(state => state.setIsRecommended);
 
-    const { collectionCafes } = useCollectionCafes(userId, true);
+    const { collectionCafes } = useCollectionCafes(userId, 1, 8, true);
     const { recommendationCafes } = useRecommendationCafes();
 
     useEffect(() => {

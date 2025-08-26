@@ -3,7 +3,7 @@
 import { createServerSupabaseClient } from "utils/supabase/server";
 import { ISupabaseCollectionCafe } from "@/types/supabase/collection";
 
-/** 수집한 카페 목록 조회
+/** 수집한 카페 목록 조회 (무한스크롤용)
  * @param user_id 유저 ID
  * @param offset 오프셋
  * @param limit 한 번에 가져올 카페 수
@@ -36,6 +36,35 @@ export async function getCollectionCafes(user_id: string, offset: number = 0, li
     const nextCursor = data && data.length === limit ? offset + limit : null;
 
     return { data: safeData, nextCursor };
+}
+
+/** 수집한 카페 전체 목록 조회 (페이지네이션용)
+ * @param user_id 유저 ID
+ * @returns 수집한 카페 전체 목록
+ */
+export async function getAllCollectionCafes(user_id: string): Promise<{ data: ISupabaseCollectionCafe[] }> {
+    if (!user_id) throw new Error('유저 ID가 유효하지 않습니다.');
+
+    const supabase = await createServerSupabaseClient();
+
+    const { data, error } = await supabase
+        .from('collection')
+        .select('*')
+        .eq('user_id', user_id)
+        .order('created_at', { ascending: true });
+
+    if (error) throw new Error(error.message);
+
+    const safeData = (data ?? []).map(item => ({
+        ...item,
+        extra_images: item.extra_images ? JSON.parse(item.extra_images) : undefined,
+        categories: item.categories ? JSON.parse(item.categories) : undefined,
+        opening_time: item.opening_time ?? undefined,
+        phone_number: item.phone_number ?? undefined,
+        eaten_menus: item.eaten_menus ?? undefined,
+    }));
+
+    return { data: safeData };
 }
 
 /** 특정 수집 카페 조회 (메타데이터용)

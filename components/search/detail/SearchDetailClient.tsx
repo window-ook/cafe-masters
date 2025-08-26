@@ -26,7 +26,7 @@ export default function SearchDetailClient({ params }: ISearchDetailClientProps)
   const setIsRecommended = useCurrentCafeStore(state => state.setIsRecommended);
   const setCurrentCafeId = useCurrentCafeStore(state => state.setCurrentCafeId);
 
-  const { collectionCafes } = useCollectionCafes(userId, true);
+  const { collectionCafes } = useCollectionCafes(userId, 1, 8, true);
   const { bookmarkCafes } = useBookmarkCafes(userId);
   const { recommendationCafes } = useRecommendationCafes();
 

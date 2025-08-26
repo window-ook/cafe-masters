@@ -1,48 +1,71 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useFilterStore } from '@/stores/filter';
-import { getCollectionCafes } from '@/actions/supabase/collection';
+import { getAllCollectionCafes } from '@/actions/supabase/collection';
 import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
 import { collectionCafeQuery } from '@/queries/supabase/collection';
 
+interface ICollectionCafes {
+  collectionCafes: ISupabaseCollectionCafe[];
+  filteredCollectionCafes: ISupabaseCollectionCafe[];
+  paginatedData: ISupabaseCollectionCafe[];
+  totalPages: number;
+  totalFilteredCount: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
 /**
- * 모든 수집 카페 조회 훅
+ * 페이지네이션을 포함한 수집 카페 조회 훅
  * @param userId 유저 ID
+ * @param currentPage 현재 페이지 (1부터 시작)
+ * @param itemsPerPage 페이지당 아이템 수
  * @param isActive 활성화 여부
- * @returns 수집 카페 데이터와 로딩 상태
+ * @returns 수집 카페 데이터와 페이지네이션 정보
  */
-export function useCollectionCafes(userId: string, isActive: boolean = true) {
+export function useCollectionCafes(
+  userId: string,
+  currentPage: number = 1,
+  itemsPerPage: number = 8,
+  isActive: boolean = true
+): ICollectionCafes & {
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
+} {
   const { selectedRegion, selectedRating, searchTermInCollectionCafe } = useFilterStore();
 
-  const infiniteQuery = useInfiniteQuery({
+  const queryData = useQuery({
     enabled: isActive && !!userId,
     queryKey: collectionCafeQuery.all(userId),
-    initialPageParam: 0,
-    queryFn: async ({ pageParam }) => {
-      const response = await getCollectionCafes(userId, pageParam, 4);
+    queryFn: async () => {
+      const response = await getAllCollectionCafes(userId);
       return response;
-    },
-    getNextPageParam: lastPage => {
-      return lastPage.nextCursor !== null ? lastPage.nextCursor : null;
     },
   });
 
-  // 모든 페이지의 데이터를 하나의 배열로 합치고 필터링 적용
-  const { collectionCafes, filteredCollectionCafes } = useMemo(() => {
-    if (!infiniteQuery.data) return { collectionCafes: [], filteredCollectionCafes: [] };
+  const paginationData = useMemo((): ICollectionCafes => {
+    if (!queryData.data?.data) {
+      return {
+        collectionCafes: [],
+        filteredCollectionCafes: [],
+        paginatedData: [],
+        totalPages: 0,
+        totalFilteredCount: 0,
+        hasNextPage: false,
+        hasPreviousPage: false,
+      };
+    }
 
-    const collectionCafes = infiniteQuery.data.pages.flatMap(page => page.data);
+    const collectionCafes = queryData.data.data;
 
-    // 필터링 적용
     const filteredCollectionCafes = collectionCafes.filter((cafe: ISupabaseCollectionCafe) => {
       // 검색어 필터링
       const matchesSearch =
         !searchTermInCollectionCafe ||
-        cafe.name
-          ?.toLowerCase()
-          .includes(searchTermInCollectionCafe.toLowerCase());
+        cafe.name?.toLowerCase().includes(searchTermInCollectionCafe.toLowerCase());
 
       // 지역 필터링
       const matchesRegion =
@@ -56,13 +79,39 @@ export function useCollectionCafes(userId: string, isActive: boolean = true) {
       return matchesSearch && matchesRegion && matchesRating;
     });
 
-    return { collectionCafes, filteredCollectionCafes };
+    // 페이지네이션 계산
+    const totalFilteredCount = filteredCollectionCafes.length;
+    const totalPages = Math.ceil(totalFilteredCount / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedData = filteredCollectionCafes.slice(startIndex, endIndex);
+
+    // 페이지네이션 상태
+    const hasNextPage = currentPage < totalPages;
+    const hasPreviousPage = currentPage > 1;
+
+    return {
+      collectionCafes,
+      filteredCollectionCafes,
+      paginatedData,
+      totalPages,
+      totalFilteredCount,
+      hasNextPage,
+      hasPreviousPage,
+    };
   }, [
-    infiniteQuery.data,
+    queryData.data,
     selectedRegion,
     selectedRating,
     searchTermInCollectionCafe,
+    currentPage,
+    itemsPerPage,
   ]);
 
-  return { ...infiniteQuery, collectionCafes, filteredCollectionCafes };
+  return {
+    ...paginationData,
+    isLoading: queryData.isLoading,
+    isError: queryData.isError,
+    error: queryData.error
+  };
 }
