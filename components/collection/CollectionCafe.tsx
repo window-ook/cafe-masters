@@ -16,17 +16,18 @@ interface ICollectionCafe {
 }
 
 const HIDDEN_CAFE_NAMES = ['탐앤탐스 대구강북점', '접속'];
-const HIDDEN_CARD = 'card card-tilt w-full h-full p-4 border-4 border-main rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer hover:border-main-light transition duration-300 ease';
+
+const HIDDEN_CARD = 'card-tilt w-full h-full p-4 border-4 border-main rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer hover:border-main-light transition duration-300 ease';
 const HIDDEN_CARD_BACK_EFFECT = 'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md animate-tilt pointer-none';
 
-const RATING_ONE_N_TWO = 'bg-slate-100 text-gray-600';
+const RATING_ONE_N_TWO = 'bg-gray-100 text-gray-600';
 const RATING_THREE = 'card-silver text-black';
 const RATING_FOUR = 'card-gold text-black';
 const RATING_FIVE = 'card-emerald text-black';
 
-let COLOR_BY_RATING = '';
-let HOVER_BORDER_BY_RATING = '';
-let NORMAL_CARD_BACK_EFFECT = '';
+let COLOR_BY_RATING = ''; // 등급에 따른 카드 색상
+let HOVER_BORDER_BY_RATING = ''; // 등급에 따른 경계 색상
+let NORMAL_CARD_BACK_EFFECT = ''; // 등급에 따른 백그라운드 효과
 
 export default function CollectionCafe({
   name,
@@ -47,12 +48,12 @@ export default function CollectionCafe({
     case 1:
       COLOR_BY_RATING = RATING_ONE_N_TWO;
       NORMAL_CARD_BACK_EFFECT = '';
-      HOVER_BORDER_BY_RATING = 'hover:border-slate-500';
+      HOVER_BORDER_BY_RATING = 'hover:border-gray-500';
       break;
     case 2:
       COLOR_BY_RATING = RATING_ONE_N_TWO;
       NORMAL_CARD_BACK_EFFECT = '';
-      HOVER_BORDER_BY_RATING = 'hover:border-slate-500';
+      HOVER_BORDER_BY_RATING = 'hover:border-gray-500';
       break;
     case 3:
       COLOR_BY_RATING = RATING_THREE;
@@ -174,7 +175,7 @@ export default function CollectionCafe({
         className={
           isHiddenCard
             ? `${HIDDEN_CARD}`
-            : `card-tilt w-full h-full p-4 border-4 ${COLOR_BY_RATING} ${HOVER_BORDER_BY_RATING} ${isDarkTheme ? 'border-dark-border' : 'border-slate-500'} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`
+            : `card-tilt w-full h-full p-4 border-4 ${COLOR_BY_RATING} ${HOVER_BORDER_BY_RATING} ${isDarkTheme ? 'border-dark-border' : 'border-gray-500'} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`
         }
       >
         {/* 빛 반사 효과 */}
@@ -184,9 +185,7 @@ export default function CollectionCafe({
 
         <div className="flex flex-col gap-2">
           <div>
-            <p
-              className={`whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-4 ${isHiddenCard ? '' : 'group-hover:text-main group-hover:font-bold transition-all duration-300 ease-in-out'} font-dunggeunmo font-semibold text-lg`}
-            >
+            <p className={`whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-4 ${isHiddenCard ? '' : ratings && ratings >= 4 ? 'group-hover:text-main group-hover:font-bold transition-all duration-300 ease-in-out' : ''} font-dunggeunmo font-bold text-lg`}>
               {name}{' '}
               {isHiddenCard && (
                 <span className="inline-flex h-6 px-2 rounded-lg shadow-md bg-linear-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-size-[200%_200%] animate-gradient items-center justify-center text-sm font-dunggeunmo">
@@ -206,7 +205,7 @@ export default function CollectionCafe({
           </div>
         </div>
 
-        <div className="h-44 bg-gray-700 rounded-lg flex flex-col">
+        <div className="z-10 h-44 bg-gray-700 rounded-lg flex flex-col">
           <Image
             src={image || IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
             alt="카페 썸네일"
@@ -220,8 +219,7 @@ export default function CollectionCafe({
           </div>
         </div>
         <div
-          className={`px-2 rounded-md border-[0.1rem] ${isHiddenCard ? 'border-main' : 'border-gray-500'} group-hover:border-main flex flex-col`}
-        >
+          className={`px-2 rounded-md border-[0.125rem] ${isHiddenCard ? 'border-main' : ratings && ratings >= 4 ? 'group-hover:border-main' : 'border-gray-500'} flex flex-col`}>
           <p className="whitespace-nowrap overflow-hidden text-sm text-ellipsis font-medium">
             {address}
           </p>

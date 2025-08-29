@@ -47,7 +47,7 @@ export default function StatisticsSection() {
     return (
         <section className="relative overflow-hidden py-20">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-main-dark via-slate-900 to-main-dark" />
+            <div className="absolute inset-0 bg-gradient-to-br from-main-dark via-gray-900 to-main-dark" />
 
             {/* Blur Elements */}
             <div className="absolute left-1/4 top-20 h-80 w-80 animate-pulse rounded-full bg-main/20 blur-3xl" />

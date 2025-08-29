@@ -107,38 +107,38 @@ pnpm dev
 <div style='display:flex; flex-direction:column; gap:2px;'>
     <img src="https://github.com/user-attachments/assets/fe97c541-6354-45dd-84ad-5e46fe8ee0b4" width="700" height="364" />
     <img src="https://github.com/user-attachments/assets/85ed1823-42d0-4491-972d-5880b92c6202" width="700" height="364" />
-</div>
+</div><br>
 
 원하는 카페를 찾으시나요? 카페의 이름을 검색해보세요.<br>
 특정 카페가 아닌, 지역만 검색해도 안의 카페를 찾을 수 있어요.<br>
 썸네일 이미지를 클릭하면 카카오 플레이스에서 제공하는 페이지로 이동할 수 있어요.<br>
 
-<img src="https://github.com/user-attachments/assets/2490b05f-50b2-48e4-a964-edb58e637257" width="700" height="364" />
+<img src="https://github.com/user-attachments/assets/2490b05f-50b2-48e4-a964-edb58e637257" width="700" height="364" /><br>
 
 지인과 가기로 한 카페인가요? 북마크 해두시고 잊지 마세요!
 
-<img  src="https://github.com/user-attachments/assets/54c9beb4-adce-4f02-9a7d-425894f303fb" width="700" height="364" />
+<img  src="https://github.com/user-attachments/assets/54c9beb4-adce-4f02-9a7d-425894f303fb" width="700" height="364" /><br>
 
 카페를 갔다오셨나요? 카드로 수집하세요-V- 별점을 매겨주시면 별점에 따라 카드의 등급이 적용됩니다.
 - 2점 이하: 노말, 3점: 실버, 4점: 골드, 5점: 에메랄드, 히든: ??
 
 ### 🗂️ 수집한 카페 모아보기
 
-<img src="https://github.com/user-attachments/assets/fca1eec2-d81e-4eae-960e-56a4af616142" width="700" height="364" />
+<img src="https://github.com/user-attachments/assets/fca1eec2-d81e-4eae-960e-56a4af616142" width="700" height="364" /><br>
 
 내가 여태 수집한 카드를 볼 수 있어요.<br>
 
-<img src="https://github.com/user-attachments/assets/a75f872a-6cb4-4f54-a4ab-f48bd987216f" width="700" height="364" />
+<img src="https://github.com/user-attachments/assets/a75f872a-6cb4-4f54-a4ab-f48bd987216f" width="700" height="364" /><br>
 
 수집하면서 저장했던 메모의 내용이 담겨있으니, 필요할 때 기억해내기 좋겠죠?<br>
 
-<img src="https://github.com/user-attachments/assets/f9833f3c-e31f-4745-848f-8f2253a45d5a" width="700" height="364" />
+<img src="https://github.com/user-attachments/assets/f9833f3c-e31f-4745-848f-8f2253a45d5a" width="700" height="364" /><br>
 
 혹시 히든 카드를 찾으셨나요..? 히든 카드는 카페 이름 오른쪽에 'HIDDEN' 라벨이 표시되어있습니다:)
 
 ### 🔖 북마크 카페 모아보기
 
-<img src="https://github.com/user-attachments/assets/f48e724e-ceeb-400a-89b4-bb17c093f4e1" width="700" height="364"/>
+<img src="https://github.com/user-attachments/assets/f48e724e-ceeb-400a-89b4-bb17c093f4e1" width="700" height="364"/><br>
 
 북마크 해뒀던 카페를 확인할 수 있어요.<br>
 갈 마음이 사라진 곳이면 삭제하시면 됩니다.<br>
@@ -146,17 +146,17 @@ pnpm dev
 
 ### 😁 추천 카페 모아보기
 
-<img src="https://github.com/user-attachments/assets/046e3458-634c-4cba-b913-206ca1001e5f" width="700" height="364"/>
+<img src="https://github.com/user-attachments/assets/046e3458-634c-4cba-b913-206ca1001e5f" width="700" height="364"/><br>
 
 개발자가 특별히 추천하는 카페입니다! 제가 직접 방문했던 곳을 추천드려요.<br>
 
-<img src="https://github.com/user-attachments/assets/9cab86a8-e247-4213-a232-b82db5287247" width="700" height="364"/>
+<img src="https://github.com/user-attachments/assets/9cab86a8-e247-4213-a232-b82db5287247" width="700" height="364"/><br>
 
 카테고리 필터링을 사용해서 원하는 카페를 찾아서 구경해보세요.
 
 ### 🎖️ 콜렉션 티어 
 
-<img src="https://github.com/user-attachments/assets/ed23ccfa-8c66-4d3f-b189-e805b6cc4fc8" width="600" height="420"/>
+<img src="https://github.com/user-attachments/assets/ed23ccfa-8c66-4d3f-b189-e805b6cc4fc8" width="600" height="420"/><br>
 
 티어는 여러분이 모은 카드의 수에 따라 상승합니다.<br>
 카페를 좋아하시는 분들은 금방 마스터가 되실 수 있을거에요😁
@@ -164,7 +164,7 @@ pnpm dev
 ## 📁 프로젝트 구조
 ### 아키텍처 다이어그램
 
-<img src="https://github.com/user-attachments/assets/fa8d23b6-0752-4b2c-8cd9-58068db78e34" width="798" height="436" />
+<img src="https://github.com/user-attachments/assets/fa8d23b6-0752-4b2c-8cd9-58068db78e34" width="798" height="436" /><br>
 
 ### 왜 이렇게 설계했는지?
 
@@ -200,7 +200,7 @@ Tanstack Query의 훅을 사용하는 로직은 커스텀 훅으로 추상화했
 
 디렉토리는 역할 기반으로 분류되어 있습니다.<br>
 이 방식은 컴포넌트나 훅, 함수, 타입 등 어떤 파일이든지 위치가 직관적이기 때문에 안정성과 확장성 면에서 매우 유리하고,<br>
-Shell Container에서 Presenter만 조건부로 렌더링을 바꿔서 하게 되는 카페 마스터즈의 아키텍처와도 잘 맞는다고 생각했습니다.
+Shell Container에서 Presenter만 조건부로 렌더링을 바꿔서 하게 되는 카페 마스터즈의 아키텍처와도 잘 맞는다고 생각했습니다.<br><br>
 
 ## 🏗️ 시스템 설계
 
@@ -270,7 +270,7 @@ user {
 ```
 
 총 4개의 테이블로 구성했습니다.<br>
-모든 테이블은 RLS(Row Level Security) 정책을 적용하여, 모든 CRUD에 대한 외부의 비인가 요청을 방어합니다.
+모든 테이블은 RLS(Row Level Security) 정책을 적용하여, 모든 CRUD에 대한 외부의 비인가 요청을 방어합니다.<br>
 
 ### 비동기 데이터 플로우
 
@@ -291,6 +291,8 @@ user {
 컴포넌트 → useQuery 커스텀 훅 → 서버 액션 → Express.js
 ```
 
+<br>
+
 ## 🤺 스킬 포커스
 
 ### 1. Shell Container-Presenter 컴포넌트 아키텍처
@@ -308,7 +310,7 @@ user {
 - Presenter: 비동기 데이터 페칭, 서버/클라이언트 상태 동기화, UI 렌더링에 집중
     - 추상화된 비동기 커스텀 훅을 사용하는 비즈니스 로직 컴포넌트
 
-결론적으로 유지보수성과 확장성이 높은 구조를 구현했습니다.
+결론적으로 유지보수성과 확장성이 높은 구조를 구현했습니다.<br>
 
 ### 2. State on 3 Layers
 
@@ -327,6 +329,8 @@ user {
 
 - 클라이언트 상태
     - Zustand는 보일러 플레이트 코드를 줄이고, 전역에서 동기화가 쉽게 이루어지게 했습니다. 영속성이 필요한 상태(UI 유지)는 persist 미들웨어로 부여했습니다.
+
+<br>
 
 ### 3. ErrorBoundary를 이용한 선언적 에러 처리
 
@@ -393,6 +397,8 @@ export function ErrorBoundaryWrapper({
     <SlidingDrawer />
 </ErrorBoundaryWrapper>
 ```
+
+<br>
 
 ### 4. zod를 활용한 유효성 검사
 

@@ -19,7 +19,7 @@ export default async function HeroSection() {
     return (
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
             {/* Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-main-900 to-green-900" />
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-main-900 to-green-900" />
 
             {/* Moving Blur Elements */}
             <div className="absolute -left-20 top-20 h-96 w-96 animate-pulse rounded-full bg-main/30 blur-3xl" />

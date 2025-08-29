@@ -95,8 +95,8 @@ export default function Header() {
               aria-label="수집한 카페 중 카페 이름 검색하기"
               className={`w-5/6 py-4 border-0 border-b-2 ${isDarkTheme
                 ? 'bg-dark-background border-gray-600 text-white'
-                : 'bg-gray-100 border-gray-300 text-slate-700'
-                } placeholder:text-slate-400 focus:outline-none focus:ring-0`}
+                : 'bg-gray-100 border-gray-300 text-gray-700'
+                } placeholder:text-gray-400 focus:outline-none focus:ring-0`}
               value={collectionInput}
               onChange={e => setCollectionInput(e.target.value)}
               onKeyDown={e => {
@@ -132,8 +132,8 @@ export default function Header() {
               aria-label="북마크한 카페 중 이름 검색"
               className={`w-5/6 py-4 border-0 border-b-2 ${isDarkTheme
                 ? 'bg-dark-background border-gray-600 text-white'
-                : 'bg-gray-100 border-gray-300 text-slate-700'
-                } placeholder:text-slate-400 focus:outline-none focus:ring-0`}
+                : 'bg-gray-100 border-gray-300 text-gray-700'
+                } placeholder:text-gray-400 focus:outline-none focus:ring-0`}
               value={bookmarkInput}
               onChange={e => setBookmarkInput(e.target.value)}
               onKeyDown={e => {

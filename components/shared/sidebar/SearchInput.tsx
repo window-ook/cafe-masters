@@ -31,7 +31,7 @@ export default function SearchInput() {
   return (
     <search className="w-full rounded-xl flex gap-2">
       <input
-        className={`w-5/6 pl-3 pr-28 py-4 bg-transparent border border-slate-200 rounded-md shadow-sm font-bold text-xl sm:text-md ${isDarkTheme ? 'placeholder:text-gray-300 text-white' : 'placeholder:text-slate-400 text-slate-700'} transition duration-300 ease focus:outline-none focus:border-main hover:border-slate-300 focus:shadow`}
+        className={`w-5/6 pl-3 pr-28 py-4 bg-transparent border border-gray-200 rounded-md shadow-sm font-bold text-xl sm:text-md ${isDarkTheme ? 'placeholder:text-gray-300 text-white' : 'placeholder:text-gray-400 text-gray-700'} transition duration-300 ease focus:outline-none focus:border-main hover:border-gray-300 focus:shadow`}
         placeholder="찾으시는 곳을 입력하세요"
         value={localKeyword}
         onChange={e => setLocalKeyword(escapeForXSS(e.target.value))}
