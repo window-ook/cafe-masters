@@ -31,7 +31,7 @@ export default function CTASection() {
                         href="/signin"
                         className="relative inline-block rounded-xl bg-white px-12 sm:px-8 py-4 sm:text-xl font-bold text-main shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-gray-100 hover:shadow-2xl"
                     >
-                        지금 시작하기
+                        바로 시작하기
                     </Link>
                 </div>
             </div>

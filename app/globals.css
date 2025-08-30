@@ -41,11 +41,16 @@ body {
   /* 컨테이너 */
   --color-sidebar-background: var(--color-gray-100);
 
-  /* 아이콘, 뱃지 */
+  /* 북마크 아이콘 */
   --color-bookmark: var(--color-yellow-400);
   --color-unbookmark: var(--color-gray-400);
-  --color-recommendation: oklch(79.32% 0.196 159.88);
 
+  /* 추천 & 수집 뱃지 */
+  --color-recommendation: oklch(79.32% 0.196 159.88);
+  --color-collection-side: oklch(87.84% 0.279 145.33);
+  --color-collection-center: oklch(60.39% 0.239 279.53);
+
+  /* 별점 색상 */
   --color-rating-star: var(--color-yellow-300);
 
   /* 다크 모드 */
@@ -54,8 +59,7 @@ body {
   --color-dark-border: var(--color-main-800);
   --color-dark-shadow: var(--color-gray-600);
 
-  --color-collection-side: oklch(87.84% 0.279 145.33);
-  --color-collection-center: oklch(60.39% 0.239 279.53);
+  /* 티어 뱃지 */
   --color-beginner: oklch(64.33% 0.023 259.32);
   --color-junior: oklch(45.16% 0.316 269.89);
   --color-senior: oklch(69.58% 0.222 53.94);
@@ -67,31 +71,40 @@ body {
   --color-master-effect-mid: oklch(67.16% 0.286 310.12);
   --color-master-effect-right: oklch(69.1% 0.213 29.61);
 
+  /* 실버 카드 */
+  --color-silver-name: var(--color-gray-400);
   --color-silver-base: oklch(91.51% 0.006 259.32);
-  --color-silver-via: oklch(69.78% 0.016 259.32);
-  --color-silver-side: oklch(45.54% 0.023 259.32);
+  --color-silver-address-background: var(--color-gray-300);
 
+  /* 골드 카드 이펙트 */
+  --color-gold-name: oklch(75.48% 0.181 98.8);
   --color-gold-base: oklch(93.08% 0.149 98.8);
-  --color-gold-via: oklch(85.86% 0.206 98.8);
-  --color-gold-side: oklch(56.93% 0.141 78.76);
   --color-gold-effect-left: oklch(93.08% 0.149 98.8);
   --color-gold-effect-mid: oklch(88.51% 0.189 98.8);
   --color-gold-effect-right: oklch(75.48% 0.181 98.8);
+  --color-gold-address-background: oklch(93.68% 0.0469 98.8);
 
+  /* 에메랄드 카드 이펙트 */
+  --color-emerald-name: oklch(61.53% 0.151 149.88);
   --color-emerald-base: oklch(86.33% 0.154 159.88);
-  --color-emerald-via: oklch(79.32% 0.196 159.88);
-  --color-emerald-side: oklch(51.53% 0.101 179.88);
   --color-emerald-effect-left: oklch(90.06% 0.204 179.88);
   --color-emerald-effect-mid: oklch(61.53% 0.151 149.88);
   --color-emerald-effect-right: oklch(22.5% 0.081 149.88);
+  --color-emerald-address-background: oklch(94.26% 0.0197 149.88);
 
+  /* 히든 뱃지 이펙트*/
   --color-hidden-badge-left: oklch(65.8% 0.266 330.28);
   --color-hidden-badge-mid: oklch(87.5% 0.101 310.12);
   --color-hidden-badge-right: oklch(65.8% 0.266 330.28);
+
+  /* 히든 카드 이펙트 */
   --color-hidden-effect-left: oklch(75.31% 0.173 229.86);
   --color-hidden-effect-mid: oklch(67.16% 0.286 310.12);
   --color-hidden-effect-right: oklch(69.1% 0.213 29.61);
+  --color-hidden-address-background: oklch(87.5% 0.101 310.12);
+  --color-hidden-address-text: oklch(67.16% 0.286 310.12);
 
+  /* 버튼 */
   --color-button: var(--color-main-500);
   --color-button-text: var(--color-white);
   --color-button-disabled: var(--color-gray-400);

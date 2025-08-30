@@ -72,11 +72,11 @@ export default function FeatureSection() {
                         여러분에게 제공하는 기능
                     </h2>
                     <p className="mx-auto max-w-2xl text-sm sm:text-xl text-gray-600">
-                        우리가 평소에 카페를 이용하면서 불편했던 점을<br className='block sm:hidden' />해결하기 위해 만들었어요
+                        다녀왔던 카페에서 뭘 마셨는지, 분위기가 어땠는지,<br className='block' />따로 기록하기 번거로우셨죠?
                     </p>
                     <br className='block sm:hidden' />
                     <p className="mx-auto max-w-2xl text-sm sm:text-xl text-gray-600">
-                        메모장에 따로 저장하지 말고 <br className='block sm:hidden' />카페 마스터즈에서 쉽게 관리해보세요
+                        카페를 찾아서 바로 저장하면 되니까 <br className='block sm:hidden' />카페 마스터즈에서 쉽게 관리해보세요
                     </p>
                 </div>
 
