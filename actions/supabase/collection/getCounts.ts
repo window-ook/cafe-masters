@@ -3,14 +3,17 @@
 import { createServerSupabaseClient } from "utils/supabase/server";
 
 /** 수집한 카페 수 조회
- * @param user_id 유저 ID
  * @returns 수집 카페 수
  */
-export async function getCollectionCounts(user_id: string): Promise<number> {
-    if (!user_id) throw new Error('유저 ID가 유효하지 않습니다.');
-
+export async function getCollectionCounts(): Promise<number> {
     const supabase = await createServerSupabaseClient();
+    const user = await supabase.auth.getUser();
 
+    // 인증 검증
+    if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
+    const user_id = user.data.user.id;
+
+    // 수집 카페 수 조회
     const { data, error } = await supabase
         .from('collection')
         .select('*', { count: 'exact' })

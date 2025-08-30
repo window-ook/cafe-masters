@@ -39,7 +39,7 @@ export function useSignIn() {
       setUserEmail(user.email ?? '');
 
       // 관리자 여부 체크
-      const isAdmin = await getIsAdmin(user.id);
+      const isAdmin = await getIsAdmin();
       if (isAdmin) setAdmin(true);
 
       // 세션 새로고침

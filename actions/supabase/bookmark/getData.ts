@@ -3,17 +3,18 @@
 import { createServerSupabaseClient } from "utils/supabase/server";
 import { ISupabaseBookmarkCafe } from "@/types/supabase/bookmark";
 
-/** 북마크한 카페 조회
- * @param user_id 유저 ID
- * @param offset 오프셋
- * @param limit 한 번에 가져올 카페 수
- * @returns 북마크 카페 목록과 다음 커서
+/** 모든 북마크 카페 조회
+ * @returns 북마크 카페 목록
  */
-export async function getBookmarkCafes(user_id: string): Promise<{ data: ISupabaseBookmarkCafe[] }> {
-    if (!user_id) throw new Error('유저 ID가 유효하지 않습니다.');
-
+export async function getBookmarkCafes(): Promise<{ data: ISupabaseBookmarkCafe[] }> {
     const supabase = await createServerSupabaseClient();
+    const user = await supabase.auth.getUser();
 
+    // 인증 검증
+    if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
+    const user_id = user.data.user.id;
+
+    // 북마크 카페 조회
     const { data, error } = await supabase
         .from('bookmark')
         .select('*')
@@ -41,11 +42,18 @@ export async function getBookmarkCafeById(cafeId: number): Promise<ISupabaseBook
     if (!cafeId) throw new Error('카페 ID가 유효하지 않습니다.');
 
     const supabase = await createServerSupabaseClient();
+    const user = await supabase.auth.getUser();
 
+    // 인증 검증
+    if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
+    const user_id = user.data.user.id;
+
+    // 북마크 카페 조회
     const { data, error } = await supabase
         .from('bookmark')
         .select('*')
         .eq('id', cafeId)
+        .eq('user_id', user_id)
         .single();
 
     if (error || !data) return null;

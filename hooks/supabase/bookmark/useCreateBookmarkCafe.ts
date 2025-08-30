@@ -11,7 +11,7 @@ export function useCreateBookmarkCafe() {
     const { userId } = useUserStore();
 
     const uploadBookmark = useMutation({
-        mutationFn: async (detail: BookmarkRowInsert) => await createBookmarkCafe(detail),
+        mutationFn: async (detail: Omit<BookmarkRowInsert, 'user_id'>) => await createBookmarkCafe(detail),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: bookmarkCafeQuery.all(userId) });
             queryClient.invalidateQueries({ queryKey: bookmarkCafeQuery.counts(userId) });

@@ -37,7 +37,7 @@ export function useBookmarkCafes(
     enabled: !!userId,
     queryKey: bookmarkCafeQuery.all(userId),
     queryFn: async () => {
-      const response = await getBookmarkCafes(userId);
+      const response = await getBookmarkCafes();
       return response;
     },
   });

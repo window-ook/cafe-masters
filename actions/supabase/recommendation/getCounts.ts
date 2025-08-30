@@ -3,7 +3,6 @@
 import { createServerSupabaseClient } from "utils/supabase/server";
 
 /** 추천 카페 수 조회
- * @param user_id 유저 ID
  * @returns 추천 카페 수
  */
 export async function getRecommendationCounts(): Promise<number> {

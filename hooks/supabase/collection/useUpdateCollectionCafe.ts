@@ -11,7 +11,7 @@ export function useUpdateCollectionCafe() {
   const { currentCafeId } = useCurrentCafeStore();
 
   const updateCollection = useMutation({
-    mutationFn: async (formData: CollectionRowUpdate) => await updateCollectionCafe(formData, currentCafeId, userId),
+    mutationFn: async (formData: CollectionRowUpdate) => await updateCollectionCafe(formData, currentCafeId),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: collectionCafeQuery.all(userId) }),
     onError: error => console.error(error),
   });

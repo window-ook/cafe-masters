@@ -41,7 +41,7 @@ export function useCollectionCafes(
     enabled: isActive && !!userId,
     queryKey: collectionCafeQuery.all(userId),
     queryFn: async () => {
-      const response = await getAllCollectionCafes(userId);
+      const response = await getAllCollectionCafes();
       return response;
     },
   });

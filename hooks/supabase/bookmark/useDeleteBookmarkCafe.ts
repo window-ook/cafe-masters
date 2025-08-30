@@ -10,7 +10,7 @@ export function useDeleteBookmarkCafe() {
     const { userId } = useUserStore();
 
     const deleteBookmark = useMutation({
-        mutationFn: async (cafeId: number) => await deleteBookmarkCafe(cafeId, userId),
+        mutationFn: async (cafeId: number) => await deleteBookmarkCafe(cafeId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: bookmarkCafeQuery.all(userId) });
             queryClient.invalidateQueries({ queryKey: bookmarkCafeQuery.counts(userId) });

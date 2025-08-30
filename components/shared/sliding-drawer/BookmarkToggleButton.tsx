@@ -45,7 +45,6 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
       } else {
         await createBookmarkCafe({
           id: bookmarkData.id,
-          user_id: userId,
           coordX: bookmarkData.coordX,
           coordY: bookmarkData.coordY,
           image: bookmarkData.image || '',
