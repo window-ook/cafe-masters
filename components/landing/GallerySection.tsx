@@ -292,7 +292,7 @@ export default function GallerySection() {
         </div>
 
         {/* 카드 갤러리 */}
-        <div className="flex justify-center items-start gap-6 overflow-x-auto pb-12">
+        <div className="py-10 overflow-x-auto flex justify-center items-start gap-6">
           {SAMPLE_CAFES.map((cafe, index) => (
             <SampleCard key={index} cafe={cafe} />
           ))}
