@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { chromium, Browser } from 'playwright-core';
 import {
-  createBrowserContext,
+  createVercelOptimizedBrowserContext,
   setupResourceBlocking,
   crawlCafeData,
-  getBaseChromiumArgs,
+  getVercelOptimizedChromiumArgs,
   getProductionExecutablePath,
   handleCrawlingError,
   type BrowserConfig,
@@ -31,14 +31,7 @@ async function getBrowserInstance(): Promise<Browser> {
 
   try {
     globalBrowser = await chromium.launch({
-      args: [
-        ...getBaseChromiumArgs(),
-        '--disable-extensions',
-        '--disable-plugins',
-        '--disable-images',
-        '--disable-web-security',
-        '--disable-features=VizDisplayCompositor',
-      ],
+      args: getVercelOptimizedChromiumArgs(),
       executablePath: await getProductionExecutablePath(),
       headless: true,
     });
@@ -61,18 +54,13 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 
     const browserConfig: BrowserConfig = {
       viewport: { width: 1280, height: 720 },
-      additionalOptions: {
-        ignoreHTTPSErrors: true,
-        bypassCSP: true,
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      },
     };
 
     const crawlingConfig: CrawlingConfig = {
       waitUntil: 'networkidle',
-      timeout: 3000,
-      selectorTimeout: 2000,
-      minWaitTime: 1500,
+      timeout: 8000,
+      selectorTimeout: 3000,
+      minWaitTime: 2000,
       resourceBlocking: {
         blockImages: true,
         blockFonts: true,
@@ -80,7 +68,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       },
     };
 
-    context = await createBrowserContext(browser, browserConfig);
+    context = await createVercelOptimizedBrowserContext(browser, browserConfig);
     const page = await context.newPage();
 
     await setupResourceBlocking(page, crawlingConfig.resourceBlocking);

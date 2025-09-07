@@ -31,11 +31,29 @@ export interface CrawlingConfig {
   };
 }
 
-const toAbsoluteUrl = (src: string | null): string | null => src && !src.startsWith('http') ? `https:${src}` : src;
-
 export async function createBrowserContext(browser: Browser, config: BrowserConfig): Promise<BrowserContext> {
   return await browser.newContext({
     viewport: config.viewport,
+    ...config.additionalOptions,
+  });
+}
+
+export async function createVercelOptimizedBrowserContext(browser: Browser, config: BrowserConfig): Promise<BrowserContext> {
+  return await browser.newContext({
+    viewport: config.viewport,
+    ignoreHTTPSErrors: true,
+    bypassCSP: true,
+    javaScriptEnabled: true,
+    acceptDownloads: false,
+    colorScheme: 'no-preference',
+    reducedMotion: 'reduce',
+    extraHTTPHeaders: {
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+      'Accept-Language': 'ko-KR,ko;q=0.9,en;q=0.8',
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache',
+    },
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     ...config.additionalOptions,
   });
 }
@@ -91,18 +109,13 @@ export async function crawlCafeData(
       );
     }
 
-    if (config.minWaitTime) {
-      waitPromises.push(page.waitForTimeout(config.minWaitTime));
-    }
+    if (config.minWaitTime) waitPromises.push(page.waitForTimeout(config.minWaitTime));
 
-    if (waitPromises.length > 0) {
-      await Promise.race(waitPromises);
-    }
+    if (waitPromises.length > 0) await Promise.race(waitPromises);
   }
 
   const data = await page.evaluate(() => {
-    const toAbsoluteUrl = (src: string | null) =>
-      src && !src.startsWith('http') ? `https:${src}` : src;
+    const toAbsoluteUrl = (src: string | null) => src && !src.startsWith('http') ? `https:${src}` : src;
 
     const imgElement = document.querySelector('.img-thumb.img_cfit');
     const photo = toAbsoluteUrl(imgElement?.getAttribute('src') || null);
@@ -140,6 +153,51 @@ export function getBaseChromiumArgs(): string[] {
     '--disable-background-timer-throttling',
     '--disable-renderer-backgrounding',
     '--disable-backgrounding-occluded-windows',
+  ];
+}
+
+export function getVercelOptimizedChromiumArgs(): string[] {
+  return [
+    ...chromiumPkg.args,
+    '--no-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-background-timer-throttling',
+    '--disable-renderer-backgrounding',
+    '--disable-backgrounding-occluded-windows',
+    '--disable-web-security',
+    '--disable-features=VizDisplayCompositor,TranslateUI,BlinkGenPropertyTrees',
+    '--disable-extensions',
+    '--disable-plugins',
+    '--disable-default-apps',
+    '--disable-sync',
+    '--disable-translate',
+    '--hide-scrollbars',
+    '--mute-audio',
+    '--no-first-run',
+    '--disable-ipc-flooding-protection',
+    '--disable-component-extensions-with-background-pages',
+    '--disable-background-networking',
+    '--disable-component-update',
+    '--disable-client-side-phishing-detection',
+    '--disable-hang-monitor',
+    '--disable-popup-blocking',
+    '--disable-prompt-on-repost',
+    '--disable-domain-reliability',
+    '--autoplay-policy=user-gesture-required',
+    '--disable-images',
+    '--disable-gpu',
+    '--disable-software-rasterizer',
+    '--disable-background-media-pause',
+    '--disable-renderer-accessibility',
+    '--disable-client-side-phishing-detection',
+    '--disable-features=AudioServiceOutOfProcess',
+    '--force-color-profile=srgb',
+    '--disable-accelerated-2d-canvas',
+    '--disable-accelerated-jpeg-decoding',
+    '--disable-accelerated-mjpeg-decode',
+    '--disable-accelerated-video-decode',
+    '--disable-app-list-dismiss-on-blur',
+    '--disable-accelerated-video-encode',
   ];
 }
 
