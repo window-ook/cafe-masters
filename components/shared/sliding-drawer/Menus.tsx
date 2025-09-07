@@ -29,7 +29,7 @@ export default function Menus({ menus, isDarkTheme, isLoading = false }: IMenus)
         );
     }
 
-    if (!menus || menus.length === 0) return <div className="w-full p-4 text-center text-description">메뉴를 보려면 썸네일 클릭</div>;
+    if (!menus || menus.length === 0) return <div className="w-full p-4 text-center text-description font-medium">메뉴를 보려면 썸네일 클릭</div>;
 
     return (
         <div className="w-full">

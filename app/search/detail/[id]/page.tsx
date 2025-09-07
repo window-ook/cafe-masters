@@ -23,6 +23,9 @@ export async function generateMetadata({ searchParams }: ISearchDetailPage): Pro
   };
 }
 
-export default function SearchDetailPage({ params, searchParams }: ISearchDetailPage) {
-  return <SearchDetailClient params={params} searchParams={searchParams} />;
+export default async function SearchDetailPage({ params, searchParams }: ISearchDetailPage) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  
+  return <SearchDetailClient params={resolvedParams} searchParams={resolvedSearchParams} />;
 }

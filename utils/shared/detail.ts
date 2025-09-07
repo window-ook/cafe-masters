@@ -2,7 +2,7 @@
 
 import { RefObject } from 'react';
 
-/** 클릭보드 복사 */
+/** 클립보드 복사 */
 export const copyText = async (param: string) => {
   try {
     await navigator.clipboard.writeText(param);

@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useCurrentCafeStore, useSearchedResultStore, useFilterStore, useUserStore } from '@/stores';
-import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
+import { IKakaoSearchResult } from '@/types/kakao-map';
 import { toast } from 'react-toastify';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark';

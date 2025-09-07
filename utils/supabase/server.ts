@@ -2,7 +2,7 @@
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { Database } from 'types_db';
+import { Database } from '@/types_db';
 
 // 오로지 서버 컴포넌트에서만 사용 가능하다
 export const createServerSupabaseClient = async (

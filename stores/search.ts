@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { IKakaoSearchResult } from '@/types/kakao-map/kakao-map';
+import { IKakaoSearchResult } from '@/types/kakao-map';
 
 interface ISearchedResultStore {
     searchResult: IKakaoSearchResult[];

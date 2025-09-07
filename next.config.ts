@@ -1,5 +1,4 @@
-import type { NextConfig } from 'next';
-import type { Configuration } from 'webpack';
+import { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
@@ -44,6 +43,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'via.placeholder.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'vsemazasjbizehcambul.supabase.co',
         port: '',
         pathname: '/**',
@@ -54,13 +59,19 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   compress: true,
   webpack: (
-    config: Configuration,
+    config,
     { isServer }: { isServer: boolean },
-  ): Configuration => {
+  ) => {
     if (!isServer && config.resolve) {
       config.resolve.fallback = {
         ...config.resolve.fallback,

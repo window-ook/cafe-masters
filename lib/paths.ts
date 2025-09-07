@@ -1,6 +1,8 @@
 const INTERNAL_PATHS = {
     CAFE_DETAIL: (cafeId: string) => `/api/cafe-detail/${cafeId}`,
     CAFE_DETAIL_LOCAL: (cafeId: string) => `/api/cafe-detail/local/${cafeId}`,
+    CAFE_DETAIL_BFF_LOCAL: (cafeId: string) => `http://localhost:3001/api/cafe-detail/${cafeId}`,
+    CAFE_DETAIL_BFF: (cafeId: string) => `${process.env.NEXT_PUBLIC_BFF_URL}/api/cafe-detail/${cafeId}`,
 } as const;
 
 const EXTERNAL_PATHS = {

@@ -3,6 +3,7 @@
 import { RefObject, useRef, ReactNode } from 'react';
 import { useUIStore } from '@/stores';
 import { scrollThumbnails } from '@/utils/shared/detail';
+import { IMAGE_PATHS } from '@/lib/paths';
 import { FolderCheck } from 'lucide-react';
 import Location from '@/components/shared/sliding-drawer/Location';
 import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
@@ -11,7 +12,6 @@ import Menus from '@/components/shared/sliding-drawer/Menus';
 import Categories from '@/components/shared/sliding-drawer/Categories';
 import ImageWithFallback from '@/components/shared/ImageWithFallback';
 import Image from 'next/image';
-import { IMAGE_PATHS } from '@/lib/paths';
 
 interface ICafeDetailBody {
   cafeId: number;
@@ -73,9 +73,7 @@ export default function CafeDetailBody({
                   <a
                     type="button"
                     aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
-                    onClick={() =>
-                      window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')
-                    }
+                    onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
                   >
                     {useImageWithFallback ? (
                       <ImageWithFallback
@@ -116,9 +114,7 @@ export default function CafeDetailBody({
                         width={340}
                         height={240}
                         priority={true}
-                        onClick={() =>
-                          window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')
-                        }
+                        onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
                         className="slide-images"
                       />
                     ) : (
@@ -129,9 +125,7 @@ export default function CafeDetailBody({
                         width={340}
                         height={240}
                         priority={true}
-                        onClick={() =>
-                          window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')
-                        }
+                        onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
                         className="slide-images"
                       />
                     )}
@@ -187,16 +181,21 @@ export default function CafeDetailBody({
         )}
 
         {/* 운영시간 */}
-        <OpenTime opening_time={cafeData.opening_time ?? ''} isLoading={isDetailLoading} />
+        <OpenTime
+          opening_time={cafeData.opening_time ?? ''}
+          isLoading={isDetailLoading}
+        />
       </section>
 
-      {/* 액션 버튼들 */}
-      <section className="flex gap-2">
-        {actionButtons}
-      </section>
+      {/* 수집, 추천 버튼 */}
+      <section className="flex gap-2">{actionButtons}</section>
 
       {/* 메뉴 */}
-      <Menus menus={cafeData.menus} isDarkTheme={isDarkTheme} isLoading={isDetailLoading} />
+      <Menus
+        menus={cafeData.menus}
+        isDarkTheme={isDarkTheme}
+        isLoading={isDetailLoading}
+      />
     </main>
   );
 }

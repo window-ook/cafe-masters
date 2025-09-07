@@ -1,19 +1,19 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useSearchedCafeDetail } from '@/hooks/kakao-map/useSearchedCafeDetail';
+import { useSearchCafeDetail } from '@/hooks/kakao-map/useSearchCafeDetail';
 import { useSearchedResultStore, useCurrentCafeStore, useUserStore, useUIStore, useCollectionStore, useRecommendationStore } from '@/stores';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
 
-interface ISearchedCafeDetail {
+interface ISearchCafeDetail {
   cafeId: number;
   setIsRecommendFormOpenAction: (isMemoOpen: boolean) => void;
 }
 
-export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction }: ISearchedCafeDetail) {
+export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction }: ISearchCafeDetail) {
   const admin = useUserStore(state => state.admin);
   const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
   const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);
@@ -24,7 +24,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   const setTargetCafeForRecommend = useRecommendationStore(state => state.setTargetCafeForRecommend);
   const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
 
-  const { searchedCafeDetail, isLoading: isDetailLoading } = useSearchedCafeDetail(cafeId.toString());
+  const { searchedCafeDetail, isLoading: isDetailLoading } = useSearchCafeDetail(cafeId.toString());
 
   // 즉시 렌더링: 검색 결과에 포함된 기본 정보(클라이언트 캐시)
   const foundCafe = useMemo(() => {
@@ -48,7 +48,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
         kakaoCategories: [],
         extra_images: searchedCafeDetail?.extra_images ?? [],
         opening_time: searchedCafeDetail?.opening_time ?? null,
-        menus: searchedCafeDetail?.menus ?? null,
+        // menus: searchedCafeDetail?.menus ?? null,
       };
     }
 
@@ -61,7 +61,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
       kakaoCategories: foundCafe.category_name ? foundCafe.category_name.split(' > ') : [],
       extra_images: searchedCafeDetail?.extra_images ?? [],
       opening_time: searchedCafeDetail?.opening_time ?? null,
-      menus: searchedCafeDetail?.menus ?? null,
+      // menus: searchedCafeDetail?.menus ?? null,
     };
   }, [foundCafe, searchedCafeDetail, cafeId]);
 
@@ -75,7 +75,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
     coordY: currentCoordY,
     extra_images: searchedDetail.extra_images,
     opening_time: searchedDetail.opening_time,
-    menus: searchedDetail.menus,
+    // menus: searchedDetail.menus,
   };
 
   const actionButtons = (
