@@ -60,7 +60,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       waitUntil: 'networkidle',
       timeout: 8000,
       selectorTimeout: 3000,
-      minWaitTime: 2000,
+      minWaitTime: 3000,
       resourceBlocking: {
         blockImages: true,
         blockFonts: true,

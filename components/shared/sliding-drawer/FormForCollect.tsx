@@ -8,6 +8,7 @@ import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { useUpdateCollectionCafe } from '@/hooks/supabase/collection/useUpdateCollectionCafe';
 import { useCreateCollectionCafe } from '@/hooks/supabase/collection';
+import { toast } from 'react-toastify';
 import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
 import RatingsSelector from '@/components/shared/sliding-drawer/RatingsSelector';
@@ -49,7 +50,7 @@ export default function FormForCollect() {
     if (isEditMode) {
       // 편집 모드: 기존 카페 업데이트
       if (!editingCafe) {
-        alert('편집할 카페 정보가 없습니다. 다시 시도해주세요.');
+        toast.error('편집할 카페 정보가 없습니다. 다시 시도해주세요.');
         return;
       }
 
@@ -69,18 +70,18 @@ export default function FormForCollect() {
         // 성공 시 폼 닫기 및 편집 상태 초기화
         clearEditingCafe();
         setIsCollectFormOpen(false);
-        alert('카페 정보가 성공적으로 수정되었습니다!');
+        toast.success('카페 정보가 성공적으로 수정되었습니다!');
 
       } catch (error) {
         console.error('카페 수정 실패:', error);
-        alert(error instanceof Error ? error.message : '카페 수정에 실패했습니다.');
+        toast.error(error instanceof Error ? error.message : '카페 수정에 실패했습니다.');
         clearEditingCafe();
         setIsCollectFormOpen(false);
       }
     } else {
       // 생성 모드: 새 카페 수집
       if (!targetCafeForCollect) {
-        alert('카페 정보가 없습니다. 다시 시도해주세요.');
+        toast.error('카페 정보가 없습니다. 다시 시도해주세요.');
         return;
       }
 
@@ -106,11 +107,10 @@ export default function FormForCollect() {
 
         createCollectionCafe(collectionData);
         setIsCollectFormOpen(false);
-        alert('카페가 성공적으로 수집되었습니다!');
-
+        toast.success('카페가 성공적으로 수집되었습니다!');
       } catch (error) {
         console.error('카페 수집 실패:', error);
-        alert(error instanceof Error ? error.message : '카페 수집에 실패했습니다.');
+        toast.error(error instanceof Error ? error.message : '카페 수집에 실패했습니다.');
       }
     }
   };

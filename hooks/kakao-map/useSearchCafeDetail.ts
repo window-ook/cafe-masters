@@ -41,9 +41,9 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
         // 3단계: 크롤링된 데이터를 Supabase에 저장
         try {
           await createCafeDetail(cafeId, crawledData);
-          console.log(`✅ 카페 ${cafeId} 데이터 Supabase 저장 완료`);
+          console.log(`✅ 카페 ${cafeId} 데이터 DB 저장 완료`);
         } catch (saveError) {
-          console.warn(`⚠️ 카페 ${cafeId} Supabase 저장 실패:`, saveError);
+          console.warn(`⚠️ 카페 ${cafeId} DB 저장 실패:`, saveError);
         }
 
         return crawledData;

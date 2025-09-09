@@ -1,14 +1,15 @@
 'use client';
 
 import { RefObject } from 'react';
+import { toast } from 'react-toastify';
 
 /** 클립보드 복사 */
 export const copyText = async (param: string) => {
   try {
     await navigator.clipboard.writeText(param);
-    alert('클립보드에 복사되었습니다!');
+    toast.success('클립보드에 복사되었습니다!');
   } catch {
-    alert('다시 시도해주세요.');
+    toast.error('다시 시도해주세요.');
   }
 };
 

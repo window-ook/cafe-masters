@@ -104,13 +104,13 @@ export async function crawlCafeData(
 
     if (config.selectorTimeout) {
       waitPromises.push(
-        page.waitForSelector('.img-thumb', { timeout: config.selectorTimeout })
-          .catch(() => console.warn('선택자 대기 시간 초과'))
+        page
+          .waitForSelector('.img-thumb', { timeout: config.selectorTimeout })
+          .catch(() => console.warn(`카페 ${cafeId}: 이미지 선택자들 대기 시간 초과 - 기본 로직으로 진행`))
       );
     }
 
     if (config.minWaitTime) waitPromises.push(page.waitForTimeout(config.minWaitTime));
-
     if (waitPromises.length > 0) await Promise.race(waitPromises);
   }
 

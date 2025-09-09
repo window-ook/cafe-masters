@@ -238,7 +238,7 @@ body {
 
   /* 카페 상세 정보 페이지의 썸네일 슬라이드 */
   .slide-images {
-    @apply w-80 max-w-full h-full rounded-md object-cover transform duration-300 ease-out hover:opacity-30 cursor-pointer;
+    @apply w-[340px] max-w-full h-[240px] rounded-md object-cover transform duration-300 ease-out hover:opacity-30 cursor-pointer;
   }
 
   .slide-images-button {

@@ -72,7 +72,7 @@ export default function CafeDetailBody({
                 <div className="h-60 py-2 snap-center shrink-0">
                   <a
                     type="button"
-                    aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
+                    aria-label="카페 이미지 클릭 시 카카오플레이스 이동(썸네일)"
                     onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
                   >
                     {useImageWithFallback ? (
@@ -105,30 +105,34 @@ export default function CafeDetailBody({
                     key={`${cafeId}-extra-${i}`}
                     className="h-60 py-2 snap-center shrink-0"
                   >
-                    {useImageWithFallback ? (
-                      <ImageWithFallback
-                        key={`${cafeId}-extra-image-${i}`}
-                        alt="카페 썸네일"
-                        src={photo}
-                        fallbackSrc={IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
-                        width={340}
-                        height={240}
-                        priority={true}
-                        onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
-                        className="slide-images"
-                      />
-                    ) : (
-                      <Image
-                        key={`${cafeId}-extra-image-${i}`}
-                        alt="카페 썸네일"
-                        src={photo}
-                        width={340}
-                        height={240}
-                        priority={true}
-                        onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
-                        className="slide-images"
-                      />
-                    )}
+                    <a
+                      type="button"
+                      aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
+                      onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
+                    >
+                      {useImageWithFallback ? (
+                        <ImageWithFallback
+                          key={`${cafeId}-extra-image-${i}`}
+                          alt="카페 썸네일"
+                          src={photo}
+                          fallbackSrc={IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
+                          width={340}
+                          height={240}
+                          priority={true}
+                          className="slide-images"
+                        />
+                      ) : (
+                        <Image
+                          key={`${cafeId}-extra-image-${i}`}
+                          alt="카페 썸네일"
+                          src={photo}
+                          width={340}
+                          height={240}
+                          priority={true}
+                          className="slide-images"
+                        />
+                      )}
+                    </a>
                   </div>
                 ))}
               </>
