@@ -1,4 +1,4 @@
-import { Browser, BrowserContext } from 'playwright-core';
+import { Browser, BrowserContext, Page, Route } from 'playwright-core';
 import { EXTERNAL_PATHS } from '@/lib/paths';
 import chromiumPkg from '@sparticuz/chromium';
 
@@ -59,12 +59,12 @@ export async function createVercelOptimizedBrowserContext(browser: Browser, conf
 }
 
 export async function setupResourceBlocking(
-  page: any,
+  page: Page,
   config?: CrawlingConfig['resourceBlocking']
 ): Promise<void> {
   if (!config) return;
 
-  await page.route('**/*', (route: any) => {
+  await page.route('**/*', (route: Route) => {
     const url = route.request().url();
     const resourceType = route.request().resourceType();
 
@@ -90,7 +90,7 @@ export async function setupResourceBlocking(
 }
 
 export async function crawlCafeData(
-  page: any,
+  page: Page,
   cafeId: string,
   config: CrawlingConfig
 ): Promise<CafeCrawlingResult> {
@@ -100,7 +100,7 @@ export async function crawlCafeData(
   });
 
   if (config.minWaitTime || config.selectorTimeout) {
-    const waitPromises: Promise<any>[] = [];
+    const waitPromises: Promise<unknown>[] = [];
 
     if (config.selectorTimeout) {
       waitPromises.push(
@@ -207,7 +207,7 @@ export function getProductionExecutablePath(): Promise<string> | undefined {
     : undefined;
 }
 
-export function handleCrawlingError(error: any): { error: string; details: string; status: number } {
+export function handleCrawlingError(error: unknown): { error: string; details: string; status: number } {
   if (error instanceof Error) {
     if (error.message.includes('timeout')) {
       return {

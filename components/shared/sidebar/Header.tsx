@@ -136,7 +136,7 @@ export default function Header() {
                 } placeholder:text-gray-400 focus:outline-none focus:ring-0`}
               value={bookmarkInput}
               onChange={e => setBookmarkInput(e.target.value)}
-              onKeyDown={e => { if (e.key === 'Enter') handleBookmarkSearch() }}
+              onKeyDown={e => { if (e.key === 'Enter') handleBookmarkSearch(); }}
             />
             <Button
               aria-label="검색"

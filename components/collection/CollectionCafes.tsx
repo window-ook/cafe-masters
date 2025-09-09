@@ -30,8 +30,8 @@ export default function CollectionCafes() {
 
   useEffect(() => { setCurrentPage(1); }, [totalFilteredCount]);
 
-  const handleNextCollectionCafePage = () => { if (hasNextPage) setCurrentPage(prev => prev + 1) };
-  const handlePreviousPageAction = () => { if (hasPreviousPage) setCurrentPage(prev => prev - 1) };
+  const handleNextCollectionCafePage = () => { if (hasNextPage) setCurrentPage(prev => prev + 1); };;
+  const handlePreviousPageAction = () => { if (hasPreviousPage) setCurrentPage(prev => prev - 1); };;
   const handleCollectionCafeClick = useCafeClick<ISupabaseCollectionCafe>({ routePath: 'collection' });
 
   if (isLoading) {

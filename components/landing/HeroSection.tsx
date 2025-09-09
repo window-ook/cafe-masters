@@ -1,6 +1,7 @@
 import { createServerSupabaseClient } from '@/utils/supabase/server';
-import { Coffee, Sticker, Star } from 'lucide-react';
+import { Coffee } from 'lucide-react';
 import Link from 'next/link';
+import SampleCards from './SampleCards';
 
 async function getCollectionCounts() {
     const supabase = await createServerSupabaseClient();
@@ -48,54 +49,7 @@ export default async function HeroSection() {
                 </h1>
 
                 <div className="flex flex-col justify-center items-center gap-8">
-                    {/* 샘플 카드 */}
-                    <div className="card-container relative size-88">
-                        <div className="card-tilt w-full h-full p-4 border-6 rounded-2xl drop-shadow-3xl bg-gradient-to-br from-[#B5582D] via-[#C28D65] to-[#C59066] border-gray-500 flex flex-col justify-between">
-                            {/* 카페 이름 */}
-                            <div className="flex flex-col gap-2">
-                                <p className="whitespace-nowrap overflow-hidden text-left text-ellipsis font-dunggeunmo font-bold text-lg">
-                                    반갑습니다 사용자님!
-                                </p>
-                                {/* 별점 */}
-                                <div className="flex justify-start gap-0.5">
-                                    {Array(2)
-                                        .fill(0)
-                                        .map((_, index) => (
-                                            <div key={index} className="rating-red-circle">
-                                                <Star className="fill-rating-star text-rating-star size-3" />
-                                            </div>
-                                        ))}
-                                </div>
-                            </div>
-
-                            {/* 일러스트 */}
-                            <div className="z-10 h-24 bg-gray-700 rounded-lg flex flex-col">
-                                <div className="h-40 w-full bg-gradient-to-br from-orange-200 to-orange-400 rounded-t-md flex items-center justify-center">
-                                    <Sticker className="h-12 w-12 text-orange-800" />
-                                </div>
-                                <div className="h-4 w-full bg-white rounded-b-md flex items-center justify-center">
-                                    <span className="text-xs text-black">CAFE MASTERS</span>
-                                </div>
-                            </div>
-
-                            {/* 주소와 전화번호 */}
-                            <div className="relative z-10 px-2 rounded-md border-[0.125rem] border-gray-500 flex flex-col"
-                                style={{ backgroundColor: '#E8CEB7' }}>
-                                <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1.5 border-gray-600 bg-gray-500 border" />
-                                <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1.5 border-gray-600 bg-gray-500 border" />
-                                <div className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1.5 border-gray-600 bg-gray-500 border" />
-                                <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1.5 border-gray-600 bg-gray-500 border" />
-
-                                <p className="whitespace-nowrap overflow-hidden text-ellipsis font-medium text-gray-600">
-                                    카드를 많이 수집해서
-                                </p>
-                                <p className="whitespace-nowrap overflow-hidden text-ellipsis font-medium text-gray-600">
-                                    카페 마스터가 되세요!
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
+                    <SampleCards />
                     {/* 입장하기 버튼 */}
                     <div className="group relative">
                         <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-main/20 via-purple-300/20 to-main/20 opacity-0 blur transition duration-1000 group-hover:opacity-100" />

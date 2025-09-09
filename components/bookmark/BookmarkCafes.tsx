@@ -30,8 +30,8 @@ export default function BookmarkCafes() {
 
   useEffect(() => { setCurrentPage(1); }, [totalFilteredCount]);
 
-  const handleNextBookmarkCafePage = () => { if (hasNextPage) setCurrentPage(prev => prev + 1) };
-  const handlePreviousPageAction = () => { if (hasPreviousPage) setCurrentPage(prev => prev - 1) };
+  const handleNextBookmarkCafePage = () => { if (hasNextPage) setCurrentPage(prev => prev + 1); };;
+  const handlePreviousPageAction = () => { if (hasPreviousPage) setCurrentPage(prev => prev - 1); };;
   const handleBookmarkCafeClick = useCafeClick<ISupabaseBookmarkCafe>({ routePath: 'bookmark' });
 
   if (isLoading) {
