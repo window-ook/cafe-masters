@@ -30,17 +30,9 @@ export default function CollectionCafes() {
 
   useEffect(() => { setCurrentPage(1); }, [totalFilteredCount]);
 
-  const handleNextCollectionCafePage = () => {
-    if (hasNextPage) setCurrentPage(prev => prev + 1);
-  };
-
-  const handlePreviousPageAction = () => {
-    if (hasPreviousPage) setCurrentPage(prev => prev - 1);
-  };
-
-  const handleCollectionCafeClick = useCafeClick<ISupabaseCollectionCafe>({
-    routePath: 'collection',
-  });
+  const handleNextCollectionCafePage = () => { if (hasNextPage) setCurrentPage(prev => prev + 1) };
+  const handlePreviousPageAction = () => { if (hasPreviousPage) setCurrentPage(prev => prev - 1) };
+  const handleCollectionCafeClick = useCafeClick<ISupabaseCollectionCafe>({ routePath: 'collection' });
 
   if (isLoading) {
     return (
@@ -97,7 +89,7 @@ export default function CollectionCafes() {
     );
   }
 
-  // 전체 데이터가 없는 경우, 필터링 결과가 없는 경우 구분
+  // 전체 데이터가 없는 경우
   if (collectionCafes?.length === 0) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
@@ -117,7 +109,7 @@ export default function CollectionCafes() {
     );
   }
 
-  // 필터링 결과만 없는 경우
+  // 필터링 결과가 없는 경우
   if (totalFilteredCount === 0) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">

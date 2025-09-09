@@ -6,6 +6,7 @@ import { useSearchedResultStore } from '@/stores/search';
 import { useBookmarkCounts } from '@/hooks/supabase/bookmark';
 import { useCollectionCounts } from '@/hooks/supabase/collection';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
+import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 import Link from 'next/link';
 import Search from '@/components/shared/sidebar/SearchInput';
@@ -15,7 +16,6 @@ import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
 import RegionFilter from '@/components/shared/sidebar/RegionsFilter';
 import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
 import Button from '@/components/shared/Button';
-import { IMAGE_PATHS } from '@/lib/paths';
 
 export default function Header() {
   const searchResult = useSearchedResultStore(state => state.searchResult);
@@ -136,9 +136,7 @@ export default function Header() {
                 } placeholder:text-gray-400 focus:outline-none focus:ring-0`}
               value={bookmarkInput}
               onChange={e => setBookmarkInput(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === 'Enter') handleBookmarkSearch();
-              }}
+              onKeyDown={e => { if (e.key === 'Enter') handleBookmarkSearch() }}
             />
             <Button
               aria-label="검색"

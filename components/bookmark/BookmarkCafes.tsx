@@ -30,19 +30,10 @@ export default function BookmarkCafes() {
 
   useEffect(() => { setCurrentPage(1); }, [totalFilteredCount]);
 
-  const handleNextBookmarkCafePage = () => {
-    if (hasNextPage) setCurrentPage(prev => prev + 1);
-  };
+  const handleNextBookmarkCafePage = () => { if (hasNextPage) setCurrentPage(prev => prev + 1) };
+  const handlePreviousPageAction = () => { if (hasPreviousPage) setCurrentPage(prev => prev - 1) };
+  const handleBookmarkCafeClick = useCafeClick<ISupabaseBookmarkCafe>({ routePath: 'bookmark' });
 
-  const handlePreviousPageAction = () => {
-    if (hasPreviousPage) setCurrentPage(prev => prev - 1);
-  };
-
-  const handleBookmarkCafeClick = useCafeClick<ISupabaseBookmarkCafe>({
-    routePath: 'bookmark',
-  });
-
-  // 로딩 상태 처리
   if (isLoading) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
@@ -60,7 +51,6 @@ export default function BookmarkCafes() {
     );
   }
 
-  // 에러 상태 처리
   if (isError) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
@@ -80,7 +70,6 @@ export default function BookmarkCafes() {
     );
   }
 
-  // userId가 없는 경우
   if (!userId) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
@@ -100,7 +89,7 @@ export default function BookmarkCafes() {
     );
   }
 
-  // 전체 데이터가 없는 경우 vs 필터링 결과가 없는 경우 구분
+  // 전체 데이터가 없는 경우
   if (bookmarkCafes?.length === 0) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
@@ -120,7 +109,7 @@ export default function BookmarkCafes() {
     );
   }
 
-  // 필터링 결과만 없는 경우
+  // 필터링 결과가 없는 경우
   if (totalFilteredCount === 0) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">

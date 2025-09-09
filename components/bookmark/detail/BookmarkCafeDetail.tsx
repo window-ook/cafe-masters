@@ -72,22 +72,30 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   };
 
   const actionButtons = (
-    <Button
-      onClick={() => setTargetCafeForCollect({
-        id: detail.id,
-        name: detail.name,
-        coordX: detail.coordX,
-        coordY: detail.coordY,
-        address: detail.address,
-        image: detail.image,
-        extra_images: detail.extra_images || [],
-        phone_number: detail.phone_number,
-        opening_time: detail.opening_time,
-      })}
-      customClassName='flex-1'
-    >
-      수집하기
-    </Button>
+    <>
+      {/* 로그인 상태 */}
+      {userId && <Button
+        onClick={() => setTargetCafeForCollect({
+          id: detail.id,
+          name: detail.name,
+          coordX: detail.coordX,
+          coordY: detail.coordY,
+          address: detail.address,
+          image: detail.image,
+          extra_images: detail.extra_images || [],
+          phone_number: detail.phone_number,
+          opening_time: detail.opening_time,
+        })}
+        customClassName='flex-1'
+      >
+        수집하기
+      </Button>}
+
+      {/* 로그아웃 상태 */}
+      {!userId && <Button onClick={() => router.push('/signin')} customClassName='flex-1'>
+        로그인하고 수집하기
+      </Button>}
+    </>
   );
 
   const handleBookmarkDeletion = async () => {

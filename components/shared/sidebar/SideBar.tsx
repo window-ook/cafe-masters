@@ -1,6 +1,6 @@
 'use client';
 
-import { useUIStore } from 'stores';
+import { useUIStore, useUserStore } from 'stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
 import TabsForLink from '@/components/shared/sidebar/TabsForLink';
@@ -17,6 +17,7 @@ import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
 export default function SideBar() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
+  const userId = useUserStore(state => state.userId);
 
   const paths = usePathMatcher();
 
@@ -37,34 +38,26 @@ export default function SideBar() {
             </>
           )}
 
-          {paths.isSearch && (
-            <div className="flex-1 min-h-0">
-              <SearchedCafes />
-            </div>
-          )}
+          {paths.isSearch && (<div className="flex-1 min-h-0"><SearchedCafes /></div>)}
+          {paths.isRecommendation && (<div className="flex-1 min-h-0"><RecommendationCafes /></div>)}
+          {paths.isHelp && (<div className="flex-1 min-h-0"><HelpCenter /></div>)}
 
           {paths.isCollection && (
-            <div className="flex-1 min-h-0">
-              <CollectionCafes />
-            </div>
+            <>
+              <div className="flex-1 min-h-0">
+                <CollectionCafes />
+              </div>
+              {!userId && <Footer />}
+            </>
           )}
 
           {paths.isBookmark && (
-            <div className="flex-1 min-h-0">
-              <BookmarkCafes />
-            </div>
-          )}
-
-          {paths.isRecommendation && (
-            <div className="flex-1 min-h-0">
-              <RecommendationCafes />
-            </div>
-          )}
-
-          {paths.isHelp && (
-            <div className="flex-1 min-h-0">
-              <HelpCenter />
-            </div>
+            <>
+              <div className="flex-1 min-h-0">
+                <BookmarkCafes />
+              </div>
+              {!userId && <Footer />}
+            </>
           )}
         </section>
       </div>

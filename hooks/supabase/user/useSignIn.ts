@@ -1,15 +1,12 @@
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useRouter } from 'next/navigation';
-import { useUserStore, useFilterStore } from '@/stores';
+import { useFilterStore } from '@/stores';
 import { useMutation } from '@tanstack/react-query';
-import { getIsAdmin } from '@/actions/supabase/user';
 import { getAuthErrorMessage } from '@/utils/shared/authErrorHandler';
 
 export function useSignIn() {
   const supabase = createBrowserSupabaseClient();
   const router = useRouter();
-
-  const { setUserId, setUserEmail, setAdmin } = useUserStore();
 
   const signIn = useMutation({
     mutationFn: async ({ email, password }: { email: string; password: string }) => {
@@ -20,27 +17,8 @@ export function useSignIn() {
     },
 
     onSuccess: async session => {
-      // 유저 데이터 초기화
-      useUserStore.setState({
-        userId: '',
-        userEmail: '',
-        userTier: 'BEGINNER',
-        admin: false,
-      });
-
-      // 키워드 초기화
+      // 키워드 초기화 (AuthProvider에서 user store는 자동 동기화됨)
       useFilterStore.setState({ keyword: '' });
-
-      const user = session?.user;
-      if (!user) return;
-
-      // 유저 ID, 이메일 동기화
-      setUserId(user.id);
-      setUserEmail(user.email ?? '');
-
-      // 관리자 여부 체크
-      const isAdmin = await getIsAdmin();
-      if (isAdmin) setAdmin(true);
 
       // 세션 새로고침
       await supabase.auth.refreshSession();

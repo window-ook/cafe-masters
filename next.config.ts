@@ -81,13 +81,13 @@ const nextConfig: NextConfig = {
     }
 
     if (config.module) {
-      if (!config.module.rules) {
-        config.module.rules = [];
-      }
+      if (!config.module.rules) config.module.rules = [];
+
       config.module.rules.push({
         test: /\.node$/,
         use: 'node-loader',
       });
+
       config.module.rules.push({
         test: /\.svg$/,
         issuer: /\.[jt]sx?$/,

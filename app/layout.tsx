@@ -21,17 +21,21 @@ const dunggeunmo = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
-  ),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: 'Cafe Masters',
   description: '카페를 자주 다니는 사람들을 위한 플랫폼',
   keywords: [
     '카페 마스터즈',
+    '카페마스터즈',
     '카페 마스터',
+    '카페마스터',
+    '카페 마스터즈 수집',
+    '카페 마스터즈 수집하기',
+    '카페 마스터즈 카드',
+    '카페 마스터즈 유희왕',
     'Cafe Masters',
-    'cafe masters',
     'CafeMasters',
+    'cafe masters',
     'cafemasters',
   ],
   openGraph: {
