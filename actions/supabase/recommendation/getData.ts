@@ -1,7 +1,9 @@
 'use server';
 
 import { createServerSupabaseClient } from "utils/supabase/server";
+import { createClient } from '@supabase/supabase-js';
 import { ISupabaseRecommendationCafe } from "@/types/supabase/recommendation";
+import { Database } from '@/types_db';
 
 /** 추천 카페 목록 조회
  * @returns 추천 카페 목록
@@ -18,6 +20,36 @@ export async function getRecommendationCafes(): Promise<{ data: ISupabaseRecomme
 
     const safeData = (data ?? []).map(item => {
 
+        return {
+            ...item,
+            extra_images: item.extra_images ? JSON.parse(item.extra_images) : undefined,
+            categories: item.categories ? JSON.parse(item.categories) : undefined,
+            opening_time: item.opening_time ?? undefined,
+            phone_number: item.phone_number ?? undefined,
+            menus: item.menus ?? undefined,
+        };
+    });
+
+    return { data: safeData };
+}
+
+/** 추천 카페 목록 조회 (사이트맵용 - 인증 없이)
+ * @returns 추천 카페 목록
+ */
+export async function getRecommendationCafesForSitemap(): Promise<{ data: ISupabaseRecommendationCafe[] }> {
+    const supabase = createClient<Database>(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
+    const { data, error } = await supabase
+        .from('recommendation')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+    if (error) throw new Error(`추천 카페 목록 조회에 실패했습니다: ${error.message}`);
+
+    const safeData = (data ?? []).map(item => {
         return {
             ...item,
             extra_images: item.extra_images ? JSON.parse(item.extra_images) : undefined,

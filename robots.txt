@@ -1,2 +1,14 @@
 User-agent: *
 Allow: /
+
+# 크롤링 최적화
+Crawl-delay: 1
+
+# Sitemap 위치
+Sitemap: https://app.cafe-masters.co/sitemap.xml
+
+# 블록할 경로들
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /tmp/

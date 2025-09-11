@@ -22,8 +22,16 @@ const dunggeunmo = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
-  title: 'Cafe Masters',
-  description: '카페를 자주 다니는 사람들을 위한 플랫폼',
+  verification: {
+    other: {
+      'naver-site-verification': 'a5ac1b2a1e00d0be10af5842d117fd62879c6e92',
+    },
+  },
+  title: {
+    default: 'Cafe Masters',
+    template: '%s | Cafe Masters'
+  },
+  description: '카페를 즐겨 다니는 누구나 마스터가 될 수 있습니다!',
   keywords: [
     '카페 마스터즈',
     '카페마스터즈',
@@ -33,27 +41,62 @@ export const metadata: Metadata = {
     '카페 마스터즈 수집하기',
     '카페 마스터즈 카드',
     '카페 마스터즈 유희왕',
+    '카페 추천',
+    '카페 리뷰',
+    '카페 지도',
     'Cafe Masters',
     'CafeMasters',
     'cafe masters',
     'cafemasters',
   ],
+  authors: [{ name: 'github@window-ook' }],
+  creator: 'github@window-ook',
+  publisher: 'github@window-ook',
+  formatDetection: {
+    telephone: false,
+  },
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
+    url: 'https://app.cafe-masters.co',
     title: 'Cafe Masters',
     siteName: 'Cafe Masters',
-    description: '카페를 자주 다니는 사람들을 위한 플랫폼',
-    images: ['https://app.cafe-masters.co/opengraph-image.png'],
+    description: '카페를 즐겨 다니는 누구나 마스터가 될 수 있습니다!',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Cafe Masters',
+        type: 'image/png',
+      }
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Cafe Masters',
-    description: '카페를 자주 다니는 사람들을 위한 플랫폼',
-    images: ['https://app.cafe-masters.co/opengraph-image.png'],
+    description: '카페를 즐겨 다니는 누구나 마스터가 될 수 있습니다!',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        alt: 'Cafe Masters',
+      }
+    ],
+    creator: 'github@window-ook',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   alternates: {
-    canonical: '/',
+    canonical: 'https://app.cafe-masters.co',
   },
 };
 
@@ -69,7 +112,7 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="kr">
+    <html lang="ko">
       <head>
         <meta
           name="google-site-verification"

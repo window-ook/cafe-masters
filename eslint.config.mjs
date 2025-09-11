@@ -15,7 +15,7 @@ const eslintConfig = [
     rules: {
       'no-undef': 'error',
       'no-unused-vars': 'off',
-      semi: ['error', 'always'],
+      "semi": ['error', 'always'],
     },
   },
 ];

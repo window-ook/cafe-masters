@@ -710,3 +710,53 @@ body {
     border-radius: 50%;
   }
 }
+
+/*
+* ======================================================
+* 카카오맵 커스텀 인포윈도우 오버레이
+* ======================================================
+*/
+.kakao-custom-marker {
+  display: block;
+  position: relative;
+  bottom: 85px;
+  float: left;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #ddd;
+  border-radius: 6px;
+  background: #da483b url('https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/custom_infowindow_go.png') no-repeat right 2px center;
+  background-size: 30px;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.kakao-custom-marker:nth-of-type(n) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+
+.kakao-custom-marker .title {
+  display: block;
+  padding: 10px 15px;
+  margin-right: 35px;
+  background: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+.kakao-custom-marker:after {
+  content: '';
+  position: absolute;
+  margin-left: -12px;
+  left: 50%;
+  bottom: -12px;
+  width: 22px;
+  height: 12px;
+  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+}
