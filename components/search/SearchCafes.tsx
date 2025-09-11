@@ -28,7 +28,7 @@ export default function SearchCafes() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleSearchedCafeClick = useCafeClick<IKakaoSearchResult>({ routePath: 'search' });
+  const handleSearchCafeClick = useCafeClick<IKakaoSearchResult>({ routePath: 'search' });
 
   return (
     <div className="h-full flex flex-col">
@@ -43,7 +43,7 @@ export default function SearchCafes() {
               address={cafe.road_address_name}
               phone_number={cafe.phone}
               image={IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
-              onClickAction={() => handleSearchedCafeClick(cafe)}
+              onClickAction={() => handleSearchCafeClick(cafe)}
             />
           ))}
         </ul>

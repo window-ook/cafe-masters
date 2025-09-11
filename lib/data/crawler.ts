@@ -103,14 +103,15 @@ export async function crawlCafeData(
     const waitPromises: Promise<unknown>[] = [];
 
     if (config.selectorTimeout) {
+      const optimizedTimeout = Math.min(config.selectorTimeout, 3000);
       waitPromises.push(
         page
-          .waitForSelector('.img-thumb', { timeout: config.selectorTimeout })
-          .catch(() => console.warn(`카페 ${cafeId}: 이미지 선택자들 대기 시간 초과 - 기본 로직으로 진행`))
+          .waitForSelector('.img-thumb', { timeout: optimizedTimeout })
+          .catch(() => console.warn(`카페 ${cafeId}: 이미지 선택자 대기 시간 초과 (${optimizedTimeout}ms)`))
       );
     }
 
-    if (config.minWaitTime) waitPromises.push(page.waitForTimeout(config.minWaitTime));
+    if (config.minWaitTime) waitPromises.push(page.waitForTimeout(Math.min(config.minWaitTime, 1000)));
     if (waitPromises.length > 0) await Promise.race(waitPromises);
   }
 
@@ -198,6 +199,14 @@ export function getVercelOptimizedChromiumArgs(): string[] {
     '--disable-accelerated-video-decode',
     '--disable-app-list-dismiss-on-blur',
     '--disable-accelerated-video-encode',
+    '--disable-blink-features=AutomationControlled',
+    '--disable-dev-tools',
+    '--disable-logging',
+    '--disable-web-sockets',
+    '--no-zygote',
+    '--single-process',
+    '--aggressive-cache-discard',
+    '--memory-pressure-off',
   ];
 }
 

@@ -8,7 +8,8 @@ import { toast } from 'react-toastify';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
-import { EXTERNAL_PATHS } from '@/lib/paths';
+import { useCafeClick } from '@/hooks/ui/useCafeClick';
+import { EXTERNAL_PATHS, IMAGE_PATHS } from '@/lib/paths';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
@@ -36,6 +37,17 @@ export default function KakaoMap() {
   const { filteredCollectionCafes } = useCollectionCafes(userId);
   const { filteredBookmarkCafes } = useBookmarkCafes(userId);
   const { recommendationCafes, isLoading: isRecommendedCafesLoading } = useRecommendationCafes();
+
+  // 페이지별 카페 클릭 핸들러 설정
+  const getRoutePathForCurrentPage = () => {
+    if (pathname === '/search' || pathname.startsWith('/search/detail')) return 'search';
+    if (pathname.startsWith('/collection')) return 'collection';
+    if (pathname.startsWith('/bookmark')) return 'bookmark';
+    if (pathname.startsWith('/recommendation')) return 'recommendation';
+    return 'search'; // 기본값
+  };
+
+  const handleCafeClick = useCafeClick({ routePath: getRoutePathForCurrentPage() });
 
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 
@@ -115,15 +127,57 @@ export default function KakaoMap() {
           getLat(item),
           getLng(item),
         );
-        const marker = new window.kakao.maps.Marker({ map, position });
+        const imageSrc = IMAGE_PATHS.MAP_MARKER;
+
+        const normalSize = new window.kakao.maps.Size(44, 44);
+        const hoverSize = new window.kakao.maps.Size(48, 48); // 스케일 1.1배
+        const normalOffset = new window.kakao.maps.Point(22, 44);
+        const hoverOffset = new window.kakao.maps.Point(24, 48);
+
+        const normalMarkerImage = new window.kakao.maps.MarkerImage(imageSrc, normalSize, { offset: normalOffset });
+        const hoverMarkerImage = new window.kakao.maps.MarkerImage(imageSrc, hoverSize, { offset: hoverOffset });
+
+        const marker = new window.kakao.maps.Marker({ map, position, image: normalMarkerImage });
         const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
 
         const createInfoWindows = () => {
-          infowindow.setContent(
-            `<div aria-label='kakao map marker' style="padding: 1rem 2rem 1rem 2rem; font-size:1rem; white-space:nowrap">${item.place_name || item.name}</div>`,
-          );
+          const cafeName = item.place_name || item.name;
+          const infoContent = `
+            <div aria-label='kakao map marker' style="
+              padding: 12px 16px;
+              font-size: 14px;
+              font-weight: 700;
+              font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+              background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+              border: none;
+              border-radius: 16px;
+              box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+              white-space: nowrap;
+              position: relative;
+              color: #2d3748;
+              max-width: 220px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              backdrop-filter: blur(10px);
+              cursor: pointer;
+              transition: all 0.2s ease-in-out;
+            ">
+              <div style="
+                width: 4px;
+                height: 100%;
+                background: linear-gradient(180deg, #ff6b6b 0%, #ff5252 100%);
+                position: absolute;
+                left: 0;
+                top: 0;
+                border-radius: 16px 0 0 16px;
+              "></div>
+              <div style="margin-left: 8px;">
+                ${cafeName}
+              </div>
+            </div>
+          `;
+          infowindow.setContent(infoContent);
           infowindow.open(map, marker);
-
           openInfoWindowRef.current = infowindow;
         };
 
@@ -134,13 +188,38 @@ export default function KakaoMap() {
 
         const hideInfoWindow = () => infowindow.close();
 
+        const handleMarkerMouseOver = () => {
+          marker.setImage(hoverMarkerImage);
+          marker.setZIndex(1000);
+          if (window.innerWidth > 768) showInfoWindow();
+        };
+
+        const handleMarkerMouseOut = () => {
+          marker.setImage(normalMarkerImage);
+          marker.setZIndex(1);
+          if (window.innerWidth > 768) hideInfoWindow();
+        };
+
+        const handleMarkerClick = () => {
+          // 카페 데이터 형태에 맞게 변환
+          const cafeData = {
+            id: item.id || item.place_id,
+            place_name: item.place_name || item.name,
+            coordX: item.x || item.coordX,
+            coordY: item.y || item.coordY,
+            x: item.x || item.coordX,
+            y: item.y || item.coordY,
+          };
+          handleCafeClick(cafeData);
+        };
+
+        // 마커 클릭 이벤트는 항상 추가
+        window.kakao.maps.event.addListener(marker, 'click', handleMarkerClick);
+
         if (window.innerWidth > 768) {
-          window.kakao.maps.event.addListener(marker, 'mouseover', showInfoWindow);
-          window.kakao.maps.event.addListener(marker, 'mouseout', hideInfoWindow);
-        } else {
-          window.kakao.maps.event.addListener(marker, 'click', showInfoWindow);
-          window.kakao.maps.event.addListener(map, 'click', hideInfoWindow);
-        }
+          window.kakao.maps.event.addListener(marker, 'mouseover', handleMarkerMouseOver);
+          window.kakao.maps.event.addListener(marker, 'mouseout', handleMarkerMouseOut);
+        } else window.kakao.maps.event.addListener(map, 'click', hideInfoWindow);
 
         return marker;
       });

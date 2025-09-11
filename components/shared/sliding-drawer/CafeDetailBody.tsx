@@ -84,6 +84,7 @@ export default function CafeDetailBody({
                         width={340}
                         height={240}
                         priority={true}
+                        quality={100}
                         className="slide-images"
                       />
                     ) : (
@@ -94,6 +95,7 @@ export default function CafeDetailBody({
                         width={340}
                         height={240}
                         priority={true}
+                        quality={100}
                         className="slide-images"
                       />
                     )}
@@ -119,6 +121,7 @@ export default function CafeDetailBody({
                           width={340}
                           height={240}
                           priority={true}
+                          quality={100}
                           className="slide-images"
                         />
                       ) : (
@@ -129,6 +132,7 @@ export default function CafeDetailBody({
                           width={340}
                           height={240}
                           priority={true}
+                          quality={100}
                           className="slide-images"
                         />
                       )}
