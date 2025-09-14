@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearchCafeDetail } from '@/hooks/kakao-map/useSearchCafeDetail';
 import { useSearchedResultStore, useCurrentCafeStore, useUserStore, useUIStore, useCollectionStore, useRecommendationStore } from '@/stores';
+import { LoadingSpinner } from '@/components/shared/sliding-drawer/LoadingSpinner';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
@@ -80,25 +81,26 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   const actionButtons = (
     <>
       {/* 로그인 & 수집하지 않은 상태 */}
-      {userId && !isCollected && <Button
-        onClick={() => {
-          setTargetCafeForCollect({
-            id: Number(searchedDetail.id),
-            name: searchedDetail.name,
-            coordX: currentCoordX,
-            coordY: currentCoordY,
-            address: searchedDetail.address,
-            image: searchedDetail.image,
-            extra_images: searchedDetail.extra_images || [],
-            phone_number: searchedDetail.phone_number,
-            opening_time: searchedDetail.opening_time,
-          });
-          setIsCollectFormOpen(true);
-        }}
-        customClassName='flex-1'
-      >
-        수집하기
-      </Button>}
+      {userId && !isCollected &&
+        <Button
+          onClick={() => {
+            setTargetCafeForCollect({
+              id: Number(searchedDetail.id),
+              name: searchedDetail.name,
+              coordX: currentCoordX,
+              coordY: currentCoordY,
+              address: searchedDetail.address,
+              image: searchedDetail.image,
+              extra_images: searchedDetail.extra_images || [],
+              phone_number: searchedDetail.phone_number,
+              opening_time: searchedDetail.opening_time,
+            });
+            setIsCollectFormOpen(true);
+          }}
+          customClassName='flex-1'
+        >
+          {isDetailLoading ? <LoadingSpinner size="sm" /> : <span>수집하기</span>}
+        </Button>}
 
       {/* 관리자 & 추천하지 않은 상태 */}
       {admin && !isRecommended && (
@@ -119,7 +121,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
           }}
           customClassName='flex-1 bg-blue-600 hover:bg-blue-800'
         >
-          추천하기
+          {isDetailLoading ? <LoadingSpinner size="sm" /> : <span>추천하기</span>}
         </Button>
       )}
 

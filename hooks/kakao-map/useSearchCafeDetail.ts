@@ -33,7 +33,8 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
           return convertedData;
         }
 
-        // 2단계: Supabase에 데이터가 없으면 크롤링
+        // 2단계: Supabase에 데이터가 없으면 크롤링 (정상 플로우)
+        console.log(`🔍 ${cafeId} DB에 없음`);
         const crawledData = await fetchSearchCafeDetail(cafeId);
 
         if (!crawledData) throw new Error('크롤링된 데이터가 없습니다.');
@@ -41,17 +42,17 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
         // 3단계: 크롤링된 데이터를 Supabase에 저장
         try {
           await createCafeDetail(cafeId, crawledData);
-          console.log(`✅ 카페 ${cafeId} 데이터 DB 저장 완료`);
+          console.log(`✅ ${cafeId} DB 저장 완료`);
         } catch (saveError) {
-          console.warn(`⚠️ 카페 ${cafeId} DB 저장 실패:`, saveError);
+          console.warn(`⚠️ ${cafeId} DB 저장 실패:`, saveError);
         }
 
         return crawledData;
       } catch (error) {
-        console.error(`❌ 카페 ${cafeId} 상세정보 조회 실패:`, error);
+        console.error(`❌ ${cafeId} 상세 정보 조회 실패:`, error);
 
         if (error instanceof Error) throw error;
-        throw new Error(`카페 상세정보 조회 중 알 수 없는 오류가 발생했습니다: ${String(error)}`);
+        throw new Error(`카페 상세 정보 조회 중 알 수 없는 오류가 발생했습니다: ${String(error)}`);
       }
     },
     enabled: isEnabled && !!cafeId && cafeId.trim() !== '',
@@ -65,7 +66,7 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
 
       return failureCount < 2;
     },
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retryDelay: (attemptIndex) => Math.min(500 * attemptIndex, 2000),
   });
 
   return {

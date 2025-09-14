@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
 import SignUpPageClient from '@/components/signup/SignUpPageClient';
 
 export const metadata: Metadata = {
