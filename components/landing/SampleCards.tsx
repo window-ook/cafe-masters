@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { Sticker, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Sticker, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ISampleCard {
     id: number;
@@ -17,7 +17,7 @@ const SAMPLE_CARDS: ISampleCard[] = [
     {
         id: 1,
         title: '반갑습니다 사용자님!',
-        stars: 8,
+        stars: 5,
         description1: '카드를 많이 수집해서',
         description2: '카페 마스터가 되세요!',
         gradient: 'from-[#B5582D] via-[#C28D65] to-[#C59066]',
@@ -26,7 +26,7 @@ const SAMPLE_CARDS: ISampleCard[] = [
     {
         id: 2,
         title: '다양한 카페를 탐험하세요!',
-        stars: 6,
+        stars: 5,
         description1: '숨겨진 카페들을',
         description2: '발견해보세요!',
         gradient: 'from-emerald-600 via-emerald-400 to-emerald-500',
@@ -35,7 +35,7 @@ const SAMPLE_CARDS: ISampleCard[] = [
     {
         id: 3,
         title: '친구들과 함께 즐기세요!',
-        stars: 7,
+        stars: 5,
         description1: '북마크를 공유하고',
         description2: '추천을 나누세요!',
         gradient: 'from-purple-600 via-purple-400 to-purple-500',
@@ -115,13 +115,13 @@ export default function SampleCards() {
             <button
                 onClick={goToPrevious}
                 disabled={isAnimating}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-lg hover:bg-white/30 hover:scale-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-lg hover:bg-white/30 hover:scale-110 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 <ChevronLeft className="w-6 h-6 text-white" />
             </button>
 
             {/* 카드 컨테이너 */}
-            <div className="relative w-80 h-96">
+            <div className="relative w-72 h-80">
                 {SAMPLE_CARDS.map((card, index) => {
                     const position = getCardPosition(index);
                     const isCenter = position === 'center';
@@ -148,7 +148,7 @@ export default function SampleCards() {
                                             .fill(0)
                                             .map((_, starIndex) => (
                                                 <div key={starIndex} className="rating-red-circle">
-                                                    <Star className="fill-rating-star text-rating-star size-3" />
+                                                    <Heart className="fill-rating-star text-rating-star size-3" />
                                                 </div>
                                             ))}
                                     </div>
@@ -187,7 +187,7 @@ export default function SampleCards() {
             <button
                 onClick={goToNext}
                 disabled={isAnimating}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-lg hover:bg-white/30 hover:scale-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-lg hover:bg-white/30 hover:scale-110 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 <ChevronRight className="w-6 h-6 text-white" />
             </button>

@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { Star, Coffee, Shield, Crown, Gem, Eye } from 'lucide-react';
+import EdgeSquare from '@/components/shared/sidebar/EdgeSquare';
 
 interface ISampleCafe {
   name: string;
@@ -49,23 +50,6 @@ const SAMPLE_CAFES: ISampleCafe[] = [
   }
 ];
 
-const EdgeSquare = ({ edgeSquare, isHiddenCard }: { edgeSquare: 'tl' | 'tr' | 'bl' | 'br', isHiddenCard: boolean }) => {
-  const getPositionClasses = () => {
-    switch (edgeSquare) {
-      case 'tl':
-        return 'absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2';
-      case 'tr':
-        return 'absolute top-0 right-0 translate-x-1/2 -translate-y-1/2';
-      case 'bl':
-        return 'absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2';
-      case 'br':
-        return 'absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2';
-    }
-  };
-
-  return <div className={`${getPositionClasses()} size-1.5 ${isHiddenCard ? 'border-main-dark bg-main' : 'border-gray-600 bg-gray-500'} border`} />;
-};
-
 const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const backEffectRef = useRef<HTMLDivElement>(null);
@@ -75,39 +59,39 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
   const Icon = cafe.icon;
 
   let cardClasses = '';
-  let backEffectClasses = '';
-  let addressBackgroundClasses = '';
+  let backlightColorByGrade = '';
+  let addressAndPhoneBackgroundColor = '';
   let textColor = '';
 
   switch (cafe.ratings) {
     case 1:
     case 2:
       cardClasses = 'bg-gray-100 text-gray-600 border-gray-500 hover:border-gray-500';
-      addressBackgroundClasses = 'bg-gray-100';
+      addressAndPhoneBackgroundColor = 'bg-gray-100';
       textColor = 'text-gray-600';
       break;
     case 3:
       cardClasses = 'card-silver text-black border-gray-500 hover:border-silver-base';
-      backEffectClasses = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-gray-500 blur-md opacity-0 group-hover:opacity-100 pointer-none';
-      addressBackgroundClasses = 'bg-silver-address-background';
+      backlightColorByGrade = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-gray-500 blur-md opacity-0 group-hover:opacity-100 pointer-none';
+      addressAndPhoneBackgroundColor = 'bg-silver-address-background';
       textColor = 'text-black group-hover:text-silver-name';
       break;
     case 4:
       cardClasses = 'card-gold text-black border-gray-500 hover:border-gold-base';
-      backEffectClasses = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-gold-effect-left via-gold-effect-mid to-gold-effect-right blur-md opacity-0 group-hover:opacity-100 pointer-none';
-      addressBackgroundClasses = 'bg-gold-address-background';
+      backlightColorByGrade = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-gold-effect-left via-gold-effect-mid to-gold-effect-right blur-md opacity-0 group-hover:opacity-100 pointer-none';
+      addressAndPhoneBackgroundColor = 'bg-gold-address-background';
       textColor = 'text-black group-hover:text-gold-name';
       break;
     case 5:
       if (isHiddenCard) {
         cardClasses = 'card-hidden text-white border-main hover:border-main-light';
-        backEffectClasses = 'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md pointer-none';
-        addressBackgroundClasses = 'bg-hidden-address-background';
+        backlightColorByGrade = 'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md pointer-none';
+        addressAndPhoneBackgroundColor = 'bg-hidden-address-background';
         textColor = 'text-white';
       } else {
         cardClasses = 'card-emerald text-black border-gray-500 hover:border-emerald-base';
-        backEffectClasses = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-emerald-effect-left via-emerald-effect-mid to-emerald-effect-right blur-md opacity-0 group-hover:opacity-100 pointer-none';
-        addressBackgroundClasses = 'bg-emerald-address-background';
+        backlightColorByGrade = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-emerald-effect-left via-emerald-effect-mid to-emerald-effect-right blur-md opacity-0 group-hover:opacity-100 pointer-none';
+        addressAndPhoneBackgroundColor = 'bg-emerald-address-background';
         textColor = 'text-black group-hover:text-emerald-name';
       }
       break;
@@ -148,6 +132,7 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
   const handleOverlayMouseMove = (e: React.MouseEvent) => {
     const container = cardRef.current;
     const overlay = overlayRef.current;
+
     if (!container || !overlay) return;
 
     const { left, top, width, height } = container.getBoundingClientRect();
@@ -172,11 +157,9 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
   };
 
   return (
-    <div className="group card-container relative h-80 w-56 flex-shrink-0">
+    <div className="group card-container relative w-63 h-70 flex-shrink-0">
       {/* 백라이트 레이어 */}
-      {backEffectClasses && (
-        <div ref={backEffectRef} className={backEffectClasses}></div>
-      )}
+      {backlightColorByGrade && (<div ref={backEffectRef} className={backlightColorByGrade}></div>)}
 
       {/* 카드 표면 */}
       <div
@@ -192,9 +175,7 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
         className={`card-tilt w-full h-full p-3 border-4 ${cardClasses} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`}
       >
         {/* 빛 반사 효과 */}
-        {cafe.ratings >= 3 && (
-          <div ref={overlayRef} className="card-overlay inset-0 rounded-2xl" />
-        )}
+        {cafe.ratings >= 3 && (<div ref={overlayRef} className="card-overlay inset-0 rounded-2xl" />)}
 
         <div className="flex flex-col gap-2">
           {/* 카페 이름 */}
@@ -250,7 +231,7 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
         </div>
 
         {/* 주소와 전화번호 */}
-        <div className={`relative z-10 px-2 py-1 rounded-md border-2 ${isHiddenCard ? 'border-main' : 'border-gray-500'} ${addressBackgroundClasses} flex flex-col`}>
+        <div className={`relative z-10 px-2 py-1 rounded-md border-2 ${isHiddenCard ? 'border-main' : 'border-gray-500'} ${addressAndPhoneBackgroundColor} flex flex-col`}>
           <EdgeSquare edgeSquare="tl" isHiddenCard={isHiddenCard} />
           <EdgeSquare edgeSquare="tr" isHiddenCard={isHiddenCard} />
           <EdgeSquare edgeSquare="bl" isHiddenCard={isHiddenCard} />
@@ -277,12 +258,8 @@ export default function GallerySection() {
       <div className="relative z-10 mx-auto max-w-7xl px-6">
         {/* 섹션 헤더 */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            다양한 등급의 카페 카드를
-            <br />
-            <span className="bg-gradient-to-r from-main to-main-dark bg-clip-text text-transparent">
-              수집해보세요
-            </span>
+          <h2 className="mb-4 bg-gradient-to-r from-main to-main-dark bg-clip-text text-transparent text-4xl font-bold">
+            다양한 카드를 수집하는 재미
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             내가 매긴 별점대로 카드의 등급이 정해집니다
@@ -292,15 +269,13 @@ export default function GallerySection() {
         </div>
 
         {/* 카드 갤러리 */}
-        <div className="py-10 overflow-x-auto flex justify-center items-start gap-6">
-          {SAMPLE_CAFES.map((cafe, index) => (
-            <SampleCard key={index} cafe={cafe} />
-          ))}
+        <div className="py-10 flex flex-col md:flex-row justify-center items-center md:items-start gap-6">
+          {SAMPLE_CAFES.map((cafe, index) => <SampleCard key={index} cafe={cafe} />)}
         </div>
 
         {/* 등급 설명 */}
         <div className="text-center mt-16">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
+          <div className="md:max-w-4xl mx-auto flex md:grid md:grid-cols-5 justify-between md:gap-4">
             <div className="text-center">
               <div className="w-12 h-12 bg-orange-100 rounded-full mx-auto mb-2 flex items-center justify-center">
                 <Coffee className="w-6 h-6 text-orange-600" />

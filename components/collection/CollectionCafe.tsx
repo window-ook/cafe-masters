@@ -5,8 +5,7 @@ import { useUIStore } from '@/stores';
 import { Star } from 'lucide-react';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
-
-type TEdgeSquare = 'tl' | 'tr' | 'bl' | 'br';
+import EdgeSquare from '@/components/shared/sidebar/EdgeSquare';
 
 interface ICollectionCafe {
   name: string | undefined;
@@ -27,28 +26,11 @@ const RATING_THREE = 'card-silver text-black';
 const RATING_FOUR = 'card-gold text-black';
 const RATING_FIVE = 'card-emerald text-black';
 
-let COLOR_BY_RATING = ''; // 등급에 따른 카드 색상
-let HOVER_BORDER_BY_RATING = ''; // 등급에 따른 카드 보더 색상
-let HOVER_NAME_COLOR = ''; // 등급에 따른 카페 이름 색상
-let NORMAL_CARD_BACK_EFFECT = ''; // 등급에 따른 백그라운드 효과
-let ADDRESS_AND_PHONE_NUMBER_BACKGROUND = ''; // 주소와 전화번호 배경 색상
-
-const EdgeSquare = ({ edgeSquare, isHiddenCard }: { edgeSquare: TEdgeSquare, isHiddenCard: boolean }) => {
-  const getPositionClasses = () => {
-    switch (edgeSquare) {
-      case 'tl':
-        return 'absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2';
-      case 'tr':
-        return 'absolute top-0 right-0 translate-x-1/2 -translate-y-1/2';
-      case 'bl':
-        return 'absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2';
-      case 'br':
-        return 'absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2';
-    }
-  };
-
-  return <div className={`${getPositionClasses()} size-1.5 ${isHiddenCard ? 'border-main-dark bg-main' : 'border-gray-600 bg-gray-500'} border`} />;
-};
+let cardColorByGrade = ''; // 등급에 따른 카드 색상
+let borderColorByGrade = ''; // 등급에 따른 카드 보더 색상
+let nameColorByGrade = ''; // 등급에 따른 카페 이름 색상
+let backlightColorByGrade = ''; // 등급에 따른 백그라운드 효과
+let addressAndPhoneBackgroundColor = ''; // 주소와 전화번호 배경 색상
 
 export default function CollectionCafe({
   name,
@@ -68,32 +50,32 @@ export default function CollectionCafe({
   switch (ratings) {
     case 1:
     case 2:
-      COLOR_BY_RATING = RATING_ONE_N_TWO;
-      NORMAL_CARD_BACK_EFFECT = '';
-      HOVER_NAME_COLOR = '';
-      HOVER_BORDER_BY_RATING = 'hover:border-gray-500';
-      ADDRESS_AND_PHONE_NUMBER_BACKGROUND = 'bg-gray-100';
+      cardColorByGrade = RATING_ONE_N_TWO;
+      backlightColorByGrade = '';
+      nameColorByGrade = '';
+      borderColorByGrade = 'hover:border-gray-500';
+      addressAndPhoneBackgroundColor = 'bg-gray-100';
       break;
     case 3:
-      COLOR_BY_RATING = RATING_THREE;
-      HOVER_NAME_COLOR = 'group-hover:text-silver-name';
-      HOVER_BORDER_BY_RATING = 'hover:border-silver-base';
-      NORMAL_CARD_BACK_EFFECT = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-gray-500 blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
-      ADDRESS_AND_PHONE_NUMBER_BACKGROUND = 'bg-silver-address-background';
+      cardColorByGrade = RATING_THREE;
+      nameColorByGrade = 'group-hover:text-silver-name';
+      borderColorByGrade = 'hover:border-silver-base';
+      backlightColorByGrade = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-gray-500 blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
+      addressAndPhoneBackgroundColor = 'bg-silver-address-background';
       break;
     case 4:
-      COLOR_BY_RATING = RATING_FOUR;
-      HOVER_NAME_COLOR = 'group-hover:text-gold-name';
-      HOVER_BORDER_BY_RATING = 'hover:border-gold-base';
-      NORMAL_CARD_BACK_EFFECT = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-gold-effect-left via-gold-effect-mid to-gold-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
-      ADDRESS_AND_PHONE_NUMBER_BACKGROUND = 'bg-gold-address-background';
+      cardColorByGrade = RATING_FOUR;
+      nameColorByGrade = 'group-hover:text-gold-name';
+      borderColorByGrade = 'hover:border-gold-base';
+      backlightColorByGrade = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-gold-effect-left via-gold-effect-mid to-gold-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
+      addressAndPhoneBackgroundColor = 'bg-gold-address-background';
       break;
     case 5:
-      COLOR_BY_RATING = RATING_FIVE;
-      HOVER_NAME_COLOR = 'group-hover:text-emerald-name';
-      HOVER_BORDER_BY_RATING = 'hover:border-emerald-base';
-      NORMAL_CARD_BACK_EFFECT = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-emerald-effect-left via-emerald-effect-mid to-emerald-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
-      ADDRESS_AND_PHONE_NUMBER_BACKGROUND = 'bg-emerald-address-background';
+      cardColorByGrade = RATING_FIVE;
+      nameColorByGrade = 'group-hover:text-emerald-name';
+      borderColorByGrade = 'hover:border-emerald-base';
+      backlightColorByGrade = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-emerald-effect-left via-emerald-effect-mid to-emerald-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
+      addressAndPhoneBackgroundColor = 'bg-emerald-address-background';
       break;
   }
 
@@ -136,6 +118,7 @@ export default function CollectionCafe({
   const handleOverlayMouseMove = (e: React.MouseEvent) => {
     const container = cardRef.current;
     const overlay = overlayRef.current;
+
     if (!container || !overlay) return;
 
     const { left, top, width, height } = container.getBoundingClientRect();
@@ -175,15 +158,13 @@ export default function CollectionCafe({
   }, []);
 
   return (
-    <li
-      className="group card-container relative list-none h-96"
-    >
+    <li className="group card-container relative list-none h-96">
       {/* 백라이트 레이어 */}
-      {isHiddenCard ? (
-        <div ref={backEffectRef} className={HIDDEN_CARD_BACK_EFFECT}></div>
-      ) : NORMAL_CARD_BACK_EFFECT ? (
-        <div ref={backEffectRef} className={NORMAL_CARD_BACK_EFFECT}></div>
-      ) : null}
+      {
+        isHiddenCard
+          ? (<div ref={backEffectRef} className={HIDDEN_CARD_BACK_EFFECT}></div>)
+          : backlightColorByGrade ? (<div ref={backEffectRef} className={backlightColorByGrade}></div>) : null
+      }
 
       {/* 카드 표면 */}
       <button
@@ -198,21 +179,15 @@ export default function CollectionCafe({
           handleCardMouseLeave();
           handleOverlayMouseLeave();
         }}
-        className={
-          isHiddenCard
-            ? `${HIDDEN_CARD}`
-            : `card-tilt w-full h-full p-4 border-6 ${COLOR_BY_RATING} ${HOVER_BORDER_BY_RATING} ${isDarkTheme ? 'border-dark-border' : 'border-gray-500'} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`
-        }
+        className={isHiddenCard ? `${HIDDEN_CARD}` : `card-tilt w-full h-full p-4 border-6 ${cardColorByGrade} ${borderColorByGrade} ${isDarkTheme ? 'border-dark-border' : 'border-gray-500'} rounded-2xl flex flex-col justify-between drop-shadow-3xl cursor-pointer transition duration-300 ease`}
       >
         {/* 빛 반사 효과 */}
-        {(ratings || 0) >= 3 && (
-          <div ref={overlayRef} className="card-overlay inset-0 rounded-2xl" />
-        )}
+        {(ratings || 0) >= 3 && (<div ref={overlayRef} className="card-overlay inset-0 rounded-2xl" />)}
 
         <div className="flex flex-col gap-2">
           {/* 카페 이름 */}
           <div className='z-10'>
-            <p className={`whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-4 ${isHiddenCard ? '' : HOVER_NAME_COLOR} font-dunggeunmo font-bold text-lg transition-all duration-300 ease-in-out`}>
+            <p className={`whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-4 ${isHiddenCard ? '' : nameColorByGrade} font-dunggeunmo font-bold text-lg transition-all duration-300 ease-in-out`}>
               {name}{' '}
               {isHiddenCard && (
                 <span className="inline-flex h-6 px-2 rounded-lg shadow-md bg-linear-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-size-[200%_200%] animate-gradient items-center justify-center text-sm font-dunggeunmo">
@@ -249,7 +224,7 @@ export default function CollectionCafe({
         </div>
 
         {/* 주소와 전화번호 */}
-        <div className={`relative z-10 px-2 rounded-md border-[0.125rem] ${isHiddenCard ? 'border-main bg-hidden-address-background' : 'border-gray-500'} ${ADDRESS_AND_PHONE_NUMBER_BACKGROUND} flex flex-col`}>
+        <div className={`relative z-10 px-2 rounded-md border-[0.125rem] ${isHiddenCard ? 'border-main bg-hidden-address-background' : 'border-gray-500'} ${addressAndPhoneBackgroundColor} flex flex-col`}>
           <EdgeSquare edgeSquare="tl" isHiddenCard={isHiddenCard} />
           <EdgeSquare edgeSquare="tr" isHiddenCard={isHiddenCard} />
           <EdgeSquare edgeSquare="bl" isHiddenCard={isHiddenCard} />
@@ -263,6 +238,6 @@ export default function CollectionCafe({
           </p>
         </div>
       </button>
-    </li>
+    </li >
   );
 }
