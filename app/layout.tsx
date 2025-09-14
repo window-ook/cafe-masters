@@ -21,7 +21,7 @@ const dunggeunmo = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://app.cafe-masters.co'),
   verification: {
     other: {
       'naver-site-verification': 'a5ac1b2a1e00d0be10af5842d117fd62879c6e92',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     default: 'Cafe Masters',
     template: '%s | Cafe Masters'
   },
-  description: '카페를 즐겨 다니는 누구나 마스터가 될 수 있습니다!',
+  description: '카페를 즐겨 다니는 분들을 위한 서비스',
   keywords: [
     '카페 마스터즈',
     '카페마스터즈',
@@ -58,16 +58,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: 'https://app.cafe-masters.co',
     title: 'Cafe Masters',
     siteName: 'Cafe Masters',
-    description: '카페를 즐겨 다니는 누구나 마스터가 될 수 있습니다!',
+    description: '카페를 즐겨 다니는 분들을 위한 서비스',
     images: ['https://app.cafe-masters.co/opengraph-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Cafe Masters',
-    description: '카페를 즐겨 다니는 누구나 마스터가 될 수 있습니다!',
+    description: '카페를 즐겨 다니는 분들을 위한 서비스',
     images: ['https://app.cafe-masters.co/opengraph-image.png'],
     creator: 'github@window-ook',
   },
