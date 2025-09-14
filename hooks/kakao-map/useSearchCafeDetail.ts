@@ -20,7 +20,7 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
       if (!cafeId || cafeId.trim() === '') throw new Error('유효한 카페 ID가 필요합니다.');
 
       try {
-        // 1단계: Supabase에서 먼저 조회해서 있으면 바로 반환
+        // 1단계: Supabase 조회
         const existingData = await getCafeDetail(cafeId);
 
         if (existingData) {
@@ -33,18 +33,29 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
           return convertedData;
         }
 
-        // 2단계: Supabase에 데이터가 없으면 크롤링 (정상 플로우)
+        // 2단계: Supabase에 없으면 크롤링
         console.log(`🔍 ${cafeId} DB에 없음`);
         const crawledData = await fetchSearchCafeDetail(cafeId);
 
         if (!crawledData) throw new Error('크롤링된 데이터가 없습니다.');
 
-        // 3단계: 크롤링된 데이터를 Supabase에 저장
-        try {
-          await createCafeDetail(cafeId, crawledData);
-          console.log(`✅ ${cafeId} DB 저장 완료`);
-        } catch (saveError) {
-          console.warn(`⚠️ ${cafeId} DB 저장 실패:`, saveError);
+        const isValidData = crawledData.image &&
+          crawledData.image.trim() !== '' &&
+          crawledData.extra_images &&
+          crawledData.extra_images.length > 0 &&
+          crawledData.opening_time &&
+          crawledData.opening_time.trim() !== '';
+
+        // 3단계: 유효한 데이터만 Supabase에 저장
+        if (isValidData) {
+          try {
+            await createCafeDetail(cafeId, crawledData);
+            console.log(`✅ ${cafeId} DB 저장 완료`);
+          } catch (saveError) {
+            console.warn(`⚠️ ${cafeId} DB 저장 실패:`, saveError);
+          }
+        } else {
+          console.warn(`⚠️ ${cafeId} DB 저장 생략`);
         }
 
         return crawledData;
