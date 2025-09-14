@@ -62,26 +62,13 @@ export const metadata: Metadata = {
     title: 'Cafe Masters',
     siteName: 'Cafe Masters',
     description: '카페를 즐겨 다니는 누구나 마스터가 될 수 있습니다!',
-    images: [
-      {
-        url: '/opengraph-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Cafe Masters',
-        type: 'image/png',
-      }
-    ],
+    images: ['https://app.cafe-masters.co/opengraph-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Cafe Masters',
     description: '카페를 즐겨 다니는 누구나 마스터가 될 수 있습니다!',
-    images: [
-      {
-        url: '/opengraph-image.png',
-        alt: 'Cafe Masters',
-      }
-    ],
+    images: ['https://app.cafe-masters.co/opengraph-image.png'],
     creator: 'github@window-ook',
   },
   robots: {
@@ -96,7 +83,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://app.cafe-masters.co',
+    canonical: 'https://app.cafe-masters.co'
   },
 };
 
