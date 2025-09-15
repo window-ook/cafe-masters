@@ -3,13 +3,13 @@ import { chromium } from 'playwright-core';
 import {
   createBrowserContext,
   setupResourceBlocking,
-  crawlCafeData,
+  scrapCafeData,
   getBaseChromiumArgs,
   getProductionExecutablePath,
-  handleCrawlingError,
+  handleScrappingError,
   type BrowserConfig,
-  type CrawlingConfig,
-} from '@/lib/data/crawler';
+  type ScrappingConfig,
+} from '@/lib/data/scrapper';
 
 export const runtime = 'nodejs';
 
@@ -29,7 +29,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       viewport: { width: 800, height: 600 },
     };
 
-    const crawlingConfig: CrawlingConfig = {
+    const scrapingConfig: ScrappingConfig = {
       waitUntil: 'domcontentloaded',
       timeout: 3000,
       selectorTimeout: 1000,
@@ -45,9 +45,9 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     const context = await createBrowserContext(browser, browserConfig);
     const page = await context.newPage();
 
-    await setupResourceBlocking(page, crawlingConfig.resourceBlocking);
+    await setupResourceBlocking(page, scrapingConfig.resourceBlocking);
 
-    const data = await crawlCafeData(page, id, crawlingConfig);
+    const data = await scrapCafeData(page, id, scrapingConfig);
 
     await context.close();
     await browser.close();
@@ -55,7 +55,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   } catch (error) {
     console.error('카페 상세정보 크롤링 실패:', error);
 
-    const errorResponse = handleCrawlingError(error);
+    const errorResponse = handleScrappingError(error);
     return NextResponse.json(
       { error: errorResponse.error, details: errorResponse.details },
       { status: errorResponse.status }

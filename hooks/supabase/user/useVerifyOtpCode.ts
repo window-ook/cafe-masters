@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
-import { getAuthErrorMessage } from '@/utils/shared/authErrorHandler';
+import { getAuthErrorMessage } from '@/utils/shared/authError';
 
 export function useVerifyOtpCode() {
   const supabase = createBrowserSupabaseClient();

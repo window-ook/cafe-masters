@@ -8,14 +8,14 @@ export function middleware(request: NextRequest) {
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https://*.kakao.com https://*.kakaocdn.net https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://map1.daumcdn.net https://map2.daumcdn.net https://map3.daumcdn.net https://map4.daumcdn.net https://*.daumcdn.net https://*.supabase.co;
     font-src 'self' https://fonts.gstatic.com;
-    connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.kakao.com;
+    connect-src 'self' https://*.supabase.co https://*.kakao.com;
     object-src 'none';
     base-uri 'self';
     form-action 'self' https://*.kakao.com;
     frame-ancestors 'none';
-    frame-src https://*.kakao.com;
-    upgrade-insecure-requests;
-  `;
+    frame-src https://*.vercel.live https://vercel.live https://*.kakao.com;
+    upgrade-insecure-requests;`;
+
     // 줄 바꿈 및 공백 제거
     const contentSecurityPolicyHeaderValue = cspHeader
         .replace(/\s{2,}/g, ' ')

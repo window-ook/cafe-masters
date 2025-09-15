@@ -8,7 +8,7 @@ import chromiumPkg from '@sparticuz/chromium';
  * @property extra_images - 추가 카페 이미지 URL 배열 (최대 2개)
  * @property opening_time - 카페 운영 시간 정보
  */
-export interface CafeCrawlingResult {
+export interface CafeScrappingResult {
   image: string | null;
   extra_images: (string | null)[];
   opening_time: string;
@@ -38,7 +38,7 @@ export interface BrowserConfig {
  * @property minWaitTime - 최소 대기 시간 (선택적, 밀리초)
  * @property resourceBlocking - 리소스 차단 설정 (선택적)
  */
-export interface CrawlingConfig {
+export interface ScrappingConfig {
   waitUntil: 'load' | 'domcontentloaded' | 'networkidle' | 'commit';
   timeout: number;
   selectorTimeout?: number;
@@ -98,7 +98,7 @@ export async function createVercelOptimizedBrowserContext(browser: Browser, conf
  */
 export async function setupResourceBlocking(
   page: Page,
-  config?: CrawlingConfig['resourceBlocking']
+  config?: ScrappingConfig['resourceBlocking']
 ): Promise<void> {
   if (!config) return;
 
@@ -132,13 +132,13 @@ export async function setupResourceBlocking(
  * @param page - Playwright Page 인스턴스
  * @param cafeId - 카카오맵 카페 ID
  * @param config - 크롤링 설정 객체
- * @returns Promise<CafeCrawlingResult> - 크롤링된 카페 정보 (이미지, 운영시간 등)
+ * @returns Promise<CafeScrappingResult> - 크롤링된 카페 정보 (이미지, 운영시간 등)
  */
-export async function crawlCafeData(
+export async function scrapCafeData(
   page: Page,
   cafeId: string,
-  config: CrawlingConfig
-): Promise<CafeCrawlingResult> {
+  config: ScrappingConfig
+): Promise<CafeScrappingResult> {
   await page.goto(EXTERNAL_PATHS.KAKAO_MAP_CAFE_DETAIL(cafeId), {
     waitUntil: config.waitUntil,
     timeout: config.timeout,
@@ -295,9 +295,9 @@ export function getProductionExecutablePath(): Promise<string> | undefined {
 
 /**
  * @description 환경에 따라 최적화된 크롤링 설정을 반환하는 함수
- * @returns CrawlingConfig - Vercel 프로덕션 환경과 로컬 환경에 맞게 최적화된 크롤링 설정
+ * @returns ScrappingConfig - Vercel 프로덕션 환경과 로컬 환경에 맞게 최적화된 크롤링 설정
  */
-export function getOptimizedCrawlingConfig(): CrawlingConfig {
+export function getOptimizedScrappingConfig(): ScrappingConfig {
   const isProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
 
   return {
@@ -318,7 +318,7 @@ export function getOptimizedCrawlingConfig(): CrawlingConfig {
  * @param error - 발생한 에러 객체 (unknown 타입)
  * @returns { error: string; details: string; status: number } - 사용자 친화적 에러 메시지와 HTTP 상태 코드
  */
-export function handleCrawlingError(error: unknown): { error: string; details: string; status: number } {
+export function handleScrappingError(error: unknown): { error: string; details: string; status: number } {
   if (error instanceof Error) {
     if (error.message.includes('timeout')) {
       return {

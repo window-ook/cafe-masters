@@ -58,7 +58,7 @@ export default function CollectionCafes() {
           <div className="my-8 px-8 flex items-center justify-center h-40">
             <div className="text-center">
               <p className="text-red-500 dark:text-red-400 mb-2">
-                수집 카페 목록을 불러오는 중 오류가 발생했습니다.
+                수집 카페 목록을 불러오는 중 에러가 발생했습니다.
               </p>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
                 {error?.message || '알 수 없는 오류'}

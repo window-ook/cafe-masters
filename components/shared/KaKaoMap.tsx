@@ -59,7 +59,7 @@ export default function KakaoMap() {
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = EXTERNAL_PATHS.KAKAO_MAP_URL;
+    script.src = EXTERNAL_PATHS.KAKAO_MAP;
     script.async = true;
     script.defer = true;
     document.head.appendChild(script);

@@ -27,7 +27,7 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
           const convertedData: ISearchCafeDetail = {
             image: existingData.image || '',
             extra_images: JSON.parse(existingData.extra_images || '[]'),
-            opening_time: JSON.parse(existingData.opening_time || '""'),
+            opening_time: existingData.opening_time || '',
           };
 
           return convertedData;
@@ -35,16 +35,16 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
 
         // 2단계: Supabase에 없으면 크롤링
         console.log(`🔍 ${cafeId} DB에 없음`);
-        const crawledData = await fetchSearchCafeDetail(cafeId);
+        const scrapedData = await fetchSearchCafeDetail(cafeId);
 
-        if (!crawledData) throw new Error('크롤링된 데이터가 없습니다.');
+        if (!scrapedData) throw new Error('크롤링된 데이터가 없습니다.');
 
-        const isValidData = crawledData.image && crawledData.image.trim() !== ''
+        const isValidData = scrapedData.image && scrapedData.image.trim() !== '';
 
         // 3단계: 유효한 데이터만 Supabase에 저장
         if (isValidData) {
           try {
-            await createCafeDetail(cafeId, crawledData);
+            await createCafeDetail(cafeId, scrapedData);
             console.log(`✅ ${cafeId} DB 저장 완료`);
           } catch (saveError) {
             console.warn(`⚠️ ${cafeId} DB 저장 실패:`, saveError);
@@ -53,12 +53,12 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
           console.warn(`⚠️ ${cafeId} DB 저장 생략`);
         }
 
-        return crawledData;
+        return scrapedData;
       } catch (error) {
         console.error(`❌ ${cafeId} 상세 정보 조회 실패:`, error);
 
         if (error instanceof Error) throw error;
-        throw new Error(`카페 상세 정보 조회 중 알 수 없는 오류가 발생했습니다: ${String(error)}`);
+        throw new Error(`카페 상세 정보 조회 중 알 수 없는 에러가 발생했습니다: ${String(error)}`);
       }
     },
     enabled: isEnabled && !!cafeId && cafeId.trim() !== '',

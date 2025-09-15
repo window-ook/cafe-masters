@@ -123,12 +123,12 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
             <Ratings rating={collectionCafeDetail?.ratings ?? 0} />
           </div>
           <Categories categories={collectionCafeDetail?.categories} />
-          <OpenTime opening_time={collectionCafeDetail?.opening_time || ''} />
+          <OpenTime opening_time={collectionCafeDetail?.opening_time || null} />
           <Location address={collectionCafeDetail?.address} />
-          <PhoneNumber phone_number={collectionCafeDetail?.phone_number || ''} />
+          <PhoneNumber phone_number={collectionCafeDetail?.phone_number || null} />
 
           <Comment comment={collectionCafeDetail?.comment} />
-          <EatenMenus eaten={collectionCafeDetail?.eaten_menus ?? ''} />
+          <EatenMenus eaten={collectionCafeDetail?.eaten_menus ?? null} />
           <Pros pros={collectionCafeDetail?.pros ?? ''} />
           <Cons cons={collectionCafeDetail?.cons ?? ''} />
         </section>

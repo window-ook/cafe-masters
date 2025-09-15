@@ -26,8 +26,8 @@ interface ICafeDetailBody {
     categories?: string[];
     kakaoCategories?: string[];
   };
-  actionButtons: ReactNode;
   useImageWithFallback?: boolean;
+  actionButtons: ReactNode;
   isDetailLoading?: boolean;
 }
 
@@ -157,7 +157,7 @@ export default function CafeDetailBody({
         {/* 카페 이름 */}
         <h1 className="text-2xl font-bold">{cafeData.name}</h1>
 
-        {/* 카테고리 (RecommendationCafeDetail 전용) */}
+        {/* 카테고리 (수집, 추천 카페) */}
         {cafeData.categories && cafeData.categories.length > 0 && (<Categories categories={cafeData.categories} />)}
 
         {/* 주소 */}
@@ -166,7 +166,7 @@ export default function CafeDetailBody({
         {/* 전화번호 */}
         <PhoneNumber phone_number={cafeData.phone_number} />
 
-        {/* 카카오맵 분류 (SearchedCafeDetail 전용) */}
+        {/* 카카오맵 분류 (검색 결과) */}
         {cafeData.kakaoCategories && cafeData.kakaoCategories.length > 0 && (
           <div className="col-span-2 grid grid-cols-3">
             <div className='flex items-center gap-2'>
@@ -188,7 +188,7 @@ export default function CafeDetailBody({
 
         {/* 운영시간 */}
         <OpenTime
-          opening_time={cafeData.opening_time ?? ''}
+          opening_time={cafeData.opening_time ?? null}
           isLoading={isDetailLoading}
         />
       </section>

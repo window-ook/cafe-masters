@@ -1,18 +1,10 @@
 'use client';
 
-import { useRouter } from "next/navigation";
-import { useUIStore } from '@/stores';
 import { CircleX } from "lucide-react";
+import { useCloseSlidingDrawer } from '@/hooks/ui/useCloseSlidingDrawer';
 
 export default function DetailErrorFallback() {
-    const router = useRouter();
-
-    const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
-
-    const handleClose = () => {
-        setIsSlidingDrawerOpen(false);
-        router.back();
-    };
+    const handleClose = useCloseSlidingDrawer();
 
     return (
         <div className={`h-full flex flex-col`}>

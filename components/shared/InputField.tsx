@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { escapeForXSS } from '@/utils/shared/escapeForXSS';
+import { handleSafeInput } from '@/utils/shared/safeInput';
 import { IMAGE_PATHS } from '@/lib/paths';
 
 interface IInputField extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -36,15 +36,16 @@ const InputField = React.forwardRef<HTMLInputElement, IInputField>(
         // XSS 보호가 활성화된 경우의 onChange 핸들러
         const handleSecureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             if (enableXSSProtection) {
-                const safeValue = escapeForXSS(e.target.value);
-                const safeEvent = {
-                    ...e,
-                    target: {
-                        ...e.target,
-                        value: safeValue
-                    }
-                };
-                onChange?.(safeEvent as React.ChangeEvent<HTMLInputElement>);
+                handleSafeInput(e.target.value, (safeValue) => {
+                    const safeEvent = {
+                        ...e,
+                        target: {
+                            ...e.target,
+                            value: safeValue
+                        }
+                    };
+                    onChange?.(safeEvent as React.ChangeEvent<HTMLInputElement>);
+                });
             } else {
                 onChange?.(e);
             }

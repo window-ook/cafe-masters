@@ -7,7 +7,7 @@ export interface ISupabaseRecommendationCafe {
     name: string;
     image: string;
     extra_images?: string[] | null;
-    opening_time?: string | undefined;
+    opening_time?: string | null;
     address: string;
     phone_number?: string | null;
     menus?: string | null;

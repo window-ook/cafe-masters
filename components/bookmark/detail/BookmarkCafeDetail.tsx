@@ -4,8 +4,9 @@ import { useRouter } from 'next/navigation';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark/useBookmarkCafes';
 import { useDeleteBookmarkCafe } from '@/hooks/supabase/bookmark';
 import { useCollectionStore } from '@/stores/collection';
-import { useCurrentCafeStore, useUIStore, useUserStore } from '@/stores';
+import { useCurrentCafeStore, useUserStore } from '@/stores';
 import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
+import { useCloseSlidingDrawer } from '@/hooks/ui/useCloseSlidingDrawer';
 import { toast } from 'react-toastify';
 import { Bookmark, CircleX } from 'lucide-react';
 import Button from '@/components/shared/Button';
@@ -19,18 +20,14 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   const userId = useUserStore(state => state.userId);
   const isCollected = useCurrentCafeStore(state => state.isCollected);
   const isRecommended = useCurrentCafeStore(state => state.isRecommended);
-  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
   const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
   const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
-
-  const handleClose = () => {
-    setIsSlidingDrawerOpen(false);
-    router.back();
-  };
 
   const { filteredBookmarkCafes } = useBookmarkCafes(userId);
 
   const { deleteBookmarkCafe } = useDeleteBookmarkCafe();
+
+  const handleClose = useCloseSlidingDrawer();
 
   const detail = filteredBookmarkCafes.find((cafe: ISupabaseBookmarkCafe) => cafe.id === Number(cafeId));
 

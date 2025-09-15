@@ -2,7 +2,7 @@ import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useFilterStore } from '@/stores';
 import { useMutation } from '@tanstack/react-query';
-import { getAuthErrorMessage } from '@/utils/shared/authErrorHandler';
+import { getAuthErrorMessage } from '@/utils/shared/authError';
 
 export function useSignIn() {
   const supabase = createBrowserSupabaseClient();

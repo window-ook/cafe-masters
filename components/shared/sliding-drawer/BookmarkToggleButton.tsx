@@ -59,7 +59,7 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
         toast.success('북마크에 추가되었습니다.');
       }
     } catch {
-      toast.error('작업 중 오류가 발생했습니다.');
+      toast.error('작업 중 에러가 발생했습니다.');
     }
   };
 

@@ -32,11 +32,11 @@ export default function SlidingDrawer() {
         isDarkTheme ? 'bg-dark-background text-white' : 'bg-white/20 text-black backdrop-blur-lg',
         {
             // 모바일 닫힌 상태: 화면 아래로 숨김
-            'rounded-t-3xl bottom-0 left-0 h-[calc(100vh-13rem)] translate-y-full opacity-0 pointer-events-none': !isSlidingDrawerOpen && !isExtend,
+            'rounded-t-3xl bottom-0 left-0 h-[40vh] translate-y-full opacity-0 pointer-events-none': !isSlidingDrawerOpen && !isExtend,
             'rounded-t-3xl bottom-0 left-0 h-[calc(100vh-3rem)] translate-y-full opacity-0 pointer-events-none': !isSlidingDrawerOpen && isExtend,
 
             // 모바일 열린 상태: 아래에서 위로 슬라이드
-            'rounded-t-3xl bottom-0 left-0 h-[calc(100vh-13rem)] translate-y-0 opacity-100': isSlidingDrawerOpen && !isExtend,
+            'rounded-t-3xl bottom-0 left-0 h-[40vh] translate-y-0 opacity-100': isSlidingDrawerOpen && !isExtend,
             'rounded-t-3xl bottom-0 left-0 h-[calc(100vh-3rem)] translate-y-0 opacity-100': isSlidingDrawerOpen && isExtend,
 
             // 데스크톱 닫힌 상태: 사이드바 우측 영역에서 오른쪽으로 숨김

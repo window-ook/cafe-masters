@@ -56,6 +56,6 @@ export function getAuthErrorMessage(error: IAuthError | Error | string | unknown
       if (lowerErrorMessage.includes('network')) return '네트워크 연결에 문제가 있습니다. 다시 시도해주세요.';
       if (lowerErrorMessage.includes('rate limit') || lowerErrorMessage.includes('email rate limit exceeded')) return '이메일 발송 횟수를 초과했습니다. 잠시 후 다시 시도해주세요. (약 60초 후)';
       if (lowerErrorMessage.includes('too many requests')) return '너무 많은 요청이 있었습니다. 잠시 후 다시 시도해주세요.';
-      return '요청 처리 중 오류가 발생했습니다. 다시 시도해주세요.';
+      return '요청 처리 중 에러가 발생했습니다. 다시 시도해주세요.';
   }
 }

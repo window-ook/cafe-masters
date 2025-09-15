@@ -3,13 +3,13 @@ import { chromium, Browser, BrowserContext } from 'playwright-core';
 import {
   createVercelOptimizedBrowserContext,
   setupResourceBlocking,
-  crawlCafeData,
+  scrapCafeData,
   getVercelOptimizedChromiumArgs,
   getProductionExecutablePath,
-  handleCrawlingError,
+  handleScrappingError,
   BrowserConfig,
-  CrawlingConfig,
-} from '@/lib/data/crawler';
+  ScrappingConfig,
+} from '@/lib/data/scrapper';
 
 export const runtime = 'nodejs';
 
@@ -20,7 +20,7 @@ interface ContextPoolItem {
   context: BrowserContext;
   isBeingUsed: boolean;
   lastUsed: number;
-  isClosed: boolean; // 수동으로 closed 상태 관리
+  isClosed: boolean;
 }
 
 const contextPool: ContextPoolItem[] = [];
@@ -71,7 +71,7 @@ async function getAvailableContext(browser: Browser, config: BrowserConfig): Pro
     return availableItem;
   }
 
-  // 새 컨텍스트 생성 (최대 개수 체크)
+  // 새 컨텍스트 생성
   if (contextPool.length < MAX_CONTEXTS) {
     console.log(`🆕 새 Context 생성 (Pool 크기: ${contextPool.length + 1}/${MAX_CONTEXTS})`);
     const newContext = await createVercelOptimizedBrowserContext(browser, config);
@@ -86,7 +86,7 @@ async function getAvailableContext(browser: Browser, config: BrowserConfig): Pro
   }
 
   // Pool이 가득 찬 경우 대기 후 재시도
-  console.log(`⏳ Context Pool 가득참, 대기 중...`);
+  console.log(`⏳ 컨텍스트 풀 대기...`);
   await new Promise(resolve => setTimeout(resolve, 200));
   return getAvailableContext(browser, config);
 }
@@ -124,7 +124,7 @@ function cleanupOldContexts() {
 }
 
 // 주기적으로 오래된 컨텍스트 정리
-setInterval(cleanupOldContexts, 2 * 60 * 1000); // 2분마다 정리
+setInterval(cleanupOldContexts, 2 * 60 * 1000);
 
 // Keep-Alive: 브라우저 인스턴스 생명주기 관리
 let browserKeepAliveTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -136,9 +136,8 @@ function resetBrowserKeepAlive() {
 
   // 10분간 사용되지 않으면 브라우저 종료
   browserKeepAliveTimeout = setTimeout(async () => {
-    console.log('🛌 브라우저 Keep-Alive 타임아웃, 인스턴스 종료');
+    console.log('브라우저 종료 Keep-Alive 타임아웃');
 
-    // 모든 컨텍스트 정리
     contextPool.forEach(item => {
       if (!item.isClosed) {
         item.context.close().catch(() => { });
@@ -147,12 +146,11 @@ function resetBrowserKeepAlive() {
     });
     contextPool.length = 0;
 
-    // 브라우저 종료
     if (globalBrowser && globalBrowser.isConnected()) {
       await globalBrowser.close().catch(() => { });
       globalBrowser = null;
     }
-  }, 10 * 60 * 1000); // 10분
+  }, 10 * 60 * 1000);
 }
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -169,7 +167,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       viewport: { width: 1280, height: 720 },
     };
 
-    const crawlingConfig: CrawlingConfig = {
+    const scrapingConfig: ScrappingConfig = {
       waitUntil: 'networkidle',
       timeout: 8000,
       selectorTimeout: 3000,
@@ -181,29 +179,26 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       },
     };
 
-    // Context Pool에서 컨텍스트 가져오기
     contextItem = await getAvailableContext(browser, browserConfig);
     const page = await contextItem.context.newPage();
 
-    // Keep-Alive 타이머 리셋
     resetBrowserKeepAlive();
 
-    await setupResourceBlocking(page, crawlingConfig.resourceBlocking);
+    await setupResourceBlocking(page, scrapingConfig.resourceBlocking);
 
-    const data = await crawlCafeData(page, id, crawlingConfig);
+    const data = await scrapCafeData(page, id, scrapingConfig);
 
-    // 페이지만 닫고 컨텍스트는 Pool에 반환
     await page.close().catch(() => { });
+
     if (contextItem) releaseContext(contextItem);
 
     return NextResponse.json(data);
   } catch (error) {
     console.error('카페 상세정보 크롤링 실패:', error);
 
-    // 에러 발생 시에도 컨텍스트 반환
     if (contextItem) releaseContext(contextItem);
 
-    const errorResponse = handleCrawlingError(error);
+    const errorResponse = handleScrappingError(error);
     return NextResponse.json(
       { error: errorResponse.error, details: errorResponse.details },
       { status: errorResponse.status }

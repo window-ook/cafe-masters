@@ -1,7 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useUIStore } from '@/stores';
+import { useCloseSlidingDrawer } from '@/hooks/ui/useCloseSlidingDrawer';
 import { CircleX } from 'lucide-react';
 
 interface ISimpleHeader {
@@ -9,13 +8,8 @@ interface ISimpleHeader {
 }
 
 export default function CollectionCafeDetailHeader({ isDarkTheme = false }: ISimpleHeader) {
-  const router = useRouter();
-  const setIsSlidingDrawerOpen = useUIStore(state => state.setIsSlidingDrawerOpen);
 
-  const handleClose = () => {
-    setIsSlidingDrawerOpen(false);
-    router.back();
-  };
+  const handleClose = useCloseSlidingDrawer();
 
   return (
     <header className={`w-full p-4 flex justify-between items-center ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>

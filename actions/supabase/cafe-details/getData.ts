@@ -23,6 +23,6 @@ export async function getCafeDetail(cafeId: string): Promise<CafeDetailRow | nul
     return data;
   } catch (error) {
     if (error instanceof Error) throw error;
-    throw new Error('카페 상세정보 조회 중 예상치 못한 오류가 발생했습니다.');
+    throw new Error('카페 상세정보 조회 중 예상치 못한 에러가 발생했습니다.');
   }
 }
