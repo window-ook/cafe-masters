@@ -127,7 +127,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
 
       {/* 로그아웃 상태 */}
       {!userId && <Button onClick={() => router.push('/signin')} customClassName='flex-1'>
-        로그인하고 수집하기
+        {isDetailLoading ? <LoadingSpinner size="sm" /> : <span>로그인하고 수집하기</span>}
       </Button>}
     </>
   );

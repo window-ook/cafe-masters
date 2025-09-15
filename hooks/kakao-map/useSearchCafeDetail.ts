@@ -39,12 +39,7 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
 
         if (!crawledData) throw new Error('크롤링된 데이터가 없습니다.');
 
-        const isValidData = crawledData.image &&
-          crawledData.image.trim() !== '' &&
-          crawledData.extra_images &&
-          crawledData.extra_images.length > 0 &&
-          crawledData.opening_time &&
-          crawledData.opening_time.trim() !== '';
+        const isValidData = crawledData.image && crawledData.image.trim() !== ''
 
         // 3단계: 유효한 데이터만 Supabase에 저장
         if (isValidData) {

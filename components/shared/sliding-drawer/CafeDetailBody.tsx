@@ -158,9 +158,7 @@ export default function CafeDetailBody({
         <h1 className="text-2xl font-bold">{cafeData.name}</h1>
 
         {/* 카테고리 (RecommendationCafeDetail 전용) */}
-        {cafeData.categories && cafeData.categories.length > 0 && (
-          <Categories categories={cafeData.categories} />
-        )}
+        {cafeData.categories && cafeData.categories.length > 0 && (<Categories categories={cafeData.categories} />)}
 
         {/* 주소 */}
         <Location address={cafeData.address} />

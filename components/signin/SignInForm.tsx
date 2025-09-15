@@ -94,14 +94,14 @@ export default function SignInForm() {
               type="button"
               aria-label="비밀번호 재설정 폼 열기 버튼"
               onClick={() => setShowResetForm(true)}
-              customClassName='bg-blue-500'
+              customClassName='bg-blue-500 hover:bg-blue-600'
               text='비밀번호 재설정'
             />
             <Button
               type="button"
               aria-label="카카오 로그인 버튼"
               onClick={() => signinWithKakao()}
-              customClassName="bg-yellow-500"
+              customClassName="bg-yellow-500 hover:bg-yellow-600"
               text='카카오 로그인'
             />
             <p className="auth-form-mention">

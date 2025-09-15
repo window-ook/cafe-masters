@@ -133,7 +133,7 @@ export default function SignUpForm() {
           <Button
             type="button"
             aria-label="카카오 로그인 버튼"
-            customClassName='bg-yellow-500'
+            customClassName='bg-yellow-500 hover:bg-yellow-600'
             onClick={() => signinWithKakao()}
             text='카카오 로그인'
           />

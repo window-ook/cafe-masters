@@ -14,7 +14,7 @@ export default function OpenTime({ opening_time, isLoading = false }: IOpenTime)
       </div>
       <div className="col-span-1 text-left">
         {isLoading && !opening_time ? (
-          <div className="h-5 bg-gray-200 dark:bg-gray-700 animate-pulse rounded" />
+          <div className="h-5 skeleton-shimmer rounded" />
         ) : (
           <p>{opening_time}</p>
         )}

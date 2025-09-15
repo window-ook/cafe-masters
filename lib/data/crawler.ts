@@ -148,8 +148,8 @@ export async function crawlCafeData(
     const waitPromises: Promise<unknown>[] = [];
 
     if (config.selectorTimeout) {
-      const isVercelProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
-      const optimizedTimeout = isVercelProduction
+      const isProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
+      const optimizedTimeout = isProduction
         ? Math.min(config.selectorTimeout, 8000)
         : Math.min(config.selectorTimeout, 3000);
 
@@ -161,8 +161,8 @@ export async function crawlCafeData(
     }
 
     if (config.minWaitTime) {
-      const isVercelProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
-      const optimizedMinWait = isVercelProduction
+      const isProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
+      const optimizedMinWait = isProduction
         ? Math.min(config.minWaitTime, 2000)
         : Math.min(config.minWaitTime, 1000);
 
@@ -172,29 +172,37 @@ export async function crawlCafeData(
     if (waitPromises.length > 0) await Promise.race(waitPromises);
   }
 
-  const data = await page.evaluate(() => {
+  const isProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
+
+  const data = await page.evaluate((skipExtraData) => {
     const toAbsoluteUrl = (src: string | null) => src && !src.startsWith('http') ? `https:${src}` : src;
 
     const imgElement = document.querySelector('.img-thumb.img_cfit');
     const photo = toAbsoluteUrl(imgElement?.getAttribute('src') || null);
 
-    const photos = Array.from(document.querySelectorAll('.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit'));
-    const photoList = photos
-      .slice(0, 2)
-      .map(el => toAbsoluteUrl(el.getAttribute('src')));
+    let photoList: (string | null)[] = [];
+    let openingHours = '';
 
-    const timeElement = document.querySelector('.line_fold .txt_detail');
-    let openingHours = timeElement ? timeElement.textContent?.trim().replace(/\s+/g, ' ') || '' : '';
-    openingHours = openingHours.replace(/^매일\s+/, '').trim();
+    // 로컬에서 추가 데이터 스크래핑
+    if (!skipExtraData) {
+      const photos = Array.from(document.querySelectorAll('.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit'));
+      photoList = photos
+        .slice(0, 2)
+        .map(el => toAbsoluteUrl(el.getAttribute('src')));
+
+      const timeElement = document.querySelector('.line_fold .txt_detail');
+      openingHours = timeElement ? timeElement.textContent?.trim().replace(/\s+/g, ' ') || '' : '';
+      openingHours = openingHours.replace(/^매일\s+/, '').trim();
+    }
 
     return {
       image: photo,
       extra_images: photoList,
       opening_time: openingHours,
     };
-  });
+  }, isProduction);
 
-  console.log(`✅ 카페 ${cafeId} 조회 완료:`, {
+  console.log(`✅ 카페 ${cafeId} 조회 완료 ${isProduction ? '(Vercel 최적화)' : '(전체 데이터)'}:`, {
     image: !!data.image,
     extraImages: data.extra_images.length,
     hasOpeningTime: !!data.opening_time,
@@ -290,13 +298,13 @@ export function getProductionExecutablePath(): Promise<string> | undefined {
  * @returns CrawlingConfig - Vercel 프로덕션 환경과 로컬 환경에 맞게 최적화된 크롤링 설정
  */
 export function getOptimizedCrawlingConfig(): CrawlingConfig {
-  const isVercelProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
+  const isProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
 
   return {
     waitUntil: 'networkidle',
-    timeout: isVercelProduction ? 15000 : 10000,
-    selectorTimeout: isVercelProduction ? 8000 : 3000,
-    minWaitTime: isVercelProduction ? 2000 : 500,
+    timeout: isProduction ? 15000 : 10000,
+    selectorTimeout: isProduction ? 8000 : 3000,
+    minWaitTime: isProduction ? 2000 : 500,
     resourceBlocking: {
       blockImages: false,
       blockFonts: true,

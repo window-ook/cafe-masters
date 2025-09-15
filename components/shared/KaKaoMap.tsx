@@ -134,7 +134,7 @@ export default function KakaoMap() {
         const createInfoWindows = () => {
           const cafeName = item.place_name || item.name;
           const overlayContent = `
-            <div class="kakao-custom-marker">
+            <div class="marker-infowindow">
               <div class="title">${cafeName}</div>
             </div>
           `;
@@ -142,7 +142,8 @@ export default function KakaoMap() {
           const overlay = new window.kakao.maps.CustomOverlay({
             content: overlayContent,
             map: map,
-            position: position
+            position: position,
+            zIndex: 2000
           });
 
           openInfoWindowRef.current = overlay;
