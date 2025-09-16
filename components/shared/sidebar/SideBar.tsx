@@ -5,7 +5,6 @@ import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
 import TabsForLink from '@/components/shared/sidebar/TabsForLink';
 import Footer from '@/components/shared/sidebar/Footer';
-import HelpCenter from '@/components/shared/sidebar/HelpCenter';
 import Header from '@/components/shared/sidebar/Header';
 import SearchedCafes from '@/components/search/SearchCafes';
 import BookmarkCafes from '@/components/bookmark/BookmarkCafes';
@@ -40,7 +39,6 @@ export default function SideBar() {
 
           {paths.isSearch && (<div className="flex-1 min-h-0"><SearchedCafes /></div>)}
           {paths.isRecommendation && (<div className="flex-1 min-h-0"><RecommendationCafes /></div>)}
-          {paths.isHelp && (<div className="flex-1 min-h-0"><HelpCenter /></div>)}
 
           {paths.isCollection && (
             <>
@@ -62,7 +60,6 @@ export default function SideBar() {
         </section>
       </div>
 
-      {/* 상세 정보 Shell Container */}
       <ErrorBoundaryWrapper
         featureName="상세 정보"
         message="상세 정보를 불러오는 중 에러가 발생했습니다."

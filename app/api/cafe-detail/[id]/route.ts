@@ -6,9 +6,9 @@ import {
   scrapCafeData,
   getVercelOptimizedChromiumArgs,
   getProductionExecutablePath,
-  handleScrappingError,
+  handleScrapingError,
   BrowserConfig,
-  ScrappingConfig,
+  ScrapingConfig,
 } from '@/lib/data/scrapper';
 
 export const runtime = 'nodejs';
@@ -53,9 +53,7 @@ async function getBrowserInstance(): Promise<Browser> {
   }
 }
 
-/**
- * Context Pool에서 사용 가능한 컨텍스트를 가져오거나 새로 생성하는 함수
- */
+/** Context Pool에서 사용 가능한 컨텍스트를 가져오거나 새로 생성하는 함수 */
 async function getAvailableContext(browser: Browser, config: BrowserConfig): Promise<ContextPoolItem> {
   // 사용 중이지 않은 컨텍스트 찾기
   const availableItem = contextPool.find(item =>
@@ -91,18 +89,14 @@ async function getAvailableContext(browser: Browser, config: BrowserConfig): Pro
   return getAvailableContext(browser, config);
 }
 
-/**
- * 컨텍스트 사용 완료 후 Pool에 반환하는 함수
- */
+/** 컨텍스트 사용 완료 후 Pool에 반환하는 함수 */
 function releaseContext(contextItem: ContextPoolItem) {
   contextItem.isBeingUsed = false;
   contextItem.lastUsed = Date.now();
   console.log(`🔄 Context Pool에 반환 (사용 가능: ${contextPool.filter(item => !item.isBeingUsed).length}/${contextPool.length})`);
 }
 
-/**
- * 오래된 컨텍스트들을 정리하는 함수
- */
+/** 오래된 컨텍스트들을 정리하는 함수 */
 function cleanupOldContexts() {
   const now = Date.now();
   const itemsToRemove = contextPool.filter(item =>
@@ -167,7 +161,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       viewport: { width: 1280, height: 720 },
     };
 
-    const scrapingConfig: ScrappingConfig = {
+    const scrapingConfig: ScrapingConfig = {
       waitUntil: 'networkidle',
       timeout: 8000,
       selectorTimeout: 3000,
@@ -194,11 +188,11 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error('카페 상세정보 크롤링 실패:', error);
+    console.error('카페 상세정보 스크래핑 실패:', error);
 
     if (contextItem) releaseContext(contextItem);
 
-    const errorResponse = handleScrappingError(error);
+    const errorResponse = handleScrapingError(error);
     return NextResponse.json(
       { error: errorResponse.error, details: errorResponse.details },
       { status: errorResponse.status }

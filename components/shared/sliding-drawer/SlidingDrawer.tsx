@@ -11,7 +11,7 @@ import RecommendationCafeDetail from '@/components/recommendation/detail/Recomme
 import FormForCollect from '@/components/shared/sliding-drawer/FormForCollect';
 import FormForRecommend from '@/components/shared/sliding-drawer/FormForRecommend';
 
-/** 상세 정보, 수집하기, 추천하기 폼을 표시하는 Shell */
+/** 상세 정보, 수집하기, 추천하기 폼을 표시하는 Shell Container */
 export default function SlidingDrawer() {
     const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
     const isDarkTheme = useUIStore(state => state.isDarkTheme);

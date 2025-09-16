@@ -3,12 +3,12 @@ import { EXTERNAL_PATHS } from '@/lib/paths';
 import chromiumPkg from '@sparticuz/chromium';
 
 /**
- * @description 카페 크롤링 결과를 나타내는 인터페이스
+ * @description 카페 스크래핑 결과를 나타내는 인터페이스
  * @property image - 카페 대표 이미지 URL (없을 경우 null)
  * @property extra_images - 추가 카페 이미지 URL 배열 (최대 2개)
  * @property opening_time - 카페 운영 시간 정보
  */
-export interface CafeScrappingResult {
+export interface CafeScrapingResult {
   image: string | null;
   extra_images: (string | null)[];
   opening_time: string;
@@ -31,14 +31,14 @@ export interface BrowserConfig {
 }
 
 /**
- * @description 크롤링 동작 설정을 위한 인터페이스
+ * @description 스크래핑 동작 설정을 위한 인터페이스
  * @property waitUntil - 페이지 로드 완료 조건 ('load' | 'domcontentloaded' | 'networkidle' | 'commit')
  * @property timeout - 페이지 로드 최대 대기 시간 (밀리초)
  * @property selectorTimeout - 특정 선택자 대기 최대 시간 (선택적, 밀리초)
  * @property minWaitTime - 최소 대기 시간 (선택적, 밀리초)
  * @property resourceBlocking - 리소스 차단 설정 (선택적)
  */
-export interface ScrappingConfig {
+export interface ScrapingConfig {
   waitUntil: 'load' | 'domcontentloaded' | 'networkidle' | 'commit';
   timeout: number;
   selectorTimeout?: number;
@@ -91,14 +91,14 @@ export async function createVercelOptimizedBrowserContext(browser: Browser, conf
 }
 
 /**
- * @description 페이지 리소스 로딩을 선택적으로 차단하여 크롤링 성능을 최적화하는 함수
+ * @description 페이지 리소스 로딩을 선택적으로 차단하여 스크래핑 성능을 최적화하는 함수
  * @param page - Playwright Page 인스턴스
  * @param config - 리소스 차단 설정 (선택적)
  * @returns Promise<void> - 비동기 작업 완료
  */
 export async function setupResourceBlocking(
   page: Page,
-  config?: ScrappingConfig['resourceBlocking']
+  config?: ScrapingConfig['resourceBlocking']
 ): Promise<void> {
   if (!config) return;
 
@@ -128,17 +128,17 @@ export async function setupResourceBlocking(
 }
 
 /**
- * @description 카카오맵에서 특정 카페의 상세 정보를 크롤링하는 함수
+ * @description 카카오맵에서 특정 카페의 상세 정보를 스크래핑하는 함수
  * @param page - Playwright Page 인스턴스
  * @param cafeId - 카카오맵 카페 ID
- * @param config - 크롤링 설정 객체
- * @returns Promise<CafeScrappingResult> - 크롤링된 카페 정보 (이미지, 운영시간 등)
+ * @param config - 스크래핑 설정 객체
+ * @returns Promise<CafeScrapingResult> - 스크래핑된 카페 정보 (이미지, 운영시간 등)
  */
 export async function scrapCafeData(
   page: Page,
   cafeId: string,
-  config: ScrappingConfig
-): Promise<CafeScrappingResult> {
+  config: ScrapingConfig
+): Promise<CafeScrapingResult> {
   await page.goto(EXTERNAL_PATHS.KAKAO_MAP_CAFE_DETAIL(cafeId), {
     waitUntil: config.waitUntil,
     timeout: config.timeout,
@@ -294,10 +294,10 @@ export function getProductionExecutablePath(): Promise<string> | undefined {
 }
 
 /**
- * @description 환경에 따라 최적화된 크롤링 설정을 반환하는 함수
- * @returns ScrappingConfig - Vercel 프로덕션 환경과 로컬 환경에 맞게 최적화된 크롤링 설정
+ * @description 환경에 따라 최적화된 스크래핑 설정을 반환하는 함수
+ * @returns ScrapingConfig - Vercel 프로덕션 환경과 로컬 환경에 맞게 최적화된 스크래핑 설정
  */
-export function getOptimizedScrappingConfig(): ScrappingConfig {
+export function getOptimizedScrapingConfig(): ScrapingConfig {
   const isProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
 
   return {
@@ -314,11 +314,11 @@ export function getOptimizedScrappingConfig(): ScrappingConfig {
 }
 
 /**
- * @description 크롤링 중 발생한 에러를 분석하여 적절한 에러 메시지를 반환하는 함수
+ * @description 스크래핑 중 발생한 에러를 분석하여 적절한 에러 메시지를 반환하는 함수
  * @param error - 발생한 에러 객체 (unknown 타입)
  * @returns { error: string; details: string; status: number } - 사용자 친화적 에러 메시지와 HTTP 상태 코드
  */
-export function handleScrappingError(error: unknown): { error: string; details: string; status: number } {
+export function handleScrapingError(error: unknown): { error: string; details: string; status: number } {
   if (error instanceof Error) {
     if (error.message.includes('timeout')) {
       return {

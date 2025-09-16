@@ -541,7 +541,7 @@ Claude Code와 Gemini CLI를 사용했으며, 주 용도는 아래와 같습니�
 
 Shell Container-Presenter 패턴<br>
 CSS 3D 효과 구현<br>
-웹 크롤링 최적화<br>
+웹 스크래핑 최적화<br>
 
 >**새롭게 알게 된 것**
 

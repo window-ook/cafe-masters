@@ -5,7 +5,7 @@ import { ISearchCafeDetail } from '@/types/kakao-map';
 import { CafeDetailInsert } from '@/actions/supabase/cafe-details';
 
 
-/** 카페 상세 정보를 Supabase에 저장하는 서버 액션 */
+/** 카페 상세 정보 추가 */
 export async function createCafeDetail(
   cafeId: string,
   scrapedDetail: ISearchCafeDetail,
@@ -13,7 +13,7 @@ export async function createCafeDetail(
   const supabase = await createServerSupabaseClient();
 
   if (!cafeId || typeof cafeId !== 'string' || cafeId.trim() === '') throw new Error('유효한 카페 ID가 필요합니다.');
-  if (!scrapedDetail || typeof scrapedDetail !== 'object') throw new Error('유효한 크롤링 데이터가 필요합니다.');
+  if (!scrapedDetail || typeof scrapedDetail !== 'object') throw new Error('유효한 스크래핑 데이터가 필요합니다.');
   const cafeIdNum = parseInt(cafeId.trim(), 10);
   if (isNaN(cafeIdNum)) throw new Error('카페 ID는 숫자여야 합니다.');
 
@@ -26,7 +26,6 @@ export async function createCafeDetail(
       created_at: new Date().toISOString(),
     };
 
-    // 기존 데이터 확인 및 업데이트/삽입
     const { data: existingData } = await supabase
       .from('cafe_details')
       .select('id')
@@ -35,9 +34,7 @@ export async function createCafeDetail(
 
     let result = false;
 
-    if (existingData) {
-      result = false;
-    } else {
+    if (!existingData) {
       const { error } = await supabase
         .from('cafe_details')
         .insert(insertData)

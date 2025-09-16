@@ -1,26 +1,27 @@
 'use client';
 
+import { EXTERNAL_PATHS } from '@/lib/paths';
 import { ExternalLink, MessageSquareText } from 'lucide-react';
 import React from 'react';
 
-interface IContactCard {
+interface ICheckCard {
     title: string;
     description: string;
     icon: React.ComponentType<{ className?: string }>;
     onClick?: () => void;
 }
 
-const ContactCard = ({ title, description, icon: Icon, onClick }: IContactCard) => {
+const CheckCard = ({ title, description, icon: Icon, onClick }: ICheckCard) => {
     return (
         <button
             type="button"
             aria-label={`${title} 버튼`}
             onClick={onClick}
             className="group relative w-[50%]">
-            {/* Backlight Effect */}
+            {/* 백라이트 */}
             <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-main/20 via-purple-300/20 to-main/20 opacity-0 blur transition duration-1000 group-hover:opacity-100" />
 
-            {/* Main Card */}
+            {/* 카드 내용 */}
             <div className="relative flex h-40 cursor-pointer flex-col justify-center rounded-xl border border-white/20 bg-white/10 p-4 shadow-xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
                 <div className="flex justify-between">
                     <span className="font-bold text-white text-xs sm:text-xl">
@@ -38,37 +39,37 @@ const ContactCard = ({ title, description, icon: Icon, onClick }: IContactCard) 
     );
 };
 
-ContactCard.displayName = 'ContactCard';
+CheckCard.displayName = 'CheckCard';
 
-export default function ContactSection() {
-    const handleGuideLinkClick = () => window.open('https://github.com/window-ook/cafe-masters', '_blank');
-    const handleFeedbackClick = () => window.open('https://windowook.notion.site/2417c0b6007c8001bf37f835b3510261?source=copy_link', '_blank');
+export default function CheckSection() {
+    const handleGuideLinkClick = () => window.open(EXTERNAL_PATHS.USER_MANUAL, '_blank');
+    const handleFeedbackClick = () => window.open(EXTERNAL_PATHS.GOOGLE_FORM_FEEDBACK, '_blank');
 
     return (
         <section className="relative w-full overflow-hidden py-32">
-            {/* Background */}
+            {/* 배경 */}
             <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
 
-            {/* Blur Elements */}
+            {/* 체크 섹션 */}
             <div className="absolute left-1/4 top-10 h-64 w-64 animate-pulse rounded-full bg-main/10 blur-3xl" />
             <div className="absolute bottom-10 right-1/4 h-80 w-80 animate-pulse rounded-full bg-purple-200/10 blur-3xl delay-500" />
 
             <div className="relative">
                 <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-10 transition-all duration-1000 ease-out sm:px-16 md:px-20 lg:px-24 xl:px-32">
                     <span className="bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-2xl sm:text-5xl font-bold text-transparent">
-                        Contact me<span className="text-main">.</span>
+                        Please Check<span className="ml-2 text-main">✓</span>
                     </span>
 
                     <div className="flex justify-between gap-6">
-                        <ContactCard
+                        <CheckCard
                             title="카페 마스터즈 사용법"
-                            description="리드미로 사용법을 소개해드립니다"
+                            description="어떻게 사용하는지 쉽게 소개해드려요"
                             icon={ExternalLink}
                             onClick={handleGuideLinkClick}
                         />
-                        <ContactCard
+                        <CheckCard
                             title="피드백을 들려주세요"
-                            description="커뮤니티에 의견을 남겨주시면 업데이트에 참고하겠습니다"
+                            description="서비스 개선에 큰 힘이 됩니다"
                             icon={MessageSquareText}
                             onClick={handleFeedbackClick}
                         />

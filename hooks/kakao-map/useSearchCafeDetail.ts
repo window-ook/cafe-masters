@@ -8,7 +8,7 @@ import { getCafeDetail, createCafeDetail } from '@/actions/supabase/cafe-details
 
 /**
  * 카페 상세 정보를 다단계 캐시로 조회하는 훅
- * @description React Query 캐시 조회 → 캐시 미스시 Supabase DB 조회 → 데이터 없으면 크롤링 → Supabase 저장
+ * @description React Query 캐시 조회 → 캐시 미스시 Supabase DB 조회 → 데이터 없으면 스크래핑 → Supabase 저장
  * @param cafeId 카페 ID
  * @param isEnabled 쿼리 활성화 여부
  * @returns 카페 상세 정보 데이터
@@ -33,11 +33,11 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
           return convertedData;
         }
 
-        // 2단계: Supabase에 없으면 크롤링
+        // 2단계: Supabase에 없으면 스크래핑
         console.log(`🔍 ${cafeId} DB에 없음`);
         const scrapedData = await fetchSearchCafeDetail(cafeId);
 
-        if (!scrapedData) throw new Error('크롤링된 데이터가 없습니다.');
+        if (!scrapedData) throw new Error('스크래핑된 데이터가 없습니다.');
 
         const isValidData = scrapedData.image && scrapedData.image.trim() !== '';
 
@@ -55,8 +55,6 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
 
         return scrapedData;
       } catch (error) {
-        console.error(`❌ ${cafeId} 상세 정보 조회 실패:`, error);
-
         if (error instanceof Error) throw error;
         throw new Error(`카페 상세 정보 조회 중 알 수 없는 에러가 발생했습니다: ${String(error)}`);
       }

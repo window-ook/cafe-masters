@@ -6,9 +6,9 @@ import {
   scrapCafeData,
   getBaseChromiumArgs,
   getProductionExecutablePath,
-  handleScrappingError,
+  handleScrapingError,
   type BrowserConfig,
-  type ScrappingConfig,
+  type ScrapingConfig,
 } from '@/lib/data/scrapper';
 
 export const runtime = 'nodejs';
@@ -29,7 +29,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       viewport: { width: 800, height: 600 },
     };
 
-    const scrapingConfig: ScrappingConfig = {
+    const scrapingConfig: ScrapingConfig = {
       waitUntil: 'domcontentloaded',
       timeout: 3000,
       selectorTimeout: 1000,
@@ -53,9 +53,9 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     await browser.close();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('카페 상세정보 크롤링 실패:', error);
+    console.error('카페 상세정보 스크래핑 실패:', error);
 
-    const errorResponse = handleScrappingError(error);
+    const errorResponse = handleScrapingError(error);
     return NextResponse.json(
       { error: errorResponse.error, details: errorResponse.details },
       { status: errorResponse.status }

@@ -2,7 +2,7 @@ import FeatureSection from '@/components/landing/FeatureSection';
 import BenefitsSection from '@/components/landing/BenefitsSection';
 import CategorySection from '@/components/landing/CategorySection';
 import CTASection from '@/components/landing/CTASection';
-import ContactSection from '@/components/landing/ContactSection';
+import CheckSection from '@/components/landing/CheckSection';
 import HeroSection from '@/components/landing/HeroSection';
 import GallerySection from '@/components/landing/GallerySection';
 
@@ -15,7 +15,7 @@ export default function Home() {
       <BenefitsSection />
       <CategorySection />
       <CTASection />
-      <ContactSection />
+      <CheckSection />
     </div>
   );
 };
