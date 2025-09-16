@@ -2,18 +2,21 @@ import { ISearchCafeDetail } from '@/types/kakao-map';
 import { INTERNAL_PATHS } from '../paths';
 
 /**
- * 라우트 핸들러로 카페 상세 정보를 가져오는 함수
+ * 스크래핑 라우트 핸들러 요청 함수
+ * @description 로컬에서만 작동하는 스크래핑 라우트 요청
  * @param cafeId 카페 ID
- * @returns 카페 상세정보 또는 null
+ * @returns 카페 상세 정보 또는 null
  */
 export async function fetchSearchCafeDetail(cafeId: string): Promise<ISearchCafeDetail | null> {
   if (!cafeId || typeof cafeId !== 'string' || cafeId.trim() === '') throw new Error('유효한 카페 ID가 필요합니다.');
 
+  const isLocalEnvironment = process.env.NEXT_PUBLIC_BASE_URL === 'http://localhost:3000';
+  if (!isLocalEnvironment) throw new Error('Vercel 환경에서는 스크래핑을 지원하지 않습니다.');
+
   const cleanCafeId = cafeId.trim();
 
   try {
-    const fetchUrl = process.env.NEXT_PUBLIC_BASE_URL === 'http://localhost:3000' ? INTERNAL_PATHS.CAFE_DETAIL_LOCAL : INTERNAL_PATHS.CAFE_DETAIL;
-    const response = await fetch(`${fetchUrl}/${cleanCafeId}`, {
+    const response = await fetch(`${INTERNAL_PATHS.CAFE_DETAIL_LOCAL}/${cleanCafeId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +25,6 @@ export async function fetchSearchCafeDetail(cafeId: string): Promise<ISearchCafe
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-
       throw new Error(errorData.error || errorData.details || `API 요청 실패: ${response.status} ${response.statusText}`);
     }
 
