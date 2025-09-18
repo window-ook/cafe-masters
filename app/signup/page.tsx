@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import SignUpPageClient from '@/components/signup/SignUpPageClient';
+import SignUpPageClient from '@/components/signup/SignUpRequestClient';
 
 export const metadata: Metadata = {
   title: '회원가입 : Cafe Masters',

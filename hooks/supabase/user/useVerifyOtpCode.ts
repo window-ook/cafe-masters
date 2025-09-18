@@ -1,9 +1,13 @@
+'use client';
+
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { getAuthErrorMessage } from '@/utils/shared/authError';
 
 export function useVerifyOtpCode() {
   const supabase = createBrowserSupabaseClient();
+  const router = useRouter();
 
   const verifyOtpCode = useMutation({
     mutationFn: async ({ email, otp }: { email: string; otp: string }) => {
@@ -14,6 +18,11 @@ export function useVerifyOtpCode() {
       });
 
       if (error) throw error;
+    },
+
+    onSuccess: async () => {
+      sessionStorage.removeItem('signup_email');
+      router.replace('/main');
     },
 
     onError: error => {

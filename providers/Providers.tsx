@@ -27,6 +27,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             refetchOnWindowFocus: false,
             refetchOnReconnect: 'always',
           },
+          mutations: {
+            retry: false,
+          },
         },
       }),
   );
@@ -49,8 +52,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             <SideBar />
           </ErrorBoundaryWrapper>
         )}
+
         {children}
+
         {!shouldHideComponents && <KakaoMap />}
+
         <ToastContainer
           position="top-center"
           autoClose={2000}
@@ -59,6 +65,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           theme="light"
           limit={1}
         />
+
         {process.env.NODE_ENV === 'development' && (
           <ReactQueryDevtools
             initialIsOpen={false}

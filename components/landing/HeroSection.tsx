@@ -1,7 +1,8 @@
 import { createServerSupabaseClient } from '@/utils/supabase/server';
 import { Coffee } from 'lucide-react';
 import Link from 'next/link';
-import SampleCards from './SampleCards';
+import SampleCards from '@/components/landing/SampleCards';
+import MainThemeBackground from '@/components/shared/MainThemeBackground';
 
 async function getCollectionCounts() {
     const supabase = await createServerSupabaseClient();
@@ -19,13 +20,8 @@ export default async function HeroSection() {
     const collectionCafesCounts = await getCollectionCounts();
     return (
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-            {/* 그레이디언트 배경 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-main-900 to-green-900" />
-
-            {/* 움직이는 블러 */}
-            <div className="absolute -left-20 top-20 h-96 w-96 animate-pulse rounded-full bg-main/30 blur-3xl" />
-            <div className="absolute -right-20 bottom-20 h-96 w-96 animate-pulse rounded-full bg-purple-200/50 blur-3xl delay-1000" />
-            <div className="absolute left-1/2 top-1/3 h-64 w-64 animate-pulse rounded-full bg-main-light/20 blur-3xl delay-500" />
+            {/* 배경 */}
+            <MainThemeBackground />
 
             {/* 컨텐츠 */}
             <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">

@@ -1,8 +1,11 @@
+'use client';
+
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useFilterStore } from '@/stores';
 import { useMutation } from '@tanstack/react-query';
 import { getAuthErrorMessage } from '@/utils/shared/authError';
+import { toast } from 'react-toastify';
 
 export function useSignIn() {
   const supabase = createBrowserSupabaseClient();
@@ -12,12 +15,16 @@ export function useSignIn() {
     mutationFn: async ({ email, password }: { email: string; password: string }) => {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-      if (error) throw error;
-      return data.session;
+      return { session: data.session, error };
     },
 
-    onSuccess: async session => {
-      // 키워드 초기화 (AuthProvider에서 user store는 자동 동기화됨)
+    onSuccess: async result => {
+      if (result.error) {
+        const errorMessage = getAuthErrorMessage(result.error);
+        toast.error(errorMessage);
+        return;
+      }
+
       useFilterStore.setState({ keyword: '' });
 
       // 세션 새로고침
@@ -27,7 +34,7 @@ export function useSignIn() {
 
     onError: error => {
       const errorMessage = getAuthErrorMessage(error);
-      alert(errorMessage);
+      toast.error(errorMessage);
     },
   });
 
