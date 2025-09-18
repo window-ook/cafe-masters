@@ -272,7 +272,7 @@ body {
 
   /* 로그인 폼 카드 */
   .auth-form-layout {
-    @apply z-10 p-5 rounded-xl shadow-main-shadow bg-white;
+    @apply z-10 p-5 rounded-xl shadow-md shadow-main-shadow bg-white;
   }
 
   /* 로그인 폼 타이틀 */

@@ -69,7 +69,7 @@ export default function FeatureSection() {
             {/* 배경 */}
             <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100" />
 
-            {/* 피쳐 섹션 */}
+            {/* 블러 */}
             <div className="absolute left-10 top-10 h-64 w-64 animate-pulse rounded-full bg-main/10 blur-3xl" />
             <div className="absolute bottom-10 right-10 h-96 w-96 animate-pulse rounded-full bg-purple-200/30 blur-3xl delay-1000" />
 
