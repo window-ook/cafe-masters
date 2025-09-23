@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function CollectionPage() {
-  return;
+  return <div>Collection Page Content</div>;
 }

@@ -6,6 +6,7 @@ import { IMAGE_PATHS } from '@/lib/paths';
 interface IInputField extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string;
     labelSize?: 'text-sm' | 'text-base';
+    dataTestId?: string;
     isError?: string;
     errorResponseMessage?: string | null;
     isPasswordVisible?: boolean;
@@ -31,7 +32,7 @@ interface IInputField extends React.InputHTMLAttributes<HTMLInputElement> {
  * @description 소수점 입력시 스핀버튼 숨김 적용됨, XSS 보호 기능 내장
  */
 const InputField = React.forwardRef<HTMLInputElement, IInputField>(
-    ({ label, labelSize = 'text-sm', id, type, placeholder, isError, errorResponseMessage, disabled, isPasswordVisible, customClassName, handlePasswordVisibility, enableXSSProtection = true, onChange, ...props }, ref) => {
+    ({ label, labelSize = 'text-sm', dataTestId, id, type, placeholder, isError, errorResponseMessage, disabled, isPasswordVisible, customClassName, handlePasswordVisibility, enableXSSProtection = true, onChange, ...props }, ref) => {
 
         // XSS 보호가 활성화된 경우의 onChange 핸들러
         const handleSecureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +60,7 @@ const InputField = React.forwardRef<HTMLInputElement, IInputField>(
                         ref={ref}
                         type={label === '비밀번호' ? (isPasswordVisible ? 'text' : 'password') : type}
                         id={id}
+                        data-testid={dataTestId}
                         placeholder={placeholder}
                         aria-invalid={disabled ? (isError ? 'true' : 'false') : undefined}
                         className={`${customClassName} block w-full p-2.5 rounded-lg bg-gray-50 text-sm border-1 focus:outline-none ${isError || errorResponseMessage ? 'border-red-600' : 'focus:border-main'} [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}

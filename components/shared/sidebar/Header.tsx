@@ -48,11 +48,12 @@ export default function Header() {
     >
       <div className="flex justify-between items-center mb-2">
         <Tooltip
-          comment="메인페이지"
+          comment="메인으로"
           component={
             <Link
               href="/main"
-              aria-label="홈페이지 이동 버튼"
+              aria-label="메인페이지 이동 버튼"
+              data-testid="go-to-main"
               className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-150"
               onClick={handleReset}
             >
@@ -73,6 +74,7 @@ export default function Header() {
         <ThemeToggleButton />
       </div>
 
+      {/* 검색 바 - 입력창, 버튼 */}
       <Search />
 
       {paths.isSearch && (

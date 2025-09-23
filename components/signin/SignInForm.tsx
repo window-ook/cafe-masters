@@ -59,6 +59,7 @@ export default function SignInForm() {
                   id="email"
                   type="email"
                   label="이메일"
+                  data-testid="email-input"
                   placeholder="아이디@주소"
                   disabled={isSubmitting || isPending}
                   isError={errors.email?.message}
@@ -75,6 +76,7 @@ export default function SignInForm() {
                   id="password"
                   type="password"
                   label="비밀번호"
+                  data-testid="password-input"
                   placeholder="********"
                   disabled={isSubmitting || isPending}
                   isError={errors.password?.message}
@@ -87,12 +89,14 @@ export default function SignInForm() {
             <Button
               type="submit"
               ariaLabel="로그인 버튼"
+              dataTestId="signin-button"
               disabled={isSubmitting || isPending}
               text='접속하기'
             />
             <Button
               type="button"
               aria-label="비밀번호 재설정 폼 열기 버튼"
+              dataTestId="open-resetpassword-form-button"
               onClick={() => setShowResetForm(true)}
               customClassName='bg-blue-500 hover:bg-blue-600'
               text='비밀번호 재설정'
@@ -104,11 +108,13 @@ export default function SignInForm() {
               customClassName="bg-yellow-500 hover:bg-yellow-600"
               text='카카오 로그인'
             />
+
             <p className="auth-form-mention">
               계정이 없으신가요?{' '}
               <Link
                 href="/signup"
-                aria-label="회원가입 페이지로 이동 버튼"
+                aria-label="회원가입 페이지 이동 버튼"
+                data-testid="go-to-signup-from-signIn"
                 className="cursor-pointer"
               >
                 <span className="font-bold text-main">

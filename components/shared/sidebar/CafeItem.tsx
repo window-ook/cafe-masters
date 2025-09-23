@@ -1,10 +1,11 @@
 'use client';
 
 import { useUIStore } from '@/stores';
-import ImageWithFallback from '@/components/shared/ImageWithFallback';
 import { IMAGE_PATHS } from '@/lib/paths';
+import ImageWithFallback from '@/components/shared/ImageWithFallback';
 
 interface ICafeItem {
+  dataTestId: string;
   name: string | undefined;
   address: string;
   phone_number: string | null | undefined;
@@ -13,6 +14,7 @@ interface ICafeItem {
 }
 
 export default function CafeItem({
+  dataTestId,
   name,
   address,
   phone_number,
@@ -28,6 +30,7 @@ export default function CafeItem({
       <button
         type="button"
         aria-label="카페 상세 정보 열기 버튼"
+        data-testid={dataTestId}
         onClick={onClickAction}
         className="w-full h-full flex justify-between items-center gap-2 text-left cursor-pointer"
       >

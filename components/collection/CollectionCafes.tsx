@@ -14,6 +14,7 @@ export default function CollectionCafes() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const userId = useUserStore(state => state.userId);
 
+
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const {

@@ -10,6 +10,7 @@ import { BookMarked, BookImage, SearchCode, ThumbsUp, Info } from 'lucide-react'
 import Link from 'next/link';
 
 interface ISideBarTab {
+  testId?: string;
   icon: ReactNode;
   title: string;
   path: string;
@@ -17,7 +18,7 @@ interface ISideBarTab {
   isDarkTheme: boolean;
 }
 
-const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => {
+const SideBarTab = ({ testId = '', icon, title, path, isDarkTheme, counts }: ISideBarTab) => {
   const closeSlidingDrawer = useUIStore(state => state.closeSlidingDrawer);
 
   const handleNavClick = () => closeSlidingDrawer();
@@ -27,6 +28,7 @@ const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => 
       {path !== EXTERNAL_PATHS.GOOGLE_FORM_BUG_REPORT ?
         <Link
           href={path}
+          data-testid={testId}
           onClick={handleNavClick}
           className={`group w-full px-3 py-4 rounded-lg ${isDarkTheme ? 'hover:bg-main' : 'hover:bg-white'} flex justify-between cursor-pointer hover:shadow-md transition duration-150 ease-in`}
         >
@@ -50,7 +52,7 @@ const SideBarTab = ({ icon, title, path, isDarkTheme, counts }: ISideBarTab) => 
           <div className="flex items-center gap-2">
             <p>{icon}</p>
             <p className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}>
-              버그 제보하기
+              {title}
             </p>
           </div>
         </button>
@@ -71,6 +73,7 @@ export default function TabsForLink() {
   return (
     <ul className="flex-1 flex flex-col">
       <SideBarTab
+        testId='go-to-search-by-tab'
         icon={<SearchCode className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} text-3xl`} />}
         title={'검색 결과'}
         path={'/search'}
@@ -78,6 +81,7 @@ export default function TabsForLink() {
         counts={searchResult.length}
       />
       <SideBarTab
+        testId='go-to-collection-by-tab'
         icon={<BookImage className={`${isDarkTheme ? 'text-main-shadow' : `text-main`} text-3xl`} />}
         title={'내가 수집한 카페'}
         path={'/collection'}
@@ -85,6 +89,7 @@ export default function TabsForLink() {
         counts={collectionCounts!}
       />
       <SideBarTab
+        testId='go-to-bookmark-by-tab'
         icon={<BookMarked className={`text-yellow-500 text-3xl`} />}
         title={'북마크한 카페'}
         path={'/bookmark'}
@@ -92,6 +97,7 @@ export default function TabsForLink() {
         counts={bookmarkCounts!}
       />
       <SideBarTab
+        testId='go-to-recommendation-by-tab'
         icon={<ThumbsUp className={`text-recommendation text-3xl`} />}
         title={'개발자 PICK 추천 카페'}
         path={'/recommendation'}
@@ -100,7 +106,7 @@ export default function TabsForLink() {
       />
       <SideBarTab
         icon={<Info className={`text-gray-500 text-3xl`} />}
-        title={'도움말'}
+        title={'버그 제보'}
         path={EXTERNAL_PATHS.GOOGLE_FORM_BUG_REPORT}
         isDarkTheme={isDarkTheme}
       />

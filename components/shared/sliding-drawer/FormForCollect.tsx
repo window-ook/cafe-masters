@@ -70,7 +70,7 @@ export default function FormForCollect() {
         // 성공 시 폼 닫기 및 편집 상태 초기화
         clearEditingCafe();
         setIsCollectFormOpen(false);
-        toast.success('카페 정보가 성공적으로 수정되었습니다!');
+        toast.success('카페 정보 수정을 완료했어요!');
 
       } catch (error) {
         console.error('카페 수정 실패:', error);
@@ -107,10 +107,10 @@ export default function FormForCollect() {
 
         createCollectionCafe(collectionData);
         setIsCollectFormOpen(false);
-        toast.success('카페가 성공적으로 수집되었습니다!');
+        toast.success('카페를 수집했어요!');
       } catch (error) {
-        console.error('카페 수집 실패:', error);
-        toast.error(error instanceof Error ? error.message : '카페 수집에 실패했습니다.');
+        console.error('수집 실패:', error);
+        toast.error(error instanceof Error ? error.message : '수집에 실패했습니다.');
       }
     }
   };
@@ -141,7 +141,8 @@ export default function FormForCollect() {
             control={control}
             render={({ field }) => (
               <RatingsSelector
-                aria-label="카페의 별점을 매기는 라디오 그룹"
+                ariaLabel="카페의 별점을 매기는 라디오 그룹"
+                dataTestId="ratings-selector"
                 value={field.value}
                 onChange={field.onChange}
               />
@@ -175,6 +176,7 @@ export default function FormForCollect() {
             id="comment"
             type="text"
             label="코멘트"
+            dataTestId='comment-input'
             placeholder="*코멘트"
             disabled={isSubmitting}
             isError={errors.comment?.message}
@@ -192,6 +194,7 @@ export default function FormForCollect() {
             id="eaten_menus"
             type="text"
             label="먹은 메뉴"
+            dataTestId='eaten-menus-input'
             placeholder="*먹은 메뉴"
             disabled={isSubmitting}
             isError={errors.eaten_menus?.message}
@@ -237,6 +240,7 @@ export default function FormForCollect() {
       <Button
         type="submit"
         aria-label={isEditMode ? "카드 수정 완료 버튼" : "카드 수집 완료 버튼"}
+        dataTestId="submit-collect-button"
         disabled={isSubmitting}
         text={isSubmitting ? (isEditMode ? '수정 중...' : '저장 중...') : '완료'}
       />

@@ -13,10 +13,10 @@ import FormForRecommend from '@/components/shared/sliding-drawer/FormForRecommen
 
 /** 상세 정보, 수집하기, 추천하기 폼을 표시하는 Shell Container */
 export default function SlidingDrawer() {
+    const currentCafeId = useCurrentCafeStore(state => state.currentCafeId);
     const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
     const isDarkTheme = useUIStore(state => state.isDarkTheme);
     const isExtend = useUIStore(state => state.isExtend);
-    const currentCafeId = useCurrentCafeStore(state => state.currentCafeId);
     const isCollectFormOpen = useUIStore(state => state.isCollectFormOpen);
     const closeSlidingDrawer = useUIStore(state => state.closeSlidingDrawer);
 
@@ -62,5 +62,5 @@ export default function SlidingDrawer() {
         );
     };
 
-    return <div role="dialog" aria-modal="true" className={SLIDING_DRAWER_STYLE}>{renderContent()}</div>;
+    return <div role="dialog" data-testid="sliding-drawer" aria-modal="true" className={SLIDING_DRAWER_STYLE}>{renderContent()}</div>;
 }

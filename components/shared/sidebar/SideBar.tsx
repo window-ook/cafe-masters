@@ -38,6 +38,7 @@ export default function SideBar() {
           )}
 
           {paths.isSearch && (<div className="flex-1 min-h-0"><SearchedCafes /></div>)}
+
           {paths.isRecommendation && (<div className="flex-1 min-h-0"><RecommendationCafes /></div>)}
 
           {paths.isCollection && (

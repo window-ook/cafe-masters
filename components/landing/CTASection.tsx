@@ -42,6 +42,7 @@ export default function CTASection() {
                         {/* 로그인/회원가입 Link */}
                         <Link
                             href="/signin"
+                            data-testid="go-to-signin-from-landing"
                             className="group/cafe w-32 sm:w-40 px-6 sm:px-16 py-4 sm:text-xl font-bold text-main transition-all duration-300 hover:bg-gray-300 hover:text-main flex items-center justify-center text-nowrap"
                         >
                             로그인

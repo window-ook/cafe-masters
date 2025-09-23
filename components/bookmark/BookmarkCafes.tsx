@@ -138,6 +138,7 @@ export default function BookmarkCafes() {
           {paginatedBookmarkCafes.map((cafe: ISupabaseBookmarkCafe) => (
             <CafeItem
               key={cafe.id}
+              dataTestId={`cafe-${cafe.id}`}
               name={cafe.name}
               address={cafe.address}
               phone_number={cafe.phone_number}

@@ -66,6 +66,7 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
   return (
     <button
       type="button"
+      data-testid="bookmark-button"
       aria-label="북마크 토글 버튼"
       onClick={handleBookmarkToggle}
       className={`cursor-pointer ${className}`}

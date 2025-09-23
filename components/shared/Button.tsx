@@ -13,6 +13,7 @@ interface IButton {
     customClassName?: string;
     onClick?: () => void | Promise<void> | Window | null;
     children?: React.ReactNode;
+    dataTestId?: string;
 }
 
 /**
@@ -31,6 +32,7 @@ export default function Button({
     customClassName = '',
     onClick,
     children,
+    dataTestId,
 }: IButton) {
     const getVariantClasses = (variant: ButtonVariant): string => {
         const hasCustomHover = customClassName.includes('hover:');
@@ -57,6 +59,7 @@ export default function Button({
         <button
             type={type}
             aria-label={ariaLabel}
+            data-testid={dataTestId}
             disabled={isClickDisabled}
             onClick={onClick}
             className={finalClassName}

@@ -134,6 +134,7 @@ export default function RecommendationCafes() {
           {paginatedRecommend.map((cafe: ISupabaseRecommendationCafe) => (
             <CafeItem
               key={cafe.id}
+              dataTestId={`cafe-${cafe.id}`}
               name={cafe.name}
               address={cafe.address}
               phone_number={cafe.phone_number}

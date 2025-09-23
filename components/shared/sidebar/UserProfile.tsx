@@ -3,9 +3,9 @@
 import { useEffect } from 'react';
 import { useCollectionCounts } from '@/hooks/supabase/collection';
 import { useUIStore, useUserStore } from '@/stores';
-import TierBadge from '@/components/shared/sidebar/TierBadge';
-import Image from 'next/image';
 import { IMAGE_PATHS } from '@/lib/paths';
+import Image from 'next/image';
+import TierBadge from '@/components/shared/sidebar/TierBadge';
 
 export default function UserProfile() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);

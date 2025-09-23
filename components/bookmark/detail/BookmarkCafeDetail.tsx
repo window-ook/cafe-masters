@@ -107,6 +107,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
         <div className='flex items-center gap-2'>
           <button
             type='button'
+            data-testid="bookmark-cancel-button"
             onClick={() => handleBookmarkDeletion()}
             className='cursor-pointer'
           >

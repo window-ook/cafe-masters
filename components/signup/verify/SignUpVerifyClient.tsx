@@ -73,6 +73,7 @@ export default function SignUpVerifyClient() {
                 id="otp"
                 name="otp"
                 type="text"
+                data-testid="verification-code-input"
                 value={otpValue}
                 onChange={(e) => setOtpValue(e.target.value)}
                 placeholder="6자리 인증 코드를 입력하세요"
@@ -88,9 +89,10 @@ export default function SignUpVerifyClient() {
 
             <Button
               type="submit"
-              aria-label="인증 코드 확인 버튼"
+              aria-label="인증 코드 제출 버튼"
+              dataTestId="submit-email-verification-code-button"
               disabled={verifyOtpPending || otpValue.length !== 6}
-              text='인증 코드 확인'
+              text='인증 완료'
               customClassName="w-full"
             />
 
@@ -100,7 +102,7 @@ export default function SignUpVerifyClient() {
                 aria-label="회원가입 페이지로 돌아가기"
                 className="cursor-pointer"
               >
-                <span className="font-bold text-main">다시 가입하기</span>
+                <span className="font-bold text-main">처음으로 돌아가기</span>
               </Link>
             </p>
           </form>

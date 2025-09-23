@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import SignUpPageClient from '@/components/signup/SignUpRequestClient';
+import SignUpClient from '@/components/signup/SignUpClient';
 
 export const metadata: Metadata = {
   title: '회원가입 : Cafe Masters',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function SignUp() {
-  return <SignUpPageClient />;
+  return <SignUpClient />;
 }

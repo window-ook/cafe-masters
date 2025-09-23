@@ -83,6 +83,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
       {/* 로그인 & 수집하지 않은 상태 */}
       {userId && !isCollected &&
         <Button
+          dataTestId="collect-button"
           onClick={() => {
             setTargetCafeForCollect({
               id: Number(searchedDetail.id),

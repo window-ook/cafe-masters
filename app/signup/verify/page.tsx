@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import SignUpVerifyClient from '@/components/signup/SignUpVerifyClient';
+import SignUpVerifyClient from '@/components/signup/verify/SignUpVerifyClient';
 
 export const metadata: Metadata = {
   title: '인증 코드 입력 : Cafe Masters',

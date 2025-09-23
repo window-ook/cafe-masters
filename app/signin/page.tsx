@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import SignInPageClient from '@/components/signin/SignInPageClient';
+import SignInClient from '@/components/signin/SignInClient';
 
 export const metadata: Metadata = {
   title: '로그인 : Cafe Masters',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function SignIn() {
-  return <SignInPageClient />;
+  return <SignInClient />;
 }

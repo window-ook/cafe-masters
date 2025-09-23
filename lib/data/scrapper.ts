@@ -2,8 +2,7 @@ import { Browser, BrowserContext, Page, Route } from 'playwright-core';
 import { EXTERNAL_PATHS } from '@/lib/paths';
 import chromiumPkg from '@sparticuz/chromium';
 
-/**
- * @description 카페 스크래핑 결과를 나타내는 인터페이스
+/** 카페 스크래핑 결과를 나타내는 인터페이스
  * @property image - 카페 대표 이미지 URL (없을 경우 null)
  * @property extra_images - 추가 카페 이미지 URL 배열 (최대 2개)
  * @property opening_time - 카페 운영 시간 정보
@@ -14,8 +13,7 @@ export interface CafeScrapingResult {
   opening_time: string;
 }
 
-/**
- * @description 브라우저 설정을 위한 인터페이스
+/** 브라우저 설정을 위한 인터페이스
  * @property viewport - 브라우저 뷰포트 크기 설정 (너비, 높이)
  * @property args - 브라우저 실행 시 전달할 추가 명령행 인수 (선택적)
  * @property additionalOptions - 브라우저 컨텍스트 추가 옵션 설정 (선택적)
@@ -30,8 +28,7 @@ export interface BrowserConfig {
   };
 }
 
-/**
- * @description 스크래핑 동작 설정을 위한 인터페이스
+/** 스크래핑 동작 설정을 위한 인터페이스
  * @property waitUntil - 페이지 로드 완료 조건 ('load' | 'domcontentloaded' | 'networkidle' | 'commit')
  * @property timeout - 페이지 로드 최대 대기 시간 (밀리초)
  * @property selectorTimeout - 특정 선택자 대기 최대 시간 (선택적, 밀리초)
@@ -51,8 +48,7 @@ export interface ScrapingConfig {
   };
 }
 
-/**
- * @description 기본 브라우저 컨텍스트를 생성하는 함수
+/** 기본 브라우저 컨텍스트를 생성
  * @param browser - Playwright Browser 인스턴스
  * @param config - 브라우저 설정 객체
  * @returns Promise<BrowserContext> - 생성된 브라우저 컨텍스트
@@ -64,34 +60,8 @@ export async function createBrowserContext(browser: Browser, config: BrowserConf
   });
 }
 
-/**
- * @description Vercel 서버리스 환경에 최적화된 브라우저 컨텍스트를 생성하는 함수
- * @param browser - Playwright Browser 인스턴스
- * @param config - 브라우저 설정 객체
- * @returns Promise<BrowserContext> - Vercel 환경에 최적화된 브라우저 컨텍스트
- */
-export async function createVercelOptimizedBrowserContext(browser: Browser, config: BrowserConfig): Promise<BrowserContext> {
-  return await browser.newContext({
-    viewport: config.viewport,
-    ignoreHTTPSErrors: true,
-    bypassCSP: true,
-    javaScriptEnabled: true,
-    acceptDownloads: false,
-    colorScheme: 'no-preference',
-    reducedMotion: 'reduce',
-    extraHTTPHeaders: {
-      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-      'Accept-Language': 'ko-KR,ko;q=0.9,en;q=0.8',
-      'Cache-Control': 'no-cache',
-      'Pragma': 'no-cache',
-    },
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    ...config.additionalOptions,
-  });
-}
 
-/**
- * @description 페이지 리소스 로딩을 선택적으로 차단하여 스크래핑 성능을 최적화하는 함수
+/** 페이지 리소스 로딩을 선택적으로 차단하여 스크래핑 성능을 최적화
  * @param page - Playwright Page 인스턴스
  * @param config - 리소스 차단 설정 (선택적)
  * @returns Promise<void> - 비동기 작업 완료
@@ -127,8 +97,7 @@ export async function setupResourceBlocking(
   });
 }
 
-/**
- * @description 카카오맵에서 특정 카페의 상세 정보를 스크래핑하는 함수
+/** 카카오맵에서 특정 카페의 상세 정보를 스크래핑
  * @param page - Playwright Page 인스턴스
  * @param cafeId - 카카오맵 카페 ID
  * @param config - 스크래핑 설정 객체
@@ -148,51 +117,47 @@ export async function scrapCafeData(
     const waitPromises: Promise<unknown>[] = [];
 
     if (config.selectorTimeout) {
-      const isProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
-      const optimizedTimeout = isProduction
-        ? Math.min(config.selectorTimeout, 8000)
-        : Math.min(config.selectorTimeout, 3000);
-
       waitPromises.push(
         page
-          .waitForSelector('.img-thumb', { timeout: optimizedTimeout })
-          .catch(() => console.warn(`카페 ${cafeId}: 이미지 선택자 대기 시간 초과 (${optimizedTimeout}ms)`))
+          .waitForSelector('.img-thumb', { timeout: config.selectorTimeout })
+          .catch(() => console.warn(`${cafeId}: 이미지 선택자 대기 시간 초과 (${config.selectorTimeout}ms)`))
       );
     }
 
-    if (config.minWaitTime) {
-      const isProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
-      const optimizedMinWait = isProduction
-        ? Math.min(config.minWaitTime, 2000)
-        : Math.min(config.minWaitTime, 1000);
-
-      waitPromises.push(page.waitForTimeout(optimizedMinWait));
-    }
-
+    if (config.minWaitTime) waitPromises.push(page.waitForTimeout(config.minWaitTime));
     if (waitPromises.length > 0) await Promise.race(waitPromises);
   }
 
-  const isProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
-
-  const data = await page.evaluate((skipExtraData) => {
+  const data = await page.evaluate(() => {
     const toAbsoluteUrl = (src: string | null) => src && !src.startsWith('http') ? `https:${src}` : src;
-
     const imgElement = document.querySelector('.img-thumb.img_cfit');
     const photo = toAbsoluteUrl(imgElement?.getAttribute('src') || null);
 
     let photoList: (string | null)[] = [];
     let openingHours = '';
 
-    // 로컬에서 추가 데이터 스크래핑
-    if (!skipExtraData) {
+    // 추가 이미지, 운영시간 추출
+    {
       const photos = Array.from(document.querySelectorAll('.col.col_depth1 .col.col_depth2 .img-thumb.img_cfit'));
       photoList = photos
         .slice(0, 2)
         .map(el => toAbsoluteUrl(el.getAttribute('src')));
 
-      const timeElement = document.querySelector('.line_fold .txt_detail');
-      openingHours = timeElement ? timeElement.textContent?.trim().replace(/\s+/g, ' ') || '' : '';
-      openingHours = openingHours.replace(/^매일\s+/, '').trim();
+      // 여러 .line_fold에서 유효한 시간 형식을 찾기
+      const timeElements = document.querySelectorAll('.line_fold .txt_detail');
+      openingHours = '';
+
+      for (const element of timeElements) {
+        const timeText = element.textContent?.trim().replace(/\s+/g, ' ') || '';
+
+        // 유효한 운영시간 검증
+        if (timeText && /\d{1,2}:\d{2}/.test(timeText) && !timeText.includes('휴무')) {
+          openingHours = timeText.replace(/^매일\s+/, '').trim();
+          break;
+        }
+      }
+
+      if (!openingHours) openingHours = '운영시간 정보 없음';
     }
 
     return {
@@ -200,9 +165,9 @@ export async function scrapCafeData(
       extra_images: photoList,
       opening_time: openingHours,
     };
-  }, isProduction);
+  });
 
-  console.log(`✅ 카페 ${cafeId} 조회 완료 ${isProduction ? '(Vercel 최적화)' : '(전체 데이터)'}:`, {
+  console.log(`✅ ${cafeId} 조회 완료:`, {
     image: !!data.image,
     extraImages: data.extra_images.length,
     hasOpeningTime: !!data.opening_time,
@@ -211,8 +176,7 @@ export async function scrapCafeData(
   return data;
 }
 
-/**
- * @description 기본 Chromium 브라우저 실행 인수를 반환하는 함수
+/** 기본 Chromium 브라우저 실행 인수를 반환
  * @returns string[] - Chromium 실행에 필요한 기본 명령행 인수 배열
  */
 export function getBaseChromiumArgs(): string[] {
@@ -226,65 +190,7 @@ export function getBaseChromiumArgs(): string[] {
   ];
 }
 
-/**
- * @description Vercel 서버리스 환경에 최적화된 Chromium 브라우저 실행 인수를 반환하는 함수
- * @returns string[] - Vercel 환경에서 메모리 및 성능 최적화된 Chromium 실행 인수 배열
- */
-export function getVercelOptimizedChromiumArgs(): string[] {
-  return [
-    ...chromiumPkg.args,
-    '--no-sandbox',
-    '--disable-dev-shm-usage',
-    '--disable-background-timer-throttling',
-    '--disable-renderer-backgrounding',
-    '--disable-backgrounding-occluded-windows',
-    '--disable-web-security',
-    '--disable-features=VizDisplayCompositor,TranslateUI,BlinkGenPropertyTrees',
-    '--disable-extensions',
-    '--disable-plugins',
-    '--disable-default-apps',
-    '--disable-sync',
-    '--disable-translate',
-    '--hide-scrollbars',
-    '--mute-audio',
-    '--no-first-run',
-    '--disable-ipc-flooding-protection',
-    '--disable-component-extensions-with-background-pages',
-    '--disable-background-networking',
-    '--disable-component-update',
-    '--disable-client-side-phishing-detection',
-    '--disable-hang-monitor',
-    '--disable-popup-blocking',
-    '--disable-prompt-on-repost',
-    '--disable-domain-reliability',
-    '--autoplay-policy=user-gesture-required',
-    '--disable-images',
-    '--disable-gpu',
-    '--disable-software-rasterizer',
-    '--disable-background-media-pause',
-    '--disable-renderer-accessibility',
-    '--disable-client-side-phishing-detection',
-    '--disable-features=AudioServiceOutOfProcess',
-    '--force-color-profile=srgb',
-    '--disable-accelerated-2d-canvas',
-    '--disable-accelerated-jpeg-decoding',
-    '--disable-accelerated-mjpeg-decode',
-    '--disable-accelerated-video-decode',
-    '--disable-app-list-dismiss-on-blur',
-    '--disable-accelerated-video-encode',
-    '--disable-blink-features=AutomationControlled',
-    '--disable-dev-tools',
-    '--disable-logging',
-    '--disable-web-sockets',
-    '--no-zygote',
-    '--single-process',
-    '--aggressive-cache-discard',
-    '--memory-pressure-off',
-  ];
-}
-
-/**
- * @description 프로덕션 환경에서 Chromium 실행 파일 경로를 반환하는 함수
+/** 프로덕션 환경에서 Chromium 실행 파일 경로를 반환
  * @returns Promise<string> | undefined - 프로덕션 환경일 때 Chromium 실행 파일 경로, 개발 환경일 때 undefined
  */
 export function getProductionExecutablePath(): Promise<string> | undefined {
@@ -293,18 +199,15 @@ export function getProductionExecutablePath(): Promise<string> | undefined {
     : undefined;
 }
 
-/**
- * @description 환경에 따라 최적화된 스크래핑 설정을 반환하는 함수
- * @returns ScrapingConfig - Vercel 프로덕션 환경과 로컬 환경에 맞게 최적화된 스크래핑 설정
+/** 로컬 환경에 최적화된 스크래핑 설정을 반환
+ * @returns ScrapingConfig - 로컬 환경에 맞게 최적화된 스크래핑 설정
  */
 export function getOptimizedScrapingConfig(): ScrapingConfig {
-  const isProduction = process.env.NODE_ENV === 'production' && process.env.VERCEL;
-
   return {
     waitUntil: 'networkidle',
-    timeout: isProduction ? 15000 : 10000,
-    selectorTimeout: isProduction ? 8000 : 3000,
-    minWaitTime: isProduction ? 2000 : 500,
+    timeout: 10000,
+    selectorTimeout: 3000,
+    minWaitTime: 500,
     resourceBlocking: {
       blockImages: false,
       blockFonts: true,
@@ -313,8 +216,7 @@ export function getOptimizedScrapingConfig(): ScrapingConfig {
   };
 }
 
-/**
- * @description 스크래핑 중 발생한 에러를 분석하여 적절한 에러 메시지를 반환하는 함수
+/** 스크래핑 중 발생한 에러를 분석하여 적절한 에러 메시지를 반환
  * @param error - 발생한 에러 객체 (unknown 타입)
  * @returns { error: string; details: string; status: number } - 사용자 친화적 에러 메시지와 HTTP 상태 코드
  */

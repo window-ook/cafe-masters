@@ -39,6 +39,7 @@ export default function SearchCafes() {
           {paginatedResult.map((cafe: IKakaoSearchResult) => (
             <CafeItem
               key={cafe.id}
+              dataTestId={`cafe-${cafe.id}`}
               name={cafe.place_name}
               address={cafe.road_address_name}
               phone_number={cafe.phone}

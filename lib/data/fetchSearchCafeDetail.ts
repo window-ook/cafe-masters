@@ -1,5 +1,5 @@
 import { ISearchCafeDetail } from '@/types/kakao-map';
-import { INTERNAL_PATHS } from '../paths';
+import { INTERNAL_PATHS } from '@/lib/paths';
 
 /**
  * 스크래핑 라우트 핸들러 요청 함수

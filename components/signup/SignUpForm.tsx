@@ -53,6 +53,7 @@ export default function SignUpEmailForm() {
             id="email"
             type="email"
             label="이메일"
+            data-testid="email-input"
             placeholder="아이디@주소"
             disabled={signUpForm.formState.isSubmitting || signUpPending}
             isError={signUpForm.formState.errors.email?.message}
@@ -69,6 +70,7 @@ export default function SignUpEmailForm() {
             id="password"
             type="password"
             label="비밀번호"
+            data-testid="password-input"
             placeholder="********"
             disabled={signUpForm.formState.isSubmitting || signUpPending}
             isError={signUpForm.formState.errors.password?.message}
@@ -79,25 +81,29 @@ export default function SignUpEmailForm() {
       />
 
       <p>*비밀번호는 최소 6자 이상, 영문과 숫자를 포함해야 합니다.</p>
+
       <Button
         type="submit"
         aria-label="회원가입 요청 버튼"
-        customClassName='bg-main'
+        dataTestId="submit-request-signup-button"
         disabled={signUpForm.formState.isSubmitting || signUpPending}
+        customClassName='bg-main'
         text='가입하기'
       />
       <Button
         type="button"
         aria-label="카카오 로그인 버튼"
-        customClassName='bg-yellow-500 hover:bg-yellow-600'
         onClick={() => signinWithKakao()}
+        customClassName='bg-yellow-500 hover:bg-yellow-600'
         text='카카오 로그인'
       />
+
       <p className="auth-form-mention">
         이미 계정이 있으신가요?{' '}
         <Link
           href="/signin"
-          aria-label="로그인 페이지로 이동 버튼"
+          aria-label="로그인 페이지 이동 버튼"
+          data-testid="go-to-signin-from-signUp"
           className="cursor-pointer"
         >
           <span className="font-bold text-main">로그인 하기</span>
