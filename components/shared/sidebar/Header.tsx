@@ -53,7 +53,7 @@ export default function Header() {
             <Link
               href="/main"
               aria-label="메인페이지 이동 버튼"
-              data-testid="go-to-main"
+              data-testid="button-go-to-main"
               className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-150"
               onClick={handleReset}
             >

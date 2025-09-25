@@ -240,7 +240,7 @@ export default function FormForCollect() {
       <Button
         type="submit"
         aria-label={isEditMode ? "카드 수정 완료 버튼" : "카드 수집 완료 버튼"}
-        dataTestId="submit-collect-button"
+        dataTestId="button-submit-collect"
         disabled={isSubmitting}
         text={isSubmitting ? (isEditMode ? '수정 중...' : '저장 중...') : '완료'}
       />

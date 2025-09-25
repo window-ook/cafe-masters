@@ -30,24 +30,42 @@ export default function CafeDetailHeader({ bookmarkData }: ICafeDetailHeader) {
 
   const handleClose = useCloseSlidingDrawer();
   return (
-    <header className="w-full p-4 flex justify-between items-center">
-      <div className='flex items-center gap-2'>
-        <BookmarkToggleButton bookmarkData={bookmarkData} />
-        {isCollected && <CollectedBadge />}
-        {isRecommended && <RecommendedBadge />}
-      </div>
-      <div className="flex justify-center">
-        <button
-          aria-label="모바일: 서브사이드바 업 다운 버튼"
-          className={`${isDarkTheme ? 'bg-gray-300' : 'bg-main-400'} w-20 h-2 py-3 sm:hidden rounded-2xl flex items-center justify-center`}
-          onClick={setIsExtend}
-        >
-          <ChevronsUpDown className='size-4 text-button-text' />
+    <header className="w-full p-4">
+      {/* PC 레이아웃: 한 줄에 모든 요소 배치 */}
+      <div className='hidden sm:flex items-center justify-between'>
+        <div className='flex items-center gap-2'>
+          <BookmarkToggleButton bookmarkData={bookmarkData} />
+          {isRecommended && <RecommendedBadge />}
+          {isCollected && <CollectedBadge />}
+        </div>
+        <button onClick={handleClose} className='cursor-pointer'>
+          <CircleX className='size-8' />
         </button>
       </div>
-      <button onClick={handleClose} className='cursor-pointer'>
-        <CircleX className='size-8' />
-      </button>
+
+      {/* 모바일 레이아웃: 2줄로 분리 */}
+      <div className='sm:hidden flex flex-col gap-2'>
+        {/* 첫 번째 줄: 북마크 + 드로어 조절 + 닫기 버튼 */}
+        <div className='flex items-center justify-between'>
+          <BookmarkToggleButton bookmarkData={bookmarkData} />
+          <button
+            aria-label="모바일: 서브사이드바 업 다운 버튼"
+            className={`${isDarkTheme ? 'bg-gray-300' : 'bg-main-400'} w-20 h-2 py-3 rounded-2xl flex items-center justify-center`}
+            onClick={setIsExtend}
+          >
+            <ChevronsUpDown className='size-4 text-button-text' />
+          </button>
+          <button onClick={handleClose} className='cursor-pointer'>
+            <CircleX className='size-8' />
+          </button>
+        </div>
+
+        {/* 두 번째 줄: 추천/수집 뱃지 */}
+        <div className='flex items-center gap-2'>
+          {isRecommended && <RecommendedBadge />}
+          {isCollected && <CollectedBadge />}
+        </div>
+      </div>
     </header>
   );
 }

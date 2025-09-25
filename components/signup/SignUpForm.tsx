@@ -85,7 +85,7 @@ export default function SignUpEmailForm() {
       <Button
         type="submit"
         aria-label="회원가입 요청 버튼"
-        dataTestId="submit-request-signup-button"
+        dataTestId="button-submit-request-signup"
         disabled={signUpForm.formState.isSubmitting || signUpPending}
         customClassName='bg-main'
         text='가입하기'
@@ -103,7 +103,7 @@ export default function SignUpEmailForm() {
         <Link
           href="/signin"
           aria-label="로그인 페이지 이동 버튼"
-          data-testid="go-to-signin-from-signUp"
+          data-testid="button-go-to-signin-from-signup"
           className="cursor-pointer"
         >
           <span className="font-bold text-main">로그인 하기</span>

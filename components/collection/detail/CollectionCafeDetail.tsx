@@ -134,7 +134,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
         </section>
 
         <Button
-          dataTestId="collect-edit-button"
+          dataTestId="button-collect-edit"
           onClick={() => {
             setEditingCafeForCollect(collectionCafeDetail);
             setIsCollectFormOpen(true);

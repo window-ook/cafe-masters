@@ -90,7 +90,7 @@ export default function SignUpVerifyClient() {
             <Button
               type="submit"
               aria-label="인증 코드 제출 버튼"
-              dataTestId="submit-email-verification-code-button"
+              dataTestId="button-submit-email-verification-code"
               disabled={verifyOtpPending || otpValue.length !== 6}
               text='인증 완료'
               customClassName="w-full"

@@ -16,7 +16,7 @@ export async function fetchSearchCafeDetail(cafeId: string): Promise<ISearchCafe
   const cleanCafeId = cafeId.trim();
 
   try {
-    const response = await fetch(`${INTERNAL_PATHS.CAFE_DETAIL_LOCAL}/${cleanCafeId}`, {
+    const response = await fetch(`${INTERNAL_PATHS.CAFE_DETAIL}/${cleanCafeId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

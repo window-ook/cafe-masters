@@ -1,6 +1,6 @@
 /** 내부 API */
 const INTERNAL_PATHS = {
-    CAFE_DETAIL_LOCAL: '/api/cafe-detail',
+    CAFE_DETAIL: '/api/cafe-detail',
 } as const;
 
 /** 외부 API */

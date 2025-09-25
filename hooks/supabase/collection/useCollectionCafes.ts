@@ -6,6 +6,7 @@ import { useFilterStore } from '@/stores/filter';
 import { getAllCollectionCafes } from '@/actions/supabase/collection';
 import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
 import { collectionCafeQuery } from '@/queries/supabase/collection';
+import { MOCK_COLLECTION_CAFES } from '@/tests/e2e/utils/constants';
 
 interface ICollectionCafes {
   collectionCafes: ISupabaseCollectionCafe[];
@@ -41,39 +42,10 @@ export function useCollectionCafes(
     enabled: isActive && !!userId,
     queryKey: collectionCafeQuery.all(userId),
     queryFn: async () => {
-      // Playwright 테스트 환경 감지
       const isPlaywrightTest = typeof window !== 'undefined' &&
-        (window.navigator.userAgent.includes('Playwright') ||
-         (window as any).__PLAYWRIGHT_TEST__ === true ||
-         (window as any).__mockServerActions);
+        (window.navigator.userAgent.includes('Playwright') || (window as any).__PLAYWRIGHT_TEST__ === true);
 
-      if (isPlaywrightTest) {
-        // 테스트용 모킹 데이터 반환
-        return {
-          data: [
-            {
-              id: 803452801,
-              name: "이얼즈",
-              address: "대구 중구 동문동 10-4",
-              coordX: 128.60039182923592,
-              coordY: 35.871224288731426,
-              image: "https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2Fec2c1096b85aa2d7a0ef108c140901a58bffb8f4%3Foriginal",
-              comment: "분위기가 정말 좋은 카페입니다",
-              pros: "",
-              cons: "",
-              eaten_menus: "이얼즈 라떼",
-              ratings: 5,
-              created_at: "2025-09-23 03:00:00.000+00",
-              updated_at: null,
-              user_id: "mock-user-id",
-              phone_number: "",
-              opening_time: "12:00 ~ 23:00",
-              categories: ["특색있는", "커피가 맛있는"],
-              extra_images: ["https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2Fada47eb2153cbf9a7e252665ccfa8fa6c451a8a8%3Foriginal"]
-            }
-          ]
-        };
-      }
+      if (isPlaywrightTest) return { data: MOCK_COLLECTION_CAFES };
 
       const response = await getAllCollectionCafes();
       return response;

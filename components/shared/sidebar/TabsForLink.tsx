@@ -73,7 +73,7 @@ export default function TabsForLink() {
   return (
     <ul className="flex-1 flex flex-col">
       <SideBarTab
-        testId='go-to-search-by-tab'
+        testId='button-go-to-search-by-tab'
         icon={<SearchCode className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} text-3xl`} />}
         title={'검색 결과'}
         path={'/search'}
@@ -81,7 +81,7 @@ export default function TabsForLink() {
         counts={searchResult.length}
       />
       <SideBarTab
-        testId='go-to-collection-by-tab'
+        testId='button-go-to-collection-by-tab'
         icon={<BookImage className={`${isDarkTheme ? 'text-main-shadow' : `text-main`} text-3xl`} />}
         title={'내가 수집한 카페'}
         path={'/collection'}
@@ -89,7 +89,7 @@ export default function TabsForLink() {
         counts={collectionCounts!}
       />
       <SideBarTab
-        testId='go-to-bookmark-by-tab'
+        testId='button-go-to-bookmark-by-tab'
         icon={<BookMarked className={`text-yellow-500 text-3xl`} />}
         title={'북마크한 카페'}
         path={'/bookmark'}
@@ -97,7 +97,7 @@ export default function TabsForLink() {
         counts={bookmarkCounts!}
       />
       <SideBarTab
-        testId='go-to-recommendation-by-tab'
+        testId='button-go-to-recommendation-by-tab'
         icon={<ThumbsUp className={`text-recommendation text-3xl`} />}
         title={'개발자 PICK 추천 카페'}
         path={'/recommendation'}

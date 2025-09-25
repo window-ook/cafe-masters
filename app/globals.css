@@ -376,8 +376,8 @@ body {
 * 수집한 카페의 카드 텍스처
 * 본체 z-index: 10, linear-gradient
 * 마우스 포인터 광원 z-index: 20, radial-gradient
-* :before z-index: 1
-* :after z-index: 2
+* ::before z-index: 1
+* ::after z-index: 2
 * ====================================================== 
 */
 .card-container {
@@ -426,7 +426,7 @@ body {
       #374151);
 }
 
-.card-silver:after {
+.card-silver::after {
   content: "";
   position: absolute;
   z-index: 2;
@@ -463,7 +463,7 @@ body {
   background-size: 100% 100%;
 }
 
-.card-gold:after {
+.card-gold::after {
   content: "";
   position: absolute;
   z-index: 2;
@@ -503,7 +503,7 @@ body {
   background-size: 100% 100%;
 }
 
-.card-emerald:after {
+.card-emerald::after {
   content: "";
   position: absolute;
   z-index: 2;
@@ -541,8 +541,8 @@ body {
   color: white;
 }
 
-.card-hidden:before,
-.card-hidden:after {
+.card-hidden::before,
+.card-hidden::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -553,7 +553,7 @@ body {
   transition: all .33s ease;
 }
 
-.card-hidden:before {
+.card-hidden::before {
   z-index: 1;
   opacity: .5;
   background-image: linear-gradient(115deg, transparent 0%, rgba(0, 231, 255, 0.8) 25%, transparent 47%, transparent 53%, rgba(255, 0, 231, 0.8) 75%, transparent 100%);
@@ -562,7 +562,7 @@ body {
   background-size: 300% 300%;
 }
 
-.card-hidden:after {
+.card-hidden::after {
   z-index: 2;
   opacity: .5;
   background-image:
@@ -576,7 +576,7 @@ body {
 }
 
 /* 랜딩페이지 샘플 카드(히어로 섹션) */
-.card-sample:before {
+.card-sample::before {
   z-index: 1;
   opacity: .5;
   background-image: linear-gradient(115deg, transparent 0%, rgba(0, 231, 255, 0.8) 25%, transparent 47%, transparent 53%, rgba(255, 0, 231, 0.8) 75%, transparent 100%);
@@ -585,7 +585,7 @@ body {
   background-size: 300% 300%;
 }
 
-.card-sample:after {
+.card-sample::after {
   content: "";
   position: absolute;
   z-index: 2;
@@ -750,7 +750,7 @@ body {
 }
 
 
-.marker-infowindow:after {
+.marker-infowindow::after {
   content: '';
   position: absolute;
   margin-left: -12px;

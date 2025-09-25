@@ -24,7 +24,7 @@ export default function TierBadge({ tier }: { tier: Tier }) {
         {tier === 'MASTER' && <div className='master-badge'></div>}
         <button
           aria-label="티어 다이얼로그 오픈 버튼"
-          data-testid="open-tier-dialog-button"
+          data-testid="button-open-tier-dialog-button"
           onClick={() => handleDialogOpen()}
           className={`${TIER_STYLES[tier]} w-20 h-6 py-4 rounded-xl flex items-center justify-center hover:cursor-pointer`}
         >

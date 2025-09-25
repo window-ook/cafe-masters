@@ -89,7 +89,7 @@ export default function SignInForm() {
             <Button
               type="submit"
               ariaLabel="로그인 버튼"
-              dataTestId="signin-button"
+              dataTestId="button-signin"
               disabled={isSubmitting || isPending}
               text='접속하기'
             />
@@ -114,7 +114,7 @@ export default function SignInForm() {
               <Link
                 href="/signup"
                 aria-label="회원가입 페이지 이동 버튼"
-                data-testid="go-to-signup-from-signIn"
+                data-testid="button-go-to-signup-from-signin"
                 className="cursor-pointer"
               >
                 <span className="font-bold text-main">
