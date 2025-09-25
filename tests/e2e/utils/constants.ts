@@ -55,6 +55,7 @@ export const TEST_SELECTORS = {
     BUTTON_SUBMIT_KEYWORD_FOR_SEARCH: 'button-submit-keyword-for-search',
     BUTTON_SUBMIT_REQUEST_SIGNUP: 'button-submit-request-signup',
     BUTTON_SUBMIT_EMAIL_VERIFICATION_CODE: 'button-submit-email-verification-code',
+    BUTTON_NEXT_PAGE: 'button-next-page',
     BUTTON_SUBMIT_COLLECT: 'button-submit-collect',
     BUTTON_COLLECT: 'button-collect',
     BUTTON_COLLECT_EDIT: 'button-collect-edit',

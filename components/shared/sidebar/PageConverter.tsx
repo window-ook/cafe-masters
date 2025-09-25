@@ -41,7 +41,7 @@ export default function PageConverter({
         <button
           type="button"
           aria-label="이전 페이지 번호"
-          data-testid="previous-page-button"
+          data-testid="button-previous-page"
           onClick={handlePreviousWithScroll}
           disabled={currentPage === 1}
           className={`px-4 py-2 ${currentPage === 1 ? 'opacity-50' : 'opacity-100'} cursor-pointer`}
@@ -54,7 +54,7 @@ export default function PageConverter({
         <button
           type="button"
           aria-label="다음 페이지 번호"
-          data-testid="next-page-button"
+          data-testid="button-next-page"
           onClick={handleNextWithScroll}
           disabled={currentPage === totalPages}
           className={`px-4 py-2 ${currentPage === totalPages ? 'opacity-50' : 'opacity-100'} cursor-pointer`}
