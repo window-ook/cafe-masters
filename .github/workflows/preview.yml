@@ -51,15 +51,9 @@ jobs:
       - name: Playwright 브라우저 설치
         run: npx playwright install --with-deps
 
-      - name: 테스트용 빌드
-        run: pnpm run build
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-
-      - name: 테스트용 앱 실행 및 테스트 실행
+      - name: 테스트용 개발 서버 실행 및 테스트 실행
         run: |
-          pnpm run start &
+          pnpm run dev &
           sleep 10
           pnpm run test:playwright
         env:

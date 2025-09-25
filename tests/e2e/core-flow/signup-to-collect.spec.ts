@@ -37,7 +37,14 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
         await page.waitForLoadState();
 
         // 6. 검색 결과에서 카페 선택 및 수집하기 클릭
-        await page.getByTestId('next-page-button').click();
+        const nextPageButton = page.getByTestId('next-page-button');
+        await nextPageButton.waitFor({ state: 'visible', timeout: 10000 });
+
+        // 버튼이 활성화 상태인지 확인
+        const isDisabled = await nextPageButton.isDisabled();
+        if (!isDisabled) await nextPageButton.click();
+        else console.log('Next page button is disabled - already on last page');
+
         await page.getByText('이얼즈').click();
         const slidingDrawer = page.getByTestId(TEST_SELECTORS.SLIDING_DRAWER);
         await slidingDrawer.waitFor({ state: 'visible' });

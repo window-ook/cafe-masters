@@ -37,26 +37,25 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    // CI에서는 Chrome만 사용해 속도 최적화
     ...(process.env.CI
       ? []
       : [
-          {
-            name: 'firefox',
-            use: { ...devices['Desktop Firefox'] },
-          },
-          {
-            name: 'webkit',
-            use: { ...devices['Desktop Safari'] },
-          },
-        ]),
+        {
+          name: 'firefox',
+          use: { ...devices['Desktop Firefox'] },
+        },
+        {
+          name: 'webkit',
+          use: { ...devices['Desktop Safari'] },
+        },
+      ]),
   ],
 
   webServer: process.env.CI
     ? undefined // CI에서는 미리 빌드된 서버 사용
     : {
-        command: 'pnpm run dev',
-        url: 'http://localhost:3000',
-        reuseExistingServer: true,
-      },
+      command: 'pnpm run dev',
+      url: 'http://localhost:3000',
+      reuseExistingServer: true,
+    },
 });
