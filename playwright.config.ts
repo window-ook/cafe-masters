@@ -22,7 +22,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'null',
+  reporter: process.env.CI ? [['github'], ['list']] : [['list']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -37,21 +37,26 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // CI에서는 Chrome만 사용해 속도 최적화
+    ...(process.env.CI
+      ? []
+      : [
+          {
+            name: 'firefox',
+            use: { ...devices['Desktop Firefox'] },
+          },
+          {
+            name: 'webkit',
+            use: { ...devices['Desktop Safari'] },
+          },
+        ]),
   ],
 
-  webServer: {
-    command: 'pnpm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-  },
+  webServer: process.env.CI
+    ? undefined // CI에서는 미리 빌드된 서버 사용
+    : {
+        command: 'pnpm run dev',
+        url: 'http://localhost:3000',
+        reuseExistingServer: true,
+      },
 });
