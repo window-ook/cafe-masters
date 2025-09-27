@@ -27,7 +27,7 @@ export function useBookmarkCafes(
   currentPage: number = 1,
   itemsPerPage: number = 8
 ): IBookmarkCafes & {
-  isLoading: boolean;
+  isPending: boolean;
   isError: boolean;
   error: Error | null;
 } {
@@ -93,5 +93,5 @@ export function useBookmarkCafes(
     itemsPerPage,
   ]);
 
-  return { ...paginationData, isLoading: queryData.isLoading, isError: queryData.isError, error: queryData.error };
+  return { ...paginationData, isPending: queryData.isPending, isError: queryData.isError, error: queryData.error };
 }

@@ -3,6 +3,7 @@
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useUserStore } from '@/stores/user';
 import Link from 'next/link';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 export default function SignOutButton() {
   const supabase = createBrowserSupabaseClient();
@@ -14,7 +15,7 @@ export default function SignOutButton() {
       await supabase.auth.signOut();
       resetUser();
     } catch (error) {
-      console.error('로그아웃 중 오류 발생:', error);
+      console.error(CONSOLE_ERROR.SIGNOUT, error);
     }
   };
 

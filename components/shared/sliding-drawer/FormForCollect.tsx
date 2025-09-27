@@ -8,6 +8,7 @@ import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { useUpdateCollectionCafe } from '@/hooks/supabase/collection/useUpdateCollectionCafe';
 import { useCreateCollectionCafe } from '@/hooks/supabase/collection';
+import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
@@ -24,7 +25,6 @@ export default function FormForCollect() {
   const { updateCollectionCafe } = useUpdateCollectionCafe();
   const { createCollectionCafe } = useCreateCollectionCafe();
 
-  // 편집 모드 감지
   const isEditMode = pathname?.startsWith('/collection/detail/') && editingCafe;
 
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<CollectionFormData>({
@@ -46,11 +46,11 @@ export default function FormForCollect() {
     },
   });
 
+  // 수정/수집 핸들러
   const onFormSubmit = async (data: CollectionFormData) => {
     if (isEditMode) {
-      // 편집 모드: 기존 카페 업데이트
       if (!editingCafe) {
-        toast.error('편집할 카페 정보가 없습니다. 다시 시도해주세요.');
+        toast.error(TOAST_ERROR.NO_DATA_FOR_EDIT_COLLECTION);
         return;
       }
 
@@ -64,24 +64,21 @@ export default function FormForCollect() {
           cons: data.cons || '',
         };
 
-        // 업데이트 액션 호출
         updateCollectionCafe(updateData);
 
-        // 성공 시 폼 닫기 및 편집 상태 초기화
         clearEditingCafe();
         setIsCollectFormOpen(false);
-        toast.success('카페 정보 수정을 완료했어요!');
+        toast.success(TOAST_SUCCESS.EDIT_COLLECTION);
 
       } catch (error) {
-        console.error('카페 수정 실패:', error);
-        toast.error(error instanceof Error ? error.message : '카페 수정에 실패했습니다.');
+        console.error(CONSOLE_ERROR.EDIT_COLLECTION_CAFE, error);
+        toast.error(error instanceof Error ? error.message : TOAST_ERROR.EDIT_COLLECTION);
         clearEditingCafe();
         setIsCollectFormOpen(false);
       }
     } else {
-      // 생성 모드: 새 카페 수집
       if (!targetCafeForCollect) {
-        toast.error('카페 정보가 없습니다. 다시 시도해주세요.');
+        toast.error(TOAST_ERROR.NO_DATA_FOR_CREATE_COLLECTION);
         return;
       }
 
@@ -107,10 +104,10 @@ export default function FormForCollect() {
 
         createCollectionCafe(collectionData);
         setIsCollectFormOpen(false);
-        toast.success('카페를 수집했어요!');
+        toast.success(TOAST_SUCCESS.CREATE_COLLECTION);
       } catch (error) {
-        console.error('수집 실패:', error);
-        toast.error(error instanceof Error ? error.message : '수집에 실패했습니다.');
+        console.error(CONSOLE_ERROR.CREATE_COLLECTION_CAFE, error);
+        toast.error(error instanceof Error ? error.message : TOAST_ERROR.CREATE_COLLECTION);
       }
     }
   };

@@ -189,7 +189,7 @@ export default function CafeDetailBody({
         {/* 운영시간 */}
         <OpenTime
           opening_time={cafeData.opening_time ?? null}
-          isLoading={isDetailLoading}
+          isPending={isDetailLoading}
         />
       </section>
 
@@ -200,7 +200,7 @@ export default function CafeDetailBody({
       <Menus
         menus={cafeData.menus}
         isDarkTheme={isDarkTheme}
-        isLoading={isDetailLoading}
+        isPending={isDetailLoading}
       />
     </main>
   );

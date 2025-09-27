@@ -7,11 +7,11 @@ interface IMenus {
         description?: string;
     }> | null;
     isDarkTheme: boolean;
-    isLoading?: boolean;
+    isPending?: boolean;
 }
 
-export default function Menus({ menus, isDarkTheme, isLoading = false }: IMenus) {
-    if (isLoading && (!menus || menus.length === 0)) {
+export default function Menus({ menus, isDarkTheme, isPending = false }: IMenus) {
+    if (isPending && (!menus || menus.length === 0)) {
         return (
             <div className="w-full">
                 <div className="w-full h-12 skeleton-shimmer rounded-lg mb-4" />

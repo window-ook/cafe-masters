@@ -15,7 +15,7 @@ export default function RecommendationCafes() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { filteredRecommendationCafes, totalFilteredCount, isError, error, isLoading } = useRecommendationCafes(selectedCategories);
+  const { filteredRecommendationCafes, totalFilteredCount, isError, error, isPending } = useRecommendationCafes(selectedCategories);
 
   const recommendationPerPage = 5;
   const totalRecommendedPages = Math.ceil((filteredRecommendationCafes?.length || 0) / recommendationPerPage);
@@ -34,7 +34,7 @@ export default function RecommendationCafes() {
   const handleRecommendedCafeClick = useCafeClick<ISupabaseRecommendationCafe>({ routePath: 'recommendation' });
 
   // 로딩 상태 처리
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="h-full flex flex-col">
         <section

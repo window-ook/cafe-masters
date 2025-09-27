@@ -1,19 +1,20 @@
 'use client';
 
 import { RefObject } from 'react';
+import { TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 
 /** 클립보드 복사 */
 export const copyText = async (param: string) => {
   try {
     await navigator.clipboard.writeText(param);
-    toast.success('클립보드에 복사되었습니다!');
+    toast.success(TOAST_SUCCESS.COPY_TO_CLIPBOARD);
   } catch {
-    toast.error('다시 시도해주세요.');
+    toast.error(TOAST_ERROR.RETRY);
   }
 };
 
-/** 썸네일 슬라이드 스크롤 */
+/** 카페 상세 UI 썸네일 무한 슬라이드 스크롤 */
 export const scrollThumbnails = (direction: 'left' | 'right', scrollRef: RefObject<HTMLDivElement>) => {
   if (!scrollRef.current) return;
 

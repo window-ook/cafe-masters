@@ -24,7 +24,7 @@ export default function CollectionCafes() {
     totalFilteredCount,
     hasNextPage,
     hasPreviousPage,
-    isLoading,
+    isPending,
     isError,
     error,
   } = useCollectionCafes(userId, currentPage, COLLECTION_CAFES_PER_PAGE, true);
@@ -35,7 +35,7 @@ export default function CollectionCafes() {
   const handlePreviousPageAction = () => { if (hasPreviousPage) setCurrentPage(prev => prev - 1); };;
   const handleCollectionCafeClick = useCafeClick<ISupabaseCollectionCafe>({ routePath: 'collection' });
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">

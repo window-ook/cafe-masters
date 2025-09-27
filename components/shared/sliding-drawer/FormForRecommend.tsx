@@ -6,6 +6,7 @@ import { useCreateRecommendationCafe } from '@/hooks/supabase/recommendation/use
 import { useRecommendationStore } from '@/stores/recommendation';
 import { recommendationFormSchema, RecommendationFormData } from '@/schema/recommendation';
 import { RecommendationRowInsert } from '@/actions/supabase/recommendation';
+import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS, TOAST_WARN } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
 import Button from '@/components/shared/Button';
@@ -24,7 +25,7 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
 
   const onFormSubmit = async (data: RecommendationFormData) => {
     if (!targetCafeForRecommend) {
-      toast.warning('추천할 카페 정보가 없습니다. 다시 시도해주세요.');
+      toast.warning(TOAST_WARN.NO_DATA_FOR_RECOMMEND);
       return;
     }
 
@@ -46,10 +47,10 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
 
       createRecommendationCafe(recommendationData);
       setIsRecommendFormOpenAction(false);
-      toast.success('추천 카페로 추가했습니다!');
+      toast.success(TOAST_SUCCESS.CREATE_RECOMMENDATION);
     } catch (error) {
-      console.error('카페 추천 실패:', error);
-      toast.error(error instanceof Error ? error.message : '카페 추천에 실패했습니다.');
+      console.error(CONSOLE_ERROR.CREATE_RECOMMENDATION_CAFE, error);
+      toast.error(error instanceof Error ? error.message : TOAST_ERROR.CREATE_RECOMMENDATION);
     }
   };
 

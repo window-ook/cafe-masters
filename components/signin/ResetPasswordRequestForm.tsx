@@ -7,6 +7,7 @@ import { useRequestResetPassword } from '@/hooks/supabase/user/useRequestResetPa
 import { resetPasswordRequestSchema, ResetPasswordRequestData } from '@/schema/auth';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 interface IResetPasswordRequestFormProps {
   onBackAction: () => void;
@@ -31,7 +32,7 @@ export default function ResetPasswordRequestForm({
       requestResetPassword(data.email.trim());
       onSuccessAction();
     } catch (error) {
-      console.error('비밀번호 재설정 요청 실패:', error);
+      console.error(CONSOLE_ERROR.REQUEST_RESET_PASSWORD, error);
     }
   };
 

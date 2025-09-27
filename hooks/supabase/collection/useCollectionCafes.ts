@@ -32,7 +32,7 @@ export function useCollectionCafes(
   itemsPerPage: number = 8,
   isActive: boolean = true
 ): ICollectionCafes & {
-  isLoading: boolean;
+  isPending: boolean;
   isError: boolean;
   error: Error | null;
 } {
@@ -116,7 +116,7 @@ export function useCollectionCafes(
 
   return {
     ...paginationData,
-    isLoading: queryData.isLoading,
+    isPending: queryData.isPending,
     isError: queryData.isError,
     error: queryData.error
   };

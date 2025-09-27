@@ -23,7 +23,7 @@ export default function BookmarkCafes() {
     totalFilteredCount,
     hasNextPage,
     hasPreviousPage,
-    isLoading,
+    isPending,
     isError,
     error,
   } = useBookmarkCafes(userId, currentPage, BOOKMARK_CAFES_PER_PAGE);
@@ -34,7 +34,7 @@ export default function BookmarkCafes() {
   const handlePreviousPageAction = () => { if (hasPreviousPage) setCurrentPage(prev => prev - 1); };;
   const handleBookmarkCafeClick = useCafeClick<ISupabaseBookmarkCafe>({ routePath: 'bookmark' });
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">

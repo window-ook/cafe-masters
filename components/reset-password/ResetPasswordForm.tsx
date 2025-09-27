@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import BackgroundCards from '@/components/shared/FallingCards';
 import Button from '@/components/shared/Button';
 import InputField from '@/components/shared/InputField';
+import { CONSOLE_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 
 export default function ResetPasswordForm() {
   const supabase = createBrowserSupabaseClient();
@@ -32,10 +33,10 @@ export default function ResetPasswordForm() {
   const onFormSubmit = async (data: ResetPasswordFormData) => {
     try {
       finishResetPassword(data.newPassword);
-      toast.success('비밀번호를 재설정했습니다!');
+      toast.success(TOAST_SUCCESS.RESET_PASSWORD);
       router.push('/reset-password/complete');
     } catch (error) {
-      console.error('비밀번호 재설정 실패:', error);
+      console.error(CONSOLE_ERROR.RESET_PASSWORD, error);
     }
   };
 

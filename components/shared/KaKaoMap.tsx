@@ -36,7 +36,7 @@ export default function KakaoMap() {
 
   const { filteredCollectionCafes } = useCollectionCafes(userId);
   const { filteredBookmarkCafes } = useBookmarkCafes(userId);
-  const { recommendationCafes, isLoading: isRecommendedCafesLoading } = useRecommendationCafes();
+  const { recommendationCafes, isPending: isRecommendedCafesLoading } = useRecommendationCafes();
 
   // 페이지별 카페 클릭 핸들러 설정
   const getRoutePathForCurrentPage = () => {

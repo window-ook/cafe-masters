@@ -10,6 +10,7 @@ import {
   type BrowserConfig,
   type ScrapingConfig,
 } from '@/lib/data/scrapper';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 export const runtime = 'nodejs';
 
@@ -53,7 +54,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     await browser.close();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('카페 상세정보 스크래핑 실패:', error);
+    console.error(CONSOLE_ERROR.SCRAP_CAFE_DETAIL, error);
 
     const errorResponse = handleScrapingError(error);
     return NextResponse.json(

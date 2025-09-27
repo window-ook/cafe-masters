@@ -30,7 +30,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   const setTargetCafeForRecommend = useRecommendationStore(state => state.setTargetCafeForRecommend);
   const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
 
-  const { searchedCafeDetail, isLoading: isDetailLoading } = useSearchCafeDetail(cafeId.toString());
+  const { searchedCafeDetail, isPending: isDetailLoading } = useSearchCafeDetail(cafeId.toString());
 
   // 즉시 렌더링: 검색 결과에 포함된 기본 정보
   const foundCafe = useMemo(() => {

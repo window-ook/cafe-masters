@@ -17,7 +17,7 @@ import { ISearchCafeDetail } from '@/types/kakao-map';
  * @returns 카페 상세 정보 데이터
  */
 export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
-  const { data, isError, error, isLoading, isFetching } = useQuery({
+  const { data, isError, error, isPending, isFetching } = useQuery({
     queryKey: searchCafeQuery.all(cafeId),
     queryFn: async (): Promise<ISearchCafeDetail> => {
       if (!cafeId || cafeId.trim() === '') throw new Error('유효한 카페 ID가 필요합니다.');
@@ -29,7 +29,7 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
         const existingData = await getCafeDetail(cafeId);
 
         if (existingData) {
-          console.log(`✅ ${cafeId} DB에서 조회 성공`);
+          console.log(`✅ ${cafeId} DB 조회`);
           const convertedData: ISearchCafeDetail = {
             image: existingData.image || '',
             extra_images: JSON.parse(existingData.extra_images || '[]'),
@@ -39,7 +39,7 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
           return convertedData;
         }
 
-        console.log(`🔍 ${cafeId} DB에 없음`);
+        console.log(`🔍 ${cafeId} DB에 존재하지 않음`);
 
         // 2단계: 환경별 처리 분기
         if (isLocalEnvironment) {
@@ -52,9 +52,9 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
           if (isValidData) {
             try {
               await createCafeDetail(cafeId, scrapedData);
-              console.log(`✅ ${cafeId} DB 저장 완료`);
+              console.log(`✅ ${cafeId} DB 저장`);
             } catch (saveError) {
-              console.warn(`⚠️ ${cafeId} DB 저장 실패:`, saveError);
+              console.warn(`⚠️ ${cafeId} DB 저장 에러:`, saveError);
             }
           } else {
             console.warn(`⚠️ ${cafeId} DB 저장 생략`);
@@ -110,7 +110,7 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
     searchedCafeDetail: data,
     isError,
     error,
-    isLoading,
+    isPending,
     isFetching
   };
 }

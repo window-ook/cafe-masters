@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getRecommendationCafeById } from '@/actions/supabase/recommendation';
 import { IPageParams } from '@/types/shared/page';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 export async function generateMetadata({ params }: IPageParams): Promise<Metadata> {
   const { id } = await params;
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: IPageParams): Promise<Metadat
       };
     }
   } catch (error) {
-    console.error('메타데이터 생성 중 오류:', error);
+    console.error(CONSOLE_ERROR.CREATE_METADATA, error);
   }
 
   return {

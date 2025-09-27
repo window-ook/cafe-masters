@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image, { ImageProps } from 'next/image';
+import { CONSOLE_LOG } from '@/utils/constants/messages';
 
 interface IImageWithFallback extends Omit<ImageProps, 'src'> {
     src: string;
@@ -38,7 +39,7 @@ export default function ImageWithFallback(props: IImageWithFallback) {
             alt={alt}
             className={className}
             onError={() => {
-                console.log('이미지 로드 실패 => fallback 이미지 적용');
+                console.log(CONSOLE_LOG.IMAGE_SRC_ERROR);
                 setImgSrc(fallbackSrc);
             }}
             width={width}

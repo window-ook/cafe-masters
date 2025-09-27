@@ -2,6 +2,7 @@
 
 import { useCreateBookmarkCafe, useDeleteBookmarkCafe } from '@/hooks/supabase/bookmark';
 import { useCurrentCafeStore, useUserStore } from '@/stores';
+import { TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 import { Bookmark } from 'lucide-react';
 import { toast } from 'react-toastify';
 
@@ -33,7 +34,7 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
 
   const handleBookmarkToggle = async () => {
     if (!userId) {
-      toast.error('로그인이 필요합니다.');
+      toast.error(TOAST_ERROR.BOOMARK_TOGGLE_WITHOUT_SIGNIN);
       return;
     }
 
@@ -41,7 +42,7 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
       if (isBookmarked) {
         await deleteBookmarkCafe(bookmarkData.id);
         setIsBookmarked(false);
-        toast.success('북마크에서 제거되었습니다.');
+        toast.success(TOAST_SUCCESS.DELETE_BOOKMARK);
       } else {
         await createBookmarkCafe({
           id: bookmarkData.id,
@@ -56,10 +57,10 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
           menus: bookmarkData.menus ? JSON.stringify(bookmarkData.menus) : null,
         });
         setIsBookmarked(true);
-        toast.success('북마크에 추가되었습니다.');
+        toast.success(TOAST_SUCCESS.CREATE_BOOKMARK);
       }
     } catch {
-      toast.error('작업 중 에러가 발생했습니다.');
+      toast.error(TOAST_ERROR.BOOMARK_TOGGLE);
     }
   };
 

@@ -7,10 +7,10 @@ import { getRecommendationCounts } from '@/actions/supabase/recommendation';
  * @returns 추천 카페 수
  */
 export function useRecommendationCounts() {
-    const { data, isError, error, isLoading } = useQuery({
+    const { data, isError, error, isPending } = useQuery({
         queryKey: recommendationCafeQuery.counts(),
         queryFn: () => getRecommendationCounts(),
     });
 
-    return { recommendationCounts: data, isError, error, isLoading };
+    return { recommendationCounts: data, isError, error, isPending };
 }

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getBookmarkCafeById } from '@/actions/supabase/bookmark';
 import { IPageParams } from '@/types/shared/page';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 import BookmarkDetailClient from '@/components/bookmark/detail/BookmarkDetailClient';
 
 export async function generateMetadata({ params }: IPageParams): Promise<Metadata> {
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: IPageParams): Promise<Metadat
       };
     }
   } catch (error) {
-    console.error('메타데이터 생성 중 오류:', error);
+    console.error(CONSOLE_ERROR.CREATE_METADATA, error);
   }
 
   return {

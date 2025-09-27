@@ -1,5 +1,5 @@
 import { Page } from 'playwright-core';
-import { TEST_SELECTORS } from '@/tests/e2e/utils/constants';
+import { SUCCESS_MESSAGES, TEST_SELECTORS } from '@/tests/e2e/utils/constants';
 import { API_PATHS, MOCK_AUTH_DATA } from '@/tests/e2e/utils/constants';
 
 export class SignupPage {
@@ -19,7 +19,7 @@ export class SignupPage {
     /** 회원가입 요청 API 모킹 */
     async mockSignUpRequest() {
         await this.page.route(API_PATHS.SUPABASE_AUTH_SIGNUP, route => {
-            console.log('회원가입 요청 인터셉트: ', route.request().url());
+            console.log(SUCCESS_MESSAGES.INTERCEPT_REQUEST_SIGNUP, route.request().url());
 
             route.fulfill({
                 status: 200,

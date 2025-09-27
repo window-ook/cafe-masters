@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getRecommendationCafesForSitemap } from '@/actions/supabase/recommendation/getData';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://app.cafe-masters.co';
@@ -64,7 +65,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     });
   } catch (error) {
-    console.error('사이트맵 생성 중 오류 발생:', error);
+    console.error(CONSOLE_ERROR.CREATE_SITE_MAP, error);
   }
 
   return [...staticPages, ...dynamicPages];

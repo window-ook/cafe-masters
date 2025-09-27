@@ -4,6 +4,7 @@ import { ReactNode, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useUserStore } from '@/stores';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 interface IAuthProvider {
   accessToken: string | null;
@@ -65,7 +66,7 @@ export default function AuthProvider({
             const isAdmin = await getIsAdmin();
             if (isAdmin) setAdmin(true);
           } catch (error) {
-            console.error('관리자 권한 확인 중 오류:', error);
+            console.error(CONSOLE_ERROR.CHECK_ADMIN, error);
           }
         } else {
           // 로그아웃된 경우: user store 초기화

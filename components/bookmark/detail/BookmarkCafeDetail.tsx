@@ -7,6 +7,7 @@ import { useCollectionStore } from '@/stores/collection';
 import { useCurrentCafeStore, useUserStore } from '@/stores';
 import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
 import { useCloseSlidingDrawer } from '@/hooks/ui/useCloseSlidingDrawer';
+import { TOAST_SUCCESS } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import { Bookmark, CircleX } from 'lucide-react';
 import Button from '@/components/shared/Button';
@@ -98,7 +99,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   const handleBookmarkDeletion = async () => {
     await deleteBookmarkCafe(bookmarkData.id);
     setIsBookmarked(false);
-    toast.success('북마크에서 제거되었습니다.');
+    toast.success(TOAST_SUCCESS.DELETE_BOOKMARK);
   };
 
   return (

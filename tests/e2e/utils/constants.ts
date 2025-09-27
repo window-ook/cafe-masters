@@ -23,6 +23,7 @@ export const SUCCESS_MESSAGES = {
     BOOKMARK_CAFE_REMOVED: '북마크에서 제거했어요!',
     SIGNUP_SUCCESS: '회원가입이 완료되었습니다',
     SIGNIN_SUCCESS: '로그인이 완료되었습니다',
+    INTERCEPT_REQUEST_SIGNUP: '회원가입 요청 인터셉트:',
 } as const;
 
 /** 에러 메시지 */
