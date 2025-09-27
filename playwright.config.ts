@@ -30,10 +30,6 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    ...(process.env.CI && {
-      actionTimeout: 15000,
-      navigationTimeout: 30000,
-    }),
   },
 
   // Github Actions use only chromium

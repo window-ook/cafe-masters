@@ -30,7 +30,8 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
         await expect(page).toHaveURL(/.*main.*/);
         await page.waitForLoadState();
 
-        // 5. 메인페이지에서 검색
+        // 5. 메인페이지에서 검색 (카카오맵 API 모킹)
+        await mainPage.mockKakaoSearchAPI();
         await mainPage.searchKeyword('대구 교동');
         await page.waitForURL('**/search**');
         await expect(page).toHaveURL(/.*search.*/);
@@ -117,7 +118,8 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
             await expect(page).toHaveURL(/.*main.*/);
             await page.waitForLoadState();
 
-            // 5. 메인페이지에서 검색
+            // 5. 메인페이지에서 검색 (카카오맵 API 모킹)
+            await mainPage.mockKakaoSearchAPI();
             await mainPage.searchKeyword('대구 교동');
             await page.waitForURL('**/search**');
             await expect(page).toHaveURL(/.*search.*/);
