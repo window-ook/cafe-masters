@@ -1,0 +1,30 @@
+{
+    "name": "Cafe Masters - 카페 마스터즈",
+    "short_name": "Cafe Masters",
+    "description": "카페를 즐겨 다니는 분들을 위한 서비스",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#da483b",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "categories": [
+        "lifestyle",
+        "food"
+    ],
+    "lang": "ko",
+    "icons": [
+        {
+            "src": "/image/icons/app_icon_192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/image/icons/app_icon_512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

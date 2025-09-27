@@ -49,6 +49,7 @@ export const metadata: Metadata = {
     'cafe masters',
     'cafemasters',
   ],
+  manifest: '/manifest.json',
   authors: [{ name: 'github@window-ook' }],
   creator: 'github@window-ook',
   publisher: 'github@window-ook',
@@ -60,13 +61,13 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     title: 'Cafe Masters',
     siteName: 'Cafe Masters',
-    description: '카페를 즐겨 다니는 분들을 위한 서비스',
+    description: '카페 정보를 쉽게 관리하고 싶은 당신을 위한 서비스',
     images: ['https://app.cafe-masters.co/opengraph-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Cafe Masters',
-    description: '카페를 즐겨 다니는 분들을 위한 서비스',
+    description: '카페 정보를 쉽게 관리하고 싶은 당신을 위한 서비스',
     images: ['https://app.cafe-masters.co/opengraph-image.png'],
     creator: 'github@window-ook',
   },
@@ -93,9 +94,7 @@ export default async function RootLayout({
 }>) {
   const supabase = await createServerSupabaseClient();
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const { data: { session } } = await supabase.auth.getSession();
 
   return (
     <html lang="ko">
@@ -104,6 +103,26 @@ export default async function RootLayout({
           name="google-site-verification"
           content="uLLg7r0DwRzwQB1croiSmhHf5Krf4FaxC2Z2t0BX4JM"
         />
+        {/* PWA Meta Tags */}
+        <meta name="application-name" content="Cafe Masters" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Cafe Masters" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+        <meta name="msapplication-TileColor" content="#da483b" />
+        <meta name="theme-color" content="#da483b" />
+
+        <link rel="apple-touch-icon" href="/image/icons/app_icon_192.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/image/icons/app_icon_192.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/image/icons/app_icon_192.png" />
+        <link rel="apple-touch-icon" sizes="167x167" href="/image/icons/app_icon_192.png" />
+
+        {/* Favicons */}
+        <link rel="icon" type="image/png" sizes="32x32" href="/image/icons/app_icon_192.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/image/icons/app_icon_192.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+
         <link
           rel="preload"
           href="/fonts/PretendardVariable.woff2"

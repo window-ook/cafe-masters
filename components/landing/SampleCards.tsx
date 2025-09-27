@@ -137,13 +137,13 @@ export default function SampleCards() {
                                 onMouseLeave={isCenter ? handleCardMouseLeave : undefined}
                                 className={`${isCenter ? 'card-tilt' : ''} card-sample w-full h-full p-4 border-6 rounded-2xl drop-shadow-3xl bg-gradient-to-br ${card.gradient} border-gray-500 flex flex-col justify-between cursor-pointer`}
                             >
-                                {/* 카페 이름 */}
-                                <div className="flex flex-col gap-2">
-                                    <p className="whitespace-nowrap overflow-hidden text-left text-ellipsis font-dunggeunmo font-bold text-lg text-white">
+                                <div className=" flex flex-col gap-2">
+                                    {/* 카페 이름 */}
+                                    <p className="px-2 py-1 shadow-sm whitespace-nowrap overflow-hidden text-left text-ellipsis font-dunggeunmo font-bold text-lg text-white">
                                         {card.title}
                                     </p>
                                     {/* 별점 */}
-                                    <div className="flex justify-start gap-0.5">
+                                    <div className="flex justify-end gap-0.5">
                                         {Array(card.stars)
                                             .fill(0)
                                             .map((_, starIndex) => (
@@ -194,4 +194,3 @@ export default function SampleCards() {
         </div>
     );
 }
-

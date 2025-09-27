@@ -179,19 +179,21 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
 
         <div className="flex flex-col gap-2">
           {/* 카페 이름 */}
-          <div>
-            <p className={`whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-2 ${textColor} font-dunggeunmo font-bold text-sm transition-all duration-300 ease-in-out`}>
-              {cafe.name}
+          <div className='px-2 py-1 shadow-sm'>
+            <div className={`flex justify-between items-center ${textColor} font-dunggeunmo font-bold text-sm transition-all duration-300 ease-in-out`}>
+              <p className="whitespace-nowrap overflow-hidden text-ellipsis">
+                {cafe.name}
+              </p>
               {isHiddenCard && (
-                <span className="inline-flex h-5 px-1.5 rounded-lg shadow-md bg-linear-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-size-[200%_200%] animate-gradient items-center justify-center text-xs font-dunggeunmo text-white">
-                  HIDDEN
+                <span className="inline-flex h-5 px-1.5 rounded-lg shadow-md bg-linear-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-size-[200%_200%] animate-gradient items-center justify-center text-xs font-dunggeunmo text-white ml-2">
+                  H
                 </span>
               )}
-            </p>
+            </div>
           </div>
 
           {/* 별점 */}
-          <div className="z-10 flex justify-start gap-0.5">
+          <div className="z-10 flex justify-end gap-0.5">
             {Array(cafe.ratings)
               .fill(0)
               .map((_, index) => (
