@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 import { SignupPage } from '@/tests/e2e/page-objects/SignUpPage';
 import { VerifyPage } from '@/tests/e2e/page-objects/VerifyPage';
 import { MainPage } from '@/tests/e2e/page-objects/MainPage';
-import { MOCK_AUTH_DATA, TEST_SELECTORS, SUCCESS_MESSAGES, ERROR_MESSAGES } from '@/tests/e2e/utils/constants';
+import { MOCK_AUTH_DATA, TEST_SELECTORS, ERROR_MESSAGES } from '@/tests/e2e/utils/constants';
+import { TOAST_SUCCESS } from '@/utils/constants/messages';
 
 test.describe('처음 가입한 사용자의 플로우 테스트', () => {
     test('회원가입부터 카페 수집까지 성공한다.', async ({ page }) => {
@@ -60,7 +61,7 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
         await page.getByTestId(TEST_SELECTORS.INPUT_COMMENT).fill('분위기가 정말 좋은 카페입니다');
         await page.getByTestId(TEST_SELECTORS.INPUT_EATEN_MENUS).fill('이얼즈 라떼');
         await page.getByTestId(TEST_SELECTORS.BUTTON_SUBMIT_COLLECT).click();
-        await expect(page.getByText(SUCCESS_MESSAGES.CAFE_COLLECTED)).toBeVisible();
+        await expect(page.getByText(TOAST_SUCCESS.CREATE_COLLECTION)).toBeVisible();
         await page.waitForLoadState();
 
         // 9. 수집 완료 후 수집 확인

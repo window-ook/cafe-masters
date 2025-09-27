@@ -15,14 +15,9 @@ export const API_PATHS = {
     SUPABASE_AUTH_VERIFY: '**/auth/v1/verify**',
 } as const;
 
+
 /** 성공 메시지 */
 export const SUCCESS_MESSAGES = {
-    CAFE_COLLECTED: '카페를 수집했어요!',
-    COLLECTION_CAFE_UPDATED: '카페 정보 수정을 완료했어요!',
-    BOOKMARK_CAFE_ADDED: '북마크에 추가했어요!',
-    BOOKMARK_CAFE_REMOVED: '북마크에서 제거했어요!',
-    SIGNUP_SUCCESS: '회원가입이 완료되었습니다',
-    SIGNIN_SUCCESS: '로그인이 완료되었습니다',
     INTERCEPT_REQUEST_SIGNUP: '회원가입 요청 인터셉트:',
 } as const;
 
@@ -33,7 +28,7 @@ export const ERROR_MESSAGES = {
     PASSWORD_REQUIRED: '비밀번호는 최소 6자 이상 입력해야 합니다',
     VERIFICATION_CODE_REQUIRED: '인증번호를 입력해주세요',
     VERIFICATION_CODE_INVALID: '인증 코드가 올바르지 않습니다',
-    NO_EATEN_MENUS: '먹은 메뉴를 입력해주세요.'
+    NO_EATEN_MENUS: '먹은 메뉴를 입력해주세요'
 } as const;
 
 /** 테스트 선택자 */

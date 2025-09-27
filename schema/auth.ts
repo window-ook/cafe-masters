@@ -7,11 +7,11 @@ import { z } from 'zod';
 export const signInFormSchema = z.object({
   email: z
     .string()
-    .min(1, '이메일을 입력해주세요.')
-    .email('유효하지 않은 이메일 형식입니다.'),
+    .min(1, '이메일을 입력해주세요')
+    .email('유효하지 않은 이메일 형식입니다'),
   password: z
     .string()
-    .min(6, '비밀번호는 최소 6자 이상 입력해야 합니다.'),
+    .min(6, '비밀번호는 최소 6자 이상 입력해야 합니다'),
 });
 
 /**
@@ -21,14 +21,14 @@ export const signInFormSchema = z.object({
 export const signUpFormSchema = z.object({
   email: z
     .string()
-    .min(1, '이메일을 입력해주세요.')
-    .email('유효하지 않은 이메일 형식입니다.'),
+    .min(1, '이메일을 입력해주세요')
+    .email('유효하지 않은 이메일 형식입니다'),
   password: z
     .string()
-    .min(6, '비밀번호는 최소 6자 이상 입력해야 합니다.')
+    .min(6, '비밀번호는 최소 6자 이상 입력해야 합니다')
     .regex(
       /^(?=.*[a-zA-Z])(?=.*\d).*$/,
-      '비밀번호는 영문과 숫자를 포함해야 합니다.'
+      '비밀번호는 영문과 숫자를 포함해야 합니다'
     ),
 });
 
@@ -39,9 +39,9 @@ export const signUpFormSchema = z.object({
 export const otpFormSchema = z.object({
   otp: z
     .string()
-    .min(6, '인증 코드는 6자리여야 합니다.')
-    .max(6, '인증 코드는 6자리여야 합니다.')
-    .regex(/^\d{6}$/, '인증 코드는 숫자만 입력 가능합니다.'),
+    .min(6, '인증 코드는 6자리여야 합니다')
+    .max(6, '인증 코드는 6자리여야 합니다')
+    .regex(/^\d{6}$/, '인증 코드는 숫자만 입력 가능합니다'),
 });
 
 /** 비밀번호 재설정 요청 폼 스키마
@@ -61,16 +61,16 @@ export const resetPasswordRequestSchema = z.object({
 export const resetPasswordFormSchema = z.object({
   newPassword: z
     .string()
-    .min(6, '비밀번호는 최소 6자 이상 입력해야 합니다.')
+    .min(6, '비밀번호는 최소 6자 이상 입력해야 합니다')
     .regex(
       /^(?=.*[a-zA-Z])(?=.*\d).*$/,
-      '비밀번호는 영문과 숫자를 포함해야 합니다.'
+      '비밀번호는 영문과 숫자를 포함해야 합니다'
     ),
   newPasswordConfirm: z
     .string()
-    .min(6, '비밀번호는 최소 6자 이상 입력해야 합니다.'),
+    .min(6, '비밀번호는 최소 6자 이상 입력해야 합니다'),
 }).refine((data) => data.newPassword === data.newPasswordConfirm, {
-  message: '비밀번호가 일치하지 않습니다.',
+  message: '비밀번호가 일치하지 않습니다',
   path: ['newPasswordConfirm'],
 });
 

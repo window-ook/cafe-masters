@@ -7,7 +7,7 @@ import { z } from 'zod';
 export const recommendationFormSchema = z.object({
   categories: z
     .array(z.string())
-    .min(1, '카테고리를 선택해주세요.'),
+    .min(1, '카테고리를 선택해주세요'),
 });
 
 export type RecommendationFormData = z.infer<typeof recommendationFormSchema>;

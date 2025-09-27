@@ -1,12 +1,12 @@
 // 유저 확인용 Toast
 export const TOAST_SUCCESS = {
-    CREATE_BOOKMARK: '북마크에 추가했습니다',
-    DELETE_BOOKMARK: '북마크에서 제거했습니다',
-    RESET_PASSWORD: '비밀번호를 재설정했습니다',
-    EDIT_COLLECTION: '수집한 카페의 정보를 수정했습니다',
-    CREATE_COLLECTION: '새로운 카페를 수집했습니다',
-    CREATE_RECOMMENDATION: '새로운 카페를 추천했습니다',
-    COPY_TO_CLIPBOARD: '클립보드에 복사했습니다',
+    CREATE_BOOKMARK: '북마크에 추가했습니다!',
+    DELETE_BOOKMARK: '북마크에서 제거했습니다!',
+    RESET_PASSWORD: '비밀번호를 재설정했습니다!',
+    EDIT_COLLECTION: '수집한 카페의 정보를 수정했습니다!',
+    CREATE_COLLECTION: '새로운 카페를 수집했습니다!',
+    CREATE_RECOMMENDATION: '새로운 카페를 추천했습니다!',
+    COPY_TO_CLIPBOARD: '클립보드에 복사했습니다!',
 } as const;
 
 export const TOAST_ERROR = {
