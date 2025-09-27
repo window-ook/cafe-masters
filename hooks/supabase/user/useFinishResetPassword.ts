@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { getAuthErrorMessage } from '@/utils/shared/authError';
+import { toast } from 'react-toastify';
 
 export function useFinishResetPassword() {
   const supabase = createBrowserSupabaseClient();
@@ -18,7 +19,7 @@ export function useFinishResetPassword() {
     },
     onError: error => {
       const errorMessage = getAuthErrorMessage(error);
-      alert(errorMessage);
+      toast.error(errorMessage);
     },
   });
 

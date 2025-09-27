@@ -3,6 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { getAuthErrorMessage } from '@/utils/shared/authError';
+import { toast } from 'react-toastify';
 
 /** Supabase 비밀번호 재설정 요청 훅
  * @description 이메일로 비밀번호 재설정 링크를 전송합니다
@@ -22,7 +23,7 @@ export function useRequestResetPassword() {
 
     onError: error => {
       const errorMessage = getAuthErrorMessage(error);
-      alert(errorMessage);
+      toast.error(errorMessage);
     },
   });
 

@@ -36,7 +36,7 @@
   },
   "include": [
     "next-env.d.ts",
-    "next-pwa.d.ts",
+    "types/**/*.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"

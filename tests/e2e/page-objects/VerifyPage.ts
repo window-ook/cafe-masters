@@ -1,5 +1,5 @@
 import { Page } from 'playwright-core';
-import { API_PATHS, TEST_SELECTORS, MOCK_AUTH_DATA } from '@/tests/e2e/utils/constants';
+import { API_PATHS, TEST_SELECTORS, MOCK_AUTH_DATA, ERROR_MESSAGES } from '@/tests/e2e/utils/constants';
 
 export class VerifyPage {
     constructor(private page: Page) { }
@@ -14,8 +14,8 @@ export class VerifyPage {
         await this.page.getByTestId(TEST_SELECTORS.BUTTON_SUBMIT_EMAIL_VERIFICATION_CODE).click();
     }
 
-    /** 회원가입 이메일 인증 코드 제출 API 모킹 */
-    async mockSubmitEmailVerificationCode() {
+    /** 회원가입 이메일 인증 코드 제출 API 모킹 (성공) */
+    async mockSubmitEmailVerificationCodeSuccess() {
         await this.page.route(API_PATHS.SUPABASE_AUTH_VERIFY, route => {
             route.fulfill({
                 status: 200,
@@ -37,6 +37,31 @@ export class VerifyPage {
                     }
                 })
             });
+        });
+    }
+
+    /** 회원가입 이메일 인증 코드 제출 API 모킹 (실패) */
+    async mockSubmitEmailVerificationCodeFailure() {
+        // 모든 Supabase 요청을 잡아서 verifyOtp 관련 요청만 실패시키기
+        await this.page.route('**/*', route => {
+            const url = route.request().url();
+            const method = route.request().method();
+            const postData = route.request().postData();
+
+            // Supabase auth 관련 POST 요청이고 type=signup이 포함된 경우
+            if (url.includes('supabase.co/auth/v1') && method === 'POST' && postData?.includes('"type":"signup"')) {
+                route.fulfill({
+                    status: 400,
+                    contentType: 'application/json',
+                    body: JSON.stringify({
+                        code: 'otp_expired',
+                        message: ERROR_MESSAGES.VERIFICATION_CODE_INVALID,
+                        error_description: ERROR_MESSAGES.VERIFICATION_CODE_INVALID
+                    })
+                });
+            } else {
+                route.continue();
+            }
         });
     }
 

@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { getAuthErrorMessage } from '@/utils/shared/authError';
+import { toast } from 'react-toastify';
 
 export function useVerifyOtpCode() {
   const supabase = createBrowserSupabaseClient();
@@ -27,7 +28,7 @@ export function useVerifyOtpCode() {
 
     onError: error => {
       const errorMessage = getAuthErrorMessage(error);
-      alert(errorMessage);
+      toast.error(errorMessage);
     },
   });
 

@@ -31,7 +31,8 @@ export const ERROR_MESSAGES = {
     EMAIL_REQUIRED: '이메일을 입력해주세요',
     PASSWORD_REQUIRED: '비밀번호는 최소 6자 이상 입력해야 합니다',
     VERIFICATION_CODE_REQUIRED: '인증번호를 입력해주세요',
-    RATING_REQUIRED: '별점을 선택해주세요',
+    VERIFICATION_CODE_INVALID: '인증 코드가 올바르지 않습니다',
+    NO_EATEN_MENUS: '먹은 메뉴를 입력해주세요.'
 } as const;
 
 /** 테스트 선택자 */

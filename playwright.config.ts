@@ -30,8 +30,13 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    ...(process.env.CI && {
+      actionTimeout: 15000,
+      navigationTimeout: 30000,
+    }),
   },
 
+  // Github Actions use only chromium
   projects: [
     {
       name: 'chromium',
@@ -51,11 +56,9 @@ export default defineConfig({
       ]),
   ],
 
-  webServer: process.env.CI
-    ? undefined // CI에서는 미리 빌드된 서버 사용
-    : {
-      command: 'pnpm run dev',
-      url: 'http://localhost:3000',
-      reuseExistingServer: true,
-    },
+  webServer: {
+    command: 'pnpm run dev',
+    url: 'http://localhost:3000',
+    reuseExistingServer: true,
+  },
 });

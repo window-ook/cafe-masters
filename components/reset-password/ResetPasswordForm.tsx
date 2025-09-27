@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useFinishResetPassword } from '@/hooks/supabase/user';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { resetPasswordFormSchema, ResetPasswordFormData } from '@/schema/auth';
+import { toast } from 'react-toastify';
 import BackgroundCards from '@/components/shared/FallingCards';
 import Button from '@/components/shared/Button';
 import InputField from '@/components/shared/InputField';
@@ -31,7 +32,7 @@ export default function ResetPasswordForm() {
   const onFormSubmit = async (data: ResetPasswordFormData) => {
     try {
       finishResetPassword(data.newPassword);
-      alert('비밀번호를 재설정했습니다!');
+      toast.success('비밀번호를 재설정했습니다!');
       router.push('/reset-password/complete');
     } catch (error) {
       console.error('비밀번호 재설정 실패:', error);

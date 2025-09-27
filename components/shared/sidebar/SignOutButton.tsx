@@ -20,7 +20,7 @@ export default function SignOutButton() {
 
   return (
     <Link
-      href='/signin'
+      href='/main'
       data-testid="button-signout"
       onClick={handleSignOut}
       className="bg-main rounded-xl shadow-md w-full py-4 sm:py-2 hover:bg-main-dark flex justify-center cursor-pointer transition duration-150 ease-in"
