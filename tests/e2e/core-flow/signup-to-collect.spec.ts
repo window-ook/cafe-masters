@@ -37,14 +37,14 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
         await expect(page).toHaveURL(/.*search.*/);
         await page.waitForLoadState('networkidle');
 
-        // 6. 검색 결과 로딩 대기 및 페이지네이션 확인
-        // 검색 결과가 충분히 로드되어 페이지네이션이 나타날 때까지 대기
-        await page.waitForFunction(() => {
-            const nextButton = document.querySelector('[data-testid="button-next-page"]');
-            return nextButton && !nextButton.hasAttribute('disabled');
-        }, { timeout: 20000 });
+        // 6. 검색 결과 로딩 대기 및 페이지네이션 버튼 대기
+        // 페이지네이션이 렌더링될 때까지 추가 대기
+        await page.waitForTimeout(3000);
 
+        // 페이지네이션 버튼이 활성화될 때까지 대기
         const nextPageButton = page.getByTestId(TEST_SELECTORS.BUTTON_NEXT_PAGE);
+        await nextPageButton.waitFor({ state: 'visible', timeout: 20000 });
+        await expect(nextPageButton).not.toBeDisabled();
         await nextPageButton.click();
         await page.getByText('이얼즈').click();
         const slidingDrawer = page.getByTestId(TEST_SELECTORS.SLIDING_DRAWER);
@@ -130,14 +130,14 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
             await expect(page).toHaveURL(/.*search.*/);
             await page.waitForLoadState('networkidle');
 
-            // 6. 검색 결과 로딩 대기 및 페이지네이션 확인
-            // 검색 결과가 충분히 로드되어 페이지네이션이 나타날 때까지 대기
-            await page.waitForFunction(() => {
-                const nextButton = document.querySelector('[data-testid="button-next-page"]');
-                return nextButton && !nextButton.hasAttribute('disabled');
-            }, { timeout: 20000 });
+            // 6. 검색 결과 로딩 대기 및 페이지네이션 버튼 대기
+            // 페이지네이션이 렌더링될 때까지 추가 대기
+            await page.waitForTimeout(3000);
 
+            // 페이지네이션 버튼이 활성화될 때까지 대기
             const nextPageButton = page.getByTestId(TEST_SELECTORS.BUTTON_NEXT_PAGE);
+            await nextPageButton.waitFor({ state: 'visible', timeout: 20000 });
+            await expect(nextPageButton).not.toBeDisabled();
             await nextPageButton.click();
             await page.getByText('이얼즈').click();
             const slidingDrawer = page.getByTestId(TEST_SELECTORS.SLIDING_DRAWER);
