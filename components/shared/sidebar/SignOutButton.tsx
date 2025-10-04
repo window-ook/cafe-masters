@@ -2,8 +2,8 @@
 
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useUserStore } from '@/stores/user';
+import { CONSOLE_ERROR } from '@/constants/messages';
 import Link from 'next/link';
-import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 export default function SignOutButton() {
   const supabase = createBrowserSupabaseClient();

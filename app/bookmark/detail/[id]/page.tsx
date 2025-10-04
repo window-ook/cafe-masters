@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getBookmarkCafeById } from '@/actions/supabase/bookmark';
 import { IPageParams } from '@/types/shared/page';
-import { CONSOLE_ERROR } from '@/utils/constants/messages';
+import { CONSOLE_ERROR } from '@/constants/messages';
 import BookmarkDetailClient from '@/components/bookmark/detail/BookmarkDetailClient';
 
 export async function generateMetadata({ params }: IPageParams): Promise<Metadata> {

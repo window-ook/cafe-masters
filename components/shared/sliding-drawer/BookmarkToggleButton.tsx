@@ -2,7 +2,7 @@
 
 import { useCreateBookmarkCafe, useDeleteBookmarkCafe } from '@/hooks/supabase/bookmark';
 import { useCurrentCafeStore, useUserStore } from '@/stores';
-import { TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
+import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/messages';
 import { Bookmark } from 'lucide-react';
 import { toast } from 'react-toastify';
 

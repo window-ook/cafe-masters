@@ -1,7 +1,7 @@
 'use client';
 
 import { RefObject } from 'react';
-import { TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
+import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/messages';
 import { toast } from 'react-toastify';
 
 /** 클립보드 복사 */

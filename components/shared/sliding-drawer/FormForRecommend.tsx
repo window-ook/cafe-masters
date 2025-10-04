@@ -6,7 +6,7 @@ import { useCreateRecommendationCafe } from '@/hooks/supabase/recommendation/use
 import { useRecommendationStore } from '@/stores/recommendation';
 import { recommendationFormSchema, RecommendationFormData } from '@/schema/recommendation';
 import { RecommendationRowInsert } from '@/actions/supabase/recommendation';
-import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS, TOAST_WARN } from '@/utils/constants/messages';
+import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS, TOAST_WARN } from '@/constants/messages';
 import { toast } from 'react-toastify';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
 import Button from '@/components/shared/Button';

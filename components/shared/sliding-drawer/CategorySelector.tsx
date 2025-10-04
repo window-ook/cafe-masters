@@ -1,4 +1,4 @@
-import { CATEGORIES } from '@/utils/constants/categories';
+import { CATEGORIES } from '@/constants/categories';
 import { RotateCcw } from 'lucide-react';
 import { ICategorySelector } from '@/types/shared/form';
 

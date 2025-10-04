@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSignIn } from '@/hooks/supabase/user';
+import { useSignIn } from '@/hooks/supabase/authentication';
 import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
 import { signInFormSchema, SignInFormData } from '@/schema/auth';
 import Link from 'next/link';

@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useFilterStore } from '@/stores/filter';
 import { useUIStore } from '@/stores';
-import { CATEGORIES } from '@/utils/constants/categories';
 import { RotateCcw } from 'lucide-react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
+import { CATEGORIES } from '@/constants/categories';
 
 export default function CategoryFilter() {
   const selectedCategories = useFilterStore(state => state.selectedCategories);

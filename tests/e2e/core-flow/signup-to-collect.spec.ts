@@ -3,7 +3,7 @@ import { SignupPage } from '@/tests/e2e/page-objects/SignUpPage';
 import { VerifyPage } from '@/tests/e2e/page-objects/VerifyPage';
 import { MainPage } from '@/tests/e2e/page-objects/MainPage';
 import { MOCK_AUTH_DATA, TEST_SELECTORS, ERROR_MESSAGES } from '@/tests/e2e/utils/constants';
-import { TOAST_SUCCESS } from '@/utils/constants/messages';
+import { TOAST_SUCCESS } from '@/constants/messages';
 
 test.describe('처음 가입한 사용자의 플로우 테스트', () => {
     test('회원가입부터 카페 수집까지 성공한다.', async ({ page }) => {

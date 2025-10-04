@@ -3,11 +3,11 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRequestResetPassword } from '@/hooks/supabase/user/useRequestResetPassword';
+import { useRequestResetPassword } from '@/hooks/supabase/authentication/useRequestResetPassword';
 import { resetPasswordRequestSchema, ResetPasswordRequestData } from '@/schema/auth';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
-import { CONSOLE_ERROR } from '@/utils/constants/messages';
+import { CONSOLE_ERROR } from '@/constants/messages';
 
 interface IResetPasswordRequestFormProps {
   onBackAction: () => void;

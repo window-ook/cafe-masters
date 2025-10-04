@@ -1,11 +1,10 @@
 import { MetadataRoute } from 'next';
 import { getRecommendationCafesForSitemap } from '@/actions/supabase/recommendation/getData';
-import { CONSOLE_ERROR } from '@/utils/constants/messages';
+import { CONSOLE_ERROR } from '@/constants/messages';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://app.cafe-masters.co';
 
-  // 기본 페이지들
   const staticPages: MetadataRoute.Sitemap = [
     // 랜딩페이지
     {
@@ -14,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 1,
     },
-    // 메인 (사이드바 탭)
+    // 메인페이지
     {
       url: `${baseUrl}/main`,
       lastModified: new Date(),
@@ -56,6 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     // 추천 카페 상세 페이지
     const { data: recommendationCafes } = await getRecommendationCafesForSitemap();
+
     recommendationCafes.forEach(cafe => {
       dynamicPages.push({
         url: `${baseUrl}/recommendation/detail/${cafe.id}`,

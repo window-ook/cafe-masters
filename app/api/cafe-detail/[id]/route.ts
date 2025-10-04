@@ -10,7 +10,7 @@ import {
   type BrowserConfig,
   type ScrapingConfig,
 } from '@/lib/data/scrapper';
-import { CONSOLE_ERROR } from '@/utils/constants/messages';
+import { CONSOLE_ERROR } from '@/constants/messages';
 
 export const runtime = 'nodejs';
 
@@ -55,7 +55,6 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     return NextResponse.json(data);
   } catch (error) {
     console.error(CONSOLE_ERROR.SCRAP_CAFE_DETAIL, error);
-
     const errorResponse = handleScrapingError(error);
     return NextResponse.json(
       { error: errorResponse.error, details: errorResponse.details },

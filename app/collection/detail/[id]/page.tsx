@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getCollectionCafeById } from '@/actions/supabase/collection';
 import { IPageParams } from '@/types/shared/page';
-import { CONSOLE_ERROR } from '@/utils/constants/messages';
+import { CONSOLE_ERROR } from '@/constants/messages';
 
 export async function generateMetadata({ params }: IPageParams): Promise<Metadata> {
   const { id } = await params;

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useVerifyOtpCode } from '@/hooks/supabase/user';
+import { useVerifyOtpCode } from '@/hooks/supabase/authentication';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Link from 'next/link';
 import Image from 'next/image';

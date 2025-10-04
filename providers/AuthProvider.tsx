@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from 'utils/supabase/client';
 import { useUserStore } from '@/stores';
-import { CONSOLE_ERROR } from '@/utils/constants/messages';
+import { CONSOLE_ERROR } from '@/constants/messages';
 
 interface IAuthProvider {
   accessToken: string | null;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useUIStore } from '@/stores';
 import { Star } from 'lucide-react';
 import { IMAGE_PATHS } from '@/lib/paths';
@@ -45,7 +45,6 @@ export default function CollectionCafe({
   const cardRef = useRef<HTMLButtonElement>(null);
   const backEffectRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const sparkleRef = useRef<HTMLStyleElement | null>(null);
 
   switch (ratings) {
     case 1:
@@ -111,8 +110,6 @@ export default function CollectionCafe({
 
     back?.style.setProperty('--rotate-x', `0deg`);
     back?.style.setProperty('--rotate-y', `0deg`);
-
-    if (isHiddenCard && sparkleRef.current) sparkleRef.current.innerHTML = '';
   };
 
   const handleOverlayMouseMove = (e: React.MouseEvent) => {
@@ -141,21 +138,6 @@ export default function CollectionCafe({
     overlay.style.setProperty('--mouse-y', `50%`);
     overlay.style.opacity = '0';
   };
-
-  useEffect(() => {
-    if (!sparkleRef.current) {
-      const styleElement = document.createElement('style');
-      document.head.appendChild(styleElement);
-      sparkleRef.current = styleElement;
-    }
-
-    return () => {
-      if (sparkleRef.current && sparkleRef.current.parentNode) {
-        sparkleRef.current.parentNode.removeChild(sparkleRef.current);
-        sparkleRef.current = null;
-      }
-    };
-  }, []);
 
   return (
     <li className="group card-container relative list-none h-96">

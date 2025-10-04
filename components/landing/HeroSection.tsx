@@ -7,13 +7,13 @@ import MainThemeBackground from '@/components/shared/MainThemeBackground';
 async function getCollectionCounts() {
     const supabase = await createServerSupabaseClient();
 
-    const { data, error } = await supabase
+    const { count, error } = await supabase
         .from('collection')
-        .select('*', { count: 'exact' });
+        .select('*', { count: 'exact', head: true });
 
     if (error) throw new Error(error.message);
 
-    return data?.length ?? 0;
+    return count ?? 0;
 }
 
 export default async function HeroSection() {

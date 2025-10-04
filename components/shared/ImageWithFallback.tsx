@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import Image, { ImageProps } from 'next/image';
-import { CONSOLE_LOG } from '@/utils/constants/messages';
+import { useState } from 'react';
+import { CONSOLE_LOG } from '@/constants/messages';
 
 interface IImageWithFallback extends Omit<ImageProps, 'src'> {
     src: string;

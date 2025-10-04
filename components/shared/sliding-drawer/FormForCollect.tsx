@@ -8,7 +8,7 @@ import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { useUpdateCollectionCafe } from '@/hooks/supabase/collection/useUpdateCollectionCafe';
 import { useCreateCollectionCafe } from '@/hooks/supabase/collection';
-import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
+import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS } from '@/constants/messages';
 import { toast } from 'react-toastify';
 import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';

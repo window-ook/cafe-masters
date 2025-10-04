@@ -103,6 +103,9 @@ const nextConfig: NextConfig = {
       });
     }
 
+    config.optimization.moduleIds = 'deterministic';
+    config.optimization.chunkIds = 'deterministic';
+
     return config;
   },
 };

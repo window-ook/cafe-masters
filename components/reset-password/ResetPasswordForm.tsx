@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFinishResetPassword } from '@/hooks/supabase/user';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { resetPasswordFormSchema, ResetPasswordFormData } from '@/schema/auth';
+import { useFinishResetPassword } from '@/hooks/supabase/authentication';
+import { CONSOLE_ERROR, TOAST_SUCCESS } from '@/constants/messages';
 import { toast } from 'react-toastify';
 import BackgroundCards from '@/components/shared/FallingCards';
 import Button from '@/components/shared/Button';
 import InputField from '@/components/shared/InputField';
-import { CONSOLE_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 
 export default function ResetPasswordForm() {
   const supabase = createBrowserSupabaseClient();

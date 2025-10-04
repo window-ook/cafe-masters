@@ -10,9 +10,6 @@ import { INTERNAL_PATHS } from '@/lib/paths';
 export async function fetchSearchCafeDetail(cafeId: string): Promise<ISearchCafeDetail | null> {
   if (!cafeId || typeof cafeId !== 'string' || cafeId.trim() === '') throw new Error('유효한 카페 ID가 필요합니다.');
 
-  const isLocalEnvironment = process.env.NEXT_PUBLIC_BASE_URL === 'http://localhost:3000';
-  if (!isLocalEnvironment) throw new Error('Vercel 환경에서는 스크래핑을 지원하지 않습니다.');
-
   const cleanCafeId = cafeId.trim();
 
   try {
