@@ -39,10 +39,10 @@ export default function CollectionCafes() {
       <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="my-8 px-8 flex flex-col gap-8">
-            {Array.from({ length: COLLECTION_CAFES_PER_PAGE }).map((_, index) => (
+            {Array.from({ length: 1 }).map((_, index) => (
               <div
                 key={index}
-                className="h-20 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"
+                className="h-80 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"
               />
             ))}
           </div>

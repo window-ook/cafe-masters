@@ -116,7 +116,7 @@ export function useCollectionCafes(
 
   return {
     ...paginationData,
-    isPending: queryData.isPending,
+    isPending: queryData.isPending && queryData.fetchStatus !== 'idle',
     isError: queryData.isError,
     error: queryData.error
   };

@@ -93,5 +93,9 @@ export function useBookmarkCafes(
     itemsPerPage,
   ]);
 
-  return { ...paginationData, isPending: queryData.isPending, isError: queryData.isError, error: queryData.error };
+  return {
+    ...paginationData,
+    isPending: queryData.isPending && queryData.fetchStatus !== 'idle',
+    isError: queryData.isError, error: queryData.error
+  };
 }

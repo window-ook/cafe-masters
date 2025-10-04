@@ -7,11 +7,11 @@ import { bookmarkCafeQuery } from "@/queries/supabase/bookmark";
  * @returns 북마크 카페 수
  */
 export function useBookmarkCounts(userId: string) {
-    const { data, isError, error, isPending } = useQuery({
+    const { data, isError, error, isPending, fetchStatus } = useQuery({
         enabled: !!userId && userId !== 'no-user',
         queryKey: bookmarkCafeQuery.counts(userId),
         queryFn: () => getBookmarkCounts(),
     });
 
-    return { bookmarkCounts: data, isError, error, isPending };
+    return { bookmarkCounts: data, isError, error, isPending: isPending && fetchStatus !== 'idle' };
 }

@@ -9,11 +9,11 @@ import { getCollectionCounts } from "@/actions/supabase/collection";
  * @returns 수집 카페 수
  */
 export function useCollectionCounts(userId: string) {
-    const { data, isError, error, isPending } = useQuery({
+    const { data, isError, error, isPending, fetchStatus } = useQuery({
         enabled: !!userId && userId !== 'no-user',
         queryKey: collectionCafeQuery.counts(userId),
         queryFn: () => getCollectionCounts(),
     });
 
-    return { collectionCounts: data, isError, error, isPending };
+    return { collectionCounts: data, isError, error, isPending: isPending && fetchStatus !== 'idle' };
 }
