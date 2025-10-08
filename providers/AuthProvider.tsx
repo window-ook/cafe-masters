@@ -62,7 +62,7 @@ export default function AuthProvider({
 
           // 관리자 권한 체크 (필요시)
           try {
-            const { getIsAdmin } = await import('@/actions/supabase/user');
+            const { getIsAdmin } = await import('@/actions/supabase/admin');
             const isAdmin = await getIsAdmin();
             if (isAdmin) setAdmin(true);
           } catch (error) {

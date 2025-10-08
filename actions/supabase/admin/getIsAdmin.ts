@@ -15,7 +15,7 @@ export async function getIsAdmin(): Promise<boolean> {
     if (!user_id) throw new Error('유저 ID가 유효하지 않습니다.');
 
     const { data, error } = await supabase
-        .from('user')
+        .from('admin')
         .select('user_id, admin')
         .eq('user_id', user_id)
         .maybeSingle();

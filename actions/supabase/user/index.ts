@@ -1,1 +1,0 @@
-export { getIsAdmin } from '@/actions/supabase/user/getIsAdmin';

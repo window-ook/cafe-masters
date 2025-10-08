@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin: {
+        Row: {
+          admin: boolean
+          created_at: string
+          user_id: string
+        }
+        Insert: {
+          admin: boolean
+          created_at?: string
+          user_id: string
+        }
+        Update: {
+          admin?: boolean
+          created_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       bookmark: {
         Row: {
           address: string
@@ -188,24 +206,6 @@ export type Database = {
           name?: string
           opening_time?: string | null
           phone_number?: string | null
-        }
-        Relationships: []
-      }
-      user: {
-        Row: {
-          admin: boolean
-          created_at: string
-          user_id: string
-        }
-        Insert: {
-          admin: boolean
-          created_at?: string
-          user_id: string
-        }
-        Update: {
-          admin?: boolean
-          created_at?: string
-          user_id?: string
         }
         Relationships: []
       }
