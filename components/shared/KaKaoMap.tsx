@@ -1,8 +1,8 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
+import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
@@ -25,7 +25,7 @@ interface IKakaoPagination {
 }
 
 export default function KakaoMap() {
-  const pathname = usePathname();
+  const paths = usePathMatcher();
 
   const userId = useUserStore(state => state.userId);
   const keyword = useFilterStore(state => state.keyword);
@@ -40,10 +40,10 @@ export default function KakaoMap() {
 
   // 페이지별 카페 클릭 핸들러 설정
   const getRoutePathForCurrentPage = () => {
-    if (pathname === '/search' || pathname.startsWith('/search/detail')) return 'search';
-    if (pathname.startsWith('/collection')) return 'collection';
-    if (pathname.startsWith('/bookmark')) return 'bookmark';
-    if (pathname.startsWith('/recommendation')) return 'recommendation';
+    if (paths.isSearch) return 'search';
+    if (paths.isCollection) return 'collection';
+    if (paths.isBookmark) return 'bookmark';
+    if (paths.isRecommendation) return 'recommendation';
     return 'search';
   };
 
@@ -233,12 +233,12 @@ export default function KakaoMap() {
       ps.keywordSearch(query, handleSearch);
     };
 
-    if (pathname === '/search') {
+    if (paths.isSearch && !paths.isSearchDetail) {
       const query = keyword.includes('카페') ? keyword : `${keyword} 카페`;
       searchCafes(query);
     }
 
-    if (pathname.startsWith('/search/detail')) {
+    if (paths.isSearchDetail) {
       updateMarkers(
         searchResult,
         cafe => cafe.y,
@@ -246,7 +246,7 @@ export default function KakaoMap() {
       );
     }
 
-    if (pathname.startsWith('/collection')) {
+    if (paths.isCollection && !paths.isCollectionDetail) {
       updateMarkers(
         filteredCollectionCafes,
         cafe => cafe.coordY,
@@ -254,7 +254,7 @@ export default function KakaoMap() {
       );
     }
 
-    if (pathname.startsWith('/bookmark')) {
+    if (paths.isBookmark && !paths.isBookmarkDetail) {
       updateMarkers(
         filteredBookmarkCafes,
         cafe => cafe.coordY,
@@ -262,7 +262,7 @@ export default function KakaoMap() {
       );
     }
 
-    if (pathname.startsWith('/recommendation')) {
+    if (paths.isRecommendation && !paths.isRecommendationDetail) {
       if (!isRecommendedCafesLoading && recommendationCafes) {
         updateMarkers(
           recommendationCafes,
@@ -273,10 +273,10 @@ export default function KakaoMap() {
     }
 
     if (
-      pathname.startsWith('/search/detail') ||
-      pathname.startsWith('/collection/detail') ||
-      pathname.startsWith('/bookmark/detail') ||
-      pathname.startsWith('/recommendation/detail')
+      paths.isSearchDetail ||
+      paths.isCollectionDetail ||
+      paths.isBookmarkDetail ||
+      paths.isRecommendationDetail
     ) {
       mapRef.current.setCenter(new window.kakao.maps.LatLng(currentCoordY, currentCoordX));
     }
@@ -286,7 +286,7 @@ export default function KakaoMap() {
     keyword,
     currentCoordX,
     currentCoordY,
-    pathname,
+    paths,
     setSearchResult,
     searchResult,
     filteredBookmarkCafes,
