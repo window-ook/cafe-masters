@@ -7,6 +7,7 @@ import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
 import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
 import SideBar from '@/components/shared/sidebar/SideBar';
+import AuthProvider from '@/providers/AuthProvider';
 
 const ReactQueryDevtools = dynamic(() => import('@tanstack/react-query-devtools').then(mod => mod.ReactQueryDevtools), { ssr: false });
 const ToastContainer = dynamic(() => import('react-toastify').then(mod => mod.ToastContainer), { ssr: false });
@@ -42,36 +43,38 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const shouldHideComponents = hiddenPages.includes(pathname) || authPages.some(page => pathname.startsWith(page));
 
   return (
-    <main className={shouldHideComponents ? "w-full" : "flex h-screen overflow-hidden"}>
-      <QueryClientProvider client={queryClient}>
-        {!shouldHideComponents && (
-          <ErrorBoundaryWrapper
-            featureName="사이드바"
-            message="사이드바를 불러오는 중 에러가 발생했습니다."
-          >
-            <SideBar />
-          </ErrorBoundaryWrapper>
-        )}
+    <AuthProvider>
+      <main className={shouldHideComponents ? "w-full" : "flex h-screen overflow-hidden"}>
+        <QueryClientProvider client={queryClient}>
+          {!shouldHideComponents && (
+            <ErrorBoundaryWrapper
+              featureName="사이드바"
+              message="사이드바를 불러오는 중 에러가 발생했습니다."
+            >
+              <SideBar />
+            </ErrorBoundaryWrapper>
+          )}
 
-        {children}
+          {children}
 
-        {!shouldHideComponents && <KakaoMap />}
+          {!shouldHideComponents && <KakaoMap />}
 
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          newestOnTop={false}
-          draggable
-          theme="light"
-          limit={1}
-        />
-
-        {process.env.NODE_ENV === 'development' && (
-          <ReactQueryDevtools
-            initialIsOpen={false}
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            newestOnTop={false}
+            draggable
+            theme="light"
+            limit={1}
           />
-        )}
-      </QueryClientProvider>
-    </main>
+
+          {process.env.NODE_ENV === 'development' && (
+            <ReactQueryDevtools
+              initialIsOpen={false}
+            />
+          )}
+        </QueryClientProvider>
+      </main>
+    </AuthProvider>
   );
 }

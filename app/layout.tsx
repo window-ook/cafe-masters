@@ -1,10 +1,8 @@
 import { Metadata } from 'next';
-import { createServerSupabaseClient } from '@/utils/supabase/server';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import './globals.css';
 import React from 'react';
 import localFont from 'next/font/local';
-import AuthProvider from '@/providers/AuthProvider';
 import Providers from '@/providers/Providers';
 
 const pretendard = localFont({
@@ -88,15 +86,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = await createServerSupabaseClient();
-
-  const { data: { session } } = await supabase.auth.getSession();
-
   return (
     <html lang="ko">
       <head>
@@ -142,10 +136,8 @@ export default async function RootLayout({
       <body
         className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
       >
-        <AuthProvider accessToken={session?.access_token || null}>
-          <Providers>{children}</Providers>
-          <SpeedInsights />
-        </AuthProvider>
+        <Providers>{children}</Providers>
+        <SpeedInsights />
       </body>
     </html>
   );
