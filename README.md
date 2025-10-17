@@ -1,6 +1,6 @@
 # Cafe Masters
 
-<img src='https://github.com/user-attachments/assets/e042eb80-164e-4031-ba76-b3c129eea431' width='550' height='390' />
+<img width="1200" height="630" src="https://github.com/user-attachments/assets/5543d2e4-66d8-4f7c-8d27-d2de5523312a" />
 
 ### 카드 모으는 재미가 있는 카페 메모 관리 서비스
 
@@ -14,12 +14,11 @@
 - [🗓️ 개발 기간](#-개발-기간)
 - [👤 체험 계정](#-체험-계정)
 - [🎧 앱 다운로드 및 실행](#-앱-다운로드-및-실행)
-- [🛠 기술 스택](#-기술-스택)
+- [🛠 개발 환경](#-개발-환경)
 - [✨ 주요 기능](#-주요-기능)
 - [📁 프로젝트 구조](#-프로젝트-구조)
 - [🏗️ 시스템 설계](#️-시스템-설계)
 - [🤺 스킬 포커스](#-스킬-포커스)
-- [🤖 컨텍스트 엔지니어링](#-컨텍스트-엔지니어링)
 - [⚡ 성능 최적화](#-성능-최적화)
 - [📈 회고](#-회고)
 
@@ -50,6 +49,8 @@ git clone https://github.com/window-ook/cafe-masters.git
 pnpm install
 pnpm dev
 ```
+
+<br>
 
 ## 🛠 개발 환경
 
@@ -181,6 +182,7 @@ pnpm dev
 └── ...
 ```
 
+<br>
 디렉토리는 역할 기반으로 분류되어 있습니다.<br>
 이 방식은 컴포넌트나 훅, 함수, 타입 등 어떤 파일이든지 위치가 직관적이기 때문에 안정성과 확장성 면에서 매우 유리하고,<br>
 Shell Container에서 Presenter만 조건부로 렌더링을 바꿔서 하게 되는 카페 마스터즈의 아키텍처와도 잘 맞는다고 생각했습니다.<br><br>
@@ -257,18 +259,18 @@ user {
 
 ### 비동기 데이터 플로우
 
-**Supabase Read**
+**DB 조회**
 ```
-컴포넌트 → useQuery 커스텀 훅 → 서버 액션 → Supabase
-```
-
-**Supabase Create, Update, Delete**
-
-```
-컴포넌트 → useMutation 커스텀 훅 → 서버 액션 → Supabase
+컴포넌트 ↔ useQuery 커스텀 훅 → 서버 액션 ↔ Supabase
 ```
 
-<br>
+**DB 생성/삭제/업데이트, 인증 관련**
+
+```
+컴포넌트 ↔ useMutation 커스텀 훅 → 서버 액션 ↔ Supabase
+```
+
+<br><br>
 
 ## 🤺 스킬 포커스
 
@@ -426,6 +428,8 @@ export const resetPasswordRequestSchema = z.object({
 
 zod의 메서드 체이닝으로 직관적이고 효율적인 유효성 검증 로직을 구현했습니다.<br>
 React Hook Form의 useForm과 함께 조합하여 폼의 상태 관리와 유효성 검증, 에러 핸들링까지 담당합니다.
+
+<br>
 
 ## ⚡ 성능 최적화
 
