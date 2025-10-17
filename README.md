@@ -2,13 +2,12 @@
 
 <img src='https://github.com/user-attachments/assets/e042eb80-164e-4031-ba76-b3c129eea431' width='550' height='390' />
 
-### 카페에 대한 평가를 카드로 수집하고 북마크, 추천 등록하는 지도 기반 플랫폼
+### 카드 모으는 재미가 있는 카페 메모 관리 서비스
 
-평소에 카페를 자주 다니는 분들을 위해 만들었습니다!<br>
-방문한 카페에 대한 정보를 메모장에 따로 저장하지 말고 카페 마스터즈에서 쉽게 관리해보세요😊<br>
-뿐만 아니라 방문할 카페를 북마크 하실 수 있어요ㅎㅎ 개발자가 말아드리는 카페 추천도 있으니 놓치지 마세요!<br><br>
-
-카페 마스터즈는 카페를 많이 모아 마스터가 되는 세계입니다. 카드를 많이 모아서 마스터가 되어보세요-v-<br>
+카페를 자주 다니는 분들을 위해 만든 재밌는 서비스입니다<br>
+간단하게 카페에 대한 정보를 저장하면, 유니크한 나만의 카드가 된답니다?!<br>
+뿐만 아니라 방문할 카페를 북마크 하실 수 있어요ㅎㅎ 제가 해드리는 추천 카페도 있으니 놓치지 마세요!<br>
+카드를 많이 모아서 마스터가 되어보세요-v-<br>
 
 ## 📋 목차
 
@@ -26,9 +25,8 @@
 
 ## 🗓️ 개발 기간
 
-### 2025.07.27 ~ 2025.08.08
-
-지속적으로 코드 및 UI 개선 예정
+### 2024.10.02 ~ 2024.10.28 VERSION 1
+### 2025 ~ VERSION 2, 지속적으로 코드 및 UI 개선 
 
 ## 👤 체험 계정
 
@@ -53,7 +51,7 @@ pnpm install
 pnpm dev
 ```
 
-## 🛠 기술 스택
+## 🛠 개발 환경
 
 ### Front-End
 
@@ -82,14 +80,14 @@ pnpm dev
     <img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=prettier&logoColor=red">
 </div>
 
-### BFF
+### Back-End
 
 <div style='display:flex; align-items:center'>
     <img src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white">
     <img src="https://img.shields.io/badge/Resend-000000?style=flat-square&logo=resend&logoColor=white">
 </div>
 
-### 외부 데이터
+### Open API
 <div style='display:flex; align-items:center'>
     <img src="https://img.shields.io/badge/Kakao Map API-FFCD00?style=flat-square&logo=kakao&logoColor=black"> 
 </div>
@@ -124,17 +122,17 @@ pnpm dev
 
 ### 🗂️ 수집한 카페 모아보기
 
-<img src="https://github.com/user-attachments/assets/fca1eec2-d81e-4eae-960e-56a4af616142" width="700" height="364" /><br>
+<img src="https://github.com/user-attachments/assets/0a07808b-b051-43d3-8e1f-3cce7df12392" width="700" height="364" /><br>
 
 내가 여태 수집한 카드를 볼 수 있어요.<br>
 
-<img src="https://github.com/user-attachments/assets/a75f872a-6cb4-4f54-a4ab-f48bd987216f" width="700" height="364" /><br>
+<img src="https://github.com/user-attachments/assets/14f1f18e-79fd-4026-8b9b-716a6a2e7d32" width="700" height="364" /><br>
 
 수집하면서 저장했던 메모의 내용이 담겨있으니, 필요할 때 기억해내기 좋겠죠?<br>
 
-<img src="https://github.com/user-attachments/assets/f9833f3c-e31f-4745-848f-8f2253a45d5a" width="700" height="364" /><br>
+<img src="https://github.com/user-attachments/assets/b3623c6f-ab89-4b15-b535-98281c5e3da4" width="300" height="350" /><br>
 
-혹시 히든 카드를 찾으셨나요..? 히든 카드는 카페 이름 오른쪽에 'HIDDEN' 라벨이 표시되어있습니다:)
+혹시 히든 카드를 찾으셨나요..? 히든 카드는 제가 랜덤하게 숨겨놓은 카페입니다 :D 히든 카드도 모아보세요~
 
 ### 🔖 북마크 카페 모아보기
 
@@ -164,22 +162,7 @@ pnpm dev
 ## 📁 프로젝트 구조
 ### 아키텍처 다이어그램
 
-<img src="https://github.com/user-attachments/assets/fa8d23b6-0752-4b2c-8cd9-58068db78e34" width="798" height="436" /><br>
-
-### 왜 이렇게 설계했는지?
-
-**카페 상세 정보 추출을 위한 BFF 구축**<br>
-Kakao Map API에서 기본적으로 주어지는 정보는 극히 제한적이었습니다.<br>
-따라서 썸네일, 영업 시간, 메뉴 등의 정보는 Playwright을 사용하여 추출했습니다.<br>
-Next.js의 라우트 핸들러에서 바로 헤드리스 모드로 카카오 플레이스에 접속하는 접근법을 사용했습니다.<br>
-dev 모드(로컬호스트)에서는 평균 1.67초로 데이터 조회가 가능했지만, Serverless 환경의 Vercel에서는 제한된 메모리 크기에 의해 평균 8.8초나 소요되었습니다.<br>
-사용자 경험 실패에 가까운 응답 속도를 극복하기 위해, Express.js로 브라우저를 항시 열어두고 클라이언트에서 요청을 보내면 즉시 접속하여 데이터를 조회할 수 있도록 하여 시간을 2.5초까지 단축하였습니다.<br>
-
-**최적화된 렌더링 구조**<br>
-UI 컨테이너에서 동적으로 컴포넌트를 렌더링하는 컴포넌트 아키텍처를 설계했습니다.<br>
-Tanstack Query의 훅을 사용하는 로직은 커스텀 훅으로 추상화했습니다. 비동기 로직을 컴포넌트의 비즈니스 로직과 격리시키고, 확장성과 유지보수성을 높였습니다.<br>
-그리고 React Hook Form의 useForm으로 폼에서 input에 의한 상태 변경이 불필요한 컴포넌트 리렌더링을 일으키는 것을 방지했습니다.<br>
-또한, zod로 타입 안전성과 코드 효율성이 높은 유효성 검증 스키마를 설계했습니다.<br>
+<img src="https://github.com/user-attachments/assets/fcc379de-d8ae-4fc4-8a8c-7fd31e93ff12" width="798" height="436" /><br>
 
 ### 디렉토리 구조: Feature Based
 
@@ -285,17 +268,11 @@ user {
 컴포넌트 → useMutation 커스텀 훅 → 서버 액션 → Supabase
 ```
 
-**카페 상세 정보 조회**
-
-```
-컴포넌트 → useQuery 커스텀 훅 → 서버 액션 → Express.js
-```
-
 <br>
 
 ## 🤺 스킬 포커스
 
-### 1. Shell Container-Presenter 컴포넌트 아키텍처
+### Shell Container-Presenter 컴포넌트 아키텍처
 
 <img width="434" height="305" src="https://github.com/user-attachments/assets/87037119-e35a-460c-b790-896b06e8f018" />
 
@@ -310,29 +287,11 @@ user {
 - Presenter: 비동기 데이터 페칭, 서버/클라이언트 상태 동기화, UI 렌더링에 집중
     - 추상화된 비동기 커스텀 훅을 사용하는 비즈니스 로직 컴포넌트
 
-결론적으로 유지보수성과 확장성이 높은 구조를 구현했습니다.<br>
-
-### 2. State on 3 Layers
-
-<img width="383" height="227" src="https://github.com/user-attachments/assets/f3f8f7d2-8c73-4089-bb5d-ba44495c0124" />
-
-> 컴포넌트 아키텍처에 맞춘 상태의 계층적 관리
-
-서버 데이터 동기화와 UI 상태 관리의 관심사를 분리하면서, 경로별 동적 렌더링에 최적화된
-상태 관리 구조를 설계하여 관리 복잡성을 낮추고 성능 문제를 방지하고자 했습니다.<br>
-
-- URL 상태
-    - usePathMatcher 훅으로 경로를 상태로 추상화하여 Shell Container에 제공합니다.
-
-- 서버 상태
-    - Tanstack Query의 '-Query'로 끝나는 훅으로 fetch와 데이터 캐싱을 합니다. useMutation으로 CRUD 작업 시 invalidateQueries로 캐시를 무효화하고 refetch합니다.
-
-- 클라이언트 상태
-    - Zustand는 보일러 플레이트 코드를 줄이고, 전역에서 동기화가 쉽게 이루어지게 했습니다. 영속성이 필요한 상태(UI 유지)는 persist 미들웨어로 부여했습니다.
+결론적으로 유지보수성과 확장성이 높은 구조를 구현했습니다.
 
 <br>
 
-### 3. ErrorBoundary를 이용한 선언적 에러 처리
+### ErrorBoundary를 이용한 선언적 에러 처리
 
 `@components/shared/ErrorBoundaryWrapper.tsx`
 
@@ -400,7 +359,7 @@ export function ErrorBoundaryWrapper({
 
 <br>
 
-### 4. zod를 활용한 유효성 검사
+### zod를 활용한 유효성 검사
 
 `@schema/**`
 
@@ -468,34 +427,6 @@ export const resetPasswordRequestSchema = z.object({
 zod의 메서드 체이닝으로 직관적이고 효율적인 유효성 검증 로직을 구현했습니다.<br>
 React Hook Form의 useForm과 함께 조합하여 폼의 상태 관리와 유효성 검증, 에러 핸들링까지 담당합니다.
 
-### 5. Async Surf 패턴 일부 적용
-
-**경로 팩토리** `@lib/paths.ts`<br>
-하드코딩을 배제하고 참조를 강제하는 의도로 외부/내부 API 경로를 중앙화하여 응집성을 높여, 가독성과 유지보수성 및 보안을 높인 팩토리입니다.<br><br>
-
-**쿼리 팩토리** `@queries/**`<br>
-React Query를 사용하면서 queryKey 또한 하드코딩으로 관리하지 않고 Feature별로 중앙화하였습니다.<br>
-FSD에서 추천하는 queryKey 관리 방식입니다. queryKey를 오타로 추가하거나, 파라미터를 올바르지 않게 사용하는 실수를 방지합니다.<br><br>
-
-**비동기 로직 추상화 커스텀 훅** `@hooks/**`<br>
-컴포넌트에서 비동기 로직을 격리하여 추상화하는 목적으로 만들어진 커스텀 훅입니다.<br>
-
-## 🤖 컨텍스트 엔지니어링
-
-LLM 에이전트를 개발 어시스트에 활용했습니다.<br>
-Claude Code와 Gemini CLI를 사용했으며, 주 용도는 아래와 같습니다.
-
-### Claude Code
-
-- 컨텍스트 기반 컴포넌트 구현 및 리팩토링
-- Markdown으로 만들어진 서브 에이전트, 커스텀 커맨드를 활용
-- 테스트 시나리오 작성
-
-### Gemini CLI
-
-- 코드 패턴 적합성, 보안 수준 점검, 컴포넌트 응집도 & 결합도 평가
-- Google AI Studio 리포지토리 연결(PR 생성시 코드 리뷰 및 개선 포인트 제공)
-
 ## ⚡ 성능 최적화
 
 ### 렌더링 최적화
@@ -535,7 +466,7 @@ Claude Code와 Gemini CLI를 사용했으며, 주 용도는 아래와 같습니�
 
 ## 📑 회고
 
-### 1. 새로운 시도 & 새롭게 알게 된 것
+### 새로운 시도 & 새롭게 알게 된 것
 
 >**새로운 시도**
 
@@ -545,15 +476,6 @@ CSS 3D 효과 구현<br>
 
 >**새롭게 알게 된 것**
 
-- Zustand의 state를 불러서 사용할 때는 개별 상태/액션을 선택하는 것이 더 효율적
+- Zustand의 state를 불러서 사용할 때는 개별 상태/액션을 선택하는 것이 더 효율적입니다.
     - 스토어의 다른 상태가 아무리 많이 변경되어도, 참조한 상태/액션 자체의 참조값이 바뀌지 않으면 컴포넌트가 리렌더링되지 않습니다.
-- KakaoMap에서 마커 생성과 삭제, InfoWindow 생성과 삭제는 useRef를 사용해서 제어가 필수적
-- Serverless 환경의 한계는 명확
-    - Puppeteer, Playwright의 headless 브라우저를 사용하여 카페 상세 정보를 추출하는 것은 Vercel에서 매우 느림
-    - dev: 평균 1.5초, Vercel: 평균 8.8초
-
-### 2. 앞으로 더 도전해 볼만한 것들
-
-- 마커 클릭시 상세 정보가 표시되게 만들기
-- 3D 카드 고도화, 인터랙티브 애니메이션을 갖춘 쇼룸 기능 만들기
-- 카드 획득시 안내 다이얼로그 플로팅
+- KakaoMap에서 마커 생성과 삭제, InfoWindow 생성과 삭제는 useRef를 사용해서 제어가 필수적입니다.
