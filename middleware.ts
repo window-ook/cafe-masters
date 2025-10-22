@@ -4,7 +4,7 @@ export function middleware(request: NextRequest) {
     const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
     const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://*.kakao.com;
+    script-src 'self' 'unsafe-inline' 'nonce-${nonce}' 'strict-dynamic' https://*.kakao.com;
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https://*.kakao.com https://*.kakaocdn.net https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://map1.daumcdn.net https://map2.daumcdn.net https://map3.daumcdn.net https://map4.daumcdn.net https://*.daumcdn.net https://*.supabase.co;
     font-src 'self' https://fonts.gstatic.com;

@@ -62,6 +62,10 @@ export default function KakaoMap() {
     script.src = EXTERNAL_PATHS.KAKAO_MAP;
     script.async = true;
     script.defer = true;
+
+    const nonce = document.querySelector('meta[name="x-nonce"]')?.getAttribute('content');
+    if (nonce) script.setAttribute('nonce', nonce);
+
     document.head.appendChild(script);
 
     script.onload = () => {

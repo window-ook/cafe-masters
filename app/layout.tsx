@@ -3,6 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import './globals.css';
 import React from 'react';
 import localFont from 'next/font/local';
+import { headers } from 'next/headers';
 import Providers from '@/providers/Providers';
 
 const pretendard = localFont({
@@ -86,14 +87,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const nonce = headersList.get('x-nonce') ?? '';
+
   return (
     <html lang="ko">
       <head>
+        <meta name="x-nonce" content={nonce} />
         <meta
           name="google-site-verification"
           content="uLLg7r0DwRzwQB1croiSmhHf5Krf4FaxC2Z2t0BX4JM"
