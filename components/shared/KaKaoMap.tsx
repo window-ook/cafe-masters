@@ -6,10 +6,11 @@ import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
-import { IKakaoSearchResult } from '@/types/kakao-map';
 import { useCurrentCafeStore, useSearchedResultStore, useFilterStore, useUserStore } from '@/stores';
-import { toast } from 'react-toastify';
 import { EXTERNAL_PATHS, IMAGE_PATHS } from '@/lib/paths';
+import { IKakaoSearchResult } from '@/types/kakao-map';
+import { toast } from 'react-toastify';
+import Script from 'next/script';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
@@ -57,38 +58,30 @@ export default function KakaoMap() {
   const prevMarkerDataRef = useRef<any[] | null>(null);
   const prevKeywordRef = useRef<string | null>(null);
 
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = EXTERNAL_PATHS.KAKAO_MAP;
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
+  const initializeMap = () => {
+    if (!window.kakao?.maps) return;
 
-    script.onload = () => {
-      window.kakao.maps.load(() => {
-        const container = document.getElementById('map');
-        const options = {
-          center: new window.kakao.maps.LatLng(
-            37.54715716085294,
-            127.04663357436208,
-          ),
-          level: 7,
-          draggable: true,
-        };
-        const zoomControl = new window.kakao.maps.ZoomControl();
+    window.kakao.maps.load(() => {
+      const container = document.getElementById('map');
+      const options = {
+        center: new window.kakao.maps.LatLng(
+          37.54715716085294,
+          127.04663357436208,
+        ),
+        level: 7,
+        draggable: true,
+      };
+      const zoomControl = new window.kakao.maps.ZoomControl();
 
-        mapRef.current = new window.kakao.maps.Map(container, options);
-        mapRef.current.addControl(
-          zoomControl,
-          window.kakao.maps.ControlPosition.RIGHT,
-        );
+      mapRef.current = new window.kakao.maps.Map(container, options);
+      mapRef.current.addControl(
+        zoomControl,
+        window.kakao.maps.ControlPosition.RIGHT,
+      );
 
-        setMapLoaded(true);
-      });
-    };
-
-    return () => script.remove();
-  }, []);
+      setMapLoaded(true);
+    });
+  };
 
   // 인포윈도우 제거
   const removeInfoWindows = () => {
@@ -296,10 +289,17 @@ export default function KakaoMap() {
   ]);
 
   return (
-    <figure
-      id="map"
-      aria-label="kakao map"
-      className="fixed z-0 top-0 w-screen h-screen sm:translate-x-108 sm:w-[calc(100vw-27rem)]"
-    />
+    <>
+      <Script
+        src={EXTERNAL_PATHS.KAKAO_MAP}
+        strategy="afterInteractive"
+        onLoad={initializeMap}
+      />
+      <figure
+        id="map"
+        aria-label="kakao map"
+        className="fixed z-0 top-0 w-screen h-screen sm:translate-x-108 sm:w-[calc(100vw-27rem)]"
+      />
+    </>
   );
 }
