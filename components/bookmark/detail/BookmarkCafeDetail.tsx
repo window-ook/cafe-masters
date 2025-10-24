@@ -125,7 +125,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
         cafeId={cafeId}
         cafeData={cafeData}
         actionButtons={actionButtons}
-        useImageWithFallback={true}
+        isImageWithFallback={true}
       />
     </article>
   );

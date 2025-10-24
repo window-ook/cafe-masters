@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import { IBadge } from '@/types/shared/tier';
 import { useUIStore } from '@/stores';
 interface ITierDialog {
-  open: boolean;
+  isOpen: boolean;
   handleDialogCloseAction: () => void;
 }
 
@@ -23,7 +23,7 @@ const TIER_DESC_STYLE = 'font-semibold text-gray-500 lg:text-lg text-xs';
 const BADGE_STYLE = 'rounded-xl w-20 h-6 py-4 flex items-center justify-center';
 
 export default function TierDialog({
-  open,
+  isOpen,
   handleDialogCloseAction,
 }: ITierDialog) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -32,9 +32,9 @@ export default function TierDialog({
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (open) dialog.showModal();
+    if (isOpen) dialog.showModal();
     else dialog.close();
-  }, [open]);
+  }, [isOpen]);
 
   return (
     <dialog

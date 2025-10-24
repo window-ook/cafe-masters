@@ -13,6 +13,6 @@ export const useSearchedResultStore = create<ISearchedResultStore>()(
             searchResult: [],
             setSearchResult: (data: IKakaoSearchResult[]) => set({ searchResult: data }),
         }),
-        { name: 'searchedResultStore' },
+        { name: 'searchResultStore' },
     )
 );

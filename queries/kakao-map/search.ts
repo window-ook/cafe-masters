@@ -1,3 +1,3 @@
 export const searchCafeQuery = {
-    all: (cafeId: string) => ['searchedCafeDetail', cafeId],
+    all: (cafeId: string) => ['searchCafeDetail', cafeId],
 } as const;

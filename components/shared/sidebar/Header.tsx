@@ -11,7 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Search from '@/components/shared/sidebar/SearchInput';
 import ThemeToggleButton from '@/components/shared/sidebar/ThemeToggleButton';
-import Tooltip from '@/components/shared/TooltipContainer';
+import Tooltip from '@/components/shared/Tooltip';
 import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
 import RegionFilter from '@/components/shared/sidebar/RegionsFilter';
 import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
@@ -69,7 +69,7 @@ export default function Header() {
               </h1>
             </Link>
           }
-          left="32"
+          position="bottom"
         />
         <ThemeToggleButton />
       </div>

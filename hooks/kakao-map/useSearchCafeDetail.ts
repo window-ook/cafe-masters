@@ -107,7 +107,7 @@ export function useSearchCafeDetail(cafeId: string, isEnabled: boolean = true) {
   });
 
   return {
-    searchedCafeDetail: data,
+    searchCafeDetail: data,
     isError,
     error,
     isPending,

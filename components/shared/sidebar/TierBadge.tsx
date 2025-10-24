@@ -31,7 +31,7 @@ export default function TierBadge({ tier }: { tier: Tier }) {
           <span className="text-sm font-dunggeunmo">{tier}</span>
         </button>
       </div>
-      <TierDialog open={open} handleDialogCloseAction={handleDialogClose} />
+      <TierDialog isOpen={open} handleDialogCloseAction={handleDialogClose} />
     </>
   );
 }

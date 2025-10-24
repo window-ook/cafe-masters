@@ -13,7 +13,7 @@ interface IInputField extends React.InputHTMLAttributes<HTMLInputElement> {
     customClassName?: string;
     handlePasswordVisibility?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     disabled: boolean;
-    enableXSSProtection?: boolean; // XSS 보호 활성화 여부
+    hasXSSProtection?: boolean;
 }
 
 /** 폼 공통 Input Field
@@ -27,16 +27,16 @@ interface IInputField extends React.InputHTMLAttributes<HTMLInputElement> {
  * @props disabled 인풋 비활성화 여부
  * @props isPasswordVisible 비밀번호 보기 여부
  * @props handlePasswordVisibility 비밀번호 보기 핸들러
- * @props enableXSSProtection XSS 보호 활성화 여부 (기본값: true)
+ * @props hasXSSProtection XSS 보호 활성화 여부 (기본값: true)
  * @props ...props 나머지 인풋 속성
  * @description 소수점 입력시 스핀버튼 숨김 적용됨, XSS 보호 기능 내장
  */
 const InputField = React.forwardRef<HTMLInputElement, IInputField>(
-    ({ label, labelSize = 'text-sm', dataTestId, id, type, placeholder, isError, errorResponseMessage, disabled, isPasswordVisible, customClassName, handlePasswordVisibility, enableXSSProtection = true, onChange, ...props }, ref) => {
+    ({ label, labelSize = 'text-sm', dataTestId, id, type, placeholder, isError, errorResponseMessage, disabled, isPasswordVisible, customClassName, handlePasswordVisibility, hasXSSProtection = true, onChange, ...props }, ref) => {
 
         // XSS 보호가 활성화된 경우의 onChange 핸들러
         const handleSecureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            if (enableXSSProtection) {
+            if (hasXSSProtection) {
                 handleSafeInput(e.target.value, (safeValue) => {
                     const safeEvent = {
                         ...e,

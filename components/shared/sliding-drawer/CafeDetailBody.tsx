@@ -2,9 +2,10 @@
 
 import { RefObject, useRef, ReactNode } from 'react';
 import { useUIStore } from '@/stores';
-import { scrollThumbnails } from '@/utils/shared/detail';
+import { copyText, scrollThumbnails } from '@/utils/shared/detail';
 import { IMAGE_PATHS } from '@/lib/paths';
-import { FolderCheck } from 'lucide-react';
+import { FolderCheck, Send } from 'lucide-react';
+import Tooltip from '@/components/shared/Tooltip';
 import Location from '@/components/shared/sliding-drawer/Location';
 import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
 import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
@@ -26,7 +27,7 @@ interface ICafeDetailBody {
     categories?: string[];
     kakaoCategories?: string[];
   };
-  useImageWithFallback?: boolean;
+  isImageWithFallback?: boolean;
   actionButtons: ReactNode;
   isDetailLoading?: boolean;
 }
@@ -35,10 +36,12 @@ export default function CafeDetailBody({
   cafeId,
   cafeData,
   actionButtons,
-  useImageWithFallback = false,
+  isImageWithFallback = false,
   isDetailLoading = false
 }: ICafeDetailBody) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/search/detail/${cafeId}?name=${encodeURIComponent(cafeData.name)}`;
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -75,7 +78,7 @@ export default function CafeDetailBody({
                     aria-label="카페 이미지 클릭 시 카카오플레이스 이동(썸네일)"
                     onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
                   >
-                    {useImageWithFallback ? (
+                    {isImageWithFallback ? (
                       <ImageWithFallback
                         key={`${cafeId}-main-image-${cafeData.image}`}
                         alt="카페 썸네일"
@@ -112,7 +115,7 @@ export default function CafeDetailBody({
                       aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
                       onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
                     >
-                      {useImageWithFallback ? (
+                      {isImageWithFallback ? (
                         <ImageWithFallback
                           key={`${cafeId}-extra-image-${i}`}
                           alt="카페 썸네일"
@@ -154,8 +157,24 @@ export default function CafeDetailBody({
 
       {/* 카페 정보 */}
       <section className="space-y-4">
-        {/* 카페 이름 */}
-        <h1 className="text-2xl font-bold">{cafeData.name}</h1>
+        <div className='flex items-center justify-between'>
+          {/* 카페 이름 */}
+          <h1 className="text-2xl font-bold">{cafeData.name}</h1>
+          {/* 공유 버튼 */}
+          <Tooltip
+            comment="공유"
+            component={
+              <button
+                type="button"
+                aria-label="카페 url 공유 버튼"
+                onClick={() => copyText(url)}
+                className="p-2 cursor-pointer hover:opacity-50"
+              >
+                <Send className='size-4' />
+              </button>
+            }
+          />
+        </div>
 
         {/* 카테고리 (수집, 추천 카페) */}
         {cafeData.categories && cafeData.categories.length > 0 && (<Categories categories={cafeData.categories} />)}

@@ -30,7 +30,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   const setTargetCafeForRecommend = useRecommendationStore(state => state.setTargetCafeForRecommend);
   const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
 
-  const { searchedCafeDetail, isPending: isDetailLoading } = useSearchCafeDetail(cafeId.toString());
+  const { searchCafeDetail, isPending: isDetailLoading } = useSearchCafeDetail(cafeId.toString());
 
   // 즉시 렌더링: 검색 결과에 포함된 기본 정보
   const foundCafe = useMemo(() => {
@@ -40,7 +40,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   }, [searchResult, cafeId]);
 
   // 점진적 렌더링: 기본 정보 즉각 업데이트 + 카페 상세 정보 데이터 비동기 페칭 후 업데이트
-  const searchedDetail = useMemo(() => {
+  const searchDetail = useMemo(() => {
     if (!foundCafe) {
       return {
         id: cafeId.toString(),
@@ -49,33 +49,33 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
         address: '',
         phone_number: '',
         kakaoCategories: [],
-        extra_images: searchedCafeDetail?.extra_images ?? [],
-        opening_time: searchedCafeDetail?.opening_time ?? null,
+        extra_images: searchCafeDetail?.extra_images ?? [],
+        opening_time: searchCafeDetail?.opening_time ?? null,
       };
     }
 
     return {
       id: foundCafe.id,
       name: foundCafe.place_name,
-      image: searchedCafeDetail?.image || IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK,
+      image: searchCafeDetail?.image || IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK,
       address: foundCafe.road_address_name ?? foundCafe.address_name,
       phone_number: foundCafe.phone ?? '',
       kakaoCategories: foundCafe.category_name ? foundCafe.category_name.split(' > ') : [],
-      extra_images: searchedCafeDetail?.extra_images ?? [],
-      opening_time: searchedCafeDetail?.opening_time ?? null,
+      extra_images: searchCafeDetail?.extra_images ?? [],
+      opening_time: searchCafeDetail?.opening_time ?? null,
     };
-  }, [foundCafe, searchedCafeDetail, cafeId]);
+  }, [foundCafe, searchCafeDetail, cafeId]);
 
   const bookmarkData = {
-    id: Number(searchedDetail.id),
-    name: searchedDetail.name,
-    address: searchedDetail.address,
-    phone_number: searchedDetail.phone_number,
-    image: searchedDetail.image,
+    id: Number(searchDetail.id),
+    name: searchDetail.name,
+    address: searchDetail.address,
+    phone_number: searchDetail.phone_number,
+    image: searchDetail.image,
     coordX: currentCoordX,
     coordY: currentCoordY,
-    extra_images: searchedDetail.extra_images,
-    opening_time: searchedDetail.opening_time,
+    extra_images: searchDetail.extra_images,
+    opening_time: searchDetail.opening_time,
   };
 
   const actionButtons = (
@@ -86,15 +86,15 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
           dataTestId="button-collect"
           onClick={() => {
             setTargetCafeForCollect({
-              id: Number(searchedDetail.id),
-              name: searchedDetail.name,
+              id: Number(searchDetail.id),
+              name: searchDetail.name,
               coordX: currentCoordX,
               coordY: currentCoordY,
-              address: searchedDetail.address,
-              image: searchedDetail.image,
-              extra_images: searchedDetail.extra_images || [],
-              phone_number: searchedDetail.phone_number,
-              opening_time: searchedDetail.opening_time,
+              address: searchDetail.address,
+              image: searchDetail.image,
+              extra_images: searchDetail.extra_images || [],
+              phone_number: searchDetail.phone_number,
+              opening_time: searchDetail.opening_time,
             });
             setIsCollectFormOpen(true);
           }}
@@ -108,15 +108,15 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
         <Button
           onClick={() => {
             setTargetCafeForRecommend({
-              id: Number(searchedDetail.id),
-              name: searchedDetail.name,
+              id: Number(searchDetail.id),
+              name: searchDetail.name,
               coordX: currentCoordX,
               coordY: currentCoordY,
-              address: searchedDetail.address,
-              image: searchedDetail.image,
-              extra_images: searchedDetail.extra_images || [],
-              phone_number: searchedDetail.phone_number,
-              opening_time: searchedDetail.opening_time,
+              address: searchDetail.address,
+              image: searchDetail.image,
+              extra_images: searchDetail.extra_images || [],
+              phone_number: searchDetail.phone_number,
+              opening_time: searchDetail.opening_time,
             });
             setIsRecommendFormOpenAction(true);
           }}
@@ -138,9 +138,9 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
       <CafeDetailHeader bookmarkData={bookmarkData} />
       <CafeDetailBody
         cafeId={cafeId}
-        cafeData={searchedDetail}
+        cafeData={searchDetail}
         actionButtons={actionButtons}
-        useImageWithFallback={true}
+        isImageWithFallback={true}
         isDetailLoading={isDetailLoading}
       />
     </article>

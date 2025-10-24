@@ -95,7 +95,7 @@ export default function RecommendationCafeDetail({ cafeId }: { cafeId: number })
         cafeId={cafeId}
         cafeData={cafeData}
         actionButtons={actionButtons}
-        useImageWithFallback={false}
+        isImageWithFallback={false}
       />
     </article>
   );
