@@ -3,7 +3,7 @@ import { getRecommendationCafesForSitemap } from '@/actions/supabase/recommendat
 import { CONSOLE_ERROR } from '@/constants/messages';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://app.cafe-masters.co';
+  const baseUrl = 'https://www.cafe-masters.com';
 
   const staticPages: MetadataRoute.Sitemap = [
     // 랜딩페이지

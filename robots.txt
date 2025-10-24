@@ -5,7 +5,7 @@ Allow: /
 Crawl-delay: 1
 
 # Sitemap 위치
-Sitemap: https://app.cafe-masters.co/sitemap.xml
+Sitemap: https://www.cafe-masters.com/sitemap.xml
 
 # 블록할 경로들
 Disallow: /api/

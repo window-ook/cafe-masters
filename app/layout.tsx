@@ -22,7 +22,7 @@ const dunggeunmo = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://app.cafe-masters.co'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://www.cafe-masters.com'),
   verification: {
     other: {
       'naver-site-verification': 'a5ac1b2a1e00d0be10af5842d117fd62879c6e92',
@@ -63,13 +63,13 @@ export const metadata: Metadata = {
     title: 'Cafe Masters',
     siteName: 'Cafe Masters',
     description: '카페 정보를 쉽게 관리하고 싶은 당신을 위한 서비스',
-    images: ['https://app.cafe-masters.co/opengraph-image.png'],
+    images: ['https://www.cafe-masters.com/opengraph-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Cafe Masters',
     description: '카페 정보를 쉽게 관리하고 싶은 당신을 위한 서비스',
-    images: ['https://app.cafe-masters.co/opengraph-image.png'],
+    images: ['https://www.cafe-masters.com/opengraph-image.png'],
     creator: 'github@window-ook',
   },
   robots: {
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://app.cafe-masters.co'
+    canonical: 'https://www.cafe-masters.com'
   },
 };
 

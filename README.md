@@ -36,7 +36,7 @@
 
 ### 접속 링크
 
-https://app.cafe-masters.co
+https://www.cafe-masters.com
 
 ## 🎧 앱 다운로드 및 로컬 실행
 
