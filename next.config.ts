@@ -9,19 +9,6 @@ const pwaConfig = withPWA({
 });
 
 const nextConfig: NextConfig = {
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.kakao.com https://dapi.kakao.com https://t1.daumcdn.net https://*.vercel.live https://vercel.live https://*.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https://*.kakao.com https://*.kakaocdn.net https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://map1.daumcdn.net https://map2.daumcdn.net https://map3.daumcdn.net https://map4.daumcdn.net https://*.daumcdn.net https://*.supabase.co; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co https://*.kakao.com https://dapi.kakao.com https://*.vercel.live https://vercel.live; object-src 'none'; base-uri 'self'; form-action 'self' https://*.kakao.com; frame-ancestors 'none'; frame-src https://*.vercel.live https://vercel.live https://*.kakao.com; upgrade-insecure-requests;",
-          },
-        ],
-      },
-    ];
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
@@ -39,8 +26,14 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'http',
+        protocol: 'https',
         hostname: 't1.daumcdn.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'mts.daumcdn.net',
         port: '',
         pathname: '/**',
       },

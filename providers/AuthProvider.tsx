@@ -7,6 +7,7 @@ import { useUserStore } from '@/stores';
 import { CONSOLE_ERROR } from '@/constants/messages';
 
 interface IAuthProvider {
+  accessToken: string | null;
   children: ReactNode;
 }
 
@@ -24,7 +25,10 @@ const RULES = [
 
 const matchRule = (pathname: string) => RULES.find(rule => pathname === rule.path);
 
-export default function AuthProvider({ children }: IAuthProvider) {
+export default function AuthProvider({
+  accessToken,
+  children,
+}: IAuthProvider) {
   const supabase = createBrowserSupabaseClient();
   const router = useRouter();
   const pathname = usePathname();
@@ -77,7 +81,7 @@ export default function AuthProvider({ children }: IAuthProvider) {
       });
 
     return () => authListner.unsubscribe();
-  }, [supabase, router, pathname, setUserId, setUserEmail, setAdmin, resetUser]);
+  }, [accessToken, supabase, router, pathname, setUserId, setUserEmail, setAdmin, resetUser]);
 
   return children;
 }

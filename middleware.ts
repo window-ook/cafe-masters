@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
     default-src 'self';
     script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.kakao.com https://dapi.kakao.com https://t1.daumcdn.net https://*.vercel.live https://vercel.live https://*.vercel-scripts.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://*.kakao.com https://*.kakaocdn.net https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://map1.daumcdn.net https://map2.daumcdn.net https://map3.daumcdn.net https://map4.daumcdn.net https://*.daumcdn.net https://*.supabase.co;
+    img-src 'self' blob: data: https://*.kakao.com https://*.kakaocdn.net https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://t1.daumcdn.net https://mts.daumcdn.net https://*.supabase.co;
     font-src 'self' https://fonts.gstatic.com;
     connect-src 'self' https://*.supabase.co https://*.kakao.com https://dapi.kakao.com https://*.vercel.live https://vercel.live;
     object-src 'none';
