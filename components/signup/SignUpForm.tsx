@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignUp } from '@/hooks/supabase/authentication';
-import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
+import { signInWithGoogle } from '@/utils/supabase/signInWithGoogle';
+import { signInWithKakao } from '@/utils/supabase/signInWithKakao';
 import { signUpFormSchema, SignUpFormData } from '@/schema/auth';
 import Link from 'next/link';
 import InputField from '@/components/shared/InputField';
@@ -92,8 +93,15 @@ export default function SignUpEmailForm() {
       />
       <Button
         type="button"
+        aria-label="구글 로그인 버튼"
+        onClick={() => signInWithGoogle()}
+        customClassName='bg-blue-500 hover:bg-blue-600'
+        text='구글 로그인'
+      />
+      <Button
+        type="button"
         aria-label="카카오 로그인 버튼"
-        onClick={() => signinWithKakao()}
+        onClick={() => signInWithKakao()}
         customClassName='bg-yellow-500 hover:bg-yellow-600'
         text='카카오 로그인'
       />

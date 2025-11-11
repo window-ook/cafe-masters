@@ -4,12 +4,13 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignIn } from '@/hooks/supabase/authentication';
-import { signinWithKakao } from '@/utils/supabase/signinWithKakao';
+import { signInWithKakao } from '@/utils/supabase/signInWithKakao';
 import { signInFormSchema, SignInFormData } from '@/schema/auth';
 import Link from 'next/link';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
 import ResetPasswordRequestForm from '@/components/signin/ResetPasswordRequestForm';
+import { signInWithGoogle } from '@/utils/supabase/signInWithGoogle';
 
 export default function SignInForm() {
   const [resetRequired, setResetRequired] = useState<boolean>(false);
@@ -98,13 +99,20 @@ export default function SignInForm() {
               aria-label="비밀번호 재설정 폼 열기 버튼"
               dataTestId="open-resetpassword-form-button"
               onClick={() => setShowResetForm(true)}
-              customClassName='bg-blue-500 hover:bg-blue-600'
+              customClassName='bg-orange-500 hover:bg-orange-600'
               text='비밀번호 재설정'
             />
             <Button
               type="button"
+              aria-label="구글 로그인 버튼"
+              onClick={() => signInWithGoogle()}
+              customClassName='bg-blue-500 hover:bg-blue-600'
+              text='구글 로그인'
+            />
+            <Button
+              type="button"
               aria-label="카카오 로그인 버튼"
-              onClick={() => signinWithKakao()}
+              onClick={() => signInWithKakao()}
               customClassName="bg-yellow-500 hover:bg-yellow-600"
               text='카카오 로그인'
             />
