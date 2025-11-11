@@ -5,12 +5,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignIn } from '@/hooks/supabase/authentication';
 import { signInWithKakao } from '@/utils/supabase/signInWithKakao';
+import { signInWithGoogle } from '@/utils/supabase/signInWithGoogle';
 import { signInFormSchema, SignInFormData } from '@/schema/auth';
 import Link from 'next/link';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
 import ResetPasswordRequestForm from '@/components/signin/ResetPasswordRequestForm';
-import { signInWithGoogle } from '@/utils/supabase/signInWithGoogle';
 
 export default function SignInForm() {
   const [resetRequired, setResetRequired] = useState<boolean>(false);
