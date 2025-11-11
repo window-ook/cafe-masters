@@ -6,7 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignUp } from '@/hooks/supabase/authentication';
 import { signInWithGoogle } from '@/utils/supabase/signInWithGoogle';
-import { signInWithKakao } from '@/utils/supabase/signInWithKakao';
+import { signInWithKakao } from '@/utils/supabase/signInKakao';
 import { signUpFormSchema, SignUpFormData } from '@/schema/auth';
 import Link from 'next/link';
 import InputField from '@/components/shared/InputField';

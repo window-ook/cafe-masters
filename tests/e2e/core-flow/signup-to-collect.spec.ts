@@ -80,10 +80,7 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
             // 1. 랜딩페이지 -> 로그인 페이지 -> 회원가입 페이지
             await page.goto('/');
             await page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_SIGNIN_FROM_LANDING).click();
-            await page.waitForLoadState('networkidle');
-            const signupButton = page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_SIGNUP_FROM_SIGNIN);
-            await signupButton.waitFor({ state: 'visible', timeout: 10000 });
-            await signupButton.click();
+            await page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_SIGNUP_FROM_SIGNIN).click();
             await expect(page).toHaveURL(/.*signup.*/);
 
             // 2. 정보 입력 후 회원가입 요청
@@ -110,10 +107,7 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
             // 1. 랜딩페이지 -> 로그인 페이지 -> 회원가입 페이지
             await page.goto('/');
             await page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_SIGNIN_FROM_LANDING).click();
-            await page.waitForLoadState('networkidle');
-            const signupButton = page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_SIGNUP_FROM_SIGNIN);
-            await signupButton.waitFor({ state: 'visible', timeout: 10000 });
-            await signupButton.click();
+            await page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_SIGNUP_FROM_SIGNIN).click();
             await expect(page).toHaveURL(/.*signup.*/);
 
             // 2. 정보 입력 후 회원가입 요청
