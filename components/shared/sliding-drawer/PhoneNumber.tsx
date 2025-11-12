@@ -9,14 +9,16 @@ export default function PhoneNumber({ phone_number }: { phone_number: string | n
         <p className='font-medium'>전화번호</p>
       </div>
       <div className="col-span-2 flex items-center gap-4">
-        <p className='text-sm'>{phone_number || '등록 X'}</p>
-        <button
-          type="button"
-          onClick={() => copyText(phone_number ?? '')}
-          className="cursor-pointer hover:opacity-50"
-        >
-          <CopyCheck className='size-4' />
-        </button>
+        <p className='text-sm'>{phone_number || '미등록'}</p>
+        {phone_number && (
+          <button
+            type="button"
+            onClick={() => copyText(phone_number ?? '')}
+            className="cursor-pointer hover:opacity-50"
+          >
+            <CopyCheck className='size-4' />
+          </button>
+        )}
       </div>
     </div>
   );

@@ -13,13 +13,13 @@ export default function CTASection() {
 
             <div className="relative mx-auto max-w-4xl px-6 text-center text-white">
                 <h2 className="mb-6 text-2xl sm:text-5xl font-bold">
-                    마스터가 될 준비가 되셨나요?
+                    카드를 모아서 마스터가 되세요
                 </h2>
 
                 <p className="mb-8 text-sm sm:text-xl leading-relaxed text-main-super-light">
-                    지금 시작해서 나만의 카페 컬렉션을 만들고,
+                    소중한 경험을 나만의 카페 컬렉션으로 모아
                     <br />
-                    새로운 카페 경험의 세계로 떠나보세요.
+                    오랫동안 간직하고 꺼내보세요
                 </p>
 
                 <div className="group relative inline-block">

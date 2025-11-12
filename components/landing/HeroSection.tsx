@@ -40,7 +40,7 @@ export default async function HeroSection() {
                     카페 컬렉션의 새로운 경험을
                     <br />
                     <span className="bg-gradient-to-r from-main-light to-main bg-clip-text text-transparent">
-                        시작하세요
+                        제시합니다
                     </span>
                 </h1>
 

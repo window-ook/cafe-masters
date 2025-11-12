@@ -59,7 +59,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
     phone_number: detail.phone_number || '',
     image: detail.image || '',
     extra_images: detail.extra_images || [],
-    opening_time: detail.opening_time || '등록 X',
+    opening_time: detail.opening_time || '미등록',
     menus: detail.menus ? (() => {
       try {
         return JSON.parse(detail.menus);
