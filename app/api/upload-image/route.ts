@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     if (!file) return NextResponse.json({ error: '파일이 없습니다' }, { status: 400 });
 
-    console.log('📤 업로드 요청:', {
+    console.log('📤 업로드 정보:', {
       name: file.name,
       type: file.type,
       originalSize: `${(file.size / 1024).toFixed(2)} KB`
