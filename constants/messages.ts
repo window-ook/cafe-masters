@@ -17,6 +17,9 @@ export const TOAST_ERROR = {
     NO_DATA_FOR_CREATE_COLLECTION: '수집할 카페의 정보가 없습니다',
     CREATE_COLLECTION: '새로운 카페 수집에 실패했습니다',
     CREATE_RECOMMENDATION: '새로운 카페 추천에 실패했습니다',
+    UPLOAD_IMAGE_SIZE: '이미지 크기는 2MB 이하여야 합니다',
+    UPLOAD_IMAGE_TYPE: '이미지 파일만 업로드 가능합니다',
+    UPLOAD_IMAGE_FAILED: '이미지 업로드에 실패했습니다',
     RETRY: '다시 시도해주세요'
 } as const;
 
@@ -40,5 +43,6 @@ export const CONSOLE_ERROR = {
     CREATE_RECOMMENDATION_CAFE: '새로운 카페 추천 중 에러:',
     REQUEST_RESET_PASSWORD: '비밀번호 재설정 요청 중 에러:',
     PARSE_CATEGORIES: '카테고리 파싱 중 에러:',
-    CHECK_ADMIN: '관리자 권한 확인 중 에러:'
+    CHECK_ADMIN: '관리자 권한 확인 중 에러:',
+    UPLOAD_IMAGE: '이미지 업로드 중 에러:'
 } as const;
