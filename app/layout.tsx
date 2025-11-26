@@ -124,20 +124,11 @@ export default async function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/image/icons/app_icon_192.png" />
         <link rel="shortcut icon" href="/favicon.ico" />
 
-        <link
-          rel="preload"
-          href="/fonts/PretendardVariable.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/DungGeunMo.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
+        {/* 카카오맵 최적화 */}
+        <link rel="preconnect" href="https://dapi.kakao.com" />
+        <link rel="preconnect" href="https://t1.daumcdn.net" />
+        <link rel="dns-prefetch" href="https://dapi.kakao.com" />
+        <link rel="dns-prefetch" href="https://t1.daumcdn.net" />
       </head>
       <body
         className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
