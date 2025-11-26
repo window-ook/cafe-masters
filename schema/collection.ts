@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-/**
- * 카페 수집 폼 데이터 스키마
+/** 카페 수집 폼 데이터 스키마
  * @description 사용자가 카페를 수집할 때 입력하는 데이터의 유효성을 검증합니다.
  */
 export const collectionFormSchema = z.object({

@@ -5,8 +5,8 @@
 ### 카드 모으는 재미가 있는 카페 메모 관리 서비스
 
 카페를 자주 다니는 분들을 위해 만든 재밌는 서비스입니다<br>
-간단하게 카페에 대한 정보를 저장하면, 유니크한 나만의 카드가 된답니다?!<br>
-뿐만 아니라 방문할 카페를 북마크 하실 수 있어요ㅎㅎ 제가 해드리는 추천 카페도 있으니 놓치지 마세요!<br>
+간단하게 카페에 대한 정보를 저장하면, 유니크한 나만의 카드가 된답니다:)<br>
+뿐만 아니라 다음에 가고 싶은 카페를 북마크하고, 제가 추천하는 카페를 확인할 수 있습니다!<br>
 카드를 많이 모아서 마스터가 되어보세요-v-<br>
 
 ## 📋 목차
@@ -24,8 +24,8 @@
 
 ## 🗓️ 개발 기간
 
-### 2024.10.02 ~ 2024.10.28 VERSION 1
-### 2025 ~ VERSION 2, 지속적으로 코드 및 UI 개선 
+### VERSION 1 2024.10.02 ~ 2024.10.28 
+### VERSION 2 2025 ~
 
 ## 👤 체험 계정
 
@@ -37,20 +37,6 @@
 ### 접속 링크
 
 https://www.cafe-masters.com
-
-## 🎧 앱 다운로드 및 로컬 실행
-
-### Repository Clone
-```
-git clone https://github.com/window-ook/cafe-masters.git
-```
-### Execution Commands
-```
-pnpm install
-pnpm dev
-```
-
-<br>
 
 ## 🛠 개발 환경
 
@@ -475,7 +461,7 @@ React Hook Form의 useForm과 함께 조합하여 폼의 상태 관리와 유효
 >**새로운 시도**
 
 Shell Container-Presenter 패턴<br>
-CSS 3D 효과 구현<br>
+카드 애니메이션 3D Rotate & Multi Layers Effect 구현<br>
 웹 스크래핑 최적화<br>
 
 >**새롭게 알게 된 것**

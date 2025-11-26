@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-/**
- * 로그인 폼 스키마
+/** 로그인 폼 스키마
  * @description 이메일 형식과 비밀번호 최소 길이 검증
  */
 export const signInFormSchema = z.object({
@@ -14,8 +13,7 @@ export const signInFormSchema = z.object({
     .min(6, '비밀번호는 최소 6자 이상 입력해야 합니다'),
 });
 
-/**
- * 회원가입 폼 스키마
+/** 회원가입 폼 스키마
  * @description 이메일 형식과 비밀번호 최소 길이 및 포함 문자 검증
  */
 export const signUpFormSchema = z.object({
@@ -32,8 +30,7 @@ export const signUpFormSchema = z.object({
     ),
 });
 
-/**
- * OTP 인증 폼 스키마
+/** OTP 인증 폼 스키마
  * @description 6자리 인증 코드 검증
  */
 export const otpFormSchema = z.object({
@@ -54,8 +51,7 @@ export const resetPasswordRequestSchema = z.object({
     .email('올바른 이메일 형식을 입력해주세요'),
 });
 
-/**
- * 비밀번호 재설정 폼 스키마
+/** 비밀번호 재설정 폼 스키마
  * @description 새 비밀번호와 확인 비밀번호 일치 검증
 */
 export const resetPasswordFormSchema = z.object({

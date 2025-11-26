@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-/**
- * 카페 추천 폼 데이터 스키마
+/** 카페 추천 폼 데이터 스키마
  * @description 관리자가 카페를 추천할 때 입력하는 데이터의 유효성을 검증합니다.
  */
 export const recommendationFormSchema = z.object({

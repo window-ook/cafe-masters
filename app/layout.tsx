@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://www.cafe-masters.com'),
   verification: {
     other: {
-      'naver-site-verification': 'a5ac1b2a1e00d0be10af5842d117fd62879c6e92',
+      'naver-site-verification': '21f2bf3fb94880466f7c23f5ac23cad4cc75f3a7',
     },
   },
   title: {

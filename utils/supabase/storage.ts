@@ -4,12 +4,10 @@ export function getImageUrl(path: string) {
   return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${process.env.NEXT_PUBLIC_STORAGE_BUCKET}/${path}`;
 }
 
-/**
- * Supabase Storage 이미지 업로드
+/** Supabase Storage 이미지 업로드
  * @param file - 업로드할 파일 (Buffer 형태)
  * @param fileName - 저장할 파일명 (UUID 등 고유값 권장)
- * @returns 업로드된 이미지의 Public URL
- */
+ * @returns 업로드된 이미지의 Public URL */
 export async function uploadImageToStorage(
   file: Buffer,
   fileName: string
@@ -33,8 +31,7 @@ export async function uploadImageToStorage(
   return getImageUrl(filePath);
 }
 
-/**
- * Supabase Storage에서 이미지 삭제
+/** Supabase Storage에서 이미지 삭제
  * @param filePath - 삭제할 파일 경로 (예: collection/abc-123.webp)
  */
 export async function deleteImageFromStorage(filePath: string): Promise<void> {
