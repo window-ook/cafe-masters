@@ -47,10 +47,10 @@ export default function SignUpVerifyClient() {
         <header className="flex">
           <Image
             src={IMAGE_PATHS.FALLING_CARDS_BACKGROUND}
-            width={100}
-            height={100}
+            width={32}
+            height={32}
             alt="로고 아이콘"
-            className="w-8 h-auto"
+            className="w-8 h-8"
           />
           <span className="text-3xl text-white text-shadow-black font-bold">
             Cafe Masters

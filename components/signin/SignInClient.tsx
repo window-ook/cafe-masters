@@ -14,13 +14,13 @@ export default function SignInClient() {
             <div className="absolute left-1/2 top-1/3 h-64 w-64 animate-pulse rounded-full bg-main-light/20 blur-3xl delay-500" />
             <FallingCards />
             <section className="relative z-10 flex flex-col items-center gap-4">
-                <header className="flex">
+                <header className="flex items-center">
                     <Image
                         src={IMAGE_PATHS.FALLING_CARDS_BACKGROUND}
-                        width={100}
-                        height={100}
+                        width={32}
+                        height={32}
                         alt="로고 아이콘"
-                        className="w-8 h-auto"
+                        className="w-8 h-8"
                     />
                     <span className="text-3xl text-white text-shadow-black font-bold">
                         Cafe Masters
