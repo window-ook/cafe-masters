@@ -1,0 +1,230 @@
+/*
+* ======================================================
+* 수집한 카페의 카드 텍스처
+* 본체 z-index: 10, linear-gradient
+* 마우스 포인터 광원 z-index: 20, radial-gradient
+* ::before z-index: 1
+* ::after z-index: 2
+* ======================================================
+*/
+.card-container {
+  perspective: 500px;
+}
+
+.card-tilt {
+  transition: transform 0.1s ease;
+  will-change: transform;
+  transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+}
+
+/* 마우스 포인터 광원
+  * 오버레이
+  * radial-gradient
+ */
+.card-overlay {
+  position: absolute;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  filter: blur(var(--blur, 70px)) brightness(var(--brightness, 2));
+  background: radial-gradient(circle at var(--mouse-x, 100%) var(--mouse-y, 100%), rgba(255, 255, 255, 0.8), transparent 60%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+/* 실버 카드
+  * 3점
+  * linear-gradient
+*/
+.card-silver {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  background-size: 100% 100%;
+  background: linear-gradient(to bottom right,
+      #f9fafb,
+      #e5e7eb,
+      #d1d5db,
+      #9ca3af,
+      #6b7280,
+      #4b5563,
+      #374151);
+}
+
+.card-silver::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  opacity: .2;
+  filter: brightness(1) contrast(1);
+  background-image: url("/image/card-style/texture_sparkles.webp");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 160%;
+  background-blend-mode: normal;
+  mix-blend-mode: color-dodge;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: all .33s ease;
+}
+
+/* 골드 카드
+  * 4점
+  * linear-gradient
+*/
+.card-gold {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  background: linear-gradient(to bottom right,
+      #fef9c3,
+      #fde68a,
+      #fde047,
+      #facc15,
+      #ca8a04,
+      #a16207,
+      #78350f);
+  background-size: 100% 100%;
+}
+
+.card-gold::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background-image:
+    url("/image/card-style/texture_foil.avif"),
+    url("/image/card-style/texture_sparkles.webp"),
+    linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+  filter: brightness(1) contrast(1);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 160%;
+  background-blend-mode: overlay;
+  opacity: .5;
+  border-radius: inherit;
+  mix-blend-mode: color-dodge;
+  transition: all .33s ease;
+}
+
+/* 에메랄드 카드
+  * 5점
+  * linear-gradient
+*/
+.card-emerald {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  background: linear-gradient(to bottom right,
+      #ccfbf1,
+      #6ee7b7,
+      #5fe0a9,
+      #34d399,
+      #178f7e,
+      #0f766e,
+      #0d5c5b);
+  color: black;
+  background-size: 100% 100%;
+}
+
+.card-emerald::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  opacity: .5;
+  background-image: url("/image/card-style/holo_diagonal.gif"), url("/image/card-style/texture_ancient.avif");
+  filter: brightness(1) contrast(1);
+  background-position: 50% 50%;
+  background-size: 180%;
+  background-blend-mode: overlay;
+  background-repeat: no-repeat;
+  mix-blend-mode: color-dodge;
+  transition: all .33s ease;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* 히든 카드
+  * 히든 카드
+  * linear-gradient
+*/
+.card-hidden {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  background: linear-gradient(to bottom right,
+      #ff9fda,
+      #f5248c,
+      #d622aa,
+      #b02fc5,
+      #8a24b9,
+      #6b168a,
+      #5f018a);
+  background-size: 100% 100%;
+  color: white;
+}
+
+.card-hidden::before,
+.card-hidden::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  border-radius: inherit;
+  mix-blend-mode: color-dodge;
+  pointer-events: none;
+  transition: all .33s ease;
+}
+
+.card-hidden::before {
+  z-index: 1;
+  opacity: .5;
+  background-image: linear-gradient(115deg, transparent 0%, rgba(0, 231, 255, 0.8) 25%, transparent 47%, transparent 53%, rgba(255, 0, 231, 0.8) 75%, transparent 100%);
+  filter: brightness(.5) contrast(1);
+  background-position: 50% 50%;
+  background-size: 300% 300%;
+}
+
+.card-hidden::after {
+  z-index: 2;
+  opacity: .5;
+  background-image:
+    url("/image/card-style/holo_diagonal.gif"),
+    url("/image/card-style/texture_hidden.avif"),
+    linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+  filter: brightness(1) contrast(1);
+  background-position: 50% 50%;
+  background-size: 160%;
+  background-blend-mode: overlay;
+}
+
+/* 랜딩페이지 샘플 카드(히어로 섹션) */
+.card-sample::before {
+  z-index: 1;
+  opacity: .5;
+  background-image: linear-gradient(115deg, transparent 0%, rgba(0, 231, 255, 0.8) 25%, transparent 47%, transparent 53%, rgba(255, 0, 231, 0.8) 75%, transparent 100%);
+  filter: brightness(.5) contrast(1);
+  background-position: 50% 50%;
+  background-size: 300% 300%;
+}
+
+.card-sample::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background-image: url("/image/card-style/texture_sample.avif"), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+  filter: brightness(1) contrast(1);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 160%;
+  background-blend-mode: overlay;
+  opacity: .1;
+  border-radius: inherit;
+  mix-blend-mode: color-dodge;
+  transition: all .33s ease;
+}

@@ -58,7 +58,7 @@ export default function Header() {
               onClick={handleReset}
             >
               <Image
-                src={IMAGE_PATHS.FALLING_CARDS_BACKGROUND}
+                src={IMAGE_PATHS.RISING_CARDS_BACKGROUND}
                 width={32}
                 height={32}
                 alt="로고 아이콘"

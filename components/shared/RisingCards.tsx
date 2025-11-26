@@ -1,8 +1,9 @@
 import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
+import '@/app/rising-cards.css';
 
-export default function FallingCards() {
-  const imageSrc = IMAGE_PATHS.FALLING_CARDS_BACKGROUND;
+export default function RisingCards() {
+  const imageSrc = IMAGE_PATHS.RISING_CARDS_BACKGROUND;
 
   return (
     <section className="circles">

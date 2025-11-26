@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { Sticker, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
+import '@/app/card-styles.css';
 
 interface ISampleCard {
     id: number;

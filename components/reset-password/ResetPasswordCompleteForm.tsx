@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
-import BackgroundCards from '@/components/shared/FallingCards';
+import RisingCards from '@/components/shared/RisingCards';
 import Button from '@/components/shared/Button';
 
 export default function ResetPasswordCompleteForm() {
@@ -16,7 +16,7 @@ export default function ResetPasswordCompleteForm() {
 
     return (
         <main className="area h-screen w-screen flex justify-center items-center">
-            <BackgroundCards />
+            <RisingCards />
             <div className="flex flex-col items-center gap-4">
                 <span className="text-3xl text-white text-shadow-black font-bold">
                     Cafe Masters

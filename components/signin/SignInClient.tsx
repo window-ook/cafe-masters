@@ -1,7 +1,7 @@
 'use client';
 
 import { IMAGE_PATHS } from '@/lib/paths';
-import FallingCards from '@/components/shared/FallingCards';
+import RisingCards from '@/components/shared/RisingCards';
 import Image from 'next/image';
 import SignInForm from '@/components/signin/SignInForm';
 
@@ -12,11 +12,11 @@ export default function SignInClient() {
             <div className="absolute -left-20 top-20 h-96 w-96 animate-pulse rounded-full bg-main/30 blur-3xl" />
             <div className="absolute -right-20 bottom-20 h-96 w-96 animate-pulse rounded-full bg-purple-200/50 blur-3xl delay-1000" />
             <div className="absolute left-1/2 top-1/3 h-64 w-64 animate-pulse rounded-full bg-main-light/20 blur-3xl delay-500" />
-            <FallingCards />
+            <RisingCards />
             <section className="relative z-10 flex flex-col items-center gap-4">
                 <header className="flex items-center">
                     <Image
-                        src={IMAGE_PATHS.FALLING_CARDS_BACKGROUND}
+                        src={IMAGE_PATHS.RISING_CARDS_BACKGROUND}
                         width={32}
                         height={32}
                         alt="로고 아이콘"

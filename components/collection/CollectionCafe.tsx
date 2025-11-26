@@ -6,6 +6,7 @@ import { Star } from 'lucide-react';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 import EdgeSquare from '@/components/shared/sidebar/EdgeSquare';
+import '@/app/card-styles.css';
 
 interface ICollectionCafe {
   name: string | undefined;

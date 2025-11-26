@@ -9,7 +9,7 @@ import { resetPasswordFormSchema, ResetPasswordFormData } from '@/schema/auth';
 import { useFinishResetPassword } from '@/hooks/supabase/authentication';
 import { CONSOLE_ERROR, TOAST_SUCCESS } from '@/constants/messages';
 import { toast } from 'react-toastify';
-import BackgroundCards from '@/components/shared/FallingCards';
+import RisingCards from '@/components/shared/RisingCards';
 import Button from '@/components/shared/Button';
 import InputField from '@/components/shared/InputField';
 
@@ -50,7 +50,7 @@ export default function ResetPasswordForm() {
 
   return (
     <main className="area h-screen w-screen flex justify-center items-center">
-      <BackgroundCards />
+      <RisingCards />
       <div className="flex flex-col items-center gap-4">
         <span className="text-3xl text-white text-shadow-black font-bold">
           Cafe Masters

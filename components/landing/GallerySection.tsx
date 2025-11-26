@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import { Star, Coffee, Shield, Crown, Gem, Eye } from 'lucide-react';
 import EdgeSquare from '@/components/shared/sidebar/EdgeSquare';
+import '@/app/card-styles.css';
 
 interface ISampleCafe {
   name: string;
