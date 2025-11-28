@@ -6,10 +6,10 @@ import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
-import { IKakaoSearchResult } from '@/types/kakao-map';
 import { useCurrentCafeStore, useSearchedResultStore, useFilterStore, useUserStore } from '@/stores';
-import { toast } from 'react-toastify';
+import { IKakaoSearchResult } from '@/types/kakao-map';
 import { EXTERNAL_PATHS, IMAGE_PATHS } from '@/lib/paths';
+import { toast } from 'react-toastify';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
@@ -58,9 +58,37 @@ export default function KakaoMap() {
   const prevKeywordRef = useRef<string | null>(null);
 
   useEffect(() => {
+    const existingScript = document.querySelector(`script[src*="dapi.kakao.com"]`);
+
+    if (existingScript) {
+      if (window.kakao?.maps) {
+        window.kakao.maps.load(() => {
+          const container = document.getElementById('map');
+          const options = {
+            center: new window.kakao.maps.LatLng(
+              37.54715716085294,
+              127.04663357436208,
+            ),
+            level: 7,
+            draggable: true,
+          };
+          const zoomControl = new window.kakao.maps.ZoomControl();
+
+          mapRef.current = new window.kakao.maps.Map(container, options);
+          mapRef.current.addControl(
+            zoomControl,
+            window.kakao.maps.ControlPosition.RIGHT,
+          );
+
+          setMapLoaded(true);
+        });
+      }
+      return;
+    }
+
     const script = document.createElement('script');
     script.src = EXTERNAL_PATHS.KAKAO_MAP;
-    script.defer = true;
+    script.async = true;
     document.head.appendChild(script);
 
     script.onload = () => {
@@ -86,7 +114,10 @@ export default function KakaoMap() {
       });
     };
 
-    return () => script.remove();
+    return () => {
+      if (!document.querySelector(`script[src*="dapi.kakao.com"]`)) return;
+      script.remove();
+    };
   }, []);
 
   // 인포윈도우 제거
@@ -118,15 +149,12 @@ export default function KakaoMap() {
           getLat(item),
           getLng(item),
         );
-        const imageSrc = IMAGE_PATHS.CUSTOM_MARKER;
+        const imageSrc = IMAGE_PATHS.CUSTOM_MARKER_1;
 
-        const normalSize = new window.kakao.maps.Size(44, 44);
-        const hoverSize = new window.kakao.maps.Size(48, 48); // 스케일 1.1배
-        const normalOffset = new window.kakao.maps.Point(22, 44);
-        const hoverOffset = new window.kakao.maps.Point(24, 48);
+        const normalSize = new window.kakao.maps.Size(54, 54);
+        const normalOffset = new window.kakao.maps.Point(27, 54);
 
         const normalMarkerImage = new window.kakao.maps.MarkerImage(imageSrc, normalSize, { offset: normalOffset });
-        const hoverMarkerImage = new window.kakao.maps.MarkerImage(imageSrc, hoverSize, { offset: hoverOffset });
 
         const marker = new window.kakao.maps.Marker({ map, position, image: normalMarkerImage });
 
@@ -158,7 +186,6 @@ export default function KakaoMap() {
         };
 
         const handleMarkerMouseOver = () => {
-          marker.setImage(hoverMarkerImage);
           marker.setZIndex(1000);
           if (window.innerWidth > 768) showInfoWindow();
         };

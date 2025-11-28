@@ -64,7 +64,7 @@ export default function Header() {
                 alt="로고 아이콘"
                 className="w-8 h-8"
               />
-              <h1 className="text-3xl text-white text-shadow-black font-bold">
+              <h1 className="text-3xl font-bold text-white [text-shadow:0_0_10px_rgba(135,90,173,1),0_4px_8px_rgba(0,0,0,0.9)]">
                 Cafe Masters
               </h1>
             </Link>

@@ -12,6 +12,7 @@ const pretendard = localFont({
   display: 'swap',
   weight: '45 920',
   variable: '--font-pretendard',
+  fallback: ['system-ui', '-apple-system', 'sans-serif'],
 });
 
 const dunggeunmo = localFont({
@@ -19,6 +20,7 @@ const dunggeunmo = localFont({
   display: 'swap',
   weight: '45 920',
   variable: '--font-dunggeunmo',
+  fallback: ['monospace'],
 });
 
 export const metadata: Metadata = {

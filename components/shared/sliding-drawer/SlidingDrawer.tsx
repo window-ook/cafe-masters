@@ -62,5 +62,5 @@ export default function SlidingDrawer() {
         );
     };
 
-    return <div role="dialog" data-testid="sliding-drawer" aria-modal="true" className={SLIDING_DRAWER_STYLE}>{renderContent()}</div>;
+    return <div data-testid="sliding-drawer" className={SLIDING_DRAWER_STYLE}>{renderContent()}</div>;
 }
