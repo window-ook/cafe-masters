@@ -1,31 +1,18 @@
 import { Metadata } from 'next';
 import { getRecommendationCafeById } from '@/actions/supabase/recommendation';
 import { IPageParams } from '@/types/shared/page';
-import { CONSOLE_ERROR } from '@/constants/messages';
 
 export async function generateMetadata({ params }: IPageParams): Promise<Metadata> {
   const { id } = await params;
   const cafeId = Number(id);
-
-  try {
-    const cafe = await getRecommendationCafeById(cafeId);
-
-    if (cafe) {
-      return {
-        title: `${cafe.name} 상세 정보 : Cafe Masters`,
-        description: `추천 카페 '${cafe.name}'의 상세 정보를 확인해보세요.`,
-        alternates: {
-          canonical: `https://www.cafe-masters.com/recommendation/detail/${id}`
-        },
-      };
-    }
-  } catch (error) {
-    console.error(CONSOLE_ERROR.CREATE_METADATA, error);
-  }
+  const cafe = await getRecommendationCafeById(cafeId);
 
   return {
-    title: '카페 상세 정보 : Cafe Masters',
-    description: '추천 카페의 상세 정보를 확인해보세요.',
+    title: `${cafe?.name} 상세 정보 : Cafe Masters`,
+    description: 'Cafe Masters에서 엄선한 추천 카페의 상세 정보를 확인해보세요. 위치, 메뉴, 영업시간 등 다양한 정보를 제공합니다.',
+    alternates: {
+      canonical: `https://www.cafe-masters.com/recommendation/detail/${id}`
+    },
   };
 }
 

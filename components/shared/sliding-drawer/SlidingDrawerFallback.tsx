@@ -1,6 +1,6 @@
 import { LoadingSpinner } from './LoadingSpinner';
 
-export default function SlidingDrawerSkeleton() {
+export default function SlidingDrawerFallback() {
   return (
     <article className="size-full">
       <LoadingSpinner size="xl" className="size-full" />

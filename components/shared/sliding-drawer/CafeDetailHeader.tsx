@@ -38,7 +38,7 @@ export default function CafeDetailHeader({ bookmarkData }: ICafeDetailHeader) {
           {isRecommended && <RecommendedBadge />}
           {isCollected && <CollectedBadge />}
         </div>
-        <button onClick={handleClose} className='cursor-pointer'>
+        <button aria-label="카페 상세 정보 보기 취소 버튼" onClick={handleClose} className='cursor-pointer'>
           <CircleX className='size-8' />
         </button>
       </div>
@@ -55,7 +55,7 @@ export default function CafeDetailHeader({ bookmarkData }: ICafeDetailHeader) {
           >
             <ChevronsUpDown className='size-4 text-button-text' />
           </button>
-          <button onClick={handleClose} className='cursor-pointer'>
+          <button aria-label="카페 상세 정보 보기 취소 버튼" onClick={handleClose} className='cursor-pointer'>
             <CircleX className='size-8' />
           </button>
         </div>

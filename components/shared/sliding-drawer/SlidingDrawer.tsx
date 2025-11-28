@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCurrentCafeStore, useUIStore } from '@/stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import clsx from 'clsx';
@@ -50,7 +50,9 @@ export default function SlidingDrawer() {
 
     const paths = usePathMatcher();
 
-    if (paths.isMain && isSlidingDrawerOpen) closeSlidingDrawer();
+    useEffect(() => {
+        if (paths.isMain && isSlidingDrawerOpen) closeSlidingDrawer();
+    }, [paths.isMain, isSlidingDrawerOpen, closeSlidingDrawer]);
 
     const SLIDING_DRAWER_STYLE = clsx(
         'fixed z-10 w-screen max-w-108 p-2 overflow-x-hidden overflow-y-auto shadow-md transition-all duration-300 ease-in-out',

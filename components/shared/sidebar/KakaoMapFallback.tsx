@@ -1,6 +1,6 @@
 import { LoadingSpinner } from '@/components/shared/sliding-drawer/LoadingSpinner';
 
-export default function KakaoMapSkeleton() {
+export default function KakaoMapFallback() {
     return (
         <figure
             id="map"

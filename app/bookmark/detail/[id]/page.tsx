@@ -1,32 +1,19 @@
 import { Metadata } from 'next';
 import { getBookmarkCafeById } from '@/actions/supabase/bookmark';
 import { IPageParams } from '@/types/shared/page';
-import { CONSOLE_ERROR } from '@/constants/messages';
 import BookmarkDetailClient from '@/components/bookmark/detail/BookmarkDetailClient';
 
 export async function generateMetadata({ params }: IPageParams): Promise<Metadata> {
   const { id } = await params;
   const cafeId = Number(id);
-
-  try {
-    const cafe = await getBookmarkCafeById(cafeId);
-
-    if (cafe) {
-      return {
-        title: `${cafe.name} 상세 정보 : Cafe Masters`,
-        description: `북마크한 카페 '${cafe.name}'의 상세 정보를 확인해보세요.`,
-        alternates: {
-          canonical: `https://www.cafe-masters.com/bookmark/detail/${id}`
-        },
-      };
-    }
-  } catch (error) {
-    console.error(CONSOLE_ERROR.CREATE_METADATA, error);
-  }
+  const cafe = await getBookmarkCafeById(cafeId);
 
   return {
-    title: '카페 상세 정보 : Cafe Masters',
-    description: '북마크한 카페의 상세 정보를 확인해보세요.',
+    title: `${cafe?.name} 상세 정보 : Cafe Masters`,
+    description: `북마크한 카페 '${cafe?.name}'의 상세 정보를 확인해보세요.`,
+    alternates: {
+      canonical: `https://www.cafe-masters.com/bookmark/detail/${id}`
+    },
   };
 }
 

@@ -63,15 +63,11 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
           >
             <div className="h-60 py-2 snap-center shrink-0">
               {collectionCafeDetail?.image && (
-                <a
+                <button
                   type="button"
                   aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
-                  onClick={() =>
-                    window.open(
-                      `http://place.map.kakao.com/${collectionCafeDetail?.id}`,
-                      '_blank',
-                    )
-                  }
+                  className="cursor-pointer"
+                  onClick={() => window.open(`http://place.map.kakao.com/${collectionCafeDetail?.id}`, '_blank')}
                 >
                   <Image
                     key={`${cafeId}-main-image`}
@@ -82,7 +78,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
                     priority={true}
                     className="slide-images"
                   />
-                </a>
+                </button>
               )}
             </div>
             {collectionCafeDetail?.extra_images && Array.isArray(collectionCafeDetail.extra_images) && collectionCafeDetail.extra_images.length > 0 && collectionCafeDetail.extra_images.map((photo, i) => {
@@ -90,21 +86,22 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
                 <div
                   key={`${cafeId}-extra-${i}`}
                   className="h-60 py-2 snap-center shrink-0">
-                  <Image
-                    key={`${cafeId}-extra-image-${i}`}
-                    alt="카페 썸네일"
-                    src={photo}
-                    width={340}
-                    height={240}
-                    priority={true}
-                    onClick={() =>
-                      window.open(
-                        `http://place.map.kakao.com/${collectionCafeDetail?.id}`,
-                        '_blank',
-                      )
-                    }
-                    className="slide-images"
-                  />
+                  <button
+                    type="button"
+                    aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
+                    className="cursor-pointer"
+                    onClick={() => window.open(`http://place.map.kakao.com/${collectionCafeDetail?.id}`, '_blank')}
+                  >
+                    <Image
+                      key={`${cafeId}-extra-image-${i}`}
+                      alt="카페 썸네일"
+                      src={photo}
+                      width={340}
+                      height={240}
+                      priority={true}
+                      className="slide-images"
+                    />
+                  </button>
                 </div>
               );
             })}

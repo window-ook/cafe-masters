@@ -117,7 +117,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
           {isCollected && <CollectedBadge />}
           {isRecommended && <RecommendedBadge />}
         </div>
-        <button onClick={handleClose} className='cursor-pointer'>
+        <button aria-label="카페 상세 정보 보기 취소 버튼" onClick={handleClose} className='cursor-pointer'>
           <CircleX className='size-8' />
         </button>
       </header>

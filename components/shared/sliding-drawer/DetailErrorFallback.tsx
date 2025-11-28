@@ -11,7 +11,7 @@ export default function DetailErrorFallback() {
             {/* 헤더 */}
             <header className={`flex justify-between items-center rounded-md p-2`}>
                 <div className="flex justify-between items-center p-4 w-full">
-                    <button onClick={handleClose}>
+                    <button aria-label="카페 상세 정보 보기 취소 버튼" onClick={handleClose}>
                         <CircleX className='size-8' />
                     </button>
                 </div>

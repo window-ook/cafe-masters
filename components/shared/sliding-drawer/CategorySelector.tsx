@@ -1,6 +1,6 @@
 import { CATEGORIES } from '@/constants/categories';
-import { RotateCcw } from 'lucide-react';
 import { ICategorySelector } from '@/types/shared/form';
+import CategoryResetButton from '@/components/shared/CategoryResetButton';
 
 export default function CategorySelector({
   selectedCategories,
@@ -25,7 +25,7 @@ export default function CategorySelector({
           onClick={() => toggleCategories(category)}
           className={`px-4 py-2 rounded-full border transition text-sm cursor-pointer
             ${selectedCategories.includes(category)
-              ? 'bg-blue-500 text-white border-blue-500'
+              ? 'bg-main text-white border-main'
               : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
             }
           `}
@@ -33,13 +33,7 @@ export default function CategorySelector({
           {category}
         </button>
       ))}
-      <button
-        type="button"
-        className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center cursor-pointer transform duration-150 hover:opacity-60"
-        onClick={resetCategories}
-      >
-        <RotateCcw className="size-4" />
-      </button>
+      <CategoryResetButton onReset={resetCategories} />
     </div>
   );
 }

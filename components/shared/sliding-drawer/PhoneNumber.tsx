@@ -13,6 +13,7 @@ export default function PhoneNumber({ phone_number }: { phone_number: string | n
         {phone_number && (
           <button
             type="button"
+            aria-label="전화번호 복사 버튼"
             onClick={() => copyText(phone_number ?? '')}
             className="cursor-pointer hover:opacity-50"
           >

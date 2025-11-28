@@ -73,10 +73,11 @@ export default function CafeDetailBody({
             ) : (
               <>
                 <div className="h-60 py-2 snap-center shrink-0">
-                  <a
+                  <button
                     type="button"
                     aria-label="카페 이미지 클릭 시 카카오플레이스 이동(썸네일)"
                     onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
+                    className="cursor-pointer"
                   >
                     {isImageWithFallback ? (
                       <ImageWithFallback
@@ -102,7 +103,7 @@ export default function CafeDetailBody({
                         className="slide-images"
                       />
                     )}
-                  </a>
+                  </button>
                 </div>
 
                 {cafeData.extra_images?.map((photo, i) => (
@@ -110,10 +111,11 @@ export default function CafeDetailBody({
                     key={`${cafeId}-extra-${i}`}
                     className="h-60 py-2 snap-center shrink-0"
                   >
-                    <a
+                    <button
                       type="button"
                       aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
                       onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
+                      className="cursor-pointer"
                     >
                       {isImageWithFallback ? (
                         <ImageWithFallback
@@ -139,7 +141,7 @@ export default function CafeDetailBody({
                           className="slide-images"
                         />
                       )}
-                    </a>
+                    </button>
                   </div>
                 ))}
               </>

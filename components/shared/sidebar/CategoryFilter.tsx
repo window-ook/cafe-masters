@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useFilterStore } from '@/stores/filter';
 import { useUIStore } from '@/stores';
-import { RotateCcw } from 'lucide-react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 import { CATEGORIES } from '@/constants/categories';
+import CategoryResetButton from '@/components/shared/CategoryResetButton';
 
 export default function CategoryFilter() {
   const selectedCategories = useFilterStore(state => state.selectedCategories);
@@ -42,13 +42,7 @@ export default function CategoryFilter() {
               {category}
             </button>
           ))}
-          <button
-            type="button"
-            className="bg-main-light text-main px-4 py-2 rounded-full flex justify-center items-center cursor-pointer transform duration-150 hover:opacity-60"
-            onClick={resetCategories}
-          >
-            <RotateCcw className="size-4" />
-          </button>
+          <CategoryResetButton onReset={resetCategories} />
         </div>
       </div>
       <button

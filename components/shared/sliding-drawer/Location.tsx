@@ -12,6 +12,7 @@ export default function Location({ address }: { address: string }) {
         <p className="text-sm">{address}</p>
         <button
           type="button"
+          aria-label="주소 복사 버튼"
           onClick={() => copyText(address)}
           className="cursor-pointer hover:opacity-50"
         >

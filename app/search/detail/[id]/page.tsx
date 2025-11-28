@@ -10,19 +10,12 @@ export async function generateMetadata({ searchParams }: ISearchDetailPage): Pro
   const resolvedSearchParams = await searchParams;
   const cafeName = resolvedSearchParams?.name as string;
 
-  if (cafeName) {
-    return {
-      title: `${cafeName} 상세 정보 : Cafe Masters`,
-      description: `검색 결과 카페 '${cafeName}'의 상세 정보를 확인해보세요.`,
-      alternates: {
-        canonical: `https://www.cafe-masters.com/search/detail/${resolvedSearchParams?.id}`
-      },
-    };
-  }
-
   return {
-    title: `카페 상세 정보 : Cafe Masters`,
-    description: `검색 결과 카페의 상세 정보를 확인해보세요.`,
+    title: `${cafeName} 상세 정보 : Cafe Masters`,
+    description: `검색 결과 카페 '${cafeName}'의 상세 정보를 확인해보세요.`,
+    alternates: {
+      canonical: `https://www.cafe-masters.com/search/detail/${resolvedSearchParams?.id}`
+    },
   };
 }
 
