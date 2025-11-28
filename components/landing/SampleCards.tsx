@@ -118,7 +118,7 @@ export default function SampleCards() {
                 disabled={isAnimating}
                 className="absolute left-0 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-lg hover:bg-white/30 hover:scale-110 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                <ChevronLeft className="w-6 h-6 text-white" />
+                <ChevronLeft className="size-6 text-white" />
             </button>
 
             {/* 카드 컨테이너 */}
@@ -190,7 +190,7 @@ export default function SampleCards() {
                 disabled={isAnimating}
                 className="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-lg hover:bg-white/30 hover:scale-110 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                <ChevronRight className="w-6 h-6 text-white" />
+                <ChevronRight className="size-6 text-white" />
             </button>
         </div>
     );

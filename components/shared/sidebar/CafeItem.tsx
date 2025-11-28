@@ -25,7 +25,7 @@ export default function CafeItem({
 
   return (
     <li
-      className={`h-24 p-2 rounded-sm shadow-md list-none ${isDarkTheme ? 'bg-dark-background text-white shadow-dark-shadow' : ''} hover:opacity-50 transition duration-150 ease`}
+      className={`h-24 p-2 rounded-sm shadow-md list-none ${isDarkTheme ? 'bg-dark-background text-white shadow-dark-shadow' : ''} hover:shadow-main-300 transition duration-200 ease`}
     >
       <button
         type="button"

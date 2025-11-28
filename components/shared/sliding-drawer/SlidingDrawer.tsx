@@ -4,12 +4,38 @@ import { useState } from 'react';
 import { useCurrentCafeStore, useUIStore } from '@/stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import clsx from 'clsx';
-import SearchCafeDetail from '@/components/search/detail/SearchCafeDetail';
-import CollectionCafeDetail from '@/components/collection/detail/CollectionCafeDetail';
-import BookmarkCafeDetail from '@/components/bookmark/detail/BookmarkCafeDetail';
-import RecommendationCafeDetail from '@/components/recommendation/detail/RecommendationCafeDetail';
-import FormForCollect from '@/components/shared/sliding-drawer/FormForCollect';
-import FormForRecommend from '@/components/shared/sliding-drawer/FormForRecommend';
+import dynamic from 'next/dynamic';
+import SlidingDrawerFallback from '@/components/shared/sliding-drawer/SlidingDrawerFallback';
+
+const SearchCafeDetail = dynamic(() => import('@/components/search/detail/SearchCafeDetail'), {
+    loading: () => <SlidingDrawerFallback />,
+    ssr: false,
+});
+
+const CollectionCafeDetail = dynamic(() => import('@/components/collection/detail/CollectionCafeDetail'), {
+    loading: () => <SlidingDrawerFallback />,
+    ssr: false,
+});
+
+const BookmarkCafeDetail = dynamic(() => import('@/components/bookmark/detail/BookmarkCafeDetail'), {
+    loading: () => <SlidingDrawerFallback />,
+    ssr: false,
+});
+
+const RecommendationCafeDetail = dynamic(() => import('@/components/recommendation/detail/RecommendationCafeDetail'), {
+    loading: () => <SlidingDrawerFallback />,
+    ssr: false,
+});
+
+const FormForCollect = dynamic(() => import('@/components/shared/sliding-drawer/FormForCollect'), {
+    loading: () => <SlidingDrawerFallback />,
+    ssr: false,
+});
+
+const FormForRecommend = dynamic(() => import('@/components/shared/sliding-drawer/FormForRecommend'), {
+    loading: () => <SlidingDrawerFallback />,
+    ssr: false,
+});
 
 /** 상세 정보, 수집하기, 추천하기 폼을 표시하는 Shell Container */
 export default function SlidingDrawer() {

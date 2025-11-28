@@ -6,11 +6,16 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
 import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
-import SideBar from '@/components/shared/sidebar/SideBar';
+import SideBarSkeleton from '@/components/shared/sidebar/SideBarSkeleton';
+import KakaoMapFallback from '@/components/shared/sidebar/KakaoMapFallback';
 
 const ReactQueryDevtools = dynamic(() => import('@tanstack/react-query-devtools').then(mod => mod.ReactQueryDevtools), { ssr: false });
 const ToastContainer = dynamic(() => import('react-toastify').then(mod => mod.ToastContainer), { ssr: false });
-const KakaoMap = dynamic(() => import('@/components/shared/KaKaoMap'), { ssr: false });
+const KakaoMap = dynamic(() => import('@/components/shared/KaKaoMap'), { ssr: false, loading: () => <KakaoMapFallback /> });
+const SideBar = dynamic(() => import('@/components/shared/sidebar/SideBar'), {
+  ssr: false,
+  loading: () => <SideBarSkeleton />
+});
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(

@@ -281,35 +281,35 @@ export default function GallerySection() {
           <div className="md:max-w-4xl mx-auto flex md:grid md:grid-cols-5 justify-between md:gap-4">
             <div className="text-center">
               <div className="w-12 h-12 bg-orange-100 rounded-full mx-auto mb-2 flex items-center justify-center">
-                <Coffee className="w-6 h-6 text-orange-600" />
+                <Coffee className="size-6 text-orange-600" />
               </div>
               <h3 className="font-bold text-gray-900 mb-1">노멀</h3>
               <p className="text-sm text-gray-600">1-2점 </p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-gray-200 rounded-full mx-auto mb-2 flex items-center justify-center">
-                <Shield className="w-6 h-6 text-gray-600" />
+                <Shield className="size-6 text-gray-600" />
               </div>
               <h3 className="font-bold text-gray-900 mb-1">실버</h3>
               <p className="text-sm text-gray-600">3점 </p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-yellow-100 rounded-full mx-auto mb-2 flex items-center justify-center">
-                <Crown className="w-6 h-6 text-yellow-600" />
+                <Crown className="size-6 text-yellow-600" />
               </div>
               <h3 className="font-bold text-gray-900 mb-1">골드</h3>
               <p className="text-sm text-gray-600">4점 </p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-emerald-100 rounded-full mx-auto mb-2 flex items-center justify-center">
-                <Gem className="w-6 h-6 text-emerald-600" />
+                <Gem className="size-6 text-emerald-600" />
               </div>
               <h3 className="font-bold text-gray-900 mb-1">에메랄드</h3>
               <p className="text-sm text-gray-600">5점 </p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mb-2 flex items-center justify-center">
-                <Eye className="w-6 h-6 text-white" />
+                <Eye className="size-6 text-white" />
               </div>
               <h3 className="font-bold text-transparent bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text mb-1">히든</h3>
               <p className="text-sm text-gray-600">특별한 카페</p>

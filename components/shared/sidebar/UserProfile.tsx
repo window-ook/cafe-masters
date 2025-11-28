@@ -31,7 +31,7 @@ export default function UserProfile() {
       <div
         className={`w-full pl-1 py-1 rounded-xl ${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-300'} shadow-md flex items-center sm:gap-6`}
       >
-        <div className="w-6 h-6 rounded-full bg-main-light flex items-center justify-center">
+        <div className="size-6 rounded-full bg-main-light flex items-center justify-center">
           <Image
             src={IMAGE_PATHS.USER_ICON}
             alt="유저 프로필 이미지"

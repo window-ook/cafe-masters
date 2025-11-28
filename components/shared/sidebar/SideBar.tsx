@@ -3,14 +3,18 @@
 import { useUIStore, useUserStore } from 'stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
+import dynamic from 'next/dynamic';
 import TabsForLink from '@/components/shared/sidebar/TabsForLink';
 import Footer from '@/components/shared/sidebar/Footer';
 import Header from '@/components/shared/sidebar/Header';
-import SearchedCafes from '@/components/search/SearchCafes';
-import BookmarkCafes from '@/components/bookmark/BookmarkCafes';
-import RecommendationCafes from '@/components/recommendation/RecommendationCafes';
-import CollectionCafes from '@/components/collection/CollectionCafes';
 import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
+import CollectionCafesSkeleton from '@/components/collection/CollectionCafesSkeleton';
+import CafeItemSkeleton from '@/components/shared/sidebar/CafeItemSkeleton';
+
+const SearchCafes = dynamic(() => import('@/components/search/SearchCafes'), { ssr: false, loading: () => <CafeItemSkeleton /> });
+const CollectionCafes = dynamic(() => import('@/components/collection/CollectionCafes'), { ssr: false, loading: () => <CollectionCafesSkeleton /> });
+const BookmarkCafes = dynamic(() => import('@/components/bookmark/BookmarkCafes'), { ssr: false, loading: () => <CafeItemSkeleton /> });
+const RecommendationCafes = dynamic(() => import('@/components/recommendation/RecommendationCafes'), { ssr: false, loading: () => <CafeItemSkeleton /> });
 
 /** 네비게이션, 리스트 표시 Shell Container */
 export default function SideBar() {
@@ -21,7 +25,7 @@ export default function SideBar() {
   const paths = usePathMatcher();
 
   return (
-    <nav className="flex">
+    <aside className="flex">
       <div
         className={`z-10 relative w-screen h-screen max-w-108 px-1 rounded-none border-r-1 border-main-400/20
           ${isDarkTheme ? 'bg-dark-background text-dark-text' : 'bg-sidebar-background'} 
@@ -37,7 +41,7 @@ export default function SideBar() {
             </>
           )}
 
-          {paths.isSearch && (<div className="flex-1 min-h-0"><SearchedCafes /></div>)}
+          {paths.isSearch && (<div className="flex-1 min-h-0"><SearchCafes /></div>)}
 
           {paths.isRecommendation && (<div className="flex-1 min-h-0"><RecommendationCafes /></div>)}
 
@@ -67,6 +71,6 @@ export default function SideBar() {
       >
         <SlidingDrawer />
       </ErrorBoundaryWrapper>
-    </nav>
+    </aside>
   );
 }

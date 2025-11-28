@@ -259,7 +259,7 @@ export default function FormForCollect() {
                     checked={field.value}
                     onChange={(e) => field.onChange(e.target.checked)}
                     disabled={isSubmitting || isUploading}
-                    className="w-4 h-4 cursor-pointer"
+                    className="size-4 cursor-pointer"
                   />
                   <span className="text-sm text-gray-700">
                     기본 썸네일도 함께 보관하기

@@ -7,10 +7,12 @@ import { useSignIn } from '@/hooks/supabase/authentication';
 import { signInWithKakao } from '@/utils/supabase/signInWithKakao';
 import { signInWithGoogle } from '@/utils/supabase/signInWithGoogle';
 import { signInFormSchema, SignInFormData } from '@/schema/auth';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
-import ResetPasswordRequestForm from '@/components/signin/ResetPasswordRequestForm';
+
+const ResetPasswordRequestForm = dynamic(() => import('@/components/signin/ResetPasswordRequestForm'), { ssr: false, loading: () => <div className='w-80 h-70 max-w-(--breakpoint-lg) sm:w-96 bg-white'></div> });
 
 export default function SignInForm() {
   const [resetRequired, setResetRequired] = useState<boolean>(false);
@@ -171,7 +173,7 @@ export default function SignInForm() {
             >
             </Button>
             <p className="text-sm text-gray-500 text-center">
-              이메일이 오지 않았나요? 스팸함도 확인해보세요.
+              이메일이 오지 않았나요? 스팸도 확인해보세요.
             </p>
           </div>
         </div>

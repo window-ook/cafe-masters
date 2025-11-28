@@ -8,10 +8,13 @@ import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { resetPasswordFormSchema, ResetPasswordFormData } from '@/schema/auth';
 import { useFinishResetPassword } from '@/hooks/supabase/authentication';
 import { CONSOLE_ERROR, TOAST_SUCCESS } from '@/constants/messages';
+import { IMAGE_PATHS } from '@/lib/paths';
 import { toast } from 'react-toastify';
 import RisingCards from '@/components/shared/RisingCards';
 import Button from '@/components/shared/Button';
 import InputField from '@/components/shared/InputField';
+import MainThemeBackground from '@/components/shared/MainThemeBackground';
+import Image from 'next/image';
 
 export default function ResetPasswordForm() {
   const supabase = createBrowserSupabaseClient();
@@ -49,13 +52,23 @@ export default function ResetPasswordForm() {
   const toggleConfirmPasswordVisibility = () => setIsConfirmPasswordVisible(prev => !prev);
 
   return (
-    <main className="area h-screen w-screen flex justify-center items-center">
+    <main className="area h-screen w-screen flex flex-col justify-center items-center">
+      <MainThemeBackground />
       <RisingCards />
-      <div className="flex flex-col items-center gap-4">
-        <span className="text-3xl font-bold text-white [text-shadow:0_0_10px_rgba(135,90,173,1),0_4px_8px_rgba(0,0,0,0.9)]">
-          Cafe Masters
-        </span>
-        <div className="z-10 p-5 rounded-xl bg-white shadow-main-shadow">
+      <section className="relative z-10 flex flex-col items-center gap-4">
+        <header className="flex items-center gap-2">
+          <Image
+            src={IMAGE_PATHS.RISING_CARDS_BACKGROUND}
+            width={32}
+            height={32}
+            alt="로고 아이콘"
+            className="size-8"
+          />
+          <h1 className="text-3xl font-bold text-white [text-shadow:0_0_10px_rgba(135,90,173,1),0_4px_8px_rgba(0,0,0,0.9)]">
+            Cafe Masters
+          </h1>
+        </header>
+        <div className="p-5 rounded-xl bg-white shadow-main-shadow">
           <form
             className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
             onSubmit={handleSubmit(onFormSubmit)}
@@ -119,7 +132,7 @@ export default function ResetPasswordForm() {
             />
           </form>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

@@ -5,9 +5,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRequestResetPassword } from '@/hooks/supabase/authentication/useRequestResetPassword';
 import { resetPasswordRequestSchema, ResetPasswordRequestData } from '@/schema/auth';
+import { CONSOLE_ERROR } from '@/constants/messages';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
-import { CONSOLE_ERROR } from '@/constants/messages';
 
 interface IResetPasswordRequestFormProps {
   onBackAction: () => void;
@@ -37,13 +37,13 @@ export default function ResetPasswordRequestForm({
   };
 
   return (
-    <div>
+    <>
       <p className="auth-form-title">비밀번호 재설정</p>
       <form
         className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
         onSubmit={handleSubmit(onFormSubmit)}
       >
-        <p className="text-sm text-gray-600 mb-2">
+        <p className="mt-2 text-center text-sm text-gray-600">
           가입하신 이메일 주소를 입력해주세요.<br />
           비밀번호 재설정 링크를 발송해드립니다.
         </p>
@@ -79,6 +79,6 @@ export default function ResetPasswordRequestForm({
           text="취소"
         />
       </form>
-    </div>
+    </>
   );
 }
