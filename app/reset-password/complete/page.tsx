@@ -4,6 +4,9 @@ import ResetPasswordCompleteForm from '@/components/reset-password/ResetPassword
 export const metadata: Metadata = {
   title: '비밀번호 재설정 완료 : Cafe Masters',
   description: '비밀번호 재설정을 완료페이지입니다.',
+  alternates: {
+    canonical: 'https://www.cafe-masters.com/reset-password/complete'
+  },
 };
 
 export default function ResetPasswordCompletePage() {

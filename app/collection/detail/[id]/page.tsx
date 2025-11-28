@@ -14,6 +14,9 @@ export async function generateMetadata({ params }: IPageParams): Promise<Metadat
       return {
         title: `${cafe.name} 상세 정보 : Cafe Masters`,
         description: `수집한 카페 '${cafe.name}'의 상세 정보를 확인해보세요.`,
+        alternates: {
+          canonical: `https://www.cafe-masters.com/collection/detail/${id}`
+        },
       };
     }
   } catch (error) {
