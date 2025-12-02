@@ -1,6 +1,6 @@
 'use client';
 
-import { RefObject, useRef } from 'react';
+import { RefObject, useMemo, useRef } from 'react';
 import { useUIStore, useUserStore } from 'stores';
 import { useCollectionStore } from '@/stores/collection';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
@@ -29,7 +29,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const collectionCafeDetail = filteredCollectionCafes.find((cafe: ISupabaseCollectionCafe) => cafe.id === cafeId);
+  const collectionCafeDetail = useMemo(() => filteredCollectionCafes.find((cafe: ISupabaseCollectionCafe) => cafe.id === cafeId), [filteredCollectionCafes, cafeId]);
 
   if (!collectionCafeDetail) {
     return (

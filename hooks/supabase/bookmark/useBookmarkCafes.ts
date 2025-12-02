@@ -42,7 +42,6 @@ export function useBookmarkCafes(
     },
   });
 
-  // 필터링 및 페이지네이션 계산을 useMemo로 최적화
   const paginationData = useMemo((): IBookmarkCafes => {
     if (!queryData.data?.data) {
       return {

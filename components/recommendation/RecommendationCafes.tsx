@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useUIStore } from 'stores';
 import { useFilterStore } from '@/stores/filter';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
@@ -18,8 +18,8 @@ export default function RecommendationCafes() {
   const { filteredRecommendationCafes, totalFilteredCount, isError, error, isPending } = useRecommendationCafes(selectedCategories);
 
   const recommendationPerPage = 5;
-  const totalRecommendedPages = Math.ceil((filteredRecommendationCafes?.length || 0) / recommendationPerPage);
-  const paginatedRecommend = filteredRecommendationCafes?.slice((currentPage - 1) * recommendationPerPage, currentPage * recommendationPerPage) || [];
+  const totalRecommendedPages = useMemo(() => Math.ceil((filteredRecommendationCafes?.length || 0) / recommendationPerPage), [filteredRecommendationCafes, recommendationPerPage]);
+  const paginatedRecommend = useMemo(() => filteredRecommendationCafes?.slice((currentPage - 1) * recommendationPerPage, currentPage * recommendationPerPage) || [], [currentPage, filteredRecommendationCafes, recommendationPerPage]);
 
   useEffect(() => { setCurrentPage(1); }, [filteredRecommendationCafes]);
 

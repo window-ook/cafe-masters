@@ -18,6 +18,7 @@ async function getCollectionCounts() {
 
 export default async function HeroSection() {
     const collectionCafesCounts = await getCollectionCounts();
+
     return (
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
             {/* 배경 */}

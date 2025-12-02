@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, memo, useCallback } from 'react';
 import { useUIStore } from '@/stores';
 import { Star } from 'lucide-react';
 import { IMAGE_PATHS } from '@/lib/paths';
@@ -33,7 +33,7 @@ let nameColorByGrade = ''; // 등급에 따른 카페 이름 색상
 let backlightColorByGrade = ''; // 등급에 따른 백그라운드 효과
 let addressAndPhoneBackgroundColor = ''; // 주소와 전화번호 배경 색상
 
-export default function CollectionCafe({
+export default memo(function CollectionCafe({
   name,
   image,
   address,
@@ -81,7 +81,7 @@ export default function CollectionCafe({
 
   const isHiddenCard = HIDDEN_CAFE_NAMES.includes(name || '');
 
-  const handleCardMouseMove = (e: React.MouseEvent) => {
+  const handleCardMouseMove = useCallback((e: React.MouseEvent) => {
     const container = cardRef.current;
     const back = backEffectRef.current;
 
@@ -98,9 +98,9 @@ export default function CollectionCafe({
 
     back?.style.setProperty('--rotate-x', `${rotateX}deg`);
     back?.style.setProperty('--rotate-y', `${rotateY}deg`);
-  };
+  }, []);
 
-  const handleCardMouseLeave = () => {
+  const handleCardMouseLeave = useCallback(() => {
     const container = cardRef.current;
     const back = backEffectRef.current;
 
@@ -111,9 +111,9 @@ export default function CollectionCafe({
 
     back?.style.setProperty('--rotate-x', `0deg`);
     back?.style.setProperty('--rotate-y', `0deg`);
-  };
+  }, []);
 
-  const handleOverlayMouseMove = (e: React.MouseEvent) => {
+  const handleOverlayMouseMove = useCallback((e: React.MouseEvent) => {
     const container = cardRef.current;
     const overlay = overlayRef.current;
 
@@ -128,9 +128,9 @@ export default function CollectionCafe({
     overlay.style.setProperty('--mouse-x', `${percentX}%`);
     overlay.style.setProperty('--mouse-y', `${percentY}%`);
     overlay.style.opacity = '0.8';
-  };
+  }, []);
 
-  const handleOverlayMouseLeave = () => {
+  const handleOverlayMouseLeave = useCallback(() => {
     const overlay = overlayRef.current;
 
     if (!overlay) return;
@@ -138,7 +138,7 @@ export default function CollectionCafe({
     overlay.style.setProperty('--mouse-x', `50%`);
     overlay.style.setProperty('--mouse-y', `50%`);
     overlay.style.opacity = '0';
-  };
+  }, []);
 
   return (
     <li className="group card-container relative list-none h-96">
@@ -225,4 +225,4 @@ export default function CollectionCafe({
       </button>
     </li >
   );
-}
+});

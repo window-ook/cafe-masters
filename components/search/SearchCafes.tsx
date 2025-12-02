@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchedResultStore, useUIStore } from 'stores';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import { IKakaoSearchResult } from '@/types/kakao-map';
@@ -16,7 +16,7 @@ export default function SearchCafes() {
 
   const searchResultsPerPage = 15;
   const totalSearchResultPages = Math.ceil(searchResult.length / searchResultsPerPage);
-  const paginatedResult = searchResult.slice((currentPage - 1) * searchResultsPerPage, currentPage * searchResultsPerPage);
+  const paginatedResult = useMemo(() => searchResult.slice((currentPage - 1) * searchResultsPerPage, currentPage * searchResultsPerPage), [currentPage, searchResult]);
 
   useEffect(() => { setCurrentPage(1); }, [searchResult]);
 

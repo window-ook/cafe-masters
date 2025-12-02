@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCurrentCafeStore, useUIStore } from '@/stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import clsx from 'clsx';

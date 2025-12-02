@@ -38,16 +38,15 @@ export default function KakaoMap() {
   const { filteredBookmarkCafes } = useBookmarkCafes(userId);
   const { recommendationCafes, isPending: isRecommendedCafesLoading } = useRecommendationCafes();
 
-  // 페이지별 카페 클릭 핸들러 설정
-  const getRoutePathForCurrentPage = () => {
-    if (paths.isSearch) return 'search';
-    if (paths.isCollection) return 'collection';
-    if (paths.isBookmark) return 'bookmark';
-    if (paths.isRecommendation) return 'recommendation';
-    return 'search';
-  };
+  // 페이지별 카페 클릭 경로
+  const routePathForCurrentPage =
+    paths.isSearch ? 'search' :
+      paths.isCollection ? 'collection' :
+        paths.isBookmark ? 'bookmark' :
+          paths.isRecommendation ? 'recommendation' :
+            'search';
 
-  const handleCafeClick = useCafeClick({ routePath: getRoutePathForCurrentPage() });
+  const handleCafeClick = useCafeClick({ routePath: routePathForCurrentPage });
 
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 
