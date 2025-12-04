@@ -9,7 +9,8 @@ const EXTERNAL_PATHS = {
     KAKAO_MAP_CAFE_DETAIL: (cafeId: string) => `https://place.map.kakao.com/${cafeId}`,
     GOOGLE_FORM_BUG_REPORT: 'https://forms.gle/7jEc8cKfELoKDFPb7',
     GOOGLE_FORM_FEEDBACK: 'https://forms.gle/PRAbmuAoKpHnCJCP6',
-    USER_MANUAL: 'https://github.com/window-ook/cafe-masters'
+    USER_MANUAL: 'https://velog.io/@windowook/cafe-masters',
+    INSTAGRAM: 'https://www.instagram.com/cafemasters_official'
 } as const;
 
 /** Storage 이미지 */
@@ -22,6 +23,7 @@ const IMAGE_PATHS = {
     CUSTOM_MARKER: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/custom_marker.avif',
     CUSTOM_MARKER_1: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/custom_marker_1.avif',
     CUSTOM_INFOWINDOW_GO: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/custom_infowindow_go.avif',
+    INSTAGRAM_LOGO: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/insta.webp',
     FALLBACK_THUMBNAILS: {
         IMAGE_1: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/fallback_thumbnails/fallback_thumb_1.avif',
         IMAGE_2: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/fallback_thumbnails/fallback_thumb_2.avif',

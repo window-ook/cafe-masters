@@ -262,7 +262,7 @@ export default function FormForCollect() {
                     className="size-4 cursor-pointer"
                   />
                   <span className="text-sm text-gray-700">
-                    기본 썸네일도 함께 보관하기
+                    기본 썸네일도 함께 저장하기
                   </span>
                 </label>
               )}

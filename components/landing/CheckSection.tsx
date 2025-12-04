@@ -1,7 +1,8 @@
 'use client';
 
-import { EXTERNAL_PATHS } from '@/lib/paths';
+import { EXTERNAL_PATHS, IMAGE_PATHS } from '@/lib/paths';
 import { ExternalLink, MessageSquareText } from 'lucide-react';
+import Image from 'next/image';
 import React from 'react';
 
 interface ICheckCard {
@@ -74,6 +75,18 @@ export default function CheckSection() {
                             onClick={handleFeedbackClick}
                         />
                     </div>
+                    <button
+                        onClick={() => window.open(EXTERNAL_PATHS.INSTAGRAM, '_blank')}
+                        className='size-8 cursor-pointer'
+                    >
+                        <Image
+                            src={IMAGE_PATHS.INSTAGRAM_LOGO}
+                            alt='인스타그램 로고'
+                            width={30}
+                            height={30}
+                            className='object-cover'
+                        />
+                    </button>
                 </div>
             </div>
         </section>

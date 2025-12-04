@@ -17,7 +17,7 @@ interface ICollectionCafe {
   onClickAction: () => void;
 }
 
-const HIDDEN_CAFE_NAMES = ['탐앤탐스 대구강북점', '접속'];
+const HIDDEN_CAFE_NAMES = ['탐앤탐스 대구강북점'];
 
 const HIDDEN_CARD = 'card-tilt w-full h-full p-4 border-6 border-main rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer hover:border-main-light transition duration-300 ease';
 const HIDDEN_CARD_BACK_EFFECT = 'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md animate-tilt pointer-none';

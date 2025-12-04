@@ -27,7 +27,6 @@ export function useSignIn() {
 
       useFilterStore.setState({ keyword: '' });
 
-      // 세션 새로고침
       await supabase.auth.refreshSession();
       router.replace('/main');
     },
