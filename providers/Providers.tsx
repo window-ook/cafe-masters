@@ -4,18 +4,15 @@ import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
-import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
 import SideBarSkeleton from '@/components/shared/sidebar/SideBarSkeleton';
 import KakaoMapFallback from '@/components/shared/sidebar/KakaoMapFallback';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ReactQueryDevtools = dynamic(() => import('@tanstack/react-query-devtools').then(mod => mod.ReactQueryDevtools), { ssr: false });
 const ToastContainer = dynamic(() => import('react-toastify').then(mod => mod.ToastContainer), { ssr: false });
 const KakaoMap = dynamic(() => import('@/components/shared/KaKaoMap'), { ssr: false, loading: () => <KakaoMapFallback /> });
-const SideBar = dynamic(() => import('@/components/shared/sidebar/SideBar'), {
-  ssr: false,
-  loading: () => <SideBarSkeleton />
-});
+const SideBar = dynamic(() => import('@/components/shared/sidebar/SideBar'), { ssr: false, loading: () => <SideBarSkeleton /> });
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -47,13 +44,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const shouldHideComponents = hiddenPages.includes(pathname) || authPages.some(page => pathname.startsWith(page));
 
   return (
-    <main className={shouldHideComponents ? "w-full" : "flex h-screen overflow-hidden"}>
+    <main className={shouldHideComponents ? "w-full" : "h-screen flex overflow-hidden"}>
       <QueryClientProvider client={queryClient}>
         {!shouldHideComponents && (
-          <ErrorBoundaryWrapper
-            featureName="사이드바"
-            message="사이드바를 불러오는 중 에러가 발생했습니다."
-          >
+          <ErrorBoundaryWrapper featureName="사이드바" message="사이드바를 불러오는 중 에러가 발생했습니다.">
             <SideBar />
           </ErrorBoundaryWrapper>
         )}
@@ -71,11 +65,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           limit={1}
         />
 
-        {process.env.NODE_ENV === 'development' && (
-          <ReactQueryDevtools
-            initialIsOpen={false}
-          />
-        )}
+        {process.env.NODE_ENV === 'development' && (<ReactQueryDevtools initialIsOpen={false} />)}
       </QueryClientProvider>
     </main>
   );

@@ -16,9 +16,7 @@ export function middleware(request: NextRequest) {
     frame-src https://*.vercel.live https://vercel.live https://*.kakao.com;
     upgrade-insecure-requests;`;
 
-    const contentSecurityPolicyHeaderValue = cspHeader
-        .replace(/\s{2,}/g, ' ')
-        .trim();
+    const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, ' ').trim();
 
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-nonce', nonce);
@@ -32,6 +30,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        '/((?!api|_next/static|_next/image|favicon.ico).*)',
+        '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf|eot)$).*)',
     ],
 };
