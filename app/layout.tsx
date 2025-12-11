@@ -153,7 +153,6 @@ export default async function RootLayout({
         className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
       >
         <AuthProvider
-          accessToken={null}
           initialUserId={initialUserId}
           initialUserEmail={initialUserEmail}
           initialIsAdmin={initialIsAdmin}

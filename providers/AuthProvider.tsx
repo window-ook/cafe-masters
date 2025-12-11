@@ -1,12 +1,11 @@
 'use client';
 
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef, useMemo } from 'react';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { useUserStore } from '@/stores';
 import { CONSOLE_ERROR } from '@/constants/messages';
 
 interface IAuthProvider {
-  accessToken: string | null;
   initialUserId?: string | null;
   initialUserEmail?: string | null;
   initialIsAdmin?: boolean;
@@ -14,65 +13,73 @@ interface IAuthProvider {
 }
 
 export default function AuthProvider({
-  accessToken,
   initialUserId,
   initialUserEmail,
   initialIsAdmin,
   children,
 }: IAuthProvider) {
-  const supabase = createBrowserSupabaseClient();
+  const supabase = useMemo(() => createBrowserSupabaseClient(), []);
 
-  const { setUserId, setUserEmail, setIsAdmin, resetUser } = useUserStore();
+  const setUserId = useUserStore(state => state.setUserId);
+  const setUserEmail = useUserStore(state => state.setUserEmail);
+  const setIsAdmin = useUserStore(state => state.setIsAdmin);
+  const resetUser = useUserStore(state => state.resetUser);
 
   const isInitialized = useRef(false);
 
   const checkIsAdmin = async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('admin')
-        .select('admin')
-        .eq('user_id', userId)
-        .maybeSingle();
+    const { data, error } = await supabase
+      .from('admin')
+      .select('admin')
+      .eq('user_id', userId)
+      .maybeSingle();
 
-      if (error) {
-        console.error(CONSOLE_ERROR.CHECK_ADMIN, error.message);
-        return false;
-      }
-
-      return data?.admin === true;
-    } catch (error) {
-      console.error(CONSOLE_ERROR.CHECK_ADMIN, error instanceof Error ? error.message : error);
+    if (error) {
+      console.error(CONSOLE_ERROR.CHECK_ADMIN, error.message);
       return false;
     }
+
+    return data?.admin === true;
   };
 
   useEffect(() => {
-    if (!isInitialized.current && initialUserId) {
-      setUserId(initialUserId);
-      if (initialUserEmail) setUserEmail(initialUserEmail);
-      if (initialIsAdmin) setIsAdmin(initialIsAdmin);
-      isInitialized.current = true;
-    }
+    const initializeUser = async () => {
+      if (!isInitialized.current && initialUserId) {
+        setUserId(initialUserId);
+        if (initialUserEmail) setUserEmail(initialUserEmail);
+
+        if (initialIsAdmin !== undefined) setIsAdmin(initialIsAdmin);
+        else {
+          const isAdmin = await checkIsAdmin(initialUserId);
+          setIsAdmin(isAdmin);
+        }
+
+        isInitialized.current = true;
+      }
+    };
+
+    initializeUser();
 
     const {
-      data: { subscription: authListener }, } = supabase.auth.onAuthStateChange(async (event, session) => {
-        if (session?.user) {
-          setUserId(session.user.id);
-          setUserEmail(session.user.email ?? '');
+      data: { subscription: authListener },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user) {
+        setUserId(session.user.id);
+        setUserEmail(session.user.email ?? '');
 
-          if (event === 'SIGNED_IN') {
-            const isAdmin = await checkIsAdmin(session.user.id);
-            setIsAdmin(isAdmin);
-          }
-        } else {
-          resetUser();
+        if (event === 'SIGNED_IN') {
+          const isAdmin = await checkIsAdmin(session.user.id);
+          setIsAdmin(isAdmin);
         }
-      });
+      } else {
+        resetUser();
+      }
+    });
 
     return () => {
       authListener.unsubscribe();
-    }
-  }, [accessToken, supabase, setUserId, setUserEmail, setIsAdmin, resetUser, initialUserId, initialUserEmail, initialIsAdmin]);
+    };
+  }, [supabase, setUserId, setUserEmail, setIsAdmin, resetUser, initialUserId, initialUserEmail, initialIsAdmin]);
 
   return children;
 }

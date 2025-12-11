@@ -99,7 +99,7 @@ export class VerifyPage {
                     userId: mockData.USER_ID,
                     userEmail: mockData.SIGNUP_EMAIL,
                     userTier: "BEGINNER",
-                    admin: false
+                    isAdmin: false
                 },
                 version: 0
             };
@@ -171,9 +171,16 @@ export class VerifyPage {
             });
         });
 
-        await this.page.waitForTimeout(100);
+        // 5. Supabase DB 요청 모킹 (admin 테이블 조회)
+        await this.page.route('**/rest/v1/admin**', route => {
+            route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify([])
+            });
+        });
 
-        // 5. Supabase DB 요청 모킹
+        // 6. 기타 Supabase DB 요청 모킹
         await this.page.route('**/rest/v1/**', route => {
             route.fulfill({
                 status: 200,
@@ -182,9 +189,38 @@ export class VerifyPage {
             });
         });
 
-        // 6. Playwright 테스트 환경 플래그 설정
+        // 7. Playwright 테스트 환경 플래그 설정
         await this.page.addInitScript(() => {
             (window as any).__PLAYWRIGHT_TEST__ = true;
         });
+
+        // 8. AuthProvider의 onAuthStateChange를 트리거하기 위한 추가 설정
+        // 페이지가 로드된 후 Zustand 스토어를 강제로 설정하는 스크립트
+        await this.page.addInitScript((mockData) => {
+            // 페이지 로드 후 Zustand 스토어 강제 설정
+            window.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    // Zustand persist가 localStorage를 읽기 전에 설정
+                    const userStoreState = {
+                        state: {
+                            userId: mockData.USER_ID,
+                            userEmail: mockData.SIGNUP_EMAIL,
+                            userTier: "BEGINNER",
+                            isAdmin: false
+                        },
+                        version: 0
+                    };
+                    localStorage.setItem('userStore', JSON.stringify(userStoreState));
+
+                    // Storage 이벤트 발생시켜 Zustand에 알림
+                    window.dispatchEvent(new StorageEvent('storage', {
+                        key: 'userStore',
+                        newValue: JSON.stringify(userStoreState)
+                    }));
+                }, 0);
+            });
+        }, MOCK_AUTH_DATA);
+
+        await this.page.waitForTimeout(100);
     }
 }

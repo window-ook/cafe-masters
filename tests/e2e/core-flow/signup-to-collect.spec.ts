@@ -31,6 +31,9 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
         await expect(page).toHaveURL(/.*main.*/);
         await page.waitForLoadState();
 
+        // 4. 인증 상태 확인 및 보장 (새로운 AuthProvider 구조 대응)
+        await mainPage.ensureAuthenticated();
+
         // 5. 메인페이지에서 검색 (카카오맵 API 모킹)
         await mainPage.mockKakaoSearchAPI();
         await mainPage.searchKeyword('대구 교동');
@@ -123,6 +126,9 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
             await page.waitForURL('**/main**');
             await expect(page).toHaveURL(/.*main.*/);
             await page.waitForLoadState();
+
+            // 4. 인증 상태 확인 및 보장 (새로운 AuthProvider 구조 대응)
+            await mainPage.ensureAuthenticated();
 
             // 5. 메인페이지에서 검색 (카카오맵 API 모킹)
             await mainPage.mockKakaoSearchAPI();

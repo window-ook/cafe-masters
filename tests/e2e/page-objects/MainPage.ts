@@ -1,8 +1,44 @@
 import { Page } from 'playwright-core';
-import { TEST_SELECTORS } from '@/tests/e2e/utils/constants';
+import { TEST_SELECTORS, MOCK_AUTH_DATA } from '@/tests/e2e/utils/constants';
 
 export class MainPage {
     constructor(private page: Page) { }
+
+    /** 인증 상태 확인 및 강제 설정 (새로운 AuthProvider 구조 대응) */
+    async ensureAuthenticated() {
+        // localStorage에서 userStore 확인
+        const userId = await this.page.evaluate(() => {
+            const store = localStorage.getItem('userStore');
+            if (store) {
+                const parsed = JSON.parse(store);
+                return parsed.state?.userId || null;
+            }
+            return null;
+        });
+
+        // userId가 없으면 강제로 설정
+        if (!userId) {
+            console.log('[TEST] 인증 상태가 없습니다. localStorage에 설정합니다.');
+            await this.page.evaluate((mockData) => {
+                const userStoreState = {
+                    state: {
+                        userId: mockData.USER_ID,
+                        userEmail: mockData.SIGNUP_EMAIL,
+                        userTier: "BEGINNER",
+                        isAdmin: false
+                    },
+                    version: 0
+                };
+                localStorage.setItem('userStore', JSON.stringify(userStoreState));
+            }, MOCK_AUTH_DATA);
+
+            // 페이지 새로고침으로 Zustand persist가 localStorage를 읽도록 함
+            await this.page.reload();
+            await this.page.waitForLoadState();
+        } else {
+            console.log('[TEST] 인증 상태 확인됨:', userId);
+        }
+    }
 
     /** 카카오맵 검색 API 모킹 */
     async mockKakaoSearchAPI() {
