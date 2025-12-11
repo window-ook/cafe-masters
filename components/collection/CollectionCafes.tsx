@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useUIStore, useUserStore } from 'stores';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { ISupabaseCollectionCafe } from '@/types/supabase/collection';

@@ -7,7 +7,7 @@ const AUTH_ROUTES = {
     BLOCK_IF_AUTH: ['/signin', '/signup', '/signup/confirm', '/reset-password', '/reset-password/complete'],
 };
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const { pathname, searchParams } = new URL(request.url);
 
     const nonce = Buffer.from(crypto.randomUUID()).toString('base64');

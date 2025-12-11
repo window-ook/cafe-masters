@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { IBadge } from '@/types/shared/tier';
 import { useUIStore } from '@/stores';
 interface ITierDialog {

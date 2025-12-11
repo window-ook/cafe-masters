@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useUIStore } from 'stores';
 import { useFilterStore } from '@/stores/filter';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';

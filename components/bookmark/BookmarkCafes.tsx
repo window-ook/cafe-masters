@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useUIStore, useUserStore } from 'stores';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark/useBookmarkCafes';
 import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';

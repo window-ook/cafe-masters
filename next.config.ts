@@ -9,6 +9,7 @@ const pwaConfig = withPWA({
 });
 
 const nextConfig: NextConfig = {
+  turbopack: {},
   images: {
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,

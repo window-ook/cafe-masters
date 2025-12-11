@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchedResultStore, useUIStore } from 'stores';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import { IKakaoSearchResult } from '@/types/kakao-map';
