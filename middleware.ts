@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createMiddlewareSupabaseClient } from '@/utils/supabase/middleware';
 
-export function middleware(request: NextRequest) {
+const AUTH_ROUTES = {
+    RECOVERY_ROUTES: ['/reset-password', '/reset-password/complete'],
+    REQUIRE_AUTH: ['/collection/detail', '/bookmark/detail'],
+    BLOCK_IF_AUTH: ['/signin', '/signup', '/signup/confirm', '/reset-password', '/reset-password/complete'],
+};
+
+export async function middleware(request: NextRequest) {
+    const { pathname, searchParams } = new URL(request.url);
+
     const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
     const cspHeader = `
     default-src 'self';
@@ -24,6 +33,18 @@ export function middleware(request: NextRequest) {
 
     const response = NextResponse.next({ request: { headers: requestHeaders } });
     response.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue);
+
+    const supabase = createMiddlewareSupabaseClient(request, response);
+    const { data: { user } } = await supabase.auth.getUser();
+
+    const isRecoveryFlow = AUTH_ROUTES.RECOVERY_ROUTES.some(route => pathname.startsWith(route)) || searchParams.get('type') === 'recovery';
+    if (isRecoveryFlow) return response;
+
+    const requiresAuth = AUTH_ROUTES.REQUIRE_AUTH.some(route => pathname.startsWith(route));
+    if (requiresAuth && !user) return NextResponse.redirect(new URL('/signin', request.url));
+
+    const blockIfAuth = AUTH_ROUTES.BLOCK_IF_AUTH.some(route => pathname.startsWith(route));
+    if (blockIfAuth && user) return NextResponse.redirect(new URL('/main', request.url));
 
     return response;
 }

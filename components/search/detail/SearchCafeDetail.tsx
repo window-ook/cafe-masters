@@ -19,7 +19,7 @@ interface ISearchCafePreDetail {
 export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction }: ISearchCafePreDetail) {
   const router = useRouter();
 
-  const admin = useUserStore(state => state.admin);
+  const isAdmin = useUserStore(state => state.isAdmin);
   const userId = useUserStore(state => state.userId);
   const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
   const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);
@@ -104,7 +104,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
         </Button>}
 
       {/* 관리자 & 추천하지 않은 상태 */}
-      {admin && !isRecommended && (
+      {isAdmin && !isRecommended && (
         <Button
           onClick={() => {
             setTargetCafeForRecommend({

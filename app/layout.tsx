@@ -97,7 +97,24 @@ export default async function RootLayout({
 }>) {
   const supabase = await createServerSupabaseClient();
 
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let initialUserId: string | null = null;
+  let initialUserEmail: string | null = null;
+  let initialIsAdmin = false;
+
+  if (user) {
+    initialUserId = user.id;
+    initialUserEmail = user.email ?? null;
+
+    const { data: adminData } = await supabase
+      .from('admin')
+      .select('admin')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    initialIsAdmin = adminData?.admin === true;
+  }
 
   return (
     <html lang="ko">
@@ -135,7 +152,12 @@ export default async function RootLayout({
       <body
         className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
       >
-        <AuthProvider accessToken={session?.access_token || null}>
+        <AuthProvider
+          accessToken={null}
+          initialUserId={initialUserId}
+          initialUserEmail={initialUserEmail}
+          initialIsAdmin={initialIsAdmin}
+        >
           <Providers>{children}</Providers>
           <SpeedInsights />
         </AuthProvider>

@@ -1,85 +1,78 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { ReactNode, useEffect, useRef } from 'react';
+import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { useUserStore } from '@/stores';
 import { CONSOLE_ERROR } from '@/constants/messages';
 
 interface IAuthProvider {
   accessToken: string | null;
+  initialUserId?: string | null;
+  initialUserEmail?: string | null;
+  initialIsAdmin?: boolean;
   children: ReactNode;
 }
 
-/** 라우팅 규칙
- * 로그인 필요: 수집한 카페 상세 페이지, 북마크 카페 상세 페이지
- * 로그인 상태로 접근 불가: 로그인, 회원가입, 회원가입 리다이렉션, 비밀번호 재설정, 비밀번호 재설정 완료
- */
-const RULES = [
-  { path: '/signin', requireAuth: false, blockIfAuth: true },
-  { path: '/signup', requireAuth: false, blockIfAuth: true },
-  { path: '/signup/confirm', requireAuth: false, blockIfAuth: true },
-  { path: '/reset-password', requireAuth: false, blockIfAuth: true },
-  { path: '/reset-password/complete', requireAuth: false, blockIfAuth: true },
-  { path: '/collection/detail', requireAuth: true, blockIfAuth: false },
-  { path: '/bookmark/detail', requireAuth: true, blockIfAuth: false },
-];
-
-const matchRule = (pathname: string) => RULES.find(rule => pathname === rule.path);
-
 export default function AuthProvider({
   accessToken,
+  initialUserId,
+  initialUserEmail,
+  initialIsAdmin,
   children,
 }: IAuthProvider) {
   const supabase = createBrowserSupabaseClient();
-  const router = useRouter();
-  const pathname = usePathname();
 
-  const { setUserId, setUserEmail, setAdmin, resetUser } = useUserStore();
+  const { setUserId, setUserEmail, setIsAdmin, resetUser } = useUserStore();
+
+  const isInitialized = useRef(false);
+
+  const checkIsAdmin = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('admin')
+        .select('admin')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+      if (error) {
+        console.error(CONSOLE_ERROR.CHECK_ADMIN, error.message);
+        return false;
+      }
+
+      return data?.admin === true;
+    } catch (error) {
+      console.error(CONSOLE_ERROR.CHECK_ADMIN, error instanceof Error ? error.message : error);
+      return false;
+    }
+  };
 
   useEffect(() => {
+    if (!isInitialized.current && initialUserId) {
+      setUserId(initialUserId);
+      if (initialUserEmail) setUserEmail(initialUserEmail);
+      if (initialIsAdmin) setIsAdmin(initialIsAdmin);
+      isInitialized.current = true;
+    }
+
     const {
-      data: { subscription: authListner }, } = supabase.auth.onAuthStateChange(async (event, session) => {
-        const rule = matchRule(pathname);
-
-        // 비밀번호 재설정 플로우인지 확인
-        const isPasswordRecovery = event === 'PASSWORD_RECOVERY' ||
-          pathname === '/reset-password' ||
-          pathname === '/reset-password/complete' ||
-          (typeof window !== 'undefined' && window.location.search.includes('type=recovery'));
-
-        // 비밀번호 재설정 플로우인 경우 예외 처리
-        if (isPasswordRecovery) {
-          if (event === 'PASSWORD_RECOVERY' && pathname !== '/reset-password') router.replace('/reset-password');
-          return;
-        }
-
-        // 세션 상태에 따라 유저 정보 동기화
+      data: { subscription: authListener }, } = supabase.auth.onAuthStateChange(async (event, session) => {
         if (session?.user) {
-          // 로그인된 경우: user store 업데이트
           setUserId(session.user.id);
           setUserEmail(session.user.email ?? '');
 
-          // 관리자 권한 체크
-          try {
-            const { getIsAdmin } = await import('@/actions/supabase/admin');
-            const isAdmin = await getIsAdmin();
-            if (isAdmin) setAdmin(true);
-          } catch (error) {
-            console.error(CONSOLE_ERROR.CHECK_ADMIN, error);
+          if (event === 'SIGNED_IN') {
+            const isAdmin = await checkIsAdmin(session.user.id);
+            setIsAdmin(isAdmin);
           }
         } else {
-          // 로그아웃된 경우: user store 초기화
           resetUser();
         }
-
-        // 라우팅
-        if (!session && rule?.requireAuth) router.replace('/signin');
-        if (session && rule?.blockIfAuth) router.replace('/main');
       });
 
-    return () => authListner.unsubscribe();
-  }, [accessToken, supabase, router, pathname, setUserId, setUserEmail, setAdmin, resetUser]);
+    return () => {
+      authListener.unsubscribe();
+    }
+  }, [accessToken, supabase, setUserId, setUserEmail, setIsAdmin, resetUser, initialUserId, initialUserEmail, initialIsAdmin]);
 
   return children;
 }

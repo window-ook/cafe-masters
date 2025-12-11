@@ -7,13 +7,13 @@ interface IUserStore {
   userId: string;
   userEmail: string;
   userTier: Tier;
-  admin: boolean;
+  isAdmin: boolean;
 
   // 유저 정보 액션
   setUserId: (userId: string) => void;
   setUserEmail: (userEmail: string) => void;
   setUserTier: (userTier: Tier) => void;
-  setAdmin: (admin: boolean) => void;
+  setIsAdmin: (isAdmin: boolean) => void;
 
   // 유저 정보 초기화
   resetUser: () => void;
@@ -26,20 +26,20 @@ export const useUserStore = create<IUserStore>()(
       userId: '',
       userEmail: '',
       userTier: 'BEGINNER',
-      admin: false,
+      isAdmin: false,
 
       // 유저 정보 설정
       setUserId: userId => set({ userId }),
       setUserEmail: userEmail => set({ userEmail }),
       setUserTier: userTier => set({ userTier }),
-      setAdmin: admin => set({ admin }),
+      setIsAdmin: isAdmin => set({ isAdmin }),
 
       // 유저 정보 초기화 (로그아웃 시 사용)
       resetUser: () => set({
         userId: '',
         userEmail: '',
         userTier: 'BEGINNER',
-        admin: false,
+        isAdmin: false,
       }),
     }),
     {
