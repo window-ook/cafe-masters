@@ -9,7 +9,11 @@ const pwaConfig = withPWA({
 });
 
 const nextConfig: NextConfig = {
+  experimental: {
+    turbopackFileSystemCacheForDev: true,
+  },
   turbopack: {},
+  reactCompiler: true,
   images: {
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,

@@ -7,6 +7,7 @@ import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
 import dynamic from 'next/dynamic';
 import SideBarSkeleton from '@/components/shared/sidebar/SideBarSkeleton';
 import KakaoMapFallback from '@/components/shared/sidebar/KakaoMapFallback';
+import LazyProvider from './LazyProvider';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ReactQueryDevtools = dynamic(() => import('@tanstack/react-query-devtools').then(mod => mod.ReactQueryDevtools), { ssr: false });
@@ -45,28 +46,30 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <main className={shouldHideComponents ? "w-full" : "h-screen flex overflow-hidden"}>
-      <QueryClientProvider client={queryClient}>
-        {!shouldHideComponents && (
-          <ErrorBoundaryWrapper featureName="사이드바" message="사이드바를 불러오는 중 에러가 발생했습니다.">
-            <SideBar />
-          </ErrorBoundaryWrapper>
-        )}
+      <LazyProvider>
+        <QueryClientProvider client={queryClient}>
+          {!shouldHideComponents && (
+            <ErrorBoundaryWrapper featureName="사이드바" message="사이드바를 불러오는 중 에러가 발생했습니다.">
+              <SideBar />
+            </ErrorBoundaryWrapper>
+          )}
 
-        {children}
+          {children}
 
-        {!shouldHideComponents && <KakaoMap />}
+          {!shouldHideComponents && <KakaoMap />}
 
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          newestOnTop={false}
-          draggable
-          theme="light"
-          limit={1}
-        />
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            newestOnTop={false}
+            draggable
+            theme="light"
+            limit={1}
+          />
 
-        {process.env.NODE_ENV === 'development' && (<ReactQueryDevtools initialIsOpen={false} />)}
-      </QueryClientProvider>
+          {process.env.NODE_ENV === 'development' && (<ReactQueryDevtools initialIsOpen={false} />)}
+        </QueryClientProvider>
+      </LazyProvider>
     </main>
   );
 }

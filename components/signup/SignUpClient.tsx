@@ -2,19 +2,15 @@
 
 import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
-import RisingCards from '@/components/shared/RisingCards';
 import SignUpForm from '@/components/signup/SignUpForm';
-import MainThemeBackground from '@/components/shared/MainThemeBackground';
 
 export default function SignUpClient() {
     return (
         <main className="area h-screen w-screen flex justify-center items-center">
-            <MainThemeBackground />
-            <RisingCards />
             <section className="relative z-10 flex flex-col items-center gap-4">
                 <header className="flex items-center">
                     <Image
-                        src={IMAGE_PATHS.RISING_CARDS_BACKGROUND}
+                        src={IMAGE_PATHS.LOGO_IMG}
                         width={32}
                         height={32}
                         alt="로고 아이콘"

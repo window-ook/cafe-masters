@@ -11,12 +11,14 @@ export default function SignOutButton() {
   const resetUser = useUserStore(state => state.resetUser);
 
   const handleSignOut = async () => {
-    try {
-      await supabase.auth.signOut();
-      resetUser();
-    } catch (error) {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
       console.error(CONSOLE_ERROR.SIGNOUT, error);
+      return;
     }
+
+    resetUser();
   };
 
   return (

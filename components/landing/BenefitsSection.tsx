@@ -1,33 +1,43 @@
-import { Code, Trophy, MessageCircle, RefreshCw, Star, Smartphone } from 'lucide-react';
+'use client';
+
+import { Trophy, MessageCircle, RefreshCw, Smartphone } from 'lucide-react';
 import React from 'react';
+import { m } from 'motion/react';
 
 interface IBenefitCard {
     icon: React.ComponentType<{ className?: string }>;
     title: string;
     description1: string;
     description2: string;
+    index: number;
 }
 
-const BenefitCard: React.FC<IBenefitCard> = ({ icon: Icon, title, description1, description2 }) => {
+const BenefitCard: React.FC<IBenefitCard> = ({ icon: Icon, title, description1, description2, index }) => {
+    const getNeonColor = (idx: number) => {
+        const colors = ['text-main', 'text-main-light', 'text-white'];
+        return colors[idx % 2];
+    };
+
+    const neonColorClass = getNeonColor(index);
+    const borderColorClass = index % 2 === 0 ? 'group-hover:border-main/50' : 'group-hover:border-white/50';
+
     return (
         <div className="group relative">
-            {/* 백라이트 */}
-            <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-main-light/30 via-purple-300/30 to-main-light/30 opacity-0 blur transition duration-1000 group-hover:opacity-100" />
+            {/* 배경 그라데이션 */}
+            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
 
-            {/* 카드 내용 */}
-            <div className="relative rounded-2xl border border-white/20 bg-white/10 p-8 text-center shadow-xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-main/20 to-main/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-main/30">
-                    <Icon className="h-8 w-8 text-main transition-transform duration-300 group-hover:scale-110" />
+            <div className={`relative flex h-full flex-col items-center justify-center rounded-2xl border border-white/5 bg-black/20 p-8 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 ${borderColorClass}`}>
+                <div className="mb-6 rounded-full bg-white/5 p-4 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-white/10">
+                    <Icon className={`size-8 ${neonColorClass} transition-all duration-300 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]`} />
                 </div>
 
-                <h3 className="mb-4 text-xl font-bold text-white transition-colors group-hover:text-main-light">
+                <h3 className="mb-4 text-xl font-bold text-white">
                     {title}
                 </h3>
 
-                <p className="leading-relaxed text-gray-300 text-sm sm:text-base">
+                <p className="text-sm leading-relaxed text-gray-400 group-hover:text-gray-300">
                     {description1}
-                </p>
-                <p className="leading-relaxed text-gray-300 text-sm sm:text-base">
+                    <br />
                     {description2}
                 </p>
             </div>
@@ -38,22 +48,10 @@ const BenefitCard: React.FC<IBenefitCard> = ({ icon: Icon, title, description1, 
 export default function BenefitsSection() {
     const benefits = [
         {
-            icon: Code,
-            title: '카공족 개발자',
-            description1: '실제로 카페를 자주 방문하는 개발자가',
-            description2: '직접 만든 서비스입니다',
-        },
-        {
             icon: Trophy,
-            title: '컬렉션 티어',
-            description1: '카페를 수집하면서 컬렉션이 늘어나면',
-            description2: '티어가 계속 상승합니다\n마스터까지 가보세요',
-        },
-        {
-            icon: Star,
-            title: '올인원 서비스',
-            description1: '카페에 관련된 건 ',
-            description2: '카페 마스터즈에서 전부 다 할 수 있으니까요',
+            title: '티어 시스템',
+            description1: '수집한 카드가 늘어날 수록',
+            description2: '티어가 상승합니다',
         },
         {
             icon: MessageCircle,
@@ -65,7 +63,7 @@ export default function BenefitsSection() {
             icon: RefreshCw,
             title: '지속적인 업데이트',
             description1: '사용자를 위한 개선을 계속 업데이트 해요',
-            description2: '개발자도 직접 사용하고 있는 서비스에요',
+            description2: '항상 발전하는 서비스입니다',
         },
         {
             icon: Smartphone,
@@ -76,35 +74,46 @@ export default function BenefitsSection() {
     ];
 
     return (
-        <section className="relative overflow-hidden py-20">
-            {/* 배경 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-main-dark via-gray-900 to-main-dark" />
+        <section className="relative overflow-hidden py-32 bg-transparent">
+            <div className="relative mx-auto max-w-[1400px] px-6">
+                <div className="grid grid-cols-1 gap-16 lg:grid-cols-[1fr_1.5fr]">
+                    {/* 왼쪽 텍스트 영역 */}
+                    <div className="flex flex-col justify-center text-left">
+                        <m.h2
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.6, ease: 'easeOut' }}
+                            className="mb-8 text-4xl font-bold uppercase leading-tight text-white sm:text-5xl lg:text-6xl"
+                        >
+                            오직 <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-main to-main-light">카페 마스터즈에서만</span>
+                        </m.h2>
+                        <m.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
+                            className="max-w-md text-lg text-gray-400"
+                        >
+                            카페 마스터즈는 단순한 기록을 넘어<br />
+                            당신의 커피 라이프를 더 풍요롭게 만듭니다.
+                        </m.p>
+                    </div>
 
-            {/* 베네핏 섹션 */}
-            <div className="absolute left-1/4 top-20 h-80 w-80 animate-pulse rounded-full bg-main/20 blur-3xl" />
-            <div className="absolute bottom-20 right-1/3 h-64 w-64 animate-pulse rounded-full bg-purple-200/20 blur-3xl delay-700" />
-
-            <div className="relative mx-auto max-w-7xl px-6 text-white">
-                <div className="mb-16 text-center">
-                    <span className="font-semibold text-lg text-main-light">놓치지 마세요</span>
-                    <h2 className="mb-4 mt-2 text-2xl sm:text-4xl font-bold text-white">
-                        카페 마스터즈만의 특별한 경험
-                    </h2>
-                    <p className="mx-auto max-w-2xl text-sm sm:text-xl text-main-light">
-                        다른 서비스에서는 경험할 수 없는 <br className='block sm:hidden' />카페 마스터즈만의 풍부한 혜택들을 즐겨보세요
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {benefits.map((benefit, index) => (
-                        <BenefitCard
-                            key={index}
-                            icon={benefit.icon}
-                            title={benefit.title}
-                            description1={benefit.description1}
-                            description2={benefit.description2}
-                        />
-                    ))}
+                    {/* 오른쪽 그리드 영역 */}
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        {benefits.map((benefit, index) => (
+                            <BenefitCard
+                                key={index}
+                                index={index}
+                                icon={benefit.icon}
+                                title={benefit.title}
+                                description1={benefit.description1}
+                                description2={benefit.description2}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

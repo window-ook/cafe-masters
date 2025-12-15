@@ -38,6 +38,9 @@ body {
   --color-main-shadow: var(--color-main-600);
   --color-main-dark: var(--color-main-900);
 
+  /* New Design System Colors - Removed Neon, Using Main Theme */
+  --color-dark-bg: var(--color-gray-900);
+
   /* 컨테이너 */
   --color-sidebar-background: var(--color-gray-100);
 

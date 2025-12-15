@@ -6,6 +6,7 @@ import React from 'react';
 import localFont from 'next/font/local';
 import AuthProvider from '@/providers/AuthProvider';
 import Providers from '@/providers/Providers';
+import PersistentThreeBackgroundCards from '@/components/shared/PersistentThreeBackgroundCards';
 
 const pretendard = localFont({
   src: '../public/fonts/PretendardVariable.woff2',
@@ -152,6 +153,7 @@ export default async function RootLayout({
       <body
         className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
       >
+        <PersistentThreeBackgroundCards />
         <AuthProvider
           initialUserId={initialUserId}
           initialUserEmail={initialUserEmail}

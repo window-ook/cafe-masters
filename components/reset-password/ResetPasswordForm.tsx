@@ -10,10 +10,8 @@ import { useFinishResetPassword } from '@/hooks/supabase/authentication';
 import { CONSOLE_ERROR, TOAST_SUCCESS } from '@/constants/messages';
 import { IMAGE_PATHS } from '@/lib/paths';
 import { toast } from 'react-toastify';
-import RisingCards from '@/components/shared/RisingCards';
 import Button from '@/components/shared/Button';
 import InputField from '@/components/shared/InputField';
-import MainThemeBackground from '@/components/shared/MainThemeBackground';
 import Image from 'next/image';
 
 export default function ResetPasswordForm() {
@@ -53,12 +51,10 @@ export default function ResetPasswordForm() {
 
   return (
     <main className="area h-screen w-screen flex flex-col justify-center items-center">
-      <MainThemeBackground />
-      <RisingCards />
       <section className="relative z-10 flex flex-col items-center gap-4">
         <header className="flex items-center gap-2">
           <Image
-            src={IMAGE_PATHS.RISING_CARDS_BACKGROUND}
+            src={IMAGE_PATHS.LOGO_IMG}
             width={32}
             height={32}
             alt="로고 아이콘"
