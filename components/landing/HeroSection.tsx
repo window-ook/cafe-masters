@@ -64,6 +64,7 @@ export default async function HeroSection() {
 
                             <Link
                                 href="/signin"
+                                data-testid="button-go-to-signin-from-landing"
                                 className="group relative flex w-full sm:w-[180px] items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-6 py-4 text-lg font-medium text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/10"
                             >
                                 <span>로그인</span>
