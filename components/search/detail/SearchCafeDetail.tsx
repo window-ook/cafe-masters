@@ -140,6 +140,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
         cafeData={searchDetail}
         actionButtons={actionButtons}
         isImageWithFallback={true}
+        isDetailLoading={isDetailLoading}
       />
     </article>
   );

@@ -30,7 +30,7 @@ export default async function HeroSection() {
                         <div className="mb-8 animate-fade-in-up">
                             <div className="group relative inline-block">
                                 <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-main/20 via-main-light/20 to-main/20 opacity-0 blur transition duration-1000 group-hover:opacity-100" />
-                                <span className="relative inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-medium text-main backdrop-blur-md">
+                                <span className="relative inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-medium text-main-400 backdrop-blur-md">
                                     <Coffee className="h-4 w-4" />
                                     <span className="tracking-wider">수집된 카드 {collectionCafesCounts}장</span>
                                 </span>

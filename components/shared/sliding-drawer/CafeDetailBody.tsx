@@ -29,13 +29,15 @@ interface ICafeDetailBody {
   };
   isImageWithFallback?: boolean;
   actionButtons: ReactNode;
+  isDetailLoading?: boolean;
 }
 
 export default function CafeDetailBody({
   cafeId,
   cafeData,
   actionButtons,
-  isImageWithFallback = false
+  isImageWithFallback = false,
+  isDetailLoading = false
 }: ICafeDetailBody) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
@@ -46,7 +48,7 @@ export default function CafeDetailBody({
   return (
     <main className="overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4 flex-1">
       {/* 카페 이미지 */}
-      {cafeData.image && (
+      {(cafeData.image || isDetailLoading) && (
         <section
           key={`${cafeId}-image-section`}
           className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4">
@@ -64,7 +66,13 @@ export default function CafeDetailBody({
             ref={scrollRef}
             className="w-full max-w-full overflow-x-auto overflow-y-hidden flex gap-4 scrollbar-hide snap-x snap-mandatory"
           >
-            <div className="h-60 py-2 snap-center shrink-0">
+            {isDetailLoading && !cafeData.image ? (
+              <div className="h-60 py-2 snap-center shrink-0">
+                <div className="w-[340px] h-[240px] bg-gray-200 dark:bg-gray-700 animate-pulse rounded-md" />
+              </div>
+            ) : (
+              <>
+                <div className="h-60 py-2 snap-center shrink-0">
                   <button
                     type="button"
                     aria-label="카페 이미지 클릭 시 카카오플레이스 이동(썸네일)"
@@ -98,7 +106,7 @@ export default function CafeDetailBody({
                   </button>
                 </div>
 
-            {cafeData.extra_images?.map((photo, i) => (
+                {cafeData.extra_images?.map((photo, i) => (
                   <div
                     key={`${cafeId}-extra-${i}`}
                     className="h-60 py-2 snap-center shrink-0"
@@ -136,7 +144,10 @@ export default function CafeDetailBody({
                     </button>
                   </div>
                 ))}
-              </div>
+              </>
+            )}
+          </div>
+
           <button
             className="slide-images-button right-0 bg-white/30"
             onClick={() => scrollThumbnails('right', scrollRef as RefObject<HTMLDivElement>)}
@@ -197,14 +208,21 @@ export default function CafeDetailBody({
         )}
 
         {/* 운영시간 */}
-        <OpenTime opening_time={cafeData.opening_time ?? null} />
+        <OpenTime
+          opening_time={cafeData.opening_time ?? null}
+          isPending={isDetailLoading}
+        />
       </section>
 
       {/* 수집, 추천 버튼 */}
       <section className="flex gap-2">{actionButtons}</section>
 
       {/* 메뉴 */}
-      <Menus menus={cafeData.menus} isDarkTheme={isDarkTheme} />
+      <Menus
+        menus={cafeData.menus}
+        isDarkTheme={isDarkTheme}
+        isPending={isDetailLoading}
+      />
     </main>
   );
 }

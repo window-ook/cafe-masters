@@ -2,9 +2,10 @@ import { Clock1 } from 'lucide-react';
 
 interface IOpenTime {
   opening_time: string | null;
+  isPending?: boolean;
 }
 
-export default function OpenTime({ opening_time }: IOpenTime) {
+export default function OpenTime({ opening_time, isPending = false }: IOpenTime) {
   return (
     <div className="col-span-2 grid grid-cols-3">
       <div className="col-span-1 flex gap-1 items-center">
@@ -12,7 +13,11 @@ export default function OpenTime({ opening_time }: IOpenTime) {
         <p>영업시간</p>
       </div>
       <div className="col-span-1 text-left">
-        <p>{opening_time}</p>
+        {isPending && !opening_time ? (
+          <div className="h-5 skeleton-shimmer rounded" />
+        ) : (
+          <p>{opening_time}</p>
+        )}
       </div>
     </div>
   );
