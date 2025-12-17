@@ -4,9 +4,9 @@ import { useUIStore, useUserStore } from 'stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
 import dynamic from 'next/dynamic';
+import Header from '@/components/shared/sidebar/Header';
 import TabsForLink from '@/components/shared/sidebar/TabsForLink';
 import Footer from '@/components/shared/sidebar/Footer';
-import Header from '@/components/shared/sidebar/Header';
 import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
 import CollectionCafesSkeleton from '@/components/collection/CollectionCafesSkeleton';
 import CafeItemSkeleton from '@/components/shared/sidebar/CafeItemSkeleton';
@@ -16,7 +16,6 @@ const CollectionCafes = dynamic(() => import('@/components/collection/Collection
 const BookmarkCafes = dynamic(() => import('@/components/bookmark/BookmarkCafes'), { ssr: false, loading: () => <CafeItemSkeleton /> });
 const RecommendationCafes = dynamic(() => import('@/components/recommendation/RecommendationCafes'), { ssr: false, loading: () => <CafeItemSkeleton /> });
 
-/** 네비게이션, 리스트 표시 Shell Container */
 export default function SideBar() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);

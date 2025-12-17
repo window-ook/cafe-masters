@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFilterStore, useUIStore } from '@/stores';
 import { handleSafeInput } from '@/utils/shared/safeInput';
+import { Navigation } from 'lucide-react';
 import Button from '@/components/shared/Button';
 
 export default function SearchInput() {
@@ -42,9 +43,9 @@ export default function SearchInput() {
         type="button"
         aria-label="검색 버튼"
         dataTestId="button-submit-keyword-for-search"
-        customClassName={`w-1/6 py-4 px-1 text-2xl ${isDarkTheme ? 'bg-main-dark' : ''}`}
+        customClassName={`text-2xl ${isDarkTheme ? 'bg-main-dark' : ''} flex items-center justify-center`}
         onClick={handleSearch}
-        text='GO'
+        children={<Navigation className="size-8" />}
       />
     </search>
   );

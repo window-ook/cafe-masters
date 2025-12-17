@@ -7,7 +7,7 @@ import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
 import dynamic from 'next/dynamic';
 import SideBarSkeleton from '@/components/shared/sidebar/SideBarSkeleton';
 import KakaoMapFallback from '@/components/shared/sidebar/KakaoMapFallback';
-import LazyProvider from './LazyProvider';
+import LazyProvider from '@/providers/LazyProvider';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ReactQueryDevtools = dynamic(() => import('@tanstack/react-query-devtools').then(mod => mod.ReactQueryDevtools), { ssr: false });

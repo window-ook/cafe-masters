@@ -37,7 +37,6 @@ const FormForRecommend = dynamic(() => import('@/components/shared/sliding-drawe
     ssr: false,
 });
 
-/** 상세 정보, 수집하기, 추천하기 폼을 표시하는 Shell Container */
 export default function SlidingDrawer() {
     const currentCafeId = useCurrentCafeStore(state => state.currentCafeId);
     const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
@@ -56,7 +55,6 @@ export default function SlidingDrawer() {
 
     const SLIDING_DRAWER_STYLE = clsx(
         'fixed z-10 w-screen max-w-108 p-2 overflow-x-hidden overflow-y-auto shadow-md transition-all duration-300 ease-in-out',
-        // 다크 모드
         isDarkTheme ? 'bg-dark-background text-white' : 'bg-white/20 text-black backdrop-blur-lg',
         {
             // 모바일 닫힌 상태: 화면 아래로 숨김

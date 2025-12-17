@@ -9,7 +9,7 @@ import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 import Link from 'next/link';
-import Search from '@/components/shared/sidebar/SearchInput';
+import SearchInput from '@/components/shared/sidebar/SearchInput';
 import ThemeToggleButton from '@/components/shared/sidebar/ThemeToggleButton';
 import Tooltip from '@/components/shared/Tooltip';
 import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
@@ -74,8 +74,7 @@ export default function Header() {
         <ThemeToggleButton />
       </div>
 
-      {/* 검색 바 - 입력창, 버튼 */}
-      <Search />
+      <SearchInput />
 
       {paths.isSearch && (
         <div className="flex justify-center items-center">

@@ -10,7 +10,6 @@ import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
 
-/** 슬라이딩 드로어에서 넘겨받는 카페 ID와 추천 폼 열기 액션 함수 */
 interface ISearchCafePreDetail {
   cafeId: number;
   setIsRecommendFormOpenAction: (isMemoOpen: boolean) => void;
@@ -34,7 +33,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
 
   // 즉시 렌더링: 검색 결과에 포함된 기본 정보
   const foundCafe = useMemo(() => {
-    if (!searchResult || searchResult.length === 0) return null; // 새로고침 고려
+    if (!searchResult || searchResult.length === 0) return null;
     const cafe = searchResult.find(cafe => Number(cafe.id) === cafeId);
     return cafe || null;
   }, [searchResult, cafeId]);
@@ -80,7 +79,6 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
 
   const actionButtons = (
     <>
-      {/* 로그인 & 수집하지 않은 상태 */}
       {userId && !isCollected &&
         <Button
           dataTestId="button-collect"
@@ -103,7 +101,6 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
           {isDetailLoading ? <LoadingSpinner size="sm" /> : <span>수집하기</span>}
         </Button>}
 
-      {/* 관리자 & 추천하지 않은 상태 */}
       {isAdmin && !isRecommended && (
         <Button
           onClick={() => {
@@ -127,9 +124,11 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
       )}
 
       {/* 로그아웃 상태 */}
-      {!userId && <Button onClick={() => router.push('/signin')} customClassName='flex-1'>
-        {isDetailLoading ? <LoadingSpinner size="sm" /> : <span>로그인하고 수집하기</span>}
-      </Button>}
+      {!userId &&
+        <Button
+          onClick={() => router.push('/signin')} customClassName='flex-1'>
+          {isDetailLoading ? <LoadingSpinner size="sm" /> : <span>로그인하고 수집하기</span>}
+        </Button>}
     </>
   );
 
@@ -141,7 +140,6 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
         cafeData={searchDetail}
         actionButtons={actionButtons}
         isImageWithFallback={true}
-        isDetailLoading={isDetailLoading}
       />
     </article>
   );

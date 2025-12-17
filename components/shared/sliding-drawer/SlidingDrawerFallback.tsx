@@ -1,9 +1,9 @@
-import { LoadingSpinner } from './LoadingSpinner';
+import CafeDetailSkeleton from '@/components/shared/sliding-drawer/CafeDetailSkeleton';
 
 export default function SlidingDrawerFallback() {
   return (
     <article className="size-full">
-      <LoadingSpinner size="xl" className="size-full" />
+      <CafeDetailSkeleton withHeader={true} />
     </article>
   );
 }

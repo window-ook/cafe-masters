@@ -33,7 +33,7 @@ export default function UserProfile() {
       >
         <div className="size-6 rounded-full bg-main-light flex items-center justify-center">
           <Image
-            src={IMAGE_PATHS.USER_ICON}
+            src={IMAGE_PATHS.USER_IMAGE}
             alt="유저 프로필 이미지"
             width={20}
             height={20}

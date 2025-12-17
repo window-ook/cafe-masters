@@ -59,7 +59,7 @@ export default async function HeroSection() {
                                 href="/main"
                                 className="group relative flex w-full sm:w-[180px] items-center justify-center gap-2 rounded-xl border border-main/50 bg-main/10 px-6 py-4 text-lg font-bold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-main/20 hover:shadow-[0_0_30px_rgba(218,72,59,0.4)]"
                             >
-                                <span>메인으로 GO</span>
+                                <span>메인 페이지</span>
                             </Link>
 
                             <Link
