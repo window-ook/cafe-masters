@@ -127,6 +127,22 @@ export default function KakaoMap() {
     }
   };
 
+  // 상세 페이지로 전환 시 지도 크기 재계산
+  useEffect(() => {
+    if (!mapLoaded || !mapRef.current) return;
+
+    const isDetailPage = paths.isSearchDetail || paths.isCollectionDetail || paths.isBookmarkDetail || paths.isRecommendationDetail;
+
+    if (isDetailPage) {
+      // 지도 크기 재계산
+      setTimeout(() => {
+        if (mapRef.current) {
+          mapRef.current.relayout();
+        }
+      }, 100);
+    }
+  }, [mapLoaded, paths.isSearchDetail, paths.isCollectionDetail, paths.isBookmarkDetail, paths.isRecommendationDetail]);
+
   useEffect(() => {
     if (!mapLoaded || !mapRef.current) return;
 
@@ -324,7 +340,7 @@ export default function KakaoMap() {
     <figure
       id="map"
       aria-label="kakao map"
-      className="fixed z-0 top-0 w-screen h-screen sm:translate-x-108 sm:w-[calc(100vw-27rem)]"
+      className="flex-1 z-0"
     />
   );
 }

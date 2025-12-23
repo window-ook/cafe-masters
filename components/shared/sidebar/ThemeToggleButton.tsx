@@ -13,10 +13,10 @@ export default function ThemeToggleButton() {
       type="button"
       aria-label="라이트/다크 테마 토글 버튼"
       onClick={() => setIsDarkTheme()}
-      className="relative w-20 h-10 z-0 flex items-center rounded-full cursor-pointer transition-colors duration-300 ease-in-out"
+      className="relative z-0 w-20 h-10 shadow-md rounded-full flex items-center cursor-pointer transition-colors duration-300 ease-in-out"
     >
       <div
-        className={`absolute w-full h-full rounded-full transition-colors duration-300 ${isDarkTheme ? 'bg-gray-700' : 'bg-gray-200'}`}
+        className={`absolute w-full h-full rounded-full transition-colors duration-300 ${isDarkTheme ? 'bg-gray-700/50' : 'bg-gray-200/50'}`}
       />
       <div
         className={`z-10 size-8 rounded-full shadow-md transform transition-transform duration-300 ease-in-out flex items-center justify-center ${isDarkTheme ? 'translate-x-11 bg-gray-800' : 'translate-x-1 bg-white'}`}

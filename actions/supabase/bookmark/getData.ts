@@ -3,18 +3,17 @@
 import { createServerSupabaseClient } from "utils/supabase/server";
 import { ISupabaseBookmarkCafe } from "@/types/supabase/bookmark";
 
-/** 모든 북마크 카페 조회
+/** 
+ * 모든 북마크 카페 조회
  * @returns 북마크 카페 목록
  */
 export async function getBookmarkCafes(): Promise<{ data: ISupabaseBookmarkCafe[] }> {
     const supabase = await createServerSupabaseClient();
     const user = await supabase.auth.getUser();
 
-    // 인증 검증
     if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
-    const user_id = user.data.user.id;
 
-    // 북마크 카페 조회
+    const user_id = user.data.user.id;
     const { data, error } = await supabase
         .from('bookmark')
         .select('*')
@@ -34,7 +33,8 @@ export async function getBookmarkCafes(): Promise<{ data: ISupabaseBookmarkCafe[
     return { data: safeData };
 }
 
-/** 특정 북마크 카페 조회 (메타데이터용)
+/**
+ * 특정 북마크 카페 조회 (메타데이터용)
  * @param cafeId 카페 ID
  * @returns 북마크 카페 데이터
  */
@@ -44,11 +44,9 @@ export async function getBookmarkCafeById(cafeId: number): Promise<ISupabaseBook
     const supabase = await createServerSupabaseClient();
     const user = await supabase.auth.getUser();
 
-    // 인증 검증
     if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
-    const user_id = user.data.user.id;
 
-    // 북마크 카페 조회
+    const user_id = user.data.user.id;
     const { data, error } = await supabase
         .from('bookmark')
         .select('*')

@@ -15,11 +15,11 @@ export default function ResetPasswordCompleteForm() {
 
     return (
         <main className="area h-screen w-screen flex justify-center items-center">
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-8 px-6">
                 <span className="text-3xl text-white text-shadow-black font-bold">
-                    Cafe Masters
+                    CAFE MASTERS
                 </span>
-                <div className="z-10 p-6 rounded-xl bg-white shadow-main-shadow">
+                <div className="auth-glass-card">
                     <div className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-6">
                         <div className="text-center">
                             <div className="size-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">

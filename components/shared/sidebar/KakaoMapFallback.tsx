@@ -5,7 +5,7 @@ export default function KakaoMapFallback() {
         <figure
             id="map"
             aria-label="kakao map"
-            className="fixed z-0 top-0 w-screen h-screen sm:translate-x-108 sm:w-[calc(100vw-27rem)]"
+            className="fixed z-0 top-4 right-4 bottom-4 left-4 sm:left-[calc(25rem)] rounded-3xl shadow-sm overflow-hidden"
         >
             <LoadingSpinner size="2xl" className="w-full h-full" />
         </figure>

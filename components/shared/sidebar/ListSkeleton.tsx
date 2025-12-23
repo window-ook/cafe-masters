@@ -15,7 +15,7 @@ export default function ListSkeleton() {
             <li
               key={index}
               className={`${isDarkTheme
-                ? 'bg-main-dark shadow-main-shadow'
+                ? 'bg-gray-800 shadow-main-shadow'
                 : 'bg-gray-50'} h-24 p-2 rounded-sm shadow-md list-none animate-pulse`}
             >
               <div className="w-full h-full flex justify-between items-center">

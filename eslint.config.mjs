@@ -1,3 +1,5 @@
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
@@ -9,15 +11,14 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
-  {
-    rules: {
-      "no-undef": 'error',
-      "no-unused-vars": 'off',
-      "semi": ['error', 'always'],
-    },
+const eslintConfig = [...nextCoreWebVitals, ...nextTypescript, ...compat.extends("prettier"), {
+  rules: {
+    "no-undef": 'error',
+    "no-unused-vars": 'off',
+    "semi": ['error', 'always'],
   },
-];
+}, {
+  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
+}];
 
 export default eslintConfig;

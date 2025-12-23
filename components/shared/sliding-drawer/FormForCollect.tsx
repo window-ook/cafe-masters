@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
 import RatingsSelector from '@/components/shared/sliding-drawer/RatingsSelector';
-import FileUploadField from '@/components/shared/FileUploadField';
+import FileUploadField from '@/components/shared/sliding-drawer/FileUploadField';
 import Button from '@/components/shared/Button';
 
 export default function FormForCollect() {

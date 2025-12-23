@@ -6,7 +6,7 @@ import React from 'react';
 import localFont from 'next/font/local';
 import AuthProvider from '@/providers/AuthProvider';
 import Providers from '@/providers/Providers';
-import PersistentThreeBackgroundCards from '@/components/shared/PersistentThreeBackgroundCards';
+import PersistentBackgroundCards from '@/components/shared/PersistentBackgroundCards';
 
 const pretendard = localFont({
   src: '../public/fonts/PretendardVariable.woff2',
@@ -24,6 +24,29 @@ const dunggeunmo = localFont({
   fallback: ['monospace'],
 });
 
+const gmarketSans = localFont({
+  src: [
+    {
+      path: '../public/fonts/GmarketSansTTFLight.woff2',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/GmarketSansTTFMedium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/GmarketSansTTFBold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-gmarket-sans',
+  display: 'swap',
+  preload: true,
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://www.cafe-masters.com'),
   verification: {
@@ -32,8 +55,8 @@ export const metadata: Metadata = {
     },
   },
   title: {
-    default: 'Cafe Masters',
-    template: '%s | Cafe Masters'
+    default: 'CAFE MASTERS',
+    template: '%s | CAFE MASTERS'
   },
   description: '카페를 즐겨 다니는 분들을 위한 서비스',
   keywords: [
@@ -48,7 +71,7 @@ export const metadata: Metadata = {
     '카페 추천',
     '카페 리뷰',
     '카페 지도',
-    'Cafe Masters',
+    'CAFE MASTERS',
     'CafeMasters',
     'cafe masters',
     'cafemasters',
@@ -63,14 +86,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    title: 'Cafe Masters',
-    siteName: 'Cafe Masters',
+    title: 'CAFE MASTERS',
+    siteName: 'CAFE MASTERS',
     description: '카페 정보를 쉽게 관리하고 싶은 당신을 위한 서비스',
     images: ['https://www.cafe-masters.com/opengraph-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Cafe Masters',
+    title: 'CAFE MASTERS',
     description: '카페 정보를 쉽게 관리하고 싶은 당신을 위한 서비스',
     images: ['https://www.cafe-masters.com/opengraph-image.png'],
     creator: 'github@window-ook',
@@ -124,11 +147,11 @@ export default async function RootLayout({
           name="google-site-verification"
           content="uLLg7r0DwRzwQB1croiSmhHf5Krf4FaxC2Z2t0BX4JM"
         />
-        {/* PWA Meta Tags */}
-        <meta name="application-name" content="Cafe Masters" />
+        {/* PWA */}
+        <meta name="application-name" content="CAFE MASTERS" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Cafe Masters" />
+        <meta name="apple-mobile-web-app-title" content="CAFE MASTERS" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-TileColor" content="#da483b" />
@@ -144,16 +167,16 @@ export default async function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/image/icons/app_icon_192.png" />
         <link rel="shortcut icon" href="/favicon.ico" />
 
-        {/* 카카오맵 최적화 */}
+        {/* 카카오맵 */}
         <link rel="preconnect" href="https://dapi.kakao.com" />
         <link rel="preconnect" href="https://t1.daumcdn.net" />
         <link rel="dns-prefetch" href="https://dapi.kakao.com" />
         <link rel="dns-prefetch" href="https://t1.daumcdn.net" />
       </head>
       <body
-        className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
+        className={`${pretendard.variable} ${dunggeunmo.variable} ${gmarketSans.variable} font-pretendard`}
       >
-        <PersistentThreeBackgroundCards />
+        <PersistentBackgroundCards />
         <AuthProvider
           initialUserId={initialUserId}
           initialUserEmail={initialUserEmail}

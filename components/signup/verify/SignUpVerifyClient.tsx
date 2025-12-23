@@ -51,7 +51,7 @@ export default function SignUpVerifyClient() {
             className="size-8"
           />
           <span className="text-3xl font-bold text-white [text-shadow:0_0_10px_rgba(135,90,173,1),0_4px_8px_rgba(0,0,0,0.9)]">
-            Cafe Masters
+            CAFE MASTERS
           </span>
         </header>
 

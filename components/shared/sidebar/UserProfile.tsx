@@ -27,24 +27,35 @@ export default function UserProfile() {
   if (!userEmail) return;
 
   return (
-    <section className="w-full flex items-center gap-2">
+    <section className="flex items-center gap-3">
       <div
-        className={`w-full pl-1 py-1 rounded-xl ${isDarkTheme ? 'shadow-main-shadow' : 'shadow-gray-300'} shadow-md flex items-center sm:gap-6`}
+        className={`
+          px-4 py-2 pr-3
+          rounded-xl
+          flex items-center gap-3
+          transition-all duration-200 ease-out
+          ${isDarkTheme
+            ? 'bg-gray-800/40 hover:bg-gray-800/60 border-gray-600/30'
+            : 'bg-white/40 hover:bg-white/60 border-white/50'
+          }
+          backdrop-blur-md border
+          hover:scale-[1.02] active:scale-[0.98]
+        `}
       >
-        <div className="size-6 rounded-full bg-main-light flex items-center justify-center">
+        <div className="size-8 rounded-lg bg-gray-300/20 backdrop-blur-sm flex items-center justify-center shadow-lg">
           <Image
             src={IMAGE_PATHS.USER_IMAGE}
             alt="유저 프로필 이미지"
-            width={20}
-            height={20}
-            className="inline-block object-cover object-center w-4 h-auto rounded-lg"
+            width={24}
+            height={24}
+            className="object-cover object-center size-6 rounded-md"
           />
         </div>
-        <p className="pl-4 font-bold text-[0.5rem] sm:text-[1rem]">
+        <p className={`font-semibold text-sm max-w-32 truncate ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
           {userEmail}
         </p>
+        <TierBadge tier={userTier} />
       </div>
-      <TierBadge tier={userTier} />
     </section>
   );
 }

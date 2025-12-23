@@ -1,6 +1,6 @@
 {
-    "name": "Cafe Masters - 카페 마스터즈",
-    "short_name": "Cafe Masters",
+    "name": "CAFE MASTERS - 카페 마스터즈",
+    "short_name": "CAFE MASTERS",
     "description": "카페를 즐겨 다니는 분들을 위한 서비스",
     "start_url": "/",
     "display": "standalone",

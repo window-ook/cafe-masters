@@ -11,7 +11,7 @@ export async function generateMetadata({ searchParams }: ISearchDetailPage): Pro
   const cafeName = resolvedSearchParams?.name as string;
 
   return {
-    title: `${cafeName} 상세 정보 : Cafe Masters`,
+    title: `${cafeName} 상세 정보 : CAFE MASTERS`,
     description: `검색 결과 카페 '${cafeName}'의 상세 정보를 확인해보세요.`,
     alternates: {
       canonical: `https://www.cafe-masters.com/search/detail/${resolvedSearchParams?.id}`

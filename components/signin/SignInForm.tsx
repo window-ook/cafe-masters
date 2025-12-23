@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignIn } from '@/hooks/supabase/authentication';
@@ -9,12 +10,14 @@ import { signInWithGoogle } from '@/utils/supabase/signInWithGoogle';
 import { signInFormSchema, SignInFormData } from '@/schema/auth';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { CircleX } from 'lucide-react';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
 
 const ResetPasswordRequestForm = dynamic(() => import('@/components/signin/ResetPasswordRequestForm'), { ssr: false, loading: () => <div className='w-80 h-70 max-w-(--breakpoint-lg) sm:w-96 bg-white'></div> });
 
 export default function SignInForm() {
+  const router = useRouter();
   const [resetRequired, setResetRequired] = useState<boolean>(false);
   const [showResetForm, setShowResetForm] = useState<boolean>(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
@@ -30,6 +33,7 @@ export default function SignInForm() {
   });
 
   const togglePasswordVisibility = () => setIsPasswordVisible(prev => !prev);
+  const handleClose = () => router.push('/');
 
   const onFormSubmit = async (data: SignInFormData) => {
     const trimmedEmail = data.email.trim();
@@ -37,7 +41,7 @@ export default function SignInForm() {
   };
 
   return (
-    <main className="auth-form-layout">
+    <>
       {showResetForm ? (
         <ResetPasswordRequestForm
           onBackAction={() => setShowResetForm(false)}
@@ -47,8 +51,18 @@ export default function SignInForm() {
           }}
         />
       ) : !resetRequired ? (
-        <div>
-          <p className="auth-form-title">로그인</p>
+        <div className="auth-glass-card">
+          <div className="flex justify-between items-center mb-4">
+            <p className="auth-form-title">로그인</p>
+            <button
+              type="button"
+              aria-label="로그인 취소 버튼"
+              onClick={handleClose}
+              className='cursor-pointer hover:opacity-60 transition-opacity'
+            >
+              <CircleX className='size-8' />
+            </button>
+          </div>
           <form
             className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
             onSubmit={handleSubmit(onFormSubmit)}
@@ -135,7 +149,18 @@ export default function SignInForm() {
           </form>
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-6">
+        <div className="auth-glass-card flex flex-col items-center gap-6">
+          <div className="w-full flex justify-end">
+            <button
+              type="button"
+              aria-label="로그인 취소 버튼"
+              onClick={handleClose}
+              className='cursor-pointer hover:opacity-60 transition-opacity'
+            >
+              <CircleX className='size-8' />
+            </button>
+          </div>
+
           <div className="w-16 h-16 bg-main-light rounded-full flex items-center justify-center">
             <svg
               className="size-8 text-main"
@@ -178,6 +203,6 @@ export default function SignInForm() {
           </div>
         </div>
       )}
-    </main>
+    </>
   );
 }

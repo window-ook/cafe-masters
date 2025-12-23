@@ -12,5 +12,5 @@ export default function EdgeSquare({ edgeSquare, isHiddenCard }: { edgeSquare: '
         }
     };
 
-    return <div className={`${getPositionClasses()} size-1.5 ${isHiddenCard ? 'border-main-dark bg-main' : 'border-gray-600 bg-gray-500'} border`} />;
+    return <div className={`${getPositionClasses()} size-1.5 ${isHiddenCard ? 'border-main bg-main-600' : 'border-gray-600 bg-gray-500'} border`} />;
 };

@@ -4,6 +4,13 @@ body {
   overflow-x: hidden;
 }
 
+/* CAFE MASTERS 로고 텍스트 그림자 효과 */
+.logo-text-shadow {
+  text-shadow:
+    0 0 10px var(--color-main-500),
+    0 4px 8px rgba(0, 0, 0, 0.9);
+}
+
 /* 
 * ======================================================
 * Tailwind CSS 커스텀 컬러 설정
@@ -15,14 +22,19 @@ body {
   --breakpoint-md: 801px;
   --breakpoint-lg: 1201px;
 
-  /* 폰트 */
+  /* 폰트 패밀리*/
   --font-pretendard: var(--font-pretendard);
   --font-dunggeunmo: var(--font-dunggeunmo);
+  --font-gmarket-sans: var(--font-gmarket-sans);
 
   /* 폰트 사이즈 */
   --text-2xs: 0.3rem;
 
-  /* 컬러 */
+  /* 
+  * ======================================================
+  * 컬러 설정
+  * ====================================================== 
+  */
   --color-main-100: oklch(84.11% 0.081 26.55);
   --color-main-200: oklch(78.57% 0.111 27.15);
   --color-main-300: oklch(72.8% 0.138 27.73);
@@ -38,7 +50,9 @@ body {
   --color-main-shadow: var(--color-main-600);
   --color-main-dark: var(--color-main-900);
 
-  /* New Design System Colors - Removed Neon, Using Main Theme */
+  /* 텍스트 컬러*/
+  --color-text-primary: var(--color-gray-800);
+
   --color-dark-bg: var(--color-gray-900);
 
   /* 컨테이너 */
@@ -113,6 +127,11 @@ body {
   --color-button-disabled: var(--color-gray-400);
   --color-button-hover: var(--color-main-600);
 
+  /* 스크롤바 */
+  --color-scollbar: var(--color-gray-300);
+
+  /* ====================================================== */
+
   /* 텍스트 그림자 */
   --text-shadow-black: 0 2px 4px rgba(0, 0, 0, 0.8);
   --text-shadow-main: 0 2px 4px rgba(135, 90, 173, 1);
@@ -167,12 +186,12 @@ body {
 
   /* Master 티어 Footer 뱃지 */
   .master-badge {
-    @apply w-full z-0 absolute inset-0 h-9 bg-linear-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm;
+    @apply absolute z-0 inset-0 w-full h-9 bg-linear-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm;
   }
 
   /* Master 티어 Dialog 뱃지 */
   .master-dialog-badge {
-    @apply w-[27%] sm:w-[10%] z-0 -top-0.5 inset-0 h-9 absolute bg-linear-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm
+    @apply absolute z-0 inset-0 w-[27%] sm:w-[7%] h-9 -top-0.5 bg-linear-to-r from-master-effect-left via-master-effect-mid to-master-effect-right rounded-xl blur-sm
   }
 
   /* 버튼 hover */
@@ -185,9 +204,9 @@ body {
     @apply relative size-5 rounded-full shadow-md shadow-yellow-100 flex items-center justify-center bg-red-500;
   }
 
-  /* 로그인 폼 카드 */
+  /* 로그인 폼 카드 - Glassmorphism */
   .auth-form-layout {
-    @apply z-10 p-5 rounded-xl shadow-md shadow-main-shadow bg-white;
+    @apply z-10 p-5 rounded-xl shadow-lg shadow-main-shadow/30 bg-white/80 backdrop-blur-md border border-white/30;
   }
 
   /* 로그인 폼 타이틀 */
@@ -199,6 +218,93 @@ body {
   .auth-form-mention {
     @apply flex items-center justify-center gap-4 text-center;
   }
+
+  /* Glassmorphism 카드 - 인증 폼용 */
+  .auth-glass-card {
+    @apply z-10 p-6 rounded-xl shadow-lg shadow-main-shadow/30 bg-white/30 backdrop-blur-lg border border-white/30;
+  }
+
+  /* 
+  * ======================================================
+  * Polaroid Gallery Wall 스타일
+  * ====================================================== 
+  */
+
+  .polaroid-card-light {
+    @apply relative border border-gray-200 bg-white p-2 pb-8 shadow-lg shadow-gray-400/20 transition-all duration-300 hover:shadow-xl hover:shadow-main/15;
+  }
+
+  .polaroid-card-dark {
+    @apply relative border border-gray-700 bg-gray-800 p-2 pb-8 shadow-lg shadow-black/40 transition-all duration-300 hover:shadow-xl hover:shadow-main/30;
+  }
+
+  .polaroid-tape-light {
+    @apply absolute -top-2 left-1/2 h-8 w-16 -translate-x-1/2 rotate-2 bg-main-light/60 transition-colors duration-500;
+  }
+
+  .polaroid-tape-dark {
+    @apply absolute -top-2 left-1/2 h-8 w-16 -translate-x-1/2 rotate-2 bg-main/40 transition-colors duration-500;
+  }
+
+  /* 
+  * ======================================================
+  * 랜딩페이지 텍스트
+  * ====================================================== 
+  */
+  .landing-heading {
+    @apply text-4xl sm:text-6xl font-bold bg-gradient-to-r from-main via-main-600 to-main bg-clip-text text-transparent;
+  }
+
+  .landing-title {
+    @apply font-bold text-black;
+  }
+
+  .landing-description {
+    @apply font-medium text-text-primary;
+  }
+
+  .landing-paragraph {
+    @apply text-lg font-medium text-text-primary;
+  }
+
+  /*
+  * ======================================================
+  * Collection Cafe Carousel
+  * ======================================================
+  */
+
+  .carousel-wrapper {
+    @apply relative w-full;
+    min-height: 26rem;
+    padding: 0 0;
+  }
+
+  .carousel-scroll-container {
+    @apply flex items-center gap-4 cursor-grab;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    min-height: 26rem;
+  }
+
+  .carousel-scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-scroll-container.is-dragging {
+    @apply cursor-grabbing;
+  }
+
+  .carousel-card-item {
+    @apply flex-shrink-0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    width: 22rem;
+  }
+
 }
 
 /* 
@@ -211,7 +317,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-main-500);
+  background-color: var(--color-scollbar);
   border-radius: 10px;
   border: 2px solid transparent;
 }
@@ -348,4 +454,34 @@ body {
       transparent 0%,
       rgba(255, 255, 255, 0.1) 50%,
       transparent 100%);
+}
+
+/*
+* ======================================================
+* Polaroid Gallery Wall 애니메이션
+* ======================================================
+*/
+
+@keyframes polaroid-fall {
+  from {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) rotate(var(--rotation));
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes polaroid-fall {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
 }

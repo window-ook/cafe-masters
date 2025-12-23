@@ -36,7 +36,9 @@ export default function PageConverter({
     scrollToTop();
   };
   return (
-    <nav aria-label="페이지 이동" className={`w-full py-4 ${isDarkTheme ? 'bg-dark-background' : 'bg-sidebar-background'} font-dunggeunmo`}>
+    <nav aria-label="페이지 이동"
+      className="w-full py-4 bg-transparent font-dunggeunmo"
+    >
       <div className="flex justify-between items-center">
         <button
           type="button"

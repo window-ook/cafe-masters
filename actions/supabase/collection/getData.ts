@@ -3,7 +3,8 @@
 import { createServerSupabaseClient } from "utils/supabase/server";
 import { ISupabaseCollectionCafe } from "@/types/supabase/collection";
 
-/** 모든 수집한 카페 목록 조회 (무한 스크롤용)
+/**
+ * 모든 수집한 카페 목록 조회 (무한 스크롤용)
  * @param offset 오프셋
  * @param limit 한 번에 가져올 카페 수
  * @returns 수집한 카페 목록과 다음 커서
@@ -13,11 +14,9 @@ export async function getCollectionCafes(offset: number = 0, limit: number = 4)
     const supabase = await createServerSupabaseClient();
     const user = await supabase.auth.getUser();
 
-    // 인증 검증
     if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
-    const user_id = user.data.user.id;
 
-    // 수집 카페 조회
+    const user_id = user.data.user.id;
     const { data, error } = await supabase
         .from('collection')
         .select('*')
@@ -41,19 +40,17 @@ export async function getCollectionCafes(offset: number = 0, limit: number = 4)
     return { data: safeData, nextCursor };
 }
 
-/** 수집한 카페 전체 목록 조회 (페이지네이션용)
+/**
+ * 수집한 카페 전체 목록 조회 (페이지네이션용)
  * @returns 수집한 카페 전체 목록
  */
 export async function getAllCollectionCafes(): Promise<{ data: ISupabaseCollectionCafe[] }> {
     const supabase = await createServerSupabaseClient();
     const user = await supabase.auth.getUser();
 
-
-    // 인증 검증
     if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
-    const user_id = user.data.user.id;
 
-    // 수집 카페 조회
+    const user_id = user.data.user.id;
     const { data, error } = await supabase
         .from('collection')
         .select('*')
@@ -74,7 +71,8 @@ export async function getAllCollectionCafes(): Promise<{ data: ISupabaseCollecti
     return { data: safeData };
 }
 
-/** 특정 수집 카페 조회 (메타데이터용)
+/**
+ * 특정 수집 카페 조회 (메타데이터용)
  * @param cafeId 카페 ID
  * @returns 수집 카페 데이터
  */
@@ -84,11 +82,9 @@ export async function getCollectionCafeById(cafeId: number): Promise<ISupabaseCo
     const supabase = await createServerSupabaseClient();
     const user = await supabase.auth.getUser();
 
-    // 인증 검증
     if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
-    const user_id = user.data.user.id;
 
-    // 수집 카페 조회
+    const user_id = user.data.user.id;
     const { data, error } = await supabase
         .from('collection')
         .select('*')

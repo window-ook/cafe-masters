@@ -29,8 +29,8 @@ export default async function HeroSection() {
                         {/* 상단 뱃지 */}
                         <div className="mb-8 animate-fade-in-up">
                             <div className="group relative inline-block">
-                                <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-main/20 via-main-light/20 to-main/20 opacity-0 blur transition duration-1000 group-hover:opacity-100" />
-                                <span className="relative inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-medium text-main-400 backdrop-blur-md">
+                                <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-main/40 via-main-light/40 to-main/40 opacity-70 blur-lg transition duration-1000 group-hover:opacity-100" />
+                                <span className="relative inline-flex items-center gap-2 rounded-full border border-main/30 bg-white/80 px-6 py-2 text-sm font-bold text-main backdrop-blur-md shadow-lg">
                                     <Coffee className="h-4 w-4" />
                                     <span className="tracking-wider">수집된 카드 {collectionCafesCounts}장</span>
                                 </span>
@@ -38,34 +38,33 @@ export default async function HeroSection() {
                         </div>
 
                         {/* 메인 타이포그래피 */}
-                        <h1 className="mb-6 font-black tracking-tighter text-white">
-                            <span className="block text-[clamp(48px,10vw,100px)] lg:text-[120px] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                        <h1 className="mb-6 font-black tracking-tighter">
+                            <span className="block text-[clamp(48px,10vw,100px)] lg:text-[120px] leading-[0.9] text-white logo-text-shadow">
                                 CAFE
                             </span>
-                            <span className="block text-[clamp(48px,10vw,100px)] lg:text-[120px] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-r from-main via-white to-main-light drop-shadow-[0_0_30px_rgba(218,72,59,0.4)]">
+                            <span className="block text-[clamp(48px,10vw,100px)] lg:text-[120px] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-r from-main via-main-600 to-main drop-shadow-[0_4px_12px_rgba(218,72,59,0.5)]">
                                 MASTERS
                             </span>
                         </h1>
 
                         {/* 서브 헤드라인 */}
-                        <p className="mb-10 max-w-2xl text-[clamp(16px,2vw,20px)] font-light leading-relaxed text-white/80">
-                            방문한 카페를 카드로 저장하고 <br className="hidden sm:block" />
-                            나만의 카페 지도를 완성하는 유일한 공간
+                        <p className="mb-10 max-w-2xl text-[clamp(16px,2vw,20px)] font-bold leading-relaxed text-main drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+                            카페 카드를 모아서 <br className="hidden sm:block" />
+                            나만의 카페 컬렉션과 지도를 완성하세요
                         </p>
 
                         {/* 버튼 그룹 */}
                         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                             <Link
                                 href="/main"
-                                className="group relative flex w-full sm:w-[180px] items-center justify-center gap-2 rounded-xl border border-main/50 bg-main/10 px-6 py-4 text-lg font-bold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-main/20 hover:shadow-[0_0_30px_rgba(218,72,59,0.4)]"
+                                className="group relative flex w-full sm:w-[180px] items-center justify-center gap-2 rounded-xl border-2 border-main bg-main/70 backdrop-blur-sm px-6 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-main-600 hover:shadow-[0_8px_30px_rgba(218,72,59,0.6)]"
                             >
                                 <span>메인 페이지</span>
                             </Link>
-
                             <Link
                                 href="/signin"
                                 data-testid="button-go-to-signin-from-landing"
-                                className="group relative flex w-full sm:w-[180px] items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-6 py-4 text-lg font-medium text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/10"
+                                className="group relative flex w-full sm:w-[180px] items-center justify-center gap-2 rounded-xl border-2 border-main bg-white/30 backdrop-blur-sm px-6 py-4 text-lg font-bold text-main hover:text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-main-600 hover:shadow-[0_8px_30px_rgba(218,72,59,0.6)]"
                             >
                                 <span>로그인</span>
                             </Link>

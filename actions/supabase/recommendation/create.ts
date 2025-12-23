@@ -3,7 +3,8 @@
 import { createServerSupabaseClient } from "utils/supabase/server";
 import { RecommendationRowInsert } from ".";
 
-/** 추천 카페 추가
+/**
+ * 추천 카페 추가
  * @param cafe 카페 데이터
  */
 export async function createRecommendationCafe(cafe: RecommendationRowInsert): Promise<boolean> {

@@ -1,8 +1,9 @@
 'use client';
 
+import { useUIStore } from '@/stores';
 import { Trophy, MessageCircle, RefreshCw, Smartphone } from 'lucide-react';
-import React from 'react';
 import { m } from 'motion/react';
+import React from 'react';
 
 interface IBenefitCard {
     icon: React.ComponentType<{ className?: string }>;
@@ -13,32 +14,23 @@ interface IBenefitCard {
 }
 
 const BenefitCard: React.FC<IBenefitCard> = ({ icon: Icon, title, description1, description2, index }) => {
-    const getNeonColor = (idx: number) => {
-        const colors = ['text-main', 'text-main-light', 'text-white'];
-        return colors[idx % 2];
-    };
-
-    const neonColorClass = getNeonColor(index);
-    const borderColorClass = index % 2 === 0 ? 'group-hover:border-main/50' : 'group-hover:border-white/50';
-
+    const isDarkTheme = useUIStore(state => state.isDarkTheme);
     return (
         <div className="group relative">
             {/* 배경 그라데이션 */}
-            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
+            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-main/5 to-main-light/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
 
-            <div className={`relative flex h-full flex-col items-center justify-center rounded-2xl border border-white/5 bg-black/20 p-8 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 ${borderColorClass}`}>
-                <div className="mb-6 rounded-full bg-white/5 p-4 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-white/10">
-                    <Icon className={`size-8 ${neonColorClass} transition-all duration-300 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]`} />
+            <div className={`relative flex h-full flex-col items-center justify-center rounded-2xl border-2 border-gray-200/20 bg-white/30 p-8 text-center shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 group-hover:border-main/40 group-hover:shadow-[0_8px_30px_rgba(218,72,59,0.2)]`}>
+                <div className="mb-6 p-4 rounded-full border-2 shadow-md border-main/20 bg-main/5 transition-all duration-300 group-hover:scale-110 group-hover:border-main group-hover:bg-main/10">
+                    <Icon className={`size-8 text-main transition-all duration-300 group-hover:drop-shadow-[0_0_10px_rgba(218,72,59,0.5)]`} />
                 </div>
 
-                <h3 className="mb-4 text-xl font-bold text-white">
+                <h3 className={`landing-title mb-4 text-xl group-hover:text-main ${isDarkTheme ? 'text-white' : ''}`}>
                     {title}
                 </h3>
 
-                <p className="text-sm leading-relaxed text-gray-400 group-hover:text-gray-300">
-                    {description1}
-                    <br />
-                    {description2}
+                <p className={`landing-description text-sm leading-relaxed ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+                    {description1}<br />{description2}
                 </p>
             </div>
         </div>
@@ -46,6 +38,8 @@ const BenefitCard: React.FC<IBenefitCard> = ({ icon: Icon, title, description1, 
 };
 
 export default function BenefitsSection() {
+    const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
     const benefits = [
         {
             icon: Trophy,
@@ -82,19 +76,19 @@ export default function BenefitsSection() {
                         <m.h2
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.6, ease: 'easeOut' }}
-                            className="mb-8 text-4xl font-bold uppercase leading-tight text-white sm:text-5xl lg:text-6xl"
+                            viewport={{ once: true, amount: 0.8 }}
+                            transition={{ duration: 0.8, ease: 'easeOut' }}
+                            className={`mb-8 text-4xl sm:text-6xl font-bold uppercase leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}
                         >
-                            오직 <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-main to-main-light">카페 마스터즈에서만</span>
+                            오직<br />
+                            <span className="landing-heading">카페 마스터즈에서만</span>
                         </m.h2>
                         <m.p
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-                            className="max-w-md text-lg text-gray-400"
+                            viewport={{ once: true, amount: 0.8 }}
+                            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
+                            className={`landing-paragraph max-w-md ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
                         >
                             카페 마스터즈는 단순한 기록을 넘어<br />
                             당신의 커피 라이프를 더 풍요롭게 만듭니다.

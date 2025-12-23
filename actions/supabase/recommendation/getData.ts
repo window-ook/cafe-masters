@@ -5,7 +5,8 @@ import { createClient } from '@supabase/supabase-js';
 import { ISupabaseRecommendationCafe } from "@/types/supabase/recommendation";
 import { Database } from '@/types_db';
 
-/** 추천 카페 목록 조회
+/**
+ * 추천 카페 목록 조회
  * @returns 추천 카페 목록
  */
 export async function getRecommendationCafes(): Promise<{ data: ISupabaseRecommendationCafe[] }> {
@@ -33,7 +34,8 @@ export async function getRecommendationCafes(): Promise<{ data: ISupabaseRecomme
     return { data: safeData };
 }
 
-/** 추천 카페 목록 조회 (사이트맵용 - 인증 없이)
+/**
+ * 추천 카페 목록 조회 (사이트맵용 - 인증 없이)
  * @returns 추천 카페 목록
  */
 export async function getRecommendationCafesForSitemap(): Promise<{ data: ISupabaseRecommendationCafe[] }> {
@@ -63,7 +65,8 @@ export async function getRecommendationCafesForSitemap(): Promise<{ data: ISupab
     return { data: safeData };
 }
 
-/** 특정 수집 카페 조회 (메타데이터용)
+/**
+ * 특정 수집 카페 조회 (메타데이터용)
  * @param cafeId 카페 ID
  * @returns 수집 카페 데이터
  */

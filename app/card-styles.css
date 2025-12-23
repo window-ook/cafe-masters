@@ -1,7 +1,7 @@
 /*
 * ======================================================
 * 수집한 카페의 카드 텍스처
-* 본체 z-index: 10, linear-gradient
+* 본체 linear-gradient
 * 마우스 포인터 광원 z-index: 20, radial-gradient
 * ::before z-index: 1
 * ::after z-index: 2

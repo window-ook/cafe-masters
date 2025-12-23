@@ -1,4 +1,4 @@
-# Cafe Masters
+# CAFE MASTERS
 
 <img width="1200" height="630" src="https://github.com/user-attachments/assets/5543d2e4-66d8-4f7c-8d27-d2de5523312a" />
 

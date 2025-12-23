@@ -1,8 +1,9 @@
 'use client';
 
+import { m } from 'motion/react';
 import { FolderCheck, Bookmark, Target } from 'lucide-react';
 import React from 'react';
-import { m } from 'motion/react';
+import { useUIStore } from '@/stores';
 
 interface IFeatureCard {
     icon: React.ComponentType<{ className?: string }>;
@@ -14,6 +15,7 @@ interface IFeatureCard {
 }
 
 const FeatureCard = ({ icon: Icon, title, description1, description2, category, index }: IFeatureCard) => {
+    const isDarkTheme = useUIStore(state => state.isDarkTheme);
     return (
         <div
             className="group relative h-full"
@@ -23,26 +25,26 @@ const FeatureCard = ({ icon: Icon, title, description1, description2, category, 
             <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-main/30 via-main-light/30 to-main/30 opacity-0 blur-xl transition duration-500 group-hover:opacity-70" />
 
             {/* 카드 내용 */}
-            <div className="relative flex h-full flex-col justify-between rounded-2xl border border-white/10 bg-black/40 p-8 shadow-2xl backdrop-blur-md transition-all duration-300 hover:-translate-y-2 group-hover:border-white/20">
+            <div className="relative flex h-full flex-col justify-between rounded-2xl border-2 border-gray-200/20 bg-white/30 p-8 shadow-2xl backdrop-blur-md transition-all duration-300 hover:-translate-y-2 group-hover:border-main/50 group-hover:shadow-[0_8px_30px_rgba(218,72,59,0.3)]">
                 <div>
                     <div className="mb-6 flex items-start justify-between">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-main transition-transform duration-300 group-hover:scale-110 group-hover:bg-main/10 group-hover:shadow-[0_0_20px_rgba(218,72,59,0.3)]">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-xl border-2 border-main/20 bg-main/5 text-main transition-transform duration-300 group-hover:scale-110 group-hover:border-main group-hover:bg-main/10 group-hover:shadow-[0_0_20px_rgba(218,72,59,0.4)]">
                             <Icon className="size-7" />
                         </div>
-                        <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/60">
+                        <span className="rounded-full border border-gray-300/20 bg-gray-100/30 px-3 py-1 text-xs font-bold text-gray-600 group-hover:border-main/30 group-hover:bg-main/5 group-hover:text-main">
                             {category}
                         </span>
                     </div>
 
-                    <h3 className="mb-4 text-2xl font-bold text-white transition-colors group-hover:text-main">
+                    <h3 className={`landing-title mb-4 text-2xl transition-colors group-hover:text-main ${isDarkTheme ? 'text-white' : ''}`}>
                         {title}
                     </h3>
 
                     <div className="space-y-1">
-                        <p className="leading-relaxed text-gray-400 group-hover:text-gray-300">
+                        <p className={`landing-description leading-relaxed group-hover:text-gray-900 ${isDarkTheme ? 'text-white' : ''}`}>
                             {description1}
                         </p>
-                        <p className="leading-relaxed text-gray-400 group-hover:text-gray-300">
+                        <p className={`landing-description leading-relaxed group-hover:text-gray-900 ${isDarkTheme ? 'text-white' : ''}`}>
                             {description2}
                         </p>
                     </div>
@@ -88,20 +90,20 @@ export default function FeatureSection() {
     return (
         <section className="relative overflow-hidden py-32 bg-transparent">
             <div className="relative mx-auto max-w-[1400px] px-6">
-                {/* 섹션 헤더 */}
+                {/* 타이포 */}
                 <div className="mb-20">
                     <m.h2
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.6, ease: 'easeOut' }}
-                        className="text-right text-4xl sm:text-6xl font-bold uppercase tracking-tight text-white"
+                        viewport={{ once: true, amount: 0.8 }}
+                        transition={{ duration: 0.8, ease: 'easeOut' }}
+                        className="text-right uppercase tracking-tight text-gray-900 drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
                     >
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-main via-main-light to-white">쉽고 편하게</span>
+                        <span className="landing-heading">쉽고 편하게</span>
                     </m.h2>
                 </div>
 
-                {/* 그리드 */}
+                {/* 카드 */}
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                     {features.map((feature, index) => (
                         <FeatureCard

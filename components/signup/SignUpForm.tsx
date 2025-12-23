@@ -9,6 +9,7 @@ import { signInWithGoogle } from '@/utils/supabase/signInWithGoogle';
 import { signInWithKakao } from '@/utils/supabase/signInWithKakao';
 import { signUpFormSchema, SignUpFormData } from '@/schema/auth';
 import Link from 'next/link';
+import { CircleX } from 'lucide-react';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
 
@@ -28,6 +29,7 @@ export default function SignUpEmailForm() {
   });
 
   const handlePasswordVisibility = () => setIsPasswordVisible(prev => !prev);
+  const handleClose = () => router.push('/');
 
   const onSignUpSubmit = async (data: SignUpFormData) => {
     signUp({ email: data.email, password: data.password }, {
@@ -40,11 +42,22 @@ export default function SignUpEmailForm() {
   };
 
   return (
-    <form
-      className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
-      onSubmit={signUpForm.handleSubmit(onSignUpSubmit)}
-    >
-      <p className="auth-form-title">회원가입</p>
+    <div className="auth-glass-card">
+      <form
+        className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
+        onSubmit={signUpForm.handleSubmit(onSignUpSubmit)}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <p className="auth-form-title">회원가입</p>
+        <button
+          type="button"
+          aria-label="회원가입 취소 버튼"
+          onClick={handleClose}
+          className='cursor-pointer hover:opacity-60 transition-opacity'
+        >
+          <CircleX className='size-8' />
+        </button>
+      </div>
       <Controller
         name="email"
         control={signUpForm.control}
@@ -117,6 +130,7 @@ export default function SignUpEmailForm() {
           <span className="font-bold text-main">로그인 하기</span>
         </Link>
       </p>
-    </form>
+      </form>
+    </div>
   );
 }

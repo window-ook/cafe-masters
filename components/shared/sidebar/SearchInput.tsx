@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useFilterStore, useUIStore } from '@/stores';
 import { handleSafeInput } from '@/utils/shared/safeInput';
 import { Navigation } from 'lucide-react';
-import Button from '@/components/shared/Button';
 
 export default function SearchInput() {
   const router = useRouter();
@@ -30,23 +29,47 @@ export default function SearchInput() {
   };
 
   return (
-    <search className="w-full rounded-xl flex gap-2">
-      <input
-        data-testid="search-input"
-        placeholder="찾으시는 곳을 입력하세요"
-        value={localKeyword}
-        onChange={e => handleSafeInput(e.target.value, setLocalKeyword)}
-        onKeyDown={handleKeyDown}
-        className={`w-5/6 pl-3 pr-28 py-4 bg-transparent border border-gray-200 rounded-md shadow-sm font-bold text-xl sm:text-md ${isDarkTheme ? 'placeholder:text-gray-300 text-white' : 'placeholder:text-gray-400 text-gray-700'} transition duration-300 ease focus:outline-none focus:border-main hover:border-gray-300 focus:shadow`}
-      />
-      <Button
-        type="button"
-        aria-label="검색 버튼"
-        dataTestId="button-submit-keyword-for-search"
-        customClassName={`text-2xl ${isDarkTheme ? 'bg-main-dark' : ''} flex items-center justify-center`}
-        onClick={handleSearch}
-        children={<Navigation className="size-8" />}
-      />
+    <search className="w-full flex items-center gap-3">
+      <div className="relative flex-1">
+        <input
+          data-testid="search-input"
+          placeholder="찾으시는 곳을 입력하세요"
+          value={localKeyword}
+          onChange={e => handleSafeInput(e.target.value, setLocalKeyword)}
+          onKeyDown={handleKeyDown}
+          className={`
+            w-full py-3 px-4 pr-12
+            rounded-xl
+            transition-all duration-200 ease-out
+            font-medium text-sm 
+            ${isDarkTheme
+              ? 'bg-gray-800/40 border-gray-600/30 text-white placeholder:text-white focus:border-main focus:bg-gray-800/60'
+              : 'bg-black/5 border-white/40 text-text-primary placeholder:text-text-primary focus:border-main focus:bg-white/60'
+            }
+            backdrop-blur-md border
+            focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-main/20
+            hover:border-opacity-60
+          `}
+        />
+        <button
+          type="button"
+          aria-label="검색 버튼"
+          data-testid="button-submit-keyword-for-search"
+          className={`
+            absolute right-1 top-1/2 -translate-y-1/2
+            size-8 rounded-lg
+            flex items-center justify-center
+            transition-all duration-200 ease-out
+            bg-main hover:bg-main-600 text-white
+            backdrop-blur-sm
+            hover:scale-105 active:scale-95
+            cursor-pointer
+          `}
+          onClick={handleSearch}
+        >
+          <Navigation className="size-4" />
+        </button>
+      </div>
     </search>
   );
 }

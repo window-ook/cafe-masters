@@ -1,0 +1,1 @@
+export { signOut } from '@/actions/supabase/authentication/signOut';

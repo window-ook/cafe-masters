@@ -34,10 +34,16 @@ export default function CategoryFilter() {
               aria-label={`카테고리 '${category}' 선택 버튼`}
               key={category}
               onClick={() => toggleCategories(category)}
-              className={`px-4 py-2 rounded-full border transition text-sm cursor-pointer
+              className={`
+                px-4 py-2 rounded-full border transition-all duration-200 ease-out text-sm cursor-pointer
+                backdrop-blur-md
                 ${selectedCategories.includes(category)
                   ? 'bg-main text-white border-main'
-                  : 'bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100'}`}
+                  : isDarkTheme
+                    ? 'bg-gray-800/60 text-white border-gray-600/40 hover:bg-gray-800/80'
+                    : 'bg-white/60 text-gray-700 border-white/70 hover:bg-white/80'
+                }
+              `}
             >
               {category}
             </button>
@@ -49,7 +55,13 @@ export default function CategoryFilter() {
         type="button"
         aria-expanded={isExpanded}
         onClick={toggleExpand}
-        className={`w-full px-4 py-2 rounded-full flex justify-center items-center ${isDarkTheme ? 'text-white' : 'text-gray-700'} hover:text-main cursor-pointer transition duration-150`}
+        className={`
+          w-full px-4 py-2 rounded-full
+          ${isDarkTheme ? 'text-white hover:text-main' : 'text-gray-700 hover:text-main'}
+          flex justify-center items-center
+          cursor-pointer
+          transition-all duration-200 ease-out
+        `}
       >
         {isExpanded ? (
           <p className="flex items-center gap-1">

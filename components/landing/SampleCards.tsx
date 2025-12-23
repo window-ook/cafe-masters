@@ -118,7 +118,7 @@ export default function SampleCards() {
                 disabled={isAnimating}
                 className="absolute left-0 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-lg hover:bg-white/30 hover:scale-110 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                <ChevronLeft className="size-6 text-white" />
+                <ChevronLeft className="size-6 text-main" />
             </button>
 
             {/* 카드 컨테이너 */}
@@ -158,9 +158,9 @@ export default function SampleCards() {
                                 {/* 썸네일 */}
                                 <div className="z-10 h-24 bg-gray-700 rounded-lg flex flex-col">
                                     <div className="h-40 w-full bg-gradient-to-br from-orange-200 to-orange-400 rounded-t-md flex items-center justify-center">
-                                        <Sticker className={`h-12 w-12 ${card.iconColor}`} />
+                                        <Sticker className={`size-12 ${card.iconColor}`} />
                                     </div>
-                                    <div className="h-4 w-full bg-white rounded-b-md flex items-center justify-center">
+                                    <div className="h-4 w-full bg-gray-200 rounded-b-md flex items-center justify-center">
                                         <span className="text-xs text-black">CAFE MASTERS</span>
                                     </div>
                                 </div>
@@ -171,10 +171,10 @@ export default function SampleCards() {
                                     <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1.5 border-gray-600 bg-gray-500 border" />
                                     <div className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1.5 border-gray-600 bg-gray-500 border" />
                                     <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1.5 border-gray-600 bg-gray-500 border" />
-                                    <p className="whitespace-nowrap overflow-hidden text-ellipsis font-medium text-gray-600">
+                                    <p className="whitespace-nowrap overflow-hidden text-ellipsis font-medium text-text-primary">
                                         {card.description1}
                                     </p>
-                                    <p className="whitespace-nowrap overflow-hidden text-ellipsis font-medium text-gray-600">
+                                    <p className="whitespace-nowrap overflow-hidden text-ellipsis font-medium text-text-primary">
                                         {card.description2}
                                     </p>
                                 </div>
@@ -190,7 +190,7 @@ export default function SampleCards() {
                 disabled={isAnimating}
                 className="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-lg hover:bg-white/30 hover:scale-110 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                <ChevronRight className="size-6 text-white" />
+                <ChevronRight className="size-6 text-main" />
             </button>
         </div>
     );

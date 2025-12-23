@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
+import { useUIStore } from '@/stores';
 import { Star, Coffee, Shield, Crown, Gem, Eye } from 'lucide-react';
 import { m } from 'motion/react';
 import EdgeSquare from '@/components/shared/sidebar/EdgeSquare';
@@ -38,7 +39,7 @@ const SAMPLE_CAFES: ISampleCafe[] = [
   },
   {
     name: "에메랄드 카드",
-    address: "서울특별시 강남구 테헤란로",
+    address: "서울특별시 강남구 압구정로",
     phone_number: "02-1234-5678",
     ratings: 5,
     icon: Gem,
@@ -86,10 +87,10 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
       break;
     case 5:
       if (isHiddenCard) {
-        cardClasses = 'card-hidden text-white border-main hover:border-main-light';
+        cardClasses = 'card-hidden text-gray-600 border-main hover:border-main-light';
         backlightColorByGrade = 'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right blur-md pointer-none';
         addressAndPhoneBackgroundColor = 'bg-hidden-address-background';
-        textColor = 'text-white';
+        textColor = 'text-white/80';
       } else {
         cardClasses = 'card-emerald text-black border-gray-500 hover:border-emerald-base';
         backlightColorByGrade = 'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-emerald-effect-left via-emerald-effect-mid to-emerald-effect-right blur-md opacity-0 group-hover:opacity-100 pointer-none';
@@ -187,7 +188,7 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
                 {cafe.name}
               </p>
               {isHiddenCard && (
-                <span className="inline-flex h-5 px-1.5 rounded-lg shadow-md bg-linear-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-size-[200%_200%] animate-gradient items-center justify-center text-xs font-dunggeunmo text-white ml-2">
+                <span className="inline-flex h-5 px-1.5 rounded-lg shadow-md bg-linear-to-r from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right bg-size-[200%_200%] animate-gradient items-center justify-center text-xs font-dunggeunmo text-gray-600 ml-2">
                   H
                 </span>
               )}
@@ -229,8 +230,8 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
                     : 'text-orange-800'
               }`} />
           </div>
-          <div className="h-4 w-full bg-white rounded-b-md flex items-center justify-center">
-            <span className="text-xs text-black">CAFE MASTERS</span>
+          <div className="h-4 w-full bg-gray-200 rounded-b-md flex items-center justify-center">
+            <span className="text-xs text-text-primary">CAFE MASTERS</span>
           </div>
         </div>
 
@@ -241,10 +242,10 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
           <EdgeSquare edgeSquare="bl" isHiddenCard={isHiddenCard} />
           <EdgeSquare edgeSquare="br" isHiddenCard={isHiddenCard} />
 
-          <p className={`whitespace-nowrap overflow-hidden text-xs text-ellipsis font-medium ${isHiddenCard ? 'text-hidden-address-text' : ''}`}>
+          <p className={`whitespace-nowrap overflow-hidden text-xs text-ellipsis font-medium ${isHiddenCard ? 'text-hidden-address-text' : 'text-text-primary'}`}>
             {cafe.address}
           </p>
-          <p className={`whitespace-nowrap overflow-hidden text-xs text-ellipsis font-medium ${isHiddenCard ? 'text-hidden-address-text' : ''}`}>
+          <p className={`whitespace-nowrap overflow-hidden text-xs text-ellipsis font-medium ${isHiddenCard ? 'text-hidden-address-text' : 'text-text-primary'}`}>
             {cafe.phone_number}
           </p>
         </div>
@@ -254,26 +255,28 @@ const SampleCard = ({ cafe }: { cafe: ISampleCafe }) => {
 };
 
 export default function GallerySection() {
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
   return (
     <section className="relative py-32 overflow-hidden bg-transparent">
-      <div className="relative z-10 mx-auto max-w-[1400px] px-6">
+      <div className="relative z-10 mx-auto max-w-[1400px]">
         {/* 섹션 헤더 */}
         <div className="text-center mb-20">
           <m.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="mb-4 text-4xl font-bold uppercase tracking-tight text-white sm:text-6xl"
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="landing-heading"
           >
             카드 컬렉션
           </m.h2>
           <m.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-            className="mt-4 text-lg text-gray-400 max-w-2xl mx-auto"
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
+            className={`landing-paragraph mx-auto mt-4 max-w-2xl ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
           >
             내가 매긴 별점대로 카드의 등급이 정해집니다.
             <br />
@@ -293,36 +296,36 @@ export default function GallerySection() {
               <div className="w-12 h-12 bg-orange-900/50 border border-orange-500/30 rounded-full mx-auto mb-3 flex items-center justify-center backdrop-blur-sm">
                 <Coffee className="size-6 text-orange-400" />
               </div>
-              <h3 className="font-bold text-white mb-1">노멀</h3>
-              <p className="text-sm text-gray-400">1-2점 </p>
+              <h3 className={`landing-title mb-1 ${isDarkTheme ? 'text-white' : 'text-gray-600'}`}>노멀</h3>
+              <p className={`text-sm ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>1-2점 </p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-gray-800/50 border border-gray-500/30 rounded-full mx-auto mb-3 flex items-center justify-center backdrop-blur-sm">
-                <Shield className="size-6 text-gray-400" />
+                <Shield className="size-6 text-text-primary" />
               </div>
-              <h3 className="font-bold text-white mb-1">실버</h3>
-              <p className="text-sm text-gray-400">3점 </p>
+              <h3 className={`landing-title mb-1 ${isDarkTheme ? 'text-white' : 'text-gray-600'}`}>실버</h3>
+              <p className={`text-sm ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>3점 </p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-yellow-900/50 border border-yellow-500/30 rounded-full mx-auto mb-3 flex items-center justify-center backdrop-blur-sm">
                 <Crown className="size-6 text-yellow-400" />
               </div>
-              <h3 className="font-bold text-white mb-1">골드</h3>
-              <p className="text-sm text-gray-400">4점 </p>
+              <h3 className={`landing-title mb-1 ${isDarkTheme ? 'text-white' : 'text-gray-600'}`}>골드</h3>
+              <p className={`text-sm ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>4점 </p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-emerald-900/50 border border-emerald-500/30 rounded-full mx-auto mb-3 flex items-center justify-center backdrop-blur-sm">
                 <Gem className="size-6 text-emerald-400" />
               </div>
-              <h3 className="font-bold text-white mb-1">에메랄드</h3>
-              <p className="text-sm text-gray-400">5점 </p>
+              <h3 className={`landing-title mb-1 ${isDarkTheme ? 'text-white' : 'text-gray-600'}`}>에메랄드</h3>
+              <p className={`text-sm ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>4점 </p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-purple-900/50 border border-purple-500/30 rounded-full mx-auto mb-3 flex items-center justify-center backdrop-blur-sm">
                 <Eye className="size-6 text-purple-400" />
               </div>
               <h3 className="font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text mb-1">히든</h3>
-              <p className="text-sm text-gray-400">특별한 카페</p>
+              <p className={`text-sm ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>특별한 카페</p>
             </div>
           </div>
         </div>

@@ -2,7 +2,8 @@
 
 import { createServerSupabaseClient } from "utils/supabase/server";
 
-/** 추천 카페 삭제
+/**
+ * 추천 카페 삭제
  * @param id 카페 ID
  */
 export async function deleteRecommendationCafe(id: number): Promise<boolean> {

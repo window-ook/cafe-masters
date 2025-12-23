@@ -63,7 +63,7 @@ const InputField = React.forwardRef<HTMLInputElement, IInputField>(
                         data-testid={dataTestId}
                         placeholder={placeholder}
                         aria-invalid={disabled ? (isError ? 'true' : 'false') : undefined}
-                        className={`${customClassName} block w-full p-2.5 rounded-lg bg-gray-50 text-sm border-1 focus:outline-none ${isError || errorResponseMessage ? 'border-red-600' : 'focus:border-main'} [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+                        className={`${customClassName} block w-full p-2.5 rounded-lg bg-transparent backdrop-blur-sm text-sm border-1 focus:outline-none ${isError || errorResponseMessage ? 'border-red-600' : 'focus:border-main'} [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
                         onChange={handleSecureChange}
                         {...props}
                     />

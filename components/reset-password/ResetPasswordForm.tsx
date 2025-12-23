@@ -51,7 +51,7 @@ export default function ResetPasswordForm() {
 
   return (
     <main className="area h-screen w-screen flex flex-col justify-center items-center">
-      <section className="relative z-10 flex flex-col items-center gap-4">
+      <section className="relative z-10 flex flex-col items-center gap-8 px-6">
         <header className="flex items-center gap-2">
           <Image
             src={IMAGE_PATHS.LOGO_IMG}
@@ -61,10 +61,10 @@ export default function ResetPasswordForm() {
             className="size-8"
           />
           <h1 className="text-3xl font-bold text-white [text-shadow:0_0_10px_rgba(135,90,173,1),0_4px_8px_rgba(0,0,0,0.9)]">
-            Cafe Masters
+            CAFE MASTERS
           </h1>
         </header>
-        <div className="p-5 rounded-xl bg-white shadow-main-shadow">
+        <div className="auth-glass-card">
           <form
             className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
             onSubmit={handleSubmit(onFormSubmit)}

@@ -1,7 +1,8 @@
 'use client';
 
-import { CakeSlice, PiggyBank, MicOff, Plug, SquareParking, Smile } from 'lucide-react';
 import { m } from 'motion/react';
+import { CakeSlice, PiggyBank, MicOff, Plug, SquareParking, Smile } from 'lucide-react';
+import { useUIStore } from '@/stores';
 
 const CATEGORIES = [
     {
@@ -37,6 +38,7 @@ const CATEGORIES = [
 ];
 
 export default function CategorySection() {
+    const isDarkTheme = useUIStore(state => state.isDarkTheme);
     return (
         <section className="relative overflow-hidden py-32 bg-transparent">
             <div className="relative mx-auto max-w-[1400px] px-6">
@@ -45,18 +47,18 @@ export default function CategorySection() {
                     <m.h2
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.6, ease: 'easeOut' }}
-                        className="text-4xl font-bold uppercase tracking-tight text-white sm:text-6xl"
+                        viewport={{ once: true, amount: 0.8 }}
+                        transition={{ duration: 0.8, ease: 'easeOut' }}
+                        className={`uppercase text-4xl sm:text-6xl font-bold tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}
                     >
-                        다양한 <span className="text-transparent bg-clip-text bg-gradient-to-r from-main to-main-light">카테고리</span>
+                        다양한 <span className="landing-heading">카테고리</span>
                     </m.h2>
                     <m.p
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-                        className="mt-4 text-lg text-gray-400"
+                        viewport={{ once: true, amount: 0.8 }}
+                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
+                        className={`landing-paragraph mt-4 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
                     >
                         원하는 분위기와 목적에 맞는 카페를 쉽게 찾아보세요.
                     </m.p>
@@ -69,19 +71,19 @@ export default function CategorySection() {
                             className="group relative"
                         >
                             {/* 백라이트 효과 */}
-                            <div className="absolute -inset-px rounded-xl bg-gradient-to-r from-main/20 to-main-light/20 opacity-0 blur transition-opacity duration-500 group-hover:opacity-100" />
+                            <div className="absolute -inset-px rounded-xl bg-gradient-to-r from-main/30 to-main-light/30 opacity-0 blur-lg transition-opacity duration-500 group-hover:opacity-100" />
 
-                            <div className="relative h-full rounded-xl border border-white/10 bg-black/40 p-8 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/5">
+                            <div className="relative h-full rounded-xl border-2 border-gray-200/20 bg-white/30 p-8 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-main/40 hover:shadow-[0_8px_30px_rgba(218,72,59,0.2)]">
                                 <div className="mb-6 flex items-center justify-between">
-                                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white/5 border border-white/10 text-main group-hover:bg-main/10 group-hover:shadow-[0_0_15px_rgba(218,72,59,0.3)] transition-all duration-300">
-                                        <category.icon className="h-6 w-6" />
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-lg border-2 border-main/20 bg-main/5 text-main transition-all duration-300 group-hover:border-main group-hover:bg-main/10 group-hover:shadow-[0_0_15px_rgba(218,72,59,0.4)]">
+                                        <category.icon className="size-6" />
                                     </div>
-                                    <span className="text-xs font-bold text-gray-600 group-hover:text-main transition-colors">0{index + 1}</span>
+                                    <span className={`text-xs font-bold transition-colors group-hover:text-main ${isDarkTheme ? 'text-white' : 'text-gray-500'}`}>0{index + 1}</span>
                                 </div>
-                                <h3 className="mb-2 text-xl font-bold text-white group-hover:text-main transition-colors">
+                                <h3 className={`landing-title mb-2 text-xl transition-colors group-hover:text-main ${isDarkTheme ? 'text-white' : ''}`}>
                                     {category.title}
                                 </h3>
-                                <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
+                                <p className={`landing-description text-sm transition-colors group-hover:text-gray-900 ${isDarkTheme ? 'text-white' : ''}`}>
                                     {category.description}
                                 </p>
                             </div>

@@ -49,33 +49,30 @@ export default function SlidingDrawer() {
 
     const paths = usePathMatcher();
 
-    useEffect(() => {
-        if (paths.isMain && isSlidingDrawerOpen) closeSlidingDrawer();
-    }, [paths.isMain, isSlidingDrawerOpen, closeSlidingDrawer]);
+    useEffect(() => { if (paths.isMain && isSlidingDrawerOpen) closeSlidingDrawer(); }, [paths.isMain, isSlidingDrawerOpen, closeSlidingDrawer]);
 
     const SLIDING_DRAWER_STYLE = clsx(
         'fixed z-10 w-screen max-w-108 p-2 overflow-x-hidden overflow-y-auto shadow-md transition-all duration-300 ease-in-out',
-        isDarkTheme ? 'bg-dark-background text-white' : 'bg-white/20 text-black backdrop-blur-lg',
+        isDarkTheme ? 'bg-dark-background/50 backdrop-blur-sm text-white' : 'bg-white/20 text-black backdrop-blur-lg',
         {
-            // 모바일 닫힌 상태: 화면 아래로 숨김
-            'rounded-t-3xl bottom-0 left-0 h-[40vh] translate-y-full opacity-0 pointer-events-none': !isSlidingDrawerOpen && !isExtend,
-            'rounded-t-3xl bottom-0 left-0 h-[calc(100vh-3rem)] translate-y-full opacity-0 pointer-events-none': !isSlidingDrawerOpen && isExtend,
+            // 모바일 닫힌 상태
+            'rounded-t-3xl bottom-0 left-0 h-[30vh] translate-y-full opacity-0 pointer-events-none': !isSlidingDrawerOpen && !isExtend,
+            'rounded-t-3xl bottom-0 left-0 h-[70vh] translate-y-full opacity-0 pointer-events-none': !isSlidingDrawerOpen && isExtend,
 
-            // 모바일 열린 상태: 아래에서 위로 슬라이드
-            'rounded-t-3xl bottom-0 left-0 h-[40vh] translate-y-0 opacity-100': isSlidingDrawerOpen && !isExtend,
-            'rounded-t-3xl bottom-0 left-0 h-[calc(100vh-3rem)] translate-y-0 opacity-100': isSlidingDrawerOpen && isExtend,
+            // 모바일 열린 상태
+            'rounded-t-3xl bottom-0 left-0 h-[30vh] translate-y-0 opacity-100': isSlidingDrawerOpen && !isExtend,
+            'rounded-t-3xl bottom-0 left-0 h-[70vh] translate-y-0 opacity-100': isSlidingDrawerOpen && isExtend,
 
-            // 데스크톱 닫힌 상태: 사이드바 우측 영역에서 오른쪽으로 숨김
-            'sm:top-4 sm:left-[27rem] sm:h-[90vh] sm:rounded-md sm:bottom-auto sm:translate-y-0 sm:translate-x-0 sm:opacity-0 sm:pointer-events-none': !isSlidingDrawerOpen,
+            // 데스크톱 닫힌 상태
+            'sm:top-4 sm:left-[27rem] sm:h-[80vh] sm:rounded-3xl sm:bottom-auto sm:translate-y-24 sm:translate-x-0 sm:opacity-0 sm:pointer-events-none': !isSlidingDrawerOpen,
 
-            // 데스크톱 열린 상태: 사이드바 우측에서 12만큼 왼쪽으로 이동
-            'sm:top-4 sm:left-[27rem] sm:h-[90vh] sm:rounded-md sm:bottom-auto sm:translate-y-0 sm:translate-x-12 sm:opacity-100': isSlidingDrawerOpen,
+            // 데스크톱 열린 상태
+            'sm:top-4 sm:left-[27rem] sm:h-[80vh] sm:rounded-3xl sm:bottom-auto sm:translate-y-24 sm:translate-x-8 sm:opacity-100': isSlidingDrawerOpen,
         }
     );
 
     const renderContent = () => {
         if (isCollectFormOpen) return <FormForCollect />;
-
         if (isRecommendFormOpen) return <FormForRecommend setIsRecommendFormOpenAction={setIsRecommendFormOpenAction} />;
 
         return (

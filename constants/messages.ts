@@ -7,6 +7,7 @@ export const TOAST_SUCCESS = {
     CREATE_COLLECTION: '새로운 카페를 수집했습니다!',
     CREATE_RECOMMENDATION: '새로운 카페를 추천했습니다!',
     COPY_TO_CLIPBOARD: '클립보드에 복사했습니다!',
+    SIGNOUT: '로그아웃되었습니다',
 } as const;
 
 export const TOAST_ERROR = {
@@ -20,7 +21,8 @@ export const TOAST_ERROR = {
     UPLOAD_IMAGE_SIZE: '이미지 크기는 2MB 이하여야 합니다',
     UPLOAD_IMAGE_TYPE: '이미지 파일만 업로드 가능합니다',
     UPLOAD_IMAGE_FAILED: '이미지 업로드에 실패했습니다',
-    RETRY: '다시 시도해주세요'
+    RETRY: '다시 시도해주세요',
+    SIGNOUT: '로그아웃에 실패했습니다',
 } as const;
 
 export const TOAST_WARN = {

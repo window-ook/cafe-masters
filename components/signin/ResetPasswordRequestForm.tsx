@@ -36,7 +36,7 @@ export default function ResetPasswordRequestForm({
   };
 
   return (
-    <>
+    <div className="auth-glass-card">
       <p className="auth-form-title">비밀번호 재설정</p>
       <form
         className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
@@ -78,6 +78,6 @@ export default function ResetPasswordRequestForm({
           text="취소"
         />
       </form>
-    </>
+    </div>
   );
 }

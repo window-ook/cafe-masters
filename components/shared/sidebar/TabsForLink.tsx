@@ -16,9 +16,10 @@ interface ISideBarTab {
   path: string;
   counts?: number;
   isDarkTheme: boolean;
+  showCountBackground?: boolean;
 }
 
-const SideBarTab = ({ testId = '', icon, title, path, isDarkTheme, counts }: ISideBarTab) => {
+const SideBarTab = ({ testId = '', icon, title, path, isDarkTheme, counts, showCountBackground = true }: ISideBarTab) => {
   const closeSlidingDrawer = useUIStore(state => state.closeSlidingDrawer);
 
   const handleNavClick = () => closeSlidingDrawer();
@@ -30,28 +31,34 @@ const SideBarTab = ({ testId = '', icon, title, path, isDarkTheme, counts }: ISi
           href={path}
           data-testid={testId}
           onClick={handleNavClick}
-          className={`group w-full px-3 py-4 rounded-lg ${isDarkTheme ? 'hover:bg-main' : 'hover:bg-white'} flex justify-between cursor-pointer hover:shadow-md transition duration-150 ease-in`}
+          className="group w-full px-3 py-4 rounded-lg hover:bg-main-light flex justify-between cursor-pointer hover:shadow-md transition duration-100 ease-in"
         >
           <div className="flex justify-between w-full">
             <div className="flex items-center gap-2">
               <p>{icon}</p>
-              <p className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}>
+              <p className={`${isDarkTheme ? 'text-white' : 'text-gray-800'} font-bold text-2xl transition duration-150 ease-in`}>
                 {title}
               </p>
             </div>
-            <p className={`font-bold text-lg text-gray-500 ${isDarkTheme ? 'group-hover:text-white' : 'group-hover:text-main'} transition duration-150 ease-in`}>
-              {counts}
-            </p>
+            {showCountBackground ?
+              <p className="font-bold text-lg text-white px-3 py-1 rounded-full bg-main transition duration-150 ease-in">
+                {counts}
+              </p>
+              :
+              <p className={`font-bold text-lg ${isDarkTheme ? 'text-white' : 'text-gray-800'} transition duration-150 ease-in`}>
+                {counts}
+              </p>
+            }
           </div>
         </Link>
         :
         <button
           onClick={() => window.open(EXTERNAL_PATHS.GOOGLE_FORM_BUG_REPORT, '_blank')}
-          className={`group w-full px-3 py-4 rounded-lg ${isDarkTheme ? 'hover:bg-main' : 'hover:bg-white'} flex justify-between cursor-pointer hover:shadow-md transition duration-150 ease-in`}
+          className="group w-full px-3 py-4 rounded-lg hover:bg-main-light flex justify-between cursor-pointer hover:shadow-md transition duration-150 ease-in"
         >
           <div className="flex items-center gap-2">
             <p>{icon}</p>
-            <p className={`${isDarkTheme ? 'text-white' : 'text-gray-500'} font-bold text-2xl transition duration-150 ease-in`}>
+            <p className={`${isDarkTheme ? 'text-white' : 'text-gray-800'} font-bold text-2xl transition duration-150 ease-in`}>
               {title}
             </p>
           </div>
@@ -87,6 +94,7 @@ export default function TabsForLink() {
         path={'/collection'}
         isDarkTheme={isDarkTheme}
         counts={collectionCounts!}
+        showCountBackground={!!userId}
       />
       <SideBarTab
         testId='button-go-to-bookmark-by-tab'
@@ -95,11 +103,12 @@ export default function TabsForLink() {
         path={'/bookmark'}
         isDarkTheme={isDarkTheme}
         counts={bookmarkCounts!}
+        showCountBackground={!!userId}
       />
       <SideBarTab
         testId='button-go-to-recommendation-by-tab'
         icon={<ThumbsUp className={`text-recommendation text-3xl`} />}
-        title={'개발자 PICK 추천 카페'}
+        title={'추천 카페'}
         path={'/recommendation'}
         isDarkTheme={isDarkTheme}
         counts={recommendationCounts!}

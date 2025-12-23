@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useUIStore, useUserStore } from 'stores';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark/useBookmarkCafes';
 import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
@@ -28,7 +28,12 @@ export default function BookmarkCafes() {
     error,
   } = useBookmarkCafes(userId, currentPage, BOOKMARK_CAFES_PER_PAGE);
 
-  useEffect(() => { setCurrentPage(1); }, [totalFilteredCount]);
+  const [prevTotalFilteredCount, setPrevTotalFilteredCount] = useState(totalFilteredCount);
+
+  if (totalFilteredCount !== prevTotalFilteredCount) {
+    setPrevTotalFilteredCount(totalFilteredCount);
+    setCurrentPage(1);
+  }
 
   const handleNextBookmarkCafePage = () => { if (hasNextPage) setCurrentPage(prev => prev + 1); };;
   const handlePreviousPageAction = () => { if (hasPreviousPage) setCurrentPage(prev => prev - 1); };;

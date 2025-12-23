@@ -4,17 +4,16 @@ import { useState } from 'react';
 import { useFilterStore, useUIStore, useUserStore } from '@/stores';
 import { useSearchedResultStore } from '@/stores/search';
 import { useBookmarkCounts } from '@/hooks/supabase/bookmark';
-import { useCollectionCounts } from '@/hooks/supabase/collection';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 import Link from 'next/link';
-import SearchInput from '@/components/shared/sidebar/SearchInput';
-import ThemeToggleButton from '@/components/shared/sidebar/ThemeToggleButton';
 import Tooltip from '@/components/shared/Tooltip';
 import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
 import RegionFilter from '@/components/shared/sidebar/RegionsFilter';
 import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
+import SearchInput from '@/components/shared/sidebar/SearchInput';
+import ThemeToggleButton from '@/components/shared/sidebar/ThemeToggleButton';
 import Button from '@/components/shared/Button';
 
 export default function Header() {
@@ -28,7 +27,6 @@ export default function Header() {
   const [collectionInput, setCollectionInput] = useState<string>('');
   const [bookmarkInput, setBookmarkInput] = useState<string>('');
 
-  const { collectionCounts } = useCollectionCounts(userId);
   const { bookmarkCounts } = useBookmarkCounts(userId);
 
   const paths = usePathMatcher();
@@ -44,37 +42,46 @@ export default function Header() {
 
   return (
     <header
-      className={`top-0 w-full max-w-108 py-4 flex-none ${isDarkTheme ? 'bg-dark-background' : 'bg-sidebar-background'} flex flex-col gap-2`}
+      className="top-0 w-full max-w-108 py-6 flex-none flex flex-col gap-6"
     >
-      <div className="flex justify-between items-center mb-2">
-        <Tooltip
-          comment="메인으로"
-          component={
-            <Link
-              href="/main"
-              aria-label="메인페이지 이동 버튼"
-              data-testid="button-go-to-main"
-              className="flex items-center hover:opacity-70 hover:cursor-pointer transition ease duration-150"
-              onClick={handleReset}
-            >
+      <Tooltip
+        comment="메인으로"
+        component={
+          <Link
+            href="/main"
+            aria-label="메인페이지 이동 버튼"
+            data-testid="button-go-to-main"
+            className="group flex items-center hover:opacity-80 hover:cursor-pointer transition-all duration-200 ease-out"
+            onClick={handleReset}
+          >
+            <div className="relative">
               <Image
                 src={IMAGE_PATHS.LOGO_IMG}
-                width={32}
-                height={32}
+                width={40}
+                height={40}
                 alt="로고 아이콘"
-                className="size-8"
+                className="size-10"
               />
-              <h1 className="text-3xl font-bold text-white [text-shadow:0_0_10px_rgba(135,90,173,1),0_4px_8px_rgba(0,0,0,0.9)]">
-                Cafe Masters
-              </h1>
-            </Link>
-          }
-          position="bottom"
-        />
-        <ThemeToggleButton />
-      </div>
+            </div>
+            <h1 className="text-3xl font-bold text-white logo-text-shadow">
+              CAFE MASTERS
+            </h1>
+          </Link>
+        }
+        position="bottom"
+      />
 
-      <SearchInput />
+      {/* 모바일 전용 SearchInput & ThemeToggleButton */}
+      {paths.isMain && (
+        <div className="block sm:hidden w-full px-2">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="flex-1">
+              <SearchInput />
+            </div>
+            <ThemeToggleButton />
+          </div>
+        </div>
+      )}
 
       {paths.isSearch && (
         <div className="flex justify-center items-center">
@@ -89,37 +96,36 @@ export default function Header() {
 
       {paths.isCollection && (
         <div className="flex flex-col items-center justify-center gap-4">
-          <div className="w-full flex items-center gap-2">
+          {/* 상세 검색 */}
+          <div className="w-full pl-2 flex items-center gap-2">
             <input
               type="text"
               placeholder="카드 이름으로 검색"
               aria-label="수집한 카페 중 카페 이름 검색하기"
-              className={`w-5/6 py-4 border-0 border-b-2 ${isDarkTheme
-                ? 'bg-dark-background border-gray-600 text-white'
-                : 'bg-gray-100 border-gray-300 text-gray-700'
-                } placeholder:text-gray-400 focus:outline-none focus:ring-0`}
               value={collectionInput}
               onChange={e => setCollectionInput(e.target.value)}
               onKeyDown={e => {
                 if (e.key === 'Enter') handleCollectionSearch();
               }}
+              className={`w-5/6 py-4 pl-2 bg-transparent backdrop-blur-sm ${isDarkTheme
+                ? 'bg-dark-background border-gray-600 text-white'
+                : 'border-gray-300 text-gray-700'
+                } placeholder:text-gray-400 focus:outline-none focus:ring-0`}
             />
             <Button
               aria-label="검색"
               onClick={handleCollectionSearch}
               text='검색'
-              customClassName={`w-1/6 py-4 px-1 ${isDarkTheme ? 'bg-main-dark' : ''}`}
+              customClassName="w-1/5 py-4 px-1"
             />
           </div>
-          <div className="flex gap-4">
-            {userId && <div className="flex items-center text-xl">
-              <span className={`${isDarkTheme ? 'text-white' : 'text-main'} font-bold`}>
-                {collectionCounts}
-              </span>
-              개
-            </div>}
-            <RegionFilter />
-            <RatingsFilter />
+          <div className="flex w-full gap-3">
+            <div className="flex-1">
+              <RegionFilter />
+            </div>
+            <div className="flex-1">
+              <RatingsFilter />
+            </div>
           </div>
         </div>
       )}
@@ -143,7 +149,7 @@ export default function Header() {
               aria-label="검색"
               onClick={handleBookmarkSearch}
               text='검색'
-              customClassName={`w-1/6 py-4 px-1 ${isDarkTheme ? 'bg-main-dark' : ''}`}
+              customClassName="w-1/6 py-4 px-1"
             />
           </div>
           <div className="w-full px-2 flex gap-4">

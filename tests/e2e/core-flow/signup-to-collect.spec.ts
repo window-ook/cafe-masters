@@ -71,8 +71,8 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
         await page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_MAIN_BY_HEADER).click();
         await page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_COLLECTION_BY_TAB).click();
         await expect(page).toHaveURL(/.*collection.*/);
-        await page.reload(); // useCollectionCafes 모킹 데이터 반환
-        await expect(page.getByText('이얼즈')).toBeVisible();
+        await page.waitForLoadState('networkidle');
+        await expect(page.getByText('이얼즈')).toBeVisible({ timeout: 10000 });
     })
 
     test.describe('실패 시나리오 검증', () => {
@@ -102,7 +102,6 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
         })
 
         test('카페 수집 실패: 필수 정보를 입력하지 않고 완료를 눌러 제출하면 카페 수집에 실패한다.', async ({ page }) => {
-            // TODO: 필수 입력값 없이 수집 시도하는 실패 시나리오 구현
             const signupPage = new SignupPage(page);
             const verifyPage = new VerifyPage(page);
             const mainPage = new MainPage(page);
