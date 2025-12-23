@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import Button from '@/components/shared/Button';
 import InputField from '@/components/shared/InputField';
 import Image from 'next/image';
+import Logo from '@/components/shared/sidebar/Logo';
 
 export default function ResetPasswordForm() {
   const supabase = createBrowserSupabaseClient();
@@ -60,9 +61,9 @@ export default function ResetPasswordForm() {
             alt="로고 아이콘"
             className="size-8"
           />
-          <h1 className="text-3xl font-bold text-white [text-shadow:0_0_10px_rgba(135,90,173,1),0_4px_8px_rgba(0,0,0,0.9)]">
-            CAFE MASTERS
-          </h1>
+          <div className='flex items-center gap-1'>
+            <Logo />
+          </div>
         </header>
         <div className="auth-glass-card">
           <form

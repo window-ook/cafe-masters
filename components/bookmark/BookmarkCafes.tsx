@@ -12,7 +12,7 @@ const BOOKMARK_CAFES_PER_PAGE = 8 as const;
 
 export default function BookmarkCafes() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
-  const userId = useUserStore(state => state.userId);
+  const session = useUserStore(state => state.session);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -26,7 +26,7 @@ export default function BookmarkCafes() {
     isPending,
     isError,
     error,
-  } = useBookmarkCafes(userId, currentPage, BOOKMARK_CAFES_PER_PAGE);
+  } = useBookmarkCafes(session?.user?.id ?? '', currentPage, BOOKMARK_CAFES_PER_PAGE);
 
   const [prevTotalFilteredCount, setPrevTotalFilteredCount] = useState(totalFilteredCount);
 
@@ -75,7 +75,7 @@ export default function BookmarkCafes() {
     );
   }
 
-  if (!userId) {
+  if (!session) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">

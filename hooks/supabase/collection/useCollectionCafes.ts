@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useFilterStore } from '@/stores/filter';
+import { useFilterStore, useUserStore } from '@/stores';
 import { getAllCollectionCafes } from '@/actions/supabase/collection';
 import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
 import { collectionCafeQuery } from '@/queries/supabase/collection';
@@ -37,10 +37,11 @@ export function useCollectionCafes(
   error: Error | null;
 } {
   const { selectedRegion, selectedRating, searchTermInCollectionCafe } = useFilterStore();
+  const session = useUserStore(state => state.session);
 
   const queryData = useQuery({
-    enabled: isActive && !!userId,
-    queryKey: collectionCafeQuery.all(userId),
+    enabled: isActive && !!session,
+    queryKey: collectionCafeQuery.all(session?.user?.id ?? ''),
     queryFn: async () => {
       const isPlaywrightTest = typeof window !== 'undefined' &&
         (window.navigator.userAgent.includes('Playwright') || (window as any).__PLAYWRIGHT_TEST__ === true);

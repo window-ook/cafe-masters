@@ -10,14 +10,14 @@ import CollectionCafe from '@/components/collection/CollectionCafe';
 
 export default function CollectionCafeCarousel() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
-  const userId = useUserStore(state => state.userId);
+  const session = useUserStore(state => state.session);
 
   const {
     collectionCafes,
     totalFilteredCount,
     isPending,
     isError,
-  } = useCollectionCafes(userId, 1, 100, false);
+  } = useCollectionCafes(session?.user?.id ?? '', 1, 100, false);
 
   const carouselRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -95,7 +95,7 @@ export default function CollectionCafeCarousel() {
   }
 
   if (isError) return null;
-  if (!userId) return null;
+  if (!session) return null;
   if (collectionCafes?.length === 0) return null;
   if (totalFilteredCount === 0) return null;
 

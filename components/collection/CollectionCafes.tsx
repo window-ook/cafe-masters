@@ -12,7 +12,7 @@ const COLLECTION_CAFES_PER_PAGE = 8 as const;
 
 export default function CollectionCafes() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
-  const userId = useUserStore(state => state.userId);
+  const session = useUserStore(state => state.session);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -26,7 +26,7 @@ export default function CollectionCafes() {
     isPending,
     isError,
     error,
-  } = useCollectionCafes(userId, currentPage, COLLECTION_CAFES_PER_PAGE, true);
+  } = useCollectionCafes(session?.user?.id ?? '', currentPage, COLLECTION_CAFES_PER_PAGE, true);
 
   useEffect(() => { setCurrentPage(1); }, [totalFilteredCount]);
 
@@ -70,7 +70,7 @@ export default function CollectionCafes() {
     );
   }
 
-  if (!userId) {
+  if (!session) {
     return (
       <div className="relative overflow-y-auto overflow-x-hidden">
         <section className="flex-1 overflow-y-auto overflow-x-hidden">

@@ -18,13 +18,13 @@ import RecommendedBadge from '@/components/shared/sliding-drawer/RecommendedBadg
 export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   const router = useRouter();
 
-  const userId = useUserStore(state => state.userId);
+  const session = useUserStore(state => state.session);
   const isCollected = useCurrentCafeStore(state => state.isCollected);
   const isRecommended = useCurrentCafeStore(state => state.isRecommended);
   const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
   const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
 
-  const { filteredBookmarkCafes } = useBookmarkCafes(userId);
+  const { filteredBookmarkCafes } = useBookmarkCafes(session?.user?.id ?? '');
 
   const { deleteBookmarkCafe } = useDeleteBookmarkCafe();
 
@@ -72,7 +72,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   const actionButtons = (
     <>
       {/* 로그인 상태 */}
-      {userId && <Button
+      {session && <Button
         onClick={() => setTargetCafeForCollect({
           id: detail.id,
           name: detail.name,
@@ -90,7 +90,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
       </Button>}
 
       {/* 로그아웃 상태 */}
-      {!userId && <Button onClick={() => router.push('/signin')} customClassName='flex-1'>
+      {!session && <Button onClick={() => router.push('/signin')} customClassName='flex-1'>
         로그인하고 수집하기
       </Button>}
     </>

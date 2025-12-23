@@ -42,7 +42,7 @@ export default async function HeroSection() {
                             <span className="block text-[clamp(48px,10vw,100px)] lg:text-[120px] leading-[0.9] text-white logo-text-shadow">
                                 CAFE
                             </span>
-                            <span className="block text-[clamp(48px,10vw,100px)] lg:text-[120px] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-r from-main via-main-600 to-main drop-shadow-[0_4px_12px_rgba(218,72,59,0.5)]">
+                            <span className="block text-[clamp(48px,10vw,100px)] lg:text-[120px] leading-[0.9] text-main logo-text-shadow">
                                 MASTERS
                             </span>
                         </h1>
@@ -79,7 +79,6 @@ export default async function HeroSection() {
                             <SampleCards />
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>

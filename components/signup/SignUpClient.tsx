@@ -3,6 +3,7 @@
 import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 import SignUpForm from '@/components/signup/SignUpForm';
+import Logo from '@/components/shared/sidebar/Logo';
 
 export default function SignUpClient() {
     return (
@@ -16,9 +17,9 @@ export default function SignUpClient() {
                         alt="로고 아이콘"
                         className="size-8"
                     />
-                    <span className="text-3xl font-bold text-white [text-shadow:0_0_10px_rgba(135,90,173,1),0_4px_8px_rgba(0,0,0,0.9)]">
-                        CAFE MASTERS
-                    </span>
+                    <div className='flex items-center gap-1'>
+                        <Logo />
+                    </div>
                 </header>
                 <SignUpForm />
             </section>

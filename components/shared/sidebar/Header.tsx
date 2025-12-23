@@ -15,6 +15,7 @@ import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
 import SearchInput from '@/components/shared/sidebar/SearchInput';
 import ThemeToggleButton from '@/components/shared/sidebar/ThemeToggleButton';
 import Button from '@/components/shared/Button';
+import Logo from '@/components/shared/sidebar/Logo';
 
 export default function Header() {
   const searchResult = useSearchedResultStore(state => state.searchResult);
@@ -63,9 +64,7 @@ export default function Header() {
                 className="size-10"
               />
             </div>
-            <h1 className="text-3xl font-bold text-white logo-text-shadow">
-              CAFE MASTERS
-            </h1>
+            <Logo />
           </Link>
         }
         position="bottom"

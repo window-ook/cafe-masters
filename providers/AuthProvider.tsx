@@ -20,6 +20,7 @@ export default function AuthProvider({
 }: IAuthProvider) {
   const supabase = useMemo(() => createBrowserSupabaseClient(), []);
 
+  const setSession = useUserStore(state => state.setSession);
   const setUserId = useUserStore(state => state.setUserId);
   const setUserEmail = useUserStore(state => state.setUserEmail);
   const setIsAdmin = useUserStore(state => state.setIsAdmin);
@@ -45,6 +46,9 @@ export default function AuthProvider({
   useEffect(() => {
     const initializeUser = async () => {
       if (!isInitialized.current && initialUserId) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) setSession(session);
+
         setUserId(initialUserId);
         if (initialUserEmail) setUserEmail(initialUserEmail);
 
@@ -64,6 +68,8 @@ export default function AuthProvider({
       data: { subscription: authListener },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session?.user) {
+        setSession(session);
+
         setUserId(session.user.id);
         setUserEmail(session.user.email ?? '');
 
@@ -72,6 +78,8 @@ export default function AuthProvider({
           setIsAdmin(isAdmin);
         }
       } else {
+        setSession(null);
+
         resetUser();
       }
     });
@@ -79,7 +87,7 @@ export default function AuthProvider({
     return () => {
       authListener.unsubscribe();
     };
-  }, [supabase, setUserId, setUserEmail, setIsAdmin, resetUser, initialUserId, initialUserEmail, initialIsAdmin]);
+  }, [supabase, setSession, setUserId, setUserEmail, setIsAdmin, resetUser, initialUserId, initialUserEmail, initialIsAdmin]);
 
   return children;
 }

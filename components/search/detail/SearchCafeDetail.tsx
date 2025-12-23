@@ -19,7 +19,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   const router = useRouter();
 
   const isAdmin = useUserStore(state => state.isAdmin);
-  const userId = useUserStore(state => state.userId);
+  const session = useUserStore(state => state.session);
   const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
   const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);
   const isCollected = useCurrentCafeStore(state => state.isCollected);
@@ -79,7 +79,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
 
   const actionButtons = (
     <>
-      {userId && !isCollected &&
+      {session && !isCollected &&
         <Button
           dataTestId="button-collect"
           onClick={() => {
@@ -124,7 +124,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
       )}
 
       {/* 로그아웃 상태 */}
-      {!userId &&
+      {!session &&
         <Button
           onClick={() => router.push('/signin')} customClassName='flex-1'>
           {isDetailLoading ? <LoadingSpinner size="sm" /> : <span>로그인하고 수집하기</span>}

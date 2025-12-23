@@ -19,7 +19,7 @@ const RecommendationCafes = dynamic(() => import('@/components/recommendation/Re
 export default function SideBar() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const isSlidingDrawerOpen = useUIStore(state => state.isSlidingDrawerOpen);
-  const userId = useUserStore(state => state.userId);
+  const session = useUserStore(state => state.session);
 
   const paths = usePathMatcher();
 
@@ -48,14 +48,14 @@ export default function SideBar() {
 
           {paths.isRecommendation && (<div className="min-h-0 flex-1"><RecommendationCafes /></div>)}
 
-          {paths.isCollection && (<div className="min-h-0 flex-1"><CollectionCafes /></div>)}
+          {paths.isCollection && (<div className="min-h-0 flex-1 sm:hidden"><CollectionCafes /></div>)}
 
-          {paths.isCollection && !userId && <Footer />}
+          {paths.isCollection && !session && <Footer />}
 
           {paths.isBookmark && (
             <>
               <div className="min-h-0 flex-1"><BookmarkCafes /></div>
-              {!userId && <Footer />}
+              {!session && <Footer />}
             </>
           )}
         </section>

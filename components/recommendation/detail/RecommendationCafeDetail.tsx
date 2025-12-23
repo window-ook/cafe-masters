@@ -12,7 +12,7 @@ import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
 export default function RecommendationCafeDetail({ cafeId }: { cafeId: number }) {
   const router = useRouter();
 
-  const userId = useUserStore(state => state.userId);
+  const session = useUserStore(state => state.session);
   const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
   const isCollected = useCurrentCafeStore(state => state.isCollected);
 
@@ -61,7 +61,7 @@ export default function RecommendationCafeDetail({ cafeId }: { cafeId: number })
   const actionButtons = (
     <>
       {/* 로그인 & 수집하지 않은 상태 */}
-      {userId && !isCollected && <Button
+      {session && !isCollected && <Button
         onClick={() =>
           setTargetCafeForCollect({
             id: recommendationCafedetail.id,
@@ -80,7 +80,7 @@ export default function RecommendationCafeDetail({ cafeId }: { cafeId: number })
       </Button>}
 
       {/* 로그아웃 상태 */}
-      {!userId && <Button onClick={() => router.push('/signin')} customClassName='flex-1'>
+      {!session && <Button onClick={() => router.push('/signin')} customClassName='flex-1'>
         로그인하고 수집하기
       </Button>}
     </>

@@ -25,7 +25,7 @@ interface IBookmarkToggleButton {
 }
 
 export default function BookmarkToggleButton({ bookmarkData, className = '' }: IBookmarkToggleButton) {
-  const userId = useUserStore(state => state.userId);
+  const session = useUserStore(state => state.session);
   const isBookmarked = useCurrentCafeStore(state => state.isBookmarked);
   const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
 
@@ -33,7 +33,7 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
   const { deleteBookmarkCafe } = useDeleteBookmarkCafe();
 
   const handleBookmarkToggle = async () => {
-    if (!userId) {
+    if (!session) {
       toast.error(TOAST_ERROR.BOOMARK_TOGGLE_WITHOUT_SIGNIN);
       return;
     }

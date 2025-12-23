@@ -1,7 +1,7 @@
 'use client';
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useFilterStore } from '@/stores/filter';
+import { useFilterStore, useUserStore } from '@/stores';
 import { getBookmarkCafes } from '@/actions/supabase/bookmark';
 import { bookmarkCafeQuery } from '@/queries/supabase/bookmark';
 import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
@@ -32,10 +32,11 @@ export function useBookmarkCafes(
   error: Error | null;
 } {
   const { selectedRegion, searchTermInBookmarkCafe } = useFilterStore();
+  const session = useUserStore(state => state.session);
 
   const queryData = useQuery({
-    enabled: !!userId,
-    queryKey: bookmarkCafeQuery.all(userId),
+    enabled: !!session,
+    queryKey: bookmarkCafeQuery.all(session?.user?.id ?? ''),
     queryFn: async () => {
       const response = await getBookmarkCafes();
       return response;

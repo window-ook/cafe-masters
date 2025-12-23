@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import Button from '@/components/shared/Button';
+import Logo from '@/components/shared/sidebar/Logo';
 
 export default function ResetPasswordCompleteForm() {
     const supabase = createBrowserSupabaseClient();
@@ -16,9 +17,9 @@ export default function ResetPasswordCompleteForm() {
     return (
         <main className="area h-screen w-screen flex justify-center items-center">
             <div className="flex flex-col items-center gap-8 px-6">
-                <span className="text-3xl text-white text-shadow-black font-bold">
-                    CAFE MASTERS
-                </span>
+                <div className='flex items-center gap-1'>
+                    <Logo />
+                </div>
                 <div className="auth-glass-card">
                     <div className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-6">
                         <div className="text-center">

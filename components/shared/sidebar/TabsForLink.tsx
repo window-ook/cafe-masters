@@ -69,12 +69,12 @@ const SideBarTab = ({ testId = '', icon, title, path, isDarkTheme, counts, showC
 };
 
 export default function TabsForLink() {
-  const userId = useUserStore(state => state.userId);
+  const session = useUserStore(state => state.session);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const searchResult = useSearchedResultStore(state => state.searchResult);
 
-  const { bookmarkCounts } = useBookmarkCounts(userId);
-  const { collectionCounts } = useCollectionCounts(userId);
+  const { bookmarkCounts } = useBookmarkCounts(session?.user?.id ?? '');
+  const { collectionCounts } = useCollectionCounts(session?.user?.id ?? '');
   const { recommendationCounts } = useRecommendationCounts();
 
   return (
@@ -94,7 +94,7 @@ export default function TabsForLink() {
         path={'/collection'}
         isDarkTheme={isDarkTheme}
         counts={collectionCounts!}
-        showCountBackground={!!userId}
+        showCountBackground={!!session}
       />
       <SideBarTab
         testId='button-go-to-bookmark-by-tab'
@@ -103,7 +103,7 @@ export default function TabsForLink() {
         path={'/bookmark'}
         isDarkTheme={isDarkTheme}
         counts={bookmarkCounts!}
-        showCountBackground={!!userId}
+        showCountBackground={!!session}
       />
       <SideBarTab
         testId='button-go-to-recommendation-by-tab'
