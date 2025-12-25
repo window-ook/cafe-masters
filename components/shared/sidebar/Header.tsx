@@ -136,9 +136,9 @@ export default function Header() {
               type="text"
               placeholder="카페 이름으로 검색"
               aria-label="북마크한 카페 중 이름 검색"
-              className={`w-5/6 py-4 border-0 border-b-2 ${isDarkTheme
+              className={`w-5/6 py-4 pl-2 bg-transparent backdrop-blur-sm ${isDarkTheme
                 ? 'bg-dark-background border-gray-600 text-white'
-                : 'bg-gray-100 border-gray-300 text-gray-700'
+                : 'border-gray-300 text-gray-700'
                 } placeholder:text-gray-400 focus:outline-none focus:ring-0`}
               value={bookmarkInput}
               onChange={e => setBookmarkInput(e.target.value)}

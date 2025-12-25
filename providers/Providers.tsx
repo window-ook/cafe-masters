@@ -50,7 +50,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <LazyProvider>
         <QueryClientProvider client={queryClient}>
           {!shouldHideComponents && (
-            <div className={`fixed z-10 ${isDetailPage ? 'inset-0' : 'top-4 right-4 bottom-4 left-4 sm:left-[calc(24rem)] rounded-3xl shadow-md'} flex flex-col overflow-hidden ${!isDetailPage ? 'hidden sm:flex' : ''}`}>
+            <div className={`fixed z-10 ${isDetailPage ? 'inset-0 sm:top-4 sm:right-4 sm:bottom-4 sm:left-[calc(24rem)] sm:rounded-3xl sm:shadow-md' : 'top-4 right-4 bottom-4 left-4 sm:left-[calc(24rem)] rounded-3xl shadow-md'} flex flex-col overflow-hidden ${!isDetailPage ? 'hidden sm:flex' : ''}`}>
               <NavBar />
               <KakaoMap />
             </div>
