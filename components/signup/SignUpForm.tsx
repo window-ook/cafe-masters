@@ -2,19 +2,22 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useUIStore } from '@/stores';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignUp } from '@/hooks/supabase/authentication';
 import { signInWithGoogle } from '@/utils/supabase/signInWithGoogle';
 import { signInWithKakao } from '@/utils/supabase/signInWithKakao';
 import { signUpFormSchema, SignUpFormData } from '@/schema/auth';
-import Link from 'next/link';
 import { CircleX } from 'lucide-react';
+import Link from 'next/link';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
 
 export default function SignUpEmailForm() {
   const router = useRouter();
+
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
@@ -25,6 +28,8 @@ export default function SignUpEmailForm() {
     defaultValues: {
       email: '',
       password: '',
+      nickname: '',
+      gender: undefined,
     },
   });
 
@@ -32,7 +37,7 @@ export default function SignUpEmailForm() {
   const handleClose = () => router.push('/');
 
   const onSignUpSubmit = async (data: SignUpFormData) => {
-    signUp({ email: data.email, password: data.password }, {
+    signUp({ email: data.email, password: data.password, nickname: data.nickname, gender: data.gender }, {
       onSuccess: () => {
         sessionStorage.setItem('signup_email', data.email);
         router.push('/signup/verify');
@@ -48,88 +53,146 @@ export default function SignUpEmailForm() {
         onSubmit={signUpForm.handleSubmit(onSignUpSubmit)}
       >
         <div className="flex justify-between items-center mb-4">
-          <p className="auth-form-title">회원가입</p>
-        <button
+          <p className={`auth-form-title ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>회원가입</p>
+          <button
+            type="button"
+            aria-label="회원가입 취소 버튼"
+            onClick={handleClose}
+            className={`${isDarkTheme ? 'text-white' : 'text-text-primary'} cursor-pointer hover:opacity-60 transition-opacity`}
+          >
+            <CircleX className='size-8' />
+          </button>
+        </div>
+        <Controller
+          name="email"
+          control={signUpForm.control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              id="email"
+              type="email"
+              label="이메일"
+              data-testid="email-input"
+              placeholder="아이디@주소"
+              disabled={signUpForm.formState.isSubmitting || signUpPending}
+              isError={signUpForm.formState.errors.email?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="password"
+          control={signUpForm.control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              id="password"
+              type="password"
+              label="비밀번호"
+              data-testid="password-input"
+              placeholder="********"
+              disabled={signUpForm.formState.isSubmitting || signUpPending}
+              isError={signUpForm.formState.errors.password?.message}
+              isPasswordVisible={isPasswordVisible}
+              handlePasswordVisibility={handlePasswordVisibility}
+            />
+          )}
+        />
+
+        <p className={`text-sm text-gray-600 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>*비밀번호는 최소 6자 이상, 영문과 숫자를 포함해야 합니다.</p>
+
+        <Controller
+          name="nickname"
+          control={signUpForm.control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              id="nickname"
+              type="text"
+              label="닉네임"
+              data-testid="nickname-input"
+              placeholder="2-10자, 한글/영문/숫자"
+              disabled={signUpForm.formState.isSubmitting || signUpPending}
+              isError={signUpForm.formState.errors.nickname?.message}
+            />
+          )}
+        />
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="gender" className={`text-sm font-semibold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+            성별
+          </label>
+          <Controller
+            name="gender"
+            control={signUpForm.control}
+            render={({ field }) => (
+              <div className="flex gap-4">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    value="male"
+                    checked={field.value === 'male'}
+                    onChange={() => field.onChange('male')}
+                    disabled={signUpForm.formState.isSubmitting || signUpPending}
+                    className="w-4 h-4 cursor-pointer"
+                  />
+                  <span>남성</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    value="female"
+                    checked={field.value === 'female'}
+                    onChange={() => field.onChange('female')}
+                    disabled={signUpForm.formState.isSubmitting || signUpPending}
+                    className="w-4 h-4 cursor-pointer"
+                  />
+                  <span>여성</span>
+                </label>
+              </div>
+            )}
+          />
+          {signUpForm.formState.errors.gender && (
+            <p className="text-sm text-red-500">
+              {signUpForm.formState.errors.gender.message}
+            </p>
+          )}
+        </div>
+
+        <Button
+          type="submit"
+          aria-label="회원가입 요청 버튼"
+          dataTestId="button-submit-request-signup"
+          disabled={signUpForm.formState.isSubmitting || signUpPending}
+          customClassName='bg-main'
+          text='가입하기'
+        />
+        <Button
           type="button"
-          aria-label="회원가입 취소 버튼"
-          onClick={handleClose}
-          className='cursor-pointer hover:opacity-60 transition-opacity'
-        >
-          <CircleX className='size-8' />
-        </button>
-      </div>
-      <Controller
-        name="email"
-        control={signUpForm.control}
-        render={({ field }) => (
-          <InputField
-            {...field}
-            id="email"
-            type="email"
-            label="이메일"
-            data-testid="email-input"
-            placeholder="아이디@주소"
-            disabled={signUpForm.formState.isSubmitting || signUpPending}
-            isError={signUpForm.formState.errors.email?.message}
-          />
-        )}
-      />
+          aria-label="구글 로그인 버튼"
+          onClick={() => signInWithGoogle()}
+          customClassName='bg-blue-500 hover:bg-blue-600'
+          text='구글 로그인'
+        />
+        <Button
+          type="button"
+          aria-label="카카오 로그인 버튼"
+          onClick={() => signInWithKakao()}
+          customClassName='bg-yellow-500 hover:bg-yellow-600'
+          text='카카오 로그인'
+        />
 
-      <Controller
-        name="password"
-        control={signUpForm.control}
-        render={({ field }) => (
-          <InputField
-            {...field}
-            id="password"
-            type="password"
-            label="비밀번호"
-            data-testid="password-input"
-            placeholder="********"
-            disabled={signUpForm.formState.isSubmitting || signUpPending}
-            isError={signUpForm.formState.errors.password?.message}
-            isPasswordVisible={isPasswordVisible}
-            handlePasswordVisibility={handlePasswordVisibility}
-          />
-        )}
-      />
-
-      <p>*비밀번호는 최소 6자 이상, 영문과 숫자를 포함해야 합니다.</p>
-
-      <Button
-        type="submit"
-        aria-label="회원가입 요청 버튼"
-        dataTestId="button-submit-request-signup"
-        disabled={signUpForm.formState.isSubmitting || signUpPending}
-        customClassName='bg-main'
-        text='가입하기'
-      />
-      <Button
-        type="button"
-        aria-label="구글 로그인 버튼"
-        onClick={() => signInWithGoogle()}
-        customClassName='bg-blue-500 hover:bg-blue-600'
-        text='구글 로그인'
-      />
-      <Button
-        type="button"
-        aria-label="카카오 로그인 버튼"
-        onClick={() => signInWithKakao()}
-        customClassName='bg-yellow-500 hover:bg-yellow-600'
-        text='카카오 로그인'
-      />
-
-      <p className="auth-form-mention">
-        이미 계정이 있으신가요?{' '}
-        <Link
-          href="/signin"
-          aria-label="로그인 페이지 이동 버튼"
-          data-testid="button-go-to-signin-from-signup"
-          className="cursor-pointer"
-        >
-          <span className="font-bold text-main">로그인 하기</span>
-        </Link>
-      </p>
+        <p className="auth-form-mention">
+          이미 계정이 있으신가요?{' '}
+          <Link
+            href="/signin"
+            aria-label="로그인 페이지 이동 버튼"
+            data-testid="button-go-to-signin-from-signup"
+            className="cursor-pointer"
+          >
+            <span className="font-bold text-main">로그인 하기</span>
+          </Link>
+        </p>
       </form>
     </div>
   );

@@ -17,13 +17,19 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
         await page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_SIGNUP_FROM_SIGNIN).click();
         await expect(page).toHaveURL(/.*signup.*/);
 
-        // 2. 정보 입력 후 회원가입 요청
+        // 2. 회원가입 정보 입력 (이메일, 비밀번호, 닉네임, 성별) 후 회원가입 요청
         await signupPage.mockSignUpRequest();
-        await signupPage.fillSignUpForm(MOCK_AUTH_DATA.SIGNUP_EMAIL, MOCK_AUTH_DATA.SIGNUP_PASSWORD).then(() => signupPage.requestSignUp());
+        await signupPage.fillSignUpForm(
+            MOCK_AUTH_DATA.SIGNUP_EMAIL,
+            MOCK_AUTH_DATA.SIGNUP_PASSWORD,
+            MOCK_AUTH_DATA.NICKNAME,
+            MOCK_AUTH_DATA.GENDER
+        );
+        await signupPage.requestSignUp();
         await page.waitForURL('**/signup/verify**');
         await expect(page).toHaveURL(/.*signup\/verify.*/);
 
-        // 3. 인증 코드 입력 후 제출 -> 회원가입 완료 후 자동 로그인
+        // 3. 인증 코드 입력 후 제출 -> 회원가입 완료 후 자동 로그인 -> 메인 페이지로 이동
         await verifyPage.mockSubmitEmailVerificationCodeSuccess();
         await verifyPage.fillVerificationCode(MOCK_AUTH_DATA.VERIFICATION_CODE).then(() => verifyPage.submitVerificationCode());
         await verifyPage.mockAuthenticationSuccess();
@@ -86,13 +92,19 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
             await page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_SIGNUP_FROM_SIGNIN).click();
             await expect(page).toHaveURL(/.*signup.*/);
 
-            // 2. 정보 입력 후 회원가입 요청
+            // 2. 회원가입 정보 입력 (이메일, 비밀번호, 닉네임, 성별) 후 회원가입 요청
             await signupPage.mockSignUpRequest();
-            await signupPage.fillSignUpForm(MOCK_AUTH_DATA.SIGNUP_EMAIL, MOCK_AUTH_DATA.SIGNUP_PASSWORD).then(() => signupPage.requestSignUp());
+            await signupPage.fillSignUpForm(
+                MOCK_AUTH_DATA.SIGNUP_EMAIL,
+                MOCK_AUTH_DATA.SIGNUP_PASSWORD,
+                MOCK_AUTH_DATA.NICKNAME,
+                MOCK_AUTH_DATA.GENDER
+            );
+            await signupPage.requestSignUp();
             await page.waitForURL('**/signup/verify**');
             await expect(page).toHaveURL(/.*signup\/verify.*/);
 
-            // 잘못된 인증 코드 입력 후 제출        
+            // 3. 잘못된 인증 코드 입력 후 제출
             await verifyPage.mockSubmitEmailVerificationCodeFailure();
             await verifyPage.fillVerificationCode('000000').then(() => verifyPage.submitVerificationCode());
 
@@ -112,13 +124,19 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
             await page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_SIGNUP_FROM_SIGNIN).click();
             await expect(page).toHaveURL(/.*signup.*/);
 
-            // 2. 정보 입력 후 회원가입 요청
+            // 2. 회원가입 정보 입력 (이메일, 비밀번호, 닉네임, 성별) 후 회원가입 요청
             await signupPage.mockSignUpRequest();
-            await signupPage.fillSignUpForm(MOCK_AUTH_DATA.SIGNUP_EMAIL, MOCK_AUTH_DATA.SIGNUP_PASSWORD).then(() => signupPage.requestSignUp());
+            await signupPage.fillSignUpForm(
+                MOCK_AUTH_DATA.SIGNUP_EMAIL,
+                MOCK_AUTH_DATA.SIGNUP_PASSWORD,
+                MOCK_AUTH_DATA.NICKNAME,
+                MOCK_AUTH_DATA.GENDER
+            );
+            await signupPage.requestSignUp();
             await page.waitForURL('**/signup/verify**');
             await expect(page).toHaveURL(/.*signup\/verify.*/);
 
-            // 3. 인증 코드 입력 후 제출 -> 회원가입 완료 후 자동 로그인
+            // 3. 인증 코드 입력 후 제출 -> 회원가입 완료 후 자동 로그인 -> 메인 페이지로 이동
             await verifyPage.mockSubmitEmailVerificationCodeSuccess();
             await verifyPage.fillVerificationCode(MOCK_AUTH_DATA.VERIFICATION_CODE).then(() => verifyPage.submitVerificationCode());
             await verifyPage.mockAuthenticationSuccess();

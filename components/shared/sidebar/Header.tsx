@@ -5,8 +5,6 @@ import { useFilterStore, useUIStore, useUserStore } from '@/stores';
 import { useSearchedResultStore } from '@/stores/search';
 import { useBookmarkCounts } from '@/hooks/supabase/bookmark';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
-import { IMAGE_PATHS } from '@/lib/paths';
-import Image from 'next/image';
 import Link from 'next/link';
 import Tooltip from '@/components/shared/Tooltip';
 import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
@@ -16,6 +14,7 @@ import SearchInput from '@/components/shared/sidebar/SearchInput';
 import ThemeToggleButton from '@/components/shared/sidebar/ThemeToggleButton';
 import Button from '@/components/shared/Button';
 import Logo from '@/components/shared/sidebar/Logo';
+import LinkToLandingPage from './LinkToLandingPage';
 
 export default function Header() {
   const searchResult = useSearchedResultStore(state => state.searchResult);
@@ -45,30 +44,24 @@ export default function Header() {
     <header
       className="top-0 w-full max-w-108 py-6 flex-none flex flex-col gap-6"
     >
-      <Tooltip
-        comment="메인으로"
-        component={
-          <Link
-            href="/main"
-            aria-label="메인페이지 이동 버튼"
-            data-testid="button-go-to-main"
-            className="group flex items-center hover:opacity-80 hover:cursor-pointer transition-all duration-200 ease-out"
-            onClick={handleReset}
-          >
-            <div className="relative">
-              <Image
-                src={IMAGE_PATHS.LOGO_IMG}
-                width={40}
-                height={40}
-                alt="로고 아이콘"
-                className="size-10"
-              />
-            </div>
-            <Logo />
-          </Link>
-        }
-        position="bottom"
-      />
+      <div className="flex items-center justify-between">
+        <Tooltip
+          comment="메인으로"
+          component={
+            <Link
+              href="/main"
+              aria-label="메인페이지 이동 버튼"
+              data-testid="button-go-to-main"
+              className="group flex items-center hover:opacity-80 hover:cursor-pointer transition-all duration-200 ease-out"
+              onClick={handleReset}
+            >
+              <Logo />
+            </Link>
+          }
+          position="bottom"
+        />
+        <LinkToLandingPage />
+      </div>
 
       {/* 모바일 전용 SearchInput & ThemeToggleButton */}
       {paths.isMain && (

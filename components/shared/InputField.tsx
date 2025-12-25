@@ -1,7 +1,10 @@
-import React from 'react';
-import Image from 'next/image';
+'use client';
+
 import { handleSafeInput } from '@/utils/shared/safeInput';
 import { IMAGE_PATHS } from '@/lib/paths';
+import { useUIStore } from '@/stores';
+import Image from 'next/image';
+import React from 'react';
 
 interface IInputField extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string;
@@ -34,7 +37,8 @@ interface IInputField extends React.InputHTMLAttributes<HTMLInputElement> {
 const InputField = React.forwardRef<HTMLInputElement, IInputField>(
     ({ label, labelSize = 'text-sm', dataTestId, id, type, placeholder, isError, errorResponseMessage, disabled, isPasswordVisible, customClassName, handlePasswordVisibility, hasXSSProtection = true, onChange, ...props }, ref) => {
 
-        // XSS 보호가 활성화된 경우의 onChange 핸들러
+        const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
         const handleSecureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             if (hasXSSProtection) {
                 handleSafeInput(e.target.value, (safeValue) => {
@@ -54,7 +58,7 @@ const InputField = React.forwardRef<HTMLInputElement, IInputField>(
 
         return (
             <div className="w-full flex flex-col gap-2">
-                <label htmlFor={id} className={`block ${labelSize} font-bold`}>{label}</label>
+                <label htmlFor={id} className={`block ${labelSize} font-bold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>{label}</label>
                 <div className='relative'>
                     <input
                         ref={ref}

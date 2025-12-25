@@ -2,7 +2,7 @@
 
 import { createServerSupabaseClient } from '@/utils/supabase/server';
 import { ISearchCafeDetail } from '@/types/kakao-map';
-import { CafeDetailInsert } from '@/actions/supabase/cafe-details';
+import { CafeDetailInsert } from '@/actions/supabase/cafe-detail';
 
 /**
  * 카페 상세 정보 추가
@@ -31,7 +31,7 @@ export async function createCafeDetail(
   };
 
   const { data: existingData } = await supabase
-    .from('cafe_details')
+    .from('cafe_detail')
     .select('id')
     .eq('id', cafeIdNum)
     .maybeSingle();
@@ -39,7 +39,7 @@ export async function createCafeDetail(
   if (existingData) return false;
 
   const { error } = await supabase
-    .from('cafe_details')
+    .from('cafe_detail')
     .insert(insertData)
     .select()
     .single();

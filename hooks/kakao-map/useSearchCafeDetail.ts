@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getCafeDetail, createCafeDetail } from '@/actions/supabase/cafe-details';
+import { getCafeDetail, createCafeDetail } from '@/actions/supabase/cafe-detail';
 import { fetchSearchCafeDetail } from '@/lib/data/fetchSearchCafeDetail';
 import { searchCafeQuery } from '@/queries/kakao-map/search';
 import { IMAGE_PATHS } from '@/lib/paths';

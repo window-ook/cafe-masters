@@ -2,12 +2,15 @@
 
 import { useRouter } from 'next/navigation';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
+import { useUIStore } from '@/stores';
 import Button from '@/components/shared/Button';
 import Logo from '@/components/shared/sidebar/Logo';
 
 export default function ResetPasswordCompleteForm() {
     const supabase = createBrowserSupabaseClient();
     const router = useRouter();
+
+    const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
     const handleGoToMain = async () => {
         await supabase.auth.signOut();
@@ -17,9 +20,7 @@ export default function ResetPasswordCompleteForm() {
     return (
         <main className="area h-screen w-screen flex justify-center items-center">
             <div className="flex flex-col items-center gap-8 px-6">
-                <div className='flex items-center gap-1'>
-                    <Logo />
-                </div>
+                <Logo />
                 <div className="auth-glass-card">
                     <div className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-6">
                         <div className="text-center">
@@ -39,10 +40,10 @@ export default function ResetPasswordCompleteForm() {
                                     />
                                 </svg>
                             </div>
-                            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                            <h2 className={`text-2xl font-bold text-gray-800 mb-2 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
                                 비밀번호 재설정 완료!
                             </h2>
-                            <p className="text-gray-600 leading-relaxed">
+                            <p className={`text-gray-600 leading-relaxed ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
                                 새로운 비밀번호로 재설정이 완료되었습니다.<br />
                                 로그인 페이지에서 새 비밀번호로 로그인해주세요.
                             </p>

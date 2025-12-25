@@ -7,6 +7,8 @@ export const MOCK_AUTH_DATA = {
     REFRESH_TOKEN: 'mock-refresh-token',
     JWT_TOKEN: 'mock-jwt-token',
     VERIFICATION_CODE: '123456',
+    NICKNAME: '테스터',
+    GENDER: 'male' as const,
 } as const;
 
 /** API 경로 */
@@ -37,6 +39,7 @@ export const TEST_SELECTORS = {
     INPUT_EMAIL: 'email-input',
     INPUT_PASSWORD: 'password-input',
     INPUT_VERIFICATION_CODE: 'verification-code-input',
+    INPUT_NICKNAME: 'nickname-input',
     INPUT_SEARCH: 'search-input',
     SELECTOR_RATINGS: 'ratings-selector',
     INPUT_COMMENT: 'comment-input',
@@ -67,6 +70,7 @@ export const TEST_SELECTORS = {
     BUTTON_GO_TO_COLLECTION_BY_TAB: 'button-go-to-collection-by-tab',
     BUTTON_GO_TO_BOOKMARK_BY_TAB: 'button-go-to-bookmark-by-tab',
     BUTTON_GO_TO_RECOMMENDATION_BY_TAB: 'button-go-to-recommendation-by-tab',
+    BUTTON_SUBMIT_PROFILE_SETUP: 'button-submit-profile-setup',
 } as const;
 
 export const MOCK_COLLECTION_CAFES = [

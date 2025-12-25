@@ -5,6 +5,7 @@ const AUTH_ROUTES = {
     RECOVERY_ROUTES: ['/reset-password', '/reset-password/complete'],
     REQUIRE_AUTH: ['/collection/detail', '/bookmark/detail'],
     BLOCK_IF_AUTH: ['/signin', '/signup', '/signup/confirm', '/reset-password', '/reset-password/complete'],
+    REQUIRE_PROFILE: ['/main', '/search', '/collection', '/bookmark', '/recommendation'],
 };
 
 export async function proxy(request: NextRequest) {
@@ -45,6 +46,21 @@ export async function proxy(request: NextRequest) {
 
     const blockIfAuth = AUTH_ROUTES.BLOCK_IF_AUTH.some(route => pathname.startsWith(route));
     if (blockIfAuth && user) return NextResponse.redirect(new URL('/main', request.url));
+
+    const requiresProfile = AUTH_ROUTES.REQUIRE_PROFILE.some(route => pathname.startsWith(route));
+    const isOnboardingPage = pathname.startsWith('/onboarding');
+
+    if (requiresProfile && user && !isOnboardingPage) {
+        const { data: userData } = await supabase
+            .from('user')
+            .select('nickname, gender')
+            .eq('user_id', user.id)
+            .maybeSingle();
+
+        if (!userData?.nickname || !userData?.gender) {
+            return NextResponse.redirect(new URL('/onboarding/profile-setup', request.url));
+        }
+    }
 
     return response;
 }

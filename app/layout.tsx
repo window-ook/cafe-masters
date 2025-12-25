@@ -125,19 +125,23 @@ export default async function RootLayout({
 
   let initialUserId: string | null = null;
   let initialUserEmail: string | null = null;
+  let initialUserNickname: string | null = null;
+  let initialUserGender: 'male' | 'female' | null = null;
   let initialIsAdmin = false;
 
   if (user) {
     initialUserId = user.id;
     initialUserEmail = user.email ?? null;
 
-    const { data: adminData } = await supabase
-      .from('admin')
-      .select('admin')
+    const { data: userData } = await supabase
+      .from('user')
+      .select('admin, nickname, gender')
       .eq('user_id', user.id)
       .maybeSingle();
 
-    initialIsAdmin = adminData?.admin === true;
+    initialIsAdmin = userData?.admin === true;
+    initialUserNickname = userData?.nickname ?? null;
+    initialUserGender = (userData?.gender as 'male' | 'female' | null) ?? null;
   }
 
   return (
@@ -180,6 +184,8 @@ export default async function RootLayout({
         <AuthProvider
           initialUserId={initialUserId}
           initialUserEmail={initialUserEmail}
+          initialUserNickname={initialUserNickname}
+          initialUserGender={initialUserGender}
           initialIsAdmin={initialIsAdmin}
         >
           <Providers>{children}</Providers>

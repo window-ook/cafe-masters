@@ -3,6 +3,7 @@
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRequestResetPassword } from '@/hooks/supabase/authentication/useRequestResetPassword';
+import { useUIStore } from '@/stores';
 import { resetPasswordRequestSchema, ResetPasswordRequestData } from '@/schema/auth';
 import { CONSOLE_ERROR } from '@/constants/messages';
 import InputField from '@/components/shared/InputField';
@@ -17,6 +18,8 @@ export default function ResetPasswordRequestForm({
   onBackAction,
   onSuccessAction
 }: IResetPasswordRequestFormProps) {
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
   const { requestResetPassword } = useRequestResetPassword();
 
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<ResetPasswordRequestData>({
@@ -37,12 +40,12 @@ export default function ResetPasswordRequestForm({
 
   return (
     <div className="auth-glass-card">
-      <p className="auth-form-title">비밀번호 재설정</p>
+      <p className={`auth-form-title ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>비밀번호 재설정</p>
       <form
         className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
         onSubmit={handleSubmit(onFormSubmit)}
       >
-        <p className="mt-2 text-center text-sm text-gray-600">
+        <p className={`mt-2 text-center text-sm text-gray-600 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
           가입하신 이메일 주소를 입력해주세요.<br />
           비밀번호 재설정 링크를 발송해드립니다.
         </p>

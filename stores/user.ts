@@ -10,6 +10,8 @@ interface IUserStore {
   // 유저 정보 상태
   userId: string;
   userEmail: string;
+  userNickname: string | null;
+  userGender: 'male' | 'female' | null;
   userTier: Tier;
   isAdmin: boolean;
 
@@ -19,6 +21,8 @@ interface IUserStore {
   // 유저 정보 액션
   setUserId: (userId: string) => void;
   setUserEmail: (userEmail: string) => void;
+  setUserNickname: (nickname: string | null) => void;
+  setUserGender: (gender: 'male' | 'female' | null) => void;
   setUserTier: (userTier: Tier) => void;
   setIsAdmin: (isAdmin: boolean) => void;
 
@@ -35,6 +39,8 @@ export const useUserStore = create<IUserStore>()(
       // 유저 상태 초기값
       userId: '',
       userEmail: '',
+      userNickname: null,
+      userGender: null,
       userTier: 'BEGINNER',
       isAdmin: false,
 
@@ -44,6 +50,8 @@ export const useUserStore = create<IUserStore>()(
       // 유저 정보 설정
       setUserId: userId => set({ userId }),
       setUserEmail: userEmail => set({ userEmail }),
+      setUserNickname: nickname => set({ userNickname: nickname }),
+      setUserGender: gender => set({ userGender: gender }),
       setUserTier: userTier => set({ userTier }),
       setIsAdmin: isAdmin => set({ isAdmin }),
 
@@ -52,6 +60,8 @@ export const useUserStore = create<IUserStore>()(
         session: null,
         userId: '',
         userEmail: '',
+        userNickname: null,
+        userGender: null,
         userTier: 'BEGINNER',
         isAdmin: false,
       }),
@@ -62,6 +72,8 @@ export const useUserStore = create<IUserStore>()(
       partialize: state => ({
         userId: state.userId,
         userEmail: state.userEmail,
+        userNickname: state.userNickname,
+        userGender: state.userGender,
         userTier: state.userTier,
         isAdmin: state.isAdmin,
       }),

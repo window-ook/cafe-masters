@@ -1,3 +1,6 @@
+import { IMAGE_PATHS } from '@/lib/paths';
+import Image from 'next/image';
+
 const SIZE_CLASSES = {
     '3xl': 'text-3xl',
     '4xl': 'text-4xl',
@@ -9,13 +12,22 @@ export default function Logo({ size = '3xl' }: { size?: '3xl' | '4xl' | '5xl' | 
     const sizeClass = SIZE_CLASSES[size];
 
     return (
-        <div className="flex items-center gap-1">
-            <span className={`font-black ${sizeClass} leading-[0.9] text-white logo-text-shadow`}>
-                CAFE
-            </span>
-            <span className={`font-black ${sizeClass} leading-[0.9] text-main logo-text-shadow`}>
-                MASTERS
-            </span>
-        </div>
+        <header className="flex items-center">
+            <Image
+                src={IMAGE_PATHS.LOGO_IMG}
+                width={32}
+                height={32}
+                alt="로고 아이콘"
+                className="size-8"
+            />
+            <div className="flex items-center gap-1">
+                <span className={`font-black ${sizeClass} leading-[0.9] text-white logo-text-shadow`}>
+                    CAFE
+                </span>
+                <span className={`font-black ${sizeClass} leading-[0.9] text-main logo-text-shadow`}>
+                    MASTERS
+                </span>
+            </div>
+        </header>
     );
 }

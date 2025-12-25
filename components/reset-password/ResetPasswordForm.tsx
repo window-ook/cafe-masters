@@ -8,16 +8,17 @@ import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { resetPasswordFormSchema, ResetPasswordFormData } from '@/schema/auth';
 import { useFinishResetPassword } from '@/hooks/supabase/authentication';
 import { CONSOLE_ERROR, TOAST_SUCCESS } from '@/constants/messages';
-import { IMAGE_PATHS } from '@/lib/paths';
 import { toast } from 'react-toastify';
 import Button from '@/components/shared/Button';
 import InputField from '@/components/shared/InputField';
-import Image from 'next/image';
 import Logo from '@/components/shared/sidebar/Logo';
+import { useUIStore } from '@/stores';
 
 export default function ResetPasswordForm() {
   const supabase = createBrowserSupabaseClient();
   const router = useRouter();
+
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState<boolean>(false);
@@ -53,27 +54,16 @@ export default function ResetPasswordForm() {
   return (
     <main className="area h-screen w-screen flex flex-col justify-center items-center">
       <section className="relative z-10 flex flex-col items-center gap-8 px-6">
-        <header className="flex items-center gap-2">
-          <Image
-            src={IMAGE_PATHS.LOGO_IMG}
-            width={32}
-            height={32}
-            alt="로고 아이콘"
-            className="size-8"
-          />
-          <div className='flex items-center gap-1'>
-            <Logo />
-          </div>
-        </header>
+        <Logo />
         <div className="auth-glass-card">
           <form
             className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
             onSubmit={handleSubmit(onFormSubmit)}
           >
-            <p className="text-center text-3xl font-bold">
+            <p className={`text-center text-3xl font-bold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
               비밀번호 재설정
             </p>
-            <p className="text-sm text-gray-600 text-center">
+            <p className={`text-sm text-gray-600 text-center ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
               새로운 비밀번호를 설정해주세요.
             </p>
 

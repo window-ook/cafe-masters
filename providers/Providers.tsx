@@ -41,7 +41,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   const pathname = usePathname();
 
-  const authPages = ['/signin', '/signup', '/reset-password'];
+  const authPages = ['/signin', '/signup', '/reset-password', '/onboarding'];
   const shouldHideComponents = pathname === '/' || authPages.some(page => pathname.startsWith(page));
   const isDetailPage = pathname.includes('/detail/');
 

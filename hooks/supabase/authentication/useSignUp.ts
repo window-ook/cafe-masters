@@ -9,9 +9,9 @@ export function useSignUp() {
   const supabase = createBrowserSupabaseClient();
 
   const signUp = useMutation({
-    mutationFn: async ({ email, password }: { email: string; password: string }) => {
+    mutationFn: async ({ email, password, nickname, gender }: { email: string; password: string; nickname: string; gender: 'male' | 'female' }) => {
       try {
-        const { error } = await supabase.auth.signUp({
+        const { error, data } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -19,7 +19,18 @@ export function useSignUp() {
           },
         });
 
-        return { success: !error, error };
+        if (error) return { success: false, error };
+
+        // Database Trigger가 user 레코드 생성하지만 nickname, gender는 NULL
+        // 즉시 업데이트
+        if (data.user) {
+          await supabase
+            .from('user')
+            .update({ nickname, gender })
+            .eq('user_id', data.user.id);
+        }
+
+        return { success: true, error: null };
       } catch (error) {
         return { success: false, error };
       }
@@ -27,7 +38,7 @@ export function useSignUp() {
   });
 
   const signUpWithCallback = (
-    params: { email: string; password: string },
+    params: { email: string; password: string; nickname: string; gender: 'male' | 'female' },
     callbacks?: {
       onSuccess?: () => void;
       onError?: (error: any) => void;

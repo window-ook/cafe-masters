@@ -8,16 +8,20 @@ import { useSignIn } from '@/hooks/supabase/authentication';
 import { signInWithKakao } from '@/utils/supabase/signInWithKakao';
 import { signInWithGoogle } from '@/utils/supabase/signInWithGoogle';
 import { signInFormSchema, SignInFormData } from '@/schema/auth';
+import { CircleX } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { CircleX } from 'lucide-react';
 import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
+import { useUIStore } from '@/stores';
 
 const ResetPasswordRequestForm = dynamic(() => import('@/components/signin/ResetPasswordRequestForm'), { ssr: false, loading: () => <div className='w-80 h-70 max-w-(--breakpoint-lg) sm:w-96 bg-white'></div> });
 
 export default function SignInForm() {
   const router = useRouter();
+
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
   const [resetRequired, setResetRequired] = useState<boolean>(false);
   const [showResetForm, setShowResetForm] = useState<boolean>(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
@@ -53,12 +57,12 @@ export default function SignInForm() {
       ) : !resetRequired ? (
         <div className="auth-glass-card">
           <div className="flex justify-between items-center mb-4">
-            <p className="auth-form-title">로그인</p>
+            <p className={`auth-form-title ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>로그인</p>
             <button
               type="button"
               aria-label="로그인 취소 버튼"
               onClick={handleClose}
-              className='cursor-pointer hover:opacity-60 transition-opacity'
+              className={`${isDarkTheme ? 'text-white' : 'text-text-primary'} cursor-pointer hover:opacity-60 transition-opacity`}
             >
               <CircleX className='size-8' />
             </button>
@@ -133,16 +137,16 @@ export default function SignInForm() {
               text='카카오 로그인'
             />
 
-            <p className="auth-form-mention">
+            <p className={`auth-form-mention ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
               계정이 없으신가요?{' '}
               <Link
                 href="/signup"
                 aria-label="회원가입 페이지 이동 버튼"
                 data-testid="button-go-to-signup-from-signin"
-                className="cursor-pointer"
+                className={`cursor-pointer ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
               >
-                <span className="font-bold text-main">
-                  회원가입
+                <span className={`font-bold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+                  {isDarkTheme ? '회원가입' : '회원가입'}
                 </span>
               </Link>
             </p>
@@ -155,7 +159,7 @@ export default function SignInForm() {
               type="button"
               aria-label="로그인 취소 버튼"
               onClick={handleClose}
-              className='cursor-pointer hover:opacity-60 transition-opacity'
+              className={`${isDarkTheme ? 'text-white' : 'text-text-primary'} cursor-pointer hover:opacity-60 transition-opacity`}
             >
               <CircleX className='size-8' />
             </button>
@@ -179,10 +183,10 @@ export default function SignInForm() {
           </div>
 
           <div className="text-center space-y-3">
-            <h2 className="text-2xl font-bold text-gray-800">
+            <h2 className={`text-2xl font-bold text-gray-800 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
               이메일을 확인해주세요
             </h2>
-            <p className="text-gray-600 leading-relaxed max-w-sm">
+            <p className={`text-gray-600 leading-relaxed max-w-sm ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
               비밀번호 재설정 링크를 이메일로 발송했습니다.<br />
               메일을 확인하고 링크를 클릭해주세요.
             </p>
@@ -197,7 +201,7 @@ export default function SignInForm() {
               customClassName='w-full'
             >
             </Button>
-            <p className="text-sm text-gray-500 text-center">
+            <p className={`text-sm text-gray-500 text-center ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
               이메일이 오지 않았나요? 스팸도 확인해보세요.
             </p>
           </div>

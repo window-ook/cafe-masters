@@ -1,7 +1,7 @@
 'use server';
 
 import { createServerSupabaseClient } from '@/utils/supabase/server';
-import { CafeDetailRow } from '@/actions/supabase/cafe-details';
+import { CafeDetailRow } from '@/actions/supabase/cafe-detail';
 
 /**
  * 카페 상세 정보를 조회하는 서버 액션
@@ -17,7 +17,7 @@ export async function getCafeDetail(cafeId: string): Promise<CafeDetailRow | nul
   const supabase = await createServerSupabaseClient();
 
   const { data, error } = await supabase
-    .from('cafe_details')
+    .from('cafe_detail')
     .select('*')
     .eq('id', cafeIdNum)
     .maybeSingle();

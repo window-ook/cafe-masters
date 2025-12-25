@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useCollectionCounts } from '@/hooks/supabase/collection';
 import { useUIStore, useUserStore } from '@/stores';
 import { IMAGE_PATHS } from '@/lib/paths';
@@ -11,10 +11,19 @@ export default function UserProfile() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const userId = useUserStore(state => state.userId);
   const userEmail = useUserStore(state => state.userEmail);
+  const userNickname = useUserStore(state => state.userNickname);
+  const userGender = useUserStore(state => state.userGender);
   const userTier = useUserStore(state => state.userTier);
   const setUserTier = useUserStore(state => state.setUserTier);
 
   const { collectionCounts } = useCollectionCounts(userId);
+
+  const profileImage = useMemo(() => {
+    if (userGender === 'female') return IMAGE_PATHS.USER_IMAGE_FEMALE;
+    return IMAGE_PATHS.USER_IMAGE_MALE;
+  }, [userGender]);
+
+  const displayName = userNickname || userEmail;
 
   useEffect(() => {
     if (collectionCounts && collectionCounts >= 40) setUserTier('MASTER');
@@ -44,7 +53,7 @@ export default function UserProfile() {
       >
         <div className="size-8 rounded-lg bg-gray-300/20 backdrop-blur-sm flex items-center justify-center shadow-lg">
           <Image
-            src={IMAGE_PATHS.USER_IMAGE}
+            src={profileImage}
             alt="유저 프로필 이미지"
             width={24}
             height={24}
@@ -52,7 +61,7 @@ export default function UserProfile() {
           />
         </div>
         <p className={`font-semibold text-sm max-w-32 truncate ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
-          {userEmail}
+          {displayName}
         </p>
         <TierBadge tier={userTier} />
       </div>
