@@ -27,11 +27,13 @@ export default function SideBar() {
     <aside className="flex">
       <div
         className={`
-          relative z-10 w-screen sm:max-w-92 h-screen
-          ${isSlidingDrawerOpen && 'hidden sm:block'}
-          ${isDarkTheme ? 'text-white border-gray-700/20' : 'text-gray-900 border-white/30'}
+          relative z-10
+          w-screen h-screen
           bg-transparent
+          ${isDarkTheme ? 'text-white border-gray-700/20' : 'text-gray-900 border-white/30'}
           transition-all duration-300 ease-in-out
+          ${isSlidingDrawerOpen && 'hidden sm:block'}
+          sm:max-w-92
         `}
       >
         <section className="h-full flex flex-col">

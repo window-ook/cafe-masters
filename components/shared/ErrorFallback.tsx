@@ -55,7 +55,7 @@ export function ErrorFallback({ featureName, message, error }: IErrorFallback) {
             {process.env.NODE_ENV === 'development' && (
                 <details className="mt-4 text-xs text-gray-400">
                     <summary className="cursor-pointer">에러 상세 정보</summary>
-                    <pre className="mt-2 p-2 w-full h-full bg-gray-100 rounded text-left overflow-auto">
+                    <pre className="mt-2 w-full h-full p-2 rounded bg-gray-100 overflow-auto text-left">
                         {error.message}
                     </pre>
                 </details>

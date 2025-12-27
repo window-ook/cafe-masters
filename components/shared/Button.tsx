@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-type ButtonVariant = 'default' | 'cancel' | 'disabled';
+type ButtonVariant = 'default' | 'cancel' | 'disabled' | 'auth';
 
 interface IButton {
     type?: 'button' | 'submit';
@@ -38,15 +38,17 @@ export default function Button({
         const hasCustomHover = customClassName.includes('hover:');
         const hasCustomBg = customClassName.includes('bg-');
 
-        const baseClasses = `hover-button px-4 py-2 rounded-lg font-semibold disabled:bg-button-disabled ${hasCustomBg ? '' : 'bg-button'} text-button-text ${hasCustomHover ? '' : 'hover:bg-button-hover'} disabled:cursor-not-allowed`;
+        const baseClasses = `hover-button px-4 py-2 rounded-lg ${hasCustomBg ? '' : 'bg-button'} font-semibold text-button-text ${hasCustomHover ? '' : 'hover:bg-button-hover'} disabled:bg-button-disabled disabled:cursor-not-allowed`;
 
         switch (variant) {
             case 'default':
                 return `${baseClasses}`;
             case 'cancel':
-                return `bg-transparent text-button border border-main hover:text-button-text ${baseClasses}`;
+                return `border border-main bg-transparent text-button hover:text-button-text ${baseClasses}`;
             case 'disabled':
                 return `bg-button-disabled ${baseClasses}`;
+            case 'auth':
+                return `w-full py-4 rounded-xl shadow-md bg-main flex justify-center text-white text-2xl font-semibold transition duration-150 ease-in hover:bg-main-600 disabled:opacity-50 disabled:cursor-not-allowed sm:py-2 sm:text-lg`;
             default:
                 return `${baseClasses}`;
         }

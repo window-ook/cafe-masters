@@ -2,7 +2,7 @@
 
 import { useCreateBookmarkCafe, useDeleteBookmarkCafe } from '@/hooks/supabase/bookmark';
 import { useCurrentCafeStore, useUserStore } from '@/stores';
-import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/messages';
+import { TOAST_ERROR } from '@/utils/constants/messages';
 import { Bookmark } from 'lucide-react';
 import { toast } from 'react-toastify';
 
@@ -32,35 +32,29 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
   const { createBookmarkCafe } = useCreateBookmarkCafe();
   const { deleteBookmarkCafe } = useDeleteBookmarkCafe();
 
-  const handleBookmarkToggle = async () => {
+  const handleBookmarkToggle = () => {
     if (!session) {
       toast.error(TOAST_ERROR.BOOMARK_TOGGLE_WITHOUT_SIGNIN);
       return;
     }
 
-    try {
-      if (isBookmarked) {
-        await deleteBookmarkCafe(bookmarkData.id);
-        setIsBookmarked(false);
-        toast.success(TOAST_SUCCESS.DELETE_BOOKMARK);
-      } else {
-        await createBookmarkCafe({
-          id: bookmarkData.id,
-          coordX: bookmarkData.coordX,
-          coordY: bookmarkData.coordY,
-          image: bookmarkData.image || '',
-          extra_images: bookmarkData.extra_images ? JSON.stringify(bookmarkData.extra_images) : null,
-          name: bookmarkData.name,
-          address: bookmarkData.address,
-          phone_number: bookmarkData.phone_number || '',
-          opening_time: bookmarkData.opening_time || null,
-          menus: bookmarkData.menus ? JSON.stringify(bookmarkData.menus) : null,
-        });
-        setIsBookmarked(true);
-        toast.success(TOAST_SUCCESS.CREATE_BOOKMARK);
-      }
-    } catch {
-      toast.error(TOAST_ERROR.BOOMARK_TOGGLE);
+    if (isBookmarked) {
+      deleteBookmarkCafe(bookmarkData.id);
+      setIsBookmarked(false);
+    } else {
+      createBookmarkCafe({
+        id: bookmarkData.id,
+        coordX: bookmarkData.coordX,
+        coordY: bookmarkData.coordY,
+        image: bookmarkData.image || '',
+        extra_images: bookmarkData.extra_images ? JSON.stringify(bookmarkData.extra_images) : null,
+        name: bookmarkData.name,
+        address: bookmarkData.address,
+        phone_number: bookmarkData.phone_number || '',
+        opening_time: bookmarkData.opening_time || null,
+        menus: bookmarkData.menus ? JSON.stringify(bookmarkData.menus) : null,
+      });
+      setIsBookmarked(true);
     }
   };
 

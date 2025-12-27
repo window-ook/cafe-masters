@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useFilterStore } from '@/stores/filter';
 import { useUIStore } from '@/stores';
 import { ChevronUp, ChevronDown } from 'lucide-react';
-import { CATEGORIES } from '@/constants/categories';
+import { CATEGORIES } from '@/utils/constants/categories';
 import CategoryResetButton from '@/components/shared/CategoryResetButton';
 
 export default function CategoryFilter() {
@@ -26,8 +26,8 @@ export default function CategoryFilter() {
 
   return (
     <div className="pt-2 flex flex-wrap justify-center gap-2">
-      <div className={`w-full overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="flex flex-wrap justify-center gap-2 pb-2">
+      <div className={`w-full overflow-hidden opacity-100 transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-96' : 'max-h-0 opacity-0'}`}>
+        <div className="pb-2 flex flex-wrap justify-center gap-2">
           {CATEGORIES.map(category => (
             <button
               type="button"
@@ -35,13 +35,12 @@ export default function CategoryFilter() {
               key={category}
               onClick={() => toggleCategories(category)}
               className={`
-                px-4 py-2 rounded-full border transition-all duration-200 ease-out text-sm cursor-pointer
-                backdrop-blur-md
+                px-4 py-2 rounded-full border text-sm backdrop-blur-md transition-all duration-200 ease-out
                 ${selectedCategories.includes(category)
-                  ? 'bg-main text-white border-main'
+                  ? 'bg-main border-main text-white'
                   : isDarkTheme
-                    ? 'bg-gray-800/60 text-white border-gray-600/40 hover:bg-gray-800/80'
-                    : 'bg-white/60 text-gray-700 border-white/70 hover:bg-white/80'
+                    ? 'bg-gray-800/60 border-gray-600/40 text-white hover:bg-gray-800/80'
+                    : 'bg-white/60 border-white/70 text-gray-700 hover:bg-white/80'
                 }
               `}
             >
@@ -57,9 +56,8 @@ export default function CategoryFilter() {
         onClick={toggleExpand}
         className={`
           w-full px-4 py-2 rounded-full
-          ${isDarkTheme ? 'text-white hover:text-main' : 'text-gray-700 hover:text-main'}
           flex justify-center items-center
-          cursor-pointer
+          ${isDarkTheme ? 'text-white hover:text-main' : 'text-gray-700 hover:text-main'}
           transition-all duration-200 ease-out
         `}
       >

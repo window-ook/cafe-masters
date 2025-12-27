@@ -2,7 +2,7 @@
 
 import Image, { ImageProps } from 'next/image';
 import { useState } from 'react';
-import { CONSOLE_LOG } from '@/constants/messages';
+import { CONSOLE_LOG } from '@/utils/constants/messages';
 
 interface IImageWithFallback extends Omit<ImageProps, 'src'> {
     src: string;

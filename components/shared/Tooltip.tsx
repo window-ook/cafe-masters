@@ -17,16 +17,16 @@ interface ITooltip {
 export default function Tooltip({ comment, component, position = 'top' }: ITooltip) {
   const POSITION_STYLES: Record<NonNullable<ITooltip['position']>, string> = {
     top: 'bottom-full left-1/2 -translate-x-1/2 -translate-y-2',
-    bottom: 'top-full left-1/2 -translate-x-1/2 translate-y-2',
-    left: 'right-full top-1/2 -translate-y-1/2 -translate-x-2',
-    right: 'left-full top-1/2 -translate-y-1/2 translate-x-2',
+    bottom: 'left-1/2 top-full -translate-x-1/2 translate-y-2',
+    left: 'top-1/2 right-full -translate-x-2 -translate-y-1/2',
+    right: 'top-1/2 left-full translate-x-2 -translate-y-1/2',
   };
 
   return (
-    <div className="relative group inline-block">
+    <div className="relative inline-block group">
       {component}
       <span
-        className={`absolute ${POSITION_STYLES[position]} px-3 py-1.5 rounded-md shadow-lg bg-gray-500 text-white text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50`}
+        className={`absolute ${POSITION_STYLES[position]} z-50 px-3 py-1.5 rounded-md shadow-lg bg-gray-500 pointer-events-none text-white text-xs whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
       >
         {comment}
       </span>

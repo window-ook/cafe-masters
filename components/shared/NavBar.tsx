@@ -8,11 +8,14 @@ export default function NavBar() {
   return (
     <nav
       className={`
-        hidden sm:flex
-        z-50 h-18 px-4
-        items-center justify-between
+        z-50
+        h-18
+        px-4
+        bg-transparent
+        flex items-center justify-between
+        backdrop-blur-sm
         transition-all duration-300 ease-in-out
-        bg-transparent backdrop-blur-sm
+        hidden sm:flex
       `}
     >
       <div className="flex-1 max-w-md">

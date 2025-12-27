@@ -6,7 +6,7 @@ import { useCreateRecommendationCafe } from '@/hooks/supabase/recommendation/use
 import { useRecommendationStore } from '@/stores/recommendation';
 import { recommendationFormSchema, RecommendationFormData } from '@/schema/recommendation';
 import { RecommendationRowInsert } from '@/actions/supabase/recommendation';
-import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS, TOAST_WARN } from '@/constants/messages';
+import { TOAST_WARN } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
 import Button from '@/components/shared/Button';
@@ -23,35 +23,28 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
     },
   });
 
-  const onFormSubmit = async (data: RecommendationFormData) => {
+  const onFormSubmit = (data: RecommendationFormData) => {
     if (!targetCafeForRecommend) {
       toast.warning(TOAST_WARN.NO_DATA_FOR_RECOMMEND);
       return;
     }
 
-    try {
-      // 추천 데이터 생성
-      const recommendationData: RecommendationRowInsert = {
-        id: targetCafeForRecommend.id,
-        name: targetCafeForRecommend.name,
-        address: targetCafeForRecommend.address,
-        coordX: targetCafeForRecommend.coordX,
-        coordY: targetCafeForRecommend.coordY,
-        categories: JSON.stringify(data.categories),
-        image: targetCafeForRecommend.image || '',
-        phone_number: targetCafeForRecommend.phone_number || null,
-        opening_time: targetCafeForRecommend.opening_time || null,
-        extra_images: JSON.stringify(targetCafeForRecommend.extra_images || []),
-        menus: null,
-      };
+    const recommendationData: RecommendationRowInsert = {
+      id: targetCafeForRecommend.id,
+      name: targetCafeForRecommend.name,
+      address: targetCafeForRecommend.address,
+      coordX: targetCafeForRecommend.coordX,
+      coordY: targetCafeForRecommend.coordY,
+      categories: JSON.stringify(data.categories),
+      image: targetCafeForRecommend.image || '',
+      phone_number: targetCafeForRecommend.phone_number || null,
+      opening_time: targetCafeForRecommend.opening_time || null,
+      extra_images: JSON.stringify(targetCafeForRecommend.extra_images || []),
+      menus: null,
+    };
 
-      createRecommendationCafe(recommendationData);
-      setIsRecommendFormOpenAction(false);
-      toast.success(TOAST_SUCCESS.CREATE_RECOMMENDATION);
-    } catch (error) {
-      console.error(CONSOLE_ERROR.CREATE_RECOMMENDATION_CAFE, error);
-      toast.error(error instanceof Error ? error.message : TOAST_ERROR.CREATE_RECOMMENDATION);
-    }
+    createRecommendationCafe(recommendationData);
+    setIsRecommendFormOpenAction(false);
   };
 
   const errorStyle = 'text-red-500 text-sm mt-1 block';
@@ -72,7 +65,7 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
 
       {/* 카페 정보 표시 */}
       {targetCafeForRecommend && (
-        <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="p-3 rounded-lg bg-gray-50">
           <p className="text-sm text-gray-600">{targetCafeForRecommend.address}</p>
           {targetCafeForRecommend.phone_number && (
             <p className="text-sm text-gray-600">{targetCafeForRecommend.phone_number}</p>

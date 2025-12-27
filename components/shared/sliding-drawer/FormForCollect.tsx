@@ -9,7 +9,7 @@ import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { useUpdateCollectionCafe } from '@/hooks/supabase/collection/useUpdateCollectionCafe';
 import { useCreateCollectionCafe } from '@/hooks/supabase/collection';
-import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS } from '@/constants/messages';
+import { CONSOLE_ERROR, TOAST_ERROR } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
@@ -19,6 +19,8 @@ import Button from '@/components/shared/Button';
 
 export default function FormForCollect() {
   const pathname = usePathname();
+
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const targetCafeForCollect = useCollectionStore(state => state.targetCafeForCollect);
   const editingCafe = useCollectionStore(state => state.editingCafe);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
@@ -99,93 +101,77 @@ export default function FormForCollect() {
         return;
       }
 
-      try {
-        // 이미지 처리 로직
-        let finalImage = editingCafe.image;
-        let finalExtraImages = editingCafe.extra_images || [];
+      // 이미지 처리 로직
+      let finalImage = editingCafe.image;
+      let finalExtraImages = editingCafe.extra_images || [];
 
-        if (uploadedImageUrl) {
-          if (data.keepOriginalImage) {
-            // 업로드한 이미지를 메인으로, 기존 이미지를 extra_images에 추가
-            finalImage = uploadedImageUrl;
-            finalExtraImages = [...finalExtraImages, editingCafe.image];
-          } else {
-            // 업로드한 이미지만 사용
-            finalImage = uploadedImageUrl;
-          }
+      if (uploadedImageUrl) {
+        if (data.keepOriginalImage) {
+          // 업로드한 이미지를 메인으로, 기존 이미지를 extra_images에 추가
+          finalImage = uploadedImageUrl;
+          finalExtraImages = [...finalExtraImages, editingCafe.image];
+        } else {
+          // 업로드한 이미지만 사용
+          finalImage = uploadedImageUrl;
         }
-
-        const updateData = {
-          ratings: data.rating,
-          categories: JSON.stringify(data.categories),
-          comment: data.comment,
-          eaten_menus: data.eaten_menus,
-          pros: data.pros || '',
-          cons: data.cons || '',
-          image: finalImage,
-          extra_images: JSON.stringify(finalExtraImages),
-        };
-
-        updateCollectionCafe(updateData);
-
-        clearEditingCafe();
-        setIsCollectFormOpen(false);
-        toast.success(TOAST_SUCCESS.EDIT_COLLECTION);
-
-      } catch (error) {
-        console.error(CONSOLE_ERROR.EDIT_COLLECTION_CAFE, error);
-        toast.error(error instanceof Error ? error.message : TOAST_ERROR.EDIT_COLLECTION);
-        clearEditingCafe();
-        setIsCollectFormOpen(false);
       }
+
+      const updateData = {
+        ratings: data.rating,
+        categories: JSON.stringify(data.categories),
+        comment: data.comment,
+        eaten_menus: data.eaten_menus,
+        pros: data.pros || '',
+        cons: data.cons || '',
+        image: finalImage,
+        extra_images: JSON.stringify(finalExtraImages),
+      };
+
+      updateCollectionCafe(updateData);
+      clearEditingCafe();
+      setIsCollectFormOpen(false);
     } else {
       if (!targetCafeForCollect) {
         toast.error(TOAST_ERROR.NO_DATA_FOR_CREATE_COLLECTION);
         return;
       }
 
-      try {
-        // 이미지 처리 로직
-        let finalImage = targetCafeForCollect.image;
-        let finalExtraImages = targetCafeForCollect.extra_images || [];
+      // 이미지 처리 로직
+      let finalImage = targetCafeForCollect.image;
+      let finalExtraImages = targetCafeForCollect.extra_images || [];
 
-        if (uploadedImageUrl) {
-          if (data.keepOriginalImage) {
-            // 업로드한 이미지를 메인으로, 기존 카카오맵 이미지를 extra_images에 추가
-            finalImage = uploadedImageUrl;
-            finalExtraImages = [targetCafeForCollect.image, ...finalExtraImages];
-          } else {
-            // 업로드한 이미지만 사용
-            finalImage = uploadedImageUrl;
-          }
+      if (uploadedImageUrl) {
+        if (data.keepOriginalImage) {
+          // 업로드한 이미지를 메인으로, 기존 카카오맵 이미지를 extra_images에 추가
+          finalImage = uploadedImageUrl;
+          finalExtraImages = [targetCafeForCollect.image, ...finalExtraImages];
+        } else {
+          // 업로드한 이미지만 사용
+          finalImage = uploadedImageUrl;
         }
-
-        // 완전한 수집 데이터 생성
-        const collectionData = {
-          id: targetCafeForCollect.id,
-          name: targetCafeForCollect.name,
-          coordX: targetCafeForCollect.coordX,
-          coordY: targetCafeForCollect.coordY,
-          address: targetCafeForCollect.address,
-          image: finalImage,
-          extra_images: JSON.stringify(finalExtraImages),
-          phone_number: targetCafeForCollect.phone_number,
-          opening_time: targetCafeForCollect.opening_time,
-          ratings: data.rating,
-          categories: JSON.stringify(data.categories),
-          comment: data.comment,
-          eaten_menus: data.eaten_menus,
-          pros: data.pros || '',
-          cons: data.cons || '',
-        };
-
-        createCollectionCafe(collectionData);
-        setIsCollectFormOpen(false);
-        toast.success(TOAST_SUCCESS.CREATE_COLLECTION);
-      } catch (error) {
-        console.error(CONSOLE_ERROR.CREATE_COLLECTION_CAFE, error);
-        toast.error(error instanceof Error ? error.message : TOAST_ERROR.CREATE_COLLECTION);
       }
+
+      // 완전한 수집 데이터 생성
+      const collectionData = {
+        id: targetCafeForCollect.id,
+        name: targetCafeForCollect.name,
+        coordX: targetCafeForCollect.coordX,
+        coordY: targetCafeForCollect.coordY,
+        address: targetCafeForCollect.address,
+        image: finalImage,
+        extra_images: JSON.stringify(finalExtraImages),
+        phone_number: targetCafeForCollect.phone_number,
+        opening_time: targetCafeForCollect.opening_time,
+        ratings: data.rating,
+        categories: JSON.stringify(data.categories),
+        comment: data.comment,
+        eaten_menus: data.eaten_menus,
+        pros: data.pros || '',
+        cons: data.cons || '',
+      };
+
+      createCollectionCafe(collectionData);
+      setIsCollectFormOpen(false);
     }
   };
 
@@ -230,7 +216,7 @@ export default function FormForCollect() {
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-1">
           <span className="text-sm font-semibold">커스텀 이미지</span>
-          <p className="text-xs text-gray-500">
+          <p className={`text-xs ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
             사용하고 싶은 이미지가 있다면 업로드 해주세요
           </p>
         </div>

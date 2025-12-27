@@ -21,10 +21,10 @@ export default function Logo({ size = '3xl' }: { size?: '3xl' | '4xl' | '5xl' | 
                 className="size-8"
             />
             <div className="flex items-center gap-1">
-                <span className={`font-black ${sizeClass} leading-[0.9] text-white logo-text-shadow`}>
+                <span className={`leading-[0.9] font-black ${sizeClass} text-white logo-text-shadow`}>
                     CAFE
                 </span>
-                <span className={`font-black ${sizeClass} leading-[0.9] text-main logo-text-shadow`}>
+                <span className={`leading-[0.9] font-black ${sizeClass} text-main logo-text-shadow`}>
                     MASTERS
                 </span>
             </div>

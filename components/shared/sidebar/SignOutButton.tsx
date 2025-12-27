@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/stores/user';
 import { signOut } from '@/actions/supabase/authentication';
 import { toast } from 'react-toastify';
+import Button from '@/components/shared/Button';
 
 export default function SignOutButton() {
   const router = useRouter();
@@ -29,16 +30,13 @@ export default function SignOutButton() {
   };
 
   return (
-    <button
+    <Button
       type="button"
-      data-testid="button-signout"
+      variant="auth"
+      dataTestId="button-signout"
       onClick={handleSignOut}
       disabled={isPending}
-      className="bg-main rounded-xl shadow-md w-full py-4 sm:py-2 hover:bg-main-600 flex justify-center cursor-pointer transition duration-150 ease-in disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      <span className="text-white text-2xl font-semibold sm:text-lg">
-        {isPending ? '로그아웃 중...' : '로그아웃'}
-      </span>
-    </button>
+      text={isPending ? '로그아웃 중...' : '로그아웃'}
+    />
   );
 }

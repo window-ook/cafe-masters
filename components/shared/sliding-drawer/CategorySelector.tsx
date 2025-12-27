@@ -1,4 +1,4 @@
-import { CATEGORIES } from '@/constants/categories';
+import { CATEGORIES } from '@/utils/constants/categories';
 import { ICategorySelector } from '@/types/shared/form';
 import CategoryResetButton from '@/components/shared/CategoryResetButton';
 
@@ -24,8 +24,7 @@ export default function CategorySelector({
           key={category}
           onClick={() => toggleCategories(category)}
           className={`
-            px-4 py-2 rounded-full border transition-all duration-200 ease-out text-sm cursor-pointer
-            backdrop-blur-md
+            px-4 py-2 rounded-full border text-sm cursor-pointer backdrop-blur-md transition-all duration-200 ease-out
             ${selectedCategories.includes(category)
               ? 'bg-main text-white border-main'
               : 'bg-white/60 text-gray-700 border-white/70 hover:bg-white/80'

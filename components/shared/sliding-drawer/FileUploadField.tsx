@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useRef, DragEvent, ChangeEvent } from 'react';
-import { TOAST_ERROR } from '@/constants/messages';
+import { TOAST_ERROR } from '@/utils/constants/messages';
+import { useUIStore } from '@/stores';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 
@@ -14,6 +15,8 @@ export interface IFileUploadField {
 }
 
 export default function FileUploadField({ onFileSelectAction, disabled = false }: IFileUploadField) {
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -105,9 +108,13 @@ export default function FileUploadField({ onFileSelectAction, disabled = false }
         onDrop={handleDrop}
         onClick={handleClick}
         className={`
-          relative w-full min-h-[120px] border-2 border-dashed rounded-lg
-          flex flex-col items-center justify-center gap-2 p-4
-          transition-colors cursor-pointer
+          relative
+          w-full min-h-[120px]
+          p-4
+          border-2 border-dashed rounded-lg
+          flex flex-col items-center justify-center gap-2
+          cursor-pointer
+          transition-colors
           ${isDragging ? 'border-main bg-main/10' : 'border-gray-300 hover:border-main'}
           ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
         `}
@@ -136,10 +143,10 @@ export default function FileUploadField({ onFileSelectAction, disabled = false }
                 d="M12 4v16m8-8H4"
               />
             </svg>
-            <p className="text-sm text-gray-600 text-center">
+            <p className={`text-sm ${isDarkTheme ? 'text-white' : 'text-text-primary'} text-center`}>
               파일을 끌어다 놓거나 클릭하여 업로드
             </p>
-            <p className="text-xs text-gray-400">
+            <p className={`text-xs ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
               최대 2MB, JPG/PNG/WebP/GIF
             </p>
           </>
@@ -147,7 +154,7 @@ export default function FileUploadField({ onFileSelectAction, disabled = false }
           <div className="w-full flex items-center gap-4">
             {/* 미리보기 */}
             {previewUrl && (
-              <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200">
+              <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0">
                 <Image
                   src={previewUrl}
                   alt="업로드 이미지 미리보기"

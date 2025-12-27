@@ -134,7 +134,6 @@ export default function KakaoMap() {
     const isDetailPage = paths.isSearchDetail || paths.isCollectionDetail || paths.isBookmarkDetail || paths.isRecommendationDetail;
 
     if (isDetailPage) {
-      // 지도 크기 재계산
       setTimeout(() => {
         if (mapRef.current) {
           mapRef.current.relayout();
@@ -212,7 +211,6 @@ export default function KakaoMap() {
         };
 
         const handleMarkerClick = () => {
-          // 카페 데이터 형태에 맞게 변환
           const cafeData = {
             id: item.id || item.place_id,
             place_name: item.place_name || item.name,
@@ -340,7 +338,7 @@ export default function KakaoMap() {
     <figure
       id="map"
       aria-label="kakao map"
-      className="flex-1 z-0"
+      className="z-0 flex-1"
     />
   );
 }

@@ -58,7 +58,7 @@ const InputField = React.forwardRef<HTMLInputElement, IInputField>(
 
         return (
             <div className="w-full flex flex-col gap-2">
-                <label htmlFor={id} className={`block ${labelSize} font-bold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>{label}</label>
+                <label htmlFor={id} className={`block font-bold ${labelSize} ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>{label}</label>
                 <div className='relative'>
                     <input
                         ref={ref}
@@ -67,14 +67,14 @@ const InputField = React.forwardRef<HTMLInputElement, IInputField>(
                         data-testid={dataTestId}
                         placeholder={placeholder}
                         aria-invalid={disabled ? (isError ? 'true' : 'false') : undefined}
-                        className={`${customClassName} block w-full p-2.5 rounded-lg bg-transparent backdrop-blur-sm text-sm border-1 focus:outline-none ${isError || errorResponseMessage ? 'border-red-600' : 'focus:border-main'} [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+                        className={`${customClassName} block w-full p-2.5 rounded-lg border-1 bg-transparent backdrop-blur-sm text-sm ${isDarkTheme ? 'text-white placeholder:text-white' : 'text-text-primary placeholder:text-text-primary'} focus:outline-none ${isError || errorResponseMessage ? 'border-red-600' : 'focus:border-main'} [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
                         onChange={handleSecureChange}
                         {...props}
                     />
                     {label === '비밀번호' && (
                         <button
                             type="button"
-                            className="absolute right-2.5 top-1/2 -translate-y-1/2 cursor-pointer hover:opacity-60"
+                            className="absolute top-1/2 right-2.5 -translate-y-1/2 hover:opacity-60"
                             onClick={handlePasswordVisibility}
                             tabIndex={-1}
                         >
@@ -88,9 +88,9 @@ const InputField = React.forwardRef<HTMLInputElement, IInputField>(
                     )}
                 </div>
                 {errorResponseMessage ? (
-                    <p className='text-red-600 text-sm'>{errorResponseMessage}</p>
+                    <p className='text-sm text-red-600'>{errorResponseMessage}</p>
                 ) :
-                    (isError && <p className='text-red-600 text-sm'>{isError}</p>)
+                    (isError && <p className='text-sm text-red-600'>{isError}</p>)
                 }
             </div>
         );

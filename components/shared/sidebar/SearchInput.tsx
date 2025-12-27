@@ -38,15 +38,17 @@ export default function SearchInput() {
           onChange={e => handleSafeInput(e.target.value, setLocalKeyword)}
           onKeyDown={handleKeyDown}
           className={`
-            w-full py-3 px-4 pr-12
+            w-full
+            py-3 px-4 pr-12
             rounded-xl
-            transition-all duration-200 ease-out
-            font-medium text-sm 
+            border
             ${isDarkTheme
-              ? 'bg-gray-800/40 border-gray-600/30 text-white placeholder:text-white focus:border-main focus:bg-gray-800/60'
-              : 'bg-black/5 border-white/40 text-text-primary placeholder:text-text-primary focus:border-main focus:bg-white/60'
+              ? 'bg-gray-800/40 border-gray-600/30 text-white placeholder:text-white focus:bg-gray-800/60 focus:border-main'
+              : 'bg-black/5 border-white/40 text-text-primary placeholder:text-text-primary focus:bg-white/60 focus:border-main'
             }
-            backdrop-blur-md border
+            text-sm font-medium
+            backdrop-blur-md
+            transition-all duration-200 ease-out
             focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-main/20
             hover:border-opacity-60
           `}
@@ -56,14 +58,16 @@ export default function SearchInput() {
           aria-label="검색 버튼"
           data-testid="button-submit-keyword-for-search"
           className={`
-            absolute right-1 top-1/2 -translate-y-1/2
-            size-8 rounded-lg
+            absolute top-1/2 right-2 -translate-y-1/2
+            size-8
+            rounded-lg
+            bg-main
             flex items-center justify-center
-            transition-all duration-200 ease-out
-            bg-main hover:bg-main-600 text-white
+            text-white
             backdrop-blur-sm
-            hover:scale-105 active:scale-95
-            cursor-pointer
+            transition-all duration-200 ease-out
+            hover:bg-main-600 hover:scale-105
+            active:scale-95
           `}
           onClick={handleSearch}
         >

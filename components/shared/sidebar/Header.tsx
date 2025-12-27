@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useFilterStore, useUIStore, useUserStore } from '@/stores';
-import { useSearchedResultStore } from '@/stores/search';
 import { useBookmarkCounts } from '@/hooks/supabase/bookmark';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
+import { useSearchedResultStore } from '@/stores/search';
+import { useFilterStore, useUIStore, useUserStore } from '@/stores';
 import Link from 'next/link';
 import Tooltip from '@/components/shared/Tooltip';
 import CategoryFilter from '@/components/shared/sidebar/CategoryFilter';
@@ -13,8 +13,8 @@ import RatingsFilter from '@/components/shared/sidebar/RatingsFilter';
 import SearchInput from '@/components/shared/sidebar/SearchInput';
 import ThemeToggleButton from '@/components/shared/sidebar/ThemeToggleButton';
 import Button from '@/components/shared/Button';
-import Logo from '@/components/shared/sidebar/Logo';
-import LinkToLandingPage from './LinkToLandingPage';
+import Logo from '@/components/shared/Logo';
+import LinkToLandingPage from '@/components/shared/sidebar/LinkToLandingPage';
 
 export default function Header() {
   const searchResult = useSearchedResultStore(state => state.searchResult);
@@ -52,7 +52,7 @@ export default function Header() {
               href="/main"
               aria-label="메인페이지 이동 버튼"
               data-testid="button-go-to-main"
-              className="group flex items-center hover:opacity-80 hover:cursor-pointer transition-all duration-200 ease-out"
+              className="flex items-center transition-all duration-200 ease-out hover:opacity-80 hover:cursor-pointer group"
               onClick={handleReset}
             >
               <Logo />
@@ -100,9 +100,9 @@ export default function Header() {
                 if (e.key === 'Enter') handleCollectionSearch();
               }}
               className={`w-5/6 py-4 pl-2 bg-transparent backdrop-blur-sm ${isDarkTheme
-                ? 'bg-dark-background border-gray-600 text-white'
-                : 'border-gray-300 text-gray-700'
-                } placeholder:text-gray-400 focus:outline-none focus:ring-0`}
+                ? 'bg-dark-background border-gray-600 text-white placeholder:text-gray-400'
+                : 'border-gray-300 text-gray-700 placeholder:text-gray-400'
+                } focus:outline-none focus:ring-0`}
             />
             <Button
               aria-label="검색"
@@ -130,9 +130,9 @@ export default function Header() {
               placeholder="카페 이름으로 검색"
               aria-label="북마크한 카페 중 이름 검색"
               className={`w-5/6 py-4 pl-2 bg-transparent backdrop-blur-sm ${isDarkTheme
-                ? 'bg-dark-background border-gray-600 text-white'
-                : 'border-gray-300 text-gray-700'
-                } placeholder:text-gray-400 focus:outline-none focus:ring-0`}
+                ? 'bg-dark-background border-gray-600 text-white placeholder:text-gray-400'
+                : 'border-gray-300 text-gray-700 placeholder:text-gray-400'
+                } focus:outline-none focus:ring-0`}
               value={bookmarkInput}
               onChange={e => setBookmarkInput(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') handleBookmarkSearch(); }}
