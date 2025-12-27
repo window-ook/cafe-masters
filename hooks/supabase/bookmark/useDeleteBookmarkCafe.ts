@@ -18,5 +18,5 @@ export function useDeleteBookmarkCafe() {
         onError: error => console.error(error),
     });
 
-    return { deleteBookmarkCafe: deleteBookmark.mutate };
+    return { deleteBookmarkCafe: deleteBookmark.mutateAsync };
 }

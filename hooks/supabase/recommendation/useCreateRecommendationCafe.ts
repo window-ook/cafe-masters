@@ -15,5 +15,5 @@ export function useCreateRecommendationCafe() {
     onError: error => console.error(error),
   });
 
-  return { createRecommendationCafe: createRecommendation.mutate };
+  return { createRecommendationCafe: createRecommendation.mutateAsync };
 }

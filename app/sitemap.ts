@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getRecommendationCafesForSitemap } from '@/actions/supabase/recommendation/getData';
-import { CONSOLE_ERROR } from '@/constants/messages';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.cafe-masters.com';

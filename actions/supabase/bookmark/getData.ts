@@ -5,7 +5,6 @@ import { ISupabaseBookmarkCafe } from "@/types/supabase/bookmark";
 
 /** 
  * 모든 북마크 카페 조회
- * @returns 북마크 카페 목록
  */
 export async function getBookmarkCafes(): Promise<{ data: ISupabaseBookmarkCafe[] }> {
     const supabase = await createServerSupabaseClient();
@@ -36,7 +35,6 @@ export async function getBookmarkCafes(): Promise<{ data: ISupabaseBookmarkCafe[
 /**
  * 특정 북마크 카페 조회 (메타데이터용)
  * @param cafeId 카페 ID
- * @returns 북마크 카페 데이터
  */
 export async function getBookmarkCafeById(cafeId: number): Promise<ISupabaseBookmarkCafe | null> {
     if (!cafeId) throw new Error('카페 ID가 유효하지 않습니다.');

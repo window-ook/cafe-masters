@@ -10,7 +10,7 @@ import {
   type BrowserConfig,
   type ScrapingConfig,
 } from '@/lib/data/scrapper';
-import { CONSOLE_ERROR } from '@/constants/messages';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 export const runtime = 'nodejs';
 

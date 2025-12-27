@@ -14,7 +14,11 @@ interface ITooltip {
  * @param component - 툴팁이 적용될 React 컴포넌트
  * @param position - 툴팁 표시 위치 (기본값: 'top')
  */
-export default function Tooltip({ comment, component, position = 'top' }: ITooltip) {
+export default function Tooltip({
+  comment,
+  component,
+  position = 'top',
+}: ITooltip) {
   const POSITION_STYLES: Record<NonNullable<ITooltip['position']>, string> = {
     top: 'bottom-full left-1/2 -translate-x-1/2 -translate-y-2',
     bottom: 'left-1/2 top-full -translate-x-1/2 translate-y-2',
@@ -23,10 +27,10 @@ export default function Tooltip({ comment, component, position = 'top' }: IToolt
   };
 
   return (
-    <div className="relative inline-block group">
+    <div className="group relative inline-block">
       {component}
       <span
-        className={`absolute ${POSITION_STYLES[position]} z-50 px-3 py-1.5 rounded-md shadow-lg bg-gray-500 pointer-events-none text-white text-xs whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
+        className={`absolute ${POSITION_STYLES[position]} pointer-events-none z-50 rounded-md bg-gray-500 px-3 py-1.5 text-xs whitespace-nowrap text-white opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100`}
       >
         {comment}
       </span>

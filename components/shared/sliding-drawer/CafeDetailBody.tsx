@@ -23,7 +23,7 @@ interface ICafeDetailBody {
     image: string;
     extra_images?: string[];
     opening_time?: string | null;
-    menus?: { name: string; price: string; description?: string; }[] | null;
+    menus?: { name: string; price: string; description?: string }[] | null;
     categories?: string[];
     kakaoCategories?: string[];
   };
@@ -37,7 +37,7 @@ export default function CafeDetailBody({
   cafeData,
   actionButtons,
   isImageWithFallback = false,
-  isDetailLoading = false
+  isDetailLoading = false,
 }: ICafeDetailBody) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
@@ -46,37 +46,45 @@ export default function CafeDetailBody({
   const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
-    <main className="overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4 flex-1">
+    <main className="flex flex-1 flex-col gap-4 overflow-x-hidden overflow-y-auto p-4">
       {/* 카페 이미지 */}
       {(cafeData.image || isDetailLoading) && (
         <section
           key={`${cafeId}-image-section`}
-          className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4">
+          className="shadow-main/10 relative flex flex-col items-center gap-4 rounded-md shadow-sm"
+        >
           <button
             type="button"
             aria-label="카페 이미지 슬라이드 왼쪽으로 이동"
-            onClick={() => scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)}
+            onClick={() =>
+              scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)
+            }
             className="slide-images-button left-0 bg-white/30"
           >
-            <span className='text-main'>◀</span>
+            <span className="text-main">◀</span>
           </button>
 
           {/* 카페 이미지 슬라이드 */}
           <div
             ref={scrollRef}
-            className="w-full max-w-full overflow-x-auto overflow-y-hidden flex gap-4 scrollbar-hide snap-x snap-mandatory"
+            className="scrollbar-hide flex w-full max-w-full snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden"
           >
             {isDetailLoading && !cafeData.image ? (
-              <div className="h-60 py-2 snap-center shrink-0">
-                <div className="w-[340px] h-[240px] bg-gray-200 dark:bg-gray-700 animate-pulse rounded-md" />
+              <div className="h-60 shrink-0 snap-center py-2">
+                <div className="h-[240px] w-[340px] animate-pulse rounded-md bg-gray-200 dark:bg-gray-700" />
               </div>
             ) : (
               <>
-                <div className="h-60 py-2 snap-center shrink-0">
+                <div className="h-60 shrink-0 snap-center py-2">
                   <button
                     type="button"
                     aria-label="카페 이미지 클릭 시 카카오플레이스 이동(썸네일)"
-                    onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
+                    onClick={() =>
+                      window.open(
+                        `http://place.map.kakao.com/${cafeId}`,
+                        '_blank',
+                      )
+                    }
                     className="cursor-pointer"
                   >
                     {isImageWithFallback ? (
@@ -109,12 +117,17 @@ export default function CafeDetailBody({
                 {cafeData.extra_images?.map((photo, i) => (
                   <div
                     key={`${cafeId}-extra-${i}`}
-                    className="h-60 py-2 snap-center shrink-0"
+                    className="h-60 shrink-0 snap-center py-2"
                   >
                     <button
                       type="button"
                       aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
-                      onClick={() => window.open(`http://place.map.kakao.com/${cafeId}`, '_blank')}
+                      onClick={() =>
+                        window.open(
+                          `http://place.map.kakao.com/${cafeId}`,
+                          '_blank',
+                        )
+                      }
                       className="cursor-pointer"
                     >
                       {isImageWithFallback ? (
@@ -150,16 +163,18 @@ export default function CafeDetailBody({
 
           <button
             className="slide-images-button right-0 bg-white/30"
-            onClick={() => scrollThumbnails('right', scrollRef as RefObject<HTMLDivElement>)}
+            onClick={() =>
+              scrollThumbnails('right', scrollRef as RefObject<HTMLDivElement>)
+            }
           >
-            <span className='text-main'>▶</span>
+            <span className="text-main">▶</span>
           </button>
         </section>
       )}
 
       {/* 카페 정보 */}
       <section className="space-y-4">
-        <div className='flex items-center justify-between'>
+        <div className="flex items-center justify-between">
           {/* 카페 이름 */}
           <h1 className="text-2xl font-bold">{cafeData.name}</h1>
           {/* 공유 버튼 */}
@@ -170,16 +185,18 @@ export default function CafeDetailBody({
                 type="button"
                 aria-label="카페 url 공유 버튼"
                 onClick={() => copyText(url)}
-                className="p-2 cursor-pointer hover:opacity-50"
+                className="cursor-pointer p-2 hover:opacity-50"
               >
-                <Send className='size-4' />
+                <Send className="size-4" />
               </button>
             }
           />
         </div>
 
         {/* 카테고리 (수집, 추천 카페) */}
-        {cafeData.categories && cafeData.categories.length > 0 && (<Categories categories={cafeData.categories} />)}
+        {cafeData.categories && cafeData.categories.length > 0 && (
+          <Categories categories={cafeData.categories} />
+        )}
 
         {/* 주소 */}
         <Location address={cafeData.address} />
@@ -190,15 +207,15 @@ export default function CafeDetailBody({
         {/* 카카오맵 분류 (검색 결과) */}
         {cafeData.kakaoCategories && cafeData.kakaoCategories.length > 0 && (
           <div className="col-span-2 grid grid-cols-3">
-            <div className='flex items-center gap-2'>
-              <FolderCheck className='size-4' />
+            <div className="flex items-center gap-2">
+              <FolderCheck className="size-4" />
               <p className="col-span-1 font-medium">분류</p>
             </div>
             <div className="col-span-2 flex flex-wrap gap-2">
               {cafeData.kakaoCategories.map((category, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 rounded-full shadow-md text-xs"
+                  className="rounded-full px-2 py-1 text-xs shadow-md"
                 >
                   {category}
                 </span>

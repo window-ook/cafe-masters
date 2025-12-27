@@ -35,20 +35,26 @@ function PolaroidCard({
     '--rotation': `${rotation}deg`,
   } as CSSProperties;
 
-  const cardClassName = isDarkTheme ? 'polaroid-card-dark' : 'polaroid-card-light';
-  const tapeClassName = isDarkTheme ? 'polaroid-tape-dark' : 'polaroid-tape-light';
+  const cardClassName = isDarkTheme
+    ? 'polaroid-card-dark'
+    : 'polaroid-card-light';
+  const tapeClassName = isDarkTheme
+    ? 'polaroid-tape-dark'
+    : 'polaroid-tape-light';
   const imageContainerClassName = isDarkTheme ? 'bg-gray-700' : 'bg-gray-200';
 
   return (
     <div
-      className={`${cardClassName} w-[180px] sm:w-[220px] lg:w-[280px] animate-[polaroid-fall_0.8s_cubic-bezier(0.34,1.56,0.64,1)_both] opacity-40`}
+      className={`${cardClassName} w-[180px] animate-[polaroid-fall_0.8s_cubic-bezier(0.34,1.56,0.64,1)_both] opacity-40 sm:w-[220px] lg:w-[280px]`}
       style={cardStyle}
     >
       {/* 테이프 장식 */}
       <div className={tapeClassName} />
 
       {/* 이미지 영역 */}
-      <div className={`relative h-[160px] w-full overflow-hidden rounded-sm sm:h-[200px] lg:h-[240px] ${imageContainerClassName}`}>
+      <div
+        className={`relative h-[160px] w-full overflow-hidden rounded-sm sm:h-[200px] lg:h-[240px] ${imageContainerClassName}`}
+      >
         <Image
           src={imageUrl}
           alt="Cafe polaroid"

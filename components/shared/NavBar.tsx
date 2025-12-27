@@ -6,19 +6,8 @@ import ThemeToggleButton from '@/components/shared/sidebar/ThemeToggleButton';
 
 export default function NavBar() {
   return (
-    <nav
-      className={`
-        z-50
-        h-18
-        px-4
-        bg-transparent
-        flex items-center justify-between
-        backdrop-blur-sm
-        transition-all duration-300 ease-in-out
-        hidden sm:flex
-      `}
-    >
-      <div className="flex-1 max-w-md">
+    <nav className="z-50 hidden h-18 items-center justify-between bg-transparent px-4 backdrop-blur-sm transition-all duration-300 ease-in-out sm:flex">
+      <div className="max-w-md flex-1">
         <SearchInput />
       </div>
 

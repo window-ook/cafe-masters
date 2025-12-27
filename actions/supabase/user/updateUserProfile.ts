@@ -1,7 +1,6 @@
 'use server';
 
 import { createServerSupabaseClient } from '@/utils/supabase/server';
-import { IServerActionResponse } from '@/types/shared/serverAction';
 
 export interface IUpdateUserProfileParams {
   user_id: string;
@@ -11,21 +10,16 @@ export interface IUpdateUserProfileParams {
 
 /**
  * 유저 프로필 업데이트
+ * @returns 성공 여부
  */
-export async function updateUserProfile(
-  params: IUpdateUserProfileParams
-): Promise<IServerActionResponse> {
-  if (!params.user_id)
-    return { success: false, message: '유저 ID가 유효하지 않습니다.' };
-
-  if (!params.nickname && !params.gender)
-    return { success: false, message: '업데이트할 정보가 없습니다.' };
+export async function updateUserProfile(params: IUpdateUserProfileParams): Promise<boolean> {
+  if (!params.user_id) throw new Error('유저 ID가 유효하지 않습니다.');
+  if (!params.nickname && !params.gender) throw new Error('업데이트할 정보가 없습니다.');
 
   const supabase = await createServerSupabaseClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user || user.id !== params.user_id)
-    return { success: false, message: '인증이 필요합니다.' };
+  if (!user || user.id !== params.user_id) throw new Error('인증이 필요합니다.');
 
   if (params.nickname) {
     const { data: existing } = await supabase
@@ -35,8 +29,7 @@ export async function updateUserProfile(
       .neq('user_id', params.user_id)
       .maybeSingle();
 
-    if (existing)
-      return { success: false, message: '이미 사용 중인 닉네임입니다.' };
+    if (existing) throw new Error('이미 사용 중인 닉네임입니다.');
   }
 
   const updateData: { nickname?: string; gender?: 'male' | 'female' } = {};
@@ -48,8 +41,7 @@ export async function updateUserProfile(
     .update(updateData)
     .eq('user_id', params.user_id);
 
-  if (error)
-    return { success: false, message: `프로필 업데이트 실패: ${error.message}` };
+  if (error) throw new Error(`프로필 업데이트 실패: ${error.message}`);
 
-  return { success: true, message: '프로필이 업데이트되었습니다.' };
+  return true;
 }

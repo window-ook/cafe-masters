@@ -23,13 +23,11 @@ export default function CategorySelector({
           aria-label={`카테고리 '${category}' 선택 버튼`}
           key={category}
           onClick={() => toggleCategories(category)}
-          className={`
-            px-4 py-2 rounded-full border text-sm cursor-pointer backdrop-blur-md transition-all duration-200 ease-out
-            ${selectedCategories.includes(category)
-              ? 'bg-main text-white border-main'
-              : 'bg-white/60 text-gray-700 border-white/70 hover:bg-white/80'
-            }
-          `}
+          className={`cursor-pointer rounded-full border px-4 py-2 text-sm backdrop-blur-md transition-all duration-200 ease-out ${
+            selectedCategories.includes(category)
+              ? 'bg-main border-main text-white'
+              : 'border-white/70 bg-white/60 text-gray-700 hover:bg-white/80'
+          } `}
         >
           {category}
         </button>

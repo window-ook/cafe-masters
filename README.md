@@ -4,9 +4,9 @@
 
 ### 카드 모으는 재미가 있는 카페 메모 관리 서비스
 
-카페를 자주 다니는 분들을 위해 만든 재밌는 서비스입니다<br>
-간단하게 카페에 대한 정보를 저장하면, 유니크한 나만의 카드가 된답니다:)<br>
-뿐만 아니라 다음에 가고 싶은 카페를 북마크하고, 제가 추천하는 카페를 확인할 수 있습니다!<br>
+카페를 자주 다니는 분들을 위해 만든 재밌는 서비스입니다.
+간단하게 카페에 대한 정보를 저장하면, 유니크한 나만의 카드가 된답니다:)
+뿐만 아니라 다음에 가고 싶은 카페를 북마크하고, 제가 추천하는 카페를 확인할 수 있습니다!
 카드를 많이 모아서 마스터가 되어보세요-v-<br>
 
 ## 📋 목차
@@ -22,10 +22,14 @@
 - [⚡ 성능 최적화](#-성능-최적화)
 - [📈 회고](#-회고)
 
+<br>
+
 ## 🗓️ 개발 기간
 
 ### VERSION 1 2024.10.02 ~ 2024.10.28 
-### VERSION 2 2025 ~
+### VERSION 2 2025.08 ~
+
+<br>
 
 ## 👤 체험 계정
 
@@ -36,7 +40,9 @@
 
 ### 접속 링크
 
-https://www.cafe-masters.com
+www.cafe-masters.com
+
+<br>
 
 ## 🛠 개발 환경
 
@@ -85,66 +91,45 @@ https://www.cafe-masters.com
     <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white"> 
 </div>
 
+<br>
+
 ## ✨ 주요 기능
+
+**데모 영상 링크**: https://www.youtube.com/watch?v=rmIXyzBg_Q8
 
 ### 📌 카페 검색
 
-<div style='display:flex; flex-direction:column; gap:2px;'>
-    <img src="https://github.com/user-attachments/assets/fe97c541-6354-45dd-84ad-5e46fe8ee0b4" width="700" height="364" />
-    <img src="https://github.com/user-attachments/assets/85ed1823-42d0-4491-972d-5880b92c6202" width="700" height="364" />
-</div><br>
-
-원하는 카페를 찾으시나요? 카페의 이름을 검색해보세요.<br>
-특정 카페가 아닌, 지역만 검색해도 안의 카페를 찾을 수 있어요.<br>
-썸네일 이미지를 클릭하면 카카오 플레이스에서 제공하는 페이지로 이동할 수 있어요.<br>
-
-<img src="https://github.com/user-attachments/assets/2490b05f-50b2-48e4-a964-edb58e637257" width="700" height="364" /><br>
-
-지인과 가기로 한 카페인가요? 북마크 해두시고 잊지 마세요!
-
-<img  src="https://github.com/user-attachments/assets/54c9beb4-adce-4f02-9a7d-425894f303fb" width="700" height="364" /><br>
-
-카페를 갔다오셨나요? 카드로 수집하세요-V- 별점을 매겨주시면 별점에 따라 카드의 등급이 적용됩니다.
-- 2점 이하: 노말, 3점: 실버, 4점: 골드, 5점: 에메랄드, 히든: ??
+원하는 카페를 찾으시나요? 카페의 이름을 검색해보세요.
+특정 카페가 아닌, 지역만 검색해도 안의 카페를 찾을 수 있어요.
+썸네일 이미지를 클릭하면 카카오 플레이스에서 제공하는 페이지로 이동할 수 있어요.
+지인과 가기로 한 카페는 북마크 해두시고 잊지 마세요!
+카페를 갔다오셨다면 카드로 수집하세요! 별점을 매겨주시면 별점에 따라 카드의 등급이 적용됩니다.
+- 2점 이하: 노말, 3점: 실버, 4점: 골드, 5점: 에메랄드, 히든: ??<br/>
 
 ### 🗂️ 수집한 카페 모아보기
 
-<img src="https://github.com/user-attachments/assets/0a07808b-b051-43d3-8e1f-3cce7df12392" width="700" height="364" /><br>
-
-내가 여태 수집한 카드를 볼 수 있어요.<br>
-
-<img src="https://github.com/user-attachments/assets/14f1f18e-79fd-4026-8b9b-716a6a2e7d32" width="700" height="364" /><br>
-
-수집하면서 저장했던 메모의 내용이 담겨있으니, 필요할 때 기억해내기 좋겠죠?<br>
-
-<img src="https://github.com/user-attachments/assets/b3623c6f-ab89-4b15-b535-98281c5e3da4" width="300" height="350" /><br>
-
-혹시 히든 카드를 찾으셨나요..? 히든 카드는 제가 랜덤하게 숨겨놓은 카페입니다 :D 히든 카드도 모아보세요~
+내가 여태 수집한 카드를 볼 수 있어요.
+수집하면서 저장했던 메모의 내용이 담겨있으니, 필요할 때 기억해내기 좋겠죠?
+히든 카드는 제가 랜덤하게 숨겨놓은 카페를 수집하면 모을 수 있으니 기대해보세요!
 
 ### 🔖 북마크 카페 모아보기
 
-<img src="https://github.com/user-attachments/assets/f48e724e-ceeb-400a-89b4-bb17c093f4e1" width="700" height="364"/><br>
-
-북마크 해뒀던 카페를 확인할 수 있어요.<br>
+북마크 해뒀던 카페를 확인할 수 있어요.
 갈 마음이 사라진 곳이면 삭제하시면 됩니다.<br>
-당연히 바로 수집할 수도 있습니다!
 
 ### 😁 추천 카페 모아보기
 
-<img src="https://github.com/user-attachments/assets/046e3458-634c-4cba-b913-206ca1001e5f" width="700" height="364"/><br>
-
-개발자가 특별히 추천하는 카페입니다! 제가 직접 방문했던 곳을 추천드려요.<br>
-
-<img src="https://github.com/user-attachments/assets/9cab86a8-e247-4213-a232-b82db5287247" width="700" height="364"/><br>
-
+개발자가 특별히 추천하는 카페입니다! 제가 직접 방문했던 곳을 추천드려요.
 카테고리 필터링을 사용해서 원하는 카페를 찾아서 구경해보세요.
 
 ### 🎖️ 콜렉션 티어 
 
 <img src="https://github.com/user-attachments/assets/ed23ccfa-8c66-4d3f-b189-e805b6cc4fc8" width="600" height="420"/><br>
 
-티어는 여러분이 모은 카드의 수에 따라 상승합니다.<br>
+티어는 여러분이 모은 카드의 수에 따라 상승합니다.
 카페를 좋아하시는 분들은 금방 마스터가 되실 수 있을거에요😁
+
+<br>
 
 ## 📁 프로젝트 구조
 ### 아키텍처 다이어그램
@@ -169,9 +154,11 @@ https://www.cafe-masters.com
 ```
 
 <br>
-디렉토리는 역할 기반으로 분류되어 있습니다.<br>
+디렉토리는 역할 기반으로 분류되어 있습니다.
 이 방식은 컴포넌트나 훅, 함수, 타입 등 어떤 파일이든지 위치가 직관적이기 때문에 안정성과 확장성 면에서 매우 유리하고,<br>
-Shell Container에서 Presenter만 조건부로 렌더링을 바꿔서 하게 되는 카페 마스터즈의 아키텍처와도 잘 맞는다고 생각했습니다.<br><br>
+Shell Container에서 Presenter만 조건부로 렌더링을 바꿔서 하게 되는 카페 마스터즈의 아키텍처와도 잘 맞는다고 생각했습니다.
+
+<br>
 
 ## 🏗️ 시스템 설계
 
@@ -236,6 +223,8 @@ recommendation {
 user {
     user_id: UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     admin: BOOLEAN NOT NULL DEFAULT false,
+    gender: VARCHAR NOT NULL DEFAULT false,
+    nickname: VARCHAR NOT NULL DEFAULT false,
     created_at: TIMESTAMPTZ DEFAULT NOW()
 };
 ```
@@ -256,13 +245,13 @@ user {
 컴포넌트 ↔ useMutation 커스텀 훅 → 서버 액션 ↔ Supabase
 ```
 
-<br><br>
+<br>
 
 ## 🤺 스킬 포커스
 
 ### Shell Container-Presenter 컴포넌트 아키텍처
 
-<img width="434" height="305" src="https://github.com/user-attachments/assets/87037119-e35a-460c-b790-896b06e8f018" />
+<img width="434" height="305" src="https://github.com/user-attachments/assets/5927d97b-38a8-4858-9e21-5691331da26f" /><br/>
 
 > 지도 기반 서비스에 최적화된 컴포넌트 아키텍처
 
@@ -270,14 +259,8 @@ user {
 따라서 SideBar와 SlidingDrawer가 UI 컨테이너를 전담하는 구조가 목적에 매우 적합하다고 생각했습니다. 
 두 컴포넌트는 경로별 동적 렌더링을 담당하는 Shell Container로서의 역할을 하고, 각 경로의 Feature을 책임지는 Presenter 컴포넌트가 조건부로 활성화되어 렌더링하는 구조로 아키텍처를 설계했습니다.<br>
 
-- Shell Container: UI 레이아웃과 네비게이션을 담당하는 SideBar, SlidingDrawer
-    - 일관된 레이아웃으로 Presenter를 표시하는 것에 집중
-- Presenter: 비동기 데이터 페칭, 서버/클라이언트 상태 동기화, UI 렌더링에 집중
-    - 추상화된 비동기 커스텀 훅을 사용하는 비즈니스 로직 컴포넌트
-
-결론적으로 유지보수성과 확장성이 높은 구조를 구현했습니다.
-
-<br>
+- Shell: 네비게이션과 경로별 Presenter 조건부 렌더링을 담당하는 컨테이너 역할
+- Presenter: 각 도메인의 비동기 데이터 페칭, 서버/클라이언트 상태 동기화, UI 렌더링
 
 ### ErrorBoundary를 이용한 선언적 에러 처리
 
@@ -322,8 +305,8 @@ export function ErrorBoundaryWrapper({
 }
 ```
 
-`ErrorBoundaryWrapper`는 에러가 터진 기능과, 맞춤 메세지를 나타내는 커스텀 Wrapper Component입니다. <br>
-선언형 프로그래밍을 사용하여 Shell Container에 에러 UI를 제공하기 위해 구현했습니다.<br>
+`ErrorBoundaryWrapper`는 에러가 터진 기능과, 맞춤 메세지를 나타내는 커스텀 Wrapper Component입니다.
+선언형 프로그래밍을 사용하여 Shell Container에 에러 UI를 제공하기 위해 구현했습니다.
 
 ```tsx
 // @providers/Providers.tsx
@@ -344,8 +327,6 @@ export function ErrorBoundaryWrapper({
     <SlidingDrawer />
 </ErrorBoundaryWrapper>
 ```
-
-<br>
 
 ### zod를 활용한 유효성 검사
 
@@ -412,7 +393,7 @@ export const resetPasswordRequestSchema = z.object({
 ...
 ```
 
-zod의 메서드 체이닝으로 직관적이고 효율적인 유효성 검증 로직을 구현했습니다.<br>
+zod의 메서드 체이닝으로 직관적이고 효율적인 유효성 검증 로직을 구현했습니다.
 React Hook Form의 useForm과 함께 조합하여 폼의 상태 관리와 유효성 검증, 에러 핸들링까지 담당합니다.
 
 <br>
@@ -454,15 +435,17 @@ React Hook Form의 useForm과 함께 조합하여 폼의 상태 관리와 유효
 
 - **캐싱과 저용량 확장자**CDN 업로드, `.avif` 파일 사용
 
+<br>
+
 ## 📑 회고
 
 ### 새로운 시도 & 새롭게 알게 된 것
 
 >**새로운 시도**
 
-Shell Container-Presenter 패턴<br>
-카드 애니메이션 3D Rotate & Multi Layers Effect 구현<br>
-웹 스크래핑 최적화<br>
+Shell Container-Presenter 패턴
+카드 애니메이션 3D Rotate & Multi Layers Effect 구현
+웹 스크래핑 최적화
 
 >**새롭게 알게 된 것**
 

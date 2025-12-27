@@ -37,30 +37,42 @@ export default function SignUpEmailForm() {
   const handleClose = () => router.push('/');
 
   const onSignUpSubmit = async (data: SignUpFormData) => {
-    signUp({ email: data.email, password: data.password, nickname: data.nickname, gender: data.gender }, {
-      onSuccess: () => {
-        sessionStorage.setItem('signup_email', data.email);
-        router.push('/signup/verify');
+    signUp(
+      {
+        email: data.email,
+        password: data.password,
+        nickname: data.nickname,
+        gender: data.gender,
       },
-      // 에러는 이미 useSignUp 훅에서 toast로 처리. 추가 처리가 필요한 경우에만 onError 추가
-    });
+      {
+        onSuccess: () => {
+          sessionStorage.setItem('signup_email', data.email);
+          router.push('/signup/verify');
+        },
+        // 에러는 이미 useSignUp 훅에서 toast로 처리. 추가 처리가 필요한 경우에만 onError 추가
+      },
+    );
   };
 
   return (
     <div className="auth-glass-card">
       <form
-        className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
+        className="flex w-80 max-w-(--breakpoint-lg) flex-col gap-4 sm:w-96"
         onSubmit={signUpForm.handleSubmit(onSignUpSubmit)}
       >
-        <div className="flex justify-between items-center mb-4">
-          <p className={`auth-form-title ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>회원가입</p>
+        <div className="mb-4 flex items-center justify-between">
+          <p
+            className={`auth-form-title ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+          >
+            회원가입
+          </p>
           <button
             type="button"
             aria-label="회원가입 취소 버튼"
             onClick={handleClose}
-            className={`${isDarkTheme ? 'text-white' : 'text-text-primary'} cursor-pointer hover:opacity-60 transition-opacity`}
+            className={`${isDarkTheme ? 'text-white' : 'text-text-primary'} cursor-pointer transition-opacity hover:opacity-60`}
           >
-            <CircleX className='size-8' />
+            <CircleX className="size-8" />
           </button>
         </div>
         <Controller
@@ -99,7 +111,11 @@ export default function SignUpEmailForm() {
           )}
         />
 
-        <p className={`text-sm text-gray-600 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>*비밀번호는 최소 6자 이상, 영문과 숫자를 포함해야 합니다.</p>
+        <p
+          className={`text-sm text-gray-600 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+        >
+          *비밀번호는 최소 6자 이상, 영문과 숫자를 포함해야 합니다.
+        </p>
 
         <Controller
           name="nickname"
@@ -119,7 +135,10 @@ export default function SignUpEmailForm() {
         />
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="gender" className={`text-sm font-semibold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+          <label
+            htmlFor="gender"
+            className={`text-sm font-semibold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+          >
             성별
           </label>
           <Controller
@@ -127,25 +146,29 @@ export default function SignUpEmailForm() {
             control={signUpForm.control}
             render={({ field }) => (
               <div className="flex gap-4">
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex cursor-pointer items-center gap-2">
                   <input
                     type="radio"
                     value="male"
                     checked={field.value === 'male'}
                     onChange={() => field.onChange('male')}
-                    disabled={signUpForm.formState.isSubmitting || signUpPending}
-                    className="w-4 h-4 cursor-pointer"
+                    disabled={
+                      signUpForm.formState.isSubmitting || signUpPending
+                    }
+                    className="h-4 w-4 cursor-pointer"
                   />
                   <span>남성</span>
                 </label>
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex cursor-pointer items-center gap-2">
                   <input
                     type="radio"
                     value="female"
                     checked={field.value === 'female'}
                     onChange={() => field.onChange('female')}
-                    disabled={signUpForm.formState.isSubmitting || signUpPending}
-                    className="w-4 h-4 cursor-pointer"
+                    disabled={
+                      signUpForm.formState.isSubmitting || signUpPending
+                    }
+                    className="h-4 w-4 cursor-pointer"
                   />
                   <span>여성</span>
                 </label>
@@ -164,22 +187,22 @@ export default function SignUpEmailForm() {
           aria-label="회원가입 요청 버튼"
           dataTestId="button-submit-request-signup"
           disabled={signUpForm.formState.isSubmitting || signUpPending}
-          customClassName='bg-main'
-          text='가입하기'
+          customClassName="bg-main"
+          text="가입하기"
         />
         <Button
           type="button"
           aria-label="구글 로그인 버튼"
           onClick={() => signInWithGoogle()}
-          customClassName='bg-blue-500 hover:bg-blue-600'
-          text='구글 로그인'
+          customClassName="bg-blue-500 hover:bg-blue-600"
+          text="구글 로그인"
         />
         <Button
           type="button"
           aria-label="카카오 로그인 버튼"
           onClick={() => signInWithKakao()}
-          customClassName='bg-yellow-500 hover:bg-yellow-600'
-          text='카카오 로그인'
+          customClassName="bg-yellow-500 hover:bg-yellow-600"
+          text="카카오 로그인"
         />
 
         <p className="auth-form-mention">
@@ -190,7 +213,7 @@ export default function SignUpEmailForm() {
             data-testid="button-go-to-signin-from-signup"
             className="cursor-pointer"
           >
-            <span className="font-bold text-main">로그인 하기</span>
+            <span className="text-main font-bold">로그인 하기</span>
           </Link>
         </p>
       </form>

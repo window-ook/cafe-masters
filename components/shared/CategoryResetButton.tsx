@@ -9,7 +9,7 @@ export default function CategoryResetButton({ onReset }: ICategoryResetButton) {
     <button
       type="button"
       aria-label="카테고리 초기화 버튼"
-      className="px-4 py-2 rounded-full border border-main/30 bg-main-light/80 backdrop-blur-md flex justify-center items-center text-main transition-all duration-200 ease-out hover:bg-main-light"
+      className="border-main/30 bg-main-light/80 text-main hover:bg-main-light flex items-center justify-center rounded-full border px-4 py-2 backdrop-blur-md transition-all duration-200 ease-out"
       onClick={onReset}
     >
       <RotateCcw className="size-4" />

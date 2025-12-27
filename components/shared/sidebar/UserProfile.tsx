@@ -27,9 +27,24 @@ export default function UserProfile() {
 
   useEffect(() => {
     if (collectionCounts && collectionCounts >= 40) setUserTier('MASTER');
-    else if (collectionCounts && collectionCounts < 40 && collectionCounts >= 30) setUserTier('EXPERT');
-    else if (collectionCounts && collectionCounts < 30 && collectionCounts >= 20) setUserTier('SENIOR');
-    else if (collectionCounts && collectionCounts < 20 && collectionCounts >= 10) setUserTier('JUNIOR');
+    else if (
+      collectionCounts &&
+      collectionCounts < 40 &&
+      collectionCounts >= 30
+    )
+      setUserTier('EXPERT');
+    else if (
+      collectionCounts &&
+      collectionCounts < 30 &&
+      collectionCounts >= 20
+    )
+      setUserTier('SENIOR');
+    else if (
+      collectionCounts &&
+      collectionCounts < 20 &&
+      collectionCounts >= 10
+    )
+      setUserTier('JUNIOR');
     else if (collectionCounts && collectionCounts < 10) setUserTier('BEGINNER');
   }, [collectionCounts, setUserTier]);
 
@@ -38,29 +53,24 @@ export default function UserProfile() {
   return (
     <section className="flex items-center gap-3">
       <div
-        className={`
-          px-4 py-2 pr-3
-          rounded-xl
-          flex items-center gap-3
-          transition-all duration-200 ease-out
-          ${isDarkTheme
-            ? 'bg-gray-800/40 hover:bg-gray-800/60 border-gray-600/30'
-            : 'bg-white/40 hover:bg-white/60 border-white/50'
-          }
-          backdrop-blur-md border
-          hover:scale-[1.02] active:scale-[0.98]
-        `}
+        className={`flex items-center gap-3 rounded-xl px-4 py-2 pr-3 transition-all duration-200 ease-out ${
+          isDarkTheme
+            ? 'border-gray-600/30 bg-gray-800/40 hover:bg-gray-800/60'
+            : 'border-white/50 bg-white/40 hover:bg-white/60'
+        } border backdrop-blur-md hover:scale-[1.02] active:scale-[0.98]`}
       >
-        <div className="size-8 rounded-lg bg-gray-300/20 backdrop-blur-sm flex items-center justify-center shadow-lg">
+        <div className="flex size-8 items-center justify-center rounded-lg bg-gray-300/20 shadow-lg backdrop-blur-sm">
           <Image
             src={profileImage}
             alt="유저 프로필 이미지"
             width={24}
             height={24}
-            className="object-cover object-center size-6 rounded-md"
+            className="size-6 rounded-md object-cover object-center"
           />
         </div>
-        <p className={`font-semibold text-sm max-w-32 truncate ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+        <p
+          className={`max-w-32 truncate text-sm font-semibold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+        >
           {displayName}
         </p>
         <TierBadge tier={userTier} />

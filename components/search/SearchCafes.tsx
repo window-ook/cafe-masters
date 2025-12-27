@@ -15,10 +15,21 @@ export default function SearchCafes() {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const searchResultsPerPage = 15;
-  const totalSearchResultPages = Math.ceil(searchResult.length / searchResultsPerPage);
-  const paginatedResult = useMemo(() => searchResult.slice((currentPage - 1) * searchResultsPerPage, currentPage * searchResultsPerPage), [currentPage, searchResult]);
+  const totalSearchResultPages = Math.ceil(
+    searchResult.length / searchResultsPerPage,
+  );
+  const paginatedResult = useMemo(
+    () =>
+      searchResult.slice(
+        (currentPage - 1) * searchResultsPerPage,
+        currentPage * searchResultsPerPage,
+      ),
+    [currentPage, searchResult],
+  );
 
-  useEffect(() => { setCurrentPage(1); }, [searchResult]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchResult]);
 
   const handleNextSearchResultPage = () => {
     if (currentPage < totalSearchResultPages) setCurrentPage(currentPage + 1);
@@ -28,13 +39,16 @@ export default function SearchCafes() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleSearchCafeClick = useCafeClick<IKakaoSearchResult>({ routePath: 'search' });
+  const handleSearchCafeClick = useCafeClick<IKakaoSearchResult>({
+    routePath: 'search',
+  });
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex h-full flex-col">
       <section
         id="search-scroll-container"
-        className="flex-1 overflow-y-auto overflow-x-hidden">
+        className="flex-1 overflow-x-hidden overflow-y-auto"
+      >
         <ul className="pagination-sidebar-list">
           {paginatedResult.map((cafe: IKakaoSearchResult) => (
             <CafeItem

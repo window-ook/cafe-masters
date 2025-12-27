@@ -4,7 +4,6 @@ import { createServerSupabaseClient } from "utils/supabase/server";
 
 /**
  * 수집한 카페 수 조회
- * @returns 수집 카페 수
  */
 export async function getCollectionCounts(): Promise<number> {
     const supabase = await createServerSupabaseClient();

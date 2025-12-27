@@ -13,10 +13,9 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {
-      // 비밀번호 재설정 플로우인 경우
+      // 비밀번호 재설정 플로우
       if (type === 'recovery') return NextResponse.redirect(`${origin}/reset-password`);
 
-      // nickname, gender 확인
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         const { data: userData } = await supabase
@@ -25,7 +24,6 @@ export async function GET(request: Request) {
           .eq('user_id', user.id)
           .maybeSingle();
 
-        // nickname 또는 gender가 없으면 온보딩 페이지로 리다이렉트
         if (!userData?.nickname || !userData?.gender) {
           return NextResponse.redirect(`${origin}/onboarding/profile-setup`);
         }
@@ -35,6 +33,5 @@ export async function GET(request: Request) {
     }
   }
 
-  // return the user to an error page with instructions
   return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 }

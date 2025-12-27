@@ -6,7 +6,12 @@ import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
-import { useCurrentCafeStore, useSearchedResultStore, useFilterStore, useUserStore } from '@/stores';
+import {
+  useCurrentCafeStore,
+  useSearchedResultStore,
+  useFilterStore,
+  useUserStore,
+} from '@/stores';
 import { IKakaoSearchResult } from '@/types/kakao-map';
 import { EXTERNAL_PATHS, IMAGE_PATHS } from '@/lib/paths';
 import { toast } from 'react-toastify';
@@ -30,21 +35,27 @@ export default function KakaoMap() {
   const userId = useUserStore(state => state.userId);
   const keyword = useFilterStore(state => state.keyword);
   const searchResult = useSearchedResultStore(state => state.searchResult);
-  const setSearchResult = useSearchedResultStore(state => state.setSearchResult);
+  const setSearchResult = useSearchedResultStore(
+    state => state.setSearchResult,
+  );
   const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
   const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);
 
   const { filteredCollectionCafes } = useCollectionCafes(userId);
   const { filteredBookmarkCafes } = useBookmarkCafes(userId);
-  const { recommendationCafes, isPending: isRecommendedCafesLoading } = useRecommendationCafes();
+  const { recommendationCafes, isPending: isRecommendedCafesLoading } =
+    useRecommendationCafes();
 
   // 페이지별 카페 클릭 경로
-  const routePathForCurrentPage =
-    paths.isSearch ? 'search' :
-      paths.isCollection ? 'collection' :
-        paths.isBookmark ? 'bookmark' :
-          paths.isRecommendation ? 'recommendation' :
-            'search';
+  const routePathForCurrentPage = paths.isSearch
+    ? 'search'
+    : paths.isCollection
+      ? 'collection'
+      : paths.isBookmark
+        ? 'bookmark'
+        : paths.isRecommendation
+          ? 'recommendation'
+          : 'search';
 
   const handleCafeClick = useCafeClick({ routePath: routePathForCurrentPage });
 
@@ -57,7 +68,9 @@ export default function KakaoMap() {
   const prevKeywordRef = useRef<string | null>(null);
 
   useEffect(() => {
-    const existingScript = document.querySelector(`script[src*="dapi.kakao.com"]`);
+    const existingScript = document.querySelector(
+      `script[src*="dapi.kakao.com"]`,
+    );
 
     if (existingScript) {
       if (window.kakao?.maps) {
@@ -131,7 +144,11 @@ export default function KakaoMap() {
   useEffect(() => {
     if (!mapLoaded || !mapRef.current) return;
 
-    const isDetailPage = paths.isSearchDetail || paths.isCollectionDetail || paths.isBookmarkDetail || paths.isRecommendationDetail;
+    const isDetailPage =
+      paths.isSearchDetail ||
+      paths.isCollectionDetail ||
+      paths.isBookmarkDetail ||
+      paths.isRecommendationDetail;
 
     if (isDetailPage) {
       setTimeout(() => {
@@ -140,7 +157,13 @@ export default function KakaoMap() {
         }
       }, 100);
     }
-  }, [mapLoaded, paths.isSearchDetail, paths.isCollectionDetail, paths.isBookmarkDetail, paths.isRecommendationDetail]);
+  }, [
+    mapLoaded,
+    paths.isSearchDetail,
+    paths.isCollectionDetail,
+    paths.isBookmarkDetail,
+    paths.isRecommendationDetail,
+  ]);
 
   useEffect(() => {
     if (!mapLoaded || !mapRef.current) return;
@@ -168,9 +191,17 @@ export default function KakaoMap() {
         const normalSize = new window.kakao.maps.Size(54, 54);
         const normalOffset = new window.kakao.maps.Point(27, 54);
 
-        const normalMarkerImage = new window.kakao.maps.MarkerImage(imageSrc, normalSize, { offset: normalOffset });
+        const normalMarkerImage = new window.kakao.maps.MarkerImage(
+          imageSrc,
+          normalSize,
+          { offset: normalOffset },
+        );
 
-        const marker = new window.kakao.maps.Marker({ map, position, image: normalMarkerImage });
+        const marker = new window.kakao.maps.Marker({
+          map,
+          position,
+          image: normalMarkerImage,
+        });
 
         const createInfoWindows = () => {
           const cafeName = item.place_name || item.name;
@@ -184,7 +215,7 @@ export default function KakaoMap() {
             content: overlayContent,
             map: map,
             position: position,
-            zIndex: 2000
+            zIndex: 2000,
           });
 
           openInfoWindowRef.current = overlay;
@@ -226,9 +257,18 @@ export default function KakaoMap() {
         window.kakao.maps.event.addListener(marker, 'click', handleMarkerClick);
 
         if (window.innerWidth > 768) {
-          window.kakao.maps.event.addListener(marker, 'mouseover', handleMarkerMouseOver);
-          window.kakao.maps.event.addListener(marker, 'mouseout', handleMarkerMouseOut);
-        } else window.kakao.maps.event.addListener(map, 'click', hideInfoWindow);
+          window.kakao.maps.event.addListener(
+            marker,
+            'mouseover',
+            handleMarkerMouseOver,
+          );
+          window.kakao.maps.event.addListener(
+            marker,
+            'mouseout',
+            handleMarkerMouseOut,
+          );
+        } else
+          window.kakao.maps.event.addListener(map, 'click', hideInfoWindow);
 
         return marker;
       });
@@ -251,7 +291,9 @@ export default function KakaoMap() {
         pagination: IKakaoPagination,
       ) => {
         if (status === window.kakao.maps.services.Status.OK) {
-          const filteredData = data.filter(item => item.category_group_code === 'CE7');
+          const filteredData = data.filter(
+            item => item.category_group_code === 'CE7',
+          );
 
           allResults = [...allResults, ...filteredData];
 
@@ -264,9 +306,14 @@ export default function KakaoMap() {
               item => item.y,
               item => item.x,
             );
-            mapRef.current.setCenter(new window.kakao.maps.LatLng(allResults[0].y, allResults[0].x));
+            mapRef.current.setCenter(
+              new window.kakao.maps.LatLng(allResults[0].y, allResults[0].x),
+            );
           }
-        } else toast.warning(`${query.replace('카페', '').trim()}의 검색 결과가 없습니다`);
+        } else
+          toast.warning(
+            `${query.replace('카페', '').trim()}의 검색 결과가 없습니다`,
+          );
       };
 
       ps.keywordSearch(query, handleSearch);
@@ -317,7 +364,9 @@ export default function KakaoMap() {
       paths.isBookmarkDetail ||
       paths.isRecommendationDetail
     ) {
-      mapRef.current.setCenter(new window.kakao.maps.LatLng(currentCoordY, currentCoordX));
+      mapRef.current.setCenter(
+        new window.kakao.maps.LatLng(currentCoordY, currentCoordX),
+      );
     }
   }, [
     handleCafeClick,
@@ -334,11 +383,5 @@ export default function KakaoMap() {
     isRecommendedCafesLoading,
   ]);
 
-  return (
-    <figure
-      id="map"
-      aria-label="kakao map"
-      className="z-0 flex-1"
-    />
-  );
+  return <figure id="map" aria-label="kakao map" className="z-0 flex-1" />;
 }

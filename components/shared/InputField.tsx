@@ -7,16 +7,16 @@ import Image from 'next/image';
 import React from 'react';
 
 interface IInputField extends React.InputHTMLAttributes<HTMLInputElement> {
-    label?: string;
-    labelSize?: 'text-sm' | 'text-base';
-    dataTestId?: string;
-    isError?: string;
-    errorResponseMessage?: string | null;
-    isPasswordVisible?: boolean;
-    customClassName?: string;
-    handlePasswordVisibility?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    disabled: boolean;
-    hasXSSProtection?: boolean;
+  label?: string;
+  labelSize?: 'text-sm' | 'text-base';
+  dataTestId?: string;
+  isError?: string;
+  errorResponseMessage?: string | null;
+  isPasswordVisible?: boolean;
+  customClassName?: string;
+  handlePasswordVisibility?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled: boolean;
+  hasXSSProtection?: boolean;
 }
 
 /** 폼 공통 Input Field
@@ -35,66 +35,99 @@ interface IInputField extends React.InputHTMLAttributes<HTMLInputElement> {
  * @description 소수점 입력시 스핀버튼 숨김 적용됨, XSS 보호 기능 내장
  */
 const InputField = React.forwardRef<HTMLInputElement, IInputField>(
-    ({ label, labelSize = 'text-sm', dataTestId, id, type, placeholder, isError, errorResponseMessage, disabled, isPasswordVisible, customClassName, handlePasswordVisibility, hasXSSProtection = true, onChange, ...props }, ref) => {
+  (
+    {
+      label,
+      labelSize = 'text-sm',
+      dataTestId,
+      id,
+      type,
+      placeholder,
+      isError,
+      errorResponseMessage,
+      disabled,
+      isPasswordVisible,
+      customClassName,
+      handlePasswordVisibility,
+      hasXSSProtection = true,
+      onChange,
+      ...props
+    },
+    ref,
+  ) => {
+    const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
-        const isDarkTheme = useUIStore(state => state.isDarkTheme);
+    const handleSecureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (hasXSSProtection) {
+        handleSafeInput(e.target.value, safeValue => {
+          const safeEvent = {
+            ...e,
+            target: {
+              ...e.target,
+              value: safeValue,
+            },
+          };
+          onChange?.(safeEvent as React.ChangeEvent<HTMLInputElement>);
+        });
+      } else {
+        onChange?.(e);
+      }
+    };
 
-        const handleSecureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            if (hasXSSProtection) {
-                handleSafeInput(e.target.value, (safeValue) => {
-                    const safeEvent = {
-                        ...e,
-                        target: {
-                            ...e.target,
-                            value: safeValue
-                        }
-                    };
-                    onChange?.(safeEvent as React.ChangeEvent<HTMLInputElement>);
-                });
-            } else {
-                onChange?.(e);
+    return (
+      <div className="flex w-full flex-col gap-2">
+        <label
+          htmlFor={id}
+          className={`block font-bold ${labelSize} ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+        >
+          {label}
+        </label>
+        <div className="relative">
+          <input
+            ref={ref}
+            type={
+              label === '비밀번호'
+                ? isPasswordVisible
+                  ? 'text'
+                  : 'password'
+                : type
             }
-        };
-
-        return (
-            <div className="w-full flex flex-col gap-2">
-                <label htmlFor={id} className={`block font-bold ${labelSize} ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>{label}</label>
-                <div className='relative'>
-                    <input
-                        ref={ref}
-                        type={label === '비밀번호' ? (isPasswordVisible ? 'text' : 'password') : type}
-                        id={id}
-                        data-testid={dataTestId}
-                        placeholder={placeholder}
-                        aria-invalid={disabled ? (isError ? 'true' : 'false') : undefined}
-                        className={`${customClassName} block w-full p-2.5 rounded-lg border-1 bg-transparent backdrop-blur-sm text-sm ${isDarkTheme ? 'text-white placeholder:text-white' : 'text-text-primary placeholder:text-text-primary'} focus:outline-none ${isError || errorResponseMessage ? 'border-red-600' : 'focus:border-main'} [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
-                        onChange={handleSecureChange}
-                        {...props}
-                    />
-                    {label === '비밀번호' && (
-                        <button
-                            type="button"
-                            className="absolute top-1/2 right-2.5 -translate-y-1/2 hover:opacity-60"
-                            onClick={handlePasswordVisibility}
-                            tabIndex={-1}
-                        >
-                            <Image
-                                src={isPasswordVisible ? IMAGE_PATHS.VISIBILITY_ON : IMAGE_PATHS.VISIBILITY_OFF}
-                                alt="비밀번호 보기 숨김"
-                                width={24}
-                                height={24}
-                            />
-                        </button>
-                    )}
-                </div>
-                {errorResponseMessage ? (
-                    <p className='text-sm text-red-600'>{errorResponseMessage}</p>
-                ) :
-                    (isError && <p className='text-sm text-red-600'>{isError}</p>)
+            id={id}
+            data-testid={dataTestId}
+            placeholder={placeholder}
+            aria-invalid={disabled ? (isError ? 'true' : 'false') : undefined}
+            className={`${customClassName} block w-full rounded-lg border-1 bg-transparent p-2.5 text-sm backdrop-blur-sm ${isDarkTheme ? 'text-white placeholder:text-white' : 'text-text-primary placeholder:text-text-primary'} focus:outline-none ${isError || errorResponseMessage ? 'border-red-600' : 'focus:border-main'} [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+            onChange={handleSecureChange}
+            {...props}
+          />
+          {label === '비밀번호' && (
+            <button
+              type="button"
+              className="absolute top-1/2 right-2.5 -translate-y-1/2 hover:opacity-60"
+              onClick={handlePasswordVisibility}
+              tabIndex={-1}
+            >
+              <Image
+                src={
+                  isPasswordVisible
+                    ? IMAGE_PATHS.VISIBILITY_ON
+                    : IMAGE_PATHS.VISIBILITY_OFF
                 }
-            </div>
-        );
-    }
+                alt="비밀번호 보기 숨김"
+                width={24}
+                height={24}
+              />
+            </button>
+          )}
+        </div>
+        {errorResponseMessage ? (
+          <p className="text-sm text-red-600">{errorResponseMessage}</p>
+        ) : (
+          isError && <p className="text-sm text-red-600">{isError}</p>
+        )}
+      </div>
+    );
+  },
 );
 
 InputField.displayName = 'InputField';

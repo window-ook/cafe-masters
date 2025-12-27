@@ -15,13 +15,34 @@ export default function RecommendationCafes() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { filteredRecommendationCafes, totalFilteredCount, isError, error, isPending } = useRecommendationCafes(selectedCategories);
+  const {
+    filteredRecommendationCafes,
+    totalFilteredCount,
+    isError,
+    error,
+    isPending,
+  } = useRecommendationCafes(selectedCategories);
 
   const recommendationPerPage = 5;
-  const totalRecommendedPages = useMemo(() => Math.ceil((filteredRecommendationCafes?.length || 0) / recommendationPerPage), [filteredRecommendationCafes, recommendationPerPage]);
-  const paginatedRecommend = useMemo(() => filteredRecommendationCafes?.slice((currentPage - 1) * recommendationPerPage, currentPage * recommendationPerPage) || [], [currentPage, filteredRecommendationCafes, recommendationPerPage]);
+  const totalRecommendedPages = useMemo(
+    () =>
+      Math.ceil(
+        (filteredRecommendationCafes?.length || 0) / recommendationPerPage,
+      ),
+    [filteredRecommendationCafes, recommendationPerPage],
+  );
+  const paginatedRecommend = useMemo(
+    () =>
+      filteredRecommendationCafes?.slice(
+        (currentPage - 1) * recommendationPerPage,
+        currentPage * recommendationPerPage,
+      ) || [],
+    [currentPage, filteredRecommendationCafes, recommendationPerPage],
+  );
 
-  useEffect(() => { setCurrentPage(1); }, [filteredRecommendationCafes]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filteredRecommendationCafes]);
 
   const handleNextRecommendedPage = () => {
     if (currentPage < totalRecommendedPages) setCurrentPage(currentPage + 1);
@@ -31,28 +52,31 @@ export default function RecommendationCafes() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const handleRecommendedCafeClick = useCafeClick<ISupabaseRecommendationCafe>({ routePath: 'recommendation' });
+  const handleRecommendedCafeClick = useCafeClick<ISupabaseRecommendationCafe>({
+    routePath: 'recommendation',
+  });
 
   // 로딩 상태 처리
   if (isPending) {
     return (
-      <div className="h-full flex flex-col">
+      <div className="flex h-full flex-col">
         <section
           id="recommendation-scroll-container"
-          className="flex-1 overflow-y-auto overflow-x-hidden">
+          className="flex-1 overflow-x-hidden overflow-y-auto"
+        >
           <ul className="pagination-sidebar-list">
             {Array.from({ length: recommendationPerPage }).map((_, index) => (
               <li
                 key={index}
-                className={`h-24 p-2 rounded-sm shadow-md list-none ${isDarkTheme ? 'bg-dark-background text-white shadow-dark-shadow' : ''} hover:opacity-50 transition duration-150 ease`}
+                className={`h-24 rounded-sm p-2 shadow-md ${isDarkTheme ? 'bg-dark-background shadow-dark-shadow text-white' : ''} ease list-none transition duration-150 hover:opacity-50`}
               >
                 <button
                   type="button"
                   aria-label="카페 상세 정보 열기 버튼"
-                  className="w-full h-full flex justify-between items-center gap-2 text-left cursor-pointer"
+                  className="flex h-full w-full cursor-pointer items-center justify-between gap-2 text-left"
                 >
-                  <div className="h-full flex flex-col justify-center gap-1">
-                    <span className="whitespace-nowrap overflow-hidden text-ellipsis  font-bold text-xl">
+                  <div className="flex h-full flex-col justify-center gap-1">
+                    <span className="overflow-hidden text-xl font-bold text-ellipsis whitespace-nowrap">
                       로딩중..
                     </span>
                   </div>
@@ -68,14 +92,14 @@ export default function RecommendationCafes() {
   // 에러 상태 처리
   if (isError) {
     return (
-      <div className="h-full flex flex-col">
-        <section className="flex-1 overflow-y-auto overflow-x-hidden">
-          <div className="my-8 px-8 flex items-center justify-center h-40">
+      <div className="flex h-full flex-col">
+        <section className="flex-1 overflow-x-hidden overflow-y-auto">
+          <div className="my-8 flex h-40 items-center justify-center px-8">
             <div className="text-center">
-              <p className="text-red-500 dark:text-red-400 mb-2">
+              <p className="mb-2 text-red-500 dark:text-red-400">
                 추천 카페 목록을 불러오는 중 에러가 발생했습니다.
               </p>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 {error?.message || '알 수 없는 오류'}
               </p>
             </div>
@@ -88,14 +112,14 @@ export default function RecommendationCafes() {
   // 전체 데이터가 없는 경우 vs 필터링 결과가 없는 경우 구분
   if (filteredRecommendationCafes?.length === 0) {
     return (
-      <div className="h-full flex flex-col">
-        <section className="flex-1 overflow-y-auto overflow-x-hidden">
-          <div className="my-8 px-8 flex items-center justify-center h-40">
+      <div className="flex h-full flex-col">
+        <section className="flex-1 overflow-x-hidden overflow-y-auto">
+          <div className="my-8 flex h-40 items-center justify-center px-8">
             <div className="text-center">
-              <p className="text-gray-500 dark:text-gray-400 mb-2">
+              <p className="mb-2 text-gray-500 dark:text-gray-400">
                 추천 카페가 없습니다.
               </p>
-              <p className="text-gray-400 dark:text-gray-500 text-sm">
+              <p className="text-sm text-gray-400 dark:text-gray-500">
                 곧 새로운 추천 카페가 추가될 예정입니다!
               </p>
             </div>
@@ -108,14 +132,14 @@ export default function RecommendationCafes() {
   // 필터링 결과만 없는 경우
   if (totalFilteredCount === 0) {
     return (
-      <div className="h-full flex flex-col">
-        <section className="flex-1 overflow-y-auto overflow-x-hidden">
-          <div className="my-8 px-8 flex items-center justify-center h-40">
+      <div className="flex h-full flex-col">
+        <section className="flex-1 overflow-x-hidden overflow-y-auto">
+          <div className="my-8 flex h-40 items-center justify-center px-8">
             <div className="text-center">
-              <p className="text-gray-500 dark:text-gray-400 mb-2">
+              <p className="mb-2 text-gray-500 dark:text-gray-400">
                 검색 조건에 맞는 카페가 없습니다.
               </p>
-              <p className="text-gray-400 dark:text-gray-500 text-sm">
+              <p className="text-sm text-gray-400 dark:text-gray-500">
                 다른 카테고리를 선택해보세요.
               </p>
             </div>
@@ -126,10 +150,11 @@ export default function RecommendationCafes() {
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex h-full flex-col">
       <section
         id="recommendation-scroll-container"
-        className="flex-1 overflow-y-auto overflow-x-hidden">
+        className="flex-1 overflow-x-hidden overflow-y-auto"
+      >
         <ul className="pagination-sidebar-list">
           {paginatedRecommend.map((cafe: ISupabaseRecommendationCafe) => (
             <CafeItem

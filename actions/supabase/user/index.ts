@@ -1,3 +1,2 @@
-export { checkNicknameAvailability } from './checkNicknameAvailability';
-export { updateUserProfile } from './updateUserProfile';
-export type { IUpdateUserProfileParams } from './updateUserProfile';
+export { updateUserProfile } from '@/actions/supabase/user/updateUserProfile';
+export type { IUpdateUserProfileParams } from '@/actions/supabase/user/updateUserProfile';

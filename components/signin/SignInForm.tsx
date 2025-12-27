@@ -15,7 +15,15 @@ import InputField from '@/components/shared/InputField';
 import Button from '@/components/shared/Button';
 import { useUIStore } from '@/stores';
 
-const ResetPasswordRequestForm = dynamic(() => import('@/components/signin/ResetPasswordRequestForm'), { ssr: false, loading: () => <div className='w-80 h-70 max-w-(--breakpoint-lg) sm:w-96 bg-white'></div> });
+const ResetPasswordRequestForm = dynamic(
+  () => import('@/components/signin/ResetPasswordRequestForm'),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-70 w-80 max-w-(--breakpoint-lg) bg-white sm:w-96"></div>
+    ),
+  },
+);
 
 export default function SignInForm() {
   const router = useRouter();
@@ -28,7 +36,11 @@ export default function SignInForm() {
 
   const { signIn, isPending } = useSignIn();
 
-  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignInFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignInFormData>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
       email: '',
@@ -56,19 +68,23 @@ export default function SignInForm() {
         />
       ) : !resetRequired ? (
         <div className="auth-glass-card">
-          <div className="flex justify-between items-center mb-4">
-            <p className={`auth-form-title ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>로그인</p>
+          <div className="mb-4 flex items-center justify-between">
+            <p
+              className={`auth-form-title ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+            >
+              로그인
+            </p>
             <button
               type="button"
               aria-label="로그인 취소 버튼"
               onClick={handleClose}
-              className={`${isDarkTheme ? 'text-white' : 'text-text-primary'} cursor-pointer hover:opacity-60 transition-opacity`}
+              className={`${isDarkTheme ? 'text-white' : 'text-text-primary'} cursor-pointer transition-opacity hover:opacity-60`}
             >
-              <CircleX className='size-8' />
+              <CircleX className="size-8" />
             </button>
           </div>
           <form
-            className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
+            className="flex w-80 max-w-(--breakpoint-lg) flex-col gap-4 sm:w-96"
             onSubmit={handleSubmit(onFormSubmit)}
           >
             <Controller
@@ -112,32 +128,34 @@ export default function SignInForm() {
               ariaLabel="로그인 버튼"
               dataTestId="button-signin"
               disabled={isSubmitting || isPending}
-              text='접속하기'
+              text="접속하기"
             />
             <Button
               type="button"
               aria-label="비밀번호 재설정 폼 열기 버튼"
               dataTestId="open-resetpassword-form-button"
               onClick={() => setShowResetForm(true)}
-              customClassName='bg-orange-500 hover:bg-orange-600'
-              text='비밀번호 재설정'
+              customClassName="bg-orange-500 hover:bg-orange-600"
+              text="비밀번호 재설정"
             />
             <Button
               type="button"
               aria-label="구글 로그인 버튼"
               onClick={() => signInWithGoogle()}
-              customClassName='bg-blue-500 hover:bg-blue-600'
-              text='구글 로그인'
+              customClassName="bg-blue-500 hover:bg-blue-600"
+              text="구글 로그인"
             />
             <Button
               type="button"
               aria-label="카카오 로그인 버튼"
               onClick={() => signInWithKakao()}
               customClassName="bg-yellow-500 hover:bg-yellow-600"
-              text='카카오 로그인'
+              text="카카오 로그인"
             />
 
-            <p className={`auth-form-mention ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+            <p
+              className={`auth-form-mention ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+            >
               계정이 없으신가요?{' '}
               <Link
                 href="/signup"
@@ -145,7 +163,9 @@ export default function SignInForm() {
                 data-testid="button-go-to-signup-from-signin"
                 className={`cursor-pointer ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
               >
-                <span className={`font-bold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+                <span
+                  className={`font-bold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+                >
                   {isDarkTheme ? '회원가입' : '회원가입'}
                 </span>
               </Link>
@@ -154,20 +174,20 @@ export default function SignInForm() {
         </div>
       ) : (
         <div className="auth-glass-card flex flex-col items-center gap-6">
-          <div className="w-full flex justify-end">
+          <div className="flex w-full justify-end">
             <button
               type="button"
               aria-label="로그인 취소 버튼"
               onClick={handleClose}
-              className={`${isDarkTheme ? 'text-white' : 'text-text-primary'} cursor-pointer hover:opacity-60 transition-opacity`}
+              className={`${isDarkTheme ? 'text-white' : 'text-text-primary'} cursor-pointer transition-opacity hover:opacity-60`}
             >
-              <CircleX className='size-8' />
+              <CircleX className="size-8" />
             </button>
           </div>
 
-          <div className="w-16 h-16 bg-main-light rounded-full flex items-center justify-center">
+          <div className="bg-main-light flex h-16 w-16 items-center justify-center rounded-full">
             <svg
-              className="size-8 text-main"
+              className="text-main size-8"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -182,26 +202,32 @@ export default function SignInForm() {
             </svg>
           </div>
 
-          <div className="text-center space-y-3">
-            <h2 className={`text-2xl font-bold text-gray-800 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+          <div className="space-y-3 text-center">
+            <h2
+              className={`text-2xl font-bold text-gray-800 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+            >
               이메일을 확인해주세요
             </h2>
-            <p className={`text-gray-600 leading-relaxed max-w-sm ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
-              비밀번호 재설정 링크를 이메일로 발송했습니다.<br />
+            <p
+              className={`max-w-sm leading-relaxed text-gray-600 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+            >
+              비밀번호 재설정 링크를 이메일로 발송했습니다.
+              <br />
               메일을 확인하고 링크를 클릭해주세요.
             </p>
           </div>
 
-          <div className="space-y-3 flex flex-col items-center">
+          <div className="flex flex-col items-center space-y-3">
             <Button
               type="button"
               ariaLabel="로그인 화면으로 돌아가기"
               onClick={() => setResetRequired(false)}
-              text='로그인 화면으로 돌아가기'
-              customClassName='w-full'
+              text="로그인 화면으로 돌아가기"
+              customClassName="w-full"
+            ></Button>
+            <p
+              className={`text-center text-sm text-gray-500 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
             >
-            </Button>
-            <p className={`text-sm text-gray-500 text-center ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
               이메일이 오지 않았나요? 스팸도 확인해보세요.
             </p>
           </div>

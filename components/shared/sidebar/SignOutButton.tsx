@@ -4,6 +4,7 @@ import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/stores/user';
 import { signOut } from '@/actions/supabase/authentication';
+import { TOAST_SUCCESS, TOAST_ERROR } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import Button from '@/components/shared/Button';
 
@@ -16,16 +17,16 @@ export default function SignOutButton() {
 
   const handleSignOut = () => {
     startTransition(async () => {
-      const result = await signOut();
-
-      if (!result.success) {
-        toast.error(result.message);
-        return;
+      try {
+        const success = await signOut();
+        if (success) {
+          resetUser();
+          toast.success(TOAST_SUCCESS.SIGNOUT);
+          router.replace('/main');
+        }
+      } catch {
+        toast.error(TOAST_ERROR.SIGNOUT);
       }
-
-      resetUser();
-      toast.success(result.message);
-      router.replace('/main');
     });
   };
 

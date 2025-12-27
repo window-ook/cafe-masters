@@ -11,10 +11,22 @@ import SlidingDrawer from '@/components/shared/sliding-drawer/SlidingDrawer';
 import CafeItemSkeleton from '@/components/shared/sidebar/CafeItemSkeleton';
 import CollectionCafesSkeleton from '@/components/collection/CollectionCafesSkeleton';
 
-const CollectionCafes = dynamic(() => import('@/components/collection/CollectionCafes'), { ssr: false, loading: () => <CollectionCafesSkeleton /> });
-const SearchCafes = dynamic(() => import('@/components/search/SearchCafes'), { ssr: false, loading: () => <CafeItemSkeleton /> });
-const BookmarkCafes = dynamic(() => import('@/components/bookmark/BookmarkCafes'), { ssr: false, loading: () => <CafeItemSkeleton /> });
-const RecommendationCafes = dynamic(() => import('@/components/recommendation/RecommendationCafes'), { ssr: false, loading: () => <CafeItemSkeleton /> });
+const CollectionCafes = dynamic(
+  () => import('@/components/collection/CollectionCafes'),
+  { ssr: false, loading: () => <CollectionCafesSkeleton /> },
+);
+const SearchCafes = dynamic(() => import('@/components/search/SearchCafes'), {
+  ssr: false,
+  loading: () => <CafeItemSkeleton />,
+});
+const BookmarkCafes = dynamic(
+  () => import('@/components/bookmark/BookmarkCafes'),
+  { ssr: false, loading: () => <CafeItemSkeleton /> },
+);
+const RecommendationCafes = dynamic(
+  () => import('@/components/recommendation/RecommendationCafes'),
+  { ssr: false, loading: () => <CafeItemSkeleton /> },
+);
 
 export default function SideBar() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -26,17 +38,9 @@ export default function SideBar() {
   return (
     <aside className="flex">
       <div
-        className={`
-          relative z-10
-          w-screen h-screen
-          bg-transparent
-          ${isDarkTheme ? 'text-white border-gray-700/20' : 'text-gray-900 border-white/30'}
-          transition-all duration-300 ease-in-out
-          ${isSlidingDrawerOpen && 'hidden sm:block'}
-          sm:max-w-92
-        `}
+        className={`relative z-10 h-screen w-screen bg-transparent ${isDarkTheme ? 'border-gray-700/20 text-white' : 'border-white/30 text-gray-900'} transition-all duration-300 ease-in-out ${isSlidingDrawerOpen && 'hidden sm:block'} sm:max-w-92`}
       >
-        <section className="h-full flex flex-col">
+        <section className="flex h-full flex-col">
           <Header />
 
           {paths.isMain && (
@@ -46,17 +50,31 @@ export default function SideBar() {
             </>
           )}
 
-          {paths.isSearch && (<div className="min-h-0 flex-1"><SearchCafes /></div>)}
+          {paths.isSearch && (
+            <div className="min-h-0 flex-1">
+              <SearchCafes />
+            </div>
+          )}
 
-          {paths.isRecommendation && (<div className="min-h-0 flex-1"><RecommendationCafes /></div>)}
+          {paths.isRecommendation && (
+            <div className="min-h-0 flex-1">
+              <RecommendationCafes />
+            </div>
+          )}
 
-          {paths.isCollection && (<div className="min-h-0 flex-1 sm:hidden"><CollectionCafes /></div>)}
+          {paths.isCollection && (
+            <div className="min-h-0 flex-1 sm:hidden">
+              <CollectionCafes />
+            </div>
+          )}
 
           {paths.isCollection && !session && <Footer />}
 
           {paths.isBookmark && (
             <>
-              <div className="min-h-0 flex-1"><BookmarkCafes /></div>
+              <div className="min-h-0 flex-1">
+                <BookmarkCafes />
+              </div>
               {!session && <Footer />}
             </>
           )}

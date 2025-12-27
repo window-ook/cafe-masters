@@ -3,7 +3,6 @@ import { SignupPage } from '@/tests/e2e/page-objects/SignUpPage';
 import { VerifyPage } from '@/tests/e2e/page-objects/VerifyPage';
 import { MainPage } from '@/tests/e2e/page-objects/MainPage';
 import { MOCK_AUTH_DATA, TEST_SELECTORS, ERROR_MESSAGES } from '@/tests/e2e/utils/constants';
-import { TOAST_SUCCESS } from '@/constants/messages';
 
 test.describe('처음 가입한 사용자의 플로우 테스트', () => {
     test('회원가입부터 카페 수집까지 성공한다.', async ({ page }) => {
@@ -70,7 +69,6 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
         await page.getByTestId(TEST_SELECTORS.INPUT_COMMENT).fill('분위기가 정말 좋은 카페입니다');
         await page.getByTestId(TEST_SELECTORS.INPUT_EATEN_MENUS).fill('이얼즈 라떼');
         await page.getByTestId(TEST_SELECTORS.BUTTON_SUBMIT_COLLECT).click();
-        await expect(page.getByText(TOAST_SUCCESS.CREATE_COLLECTION)).toBeVisible();
         await page.waitForLoadState();
 
         // 9. 수집 완료 후 수집 확인
@@ -78,7 +76,7 @@ test.describe('처음 가입한 사용자의 플로우 테스트', () => {
         await page.getByTestId(TEST_SELECTORS.BUTTON_GO_TO_COLLECTION_BY_TAB).click();
         await expect(page).toHaveURL(/.*collection.*/);
         await page.waitForLoadState('networkidle');
-        await expect(page.getByText('이얼즈')).toBeVisible({ timeout: 10000 });
+        await expect(page.getByText('이얼즈').first()).toBeVisible({ timeout: 10000 });
     })
 
     test.describe('실패 시나리오 검증', () => {

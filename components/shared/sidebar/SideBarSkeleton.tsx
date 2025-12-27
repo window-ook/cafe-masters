@@ -1,66 +1,66 @@
 export default function SideBarSkeleton() {
   return (
-    <aside className="flex w-screen h-screen max-w-92 bg-transparent">
-      <div className="relative z-10 w-full px-1 rounded-none">
-        <section className="h-full flex flex-col">
+    <aside className="flex h-screen w-screen max-w-92 bg-transparent">
+      <div className="relative z-10 w-full rounded-none px-1">
+        <section className="flex h-full flex-col">
           {/* 헤더 */}
-          <header className="top-0 w-full max-w-108 py-4 flex-none bg-transparent flex flex-col gap-2">
+          <header className="top-0 flex w-full max-w-108 flex-none flex-col gap-2 bg-transparent py-4">
             {/* 로고 영역 */}
-            <div className="flex justify-between items-center mb-2">
+            <div className="mb-2 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="size-8 rounded-md bg-gray-200 animate-pulse" />
-                <div className="w-40 h-8 rounded-md bg-gray-200 animate-pulse" />
+                <div className="size-8 animate-pulse rounded-md bg-gray-200" />
+                <div className="h-8 w-40 animate-pulse rounded-md bg-gray-200" />
               </div>
             </div>
           </header>
 
           {/* 탭 리스트 */}
-          <ul className="flex-1 flex flex-col">
+          <ul className="flex flex-1 flex-col">
             {/* 검색 결과 */}
-            <li className="w-full px-3 py-4 rounded-lg flex justify-between">
+            <li className="flex w-full justify-between rounded-lg px-3 py-4">
               <div className="flex items-center gap-2">
-                <div className="size-6 rounded-md bg-gray-200 animate-pulse" />
-                <div className="w-24 h-6 rounded-md bg-gray-200 animate-pulse" />
+                <div className="size-6 animate-pulse rounded-md bg-gray-200" />
+                <div className="h-6 w-24 animate-pulse rounded-md bg-gray-200" />
               </div>
             </li>
 
             {/* 내가 수집한 카페 */}
-            <li className="w-full px-3 py-4 rounded-lg flex justify-between">
+            <li className="flex w-full justify-between rounded-lg px-3 py-4">
               <div className="flex items-center gap-2">
-                <div className="size-6 rounded-md bg-gray-200 animate-pulse" />
-                <div className="w-40 h-6 rounded-md bg-gray-200 animate-pulse" />
+                <div className="size-6 animate-pulse rounded-md bg-gray-200" />
+                <div className="h-6 w-40 animate-pulse rounded-md bg-gray-200" />
               </div>
             </li>
 
             {/* 북마크한 카페 */}
-            <li className="w-full px-3 py-4 rounded-lg flex justify-between">
+            <li className="flex w-full justify-between rounded-lg px-3 py-4">
               <div className="flex items-center gap-2">
-                <div className="size-6 rounded-md bg-gray-200 animate-pulse" />
-                <div className="w-36 h-6 rounded-md bg-gray-200 animate-pulse" />
+                <div className="size-6 animate-pulse rounded-md bg-gray-200" />
+                <div className="h-6 w-36 animate-pulse rounded-md bg-gray-200" />
               </div>
             </li>
 
             {/* 개발자 PICK 추천 카페 */}
-            <li className="w-full px-3 py-4 rounded-lg flex justify-between">
+            <li className="flex w-full justify-between rounded-lg px-3 py-4">
               <div className="flex items-center gap-2">
-                <div className="size-6 rounded-md bg-gray-200 animate-pulse" />
-                <div className="w-48 h-6 rounded-md bg-gray-200 animate-pulse" />
+                <div className="size-6 animate-pulse rounded-md bg-gray-200" />
+                <div className="h-6 w-48 animate-pulse rounded-md bg-gray-200" />
               </div>
             </li>
 
             {/* 버그 제보 */}
-            <li className="w-full px-3 py-4 rounded-lg flex justify-between">
+            <li className="flex w-full justify-between rounded-lg px-3 py-4">
               <div className="flex items-center gap-2">
-                <div className="size-6 rounded-md bg-gray-200 animate-pulse" />
-                <div className="w-24 h-6 rounded-md bg-gray-200 animate-pulse" />
+                <div className="size-6 animate-pulse rounded-md bg-gray-200" />
+                <div className="h-6 w-24 animate-pulse rounded-md bg-gray-200" />
               </div>
             </li>
           </ul>
 
           {/* 푸터 */}
-          <footer className="flex-none w-full max-w-108 pb-4 flex flex-col gap-6 items-center">
+          <footer className="flex w-full max-w-108 flex-none flex-col items-center gap-6 pb-4">
             {/* 로그인 버튼 */}
-            <div className="w-full h-14 rounded-lg bg-gray-200 animate-pulse" />
+            <div className="h-14 w-full animate-pulse rounded-lg bg-gray-200" />
           </footer>
         </section>
       </div>

@@ -4,26 +4,39 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreateRecommendationCafe } from '@/hooks/supabase/recommendation/useCreateRecommendationCafe';
 import { useRecommendationStore } from '@/stores/recommendation';
-import { recommendationFormSchema, RecommendationFormData } from '@/schema/recommendation';
+import {
+  recommendationFormSchema,
+  RecommendationFormData,
+} from '@/schema/recommendation';
 import { RecommendationRowInsert } from '@/actions/supabase/recommendation';
-import { TOAST_WARN } from '@/utils/constants/messages';
+import { TOAST_SUCCESS, TOAST_ERROR, TOAST_WARN } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
 import Button from '@/components/shared/Button';
 
-export default function FormForRecommend({ setIsRecommendFormOpenAction }: { setIsRecommendFormOpenAction: (open: boolean) => void }) {
-  const targetCafeForRecommend = useRecommendationStore(state => state.targetCafeForRecommend);
+export default function FormForRecommend({
+  setIsRecommendFormOpenAction,
+}: {
+  setIsRecommendFormOpenAction: (open: boolean) => void;
+}) {
+  const targetCafeForRecommend = useRecommendationStore(
+    state => state.targetCafeForRecommend,
+  );
 
   const { createRecommendationCafe } = useCreateRecommendationCafe();
 
-  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<RecommendationFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<RecommendationFormData>({
     resolver: zodResolver(recommendationFormSchema),
     defaultValues: {
       categories: [],
     },
   });
 
-  const onFormSubmit = (data: RecommendationFormData) => {
+  const onFormSubmit = async (data: RecommendationFormData) => {
     if (!targetCafeForRecommend) {
       toast.warning(TOAST_WARN.NO_DATA_FOR_RECOMMEND);
       return;
@@ -43,35 +56,49 @@ export default function FormForRecommend({ setIsRecommendFormOpenAction }: { set
       menus: null,
     };
 
-    createRecommendationCafe(recommendationData);
-    setIsRecommendFormOpenAction(false);
+    try {
+      await createRecommendationCafe(recommendationData);
+      toast.success(TOAST_SUCCESS.CREATE_RECOMMENDATION);
+      setIsRecommendFormOpenAction(false);
+    } catch {
+      toast.error(TOAST_ERROR.CREATE_RECOMMENDATION);
+    }
   };
 
   const errorStyle = 'text-red-500 text-sm mt-1 block';
 
   return (
-    <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col p-2 gap-4">
-      <div className="flex justify-between items-center">
+    <form
+      onSubmit={handleSubmit(onFormSubmit)}
+      className="flex flex-col gap-4 p-2"
+    >
+      <div className="flex items-center justify-between">
         <p className="text-2xl font-semibold">
           {targetCafeForRecommend?.name || '카페 추천'}
         </p>
         <Button
           type="button"
           aria-label="추천 취소 버튼"
-          text='Back'
+          text="Back"
           onClick={() => setIsRecommendFormOpenAction(false)}
         />
       </div>
 
       {/* 카페 정보 표시 */}
       {targetCafeForRecommend && (
-        <div className="p-3 rounded-lg bg-gray-50">
-          <p className="text-sm text-gray-600">{targetCafeForRecommend.address}</p>
+        <div className="rounded-lg bg-gray-50 p-3">
+          <p className="text-sm text-gray-600">
+            {targetCafeForRecommend.address}
+          </p>
           {targetCafeForRecommend.phone_number && (
-            <p className="text-sm text-gray-600">{targetCafeForRecommend.phone_number}</p>
+            <p className="text-sm text-gray-600">
+              {targetCafeForRecommend.phone_number}
+            </p>
           )}
           {targetCafeForRecommend.opening_time && (
-            <p className="text-sm text-gray-600">{targetCafeForRecommend.opening_time}</p>
+            <p className="text-sm text-gray-600">
+              {targetCafeForRecommend.opening_time}
+            </p>
           )}
         </div>
       )}

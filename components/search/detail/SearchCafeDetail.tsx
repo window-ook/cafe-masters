@@ -3,7 +3,14 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearchCafeDetail } from '@/hooks/kakao-map/useSearchCafeDetail';
-import { useSearchedResultStore, useCurrentCafeStore, useUserStore, useUIStore, useCollectionStore, useRecommendationStore } from '@/stores';
+import {
+  useSearchedResultStore,
+  useCurrentCafeStore,
+  useUserStore,
+  useUIStore,
+  useCollectionStore,
+  useRecommendationStore,
+} from '@/stores';
 import { LoadingSpinner } from '@/components/shared/sliding-drawer/LoadingSpinner';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Button from '@/components/shared/Button';
@@ -15,7 +22,10 @@ interface ISearchCafePreDetail {
   setIsRecommendFormOpenAction: (isMemoOpen: boolean) => void;
 }
 
-export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction }: ISearchCafePreDetail) {
+export default function SearchCafeDetail({
+  cafeId,
+  setIsRecommendFormOpenAction,
+}: ISearchCafePreDetail) {
   const router = useRouter();
 
   const isAdmin = useUserStore(state => state.isAdmin);
@@ -26,10 +36,16 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
   const isRecommended = useCurrentCafeStore(state => state.isRecommended);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const searchResult = useSearchedResultStore(state => state.searchResult);
-  const setTargetCafeForRecommend = useRecommendationStore(state => state.setTargetCafeForRecommend);
-  const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
+  const setTargetCafeForRecommend = useRecommendationStore(
+    state => state.setTargetCafeForRecommend,
+  );
+  const setTargetCafeForCollect = useCollectionStore(
+    state => state.setTargetCafeForCollect,
+  );
 
-  const { searchCafeDetail, isPending: isDetailLoading } = useSearchCafeDetail(cafeId.toString());
+  const { searchCafeDetail, isPending: isDetailLoading } = useSearchCafeDetail(
+    cafeId.toString(),
+  );
 
   // 즉시 렌더링: 검색 결과에 포함된 기본 정보
   const foundCafe = useMemo(() => {
@@ -59,7 +75,9 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
       image: searchCafeDetail?.image || IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK,
       address: foundCafe.road_address_name ?? foundCafe.address_name,
       phone_number: foundCafe.phone ?? '',
-      kakaoCategories: foundCafe.category_name ? foundCafe.category_name.split(' > ') : [],
+      kakaoCategories: foundCafe.category_name
+        ? foundCafe.category_name.split(' > ')
+        : [],
       extra_images: searchCafeDetail?.extra_images ?? [],
       opening_time: searchCafeDetail?.opening_time ?? null,
     };
@@ -79,7 +97,7 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
 
   const actionButtons = (
     <>
-      {session && !isCollected &&
+      {session && !isCollected && (
         <Button
           dataTestId="button-collect"
           onClick={() => {
@@ -96,10 +114,15 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
             });
             setIsCollectFormOpen(true);
           }}
-          customClassName='flex-1'
+          customClassName="flex-1"
         >
-          {isDetailLoading ? <LoadingSpinner size="sm" /> : <span>수집하기</span>}
-        </Button>}
+          {isDetailLoading ? (
+            <LoadingSpinner size="sm" />
+          ) : (
+            <span>수집하기</span>
+          )}
+        </Button>
+      )}
 
       {isAdmin && !isRecommended && (
         <Button
@@ -117,23 +140,31 @@ export default function SearchCafeDetail({ cafeId, setIsRecommendFormOpenAction 
             });
             setIsRecommendFormOpenAction(true);
           }}
-          customClassName='flex-1 bg-blue-600 hover:bg-blue-800'
+          customClassName="bg-blue-600 flex-1 hover:bg-blue-800"
         >
-          {isDetailLoading ? <LoadingSpinner size="sm" /> : <span>추천하기</span>}
+          {isDetailLoading ? (
+            <LoadingSpinner size="sm" />
+          ) : (
+            <span>추천하기</span>
+          )}
         </Button>
       )}
 
       {/* 로그아웃 상태 */}
-      {!session &&
-        <Button
-          onClick={() => router.push('/signin')} customClassName='flex-1'>
-          {isDetailLoading ? <LoadingSpinner size="sm" /> : <span>로그인하고 수집하기</span>}
-        </Button>}
+      {!session && (
+        <Button onClick={() => router.push('/signin')} customClassName="flex-1">
+          {isDetailLoading ? (
+            <LoadingSpinner size="sm" />
+          ) : (
+            <span>로그인하고 수집하기</span>
+          )}
+        </Button>
+      )}
     </>
   );
 
   return (
-    <article className="h-full rounded-md flex flex-col">
+    <article className="flex h-full flex-col rounded-md">
       <CafeDetailHeader bookmarkData={bookmarkData} />
       <CafeDetailBody
         cafeId={cafeId}

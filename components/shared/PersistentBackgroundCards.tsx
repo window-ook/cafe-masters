@@ -9,7 +9,7 @@ const PolaroidGalleryBackground = dynamic(
     loading: () => (
       <div className="fixed inset-0 -z-10 bg-gradient-to-br from-slate-50 to-gray-100" />
     ),
-  }
+  },
 );
 
 export default function PersistentBackgroundCards() {

@@ -9,7 +9,7 @@ import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { useUpdateCollectionCafe } from '@/hooks/supabase/collection/useUpdateCollectionCafe';
 import { useCreateCollectionCafe } from '@/hooks/supabase/collection';
-import { CONSOLE_ERROR, TOAST_ERROR } from '@/utils/constants/messages';
+import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
@@ -21,7 +21,9 @@ export default function FormForCollect() {
   const pathname = usePathname();
 
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
-  const targetCafeForCollect = useCollectionStore(state => state.targetCafeForCollect);
+  const targetCafeForCollect = useCollectionStore(
+    state => state.targetCafeForCollect,
+  );
   const editingCafe = useCollectionStore(state => state.editingCafe);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const clearEditingCafe = useCollectionStore(state => state.clearEditingCafe);
@@ -33,27 +35,35 @@ export default function FormForCollect() {
 
   const isEditMode = pathname?.startsWith('/collection/detail/') && editingCafe;
 
-  const { control, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = useForm<CollectionFormData>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<CollectionFormData>({
     resolver: zodResolver(collectionFormSchema),
-    defaultValues: isEditMode ? {
-      rating: editingCafe?.ratings || 0,
-      categories: editingCafe?.categories || [],
-      comment: editingCafe?.comment || '',
-      eaten_menus: editingCafe?.eaten_menus || '',
-      pros: editingCafe?.pros || '',
-      cons: editingCafe?.cons || '',
-      customImage: undefined,
-      keepOriginalImage: false,
-    } : {
-      rating: 0,
-      categories: [],
-      comment: '',
-      eaten_menus: '',
-      pros: '',
-      cons: '',
-      customImage: undefined,
-      keepOriginalImage: false,
-    },
+    defaultValues: isEditMode
+      ? {
+        rating: editingCafe?.ratings || 0,
+        categories: editingCafe?.categories || [],
+        comment: editingCafe?.comment || '',
+        eaten_menus: editingCafe?.eaten_menus || '',
+        pros: editingCafe?.pros || '',
+        cons: editingCafe?.cons || '',
+        customImage: undefined,
+        keepOriginalImage: false,
+      }
+      : {
+        rating: 0,
+        categories: [],
+        comment: '',
+        eaten_menus: '',
+        pros: '',
+        cons: '',
+        customImage: undefined,
+        keepOriginalImage: false,
+      },
   });
 
   const customImage = watch('customImage');
@@ -79,7 +89,11 @@ export default function FormForCollect() {
       return url;
     } catch (error) {
       console.error(CONSOLE_ERROR.UPLOAD_IMAGE, error);
-      toast.error(error instanceof Error ? error.message : TOAST_ERROR.UPLOAD_IMAGE_FAILED);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : TOAST_ERROR.UPLOAD_IMAGE_FAILED,
+      );
       return null;
     } finally {
       setIsUploading(false);
@@ -127,9 +141,19 @@ export default function FormForCollect() {
         extra_images: JSON.stringify(finalExtraImages),
       };
 
-      updateCollectionCafe(updateData);
-      clearEditingCafe();
-      setIsCollectFormOpen(false);
+      try {
+        await updateCollectionCafe(updateData);
+        toast.success(TOAST_SUCCESS.EDIT_COLLECTION);
+        clearEditingCafe();
+        setIsCollectFormOpen(false);
+      } catch (error) {
+        console.error(CONSOLE_ERROR.EDIT_COLLECTION_CAFE, error);
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : TOAST_ERROR.EDIT_COLLECTION,
+        );
+      }
     } else {
       if (!targetCafeForCollect) {
         toast.error(TOAST_ERROR.NO_DATA_FOR_CREATE_COLLECTION);
@@ -170,21 +194,36 @@ export default function FormForCollect() {
         cons: data.cons || '',
       };
 
-      createCollectionCafe(collectionData);
-      setIsCollectFormOpen(false);
+      try {
+        await createCollectionCafe(collectionData);
+        toast.success(TOAST_SUCCESS.CREATE_COLLECTION);
+        setIsCollectFormOpen(false);
+      } catch (error) {
+        console.error(CONSOLE_ERROR.CREATE_COLLECTION_CAFE, error);
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : TOAST_ERROR.CREATE_COLLECTION,
+        );
+      }
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col p-2 gap-4">
-      <div className="flex justify-between items-center">
-        <p className=" text-2xl font-semibold">
+    <form
+      onSubmit={handleSubmit(onFormSubmit)}
+      className="flex flex-col gap-4 p-2"
+    >
+      <div className="flex items-center justify-between">
+        <p className="text-2xl font-semibold">
           {isEditMode ? editingCafe?.name : targetCafeForCollect?.name}
         </p>
         <Button
           type="button"
-          aria-label={isEditMode ? "카드 수정 취소 버튼" : "카드 수집 취소 버튼"}
-          text='Back'
+          aria-label={
+            isEditMode ? '카드 수정 취소 버튼' : '카드 수집 취소 버튼'
+          }
+          text="Back"
           onClick={() => {
             if (isEditMode) clearEditingCafe();
             setIsCollectFormOpen(false);
@@ -209,14 +248,20 @@ export default function FormForCollect() {
             )}
           />
         </div>
-        {errors.rating && <span className="text-red-500 text-sm mt-1 block">{errors.rating.message}</span>}
+        {errors.rating && (
+          <span className="mt-1 block text-sm text-red-500">
+            {errors.rating.message}
+          </span>
+        )}
       </div>
 
       {/* 이미지 업로드 섹션 */}
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-1">
           <span className="text-sm font-semibold">커스텀 이미지</span>
-          <p className={`text-xs ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+          <p
+            className={`text-xs ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+          >
             사용하고 싶은 이미지가 있다면 업로드 해주세요
           </p>
         </div>
@@ -226,7 +271,9 @@ export default function FormForCollect() {
           control={control}
           render={() => (
             <FileUploadField
-              onFileSelectAction={(file) => setValue('customImage', file || undefined)}
+              onFileSelectAction={file =>
+                setValue('customImage', file || undefined)
+              }
               disabled={isSubmitting || isUploading}
             />
           )}
@@ -234,16 +281,16 @@ export default function FormForCollect() {
 
         {/* 기본 썸네일 유지 체크박스 */}
         {customImage && (
-          <div className="flex items-center gap-2 mt-2">
+          <div className="mt-2 flex items-center gap-2">
             <Controller
               name="keepOriginalImage"
               control={control}
               render={({ field }) => (
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex cursor-pointer items-center gap-2">
                   <input
                     type="checkbox"
                     checked={field.value}
-                    onChange={(e) => field.onChange(e.target.checked)}
+                    onChange={e => field.onChange(e.target.checked)}
                     disabled={isSubmitting || isUploading}
                     className="size-4 cursor-pointer"
                   />
@@ -281,7 +328,7 @@ export default function FormForCollect() {
             id="comment"
             type="text"
             label="코멘트"
-            dataTestId='comment-input'
+            dataTestId="comment-input"
             placeholder="*코멘트"
             disabled={isSubmitting}
             isError={errors.comment?.message}
@@ -299,7 +346,7 @@ export default function FormForCollect() {
             id="eaten_menus"
             type="text"
             label="먹은 메뉴"
-            dataTestId='eaten-menus-input'
+            dataTestId="eaten-menus-input"
             placeholder="*먹은 메뉴"
             disabled={isSubmitting}
             isError={errors.eaten_menus?.message}
@@ -344,13 +391,17 @@ export default function FormForCollect() {
       {/* 제출 버튼 */}
       <Button
         type="submit"
-        aria-label={isEditMode ? "카드 수정 완료 버튼" : "카드 수집 완료 버튼"}
+        aria-label={isEditMode ? '카드 수정 완료 버튼' : '카드 수집 완료 버튼'}
         dataTestId="button-submit-collect"
         disabled={isSubmitting || isUploading}
         text={
-          isUploading ? '이미지 업로드 중...' :
-            isSubmitting ? (isEditMode ? '수정 중...' : '저장 중...') :
-              '완료'
+          isUploading
+            ? '이미지 업로드 중...'
+            : isSubmitting
+              ? isEditMode
+                ? '수정 중...'
+                : '저장 중...'
+              : '완료'
         }
       />
     </form>

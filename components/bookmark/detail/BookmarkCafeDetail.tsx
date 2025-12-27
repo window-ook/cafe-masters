@@ -7,7 +7,7 @@ import { useCollectionStore } from '@/stores/collection';
 import { useCurrentCafeStore, useUserStore } from '@/stores';
 import { useCloseSlidingDrawer } from '@/hooks/ui/useCloseSlidingDrawer';
 import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
-import { TOAST_SUCCESS } from '@/constants/messages';
+import { TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import { Bookmark, CircleX } from 'lucide-react';
 import Button from '@/components/shared/Button';
@@ -22,7 +22,9 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   const isCollected = useCurrentCafeStore(state => state.isCollected);
   const isRecommended = useCurrentCafeStore(state => state.isRecommended);
   const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
-  const setTargetCafeForCollect = useCollectionStore(state => state.setTargetCafeForCollect);
+  const setTargetCafeForCollect = useCollectionStore(
+    state => state.setTargetCafeForCollect,
+  );
 
   const { filteredBookmarkCafes } = useBookmarkCafes(session?.user?.id ?? '');
 
@@ -30,11 +32,13 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
 
   const handleClose = useCloseSlidingDrawer();
 
-  const detail = filteredBookmarkCafes.find((cafe: ISupabaseBookmarkCafe) => cafe.id === Number(cafeId));
+  const detail = filteredBookmarkCafes.find(
+    (cafe: ISupabaseBookmarkCafe) => cafe.id === Number(cafeId),
+  );
 
   if (!detail) {
     return (
-      <div className="h-full flex items-center justify-center">
+      <div className="flex h-full items-center justify-center">
         <p>카페 정보를 찾을 수 없습니다.</p>
       </div>
     );
@@ -60,65 +64,81 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
     image: detail.image || '',
     extra_images: detail.extra_images || [],
     opening_time: detail.opening_time || '미등록',
-    menus: detail.menus ? (() => {
-      try {
-        return JSON.parse(detail.menus);
-      } catch {
-        return null;
-      }
-    })() : null,
+    menus: detail.menus
+      ? (() => {
+          try {
+            return JSON.parse(detail.menus);
+          } catch {
+            return null;
+          }
+        })()
+      : null,
   };
 
   const actionButtons = (
     <>
       {/* 로그인 상태 */}
-      {session && <Button
-        onClick={() => setTargetCafeForCollect({
-          id: detail.id,
-          name: detail.name,
-          coordX: detail.coordX,
-          coordY: detail.coordY,
-          address: detail.address,
-          image: detail.image,
-          extra_images: detail.extra_images || [],
-          phone_number: detail.phone_number,
-          opening_time: detail.opening_time,
-        })}
-        customClassName='flex-1'
-      >
-        수집하기
-      </Button>}
+      {session && (
+        <Button
+          onClick={() =>
+            setTargetCafeForCollect({
+              id: detail.id,
+              name: detail.name,
+              coordX: detail.coordX,
+              coordY: detail.coordY,
+              address: detail.address,
+              image: detail.image,
+              extra_images: detail.extra_images || [],
+              phone_number: detail.phone_number,
+              opening_time: detail.opening_time,
+            })
+          }
+          customClassName="flex-1"
+        >
+          수집하기
+        </Button>
+      )}
 
       {/* 로그아웃 상태 */}
-      {!session && <Button onClick={() => router.push('/signin')} customClassName='flex-1'>
-        로그인하고 수집하기
-      </Button>}
+      {!session && (
+        <Button onClick={() => router.push('/signin')} customClassName="flex-1">
+          로그인하고 수집하기
+        </Button>
+      )}
     </>
   );
 
   const handleBookmarkDeletion = async () => {
-    await deleteBookmarkCafe(bookmarkData.id);
-    setIsBookmarked(false);
-    toast.success(TOAST_SUCCESS.DELETE_BOOKMARK);
+    try {
+      await deleteBookmarkCafe(bookmarkData.id);
+      toast.success(TOAST_SUCCESS.DELETE_BOOKMARK);
+      setIsBookmarked(false);
+    } catch (error) {
+      toast.error(TOAST_ERROR.DELETE_BOOKMARK);
+    }
   };
 
   return (
-    <article className="h-full rounded-md flex flex-col">
-      <header className="w-full p-4 flex justify-between items-center">
-        <div className='flex items-center gap-2'>
+    <article className="flex h-full flex-col rounded-md">
+      <header className="flex w-full items-center justify-between p-4">
+        <div className="flex items-center gap-2">
           <button
-            type='button'
+            type="button"
             data-testid="bookmark-cancel-button"
             onClick={() => handleBookmarkDeletion()}
-            className='cursor-pointer'
+            className="cursor-pointer"
           >
-            <Bookmark className='size-8 text-bookmark fill-bookmark' />
+            <Bookmark className="text-bookmark fill-bookmark size-8" />
           </button>
           {isCollected && <CollectedBadge />}
           {isRecommended && <RecommendedBadge />}
         </div>
-        <button aria-label="카페 상세 정보 보기 취소 버튼" onClick={handleClose} className='cursor-pointer'>
-          <CircleX className='size-8' />
+        <button
+          aria-label="카페 상세 정보 보기 취소 버튼"
+          onClick={handleClose}
+          className="cursor-pointer"
+        >
+          <CircleX className="size-8" />
         </button>
       </header>
       <CafeDetailBody

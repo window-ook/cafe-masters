@@ -1,7 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useCurrentCafeStore, useSearchedResultStore, useUIStore, useUserStore } from '@/stores';
+import {
+  useCurrentCafeStore,
+  useSearchedResultStore,
+  useUIStore,
+  useUserStore,
+} from '@/stores';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
@@ -13,7 +18,7 @@ declare global {
   }
 }
 
-interface ISearchDetailClientProps {
+export interface ISearchDetailClient {
   params: { id: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 }
@@ -21,13 +26,18 @@ interface ISearchDetailClientProps {
 /** 검색 카페 상세 페이지 클라이언트 컴포넌트
  * @description 카페 ID 동기화 / 북마크, 수집, 추천된 건지 확인하고 상태 업데이트 / URL 직접 접근 시 카페 기본 정보 조회
  */
-export default function SearchDetailClient({ params, searchParams }: ISearchDetailClientProps) {
+export default function SearchDetailClient({
+  params,
+  searchParams,
+}: ISearchDetailClient) {
   const { id } = params;
   const numericId = Number(id);
 
   const userId = useUserStore(state => state.userId);
   const searchResult = useSearchedResultStore(state => state.searchResult);
-  const setSearchResult = useSearchedResultStore(state => state.setSearchResult);
+  const setSearchResult = useSearchedResultStore(
+    state => state.setSearchResult,
+  );
   const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
   const setIsCollected = useCurrentCafeStore(state => state.setIsCollected);
   const setIsRecommended = useCurrentCafeStore(state => state.setIsRecommended);
@@ -69,7 +79,10 @@ export default function SearchDetailClient({ params, searchParams }: ISearchDeta
 
       // keywordSearch로 카페 이름으로 검색
       ps.keywordSearch(cafeName, (data: any, status: any) => {
-        if (status === window.kakao.maps.services.Status.OK && data.length > 0) {
+        if (
+          status === window.kakao.maps.services.Status.OK &&
+          data.length > 0
+        ) {
           const matchedCafe = data.find((place: any) => place.id === id);
 
           if (matchedCafe) {
@@ -98,7 +111,16 @@ export default function SearchDetailClient({ params, searchParams }: ISearchDeta
     };
 
     loadKakaoPlaceInfo();
-  }, [id, numericId, searchParams, searchResult, setSearchResult, setCurrentCoordX, setCurrentCoordY, openCafeDetail]);
+  }, [
+    id,
+    numericId,
+    searchParams,
+    searchResult,
+    setSearchResult,
+    setCurrentCoordX,
+    setCurrentCoordY,
+    openCafeDetail,
+  ]);
 
   // 카페 상태 업데이트 - 의존성이 변경될 때마다 실행하되, 중복 실행 방지
   useEffect(() => {
@@ -106,7 +128,8 @@ export default function SearchDetailClient({ params, searchParams }: ISearchDeta
 
     const isCollected = collectionCafes.some(cafe => cafe.id === numericId);
     const isBookmarked = bookmarkCafes.some(cafe => cafe.id === numericId);
-    const isRecommended = recommendationCafes?.some(cafe => cafe.id === numericId) || false;
+    const isRecommended =
+      recommendationCafes?.some(cafe => cafe.id === numericId) || false;
 
     const updateStates = () => {
       setIsCollected(isCollected);

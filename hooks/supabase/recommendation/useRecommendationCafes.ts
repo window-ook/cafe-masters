@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getRecommendationCafes } from '@/actions/supabase/recommendation';
 import { recommendationCafeQuery } from '@/queries/supabase/recommendation';
-import { CONSOLE_ERROR } from '@/constants/messages';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 /**
  * 카테고리 필터링 포함 추천 카페 조회 훅

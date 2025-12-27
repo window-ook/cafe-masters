@@ -14,7 +14,10 @@ export interface IFileUploadField {
   disabled?: boolean;
 }
 
-export default function FileUploadField({ onFileSelectAction, disabled = false }: IFileUploadField) {
+export default function FileUploadField({
+  onFileSelectAction,
+  disabled = false,
+}: IFileUploadField) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -46,7 +49,7 @@ export default function FileUploadField({ onFileSelectAction, disabled = false }
 
     // 미리보기 생성
     const reader = new FileReader();
-    reader.onload = (e) => setPreviewUrl(e.target?.result as string);
+    reader.onload = e => setPreviewUrl(e.target?.result as string);
     reader.readAsDataURL(file);
   };
 
@@ -99,7 +102,7 @@ export default function FileUploadField({ onFileSelectAction, disabled = false }
   };
 
   return (
-    <div className="w-full flex flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       {/* 업로드 존 */}
       <div
         onDragEnter={handleDragEnter}
@@ -107,17 +110,7 @@ export default function FileUploadField({ onFileSelectAction, disabled = false }
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={handleClick}
-        className={`
-          relative
-          w-full min-h-[120px]
-          p-4
-          border-2 border-dashed rounded-lg
-          flex flex-col items-center justify-center gap-2
-          cursor-pointer
-          transition-colors
-          ${isDragging ? 'border-main bg-main/10' : 'border-gray-300 hover:border-main'}
-          ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-        `}
+        className={`relative flex min-h-[120px] w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-4 transition-colors ${isDragging ? 'border-main bg-main/10' : 'hover:border-main border-gray-300'} ${disabled ? 'cursor-not-allowed opacity-50' : ''} `}
       >
         <input
           ref={fileInputRef}
@@ -131,7 +124,7 @@ export default function FileUploadField({ onFileSelectAction, disabled = false }
         {!selectedFile ? (
           <>
             <svg
-              className="w-10 h-10 text-gray-400"
+              className="h-10 w-10 text-gray-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -143,18 +136,22 @@ export default function FileUploadField({ onFileSelectAction, disabled = false }
                 d="M12 4v16m8-8H4"
               />
             </svg>
-            <p className={`text-sm ${isDarkTheme ? 'text-white' : 'text-text-primary'} text-center`}>
+            <p
+              className={`text-sm ${isDarkTheme ? 'text-white' : 'text-text-primary'} text-center`}
+            >
               파일을 끌어다 놓거나 클릭하여 업로드
             </p>
-            <p className={`text-xs ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+            <p
+              className={`text-xs ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+            >
               최대 2MB, JPG/PNG/WebP/GIF
             </p>
           </>
         ) : (
-          <div className="w-full flex items-center gap-4">
+          <div className="flex w-full items-center gap-4">
             {/* 미리보기 */}
             {previewUrl && (
-              <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0">
+              <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200">
                 <Image
                   src={previewUrl}
                   alt="업로드 이미지 미리보기"
@@ -165,8 +162,8 @@ export default function FileUploadField({ onFileSelectAction, disabled = false }
             )}
 
             {/* 파일 정보 */}
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-gray-900">
                 {selectedFile.name}
               </p>
               <p className="text-xs text-gray-500">
@@ -177,16 +174,16 @@ export default function FileUploadField({ onFileSelectAction, disabled = false }
             {/* 삭제 버튼 */}
             <button
               type="button"
-              onClick={(e) => {
+              onClick={e => {
                 e.stopPropagation();
                 handleRemoveFile();
               }}
               disabled={disabled}
-              className="flex-shrink-0 p-2 rounded-full hover:bg-gray-100 transition-colors"
+              className="flex-shrink-0 rounded-full p-2 transition-colors hover:bg-gray-100"
               aria-label="이미지 삭제"
             >
               <svg
-                className="w-5 h-5 text-red-500"
+                className="h-5 w-5 text-red-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

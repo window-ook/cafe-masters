@@ -15,13 +15,12 @@ export default function PageConverter({
   handleNextPageAction,
   scrollContainerSelector = '.pagination-sidebar-list',
 }: IPageConverter) {
-
   const scrollToTop = () => {
     const scrollContainer = document.querySelector(scrollContainerSelector);
     if (scrollContainer) {
       scrollContainer.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   };
@@ -36,10 +35,11 @@ export default function PageConverter({
     scrollToTop();
   };
   return (
-    <nav aria-label="페이지 이동"
-      className="w-full py-4 bg-transparent font-dunggeunmo"
+    <nav
+      aria-label="페이지 이동"
+      className="font-dunggeunmo w-full bg-transparent py-4"
     >
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <button
           type="button"
           aria-label="이전 페이지 번호"
@@ -48,9 +48,9 @@ export default function PageConverter({
           disabled={currentPage === 1}
           className={`px-4 py-2 ${currentPage === 1 ? 'opacity-50' : 'opacity-100'} cursor-pointer`}
         >
-          <span className="text-3xl ">{'<'}</span>
+          <span className="text-3xl">{'<'}</span>
         </button>
-        <p className="text-2xl ">
+        <p className="text-2xl">
           {currentPage} / {totalPages}
         </p>
         <button
@@ -61,7 +61,7 @@ export default function PageConverter({
           disabled={currentPage === totalPages}
           className={`px-4 py-2 ${currentPage === totalPages ? 'opacity-50' : 'opacity-100'} cursor-pointer`}
         >
-          <span className="text-3xl ">{'>'}</span>
+          <span className="text-3xl">{'>'}</span>
         </button>
       </div>
     </nav>

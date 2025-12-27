@@ -1,9 +1,7 @@
 export default function CollectedBadge() {
-    return (
-        <div
-            className="w-28 h-6 py-4 rounded-xl shadow-md bg-linear-to-r from-collection-side via-collection-center to-collection-side bg-size-[200%_200%] animate-gradient flex items-center justify-center"
-        >
-            <span className="font-bold text-white">COLLECTED</span>
-        </div>
-    );
+  return (
+    <div className="from-collection-side via-collection-center to-collection-side animate-gradient flex h-6 w-28 items-center justify-center rounded-xl bg-linear-to-r bg-size-[200%_200%] py-4 shadow-md">
+      <span className="font-bold text-white">COLLECTED</span>
+    </div>
+  );
 }

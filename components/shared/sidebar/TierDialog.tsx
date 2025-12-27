@@ -12,7 +12,7 @@ const Badge = ({ tier, range, color }: IBadge) => {
   return (
     <div className="flex items-center gap-5">
       <p className={color}>
-        <span className="text-sm font-dunggeunmo">{tier}</span>
+        <span className="font-dunggeunmo text-sm">{tier}</span>
       </p>
       <p className="text-xl font-bold">{range}</p>
     </div>
@@ -39,23 +39,23 @@ export default function TierDialog({
   return (
     <dialog
       ref={dialogRef}
-      aria-labelledby='티어 정보 다이얼로그'
+      aria-labelledby="티어 정보 다이얼로그"
       onClose={handleDialogCloseAction}
-      className='fixed inset-0 z-50 backdrop:bg-black/50 backdrop:backdrop-blur-sm m-0 p-0 max-w-none max-h-none w-full h-full bg-transparent border-none'
+      className="fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none border-none bg-transparent p-0 backdrop:bg-black/50 backdrop:backdrop-blur-sm"
     >
       <div
-        className="flex items-center justify-center w-full h-full p-4"
+        className="flex h-full w-full items-center justify-center p-4"
         onClick={handleDialogCloseAction}
       >
         <div
-          onClick={(e) => e.stopPropagation()}
-          className={`${isDarkTheme ? 'bg-dark-background text-white border-dark-border border-4' : 'bg-white border-main-shadow border-4'} relative sm:w-[30%] md:w-[50%] w-[80%] h-[70%] shadow-md p-4 flex flex-col gap-4 justify-center rounded-lg max-h-[90vh] overflow-y-auto`}
+          onClick={e => e.stopPropagation()}
+          className={`${isDarkTheme ? 'bg-dark-background border-dark-border border-4 text-white' : 'border-main-shadow border-4 bg-white'} relative flex h-[70%] max-h-[90vh] w-[80%] flex-col justify-center gap-4 overflow-y-auto rounded-lg p-4 shadow-md sm:w-[30%] md:w-[50%]`}
         >
           <div className="flex items-end gap-2">
-            <p className="font-extrabold text-2xl md:text-3xl">
+            <p className="text-2xl font-extrabold md:text-3xl">
               TIER INFORMATION
             </p>
-            <p className='font-medium'>
+            <p className="font-medium">
               수집한 카드의 개수에 따라 티어가 부여됩니다
             </p>
           </div>
@@ -92,17 +92,15 @@ export default function TierDialog({
             어엿한 카페 고수입니다 뿌듯하셔도 좋아요!!
           </p>
           <div className="relative flex items-center gap-5">
-            <div className='master-dialog-badge'></div>
-            <p className={`${BADGE_STYLE} z-10 relative bg-linear-to-r from-master-side via-master-via to-master-side bg-size-[200%_200%] animate-gradient text-white shadow-md`}>
-              <span className="text-sm font-dunggeunmo">MASTER</span>
+            <div className="master-dialog-badge"></div>
+            <p
+              className={`${BADGE_STYLE} from-master-side via-master-via to-master-side animate-gradient relative z-10 bg-linear-to-r bg-size-[200%_200%] text-white shadow-md`}
+            >
+              <span className="font-dunggeunmo text-sm">MASTER</span>
             </p>
-            <p className="z-10 relative text-xl font-bold">
-              40+
-            </p>
+            <p className="relative z-10 text-xl font-bold">40+</p>
           </div>
-          <p className={TIER_DESC_STYLE}>
-            마스터여, 당신은 월드의 주인입니다
-          </p>
+          <p className={TIER_DESC_STYLE}>마스터여, 당신은 월드의 주인입니다</p>
         </div>
       </div>
     </dialog>

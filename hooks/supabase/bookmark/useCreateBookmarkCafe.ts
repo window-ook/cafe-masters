@@ -19,5 +19,5 @@ export function useCreateBookmarkCafe() {
         onError: error => console.error(error),
     });
 
-    return { createBookmarkCafe: uploadBookmark.mutate };
+    return { createBookmarkCafe: uploadBookmark.mutateAsync };
 }

@@ -7,11 +7,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { resetPasswordFormSchema, ResetPasswordFormData } from '@/schema/auth';
 import { useFinishResetPassword } from '@/hooks/supabase/authentication';
-import { CONSOLE_ERROR, TOAST_SUCCESS } from '@/constants/messages';
+import { CONSOLE_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import Button from '@/components/shared/Button';
 import InputField from '@/components/shared/InputField';
-import Logo from '@/components/shared/sidebar/Logo';
+import Logo from '@/components/shared/Logo';
 import { useUIStore } from '@/stores';
 
 export default function ResetPasswordForm() {
@@ -21,11 +21,16 @@ export default function ResetPasswordForm() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState<boolean>(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState<boolean>(false);
 
   const { finishResetPassword } = useFinishResetPassword();
 
-  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<ResetPasswordFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordFormSchema),
     defaultValues: {
       newPassword: '',
@@ -49,21 +54,26 @@ export default function ResetPasswordForm() {
   };
 
   const togglePasswordVisibility = () => setIsPasswordVisible(prev => !prev);
-  const toggleConfirmPasswordVisibility = () => setIsConfirmPasswordVisible(prev => !prev);
+  const toggleConfirmPasswordVisibility = () =>
+    setIsConfirmPasswordVisible(prev => !prev);
 
   return (
-    <main className="area h-screen w-screen flex flex-col justify-center items-center">
+    <main className="area flex h-screen w-screen flex-col items-center justify-center">
       <section className="relative z-10 flex flex-col items-center gap-8 px-6">
         <Logo />
         <div className="auth-glass-card">
           <form
-            className="w-80 max-w-(--breakpoint-lg) sm:w-96 flex flex-col gap-4"
+            className="flex w-80 max-w-(--breakpoint-lg) flex-col gap-4 sm:w-96"
             onSubmit={handleSubmit(onFormSubmit)}
           >
-            <p className={`text-center text-3xl font-bold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+            <p
+              className={`text-center text-3xl font-bold ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+            >
               비밀번호 재설정
             </p>
-            <p className={`text-sm text-gray-600 text-center ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}>
+            <p
+              className={`text-center text-sm text-gray-600 ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
+            >
               새로운 비밀번호를 설정해주세요.
             </p>
 

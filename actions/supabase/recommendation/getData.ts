@@ -7,7 +7,6 @@ import { Database } from '@/types_db';
 
 /**
  * 추천 카페 목록 조회
- * @returns 추천 카페 목록
  */
 export async function getRecommendationCafes(): Promise<{ data: ISupabaseRecommendationCafe[] }> {
     const supabase = await createServerSupabaseClient();
@@ -36,7 +35,6 @@ export async function getRecommendationCafes(): Promise<{ data: ISupabaseRecomme
 
 /**
  * 추천 카페 목록 조회 (사이트맵용 - 인증 없이)
- * @returns 추천 카페 목록
  */
 export async function getRecommendationCafesForSitemap(): Promise<{ data: ISupabaseRecommendationCafe[] }> {
     const supabase = createClient<Database>(
@@ -68,7 +66,6 @@ export async function getRecommendationCafesForSitemap(): Promise<{ data: ISupab
 /**
  * 특정 수집 카페 조회 (메타데이터용)
  * @param cafeId 카페 ID
- * @returns 수집 카페 데이터
  */
 export async function getRecommendationCafeById(cafeId: number): Promise<ISupabaseRecommendationCafe | null> {
     if (!cafeId) throw new Error('카페 ID가 유효하지 않습니다.');

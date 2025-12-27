@@ -19,5 +19,5 @@ export function useCreateCollectionCafe() {
         onError: error => console.error(error),
     });
 
-    return { createCollectionCafe: uploadCollectionCafe.mutate };
+    return { createCollectionCafe: uploadCollectionCafe.mutateAsync };
 }

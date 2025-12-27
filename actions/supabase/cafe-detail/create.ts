@@ -8,7 +8,6 @@ import { CafeDetailInsert } from '@/actions/supabase/cafe-detail';
  * 카페 상세 정보 추가
  * @param cafeId 카페 ID
  * @param scrapedDetail 스크래핑된 카페 상세 정보
- * @returns 성공 여부
  */
 export async function createCafeDetail(
   cafeId: string,

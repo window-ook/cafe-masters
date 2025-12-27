@@ -4,7 +4,6 @@ import { createServerSupabaseClient } from "utils/supabase/server";
 
 /** 
  * 북마크한 카페 수 조회
- * @returns 북마크 카페 수
  */
 export async function getBookmarkCounts(): Promise<number> {
     const supabase = await createServerSupabaseClient();

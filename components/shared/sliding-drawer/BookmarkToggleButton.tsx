@@ -1,8 +1,11 @@
 'use client';
 
-import { useCreateBookmarkCafe, useDeleteBookmarkCafe } from '@/hooks/supabase/bookmark';
+import {
+  useCreateBookmarkCafe,
+  useDeleteBookmarkCafe,
+} from '@/hooks/supabase/bookmark';
 import { useCurrentCafeStore, useUserStore } from '@/stores';
-import { TOAST_ERROR } from '@/utils/constants/messages';
+import { TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 import { Bookmark } from 'lucide-react';
 import { toast } from 'react-toastify';
 
@@ -16,7 +19,7 @@ interface IBookmarkData {
   coordY: number;
   extra_images?: string[] | null;
   opening_time?: string | null;
-  menus?: { name: string; price: string; }[] | null;
+  menus?: { name: string; price: string }[] | null;
 }
 
 interface IBookmarkToggleButton {
@@ -24,7 +27,10 @@ interface IBookmarkToggleButton {
   className?: string;
 }
 
-export default function BookmarkToggleButton({ bookmarkData, className = '' }: IBookmarkToggleButton) {
+export default function BookmarkToggleButton({
+  bookmarkData,
+  className = '',
+}: IBookmarkToggleButton) {
   const session = useUserStore(state => state.session);
   const isBookmarked = useCurrentCafeStore(state => state.isBookmarked);
   const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
@@ -32,29 +38,37 @@ export default function BookmarkToggleButton({ bookmarkData, className = '' }: I
   const { createBookmarkCafe } = useCreateBookmarkCafe();
   const { deleteBookmarkCafe } = useDeleteBookmarkCafe();
 
-  const handleBookmarkToggle = () => {
+  const handleBookmarkToggle = async () => {
     if (!session) {
       toast.error(TOAST_ERROR.BOOMARK_TOGGLE_WITHOUT_SIGNIN);
       return;
     }
 
-    if (isBookmarked) {
-      deleteBookmarkCafe(bookmarkData.id);
-      setIsBookmarked(false);
-    } else {
-      createBookmarkCafe({
-        id: bookmarkData.id,
-        coordX: bookmarkData.coordX,
-        coordY: bookmarkData.coordY,
-        image: bookmarkData.image || '',
-        extra_images: bookmarkData.extra_images ? JSON.stringify(bookmarkData.extra_images) : null,
-        name: bookmarkData.name,
-        address: bookmarkData.address,
-        phone_number: bookmarkData.phone_number || '',
-        opening_time: bookmarkData.opening_time || null,
-        menus: bookmarkData.menus ? JSON.stringify(bookmarkData.menus) : null,
-      });
-      setIsBookmarked(true);
+    try {
+      if (isBookmarked) {
+        await deleteBookmarkCafe(bookmarkData.id);
+        toast.success(TOAST_SUCCESS.DELETE_BOOKMARK);
+        setIsBookmarked(false);
+      } else {
+        await createBookmarkCafe({
+          id: bookmarkData.id,
+          coordX: bookmarkData.coordX,
+          coordY: bookmarkData.coordY,
+          image: bookmarkData.image || '',
+          extra_images: bookmarkData.extra_images
+            ? JSON.stringify(bookmarkData.extra_images)
+            : null,
+          name: bookmarkData.name,
+          address: bookmarkData.address,
+          phone_number: bookmarkData.phone_number || '',
+          opening_time: bookmarkData.opening_time || null,
+          menus: bookmarkData.menus ? JSON.stringify(bookmarkData.menus) : null,
+        });
+        toast.success(TOAST_SUCCESS.CREATE_BOOKMARK);
+        setIsBookmarked(true);
+      }
+    } catch (error) {
+      toast.error(TOAST_ERROR.BOOMARK_TOGGLE);
     }
   };
 

@@ -6,7 +6,14 @@ import { usePolaroidLayout } from '@/hooks/ui/usePolaroidLayout';
 import { useUIStore } from '@/stores';
 import PolaroidCard from '@/components/shared/PolaroidCard';
 
-const SHOULD_BLUR_ROUTES = ['/main', '/search', '/collection', '/bookmark', '/recommendation', '/help'];
+const SHOULD_BLUR_ROUTES = [
+  '/main',
+  '/search',
+  '/collection',
+  '/bookmark',
+  '/recommendation',
+  '/help',
+];
 
 export default function PolaroidGalleryBackground() {
   const pathname = usePathname();
@@ -19,10 +26,12 @@ export default function PolaroidGalleryBackground() {
       isDarkTheme
         ? 'bg-gradient-to-br from-black via-gray-800 to-black'
         : 'bg-gradient-to-br from-main-light/5 via-white/30 to-main-light/10',
-    [isDarkTheme]
+    [isDarkTheme],
   );
 
-  const shouldBlur = SHOULD_BLUR_ROUTES.some(route => pathname.startsWith(route));
+  const shouldBlur = SHOULD_BLUR_ROUTES.some(route =>
+    pathname.startsWith(route),
+  );
 
   return (
     <div
@@ -30,7 +39,9 @@ export default function PolaroidGalleryBackground() {
       aria-hidden="true"
     >
       {/* 배경 그라데이션 레이어 */}
-      <div className={`absolute inset-0 ${backgroundClassName} transition-colors duration-500`} />
+      <div
+        className={`absolute inset-0 ${backgroundClassName} transition-colors duration-500`}
+      />
 
       {/* 폴라로이드 카드들 */}
       <div className="absolute inset-0">

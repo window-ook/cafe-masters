@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useRef, useMemo } from 'react';
 import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { useUserStore } from '@/stores';
-import { CONSOLE_ERROR } from '@/constants/messages';
+import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
 interface IAuthProvider {
   initialUserId?: string | null;

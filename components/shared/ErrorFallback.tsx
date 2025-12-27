@@ -6,60 +6,64 @@ import { TriangleAlert, RefreshCw } from 'lucide-react';
 import Button from '@/components/shared/Button';
 
 interface IErrorFallback {
-    featureName: string;
-    message: string;
-    error: Error;
+  featureName: string;
+  message: string;
+  error: Error;
 }
 
 export function ErrorFallback({ featureName, message, error }: IErrorFallback) {
-    const router = useRouter();
+  const router = useRouter();
 
-    const { resetBoundary } = useErrorBoundary();
+  const { resetBoundary } = useErrorBoundary();
 
-    const handleRetry = () => {
-        console.error(`${featureName} 에러:`, error);
-        resetBoundary();
-    };
+  const handleRetry = () => {
+    console.error(`${featureName} 에러:`, error);
+    resetBoundary();
+  };
 
-    const handleRefreshPage = () => router.refresh();
+  const handleRefreshPage = () => router.refresh();
 
-    return (
-        <div role="alert" aria-live="assertive" className="w-full h-full flex flex-col">
-            <div className="flex items-center gap-2 text-error">
-                <TriangleAlert className="size-6" />
-                <h3 className="text-lg font-semibold">{featureName} 조회 에러</h3>
-            </div>
+  return (
+    <div
+      role="alert"
+      aria-live="assertive"
+      className="flex h-full w-full flex-col"
+    >
+      <div className="text-error flex items-center gap-2">
+        <TriangleAlert className="size-6" />
+        <h3 className="text-lg font-semibold">{featureName} 조회 에러</h3>
+      </div>
 
-            <div className="flex flex-col gap-1 text-center text-sm text-description">
-                <p>{message}</p>
-            </div>
+      <div className="text-description flex flex-col gap-1 text-center text-sm">
+        <p>{message}</p>
+      </div>
 
-            <div className="flex gap-2">
-                <Button
-                    customClassName="flex items-center gap-2 text-xs"
-                    onClick={handleRetry}
-                >
-                    <RefreshCw className="size-4" />
-                    다시 시도
-                </Button>
+      <div className="flex gap-2">
+        <Button
+          customClassName="flex items-center gap-2 text-xs"
+          onClick={handleRetry}
+        >
+          <RefreshCw className="size-4" />
+          다시 시도
+        </Button>
 
-                <Button
-                    customClassName="flex items-center gap-2 text-xs"
-                    onClick={handleRefreshPage}
-                >
-                    페이지 새로고침
-                </Button>
-            </div>
+        <Button
+          customClassName="flex items-center gap-2 text-xs"
+          onClick={handleRefreshPage}
+        >
+          페이지 새로고침
+        </Button>
+      </div>
 
-            {/* 개발 환경에서만 에러 상세 정보 표시 */}
-            {process.env.NODE_ENV === 'development' && (
-                <details className="mt-4 text-xs text-gray-400">
-                    <summary className="cursor-pointer">에러 상세 정보</summary>
-                    <pre className="mt-2 w-full h-full p-2 rounded bg-gray-100 overflow-auto text-left">
-                        {error.message}
-                    </pre>
-                </details>
-            )}
-        </div>
-    );
+      {/* 개발 환경에서만 에러 상세 정보 표시 */}
+      {process.env.NODE_ENV === 'development' && (
+        <details className="mt-4 text-xs text-gray-400">
+          <summary className="cursor-pointer">에러 상세 정보</summary>
+          <pre className="mt-2 h-full w-full overflow-auto rounded bg-gray-100 p-2 text-left">
+            {error.message}
+          </pre>
+        </details>
+      )}
+    </div>
+  );
 }

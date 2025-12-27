@@ -23,51 +23,69 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
   const userId = useUserStore(state => state.userId);
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
-  const setEditingCafeForCollect = useCollectionStore(state => state.setEditingCafeForCollect);
+  const setEditingCafeForCollect = useCollectionStore(
+    state => state.setEditingCafeForCollect,
+  );
 
   const { filteredCollectionCafes } = useCollectionCafes(userId);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const collectionCafeDetail = useMemo(() => filteredCollectionCafes.find((cafe: ISupabaseCollectionCafe) => cafe.id === cafeId), [filteredCollectionCafes, cafeId]);
+  const collectionCafeDetail = useMemo(
+    () =>
+      filteredCollectionCafes.find(
+        (cafe: ISupabaseCollectionCafe) => cafe.id === cafeId,
+      ),
+    [filteredCollectionCafes, cafeId],
+  );
 
   if (!collectionCafeDetail) {
     return (
-      <div className="h-full flex items-center justify-center">
+      <div className="flex h-full items-center justify-center">
         <p>카페 정보를 찾을 수 없습니다.</p>
       </div>
     );
   }
 
   return (
-    <article className="h-full rounded-md flex flex-col">
+    <article className="flex h-full flex-col rounded-md">
       <CollectionCafeDetailHeader isDarkTheme={isDarkTheme} />
 
       {/* 바디 */}
-      <main className={`overflow-y-auto overflow-x-hidden p-4 flex flex-col gap-4 flex-1 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}>
+      <main
+        className={`flex flex-1 flex-col gap-4 overflow-x-hidden overflow-y-auto p-4 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}
+      >
         <section
           key={`${cafeId}-image-section`}
-          className="relative shadow-sm shadow-main/10 rounded-md flex flex-col items-center gap-4 ">
+          className="shadow-main/10 relative flex flex-col items-center gap-4 rounded-md shadow-sm"
+        >
           <button
             type="button"
             aria-label="카페 이미지 슬라이드 왼쪽으로 이동"
-            onClick={() => scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)}
-            className={`slide-images-button left-0 ${isDarkTheme ? 'bg-main' : 'bg-white/30'}`}
+            onClick={() =>
+              scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)
+            }
+            className={`left-0 ${isDarkTheme ? 'bg-main' : 'bg-white/30'} slide-images-button`}
           >
             <span className={`${isDarkTheme ? '' : 'text-main'}`}>◀</span>
           </button>
           {/* 카페 이미지 슬라이드 */}
           <div
             ref={scrollRef}
-            className="w-full max-w-full overflow-x-auto overflow-y-hidden flex gap-4 scrollbar-hide snap-x snap-mandatory"
+            className="scrollbar-hide flex w-full max-w-full snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden"
           >
-            <div className="h-60 py-2 snap-center shrink-0">
+            <div className="h-60 shrink-0 snap-center py-2">
               {collectionCafeDetail?.image && (
                 <button
                   type="button"
                   aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
                   className="cursor-pointer"
-                  onClick={() => window.open(`http://place.map.kakao.com/${collectionCafeDetail?.id}`, '_blank')}
+                  onClick={() =>
+                    window.open(
+                      `http://place.map.kakao.com/${collectionCafeDetail?.id}`,
+                      '_blank',
+                    )
+                  }
                 >
                   <Image
                     key={`${cafeId}-main-image`}
@@ -81,33 +99,47 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
                 </button>
               )}
             </div>
-            {collectionCafeDetail?.extra_images && Array.isArray(collectionCafeDetail.extra_images) && collectionCafeDetail.extra_images.length > 0 && collectionCafeDetail.extra_images.map((photo, i) => {
-              return (
-                <div
-                  key={`${cafeId}-extra-${i}`}
-                  className="h-60 py-2 snap-center shrink-0">
-                  <button
-                    type="button"
-                    aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
-                    className="cursor-pointer"
-                    onClick={() => window.open(`http://place.map.kakao.com/${collectionCafeDetail?.id}`, '_blank')}
+            {collectionCafeDetail?.extra_images &&
+              Array.isArray(collectionCafeDetail.extra_images) &&
+              collectionCafeDetail.extra_images.length > 0 &&
+              collectionCafeDetail.extra_images.map((photo, i) => {
+                return (
+                  <div
+                    key={`${cafeId}-extra-${i}`}
+                    className="h-60 shrink-0 snap-center py-2"
                   >
-                    <Image
-                      key={`${cafeId}-extra-image-${i}`}
-                      alt="카페 썸네일"
-                      src={photo}
-                      width={340}
-                      height={240}
-                      priority={true}
-                      className="slide-images"
-                    />
-                  </button>
-                </div>
-              );
-            })}
+                    <button
+                      type="button"
+                      aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
+                      className="cursor-pointer"
+                      onClick={() =>
+                        window.open(
+                          `http://place.map.kakao.com/${collectionCafeDetail?.id}`,
+                          '_blank',
+                        )
+                      }
+                    >
+                      <Image
+                        key={`${cafeId}-extra-image-${i}`}
+                        alt="카페 썸네일"
+                        src={photo}
+                        width={340}
+                        height={240}
+                        priority={true}
+                        className="slide-images"
+                      />
+                    </button>
+                  </div>
+                );
+              })}
             <button
-              className={`slide-images-button right-0 ${isDarkTheme ? 'bg-main' : 'bg-white/30'}`}
-              onClick={() => scrollThumbnails('right', scrollRef as RefObject<HTMLDivElement>)}
+              className={`right-0 ${isDarkTheme ? 'bg-main' : 'bg-white/30'} slide-images-button`}
+              onClick={() =>
+                scrollThumbnails(
+                  'right',
+                  scrollRef as RefObject<HTMLDivElement>,
+                )
+              }
             >
               <span className={`${isDarkTheme ? '' : 'text-main'}`}>▶</span>
             </button>
@@ -115,14 +147,18 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
         </section>
 
         <section className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold">{collectionCafeDetail?.name}</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold">
+              {collectionCafeDetail?.name}
+            </h1>
             <Ratings rating={collectionCafeDetail?.ratings ?? 0} />
           </div>
           <Categories categories={collectionCafeDetail?.categories} />
           <OpenTime opening_time={collectionCafeDetail?.opening_time || null} />
           <Location address={collectionCafeDetail?.address} />
-          <PhoneNumber phone_number={collectionCafeDetail?.phone_number || null} />
+          <PhoneNumber
+            phone_number={collectionCafeDetail?.phone_number || null}
+          />
 
           <Comment comment={collectionCafeDetail?.comment} />
           <EatenMenus eaten={collectionCafeDetail?.eaten_menus ?? null} />
