@@ -13,7 +13,7 @@ export default function FooterSection() {
           <p
             className={`text-sm font-medium ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
           >
-            © 2024 CAFE MASTERS. All rights reserved.
+            © 2026 CAFE MASTERS. All rights reserved.
           </p>
 
           <a
