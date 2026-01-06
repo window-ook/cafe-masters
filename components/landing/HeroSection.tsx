@@ -1,22 +1,30 @@
-import { createServerSupabaseClient } from '@/utils/supabase/server';
+import { unstable_cache } from 'next/cache';
+import { createCacheableSupabaseClient } from '@/utils/supabase/server';
 import { Coffee } from 'lucide-react';
 import Link from 'next/link';
 import SampleCards from '@/components/landing/SampleCards';
 
-async function getCollectionCounts() {
-  const supabase = await createServerSupabaseClient(undefined, false);
+const getCachedCollectionCounts = unstable_cache(
+  async () => {
+    const supabase = await createCacheableSupabaseClient();
 
-  const { count, error } = await supabase
-    .from('collection')
-    .select('*', { count: 'exact', head: true });
+    const { count, error } = await supabase
+      .from('collection')
+      .select('*', { count: 'exact', head: true });
 
-  if (error) throw new Error(error.message);
+    if (error) throw new Error(error.message);
 
-  return count ?? 0;
-}
+    return count ?? 0;
+  },
+  ['collection-counts'],
+  {
+    revalidate: 3600,
+    tags: ['collection-counts'],
+  }
+);
 
 export default async function HeroSection() {
-  const collectionCafesCounts = await getCollectionCounts();
+  const collectionCafesCounts = await getCachedCollectionCounts();
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-transparent pt-20">

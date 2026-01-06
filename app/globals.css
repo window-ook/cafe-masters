@@ -18,7 +18,6 @@ body {
   /* 폰트 패밀리*/
   --font-pretendard: var(--font-pretendard);
   --font-dunggeunmo: var(--font-dunggeunmo);
-  --font-gmarket-sans: var(--font-gmarket-sans);
 
   /* 폰트 사이즈 */
   --text-2xs: 0.3rem;

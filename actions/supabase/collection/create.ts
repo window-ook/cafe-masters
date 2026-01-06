@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
 import { createServerSupabaseClient } from "utils/supabase/server";
 import { CollectionRowInsert } from ".";
 
@@ -23,6 +24,8 @@ export async function createCollectionCafe(cafe: CollectionRowInsert): Promise<b
     });
 
     if (error) throw new Error(`카페 수집에 실패했습니다: ${error.message}`);
+
+    revalidateTag('collection-counts', 'max');
 
     return true;
 }

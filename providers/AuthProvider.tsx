@@ -5,23 +5,11 @@ import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { useUserStore } from '@/stores';
 import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
-interface IAuthProvider {
-  initialUserId?: string | null;
-  initialUserEmail?: string | null;
-  initialUserNickname?: string | null;
-  initialUserGender?: 'male' | 'female' | null;
-  initialIsAdmin?: boolean;
+export interface IAuthProvider {
   children: ReactNode;
 }
 
-export default function AuthProvider({
-  initialUserId,
-  initialUserEmail,
-  initialUserNickname,
-  initialUserGender,
-  initialIsAdmin,
-  children,
-}: IAuthProvider) {
+export default function AuthProvider({ children }: IAuthProvider) {
   const supabase = useMemo(() => createBrowserSupabaseClient(), []);
 
   const setSession = useUserStore(state => state.setSession);
@@ -55,26 +43,22 @@ export default function AuthProvider({
 
   useEffect(() => {
     const initializeUser = async () => {
-      if (!isInitialized.current && initialUserId) {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) setSession(session);
+      if (isInitialized.current) return;
 
-        setUserId(initialUserId);
-        if (initialUserEmail) setUserEmail(initialUserEmail);
-        if (initialUserNickname !== undefined) setUserNickname(initialUserNickname);
-        if (initialUserGender !== undefined) setUserGender(initialUserGender);
+      const { data: { session } } = await supabase.auth.getSession();
 
-        if (initialIsAdmin !== undefined && initialUserNickname !== undefined && initialUserGender !== undefined) {
-          setIsAdmin(initialIsAdmin);
-        } else {
-          const userInfo = await checkUserInfo(initialUserId);
-          setIsAdmin(userInfo.admin);
-          if (initialUserNickname === undefined) setUserNickname(userInfo.nickname);
-          if (initialUserGender === undefined) setUserGender(userInfo.gender);
-        }
+      if (session?.user) {
+        setSession(session);
+        setUserId(session.user.id);
+        setUserEmail(session.user.email ?? '');
 
-        isInitialized.current = true;
+        const userInfo = await checkUserInfo(session.user.id);
+        setIsAdmin(userInfo.admin);
+        setUserNickname(userInfo.nickname);
+        setUserGender(userInfo.gender);
       }
+
+      isInitialized.current = true;
     };
 
     initializeUser();
@@ -84,7 +68,6 @@ export default function AuthProvider({
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session?.user) {
         setSession(session);
-
         setUserId(session.user.id);
         setUserEmail(session.user.email ?? '');
 
@@ -96,7 +79,6 @@ export default function AuthProvider({
         }
       } else {
         setSession(null);
-
         resetUser();
       }
     });
@@ -104,7 +86,7 @@ export default function AuthProvider({
     return () => {
       authListener.unsubscribe();
     };
-  }, [supabase, setSession, setUserId, setUserEmail, setUserNickname, setUserGender, setIsAdmin, resetUser, initialUserId, initialUserEmail, initialUserNickname, initialUserGender, initialIsAdmin]);
+  }, [supabase, setSession, setUserId, setUserEmail, setUserNickname, setUserGender, setIsAdmin, resetUser]);
 
   return children;
 }

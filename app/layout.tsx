@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { createServerSupabaseClient } from '@/utils/supabase/server';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import './globals.css';
 import React from 'react';
@@ -14,6 +13,7 @@ const pretendard = localFont({
   weight: '45 920',
   variable: '--font-pretendard',
   fallback: ['system-ui', '-apple-system', 'sans-serif'],
+  preload: true,
 });
 
 const dunggeunmo = localFont({
@@ -22,29 +22,6 @@ const dunggeunmo = localFont({
   weight: '45 920',
   variable: '--font-dunggeunmo',
   fallback: ['monospace'],
-});
-
-const gmarketSans = localFont({
-  src: [
-    {
-      path: '../public/fonts/GmarketSansTTFLight.woff2',
-      weight: '300',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/GmarketSansTTFMedium.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/GmarketSansTTFBold.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-gmarket-sans',
-  display: 'swap',
-  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -114,36 +91,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = await createServerSupabaseClient();
-
-  const { data: { user } } = await supabase.auth.getUser();
-
-  let initialUserId: string | null = null;
-  let initialUserEmail: string | null = null;
-  let initialUserNickname: string | null = null;
-  let initialUserGender: 'male' | 'female' | null = null;
-  let initialIsAdmin = false;
-
-  if (user) {
-    initialUserId = user.id;
-    initialUserEmail = user.email ?? null;
-
-    const { data: userData } = await supabase
-      .from('user')
-      .select('admin, nickname, gender')
-      .eq('user_id', user.id)
-      .maybeSingle();
-
-    initialIsAdmin = userData?.admin === true;
-    initialUserNickname = userData?.nickname ?? null;
-    initialUserGender = (userData?.gender as 'male' | 'female' | null) ?? null;
-  }
-
   return (
     <html lang="ko">
       <head>
@@ -178,16 +130,10 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://t1.daumcdn.net" />
       </head>
       <body
-        className={`${pretendard.variable} ${dunggeunmo.variable} ${gmarketSans.variable} font-pretendard`}
+        className={`${pretendard.variable} ${dunggeunmo.variable} font-pretendard`}
       >
         <PersistentBackgroundCards />
-        <AuthProvider
-          initialUserId={initialUserId}
-          initialUserEmail={initialUserEmail}
-          initialUserNickname={initialUserNickname}
-          initialUserGender={initialUserGender}
-          initialIsAdmin={initialIsAdmin}
-        >
+        <AuthProvider>
           <Providers>{children}</Providers>
           <SpeedInsights />
         </AuthProvider>
