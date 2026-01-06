@@ -1,30 +1,8 @@
-import { unstable_cache } from 'next/cache';
-import { createCacheableSupabaseClient } from '@/utils/supabase/server';
 import { Coffee } from 'lucide-react';
 import Link from 'next/link';
 import SampleCards from '@/components/landing/SampleCards';
 
-const getCachedCollectionCounts = unstable_cache(
-  async () => {
-    const supabase = await createCacheableSupabaseClient();
-
-    const { count, error } = await supabase
-      .from('collection')
-      .select('*', { count: 'exact', head: true });
-
-    if (error) throw new Error(error.message);
-
-    return count ?? 0;
-  },
-  ['collection-counts'],
-  {
-    revalidate: 3600,
-    tags: ['collection-counts'],
-  }
-);
-
-export default async function HeroSection() {
-  const collectionCafesCounts = await getCachedCollectionCounts();
+export default function HeroSection() {
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-transparent pt-20">
@@ -39,9 +17,7 @@ export default async function HeroSection() {
                 <div className="from-main/40 via-main-light/40 to-main/40 absolute -inset-0.5 rounded-full bg-gradient-to-r opacity-70 blur-lg transition duration-1000 group-hover:opacity-100" />
                 <span className="border-main/30 text-main relative inline-flex items-center gap-2 rounded-full border bg-white/80 px-6 py-2 text-sm font-bold shadow-lg backdrop-blur-md">
                   <Coffee className="h-4 w-4" />
-                  <span className="tracking-wider">
-                    수집된 카드 {collectionCafesCounts}장
-                  </span>
+                  <span className="tracking-wider">나만의 카페 컬렉션</span>
                 </span>
               </div>
             </div>

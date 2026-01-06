@@ -54,19 +54,3 @@ export const createServerSupabaseAdminClient = async (
   return createServerSupabaseClient(resolvedCookieStore, true);
 };
 
-/**
- * 쿠키 없이 Service Role Key를 사용하는 Supabase Admin 클라이언트
- * @description unstable_cache 내부에서 사용 가능 (cookies() 미사용)
- */
-export const createCacheableSupabaseClient = async () =>
-  createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_SUPABASE_SERVICE_ROLE!,
-    {
-      cookies: {
-        get: () => undefined,
-        set: () => { },
-        remove: () => { },
-      },
-    },
-  );
