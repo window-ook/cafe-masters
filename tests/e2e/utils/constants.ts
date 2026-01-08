@@ -1,11 +1,17 @@
 /** Mock 회원가입 유저 */
+// 유효한 JWT 형식의 토큰 생성 (header.payload.signature)
+// Base64URL로 인코딩된 형식으로 Supabase JWT 파서가 처리할 수 있도록 함
+const MOCK_JWT_HEADER = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'; // {"alg":"HS256","typ":"JWT"}
+const MOCK_JWT_PAYLOAD = 'eyJzdWIiOiJtb2NrLXVzZXItaWQiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImV4cCI6OTk5OTk5OTk5OX0'; // {"sub":"mock-user-id","email":"test@example.com","role":"authenticated","exp":9999999999}
+const MOCK_JWT_SIGNATURE = 'mock_signature_for_testing_purposes_only';
+
 export const MOCK_AUTH_DATA = {
     USER_ID: 'mock-user-id',
     SIGNUP_EMAIL: 'test@example.com',
     SIGNUP_PASSWORD: '3579ciak!',
-    ACCESS_TOKEN: 'mock-access-token',
-    REFRESH_TOKEN: 'mock-refresh-token',
-    JWT_TOKEN: 'mock-jwt-token',
+    ACCESS_TOKEN: `${MOCK_JWT_HEADER}.${MOCK_JWT_PAYLOAD}.${MOCK_JWT_SIGNATURE}`,
+    REFRESH_TOKEN: `${MOCK_JWT_HEADER}.${MOCK_JWT_PAYLOAD}.${MOCK_JWT_SIGNATURE}_refresh`,
+    JWT_TOKEN: `${MOCK_JWT_HEADER}.${MOCK_JWT_PAYLOAD}.${MOCK_JWT_SIGNATURE}`,
     VERIFICATION_CODE: '123456',
     NICKNAME: '테스터',
     GENDER: 'male' as const,
@@ -56,6 +62,7 @@ export const TEST_SELECTORS = {
     BUTTON_SUBMIT_REQUEST_SIGNUP: 'button-submit-request-signup',
     BUTTON_SUBMIT_EMAIL_VERIFICATION_CODE: 'button-submit-email-verification-code',
     BUTTON_NEXT_PAGE: 'button-next-page',
+    BUTTON_PREVIOUS_PAGE: 'button-previous-page',
     BUTTON_SUBMIT_COLLECT: 'button-submit-collect',
     BUTTON_COLLECT: 'button-collect',
     BUTTON_COLLECT_EDIT: 'button-collect-edit',

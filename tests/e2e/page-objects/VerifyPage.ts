@@ -154,7 +154,7 @@ export class VerifyPage {
             });
         });
 
-        // 5. Supabase 토큰 갱신 API 모킹
+        // 5. Supabase 토큰/로그인 API 모킹 (signInWithPassword 포함)
         await this.page.route('**/auth/v1/token**', route => {
             route.fulfill({
                 status: 200,
@@ -162,11 +162,23 @@ export class VerifyPage {
                 body: JSON.stringify({
                     access_token: MOCK_AUTH_DATA.ACCESS_TOKEN,
                     refresh_token: MOCK_AUTH_DATA.REFRESH_TOKEN,
+                    token_type: 'bearer',
+                    expires_in: 3600,
+                    expires_at: Math.floor(Date.now() / 1000) + 3600,
                     user: {
                         id: MOCK_AUTH_DATA.USER_ID,
-                        email: MOCK_AUTH_DATA.SIGNUP_EMAIL
-                    },
-                    expires_at: Math.floor(Date.now() / 1000) + 3600
+                        email: MOCK_AUTH_DATA.SIGNUP_EMAIL,
+                        aud: 'authenticated',
+                        role: 'authenticated',
+                        email_confirmed_at: new Date().toISOString(),
+                        app_metadata: {
+                            provider: 'email',
+                            providers: ['email']
+                        },
+                        user_metadata: {},
+                        created_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString()
+                    }
                 })
             });
         });
