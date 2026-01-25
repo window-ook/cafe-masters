@@ -11,14 +11,20 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [...nextCoreWebVitals, ...nextTypescript, ...compat.extends("prettier"), {
-  rules: {
-    "no-undef": 'error',
-    "no-unused-vars": 'off',
-    "semi": ['error', 'always'],
+const eslintConfig = [
+  ...nextCoreWebVitals,
+  ...nextTypescript,
+  ...compat.extends("prettier"),
+  {
+    rules: {
+      "no-undef": 'error',
+      "no-unused-vars": 'off',
+      "semi": ['error', 'always'],
+    },
   },
-}, {
-  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
-}];
+  {
+    ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
+  }
+];
 
 export default eslintConfig;
