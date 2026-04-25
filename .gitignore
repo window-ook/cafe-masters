@@ -54,13 +54,6 @@ next-env.d.ts
 !.yarn/sdks
 !.yarn/versions
 
-# cursor, claude, gemini
-.cursor/
-.claude/
-CLAUDE.md
-GEMINI.md
-docs/
-
 # MCP Server
 .mcp.json
 
@@ -70,3 +63,8 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# AI
+.claude/references/
+.claude/plans/
+.claude/reports/
