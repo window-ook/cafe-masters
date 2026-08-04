@@ -154,6 +154,7 @@ export default function CollectionCafes() {
               key={cafe.id}
               name={cafe.name}
               ratings={cafe.ratings!}
+              material={cafe.material ?? null}
               image={cafe.image}
               address={cafe.address}
               phone_number={cafe.phone_number!}

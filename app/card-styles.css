@@ -228,3 +228,245 @@
   mix-blend-mode: color-dodge;
   transition: all .33s ease;
 }
+
+/*
+* ======================================================
+* 카드 베이스 — 광물 재질 (세상이 정하는 축)
+* 수집 시점에 랜덤으로 확정되며 이후 바뀌지 않습니다.
+* background만 담당하고 광택은 홀로 축이 맡습니다.
+* ======================================================
+*/
+.card-base-mica,
+.card-base-amber,
+.card-base-gold,
+.card-base-emerald,
+.card-base-amethyst,
+.card-base-obsidian,
+.card-base-archive {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  background-size: 100% 100%;
+}
+
+/* 운모 - 얇은 판이 겹친 반투명 광물 */
+.card-base-mica {
+  background: linear-gradient(to bottom right,
+      #f9fafb,
+      #e5e7eb,
+      #d1d5db,
+      #9ca3af,
+      #6b7280,
+      #4b5563,
+      #374151);
+  color: black;
+}
+
+/* 호박 - 나무 수지의 화석. 내부에 갇힌 기포가 금과 구분되는 지점입니다 */
+.card-base-amber {
+  background:
+    radial-gradient(ellipse 9% 5% at 27% 21%, rgba(255, 251, 236, .5), transparent 72%),
+    radial-gradient(ellipse 5% 3% at 63% 40%, rgba(255, 248, 227, .42), transparent 72%),
+    radial-gradient(ellipse 12% 6% at 45% 72%, rgba(255, 245, 216, .28), transparent 72%),
+    linear-gradient(to bottom right,
+      #fef3c7,
+      #fbdf8e,
+      #f5c65c,
+      #e79a24,
+      #c06d12,
+      #8f4a0b,
+      #6b3607);
+  color: #40230a;
+}
+
+/* 금 */
+.card-base-gold {
+  background: linear-gradient(to bottom right,
+      #fef9c3,
+      #fde68a,
+      #fde047,
+      #facc15,
+      #ca8a04,
+      #a16207,
+      #78350f);
+  color: black;
+}
+
+/* 에메랄드 */
+.card-base-emerald {
+  background: linear-gradient(to bottom right,
+      #ccfbf1,
+      #6ee7b7,
+      #5fe0a9,
+      #34d399,
+      #178f7e,
+      #0f766e,
+      #0d5c5b);
+  color: black;
+}
+
+/* 자수정 - 각진 결정면과 색 농도의 불균일(zoning) */
+.card-base-amethyst {
+  background:
+    linear-gradient(148deg, rgba(255, 255, 255, .2) 0 17%, transparent 17% 33%),
+    linear-gradient(212deg, rgba(255, 255, 255, .13) 0 25%, transparent 25% 47%),
+    linear-gradient(to bottom right,
+      #f3e8ff,
+      #d8b4fe,
+      #b57cf0,
+      #9333ea,
+      #6b21a8,
+      #4c1d95,
+      #2e1065);
+  color: white;
+}
+
+/* 흑요석 - 최고 등급. 어두운 바탕일수록 광택이 극적으로 보입니다 */
+.card-base-obsidian {
+  background: linear-gradient(to bottom right,
+      #4a4d55,
+      #33363d,
+      #26282e,
+      #1e2025,
+      #141519,
+      #0b0c0e);
+  color: white;
+}
+
+/* 아카이브 - 발행이 중단된 재질. 위치 인증 이전에 수집된 카드입니다.
+   광물 6종과 달리 인공물(갱지)이므로 서열 밖에 있다는 것이 계열로 드러납니다 */
+.card-base-archive {
+  background: linear-gradient(to bottom right,
+      #efe7d6,
+      #e3d7c0,
+      #d4c4a8,
+      #bfab8c,
+      #a68f6e,
+      #8a7454);
+  color: #3a3125;
+}
+
+/* 미개봉 - 위치를 얻지 못한 채 수집된 카드. 아직 재질이 확정되지 않았습니다 */
+.card-unopened {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  background: linear-gradient(145deg,
+      #4b5563,
+      #3b4553,
+      #2b3340,
+      #1f2937);
+  color: #d1d5db;
+}
+
+/*
+* ======================================================
+* 카드 백라이트 - hover 시 카드 뒤에서 번지는 빛
+* 재질의 대표색을 따릅니다.
+* ======================================================
+*/
+.card-glow-mica {
+  background: #9ca3af;
+}
+
+.card-glow-amber {
+  background: linear-gradient(to right, #fbdf8e, #e79a24, #8f4a0b);
+}
+
+.card-glow-gold {
+  background: linear-gradient(to right, #fde68a, #facc15, #a16207);
+}
+
+.card-glow-emerald {
+  background: linear-gradient(to right, #6ee7b7, #34d399, #0f766e);
+}
+
+.card-glow-amethyst {
+  background: linear-gradient(to right, #d8b4fe, #9333ea, #4c1d95);
+}
+
+.card-glow-obsidian {
+  background: linear-gradient(to right, #75c8ff, #b06bff, #ff7a6b);
+}
+
+.card-glow-archive {
+  background: #bfab8c;
+}
+
+/*
+* ======================================================
+* 카드 홀로그램 - 별점 1~5 (내가 정하는 축)
+* 카드 수정으로 언제든 조절합니다.
+* 클래스를 붙이지 않으면 무광(별점 미입력) 상태입니다.
+* ======================================================
+*/
+.card-holo-1::after,
+.card-holo-2::after,
+.card-holo-3::after,
+.card-holo-4::after,
+.card-holo-5::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  filter: brightness(1) contrast(1);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 160%;
+  background-blend-mode: overlay;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  transition: all .33s ease;
+}
+
+.card-holo-1::after {
+  opacity: .12;
+  background-image: url("/image/card-style/texture_sparkles.webp");
+}
+
+.card-holo-2::after {
+  opacity: .2;
+  background-image: url("/image/card-style/texture_sparkles.webp");
+}
+
+.card-holo-3::after {
+  opacity: .32;
+  background-image:
+    url("/image/card-style/texture_foil.avif"),
+    url("/image/card-style/texture_sparkles.webp");
+}
+
+.card-holo-4::after {
+  opacity: .5;
+  background-image:
+    url("/image/card-style/texture_foil.avif"),
+    url("/image/card-style/texture_sparkles.webp"),
+    linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+}
+
+/* 최고 단계 - 기존 card-hidden의 무지개 레이어를 홀로 축으로 이관 */
+.card-holo-5::after {
+  opacity: .5;
+  background-image:
+    url("/image/card-style/holo_diagonal.gif"),
+    url("/image/card-style/texture_hidden.avif"),
+    linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+}
+
+.card-holo-5::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  opacity: .5;
+  background-image: linear-gradient(115deg, transparent 0%, rgba(0, 231, 255, 0.8) 25%, transparent 47%, transparent 53%, rgba(255, 0, 231, 0.8) 75%, transparent 100%);
+  filter: brightness(.5) contrast(1);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 300% 300%;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  transition: all .33s ease;
+}

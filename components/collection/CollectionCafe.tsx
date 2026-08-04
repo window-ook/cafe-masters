@@ -6,6 +6,7 @@ import { Star } from 'lucide-react';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 import EdgeSquare from '@/components/shared/sidebar/EdgeSquare';
+import { getHoloClass, getMaterialClass } from '@/utils/shared/material';
 import '@/app/card-styles.css';
 
 interface ICollectionCafe {
@@ -14,26 +15,12 @@ interface ICollectionCafe {
   phone_number: string | null;
   image: string | null;
   ratings: number | null;
+  material: string | null;
   onClickAction: () => void;
 }
 
-const HIDDEN_CAFE_NAMES = ['탐앤탐스 대구강북점'];
-
-const HIDDEN_CARD =
-  'card-tilt w-full h-full p-4 border-6 border-main rounded-2xl card-hidden flex flex-col justify-between text-white cursor-pointer hover:border-main-light transition duration-300 ease';
-const HIDDEN_CARD_BACK_EFFECT =
-  'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-hidden-effect-left via-hidden-effect-mid to-hidden-effect-right blur-md animate-tilt pointer-none';
-
-const RATING_ONE_N_TWO = 'bg-gray-100 text-gray-600';
-const RATING_THREE = 'card-silver text-black';
-const RATING_FOUR = 'card-gold text-black';
-const RATING_FIVE = 'card-emerald text-black';
-
-let cardColorByGrade = ''; // 등급에 따른 카드 색상
-let borderColorByGrade = ''; // 등급에 따른 카드 보더 색상
-let nameColorByGrade = ''; // 등급에 따른 카페 이름 색상
-let backlightColorByGrade = ''; // 등급에 따른 백그라운드 효과
-let addressAndPhoneBackgroundColor = ''; // 주소와 전화번호 배경 색상
+const BACKLIGHT_BASE =
+  'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl blur-md animate-tilt pointer-none';
 
 export default memo(function CollectionCafe({
   name,
@@ -41,6 +28,7 @@ export default memo(function CollectionCafe({
   address,
   phone_number,
   ratings,
+  material,
   onClickAction,
 }: ICollectionCafe) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -49,42 +37,16 @@ export default memo(function CollectionCafe({
   const backEffectRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  switch (ratings) {
-    case 1:
-    case 2:
-      cardColorByGrade = RATING_ONE_N_TWO;
-      backlightColorByGrade = '';
-      nameColorByGrade = '';
-      borderColorByGrade = 'hover:border-gray-500';
-      addressAndPhoneBackgroundColor = 'bg-gray-100';
-      break;
-    case 3:
-      cardColorByGrade = RATING_THREE;
-      nameColorByGrade = 'group-hover:text-silver-name';
-      borderColorByGrade = 'hover:border-silver-base';
-      backlightColorByGrade =
-        'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-gray-500 blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
-      addressAndPhoneBackgroundColor = 'bg-silver-address-background';
-      break;
-    case 4:
-      cardColorByGrade = RATING_FOUR;
-      nameColorByGrade = 'group-hover:text-gold-name';
-      borderColorByGrade = 'hover:border-gold-base';
-      backlightColorByGrade =
-        'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-gold-effect-left via-gold-effect-mid to-gold-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
-      addressAndPhoneBackgroundColor = 'bg-gold-address-background';
-      break;
-    case 5:
-      cardColorByGrade = RATING_FIVE;
-      nameColorByGrade = 'group-hover:text-emerald-name';
-      borderColorByGrade = 'hover:border-emerald-base';
-      backlightColorByGrade =
-        'card-tilt absolute -z-10 inset-0 w-full h-full rounded-xl bg-linear-to-r from-emerald-effect-left via-emerald-effect-mid to-emerald-effect-right blur-md animate-tilt opacity-0 group-hover:opacity-100 pointer-none';
-      addressAndPhoneBackgroundColor = 'bg-emerald-address-background';
-      break;
-  }
+  /** 재질이 없으면 미개봉 상태입니다. 위치를 얻지 못한 채 수집된 카드입니다 */
+  const isUnopened = !material;
 
-  const isHiddenCard = HIDDEN_CAFE_NAMES.includes(name || '');
+  /** 최고 등급인 흑요석은 모서리 장식을 강조합니다 */
+  const isObsidian = material === 'obsidian';
+
+  /** 재질(세상이 정하는 축)과 홀로그램(내가 정하는 축)을 각각 조합합니다 */
+  const surfaceClass = isUnopened
+    ? 'card-unopened'
+    : `${getMaterialClass(material)} ${getHoloClass(ratings)}`;
 
   const handleCardMouseMove = useCallback((e: React.MouseEvent) => {
     const container = cardRef.current;
@@ -147,12 +109,13 @@ export default memo(function CollectionCafe({
 
   return (
     <li className="group card-container relative h-96 list-none">
-      {/* 백라이트 레이어 */}
-      {isHiddenCard ? (
-        <div ref={backEffectRef} className={HIDDEN_CARD_BACK_EFFECT}></div>
-      ) : backlightColorByGrade ? (
-        <div ref={backEffectRef} className={backlightColorByGrade}></div>
-      ) : null}
+      {/* 백라이트 레이어 - 재질의 대표색을 따릅니다 */}
+      {!isUnopened && (
+        <div
+          ref={backEffectRef}
+          className={`card-glow-${material} ${BACKLIGHT_BASE}`}
+        ></div>
+      )}
 
       {/* 카드 표면 */}
       <button
@@ -167,29 +130,23 @@ export default memo(function CollectionCafe({
           handleCardMouseLeave();
           handleOverlayMouseLeave();
         }}
-        className={
-          isHiddenCard
-            ? `${HIDDEN_CARD}`
-            : `h-full w-full border-6 p-4 ${cardColorByGrade} ${borderColorByGrade} ${isDarkTheme ? 'border-dark-border' : 'border-gray-500'} drop-shadow-3xl ease card-tilt flex cursor-pointer flex-col justify-between rounded-2xl transition duration-300`
-        }
+        className={`h-full w-full border-6 p-4 ${surfaceClass} ${isDarkTheme ? 'border-dark-border' : 'border-gray-500'} drop-shadow-3xl ease card-tilt flex cursor-pointer flex-col justify-between rounded-2xl transition duration-300`}
       >
-        {/* 빛 반사 효과 */}
-        {(ratings || 0) >= 3 && (
+        {/* 빛 반사 효과 - 홀로그램이 입혀진 카드에만 나타납니다 */}
+        {!isUnopened && (ratings || 0) >= 3 && (
           <div ref={overlayRef} className="card-overlay inset-0 rounded-2xl" />
         )}
 
         <div className="flex flex-col gap-2">
           {/* 카페 이름 */}
           <div className="z-10 px-2 py-1 shadow-sm">
-            <div
-              className={`${isHiddenCard ? '' : nameColorByGrade} font-dunggeunmo flex items-center justify-between text-lg font-bold transition-all duration-300 ease-in-out`}
-            >
+            <div className="font-dunggeunmo flex items-center justify-between text-lg font-bold transition-all duration-300 ease-in-out">
               <p className="overflow-hidden text-ellipsis whitespace-nowrap">
                 {name}
               </p>
-              {isHiddenCard && (
-                <span className="from-hidden-badge-left via-hidden-badge-mid to-hidden-badge-right font-dunggeunmo animate-gradient ml-2 inline-flex h-6 items-center justify-center rounded-lg bg-linear-to-r bg-size-[200%_200%] px-2 text-sm shadow-md">
-                  H
+              {isUnopened && (
+                <span className="font-dunggeunmo ml-2 inline-flex h-6 items-center justify-center rounded-lg border border-gray-400 px-2 text-xs text-gray-300 shadow-md">
+                  미개봉
                 </span>
               )}
             </div>
@@ -223,20 +180,20 @@ export default memo(function CollectionCafe({
 
         {/* 주소와 전화번호 */}
         <div
-          className={`relative z-10 border-[0.125rem] px-2 ${isHiddenCard ? 'border-main bg-hidden-address-background' : 'border-gray-500'} ${addressAndPhoneBackgroundColor} flex flex-col rounded-md`}
+          className={`relative z-10 border-[0.125rem] border-gray-500 px-2 ${isUnopened ? 'bg-gray-800/60' : 'bg-white/75'} flex flex-col rounded-md`}
         >
-          <EdgeSquare edgeSquare="tl" isHiddenCard={isHiddenCard} />
-          <EdgeSquare edgeSquare="tr" isHiddenCard={isHiddenCard} />
-          <EdgeSquare edgeSquare="bl" isHiddenCard={isHiddenCard} />
-          <EdgeSquare edgeSquare="br" isHiddenCard={isHiddenCard} />
+          <EdgeSquare edgeSquare="tl" isHiddenCard={isObsidian} />
+          <EdgeSquare edgeSquare="tr" isHiddenCard={isObsidian} />
+          <EdgeSquare edgeSquare="bl" isHiddenCard={isObsidian} />
+          <EdgeSquare edgeSquare="br" isHiddenCard={isObsidian} />
 
           <p
-            className={`overflow-hidden text-sm font-medium text-ellipsis whitespace-nowrap ${isHiddenCard ? 'text-hidden-address-text' : ''}`}
+            className={`overflow-hidden text-sm font-medium text-ellipsis whitespace-nowrap ${isUnopened ? 'text-gray-300' : 'text-black'}`}
           >
             {address}
           </p>
           <p
-            className={`overflow-hidden font-medium text-ellipsis whitespace-nowrap ${isHiddenCard ? 'text-hidden-address-text' : ''}`}
+            className={`overflow-hidden font-medium text-ellipsis whitespace-nowrap ${isUnopened ? 'text-gray-300' : 'text-black'}`}
           >
             {phone_number}
           </p>
