@@ -77,7 +77,6 @@ test.describe('Group D - 추천 카페 탐색 플로우', () => {
     });
 
     test('로그인 후 추천 탭에서 수집하기 버튼이 표시된다', async ({ page }) => {
-        const recommendationPage = new RecommendationPage(page);
         const signInPage = new SignInPage(page);
         const verifyPage = new VerifyPage(page);
 
