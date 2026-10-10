@@ -57,6 +57,9 @@ next-env.d.ts
 # MCP Server
 .mcp.json
 
+# Python (assets/blender 스크립트)
+__pycache__/
+
 # Playwright
 node_modules/
 /test-results/
