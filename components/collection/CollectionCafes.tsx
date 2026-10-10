@@ -146,7 +146,7 @@ export default function CollectionCafes() {
     <div className="flex h-full flex-col">
       <section
         id="collection-scroll-container"
-        className="flex-1 overflow-x-hidden overflow-y-auto"
+        className={`flex-1 overflow-x-hidden overflow-y-auto ${isDarkTheme ? 'bg-binder' : 'bg-binder-light'}`}
       >
         <ul className="pagination-sidebar-list">
           {paginatedCollectionCafes.map((cafe: ISupabaseCollectionCafe) => (

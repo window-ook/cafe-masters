@@ -77,7 +77,7 @@ export default function CategorySection() {
               {/* 백라이트 효과 */}
               <div className="from-main/30 to-main-light/30 absolute -inset-px rounded-xl bg-gradient-to-r opacity-0 blur-lg transition-opacity duration-500 group-hover:opacity-100" />
 
-              <div className="hover:border-main/40 relative h-full rounded-xl border-2 border-gray-200/20 bg-white/30 p-8 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(218,72,59,0.2)]">
+              <div className="hover:border-main/40 relative h-full rounded-xl border-2 border-paper-edge bg-paper p-8 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(218,72,59,0.2)]">
                 <div className="mb-6 flex items-center justify-between">
                   <div className="border-main/20 bg-main/5 text-main group-hover:border-main group-hover:bg-main/10 flex h-12 w-12 items-center justify-center rounded-lg border-2 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(218,72,59,0.4)]">
                     <category.icon className="size-6" />

@@ -2,6 +2,7 @@
 
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useUIStore } from '@/stores';
 import { useCreateRecommendationCafe } from '@/hooks/supabase/recommendation/useCreateRecommendationCafe';
 import { useRecommendationStore } from '@/stores/recommendation';
 import {
@@ -9,7 +10,11 @@ import {
   RecommendationFormData,
 } from '@/schema/recommendation';
 import { RecommendationRowInsert } from '@/actions/supabase/recommendation';
-import { TOAST_SUCCESS, TOAST_ERROR, TOAST_WARN } from '@/utils/constants/messages';
+import {
+  TOAST_SUCCESS,
+  TOAST_ERROR,
+  TOAST_WARN,
+} from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
 import Button from '@/components/shared/Button';
@@ -19,6 +24,8 @@ export default function FormForRecommend({
 }: {
   setIsRecommendFormOpenAction: (open: boolean) => void;
 }) {
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
   const targetCafeForRecommend = useRecommendationStore(
     state => state.targetCafeForRecommend,
   );
@@ -86,17 +93,25 @@ export default function FormForRecommend({
 
       {/* 카페 정보 표시 */}
       {targetCafeForRecommend && (
-        <div className="rounded-lg bg-gray-50 p-3">
-          <p className="text-sm text-gray-600">
+        <div
+          className={`rounded-lg p-3 ${isDarkTheme ? 'bg-case-dark' : 'bg-case'}`}
+        >
+          <p
+            className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}
+          >
             {targetCafeForRecommend.address}
           </p>
           {targetCafeForRecommend.phone_number && (
-            <p className="text-sm text-gray-600">
+            <p
+              className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}
+            >
               {targetCafeForRecommend.phone_number}
             </p>
           )}
           {targetCafeForRecommend.opening_time && (
-            <p className="text-sm text-gray-600">
+            <p
+              className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}
+            >
               {targetCafeForRecommend.opening_time}
             </p>
           )}

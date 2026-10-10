@@ -46,7 +46,7 @@ export default function ResetPasswordRequestForm({
   };
 
   return (
-    <div className="auth-glass-card">
+    <div className="auth-form-card">
       <p
         className={`auth-form-title ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
       >

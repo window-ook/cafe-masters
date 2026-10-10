@@ -15,8 +15,10 @@ export default function ListSkeleton() {
             <li
               key={index}
               className={`${
-                isDarkTheme ? 'shadow-main-shadow bg-gray-800' : 'bg-gray-50'
-              } h-24 animate-pulse list-none rounded-sm p-2 shadow-md`}
+                isDarkTheme
+                  ? 'border-paper-dark-edge bg-paper-dark'
+                  : 'border-paper-edge bg-paper'
+              } h-24 animate-pulse list-none rounded-lg border p-2`}
             >
               <div className="flex h-full w-full items-center justify-between">
                 {/* 텍스트 영역 스켈레톤 */}

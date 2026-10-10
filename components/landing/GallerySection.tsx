@@ -322,7 +322,7 @@ export default function GallerySection() {
         <div className="mt-20 text-center">
           <div className="mx-auto flex flex-wrap justify-center gap-8 md:gap-12">
             <div className="text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-orange-500/30 bg-orange-900/50 backdrop-blur-sm">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-orange-500/30 bg-orange-900/50">
                 <Coffee className="size-6 text-orange-400" />
               </div>
               <h3
@@ -337,7 +337,7 @@ export default function GallerySection() {
               </p>
             </div>
             <div className="text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-gray-500/30 bg-gray-800/50 backdrop-blur-sm">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-gray-500/30 bg-gray-800/50">
                 <Shield className="text-text-primary size-6" />
               </div>
               <h3
@@ -352,7 +352,7 @@ export default function GallerySection() {
               </p>
             </div>
             <div className="text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-yellow-500/30 bg-yellow-900/50 backdrop-blur-sm">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-yellow-500/30 bg-yellow-900/50">
                 <Crown className="size-6 text-yellow-400" />
               </div>
               <h3
@@ -367,7 +367,7 @@ export default function GallerySection() {
               </p>
             </div>
             <div className="text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-900/50 backdrop-blur-sm">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-900/50">
                 <Gem className="size-6 text-emerald-400" />
               </div>
               <h3
@@ -382,7 +382,7 @@ export default function GallerySection() {
               </p>
             </div>
             <div className="text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-purple-500/30 bg-purple-900/50 backdrop-blur-sm">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-purple-500/30 bg-purple-900/50">
                 <Eye className="size-6 text-purple-400" />
               </div>
               <h3 className="mb-1 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text font-bold text-transparent">

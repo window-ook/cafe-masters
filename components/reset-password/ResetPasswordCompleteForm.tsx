@@ -21,7 +21,7 @@ export default function ResetPasswordCompleteForm() {
     <main className="area flex h-screen w-screen items-center justify-center">
       <div className="px-6 flex flex-col items-center gap-8">
         <Logo />
-        <div className="auth-glass-card">
+        <div className="auth-form-card">
           <div className="flex w-80 max-w-(--breakpoint-lg) flex-col gap-6 sm:w-96">
             <div className="text-center">
               <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-green-100">

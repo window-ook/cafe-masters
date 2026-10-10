@@ -179,7 +179,7 @@ export default function FileUploadField({
                 handleRemoveFile();
               }}
               disabled={disabled}
-              className="flex-shrink-0 rounded-full p-2 transition-colors hover:bg-gray-100"
+              className={`flex-shrink-0 rounded-full p-2 transition-colors ${isDarkTheme ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
               aria-label="이미지 삭제"
             >
               <svg

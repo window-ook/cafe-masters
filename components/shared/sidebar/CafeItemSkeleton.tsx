@@ -11,11 +11,13 @@ export default function CafeItemSkeleton() {
         {Array.from({ length: 15 }).map((_, index) => (
           <li
             key={index}
-            className="h-24 animate-pulse list-none rounded-sm p-2 shadow-md"
+            className={`h-24 animate-pulse list-none rounded-lg border p-2 ${isDarkTheme ? 'border-paper-dark-edge bg-paper-dark' : 'border-paper-edge bg-paper'}`}
           >
             <div className="flex size-full items-center justify-between">
               <div className="flex h-full flex-col justify-center gap-1">
-                <div className="h-6 w-3/4 rounded bg-gray-200" />
+                <div
+                  className={`h-6 w-3/4 rounded ${isDarkTheme ? 'bg-gray-700' : 'bg-gray-200'}`}
+                />
               </div>
             </div>
           </li>

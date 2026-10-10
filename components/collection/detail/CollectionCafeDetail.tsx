@@ -65,7 +65,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
             onClick={() =>
               scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)
             }
-            className={`left-0 ${isDarkTheme ? 'bg-main' : 'bg-white/30'} slide-images-button`}
+            className={`left-0 ${isDarkTheme ? 'bg-paper-dark' : ''} slide-images-button`}
           >
             <span className={`${isDarkTheme ? '' : 'text-main'}`}>◀</span>
           </button>
@@ -133,7 +133,7 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
                 );
               })}
             <button
-              className={`right-0 ${isDarkTheme ? 'bg-main' : 'bg-white/30'} slide-images-button`}
+              className={`right-0 ${isDarkTheme ? 'bg-paper-dark' : ''} slide-images-button`}
               onClick={() =>
                 scrollThumbnails(
                   'right',

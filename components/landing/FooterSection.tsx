@@ -7,7 +7,7 @@ export default function FooterSection() {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
   return (
-    <footer className="relative w-full overflow-hidden border-t-2 border-gray-200/50 bg-white/10 py-8 backdrop-blur-md">
+    <footer className="relative w-full overflow-hidden border-t-2 border-paper-edge bg-paper py-8">
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="flex flex-col items-center justify-center gap-4 text-center sm:flex-row sm:justify-between">
           <p

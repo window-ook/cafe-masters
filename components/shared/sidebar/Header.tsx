@@ -104,7 +104,7 @@ export default function Header() {
               onKeyDown={e => {
                 if (e.key === 'Enter') handleCollectionSearch();
               }}
-              className={`w-5/6 bg-transparent py-4 pl-2 rounded-lg backdrop-blur-sm ${isDarkTheme
+              className={`w-5/6 bg-transparent py-4 pl-2 rounded-lg ${isDarkTheme
                 ? 'bg-dark-background border-gray-600 text-white placeholder:text-white'
                 : 'border-gray-300 text-text-primary placeholder:text-text-primary'
                 } focus:ring-0 focus:outline-none`}
@@ -134,7 +134,7 @@ export default function Header() {
               type="text"
               placeholder="카페 이름으로 검색"
               aria-label="북마크한 카페 중 이름 검색"
-              className={`w-5/6 bg-transparent py-4 pl-2 rounded-lg backdrop-blur-sm ${isDarkTheme
+              className={`w-5/6 bg-transparent py-4 pl-2 rounded-lg ${isDarkTheme
                 ? 'bg-dark-background border-gray-600 text-white placeholder:text-white'
                 : 'border-gray-300 text-text-primary placeholder:text-text-primary'
                 } focus:ring-0 focus:outline-none`}

@@ -38,12 +38,12 @@ export default function CategoryFilter() {
               aria-label={`카테고리 '${category}' 선택 버튼`}
               key={category}
               onClick={() => toggleCategories(category)}
-              className={`rounded-full border px-4 py-2 text-sm backdrop-blur-md transition-all duration-200 ease-out ${
+              className={`rounded-full border px-4 py-2 text-sm transition-all duration-200 ease-out ${
                 selectedCategories.includes(category)
                   ? 'bg-main border-main text-white'
                   : isDarkTheme
-                    ? 'border-gray-600/40 bg-gray-800/60 text-white hover:bg-gray-800/80'
-                    : 'border-white/70 bg-white/60 text-gray-700 hover:bg-white/80'
+                    ? 'border-paper-dark-edge bg-paper-dark text-white hover:bg-gray-700'
+                    : 'border-paper-edge bg-paper text-gray-700 hover:bg-white'
               } `}
             >
               {category}

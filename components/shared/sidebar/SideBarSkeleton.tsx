@@ -1,6 +1,14 @@
+'use client';
+
+import { useUIStore } from '@/stores';
+
 export default function SideBarSkeleton() {
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
   return (
-    <aside className="flex h-screen w-screen max-w-92 bg-transparent">
+    <aside
+      className={`flex h-screen w-screen max-w-92 ${isDarkTheme ? 'bg-case-dark' : 'bg-case'}`}
+    >
       <div className="relative z-10 w-full rounded-none px-1">
         <section className="flex h-full flex-col">
           {/* 헤더 */}

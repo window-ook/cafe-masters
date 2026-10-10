@@ -463,6 +463,70 @@
 
 /*
 * ======================================================
+* 슬리브 - 카드가 꽂혀 있는 투명 필름
+*
+* "꽂혀 있음"을 만드는 결정적 요소는 테두리가 아니라 덮임입니다.
+* 사람은 겹침으로 앞뒤를 판단하므로, 투명막(::after)이 카드 위를 지나가야
+* 액자가 아니라 슬리브로 읽힙니다.
+*
+* 반사는 정반사(specular)이므로 무채색 · 좁은 띠 · 경계 선명해야 합니다.
+* 회절(diffraction)인 카드 홀로그램과 성질이 겹치면 둘이 뭉쳐 보이고
+* 별점 축의 표현력을 잠식합니다. 슬리브 반사에는 절대 색을 넣지 않습니다.
+* ======================================================
+*/
+.card-sleeve {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  /* 아래를 두껍게 해 카드가 바닥에 닿아 있게 만듭니다 */
+  padding: 10px 8px 14px;
+  border-radius: 1.375rem;
+  background: rgba(148, 155, 168, .07);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+  transform: rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+  transition: transform .1s ease;
+  will-change: transform;
+}
+
+/* 개구부 - 위쪽 테두리만 밝게. 카드보다 앞 레이어에 둡니다 */
+.card-sleeve::before {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  border-top: 1px solid rgba(255, 255, 255, .38);
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .12), transparent 6%);
+  pointer-events: none;
+}
+
+/* 덮임 + 반사 - 카드 위를 지나가는 투명막
+   --sleeve-x는 마우스를 따라 갱신되며, 카드가 기우는 것과 달리 평면에서 미끄러집니다 */
+.card-sleeve::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  background: linear-gradient(108deg,
+      transparent calc(var(--sleeve-x, 50%) - 20%),
+      rgba(255, 255, 255, .06) calc(var(--sleeve-x, 50%) - 7%),
+      rgba(255, 255, 255, var(--sleeve-shine, .22)) var(--sleeve-x, 50%),
+      rgba(255, 255, 255, .06) calc(var(--sleeve-x, 50%) + 7%),
+      transparent calc(var(--sleeve-x, 50%) + 20%));
+  border-radius: inherit;
+  pointer-events: none;
+  transition: background .12s linear;
+}
+
+/* 라이트 테마 - 흰색 하이라이트이므로 불투명도를 소폭 올립니다.
+   틴트는 밝은 재질(운모)이 튀는 것을 카드를 건드리지 않고 눌러 줍니다 */
+.card-sleeve-light {
+  --sleeve-shine: .34;
+  background: rgba(90, 98, 112, .1);
+}
+
+/*
+* ======================================================
 * 카드 홀로그램 - 별점 1~5 (내가 정하는 축)
 * 카드 수정으로 언제든 조절합니다.
 * 클래스를 붙이지 않으면 무광(별점 미입력) 상태입니다.

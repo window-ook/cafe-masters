@@ -29,7 +29,7 @@ const BenefitCard: React.FC<IBenefitCard> = ({
       />
 
       <div
-        className={`group-hover:border-main/40 relative flex h-full flex-col items-center justify-center rounded-2xl border-2 border-gray-200/20 bg-white/30 p-8 text-center shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:shadow-[0_8px_30px_rgba(218,72,59,0.2)] hover:-translate-y-2`}
+        className={`group-hover:border-main/40 relative flex h-full flex-col items-center justify-center rounded-2xl border-2 border-paper-edge bg-paper p-8 text-center shadow-lg transition-all duration-300 group-hover:shadow-[0_8px_30px_rgba(218,72,59,0.2)] hover:-translate-y-2`}
       >
         <div className="border-main/20 bg-main/5 group-hover:border-main group-hover:bg-main/10 mb-6 rounded-full border-2 p-4 shadow-md transition-all duration-300 group-hover:scale-110">
           <Icon

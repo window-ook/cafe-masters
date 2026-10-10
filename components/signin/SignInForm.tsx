@@ -67,7 +67,7 @@ export default function SignInForm() {
           }}
         />
       ) : !resetRequired ? (
-        <div className="auth-glass-card">
+        <div className="auth-form-card">
           <div className="mb-4 flex items-center justify-between">
             <p
               className={`auth-form-title ${isDarkTheme ? 'text-white' : 'text-text-primary'}`}
@@ -173,7 +173,7 @@ export default function SignInForm() {
           </form>
         </div>
       ) : (
-        <div className="auth-glass-card flex flex-col items-center gap-6">
+        <div className="auth-form-card flex flex-col items-center gap-6">
           <div className="flex w-full justify-end">
             <button
               type="button"

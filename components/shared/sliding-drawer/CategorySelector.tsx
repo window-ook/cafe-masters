@@ -1,3 +1,6 @@
+'use client';
+
+import { useUIStore } from '@/stores';
 import { CATEGORIES } from '@/utils/constants/categories';
 import { ICategorySelector } from '@/types/shared/form';
 import CategoryResetButton from '@/components/shared/CategoryResetButton';
@@ -6,6 +9,8 @@ export default function CategorySelector({
   selectedCategories,
   setSelectedCategoriesAction,
 }: ICategorySelector) {
+  const isDarkTheme = useUIStore(state => state.isDarkTheme);
+
   const toggleCategories = (category: string) => {
     const newCategories = selectedCategories.includes(category)
       ? selectedCategories.filter(t => t !== category)
@@ -23,10 +28,12 @@ export default function CategorySelector({
           aria-label={`카테고리 '${category}' 선택 버튼`}
           key={category}
           onClick={() => toggleCategories(category)}
-          className={`cursor-pointer rounded-full border px-4 py-2 text-sm backdrop-blur-md transition-all duration-200 ease-out ${
+          className={`cursor-pointer rounded-full border px-4 py-2 text-sm transition-all duration-200 ease-out ${
             selectedCategories.includes(category)
               ? 'bg-main border-main text-white'
-              : 'border-white/70 bg-white/60 text-gray-700 hover:bg-white/80'
+              : isDarkTheme
+                ? 'border-paper-dark-edge bg-case-dark text-gray-300 hover:bg-gray-700'
+                : 'border-paper-edge bg-case text-gray-700 hover:bg-white'
           } `}
         >
           {category}

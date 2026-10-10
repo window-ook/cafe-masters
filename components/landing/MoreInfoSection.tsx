@@ -27,7 +27,7 @@ export default function MoreInfoSection() {
               href={EXTERNAL_PATHS.USER_MANUAL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group hover:border-main relative overflow-hidden rounded-3xl border-2 border-gray-200/20 bg-white/30 p-8 text-left shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(218,72,59,0.3)]"
+              className="group hover:border-main relative overflow-hidden rounded-3xl border-2 border-paper-edge bg-paper p-8 text-left shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(218,72,59,0.3)]"
             >
               <div className="absolute top-0 right-0 p-8 opacity-10 transition-opacity group-hover:opacity-50">
                 <ExternalLink className="text-main h-24 w-24 rotate-[-15deg] transition-colors" />
@@ -50,7 +50,7 @@ export default function MoreInfoSection() {
               href={EXTERNAL_PATHS.GOOGLE_FORM_FEEDBACK}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-3xl border-2 border-gray-200/20 bg-white/30 p-8 text-left shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-[0_8px_30px_rgba(59,130,246,0.3)]"
+              className="group relative overflow-hidden rounded-3xl border-2 border-paper-edge bg-paper p-8 text-left shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-[0_8px_30px_rgba(59,130,246,0.3)]"
             >
               <div className="absolute top-0 right-0 p-8 opacity-10 transition-opacity group-hover:opacity-50">
                 <MessageSquareText className="h-24 w-24 rotate-[15deg] text-blue-500 transition-colors" />
@@ -83,7 +83,7 @@ export default function MoreInfoSection() {
               rel="noopener noreferrer"
               className="text-gray-700 transition-colors hover:text-gray-900"
             >
-              <div className="hover:border-main rounded-full border-2 border-gray-200/20 bg-white/30 p-3 shadow-md backdrop-blur-sm transition-all hover:scale-110 hover:shadow-[0_4px_12px_rgba(218,72,59,0.2)]">
+              <div className="hover:border-main rounded-full border-2 border-paper-edge bg-paper p-3 shadow-md transition-all hover:scale-110 hover:shadow-[0_4px_12px_rgba(218,72,59,0.2)]">
                 <Image
                   src={IMAGE_PATHS.INSTAGRAM_LOGO}
                   alt="Instagram"

@@ -122,7 +122,7 @@ export default function SampleCards() {
       <button
         onClick={goToPrevious}
         disabled={isAnimating}
-        className="absolute top-1/2 left-0 z-30 -translate-y-1/2 cursor-pointer rounded-full border border-white/30 bg-white/20 p-3 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-50"
+        className="absolute top-1/2 left-0 z-30 -translate-y-1/2 cursor-pointer rounded-full border border-paper-edge bg-paper p-3 shadow-lg transition-all duration-300 hover:scale-110 hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
       >
         <ChevronLeft className="text-main size-6" />
       </button>
@@ -194,7 +194,7 @@ export default function SampleCards() {
       <button
         onClick={goToNext}
         disabled={isAnimating}
-        className="absolute top-1/2 right-0 z-30 -translate-y-1/2 cursor-pointer rounded-full border border-white/30 bg-white/20 p-3 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-50"
+        className="absolute top-1/2 right-0 z-30 -translate-y-1/2 cursor-pointer rounded-full border border-paper-edge bg-paper p-3 shadow-lg transition-all duration-300 hover:scale-110 hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
       >
         <ChevronRight className="text-main size-6" />
       </button>
