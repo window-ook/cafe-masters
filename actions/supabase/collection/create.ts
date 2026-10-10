@@ -30,10 +30,24 @@ export async function createCollectionCafe(
         isWithinRadius(userCoords, { lat: cafe.coordY, lng: cafe.coordX });
 
     const user_id = user.data.user.id;
+
+    /* 같은 카페 스택 두께는 라브라도라이트 확정 조건이므로 위치가 인증됐을 때만 조회합니다 */
+    let stackCount = 0;
+
+    if (isAtCafe && cafe.name) {
+        const { count } = await supabase
+            .from('collection')
+            .select('id', { count: 'exact', head: true })
+            .eq('user_id', user_id)
+            .eq('name', cafe.name);
+
+        stackCount = count ?? 0;
+    }
+
     const { error } = await supabase.from('collection').insert({
         ...cafe,
         user_id,
-        material: isAtCafe ? drawMaterial(cafe.name) : null,
+        material: isAtCafe ? drawMaterial(cafe.name, stackCount) : null,
         created_at: new Date().toISOString(),
     });
 

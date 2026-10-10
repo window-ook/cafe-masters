@@ -194,7 +194,7 @@
   opacity: .5;
   background-image:
     url("/image/card-style/holo_diagonal.gif"),
-    url("/image/card-style/texture_hidden.avif"),
+    url("/image/card-style/texture_special.avif"),
     linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
   filter: brightness(1) contrast(1);
   background-position: 50% 50%;
@@ -242,6 +242,7 @@
 .card-base-emerald,
 .card-base-amethyst,
 .card-base-obsidian,
+.card-base-labradorite,
 .card-base-archive {
   position: relative;
   z-index: 10;
@@ -249,9 +250,23 @@
   background-size: 100% 100%;
 }
 
-/* 운모 - 얇은 판이 겹친 반투명 광물 */
+/* 운모 - 얇은 판이 겹친 반투명 광물
+   가장 흔한 재질(30%)이라 어두운 내지 위에서 시선을 가장 많이 가져갑니다.
+   명도를 낮추면 초라해지므로("가장 흔한 카드를 가장 공들여 만들 것"),
+   층리로 면적당 밝기를 분산시켜 총 명도를 유지한 채 시선 부하만 낮춥니다.
+   주기가 다른 두 겹을 포개 규칙성을 지우고 자연물의 결로 읽히게 합니다.
+   층리는 무채색입니다 - 색이 들어가면 홀로그램(별점 축)과 뭉칩니다 */
 .card-base-mica {
-  background: linear-gradient(to bottom right,
+  background:
+    repeating-linear-gradient(174deg,
+      transparent 0 5px,
+      rgba(255, 255, 255, .11) 5px 6px,
+      transparent 6px 11px,
+      rgba(24, 32, 46, .09) 11px 12px),
+    repeating-linear-gradient(174deg,
+      transparent 0 17px,
+      rgba(255, 255, 255, .07) 17px 19px),
+    linear-gradient(to bottom right,
       #f9fafb,
       #e5e7eb,
       #d1d5db,
@@ -333,6 +348,55 @@
   color: white;
 }
 
+/* 흑요석의 각인 - 6종 중 유일하게 인간이 가공해 온 돌입니다(석기·흑요석 거울).
+   컬러 축의 결이므로 ::before를 쓰며, 광택(::after)과 층이 다릅니다 */
+.card-base-obsidian::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  opacity: .3;
+  background-image: url("/image/card-style/texture_ancient.avif");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 180%;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  transition: all .33s ease;
+}
+
+/* 라브라도라이트 - 확률 밖 재질. 각도에 따라 청색 섬광(schiller)이 번쩍이는 장석입니다.
+   뽑아서 얻는 것이 아니라 같은 카페를 거듭 찾아가 얻으므로,
+   서열 안에 있는 흑요석과 달리 "가장 귀한 것"이 아니라 "다른 방식으로 얻은 것"입니다 */
+.card-base-labradorite {
+  background: linear-gradient(to bottom right,
+      #6b7c8f,
+      #4a5b6d,
+      #35455480,
+      #253744,
+      #18242d,
+      #0f171d);
+  color: white;
+}
+
+/* 섬광 - 이 재질의 정체성입니다. 컬러 축 소유이므로 ::before를 씁니다 */
+.card-base-labradorite::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  opacity: .45;
+  background-image: url("/image/card-style/texture_special.avif");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 170%;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  transition: all .33s ease;
+}
+
 /* 아카이브 - 발행이 중단된 재질. 위치 인증 이전에 수집된 카드입니다.
    광물 6종과 달리 인공물(갱지)이므로 서열 밖에 있다는 것이 계열로 드러납니다 */
 .card-base-archive {
@@ -387,6 +451,10 @@
 
 .card-glow-obsidian {
   background: linear-gradient(to right, #75c8ff, #b06bff, #ff7a6b);
+}
+
+.card-glow-labradorite {
+  background: linear-gradient(to right, #7fd4ff, #4a5b6d, #b06bff);
 }
 
 .card-glow-archive {
@@ -445,28 +513,16 @@
     linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
 }
 
-/* 최고 단계 - 기존 card-hidden의 무지개 레이어를 홀로 축으로 이관 */
+/* 최고 단계 - 기존 card-hidden의 무지개 레이어를 홀로 축으로 이관
+   원래 ::before에 있던 대각 무지개를 ::after의 레이어로 합쳤습니다.
+   ::before를 비워야 컬러 축(재질의 결)이 쓸 자리가 생기고,
+   그래야 흑요석 각인과 최고 광택이 한 카드에서 공존합니다.
+   합치면서 잃은 brightness(.5)는 그라디언트 알파를 낮춰 대신합니다 */
 .card-holo-5::after {
   opacity: .5;
   background-image:
     url("/image/card-style/holo_diagonal.gif"),
-    url("/image/card-style/texture_hidden.avif"),
-    linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
-}
-
-.card-holo-5::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  opacity: .5;
-  background-image: linear-gradient(115deg, transparent 0%, rgba(0, 231, 255, 0.8) 25%, transparent 47%, transparent 53%, rgba(255, 0, 231, 0.8) 75%, transparent 100%);
-  filter: brightness(.5) contrast(1);
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: 300% 300%;
-  border-radius: inherit;
-  pointer-events: none;
-  mix-blend-mode: color-dodge;
-  transition: all .33s ease;
+    linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%),
+    linear-gradient(115deg, transparent 0%, rgba(0, 231, 255, 0.4) 25%, transparent 47%, transparent 53%, rgba(255, 0, 231, 0.4) 75%, transparent 100%);
+  background-size: 160%, auto, 300% 300%;
 }
