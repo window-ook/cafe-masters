@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>바인더 · 슬리브 검수</title>
+<style>
+:root {
+  --binder: oklch(34.5% 0.014 232);
+  --binder-light: oklch(72% 0.012 236);
+  --binder-edge: oklch(28% 0.012 232);
+  --binder-edge-light: oklch(64% 0.011 236);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', sans-serif;
+  background: #111;
+  color: #eee;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 14px 24px;
+  background: #17181b;
+  border-bottom: 1px solid #2a2c31;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+header h1 { margin: 0; font-size: 15px; font-weight: 600; }
+button.toggle {
+  padding: 6px 14px;
+  border: 1px solid #3a3d44;
+  border-radius: 8px;
+  background: #23252a;
+  color: #ddd;
+  font-size: 13px;
+  cursor: pointer;
+}
+button.toggle[aria-pressed="true"] { background: #3b6ea5; border-color: #4b82bd; color: #fff; }
+.hint { font-size: 12px; color: #8d939c; }
+
+/* ── 바인더 내지 ───────────────────────────── */
+.binder {
+  padding: 32px;
+  background: var(--binder);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+}
+body.light .binder { background: var(--binder-light); }
+
+/* ── 비교용: 기존 글래스모피즘 캐러셀 ──────── */
+/* 실제 캐러셀 뒤에 있는 것은 카카오맵입니다. 카드 텍스처를 배경으로 쓰면
+   비교 자체가 성립하지 않으므로 지도 톤(밝은 베이지-회색 + 도로)으로 대신합니다 */
+.old {
+  margin: 0;
+  padding: 32px;
+  background:
+    linear-gradient(90deg, transparent 0 18%, #e8e4dc 18% 20%, transparent 20%),
+    linear-gradient(0deg, transparent 0 42%, #e8e4dc 42% 44%, transparent 44%),
+    linear-gradient(63deg, transparent 0 71%, #ece8e0 71% 73.5%, transparent 73.5%),
+    radial-gradient(circle at 72% 24%, #dfe9dc 0 9%, transparent 9%),
+    #f4f1ea;
+}
+.old-inner {
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 16px;
+  background: rgba(255,255,255,.3);
+  backdrop-filter: blur(24px);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+}
+.label {
+  padding: 10px 24px;
+  background: #0d0e10;
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: #9aa1ab;
+}
+
+/* ── 카드 · 슬리브 ─────────────────────────── */
+.card-container { perspective: 500px; height: 384px; list-style: none; }
+
+.card-sleeve {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  padding: 10px 8px 14px;
+  border-radius: 1.375rem;
+  background: rgba(148, 155, 168, .07);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+  transform: rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+  transition: transform .1s ease;
+  will-change: transform;
+  filter: drop-shadow(14px 14px 11px rgba(47, 49, 51, 0.55));
+}
+.card-sleeve::before {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  border-top: 1px solid rgba(255, 255, 255, .38);
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .12), transparent 6%);
+  pointer-events: none;
+}
+.card-sleeve::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  background: linear-gradient(108deg,
+      transparent calc(var(--sleeve-x, 50%) - 20%),
+      rgba(255, 255, 255, .06) calc(var(--sleeve-x, 50%) - 7%),
+      rgba(255, 255, 255, var(--sleeve-shine, .22)) var(--sleeve-x, 50%),
+      rgba(255, 255, 255, .06) calc(var(--sleeve-x, 50%) + 7%),
+      transparent calc(var(--sleeve-x, 50%) + 20%));
+  border-radius: inherit;
+  pointer-events: none;
+  transition: background .12s linear;
+}
+body.light .card-sleeve { --sleeve-shine: .34; background: rgba(90, 98, 112, .1); }
+
+.card-face {
+  height: 100%;
+  width: 100%;
+  padding: 16px;
+  border: 6px solid #6b7280;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+body.sleeveless .card-sleeve { padding: 0; background: none; box-shadow: none; }
+body.sleeveless .card-sleeve::before,
+body.sleeveless .card-sleeve::after { display: none; }
+
+/* 재질 */
+.card-base-mica, .card-base-amber, .card-base-gold, .card-base-emerald,
+.card-base-amethyst, .card-base-obsidian, .card-base-labradorite, .card-base-archive {
+  position: relative; z-index: 10; overflow: hidden; background-size: 100% 100%;
+}
+.card-base-mica {
+  background:
+    repeating-linear-gradient(174deg,
+      transparent 0 5px,
+      rgba(255,255,255,.11) 5px 6px,
+      transparent 6px 11px,
+      rgba(24,32,46,.09) 11px 12px),
+    repeating-linear-gradient(174deg,
+      transparent 0 17px,
+      rgba(255,255,255,.07) 17px 19px),
+    linear-gradient(to bottom right,#f9fafb,#e5e7eb,#d1d5db,#9ca3af,#6b7280,#4b5563,#374151);
+  color: black;
+}
+/* 층리 이전 상태 - 판정용 비교 */
+body.no-strata .card-base-mica {
+  background: linear-gradient(to bottom right,#f9fafb,#e5e7eb,#d1d5db,#9ca3af,#6b7280,#4b5563,#374151);
+}
+.card-base-amber {
+  background:
+    radial-gradient(ellipse 9% 5% at 27% 21%, rgba(255,251,236,.5), transparent 72%),
+    radial-gradient(ellipse 5% 3% at 63% 40%, rgba(255,248,227,.42), transparent 72%),
+    radial-gradient(ellipse 12% 6% at 45% 72%, rgba(255,245,216,.28), transparent 72%),
+    linear-gradient(to bottom right,#fef3c7,#fbdf8e,#f5c65c,#e79a24,#c06d12,#8f4a0b,#6b3607);
+  color: #40230a;
+}
+.card-base-gold {
+  background: linear-gradient(to bottom right,#fef9c3,#fde68a,#fde047,#facc15,#ca8a04,#a16207,#78350f);
+  color: black;
+}
+.card-base-emerald {
+  background: linear-gradient(to bottom right,#ccfbf1,#6ee7b7,#5fe0a9,#34d399,#178f7e,#0f766e,#0d5c5b);
+  color: black;
+}
+.card-base-amethyst {
+  background:
+    linear-gradient(148deg, rgba(255,255,255,.2) 0 17%, transparent 17% 33%),
+    linear-gradient(212deg, rgba(255,255,255,.13) 0 25%, transparent 25% 47%),
+    linear-gradient(to bottom right,#f3e8ff,#d8b4fe,#b57cf0,#9333ea,#6b21a8,#4c1d95,#2e1065);
+  color: white;
+}
+.card-base-obsidian {
+  background: linear-gradient(to bottom right,#4a4d55,#33363d,#26282e,#1e2025,#141519,#0b0c0e);
+  color: white;
+}
+/* 라브라도라이트 - 확률 밖 재질. 청색 섬광(schiller)이 정체성입니다 */
+.card-base-labradorite {
+  background: linear-gradient(to bottom right,#6b7c8f,#4a5b6d,#35455480,#253744,#18242d,#0f171d);
+  color: white;
+}
+.card-base-labradorite::before {
+  content:""; position:absolute; z-index:1; inset:0; opacity:.45;
+  background-image:url('../public/image/card-style/texture_special.avif');
+  background-repeat:no-repeat; background-position:50% 50%; background-size:170%;
+  border-radius:inherit; pointer-events:none; mix-blend-mode:color-dodge;
+}
+
+.card-base-archive {
+  background: linear-gradient(to bottom right,#efe7d6,#e3d7c0,#d4c4a8,#bfab8c,#a68f6e,#8a7454);
+  color: #3a3125;
+}
+.card-unopened {
+  position: relative; z-index: 10; overflow: hidden;
+  background: linear-gradient(145deg,#4b5563,#3b4553,#2b3340,#1f2937);
+  color: #d1d5db;
+}
+
+/* 홀로그램 */
+.card-holo-1::after, .card-holo-2::after, .card-holo-3::after,
+.card-holo-4::after, .card-holo-5::after {
+  content: ""; position: absolute; z-index: 2; inset: 0;
+  background-repeat: no-repeat; background-position: 50% 50%;
+  background-size: 160%; background-blend-mode: overlay;
+  border-radius: inherit; pointer-events: none;
+  mix-blend-mode: color-dodge; transition: all .33s ease;
+}
+.card-holo-1::after { opacity:.12; background-image:url('../public/image/card-style/texture_sparkles.webp'); }
+.card-holo-2::after { opacity:.2; background-image:url('../public/image/card-style/texture_sparkles.webp'); }
+.card-holo-3::after { opacity:.32; background-image:url('../public/image/card-style/texture_foil.avif'),url('../public/image/card-style/texture_sparkles.webp'); }
+.card-holo-4::after { opacity:.5; background-image:url('../public/image/card-style/texture_foil.avif'),url('../public/image/card-style/texture_sparkles.webp'),linear-gradient(125deg,#ff008450 15%,#fca40040 30%,#ffff0030 40%,#00ff8a20 60%,#00cfff40 70%,#cc4cfa50 85%); }
+/* ::before에 있던 대각 무지개를 ::after 레이어로 합쳤습니다.
+   ::before가 비어야 컬러 축(재질의 결)이 그 자리를 쓸 수 있습니다 */
+.card-holo-5::after {
+  opacity:.5;
+  background-image:
+    url('../public/image/card-style/holo_diagonal.gif'),
+    linear-gradient(125deg,#ff008450 15%,#fca40040 30%,#ffff0030 40%,#00ff8a20 60%,#00cfff40 70%,#cc4cfa50 85%),
+    linear-gradient(115deg,transparent 0%,rgba(0,231,255,.4) 25%,transparent 47%,transparent 53%,rgba(255,0,231,.4) 75%,transparent 100%);
+  background-size: 160%, auto, 300% 300%;
+}
+/* texture_special 복원 - 비교용 */
+body.legacy-hidden .card-holo-5::after {
+  background-image:
+    url('../public/image/card-style/holo_diagonal.gif'),
+    url('../public/image/card-style/texture_special.avif'),
+    linear-gradient(125deg,#ff008450 15%,#fca40040 30%,#ffff0030 40%,#00ff8a20 60%,#00cfff40 70%,#cc4cfa50 85%),
+    linear-gradient(115deg,transparent 0%,rgba(0,231,255,.4) 25%,transparent 47%,transparent 53%,rgba(255,0,231,.4) 75%,transparent 100%);
+  background-size: 160%, 160%, auto, 300% 300%;
+}
+
+/* 어두운 재질에서 광택을 살리는 실험
+   color-dodge는 바탕이 검정이면 결과가 0이라 그라디언트가 통째로 죽습니다.
+   screen은 바탕이 검정일 때 광택이 그대로 나옵니다 */
+.holo-screen.card-holo-5::after { mix-blend-mode: screen; opacity: .55; }
+.holo-plus.card-holo-5::after { mix-blend-mode: plus-lighter; opacity: .4; }
+
+/* 무지개 알파를 올린 버전 - blend는 그대로 color-dodge */
+.holo-vivid.card-holo-5::after {
+  background-image:
+    url('../public/image/card-style/holo_diagonal.gif'),
+    linear-gradient(125deg,#ff0084b0 15%,#fca400a0 30%,#ffff0090 40%,#00ff8a80 60%,#00cfffa0 70%,#cc4cfab0 85%),
+    linear-gradient(115deg,transparent 0%,rgba(0,231,255,.9) 25%,transparent 47%,transparent 53%,rgba(255,0,231,.9) 75%,transparent 100%);
+  background-size: 160%, auto, 300% 300%;
+}
+
+/* 흑요석의 각인 - 컬러 축 소유이므로 ::before */
+.card-base-obsidian::before {
+  content:""; position:absolute; z-index:1; inset:0;
+  opacity: var(--tex-opacity, .3);
+  background-image:url('../public/image/card-style/texture_ancient.avif');
+  background-repeat:no-repeat; background-position:50% 50%; background-size:180%;
+  border-radius:inherit; pointer-events:none; mix-blend-mode:color-dodge;
+}
+body.no-engrave .card-base-obsidian::before { display: none; }
+
+/* ── ancient 텍스처 배치 실험 ───────────────
+   재질의 '결'은 컬러 축 소유이므로 ::before를 씁니다.
+   ::after는 홀로그램(별점 축)이 쓰고 있어 침범하면 두 축이 섞입니다 */
+.tex-ancient::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  opacity: var(--tex-opacity, .3);
+  background-image: url('../public/image/card-style/texture_ancient.avif');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 180%;
+  mix-blend-mode: color-dodge;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.tex-strong { --tex-opacity: .5; }
+.tex-soft { --tex-opacity: .18; }
+
+/* 카드 내부 */
+.cafe-name {
+  position: relative; z-index: 10;
+  padding: 4px 8px;
+  font-family: 'DungGeunMo', monospace;
+  font-size: 18px; font-weight: bold;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.stars { position: relative; z-index: 10; display: flex; justify-content: flex-end; gap: 2px; margin-top: 8px; }
+.star {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #ef4444; color: #fde047;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+}
+.thumb {
+  position: relative; z-index: 10; height: 176px;
+  border-radius: 8px; background: #374151;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.thumb-cap {
+  height: 16px; background: #fff; color: #000;
+  border-radius: 0 0 6px 6px; font-size: 11px;
+  display: flex; align-items: center; justify-content: center;
+}
+.addr {
+  position: relative; z-index: 10;
+  padding: 2px 8px; border: 2px solid #6b7280; border-radius: 6px;
+  background: rgba(255,255,255,.75); color: #000;
+  font-size: 13px;
+}
+.unopened .addr { background: rgba(31,41,55,.6); color: #d1d5db; }
+.badge {
+  margin-left: 8px; padding: 0 8px; height: 24px;
+  border: 1px solid #9ca3af; border-radius: 8px;
+  font-size: 11px; color: #d1d5db;
+  display: inline-flex; align-items: center;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>바인더 · 슬리브 검수</h1>
+  <button class="toggle" id="theme" aria-pressed="false">라이트 서랍으로 전환</button>
+  <button class="toggle" id="sleeve" aria-pressed="true">슬리브 끄기</button>
+  <button class="toggle" id="strata" aria-pressed="true">운모 층리 끄기</button>
+  <button class="toggle" id="engrave" aria-pressed="true">흑요석 각인 끄기</button>
+  <button class="toggle" id="legacy" aria-pressed="false">홀로5에 texture_special 복원</button>
+  <span class="hint">판정: 눈이 먼저 가는 카드가 재질이 아니라 위치로 결정되면 성공</span>
+</header>
+
+<div class="label">확정안 — 어두운 내지 + 슬리브 (확률 분포대로 21장: 운모 6 · 호박 5 · 금 4 · 에메랄드 3 · 자수정 2 · 흑요석 1)</div>
+<ul class="binder" id="grid"></ul>
+
+<div class="label">어두운 재질에서 광택 살리기 — color-dodge는 바탕이 검정이면 결과가 0이라 그라디언트가 죽습니다. ②가 현재 상태, ③~⑥이 후보. ⑦⑧은 밝은/중간 재질에서 같은 설정이 망가지지 않는지 확인용</div>
+<ul class="binder" id="texgrid"></ul>
+
+<div class="label">비교 — 현재 캐러셀 (반투명 흰색 + backdrop-blur)</div>
+<div class="old"><div class="old-inner" id="oldgrid"></div></div>
+
+<script>
+const NAMES = ['블루보틀 성수','커피리브레','프릳츠 도화','앤트러사이트','테라로사 포스코','로우키','헬카페','나무사이로','챔프커피','펠트커피','메쉬커피','deep blue lake','오르에르','대충유원지','센터커피','투데이','베르크로스터스','커피발전소','리이슈','알레그리아','보난자커피'];
+const DECK = [
+  ...Array(6).fill('mica'), ...Array(5).fill('amber'), ...Array(4).fill('gold'),
+  ...Array(3).fill('emerald'), ...Array(2).fill('amethyst'), ...Array(1).fill('obsidian')
+];
+const HOLO = [0,3,0,2,5,1,0,4,3,0,2,5,1,0,3,4,0,2,5,3,1];
+
+function card(material, holo, name, extra = '') {
+  const li = document.createElement('li');
+  li.className = 'card-container';
+  const surface = (material === 'unopened'
+    ? 'card-unopened'
+    : `card-base-${material}` + (holo ? ` card-holo-${holo}` : '')) + ' ' + extra;
+  li.innerHTML = `
+    <div class="card-sleeve">
+      <div class="card-face ${surface} ${material==='unopened'?'unopened':''}">
+        <div>
+          <div class="cafe-name"><span>${name}</span>${material==='unopened'?'<span class="badge">미개봉</span>':''}</div>
+          <div class="stars">${'<div class="star">★</div>'.repeat(holo)}</div>
+        </div>
+        <div class="thumb"><div class="thumb-cap">CAFE MASTERS</div></div>
+        <div class="addr">서울 성동구 아차산로 7<br>02-1234-5678</div>
+      </div>
+    </div>`;
+  const sleeve = li.querySelector('.card-sleeve');
+  sleeve.addEventListener('mousemove', e => {
+    const r = sleeve.getBoundingClientRect();
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    sleeve.style.setProperty('--rotate-y', `${(x/r.width-.5)*-40}deg`);
+    sleeve.style.setProperty('--rotate-x', `${(y/r.height-.5)*40}deg`);
+    sleeve.style.setProperty('--sleeve-x', `${30+(x/r.width)*40}%`);
+  });
+  sleeve.addEventListener('mouseleave', () => {
+    sleeve.style.setProperty('--rotate-x','0deg');
+    sleeve.style.setProperty('--rotate-y','0deg');
+    sleeve.style.setProperty('--sleeve-x','50%');
+  });
+  return li;
+}
+
+const grid = document.getElementById('grid');
+DECK.forEach((m,i) => grid.appendChild(card(m, HOLO[i], NAMES[i])));
+grid.appendChild(card('archive', 2, '아카이브 · 옛 카드'));
+grid.appendChild(card('unopened', 0, '미개봉 · 위치 없음'));
+
+const texgrid = document.getElementById('texgrid');
+[
+  ['obsidian', 0, '① 무광 · 각인만', ''],
+  ['obsidian', 5, '② 별점5 · color-dodge (현재)', ''],
+  ['obsidian', 5, '③ 별점5 · screen', 'holo-screen'],
+  ['obsidian', 5, '④ 별점5 · plus-lighter', 'holo-plus'],
+  ['obsidian', 5, '⑤ 별점5 · 무지개 진하게', 'holo-vivid'],
+  ['obsidian', 5, '⑥ 별점5 · screen + 진하게', 'holo-screen holo-vivid'],
+  ['mica', 5, '⑦ 운모 별점5 (밝은 재질 비교)', ''],
+  ['amethyst', 5, '⑧ 자수정 별점5 (중간 명도)', ''],
+  ['labradorite', 0, '⑨ 라브라도라이트 · 무광', ''],
+  ['labradorite', 3, '⑩ 라브라도라이트 · 별점3', ''],
+  ['labradorite', 5, '⑪ 라브라도라이트 · 별점5', ''],
+  ['obsidian', 5, '⑫ 흑요석 별점5 (나란히 비교)', ''],
+].forEach(([m, h, n, extra]) => texgrid.appendChild(card(m, h, n, extra)));
+
+const oldgrid = document.getElementById('oldgrid');
+['mica','amber','gold','emerald'].forEach((m,i) => oldgrid.appendChild(card(m, [0,3,4,5][i], NAMES[i])));
+
+document.getElementById('theme').onclick = e => {
+  const on = document.body.classList.toggle('light');
+  e.target.setAttribute('aria-pressed', on);
+  e.target.textContent = on ? '다크 서랍으로 전환' : '라이트 서랍으로 전환';
+};
+document.getElementById('sleeve').onclick = e => {
+  const off = document.body.classList.toggle('sleeveless');
+  e.target.setAttribute('aria-pressed', !off);
+  e.target.textContent = off ? '슬리브 켜기' : '슬리브 끄기';
+};
+document.getElementById('strata').onclick = e => {
+  const off = document.body.classList.toggle('no-strata');
+  e.target.setAttribute('aria-pressed', !off);
+  e.target.textContent = off ? '운모 층리 켜기' : '운모 층리 끄기';
+};
+document.getElementById('engrave').onclick = e => {
+  const off = document.body.classList.toggle('no-engrave');
+  e.target.setAttribute('aria-pressed', !off);
+  e.target.textContent = off ? '흑요석 각인 켜기' : '흑요석 각인 끄기';
+};
+document.getElementById('legacy').onclick = e => {
+  const on = document.body.classList.toggle('legacy-hidden');
+  e.target.setAttribute('aria-pressed', on);
+  e.target.textContent = on ? 'texture_special 제거' : '홀로5에 texture_special 복원';
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cafe Masters — 락업</title>
+<style>
+  :root {
+    --ink: #10141c; --panel: #171d28; --line: #2a3446;
+    --text: #dfe5ef; --dim: #7e8ca4; --accent: #e8703a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px;
+    background: var(--ink); color: var(--text);
+    font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  h1 { margin: 0 0 4px; font-size: 15px; letter-spacing: .04em; }
+  .sub { margin: 0 0 20px; color: var(--dim); font-size: 12px; }
+
+  .wrap { display: grid; grid-template-columns: 300px 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 940px) { .wrap { grid-template-columns: 1fr; } }
+
+  .panel { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+  .panel + .panel { margin-top: 14px; }
+  .panel h2 { margin: 0 0 12px; font-size: 11px; letter-spacing: .12em; color: var(--dim); text-transform: uppercase; }
+
+  .row { display: grid; grid-template-columns: 1fr 56px; gap: 8px; align-items: center; margin-bottom: 9px; }
+  .row label { color: var(--dim); font-size: 11px; }
+  .row output { text-align: right; font-variant-numeric: tabular-nums; }
+  input[type=range] { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--accent); }
+
+  .inline { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; color: var(--dim); font-size: 11px; }
+  .inline label { display: flex; align-items: center; gap: 5px; }
+  input[type=color] { width: 30px; height: 24px; padding: 0; border: 1px solid var(--line); border-radius: 5px; background: none; }
+
+  .stage { padding: 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+  .bed { padding: 28px; border-radius: 10px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 20px; }
+  .bed.dark { background: #10141c; border: 1px solid var(--line); }
+  .bed.light { background: #efe9dc; }
+  .bed .tag { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+  .bed.dark .tag { color: var(--dim); }
+  .bed.light .tag { color: #8a7f6d; }
+  .scaled { display: flex; align-items: flex-end; gap: 26px; flex-wrap: wrap; }
+  .scaled figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .scaled figcaption { font-size: 10px; color: var(--dim); }
+  .bed.light figcaption { color: #8a7f6d; }
+
+  textarea {
+    width: 100%; height: 110px; margin-top: 12px; padding: 10px;
+    border: 1px solid var(--line); border-radius: 8px;
+    background: #0c1017; color: var(--dim);
+    font: 11px/1.5 ui-monospace, monospace; resize: vertical;
+  }
+  button {
+    margin: 8px 6px 0 0; padding: 7px 12px;
+    border: 1px solid var(--line); border-radius: 7px;
+    background: #1e2634; color: var(--text); font: inherit; font-size: 11px; cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  .hint { margin-top: 12px; color: var(--dim); font-size: 11px; line-height: 1.7; }
+  .hint b { color: var(--text); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>Cafe Masters — 락업</h1>
+<p class="sub">세로형과 가로형을 같은 파라미터로 동시에 봅니다 · 두 줄 폭은 자간으로 자동 정렬</p>
+
+<div class="wrap">
+  <div>
+    <div class="panel">
+      <h2>자형</h2>
+      <div class="row"><label>획 굵기</label><output id="o-weight"></output><input type="range" id="weight" min="10" max="34" step="1"></div>
+      <div class="row"><label>윗줄 크기 — 아랫줄 대비</label><output id="o-topScale"></output><input type="range" id="topScale" min="80" max="180" step="1"></div>
+      <div class="row"><label>줄 간격</label><output id="o-lineGap"></output><input type="range" id="lineGap" min="0" max="70" step="1"></div>
+      <div class="row"><label>기준 자간</label><output id="o-tracking"></output><input type="range" id="tracking" min="-4" max="40" step="1"></div>
+      <div class="inline" style="margin-top:6px">
+        <label><input type="radio" name="join" value="bevel" checked> 모따기</label>
+        <label><input type="radio" name="join" value="miter"> 뾰족</label>
+        <label><input type="radio" name="join" value="round"> 둥글게</label>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>심볼</h2>
+      <div class="row"><label>크기 — 워드마크 대비</label><output id="o-symScale"></output><input type="range" id="symScale" min="0" max="240" step="2"></div>
+      <div class="row"><label>워드마크와의 간격</label><output id="o-symGap"></output><input type="range" id="symGap" min="0" max="90" step="2"></div>
+    </div>
+
+    <div class="panel">
+      <h2>색</h2>
+      <div class="inline">
+        <label><input type="color" id="cDark" value="#e8703a"> 다크</label>
+        <label><input type="color" id="cLight" value="#1b2230"> 라이트</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="bed dark">
+      <span class="tag">Dark</span>
+      <div class="scaled">
+        <figure><div data-bed="dark" data-layout="stack" data-w="300"></div><figcaption>세로형 300</figcaption></figure>
+        <figure><div data-bed="dark" data-layout="stack" data-w="120"></div><figcaption>세로형 120</figcaption></figure>
+        <figure><div data-bed="dark" data-layout="row" data-w="300"></div><figcaption>가로형 300</figcaption></figure>
+        <figure><div data-bed="dark" data-layout="row" data-w="160"></div><figcaption>가로형 160</figcaption></figure>
+      </div>
+    </div>
+    <div class="bed light">
+      <span class="tag">Light</span>
+      <div class="scaled">
+        <figure><div data-bed="light" data-layout="stack" data-w="300"></div><figcaption>세로형 300</figcaption></figure>
+        <figure><div data-bed="light" data-layout="row" data-w="300"></div><figcaption>가로형 300</figcaption></figure>
+        <figure><div data-bed="light" data-layout="row" data-w="160"></div><figcaption>가로형 160</figcaption></figure>
+      </div>
+    </div>
+
+    <textarea id="out" readonly spellcheck="false"></textarea>
+    <button id="copy-svg">세로형 SVG 복사</button>
+    <button id="copy-params">파라미터 복사</button>
+    <p class="hint">
+      <b>가로형 160을 보세요.</b> 사이드바 헤더에 실제로 들어가는 크기입니다.<br>
+      로고는 한 장이 아니라 자산 세트입니다 — 자리마다 필요한 비율이 다르므로 두 배치를 함께 봅니다.<br>
+      확정했으면 <code>node assets/logo/generate.cjs</code>로 SVG 다섯 벌을 만드세요.
+    </p>
+  </div>
+</div>
+
+<script src="symbol.js"></script>
+<script src="lettering.js"></script>
+<script src="lockup.js"></script>
+<script>
+const Lockup = window.CafeMastersLockup;
+const P = { ...Lockup.DEFAULTS, cDark: '#e8703a', cLight: '#1b2230' };
+
+function render() {
+  document.querySelectorAll('[data-layout]').forEach((slot, i) => {
+    const color = slot.dataset.bed === 'dark' ? P.cDark : P.cLight;
+    slot.innerHTML = Lockup.svgFor(
+      { ...P, layout: slot.dataset.layout }, color, 'v' + i, Number(slot.dataset.w)
+    );
+  });
+
+  document.getElementById('out').value =
+    Lockup.svgFor({ ...P, layout: 'stack' }, 'currentColor', 'out');
+}
+
+const KEYS = ['weight', 'topScale', 'lineGap', 'tracking', 'symScale', 'symGap'];
+const UNIT = { topScale: '%', symScale: '%' };
+
+KEYS.forEach(key => {
+  const input = document.getElementById(key);
+  const out = document.getElementById('o-' + key);
+  input.value = P[key];
+  const sync = () => {
+    P[key] = Number(input.value);
+    out.textContent = P[key] + (UNIT[key] || '');
+    render();
+  };
+  input.addEventListener('input', sync);
+  sync();
+});
+
+document.querySelectorAll('input[name=join]').forEach(radio =>
+  radio.addEventListener('change', () => { P.join = radio.value; render(); }));
+
+['cDark', 'cLight'].forEach(key => {
+  const input = document.getElementById(key);
+  input.addEventListener('input', () => { P[key] = input.value; render(); });
+});
+
+document.getElementById('copy-svg').onclick = () =>
+  navigator.clipboard.writeText(document.getElementById('out').value);
+document.getElementById('copy-params').onclick = () =>
+  navigator.clipboard.writeText(JSON.stringify(
+    { ...Object.fromEntries(KEYS.map(k => [k, P[k]])), join: P.join }, null, 2));
+
+render();
+</script>
+</body>
+</html>
