@@ -16,11 +16,11 @@ interface IPolaroidCardLayout {
 }
 
 /**
- * 폴라로이드 카드 레이아웃 훅
+ * 폴라로이드 카드 레이아웃 생성
  * @param count - 생성할 카드 개수
  * @returns {IPolaroidCardLayout[]} 폴라로이드 카드 레이아웃 배열
  */
-export const usePolaroidLayout = (count: number = 9): IPolaroidCardLayout[] => {
+export const createPolaroidLayout = (count: number = 9): IPolaroidCardLayout[] => {
   const images = Object.values(IMAGE_PATHS.POLAROID_IMAGES);
 
   const cards: IPolaroidCardLayout[] = [];

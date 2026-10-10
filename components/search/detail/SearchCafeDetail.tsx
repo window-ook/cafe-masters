@@ -55,7 +55,7 @@ export default function SearchCafeDetail({
   }, [searchResult, cafeId]);
 
   // 점진적 렌더링: 기본 정보 즉각 업데이트 + 카페 상세 정보 데이터 비동기 페칭 후 업데이트
-  const searchDetail = useMemo(() => {
+  const getSearchDetail = () => {
     if (!foundCafe) {
       return {
         id: cafeId.toString(),
@@ -81,7 +81,8 @@ export default function SearchCafeDetail({
       extra_images: searchCafeDetail?.extra_images ?? [],
       opening_time: searchCafeDetail?.opening_time ?? null,
     };
-  }, [foundCafe, searchCafeDetail, cafeId]);
+  };
+  const searchDetail = getSearchDetail();
 
   const bookmarkData = {
     id: Number(searchDetail.id),

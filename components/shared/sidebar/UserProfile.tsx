@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useCollectionCounts } from '@/hooks/supabase/collection';
 import { useUIStore, useUserStore } from '@/stores';
 import { IMAGE_PATHS } from '@/lib/paths';
@@ -18,10 +18,10 @@ export default function UserProfile() {
 
   const { collectionCounts } = useCollectionCounts(userId);
 
-  const profileImage = useMemo(() => {
-    if (userGender === 'female') return IMAGE_PATHS.USER_IMAGE_FEMALE;
-    return IMAGE_PATHS.USER_IMAGE_MALE;
-  }, [userGender]);
+  const profileImage =
+    userGender === 'female'
+      ? IMAGE_PATHS.USER_IMAGE_FEMALE
+      : IMAGE_PATHS.USER_IMAGE_MALE;
 
   const displayName = userNickname || userEmail;
 

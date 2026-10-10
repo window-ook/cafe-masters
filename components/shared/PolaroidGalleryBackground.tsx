@@ -1,8 +1,7 @@
 'use client';
 
-import { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
-import { usePolaroidLayout } from '@/hooks/ui/usePolaroidLayout';
+import { createPolaroidLayout } from '@/utils/shared/polaroidLayout';
 import { useUIStore } from '@/stores';
 import PolaroidCard from '@/components/shared/PolaroidCard';
 
@@ -15,19 +14,16 @@ const SHOULD_BLUR_ROUTES = [
   '/help',
 ];
 
+const POLAROID_CARDS = createPolaroidLayout();
+
 export default function PolaroidGalleryBackground() {
   const pathname = usePathname();
 
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
 
-  const polaroidCards = useMemo(() => usePolaroidLayout(), []);
-  const backgroundClassName = useMemo(
-    () =>
-      isDarkTheme
-        ? 'bg-gradient-to-br from-black via-gray-800 to-black'
-        : 'bg-gradient-to-br from-main-light/5 via-white/30 to-main-light/10',
-    [isDarkTheme],
-  );
+  const backgroundClassName = isDarkTheme
+    ? 'bg-gradient-to-br from-black via-gray-800 to-black'
+    : 'bg-gradient-to-br from-main-light/5 via-white/30 to-main-light/10';
 
   const shouldBlur = SHOULD_BLUR_ROUTES.some(route =>
     pathname.startsWith(route),
@@ -45,7 +41,7 @@ export default function PolaroidGalleryBackground() {
 
       {/* 폴라로이드 카드들 */}
       <div className="absolute inset-0">
-        {polaroidCards.map((card, idx) => (
+        {POLAROID_CARDS.map((card, idx) => (
           <PolaroidCard
             key={card.id}
             imageUrl={card.imageUrl}

@@ -1,6 +1,6 @@
 'use client';
 
-import { CSSProperties, useState, memo } from 'react';
+import { CSSProperties, useState } from 'react';
 import { useUIStore } from '@/stores';
 import Image from 'next/image';
 
@@ -76,4 +76,4 @@ function PolaroidCard({
   );
 }
 
-export default memo(PolaroidCard);
+export default PolaroidCard;
