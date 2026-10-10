@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useRef, memo, useCallback, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useUIStore } from '@/stores';
 import { Star } from 'lucide-react';
 import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 import EdgeSquare from '@/components/shared/sidebar/EdgeSquare';
 import { getHoloClass, getMaterialClass } from '@/utils/shared/material';
+import { formatCollectedDate } from '@/utils/shared/date';
 import '@/app/card-styles.css';
 
 interface ICollectionCafe {
@@ -16,19 +17,22 @@ interface ICollectionCafe {
   image: string | null;
   ratings: number | null;
   material: string | null;
+  /** 수집 시각. 카드 = 방문이므로 그 카페에 간 날입니다 */
+  created_at: string;
   onClickAction: () => void;
 }
 
 const BACKLIGHT_BASE =
   'card-tilt opacity-0 group-hover:opacity-100 absolute -z-10 inset-0 w-full h-full rounded-xl blur-md animate-tilt pointer-none';
 
-export default memo(function CollectionCafe({
+export default function CollectionCafe({
   name,
   image,
   address,
   phone_number,
   ratings,
   material,
+  created_at,
   onClickAction,
 }: ICollectionCafe) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -57,7 +61,7 @@ export default memo(function CollectionCafe({
    * @description getBoundingClientRect는 강제 레이아웃을 유발하므로
    * 프레임당 한 번만 호출하고 세 효과가 그 값을 공유합니다.
    */
-  const applyPointer = useCallback(() => {
+  const applyPointer = () => {
     frameRef.current = null;
 
     const sleeve = sleeveRef.current;
@@ -91,21 +95,18 @@ export default memo(function CollectionCafe({
     overlay.style.setProperty('--mouse-x', `${ratioX * 100}%`);
     overlay.style.setProperty('--mouse-y', `${ratioY * 100}%`);
     overlay.style.opacity = '0.8';
-  }, []);
+  };
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      pointerRef.current = { clientX: e.clientX, clientY: e.clientY };
+  const handleMouseMove = (e: React.MouseEvent) => {
+    pointerRef.current = { clientX: e.clientX, clientY: e.clientY };
 
-      /* 마우스 폴링은 화면 주사율보다 잦으므로 프레임당 한 번으로 묶습니다 */
-      if (frameRef.current !== null) return;
+    /* 마우스 폴링은 화면 주사율보다 잦으므로 프레임당 한 번으로 묶습니다 */
+    if (frameRef.current !== null) return;
 
-      frameRef.current = requestAnimationFrame(applyPointer);
-    },
-    [applyPointer],
-  );
+    frameRef.current = requestAnimationFrame(applyPointer);
+  };
 
-  const handleMouseLeave = useCallback(() => {
+  const handleMouseLeave = () => {
     if (frameRef.current !== null) {
       cancelAnimationFrame(frameRef.current);
       frameRef.current = null;
@@ -127,7 +128,7 @@ export default memo(function CollectionCafe({
     overlay.style.setProperty('--mouse-x', '50%');
     overlay.style.setProperty('--mouse-y', '50%');
     overlay.style.opacity = '0';
-  }, []);
+  };
 
   useEffect(() => {
     return () => {
@@ -202,8 +203,11 @@ export default memo(function CollectionCafe({
               height={50}
               className="h-40 w-auto rounded-t-md object-contain"
             />
+            {/* 획득일 - 흰 띠는 어느 재질에서나 같은 형태로 남고, 같은 카페 카드끼리는 날짜로 구분됩니다 */}
             <div className="flex h-4 w-full items-center justify-center rounded-b-md bg-white">
-              <span className="text-xs text-black">CAFE MASTERS</span>
+              <time dateTime={created_at} className="text-xs text-black">
+                {formatCollectedDate(created_at)}
+              </time>
             </div>
           </div>
 
@@ -231,4 +235,4 @@ export default memo(function CollectionCafe({
       </div>
     </li>
   );
-});
+}
