@@ -63,9 +63,7 @@ export default function CollectionCafeCarousel() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [scrollPrev, scrollNext]);
 
-  const handleScroll = useCallback(() => {
-    checkScrollPosition();
-  }, [checkScrollPosition]);
+  const handleScroll = () => checkScrollPosition();
 
   const handleCollectionCafeClick = useCafeClick<ISupabaseCollectionCafe>({
     routePath: 'collection',
