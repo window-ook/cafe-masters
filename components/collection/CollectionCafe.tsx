@@ -7,6 +7,7 @@ import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 import EdgeSquare from '@/components/shared/sidebar/EdgeSquare';
 import { getHoloClass, getMaterialClass } from '@/utils/shared/material';
+import { formatCollectedDate } from '@/utils/shared/date';
 import '@/app/card-styles.css';
 
 interface ICollectionCafe {
@@ -16,6 +17,8 @@ interface ICollectionCafe {
   image: string | null;
   ratings: number | null;
   material: string | null;
+  /** 수집 시각. 카드 = 방문이므로 그 카페에 간 날입니다 */
+  created_at: string;
   onClickAction: () => void;
 }
 
@@ -29,6 +32,7 @@ export default memo(function CollectionCafe({
   phone_number,
   ratings,
   material,
+  created_at,
   onClickAction,
 }: ICollectionCafe) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -202,8 +206,11 @@ export default memo(function CollectionCafe({
               height={50}
               className="h-40 w-auto rounded-t-md object-contain"
             />
+            {/* 획득일 - 흰 띠는 어느 재질에서나 같은 형태로 남고, 같은 카페 카드끼리는 날짜로 구분됩니다 */}
             <div className="flex h-4 w-full items-center justify-center rounded-b-md bg-white">
-              <span className="text-xs text-black">CAFE MASTERS</span>
+              <time dateTime={created_at} className="text-xs text-black">
+                {formatCollectedDate(created_at)}
+              </time>
             </div>
           </div>
 
