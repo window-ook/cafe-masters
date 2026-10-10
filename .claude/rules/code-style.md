@@ -1,3 +1,8 @@
+---
+paths:
+  - "**/*.{ts,tsx}"
+---
+
 # My Code Style
 
 ## Single Line if & function
@@ -11,48 +16,6 @@ if (!res.ok) return { success: false, message: '에러가 발생했습니다.' }
 // arrow function
 const yell = () => console.log('hi!');
 ```
-
-## Server Action
-
-Early Return 패턴을 적용합니다.
-절대 try catch를 사용하지 않습니다.
-에러 발생 시 error를 throw합니다.
-
-```typescript
-'use server';
-
-import { createServerSupabaseClient } from 'utils/supabase/server';
-
-/**
- * 북마크한 카페 삭제
- * @param id 북마크 ID
- */
-export async function deleteBookmarkCafe(id: number): Promise<boolean> {
-  if (!id) throw new Error('북마크 삭제를 위한 카페 ID가 유효하지 않습니다.');
-
-  const supabase = await createServerSupabaseClient();
-  const user = await supabase.auth.getUser();
-
-  if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
-
-  const user_id = user.data.user.id;
-  const { error } = await supabase
-    .from('bookmark')
-    .delete()
-    .eq('id', id)
-    .eq('user_id', user_id);
-
-  if (error) throw new Error(`북마크 삭제에 실패했습니다: ${error.message}`);
-
-  return true;
-}
-```
-
-## Declarative Programming
-
-- 페이지 단위 로딩 상태는 `app/[page-name]/loading.tsx`를 생성하여 핸들링합니다.
-- 컴포넌트 단위 로딩 상태는 `React.Suspense`를 감싸서 핸들링합니다.
-- 컴포넌트 단위 에러 핸들링은 컴포넌트 내부 처리 혹은 react-error-boundary의 `ErrorBoundary`로 감쌉니다.
 
 ## Declare Interface
 
@@ -87,9 +50,10 @@ export interface ICar {
 
 ## Path Factory
 
-src: `@lib/apiPaths.ts`, `@lib/imagePaths.ts`
+src: `lib/paths.ts`
 
-API 경로와 이미지 경로는 타입 단언을 사용하여 중앙에서 관리합니다.
+API 경로와 이미지 경로는 타입 단언을 사용하여 중앙에서 관리합니다. 경로를 하드코딩하지 않고 항상 이 파일에서 import합니다.
+이미지는 Supabase Storage에 올리고 `IMAGE_PATHS`에 등록합니다. (`.avif` 우선)
 
 ```typescript
 const INTERNAL_PATHS = {
@@ -111,18 +75,23 @@ const IMAGE_PATHS = {
 } as const;
 ```
 
-## Query key Factory
+## Path Alias
 
-src: `@queries/**`
+절대 경로 import는 `@/`를 사용합니다. (예: `import { X } from '@/components/Y'`)
+`utils/...`처럼 `@/` 없이 시작하는 경로나 `'.'` 같은 상대 경로는 사용하지 않습니다.
 
-React Query key도 타입 단언을 사용하여 중앙에서 관리합니다.
-하위 디렉토리 트리는 도메인 중심으로 분류합니다.
+## Message Constants
 
-- ex) `queries/supabase/**`, `queries/products/**`
+src: `utils/constants/messages.ts`
 
-```typescript
-export const collectionCafeQuery = {
-  all: (user_id: string) => ['collectionCafe', user_id],
-  counts: (user_id: string) => ['collectionCafeCounts', user_id],
-} as const;
-```
+토스트 메시지와 콘솔 로그는 하드코딩하지 않고 이 파일의 상수를 사용합니다.
+
+- `TOAST_SUCCESS`, `TOAST_ERROR`, `TOAST_WARN`: 사용자 노출 메시지
+- `CONSOLE_LOG`, `CONSOLE_ERROR`: 개발자 디버깅
+
+## Memoization
+
+React Compiler가 켜져 있으므로 `useMemo`·`useCallback`·`memo`를 새로 추가하지 않습니다.
+
+- 예외: effect 의존성으로 쓰여 참조가 유지되어야 하는 값. 커스텀 훅의 반환값은 사용처의 effect가 의존할 수 있습니다. (예: `usePathMatcher`, `useCafeClick`, `hooks/supabase`의 목록 훅은 `KaKaoMap.tsx`의 effect가 의존)
+- 기존 메모이제이션을 제거할 때는 그 값이 다른 파일의 의존성 배열에 쓰이는지 먼저 확인합니다.

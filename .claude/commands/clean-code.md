@@ -54,12 +54,11 @@
   - 하드코딩된 메시지 문자열이 없는가?
 
 - Tailwind CSS className 순서 점검
-  - CLAUDE.md에 정의된 우선순위 규칙(포지션 → 레이아웃 → 외곽 효과 → 배경색 → 공백 → Flex/Grid → 폰트 → 애니메이션 → 트랜지션)을 따르는가?
+  - `.claude/rules/code-style.md`에 정의된 우선순위 규칙을 따르는가?
   - w-와 h-가 동일한 경우 size-로 통일되어 있는가?
 
 - 성능 최적화 패턴 점검
-  - useMemo, useCallback이 적절한 곳에만 사용되고 과도하게 사용되지 않는가?
-  - 복잡한 필터링, 연산, 이벤트 핸들러에서 메모이제이션이 적용되어 있는가?
+  - `.claude/rules/code-style.md`의 Memoization 규칙을 따르는가? (신규 메모이제이션 금지, effect 의존성 예외)
   - 무거운 컴포넌트에 대해 동적 import가 고려되었는가?
 
 - 에러 핸들링 패턴 점검
