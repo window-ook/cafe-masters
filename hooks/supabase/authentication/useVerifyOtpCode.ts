@@ -2,7 +2,7 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 import { getAuthErrorMessage } from '@/utils/shared/authError';
 import { toast } from 'react-toastify';
 

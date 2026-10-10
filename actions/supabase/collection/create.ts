@@ -1,8 +1,8 @@
 'use server';
 
 import { revalidateTag } from 'next/cache';
-import { createServerSupabaseClient } from "utils/supabase/server";
-import { CollectionRowInsert } from ".";
+import { createServerSupabaseClient } from "@/utils/supabase/server";
+import { CollectionRowInsert } from "@/actions/supabase/collection";
 import { ICoordinates, isWithinRadius } from '@/utils/shared/geo';
 import { drawMaterial } from '@/utils/shared/material';
 

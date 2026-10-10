@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useUIStore, useUserStore } from 'stores';
+import { useUIStore, useUserStore } from '@/stores';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark/useBookmarkCafes';
 import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';

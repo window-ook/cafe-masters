@@ -1,4 +1,4 @@
-import { Database } from 'types_db';
+import { Database } from '@/types_db';
 
 export { getCollectionCafes, getAllCollectionCafes, getCollectionCafeById } from '@/actions/supabase/collection/getData';
 export { getCollectionCounts } from '@/actions/supabase/collection/getCounts';

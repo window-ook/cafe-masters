@@ -1,6 +1,6 @@
 'use server';
 
-import { createServerSupabaseClient } from "utils/supabase/server";
+import { createServerSupabaseClient } from "@/utils/supabase/server";
 
 /**
  * 추천 카페 수 조회

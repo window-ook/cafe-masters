@@ -1,6 +1,6 @@
 'use server';
 
-import { createServerSupabaseClient } from "utils/supabase/server";
+import { createServerSupabaseClient } from "@/utils/supabase/server";
 import { createClient } from '@supabase/supabase-js';
 import { ISupabaseRecommendationCafe } from "@/types/supabase/recommendation";
 import { Database } from '@/types_db';

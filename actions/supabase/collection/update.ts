@@ -1,7 +1,7 @@
 'use server';
 
-import { createServerSupabaseClient } from "utils/supabase/server";
-import { CollectionRowUpdate } from ".";
+import { createServerSupabaseClient } from "@/utils/supabase/server";
+import { CollectionRowUpdate } from "@/actions/supabase/collection";
 
 /**
  * 수집한 카페 내용 수정

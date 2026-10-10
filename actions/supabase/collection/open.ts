@@ -1,6 +1,6 @@
 'use server';
 
-import { createServerSupabaseClient } from "utils/supabase/server";
+import { createServerSupabaseClient } from "@/utils/supabase/server";
 import { ICoordinates, isWithinRadius } from '@/utils/shared/geo';
 import { DrawnMaterial, drawMaterial } from '@/utils/shared/material';
 

@@ -1,6 +1,6 @@
 'use server';
 
-import { BookmarkRowInsert } from '.';
+import { BookmarkRowInsert } from '@/actions/supabase/bookmark';
 import { createServerSupabaseClient } from "@/utils/supabase/server";
 
 /**

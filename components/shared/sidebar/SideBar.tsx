@@ -1,6 +1,6 @@
 'use client';
 
-import { useUIStore, useUserStore } from 'stores';
+import { useUIStore, useUserStore } from '@/stores';
 import { usePathMatcher } from '@/hooks/ui/usePathMatcher';
 import { ErrorBoundaryWrapper } from '@/components/shared/ErrorBoundaryWrapper';
 import dynamic from 'next/dynamic';

@@ -1,4 +1,4 @@
-import { Database } from 'types_db';
+import { Database } from '@/types_db';
 
 export { getRecommendationCafes, getRecommendationCafeById } from '@/actions/supabase/recommendation/getData';
 export { getRecommendationCounts } from '@/actions/supabase/recommendation/getCounts';

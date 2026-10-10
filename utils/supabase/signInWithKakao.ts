@@ -1,6 +1,6 @@
 'use client';
 
-import { createBrowserSupabaseClient } from 'utils/supabase/client';
+import { createBrowserSupabaseClient } from '@/utils/supabase/client';
 
 export const signInWithKakao = async () => {
   const supabase = createBrowserSupabaseClient();
