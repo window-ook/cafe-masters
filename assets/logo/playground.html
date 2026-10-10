@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cafe Masters — 로고 심볼 플레이그라운드</title>
+<style>
+  :root {
+    --ink: #10141c; --panel: #171d28; --line: #2a3446;
+    --text: #dfe5ef; --dim: #7e8ca4; --accent: #e8703a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px;
+    background: var(--ink); color: var(--text);
+    font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  h1 { margin: 0 0 4px; font-size: 15px; letter-spacing: .04em; }
+  .sub { margin: 0 0 20px; color: var(--dim); font-size: 12px; }
+
+  .wrap { display: grid; grid-template-columns: 300px 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
+
+  .panel { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+  .panel + .panel { margin-top: 14px; }
+  .panel h2 { margin: 0 0 12px; font-size: 11px; letter-spacing: .12em; color: var(--dim); text-transform: uppercase; }
+
+  .row { display: grid; grid-template-columns: 1fr 56px; gap: 8px; align-items: center; margin-bottom: 9px; }
+  .row label { color: var(--dim); font-size: 11px; }
+  .row output { text-align: right; font-variant-numeric: tabular-nums; }
+  input[type=range] { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--accent); }
+
+  .inline { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .inline label { display: flex; align-items: center; gap: 5px; color: var(--dim); font-size: 11px; }
+  input[type=color] { width: 30px; height: 24px; padding: 0; border: 1px solid var(--line); border-radius: 5px; background: none; }
+
+  .stage { padding: 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+  .beds { display: flex; gap: 16px; flex-wrap: wrap; }
+  .bed { flex: 1 1 250px; padding: 20px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .bed.dark { background: #10141c; border: 1px solid var(--line); }
+  .bed.light { background: #efe9dc; }
+  .bed .tag { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+  .bed.dark .tag { color: var(--dim); }
+  .bed.light .tag { color: #8a7f6d; }
+
+  .sizes { display: flex; align-items: flex-end; gap: 18px; margin-top: 16px; }
+  .size { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .size span { font-size: 10px; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .bed.light .size span { color: #8a7f6d; }
+
+  textarea {
+    width: 100%; height: 120px; margin-top: 12px; padding: 10px;
+    border: 1px solid var(--line); border-radius: 8px;
+    background: #0c1017; color: var(--dim);
+    font: 11px/1.5 ui-monospace, monospace; resize: vertical;
+  }
+  button {
+    margin: 8px 6px 0 0; padding: 7px 12px;
+    border: 1px solid var(--line); border-radius: 7px;
+    background: #1e2634; color: var(--text); font: inherit; font-size: 11px; cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  .hint { margin-top: 12px; color: var(--dim); font-size: 11px; line-height: 1.7; }
+  .hint b { color: var(--text); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>Cafe Masters — 로고 심볼</h1>
+<p class="sub">겹친 카드 · 작은 크기는 별도 변형을 씁니다 (테두리선 제거 · 간격 확대)</p>
+
+<div class="wrap">
+  <div>
+    <div class="panel">
+      <h2>구성</h2>
+      <div class="row"><label>카드 장수</label><output id="o-count"></output><input type="range" id="count" min="2" max="4" step="1"></div>
+      <div class="row"><label>가로 비율 — 세로 대비</label><output id="o-aspect"></output><input type="range" id="aspect" min="55" max="90" step="1"></div>
+      <div class="row"><label>가로 어긋남</label><output id="o-dx"></output><input type="range" id="dx" min="0" max="60" step="1"></div>
+      <div class="row"><label>세로 어긋남</label><output id="o-dy"></output><input type="range" id="dy" min="0" max="60" step="1"></div>
+      <div class="row"><label>회전 벌어짐</label><output id="o-spread"></output><input type="range" id="spread" min="0" max="26" step="1"></div>
+    </div>
+
+    <div class="panel">
+      <h2>결정 질감 — 모따기</h2>
+      <div class="row"><label>모서리 컷</label><output id="o-chamfer"></output><input type="range" id="chamfer" min="0" max="40" step="1"></div>
+      <div class="row"><label>컷 불규칙</label><output id="o-cjit"></output><input type="range" id="cjit" min="0" max="100" step="1"></div>
+      <div class="row"><label>시드</label><output id="o-seed"></output><input type="range" id="seed" min="0" max="40" step="1"></div>
+    </div>
+
+    <div class="panel">
+      <h2>인쇄 디테일</h2>
+      <div class="row"><label>카드 사이 간격</label><output id="o-gap"></output><input type="range" id="gap" min="0" max="24" step="1"></div>
+      <div class="row"><label>앞장 테두리선 — 0이면 없음</label><output id="o-frame"></output><input type="range" id="frame" min="0" max="26" step="1"></div>
+      <div class="row"><label>테두리선 굵기</label><output id="o-fw"></output><input type="range" id="fw" min="2" max="20" step="1"></div>
+    </div>
+
+    <div class="panel">
+      <h2>색 · 내보내기</h2>
+      <div class="inline" style="margin-bottom:10px">
+        <label><input type="color" id="cDark" value="#e8703a"> 다크</label>
+        <label><input type="color" id="cLight" value="#1b2230"> 라이트</label>
+      </div>
+      <div class="inline">
+        <label><input type="checkbox" id="fillBg" checked> 배경 채우기</label>
+        <input type="color" id="bgColor" value="#10141c">
+      </div>
+      <button id="png-large">PNG · 180 192 512</button>
+      <button id="png-small">PNG · 16 32 48 (작은 변형)</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="beds">
+      <div class="bed dark">
+        <span class="tag">Dark</span>
+        <div id="big-dark"></div>
+        <div class="sizes">
+          <div class="size"><div class="slot" data-bed="dark" data-size="64"></div><span>64</span></div>
+          <div class="size"><div class="slot" data-bed="dark" data-size="32" data-small="1"></div><span>32</span></div>
+          <div class="size"><div class="slot" data-bed="dark" data-size="16" data-small="1"></div><span>16</span></div>
+        </div>
+      </div>
+      <div class="bed light">
+        <span class="tag">Light</span>
+        <div id="big-light"></div>
+        <div class="sizes">
+          <div class="size"><div class="slot" data-bed="light" data-size="64"></div><span>64</span></div>
+          <div class="size"><div class="slot" data-bed="light" data-size="32" data-small="1"></div><span>32</span></div>
+          <div class="size"><div class="slot" data-bed="light" data-size="16" data-small="1"></div><span>16</span></div>
+        </div>
+      </div>
+    </div>
+
+    <textarea id="out" readonly spellcheck="false"></textarea>
+    <button id="copy-svg">SVG 복사</button>
+    <button id="copy-params">파라미터 복사</button>
+    <p class="hint">
+      32 · 16px 칸은 <b>작은 변형</b>으로 그려집니다 — 테두리선을 빼고 간격을 벌린 별도 형상입니다.<br>
+      해상도가 표현 못 하는 디테일은 사라지지 않고 <b>회색 얼룩</b>이 되므로, 축소가 아니라 다시 그려야 합니다.<br>
+      파라미터를 확정했으면 <code>node assets/logo/generate.cjs</code>로 SVG 파일을 만드세요.
+    </p>
+  </div>
+</div>
+
+<script src="symbol.js"></script>
+<script>
+const { DEFAULTS, SMALL, svgFor } = window.CafeMastersSymbol;
+
+const P = { ...DEFAULTS };
+const small = () => ({ ...P, ...SMALL });
+
+function render() {
+  document.getElementById('big-dark').innerHTML = svgFor(P, P.cDark, 'bd', 200);
+  document.getElementById('big-light').innerHTML = svgFor(P, P.cLight, 'bl', 200);
+
+  document.querySelectorAll('.slot').forEach((slot, i) => {
+    const params = slot.dataset.small ? small() : P;
+    const color = slot.dataset.bed === 'dark' ? P.cDark : P.cLight;
+    slot.innerHTML = svgFor(params, color, 's' + i, Number(slot.dataset.size));
+  });
+
+  document.getElementById('out').value = svgFor(P, 'currentColor', 'cm');
+}
+
+/* 브라우저가 가장 정확한 래스터라이저입니다. canvas로 직접 PNG를 뽑습니다 */
+function exportPng(params, size) {
+  const svg = svgFor(params, params === P ? P.cDark : P.cDark, 'ex', size);
+  const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+  const image = new Image();
+
+  image.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = size;
+    const ctx = canvas.getContext('2d');
+
+    if (document.getElementById('fillBg').checked) {
+      ctx.fillStyle = document.getElementById('bgColor').value;
+      ctx.fillRect(0, 0, size, size);
+    }
+    ctx.drawImage(image, 0, 0, size, size);
+    URL.revokeObjectURL(url);
+
+    canvas.toBlob(blob => {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `icon-${size}.png`;
+      link.click();
+    });
+  };
+  image.src = url;
+}
+
+const KEYS = ['count','aspect','dx','dy','spread','chamfer','cjit','seed','gap','frame','fw'];
+const UNIT = { aspect: '%', spread: '°', cjit: '%' };
+
+KEYS.forEach(key => {
+  const input = document.getElementById(key);
+  const out = document.getElementById('o-' + key);
+  input.value = P[key];
+  const sync = () => {
+    P[key] = Number(input.value);
+    out.textContent = P[key] + (UNIT[key] || '');
+    render();
+  };
+  input.addEventListener('input', sync);
+  sync();
+});
+
+['cDark', 'cLight'].forEach(key => {
+  const input = document.getElementById(key);
+  P[key] = input.value;
+  input.addEventListener('input', () => { P[key] = input.value; render(); });
+});
+
+document.getElementById('png-large').onclick = () => [180, 192, 512].forEach(s => exportPng(P, s));
+document.getElementById('png-small').onclick = () => [16, 32, 48].forEach(s => exportPng(small(), s));
+
+document.getElementById('copy-svg').onclick = () =>
+  navigator.clipboard.writeText(document.getElementById('out').value);
+
+document.getElementById('copy-params').onclick = () =>
+  navigator.clipboard.writeText(JSON.stringify(Object.fromEntries(KEYS.map(k => [k, P[k]])), null, 2));
+
+render();
+</script>
+</body>
+</html>

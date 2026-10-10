@@ -96,6 +96,7 @@ export type Database = {
           extra_images: string | null
           id: number
           image: string
+          material: string | null
           name: string
           opening_time: string | null
           phone_number: string | null
@@ -116,6 +117,7 @@ export type Database = {
           extra_images?: string | null
           id?: number
           image: string
+          material?: string | null
           name?: string
           opening_time?: string | null
           phone_number?: string | null
@@ -136,6 +138,7 @@ export type Database = {
           extra_images?: string | null
           id?: number
           image?: string
+          material?: string | null
           name?: string
           opening_time?: string | null
           phone_number?: string | null

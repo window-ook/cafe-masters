@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs><mask id="sms-cut0"><rect width="512" height="512" fill="#fff"/><path d="M95.54 110.49 L298.09 110.49 L330.19 142.58 L330.19 454.11 L300.29 484.00 L96.48 484.00 L68.73 456.24 L68.73 137.30 Z" fill="#000" stroke="#000" stroke-width="34" stroke-linejoin="round"/></mask></defs><path d="M220.89 28.00 L428.25 83.56 L443.27 109.58 L360.26 419.37 L321.63 441.68 L136.73 392.14 L109.51 344.99 L189.61 46.06 Z" fill="currentColor" fill-rule="evenodd" mask="url(#sms-cut0)"/><path d="M95.54 110.49 L298.09 110.49 L330.19 142.58 L330.19 454.11 L300.29 484.00 L96.48 484.00 L68.73 456.24 L68.73 137.30 Z" fill="currentColor" fill-rule="evenodd"/>
+</svg>

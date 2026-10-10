@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ResetPasswordPage } from '@/tests/e2e/page-objects/ResetPasswordPage';
-import { MOCK_AUTH_DATA, TEST_SELECTORS } from '@/tests/e2e/utils/constants';
+import { MOCK_AUTH_DATA } from '@/tests/e2e/utils/constants';
 
 test.describe('Group A - 비밀번호 재설정 플로우', () => {
     test('비밀번호 재설정 이메일 요청에 성공한다', async ({ page }) => {

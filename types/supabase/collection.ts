@@ -8,6 +8,8 @@ export interface ISupabaseCollectionCafe {
     image: string;
     extra_images?: string[] | null;
     ratings?: number | null;
+    /** 광물 재질. null이면 아직 개봉되지 않은 카드입니다 */
+    material?: string | null;
     address: string;
     comment: string;
     pros: string;

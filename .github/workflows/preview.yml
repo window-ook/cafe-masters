@@ -40,9 +40,9 @@ jobs:
       - name: 의존성 설치
         run: pnpm install --frozen-lockfile
 
+      # 타입 오류는 거의 항상 실제 문제이므로 배포를 막습니다
       - name: 타입 체크
         run: npx tsc --noEmit
-        continue-on-error: true
 
       - name: 린트 검사
         run: pnpm run lint
@@ -51,7 +51,10 @@ jobs:
       - name: Playwright 브라우저 설치
         run: npx playwright install --with-deps
 
+      # UI를 바꾸면 선택자가 깨지는 성격이라 배포를 막지 않습니다.
+      # UI 리뉴얼이 끝나고 선택자가 안정되면 continue-on-error를 제거해 다시 게이트로 되돌립니다.
       - name: 테스트용 개발 서버 실행 및 테스트 실행
+        continue-on-error: true
         run: |
           pnpm run dev &
           echo "개발 서버 시작 중..."

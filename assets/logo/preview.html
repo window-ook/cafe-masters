@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cafe Masters — 로고 적용 미리보기</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">
+
+<style>
+  :root { --ink:#10141c; --panel:#171d28; --line:#2a3446; --text:#dfe5ef; --dim:#7e8ca4;
+          --brand:#da483b; --cream:#efe9dc; --sidebar:#f3f4f6; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:24px; background:var(--ink); color:var(--text);
+         font:13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  h1 { margin:0 0 4px; font-size:15px; letter-spacing:.04em; }
+  .sub { margin:0 0 18px; color:var(--dim); font-size:12px; }
+
+  .readout { padding:14px 16px; margin-bottom:18px; border:1px solid var(--line);
+             border-radius:10px; background:var(--panel); display:flex; gap:24px; flex-wrap:wrap; align-items:center; }
+  .readout b { color:var(--brand); font-size:15px; }
+  .readout label { display:flex; align-items:center; gap:8px; color:var(--dim); font-size:11px; }
+  input[type=range] { width:180px; accent-color:var(--brand); }
+
+  .bed { padding:26px 24px; border-radius:10px; margin-bottom:12px;
+         display:flex; gap:44px; align-items:center; flex-wrap:wrap; }
+  .bed.sidebar { background:var(--sidebar); color:var(--brand); }
+  .bed.dark    { background:#10141c; color:var(--brand); border:1px solid var(--line); }
+  .bed.cream   { background:var(--cream); color:#1b2230; }
+  .tag { width:100%; margin:0 0 -12px; font-size:10px; letter-spacing:.1em; text-transform:uppercase; opacity:.6; }
+
+  /* 아래 두 클래스는 Logo.tsx의 마크업을 그대로 옮긴 것입니다 */
+  .logo { display:flex; }
+  .logo.row   { flex-direction:row; align-items:center; gap:10px; }
+  .logo.stack { flex-direction:column; align-items:center; gap:12px; }
+  .logo svg { flex:none; width:auto; }
+  .logo.row   svg { height:40px; }
+  .logo.stack svg { height:80px; }
+  .word { display:flex; flex-direction:column; font-family:Anton, Impact, sans-serif; line-height:.92; }
+  .logo.row   .word { font-size:19px; }
+  .logo.stack .word { font-size:34px; }
+</style>
+</head>
+<body>
+
+<h1>로고 적용 미리보기</h1>
+<p class="sub">Logo.tsx의 마크업·크기를 그대로 옮겼습니다 · 자간 실측값을 컴포넌트에 굳힙니다</p>
+
+<div class="readout">
+  <span>실측 이상값 <b id="ideal">—</b></span>
+  <label>자간 <input type="range" id="track" min="0" max="90" value="50"><output id="o-track"></output></label>
+  <button id="use-ideal" style="padding:6px 10px;border:1px solid var(--line);border-radius:6px;
+    background:#1e2634;color:var(--text);font:inherit;font-size:11px;cursor:pointer">실측값 적용</button>
+</div>
+
+<div class="bed sidebar"><p class="tag">사이드바 — gray-100</p>
+  <div class="logo row"></div>
+</div>
+<div class="bed dark"><p class="tag">다크 — 인증 페이지</p>
+  <div class="logo row"></div><div class="logo stack"></div>
+</div>
+<div class="bed cream"><p class="tag">크림 — 팩 앞면</p>
+  <div class="logo stack"></div><div class="logo row"></div>
+</div>
+
+<script src="symbol.js"></script>
+<script>
+const symbolSvg = () =>
+  window.CafeMastersSymbol.svgFor(window.CafeMastersSymbol.DEFAULTS, 'currentColor', 'pv');
+
+document.querySelectorAll('.logo').forEach(logo => {
+  logo.innerHTML = symbolSvg()
+    + '<span class="word"><span class="top">CAFE</span><span>MASTERS</span></span>';
+});
+
+/**
+ * CAFE를 MASTERS 폭에 맞추는 자간을 실측합니다.
+ *
+ * letter-spacing은 마지막 글자 뒤에도 붙으므로 글자 수(4)로 나누고,
+ * 같은 값을 음수 마진으로 되돌려야 실제 폭이 맞습니다.
+ */
+function measureIdeal() {
+  const word = document.querySelector('.logo.stack .word');
+  const top = word.querySelector('.top');
+  const bottom = word.lastElementChild;
+
+  top.style.letterSpacing = '0px';
+  top.style.marginRight = '0px';
+
+  const size = parseFloat(getComputedStyle(word).fontSize);
+  const spacing = (bottom.getBoundingClientRect().width - top.getBoundingClientRect().width) / 4;
+
+  return spacing / size;
+}
+
+function apply(em) {
+  document.querySelectorAll('.logo .top').forEach(top => {
+    top.style.letterSpacing = `${em}em`;
+    top.style.marginRight = `${-em}em`;
+  });
+}
+
+const slider = document.getElementById('track');
+const output = document.getElementById('o-track');
+
+function sync() {
+  const em = Number(slider.value) / 100;
+  output.textContent = em.toFixed(2) + 'em';
+  apply(em);
+}
+
+slider.addEventListener('input', sync);
+
+document.fonts.ready.then(() => {
+  const ideal = measureIdeal();
+  document.getElementById('ideal').textContent = ideal.toFixed(3) + 'em';
+  document.getElementById('use-ideal').onclick = () => {
+    slider.value = Math.round(ideal * 100);
+    sync();
+  };
+  sync();
+});
+</script>
+</body>
+</html>
