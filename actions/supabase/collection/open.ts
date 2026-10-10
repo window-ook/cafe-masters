@@ -2,7 +2,7 @@
 
 import { createServerSupabaseClient } from "utils/supabase/server";
 import { ICoordinates, isWithinRadius } from '@/utils/shared/geo';
-import { CardMaterial, drawMaterial } from '@/utils/shared/material';
+import { DrawnMaterial, drawMaterial } from '@/utils/shared/material';
 
 /**
  * 미개봉 카드를 개봉해 재질을 확정
@@ -14,7 +14,7 @@ import { CardMaterial, drawMaterial } from '@/utils/shared/material';
 export async function openCollectionCafe(
     id: number,
     userCoords: ICoordinates,
-): Promise<CardMaterial> {
+): Promise<DrawnMaterial> {
     if (!id) throw new Error('개봉할 카드 ID가 유효하지 않습니다.');
     if (!userCoords) throw new Error('현재 위치를 확인할 수 없습니다.');
 
@@ -38,7 +38,15 @@ export async function openCollectionCafe(
     if (!isWithinRadius(userCoords, { lat: card.coordY, lng: card.coordX }))
         throw new Error('카페 근처에서만 개봉할 수 있습니다.');
 
-    const material = drawMaterial(card.name);
+    /* 개봉하려는 카드 자신은 스택에서 제외합니다. 수집 시점과 같은 기준이어야 합니다 */
+    const { count } = await supabase
+        .from('collection')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user_id)
+        .eq('name', card.name)
+        .neq('id', id);
+
+    const material = drawMaterial(card.name, count ?? 0);
     const { error } = await supabase
         .from('collection')
         .update({ material })

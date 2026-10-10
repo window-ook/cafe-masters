@@ -55,7 +55,7 @@ export default function SignUpEmailForm() {
   };
 
   return (
-    <div className="auth-glass-card">
+    <div className="auth-form-card">
       <form
         className="flex w-80 max-w-(--breakpoint-lg) flex-col gap-4 sm:w-96"
         onSubmit={signUpForm.handleSubmit(onSignUpSubmit)}

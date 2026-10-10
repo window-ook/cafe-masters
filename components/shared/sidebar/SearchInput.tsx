@@ -42,15 +42,15 @@ export default function SearchInput() {
           onChange={e => handleSafeInput(e.target.value, setLocalKeyword)}
           onKeyDown={handleKeyDown}
           className={`w-full rounded-xl border px-4 py-3 pr-12 ${isDarkTheme
-              ? 'focus:border-main border-gray-600/30 bg-gray-800/40 text-white placeholder:text-white focus:bg-gray-800/60'
-              : 'text-text-primary placeholder:text-text-primary focus:border-main border-white/40 bg-black/5 focus:bg-white/60'
-            } focus:ring-main/20 hover:border-opacity-60 text-sm font-medium backdrop-blur-md transition-all duration-200 ease-out focus:ring-2 focus:ring-offset-0 focus:outline-none`}
+              ? 'focus:border-main border-paper-dark-edge bg-paper-dark text-white placeholder:text-white focus:bg-gray-700'
+              : 'text-text-primary placeholder:text-text-primary focus:border-main border-paper-edge bg-paper focus:bg-white'
+            } focus:ring-main/20 hover:border-opacity-60 text-sm font-medium transition-all duration-200 ease-out focus:ring-2 focus:ring-offset-0 focus:outline-none`}
         />
         <button
           type="button"
           aria-label="검색 버튼"
           data-testid="button-submit-keyword-for-search"
-          className={`bg-main hover:bg-main-600 absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-white backdrop-blur-sm cursor-pointer transition-all duration-200 ease-out hover:scale-105 active:scale-95`}
+          className={`bg-main hover:bg-main-600 absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-white cursor-pointer transition-all duration-200 ease-out hover:scale-105 active:scale-95`}
           onClick={handleSearch}
         >
           <Navigation className="size-4" />

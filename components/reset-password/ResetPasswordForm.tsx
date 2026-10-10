@@ -61,7 +61,7 @@ export default function ResetPasswordForm() {
     <main className="area flex h-screen w-screen flex-col items-center justify-center">
       <section className="relative z-10 flex flex-col items-center gap-8 px-6">
         <Logo />
-        <div className="auth-glass-card">
+        <div className="auth-form-card">
           <form
             className="flex w-80 max-w-(--breakpoint-lg) flex-col gap-4 sm:w-96"
             onSubmit={handleSubmit(onFormSubmit)}

@@ -40,9 +40,9 @@ export default function RegionFilter() {
         aria-label="지역 선택 드롭다운"
         className={`w-full appearance-none rounded-xl py-3 pr-12 pl-4 text-sm font-medium transition-all duration-200 ease-out ${
           isDarkTheme
-            ? 'border-gray-600/40 bg-gray-800/60 text-white hover:bg-gray-800/80'
-            : 'border-white/70 bg-white/60 text-gray-800 hover:bg-white/80'
-        } focus:ring-main/20 cursor-pointer border backdrop-blur-md focus:ring-2 focus:ring-offset-0 focus:outline-none`}
+            ? 'border-paper-dark-edge bg-paper-dark text-white hover:bg-gray-700'
+            : 'border-paper-edge bg-paper text-gray-800 hover:bg-white'
+        } focus:ring-main/20 cursor-pointer border focus:ring-2 focus:ring-offset-0 focus:outline-none`}
         onChange={handleChange}
         value={selectedRegion}
       >

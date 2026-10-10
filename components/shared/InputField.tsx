@@ -96,7 +96,7 @@ const InputField = React.forwardRef<HTMLInputElement, IInputField>(
             data-testid={dataTestId}
             placeholder={placeholder}
             aria-invalid={disabled ? (isError ? 'true' : 'false') : undefined}
-            className={`${customClassName} block w-full rounded-lg border-1 bg-transparent p-2.5 text-sm backdrop-blur-sm ${isDarkTheme ? 'text-white placeholder:text-white' : 'text-text-primary placeholder:text-text-primary'} focus:outline-none ${isError || errorResponseMessage ? 'border-red-600' : 'focus:border-main'} [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+            className={`${customClassName} block w-full rounded-lg border-1 bg-transparent p-2.5 text-sm ${isDarkTheme ? 'text-white placeholder:text-white' : 'text-text-primary placeholder:text-text-primary'} focus:outline-none ${isError || errorResponseMessage ? 'border-red-600' : 'focus:border-main'} [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
             onChange={handleSecureChange}
             {...props}
           />

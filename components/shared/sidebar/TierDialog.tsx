@@ -41,7 +41,7 @@ export default function TierDialog({
       ref={dialogRef}
       aria-labelledby="티어 정보 다이얼로그"
       onClose={handleDialogCloseAction}
-      className="fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none border-none bg-transparent p-0 backdrop:bg-black/50 backdrop:backdrop-blur-sm"
+      className="fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none border-none bg-transparent p-0 backdrop:bg-black/50"
     >
       <div
         className="flex h-full w-full items-center justify-center p-4"

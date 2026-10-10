@@ -72,10 +72,8 @@ export default function SlidingDrawer() {
   }, [paths.isMain, isSlidingDrawerOpen, closeSlidingDrawer]);
 
   const SLIDING_DRAWER_STYLE = clsx(
-    'fixed z-10 w-screen max-w-108 p-2 overflow-x-hidden overflow-y-auto shadow-md transition-all duration-300 ease-in-out',
-    isDarkTheme
-      ? 'bg-dark-background/50 backdrop-blur-sm text-white'
-      : 'bg-white/20 text-black backdrop-blur-lg',
+    'fixed z-10 w-screen max-w-108 p-2 overflow-x-hidden overflow-y-auto shadow-xl transition-all duration-300 ease-in-out',
+    isDarkTheme ? 'bg-paper-dark text-white' : 'bg-paper text-black',
     {
       // 모바일 닫힌 상태
       'rounded-t-3xl bottom-0 left-0 h-[30vh] translate-y-full opacity-0 pointer-events-none':

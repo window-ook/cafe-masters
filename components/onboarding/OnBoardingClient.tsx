@@ -59,7 +59,7 @@ export default function OnBoardingClient() {
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center justify-center gap-2 p-2">
       <Logo />
-      <div className="auth-glass-card w-full max-w-screen-sm">
+      <div className="auth-form-card w-full max-w-screen-sm">
         <form
           className="mx-auto flex w-full max-w-sm flex-col gap-4 sm:max-w-md"
           onSubmit={profileForm.handleSubmit(onSubmit)}

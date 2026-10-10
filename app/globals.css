@@ -50,6 +50,26 @@ body {
   /* 컨테이너 */
   --color-sidebar-background: var(--color-gray-100);
 
+  /* 바인더 내지 - 카드가 꽂히는 면
+     카드보다 확실히 어두워야 경계가 살고 광택이 읽힙니다.
+     라이트에서도 순백 계열은 금지이며 가장 밝은 재질(운모)보다 낮은 명도를 유지합니다 */
+  --color-binder: oklch(34.5% 0.014 232);
+  --color-binder-light: oklch(72% 0.012 236);
+  --color-binder-edge: oklch(28% 0.012 232);
+  --color-binder-edge-light: oklch(64% 0.011 236);
+
+  /* 바인더 케이스 - 사이드바 껍데기. 내지와 목록이 놓이는 지면입니다.
+     내지(binder)보다 어두워 서랍이 안쪽으로 들어가 보이게 합니다 */
+  --color-case: oklch(96% 0.004 96);
+  --color-case-dark: oklch(21% 0.008 250);
+
+  /* 인쇄면 - 유리를 걷어낸 자리에 놓이는 불투명 면
+     이 앱의 주인공은 만질 수 있는 수집품이므로 그것을 담는 그릇도 물성을 가져야 합니다 */
+  --color-paper: oklch(97.2% 0.004 96);
+  --color-paper-edge: oklch(88% 0.006 96);
+  --color-paper-dark: oklch(27.5% 0.008 250);
+  --color-paper-dark-edge: oklch(36% 0.01 250);
+
   /* 북마크 아이콘 */
   --color-bookmark: var(--color-yellow-400);
   --color-unbookmark: var(--color-gray-400);
@@ -179,8 +199,9 @@ body {
     @apply w-[340px] max-w-full h-[240px] rounded-md object-cover transform duration-300 ease-out hover:opacity-30 cursor-pointer;
   }
 
+  /* 사진 위에 얹히는 조작면. 다크에서는 사용처에서 bg-paper-dark로 덮습니다 */
   .slide-images-button {
-    @apply absolute z-10 top-1/2 transform -translate-y-1/2 px-2 py-1 shadow-md rounded-md cursor-pointer;
+    @apply absolute z-10 top-1/2 transform -translate-y-1/2 px-2 py-1 shadow-md rounded-md cursor-pointer bg-paper;
   }
 
   /* Master 티어 Footer 뱃지 */
@@ -203,9 +224,9 @@ body {
     @apply relative size-5 rounded-full shadow-md shadow-yellow-100 flex items-center justify-center bg-red-500;
   }
 
-  /* 로그인 폼 카드 - Glassmorphism */
+  /* 로그인 폼 카드 - 절제된 인쇄면 */
   .auth-form-layout {
-    @apply z-10 p-5 rounded-xl shadow-lg shadow-main-shadow/30 bg-white/80 backdrop-blur-md border border-white/30;
+    @apply z-10 p-5 rounded-xl shadow-lg shadow-main-shadow/20 bg-paper border border-paper-edge;
   }
 
   /* 로그인 폼 타이틀 */
@@ -218,9 +239,9 @@ body {
     @apply flex items-center justify-center gap-4 text-center;
   }
 
-  /* Glassmorphism 카드 - 인증 폼용 */
-  .auth-glass-card {
-    @apply z-10 p-6 rounded-xl shadow-lg shadow-main-shadow/30 bg-white/30 backdrop-blur-lg border border-white/30;
+  /* 인증 폼 카드 - 절제된 인쇄면 */
+  .auth-form-card {
+    @apply z-10 p-6 rounded-xl shadow-lg shadow-main-shadow/20 bg-paper border border-paper-edge;
   }
 
   /* 

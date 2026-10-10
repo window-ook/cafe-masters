@@ -32,7 +32,7 @@ const FeatureCard = ({
       <div className="from-main/30 via-main-light/30 to-main/30 absolute -inset-0.5 rounded-2xl bg-gradient-to-r opacity-0 blur-xl transition duration-500 group-hover:opacity-70" />
 
       {/* 카드 내용 */}
-      <div className="group-hover:border-main/50 relative flex h-full flex-col justify-between rounded-2xl border-2 border-gray-200/20 bg-white/30 p-8 shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:shadow-[0_8px_30px_rgba(218,72,59,0.3)] hover:-translate-y-2">
+      <div className="group-hover:border-main/50 relative flex h-full flex-col justify-between rounded-2xl border-2 border-paper-edge bg-paper p-8 shadow-2xl transition-all duration-300 group-hover:shadow-[0_8px_30px_rgba(218,72,59,0.3)] hover:-translate-y-2">
         <div>
           <div className="mb-6 flex items-start justify-between">
             <div className="border-main/20 bg-main/5 text-main group-hover:border-main group-hover:bg-main/10 flex h-14 w-14 items-center justify-center rounded-xl border-2 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(218,72,59,0.4)]">

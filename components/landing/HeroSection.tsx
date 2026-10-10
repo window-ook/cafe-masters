@@ -15,7 +15,7 @@ export default function HeroSection() {
             <div className="animate-fade-in-up mb-8">
               <div className="group relative inline-block">
                 <div className="from-main/40 via-main-light/40 to-main/40 absolute -inset-0.5 rounded-full bg-gradient-to-r opacity-70 blur-lg transition duration-1000 group-hover:opacity-100" />
-                <span className="border-main/30 text-main relative inline-flex items-center gap-2 rounded-full border bg-white/80 px-6 py-2 text-sm font-bold shadow-lg backdrop-blur-md">
+                <span className="border-main/30 text-main relative inline-flex items-center gap-2 rounded-full border bg-paper px-6 py-2 text-sm font-bold shadow-lg">
                   <Coffee className="h-4 w-4" />
                   <span className="tracking-wider">나만의 카페 컬렉션</span>
                 </span>
@@ -42,14 +42,14 @@ export default function HeroSection() {
             <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
               <Link
                 href="/main"
-                className="group border-main bg-main/70 hover:bg-main-600 relative flex w-full items-center justify-center gap-2 rounded-xl border-2 px-6 py-4 text-lg font-bold text-white shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(218,72,59,0.6)] sm:w-[180px]"
+                className="group border-main bg-main hover:bg-main-600 relative flex w-full items-center justify-center gap-2 rounded-xl border-2 px-6 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(218,72,59,0.6)] sm:w-[180px]"
               >
                 <span>메인 페이지</span>
               </Link>
               <Link
                 href="/signin"
                 data-testid="button-go-to-signin-from-landing"
-                className="group border-main text-main hover:bg-main-600 relative flex w-full items-center justify-center gap-2 rounded-xl border-2 bg-white/30 px-6 py-4 text-lg font-bold shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:text-white hover:shadow-[0_8px_30px_rgba(218,72,59,0.6)] sm:w-[180px]"
+                className="group border-main text-main hover:bg-main-600 relative flex w-full items-center justify-center gap-2 rounded-xl border-2 bg-paper px-6 py-4 text-lg font-bold shadow-xl transition-all duration-300 hover:-translate-y-1 hover:text-white hover:shadow-[0_8px_30px_rgba(218,72,59,0.6)] sm:w-[180px]"
               >
                 <span>로그인</span>
               </Link>

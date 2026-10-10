@@ -59,7 +59,7 @@ export default function CafeDetailBody({
             onClick={() =>
               scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)
             }
-            className="slide-images-button left-0 bg-white/30"
+            className={`slide-images-button left-0 ${isDarkTheme ? 'bg-paper-dark' : ''}`}
           >
             <span className="text-main">◀</span>
           </button>
@@ -71,7 +71,9 @@ export default function CafeDetailBody({
           >
             {isDetailLoading && !cafeData.image ? (
               <div className="h-60 shrink-0 snap-center py-2">
-                <div className="h-[240px] w-[340px] animate-pulse rounded-md bg-gray-200 dark:bg-gray-700" />
+                <div
+                  className={`h-[240px] w-[340px] animate-pulse rounded-md ${isDarkTheme ? 'bg-gray-700' : 'bg-gray-200'}`}
+                />
               </div>
             ) : (
               <>
@@ -162,7 +164,7 @@ export default function CafeDetailBody({
           </div>
 
           <button
-            className="slide-images-button right-0 bg-white/30"
+            className={`slide-images-button right-0 ${isDarkTheme ? 'bg-paper-dark' : ''}`}
             onClick={() =>
               scrollThumbnails('right', scrollRef as RefObject<HTMLDivElement>)
             }

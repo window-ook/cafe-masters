@@ -23,7 +23,7 @@ export default function CafeDetailSkeleton({
             type="button"
             aria-label="카페 이미지 슬라이드 왼쪽으로 이동"
             disabled
-            className="slide-images-button left-0 bg-white/30 opacity-50"
+            className="slide-images-button left-0 opacity-50"
           >
             <span className="text-main">◀</span>
           </button>
@@ -39,7 +39,7 @@ export default function CafeDetailSkeleton({
             type="button"
             aria-label="카페 이미지 슬라이드 오른쪽으로 이동"
             disabled
-            className="slide-images-button right-0 bg-white/30 opacity-50"
+            className="slide-images-button right-0 opacity-50"
           >
             <span className="text-main">▶</span>
           </button>
