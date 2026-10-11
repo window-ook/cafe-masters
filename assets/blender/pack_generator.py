@@ -56,12 +56,15 @@ TEETH = 26                # 절취선 톱니 개수. 적고 크면 톱날처럼 
 TEETH_AMP = 0.020         # 톱니 진폭
 TEAR_SEED = 7             # 뜯긴 자국의 불규칙함을 고정하는 시드
 
-CARD_WIDTH_RATIO = 0.78   # 봉투 너비 대비 카드 너비
+# 봉투 너비 대비 카드 너비. 카드 높이가 이 값에서 나오므로, 키우면 아랫변이 하단 크림프 실링
+# 구간까지 내려가 이빨 자국 사이로 카드가 점점이 비쳐 나옵니다(0.78에서 발생). build()가 검사합니다
+CARD_WIDTH_RATIO = 0.74
 CARD_ASPECT = 1.4         # 카드 세로/가로. 실제 TCG 규격 63×88mm를 따릅니다
 CARD_CLEARANCE = 0.02     # 카드 윗변과 이음새 사이 여유
 CARD_THICKNESS_RATIO = 0.3 / 63.0   # 카드 두께/가로. 실제 TCG 규격 0.3mm / 63mm
 CARD_CORNER_RATIO = 3.0 / 63.0      # 모서리 반경/가로. 실제 TCG 약 3mm / 63mm
 CARD_CORNER_SEGMENTS = 8            # 모서리 호 하나를 나누는 칸 수
+CARD_FILM_GAP = 0.004               # 카드 면과 필름 사이 최소 여유. 이보다 가까우면 생성을 멈춥니다
 
 PACK_YAW_DEG = 15.0       # 팩 전체를 비트는 각도. 0이면 도표처럼 납작해 보입니다
 
@@ -245,6 +248,27 @@ def fin_at(x, z, height):
     ridge = 0.5 * (1.0 + math.cos(math.pi * x / half_width))
 
     return FIN_HEIGHT * ridge * seal_factor(z, height)
+
+
+def card_film_gap(card_width, bottom_z, top_z, height):
+    """
+    1프레임에 주머니 안에 놓인 카드와 앞뒤 필름 사이의 최소 여유. 음수면 관통입니다.
+
+    카드가 아래 조각보다 짧은지만 보면 놓칩니다. 하단 크림프 실링 구간은 필름 두 장이
+    거의 맞붙은 채 이빨 자국으로 앞뒤로 출렁이므로, 카드가 그 구간에 걸치면 이빨
+    간격마다 필름을 뚫고 점점이 비쳐 나옵니다. 실제 표면 식으로 카드 전체를 훑습니다.
+    """
+    half_t = card_width * CARD_THICKNESS_RATIO / 2
+    worst = math.inf
+
+    for i in range(41):
+        z = bottom_z + (top_z - bottom_z) * i / 40
+        for j in range(101):
+            x = -card_width / 2 + card_width * j / 100
+            center, half = surface_at(x, z, height)
+            worst = min(worst, (center + half) - half_t, -half_t - (center - half))
+
+    return worst
 
 
 def create_piece(name, width, height, teeth, amp, upward, bottom_height, pivot_x=0.0):
@@ -831,10 +855,12 @@ def build():
     # 1프레임에서 카드 윗변이 이음새 바로 아래에 오도록 놓습니다
     card_base_z = seam_z - card_height / 2 - CARD_CLEARANCE
 
-    if card_height + CARD_CLEARANCE > bottom_height:
+    gap = card_film_gap(card_width, card_base_z - card_height / 2, card_base_z + card_height / 2,
+                        bottom_height)
+    if gap < CARD_FILM_GAP:
         raise ValueError(
-            f"카드({card_height:.3f})가 아래 조각({bottom_height:.3f})보다 큽니다. "
-            f"TOP_RATIO를 낮추거나 CARD_WIDTH_RATIO를 줄이세요."
+            f"카드가 주머니 필름과 {gap:.4f}까지 가깝습니다(최소 {CARD_FILM_GAP}). "
+            f"음수면 필름 밖으로 관통합니다. CARD_WIDTH_RATIO를 줄이거나 TOP_RATIO를 낮추세요."
         )
 
     animate_strip(strip, strip_pivot)
@@ -865,7 +891,7 @@ def build():
     print(f"  조각 비행    {FRAME_TEAR_END} ~ {FRAME_END}")
     print(f"  카드 상승    {FRAME_CARD_START} ~ {FRAME_END}")
     print(f"  카드 크기    {card_width:.3f} x {card_height:.3f}"
-          f"  /  아래 조각 {bottom_height:.3f}")
+          f"  /  아래 조각 {bottom_height:.3f}  /  필름 여유 {gap:.4f}")
     print(f"  카메라      거리 {distance:.2f}, 세로 {content_bottom:.2f} ~ {content_top:.2f}")
 
     # 아트워크를 그릴 때 절취선이 이미지 어느 높이에 오는지 알아야 안내선을 넣을 수 있습니다
