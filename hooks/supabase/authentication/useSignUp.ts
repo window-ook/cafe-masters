@@ -41,7 +41,7 @@ export function useSignUp() {
     params: { email: string; password: string; nickname: string; gender: 'male' | 'female' },
     callbacks?: {
       onSuccess?: () => void;
-      onError?: (error: any) => void;
+      onError?: (error: unknown) => void;
     }
   ) => {
     signUp.mutate(params, {

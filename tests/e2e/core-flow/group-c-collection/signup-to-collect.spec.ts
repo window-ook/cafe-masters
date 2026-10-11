@@ -78,7 +78,7 @@ test.describe('Group C - 처음 가입한 사용자의 플로우', () => {
 
         // 10. 완료 버튼이 표시되는지 확인 (실제 저장은 Server Action이 실제 DB를 사용하므로 테스트하지 않음)
         await expect(page.getByTestId(TEST_SELECTORS.BUTTON_SUBMIT_COLLECT)).toBeVisible();
-    })
+    });
 
     test.describe('실패 시나리오 검증', () => {
         test('회원가입 실패: 잘못된 인증 코드를 제출하면 회원가입에 실패한다.', async ({ page }) => {
@@ -110,7 +110,7 @@ test.describe('Group C - 처음 가입한 사용자의 플로우', () => {
             await page.waitForSelector('.Toastify__toast--error', { timeout: 5000 });
             await expect(page.getByText('요청 처리 중 에러가 발생했습니다. 다시 시도해주세요.')).toBeVisible();
             await expect(page).toHaveURL(/.*signup\/verify.*/);
-        })
+        });
 
         test('카페 수집 실패: 필수 정보를 입력하지 않고 완료를 눌러 제출하면 카페 수집에 실패한다.', async ({ page }) => {
             const signupPage = new SignupPage(page);
@@ -159,6 +159,6 @@ test.describe('Group C - 처음 가입한 사용자의 플로우', () => {
             // 8. 검색 버튼이 표시되는지 확인
             const searchButton = page.getByRole('search').getByTestId(TEST_SELECTORS.BUTTON_SUBMIT_KEYWORD_FOR_SEARCH);
             await expect(searchButton).toBeVisible();
-        })
-    })
-})
+        });
+    });
+});

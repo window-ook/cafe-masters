@@ -32,7 +32,7 @@ export class MainPage {
                 localStorage.setItem('userStore', JSON.stringify(userStoreState));
 
                 // Playwright 테스트 플래그 설정
-                (window as any).__PLAYWRIGHT_TEST__ = true;
+                window.__PLAYWRIGHT_TEST__ = true;
             }, MOCK_AUTH_DATA);
 
             // 페이지 새로고침으로 Zustand persist가 localStorage를 읽도록 함
@@ -45,7 +45,7 @@ export class MainPage {
         // 페이지 로드 후 session을 Zustand store에 직접 설정
         await this.page.evaluate((mockData) => {
             // Playwright 테스트 플래그 설정
-            (window as any).__PLAYWRIGHT_TEST__ = true;
+            window.__PLAYWRIGHT_TEST__ = true;
 
             // Zustand store에 session 강제 설정 시도
             const interval = setInterval(() => {
@@ -82,7 +82,7 @@ export class MainPage {
                             clearInterval(interval);
                             break;
                         }
-                    } catch (e) {
+                    } catch {
                         // 무시
                     }
                 }

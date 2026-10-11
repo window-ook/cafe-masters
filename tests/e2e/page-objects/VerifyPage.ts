@@ -203,7 +203,7 @@ export class VerifyPage {
 
         // 7. Playwright 테스트 환경 플래그 설정
         await this.page.addInitScript(() => {
-            (window as any).__PLAYWRIGHT_TEST__ = true;
+            window.__PLAYWRIGHT_TEST__ = true;
         });
 
         // 8. AuthProvider의 onAuthStateChange를 트리거하기 위한 추가 설정

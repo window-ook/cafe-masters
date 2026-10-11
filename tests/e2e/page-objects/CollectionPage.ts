@@ -125,7 +125,7 @@ export class CollectionPage {
                 localStorage.setItem('userStore', JSON.stringify(userStoreState));
 
                 // Playwright 테스트 플래그 설정 (모킹 데이터 사용을 위해)
-                (window as any).__PLAYWRIGHT_TEST__ = true;
+                window.__PLAYWRIGHT_TEST__ = true;
             }, MOCK_AUTH_DATA);
 
             await this.page.reload();
@@ -137,13 +137,13 @@ export class CollectionPage {
         // 페이지 로드 후 Zustand store에 session을 직접 설정
         await this.page.evaluate((mockData) => {
             // Playwright 테스트 플래그 설정
-            (window as any).__PLAYWRIGHT_TEST__ = true;
+            window.__PLAYWRIGHT_TEST__ = true;
 
             // Zustand store에 직접 접근하여 session 설정
             // Zustand는 window 객체에 store를 노출하지 않으므로,
             // 페이지가 로드되고 나면 React 컴포넌트에서 store를 사용할 수 있도록
             // 글로벌 변수로 mock session을 설정
-            (window as any).__MOCK_SESSION__ = {
+            window.__MOCK_SESSION__ = {
                 user: {
                     id: mockData.USER_ID,
                     email: mockData.SIGNUP_EMAIL

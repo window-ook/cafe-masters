@@ -121,7 +121,7 @@ export const MOCK_COLLECTION_CAFES = [
         categories: ["특색있는", "커피가 맛있는"],
         extra_images: ["https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2Fada47eb2153cbf9a7e252665ccfa8fa6c451a8a8%3Foriginal"]
     }
-]
+];
 
 export const MOCK_BOOKMARK_CAFE = [
     {
@@ -151,7 +151,7 @@ export const MOCK_BOOKMARK_CAFE = [
         coordY: 35.87186926414192,
         created_at: "2025-09-09 06:26:57.541+00", extra_images: ["https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=https%3A%2F%2Fpostfiles.pstatic.net%2FMjAyNTA4MjRfMjUg%2FMDAxNzU1OTYyNzQ0OTc1.urxac3yy4ZrJr2RqvFfC-uXyATrM6BTWSKzRc2AwCtAg.2ontoTnNGSiV2NKp7mSFhBX-0Lf26Ko1lqJ2l9oLzGEg.JPEG%2FIMG%25EF%25BC%25BF6924.jpg%3Ftype%3Dw773\",\"https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=https%3A%2F%2Fpostfiles.pstatic.net%2FMjAyNTA4MjRfMTUz%2FMDAxNzU1OTYyNzQ0MDcz.RsmtxCx_9S1htUsQfDJNyt5mQrWOKXErsDYcDIKOh20g.lA8ZzXumNRNYwj782gN7LfOPdUSBRBIfACKPNA2FiJkg.JPEG%2FIMG%25EF%25BC%25BF6957.jpg%3Ftype%3Dw773"]
     }
-]
+];
 
 export const MOCK_RECOMMENDATION_CAFES = [
     {
@@ -182,4 +182,4 @@ export const MOCK_RECOMMENDATION_CAFES = [
         coordX: 128.599664378036,
         coordY: 35.8703959176838
     }
-]
+];

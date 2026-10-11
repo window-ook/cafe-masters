@@ -26,6 +26,9 @@ export default function SignUpVerifyClient() {
       return;
     }
 
+    /* sessionStorage는 서버 렌더에 없으므로 hydration 뒤에 한 번 읽어 고정합니다.
+       useSyncExternalStore로 매 렌더 읽으면 인증 성공 시 키가 지워진 직후 화면이 비어 버립니다 */
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setUserEmail(email);
   }, [router]);
 

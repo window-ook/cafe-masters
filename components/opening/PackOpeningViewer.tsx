@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useRef } from 'react';
+import { Suspense, useRef, type UIEvent } from 'react';
 import { Canvas, invalidate } from '@react-three/fiber';
 import { AgXToneMapping } from 'three';
 import PackScene from '@/components/opening/PackScene';
@@ -34,7 +34,7 @@ export default function PackOpeningViewer({
     onComplete();
   };
 
-  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+  const handleScroll = (event: UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
     const scrollable = scrollHeight - clientHeight;
     /* scrollHeight는 정수로 반올림되고 scrollTop은 소수라서 끝에서도 1에 못 미칠 수 있습니다 */

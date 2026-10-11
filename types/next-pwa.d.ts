@@ -25,12 +25,12 @@ declare module 'next-pwa' {
           maxEntries?: number;
           maxAgeSeconds?: number;
         };
-        cacheKeyWillBeUsed?: any;
-        cacheWillUpdate?: any;
-        fetchDidFail?: any;
-        fetchDidSucceed?: any;
-        requestWillFetch?: any;
-        requestDidFail?: any;
+        cacheKeyWillBeUsed?: unknown;
+        cacheWillUpdate?: unknown;
+        fetchDidFail?: unknown;
+        fetchDidSucceed?: unknown;
+        requestWillFetch?: unknown;
+        requestDidFail?: unknown;
       };
     }>;
   }

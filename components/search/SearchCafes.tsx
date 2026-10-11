@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSearchedResultStore, useUIStore } from '@/stores';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
 import { IKakaoSearchResult } from '@/types/kakao-map';
@@ -13,6 +13,13 @@ export default function SearchCafes() {
   const searchResult = useSearchedResultStore(state => state.searchResult);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [prevSearchResult, setPrevSearchResult] = useState(searchResult);
+
+  /* 새 검색 결과가 오면 1페이지로 돌아갑니다. effect로 하면 이전 페이지로 한 번 그린 뒤 다시 그립니다 */
+  if (searchResult !== prevSearchResult) {
+    setPrevSearchResult(searchResult);
+    setCurrentPage(1);
+  }
 
   const searchResultsPerPage = 15;
   const totalSearchResultPages = Math.ceil(
@@ -22,10 +29,6 @@ export default function SearchCafes() {
     (currentPage - 1) * searchResultsPerPage,
     currentPage * searchResultsPerPage,
   );
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchResult]);
 
   const handleNextSearchResultPage = () => {
     if (currentPage < totalSearchResultPages) setCurrentPage(currentPage + 1);
