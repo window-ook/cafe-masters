@@ -53,6 +53,30 @@ import runpy
 runpy.run_path("<repo>/assets/blender/pack_generator.py", run_name="__main__")
 ```
 
+### 웹 반영 (Storage 재업로드)
+
+웹 뷰어(`components/opening/`)는 저장소 파일이 아니라 Supabase Storage의 사본을 읽는다.
+`art_builder.py`나 `pack_generator.py`를 다시 돌렸다면 바뀐 파일을 Storage에 다시 올려야 웹에 반영된다.
+경로는 `lib/paths.ts`의 `IMAGE_PATHS.PACK_GLB` · `IMAGE_PATHS.CARD_ART`와 같다.
+
+```
+버킷 cafe masters
+card_pack/card_pack.v<N>.glb         ← card_pack.glb의 내장 텍스처를 WebP로 바꿔서
+card_pack/card_art/<재질>.webp        ← card_art/<재질>.png를 WebP로 변환해서
+```
+
+```bash
+# GLB 내장 텍스처 PNG → WebP (EXT_texture_webp, 466KB → 235KB). 지오메트리·애니메이션은 그대로
+pnpm dlx @gltf-transform/cli@4 webp assets/blender/card_pack.glb card_pack.v<N>.glb --quality 85
+
+# 카드 면 PNG → WebP (q85, 8장 합 약 80KB)
+for f in assets/blender/card_art/*.png; do cwebp -q 85 "$f" -o "${f%.png}.webp"; done
+```
+
+GLB는 Fast 4G에서 3초 안에 로드되어야 하므로(개봉 뷰어 합격 기준) PNG 그대로 올리지 않는다.
+GLB를 바꿀 때는 덮어쓰지 말고 `v<N>`을 올려 새 경로로 업로드한 뒤 `IMAGE_PATHS.PACK_GLB`를 바꾼다.
+공개 URL은 CDN 캐시가 최대 1시간 남아 덮어쓰면 반영이 늦고, 이전 파일이 남아 있어야 되돌리기 쉽다.
+
 ---
 
 ## 2. 확정된 설계

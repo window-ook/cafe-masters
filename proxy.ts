@@ -11,6 +11,9 @@ const AUTH_ROUTES = {
 export async function proxy(request: NextRequest) {
     const { pathname, searchParams } = new URL(request.url);
 
+    // LAN IP로 붙는 dev(실기기 확인)는 https가 없어 승격하면 CSS·JS가 전부 실패합니다. localhost는 //로 시작하는 외부 스크립트를 https로 올려야 하므로 유지합니다
+    const isLanDev = process.env.NODE_ENV !== 'production' && !/^(localhost|127\.0\.0\.1)(:\d+)?$/.test(request.headers.get('host') ?? '');
+
     const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
     const cspHeader = `
     default-src 'self';
@@ -18,13 +21,13 @@ export async function proxy(request: NextRequest) {
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https://*.kakao.com https://*.kakaocdn.net https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://t1.daumcdn.net https://mts.daumcdn.net https://*.supabase.co;
     font-src 'self' https://fonts.gstatic.com;
-    connect-src 'self' https://*.supabase.co https://*.kakao.com https://dapi.kakao.com https://*.vercel.live https://vercel.live https://cloudflareinsights.com https://*.cloudflareinsights.com;
+    connect-src 'self' blob: https://*.supabase.co https://*.kakao.com https://dapi.kakao.com https://*.vercel.live https://vercel.live https://cloudflareinsights.com https://*.cloudflareinsights.com;
     object-src 'none';
     base-uri 'self';
     form-action 'self' https://*.kakao.com;
     frame-ancestors 'none';
     frame-src https://*.vercel.live https://vercel.live https://*.kakao.com;
-    upgrade-insecure-requests;`;
+    ${isLanDev ? '' : 'upgrade-insecure-requests;'}`;
 
     const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, ' ').trim();
 

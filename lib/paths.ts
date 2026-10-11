@@ -1,3 +1,5 @@
+import type { DrawnMaterial } from '@/utils/shared/material';
+
 const INTERNAL_PATHS = {
     CAFE_DETAIL: '/api/cafe-detail',
 } as const;
@@ -47,6 +49,8 @@ const IMAGE_PATHS = {
         CAFE_8: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/fallback_thumbnails/fallback_thumb_8.avif',
         CAFE_9: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/fallback_thumbnails/fallback_thumb_9.avif',
     },
+    PACK_GLB: 'https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_pack/card_pack.v4.glb',
+    CARD_ART: (material: DrawnMaterial) => `https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_pack/card_art/${material}.webp`,
 } as const;
 
 export { INTERNAL_PATHS, EXTERNAL_PATHS, IMAGE_PATHS };
