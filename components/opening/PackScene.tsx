@@ -121,10 +121,12 @@ function usePackCamera(camera: PerspectiveCamera) {
 
 /** 반사용 환경광. drei Environment 프리셋은 외부 CDN에서 HDR을 받으므로 RoomEnvironment를 굽습니다 */
 function useRoomEnvironment() {
-  const gl = useThree(state => state.gl);
-  const scene = useThree(state => state.scene);
+  /* 씬은 three.js가 소유한 가변 객체입니다. 훅이 반환한 값을 바꾸면 React Compiler가
+     최적화를 포기하므로, 스토어 접근자로 effect 안에서 꺼내 씁니다 */
+  const get = useThree(state => state.get);
 
   useEffect(() => {
+    const { gl, scene } = get();
     const pmrem = new PMREMGenerator(gl);
     const environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
     scene.environment = environment;
@@ -136,7 +138,7 @@ function useRoomEnvironment() {
       environment.dispose();
       pmrem.dispose();
     };
-  }, [gl, scene]);
+  }, [get]);
 }
 
 /**

@@ -67,7 +67,7 @@ export default function BookmarkToggleButton({
         toast.success(TOAST_SUCCESS.CREATE_BOOKMARK);
         setIsBookmarked(true);
       }
-    } catch (error) {
+    } catch {
       toast.error(TOAST_ERROR.BOOMARK_TOGGLE);
     }
   };

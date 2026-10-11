@@ -10,7 +10,6 @@ interface IBenefitCard {
   title: string;
   description1: string;
   description2: string;
-  index: number;
 }
 
 const BenefitCard: React.FC<IBenefitCard> = ({
@@ -18,7 +17,6 @@ const BenefitCard: React.FC<IBenefitCard> = ({
   title,
   description1,
   description2,
-  index,
 }) => {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
   return (
@@ -120,7 +118,6 @@ export default function BenefitsSection() {
             {benefits.map((benefit, index) => (
               <BenefitCard
                 key={index}
-                index={index}
                 icon={benefit.icon}
                 title={benefit.title}
                 description1={benefit.description1}

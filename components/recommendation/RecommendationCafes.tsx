@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useUIStore } from '@/stores';
 import { useFilterStore } from '@/stores/filter';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
@@ -23,6 +23,16 @@ export default function RecommendationCafes() {
     isPending,
   } = useRecommendationCafes(selectedCategories);
 
+  const [prevFilteredCafes, setPrevFilteredCafes] = useState(
+    filteredRecommendationCafes,
+  );
+
+  /* 필터 결과가 바뀌면 1페이지로 돌아갑니다. 목록은 훅에서 useMemo로 참조가 유지되므로 비교가 안전합니다 */
+  if (filteredRecommendationCafes !== prevFilteredCafes) {
+    setPrevFilteredCafes(filteredRecommendationCafes);
+    setCurrentPage(1);
+  }
+
   const recommendationPerPage = 5;
   const totalRecommendedPages = Math.ceil(
     (filteredRecommendationCafes?.length || 0) / recommendationPerPage,
@@ -32,10 +42,6 @@ export default function RecommendationCafes() {
       (currentPage - 1) * recommendationPerPage,
       currentPage * recommendationPerPage,
     ) || [];
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [filteredRecommendationCafes]);
 
   const handleNextRecommendedPage = () => {
     if (currentPage < totalRecommendedPages) setCurrentPage(currentPage + 1);

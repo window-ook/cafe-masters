@@ -77,7 +77,7 @@ export class RecommendationPage {
                 localStorage.setItem('userStore', JSON.stringify(userStoreState));
 
                 // Playwright 테스트 플래그 설정
-                (window as any).__PLAYWRIGHT_TEST__ = true;
+                window.__PLAYWRIGHT_TEST__ = true;
             }, MOCK_AUTH_DATA);
 
             await this.page.reload();
@@ -89,10 +89,10 @@ export class RecommendationPage {
         // 페이지 로드 후 mock session 설정
         await this.page.evaluate((mockData) => {
             // Playwright 테스트 플래그 설정
-            (window as any).__PLAYWRIGHT_TEST__ = true;
+            window.__PLAYWRIGHT_TEST__ = true;
 
             // Mock session 설정
-            (window as any).__MOCK_SESSION__ = {
+            window.__MOCK_SESSION__ = {
                 user: {
                     id: mockData.USER_ID,
                     email: mockData.SIGNUP_EMAIL
