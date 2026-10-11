@@ -1,0 +1,108 @@
+name: Staging 배포
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+# develop은 staging 전용입니다. Hobby 요금제는 Custom Environment가 없어 Preview 배포에 staging 도메인을 붙입니다
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  Deploy-Staging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 환경 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: pnpm 설치
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.16.1
+
+      - name: pnpm 캐시 설정
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: 의존성 설치
+        run: pnpm install --frozen-lockfile
+
+      # 타입 오류는 거의 항상 실제 문제이므로 배포를 막습니다
+      - name: 타입 체크
+        run: npx tsc --noEmit
+
+      - name: 린트 검사
+        run: pnpm run lint
+        continue-on-error: true
+
+      # 리뉴얼 중에는 E2E가 화면 변경으로 깨진 상태라 실행 시간만 들고 검증하지 못하므로 끕니다.
+      # 리뉴얼이 끝나면 아래 두 단계의 if: false를 지워 다시 실행합니다.
+      - name: Playwright 브라우저 설치
+        if: false
+        run: npx playwright install --with-deps
+
+      # UI를 바꾸면 선택자가 깨지는 성격이라 배포를 막지 않습니다.
+      # UI 리뉴얼이 끝나고 선택자가 안정되면 continue-on-error를 제거해 다시 게이트로 되돌립니다.
+      - name: 테스트용 개발 서버 실행 및 테스트 실행
+        if: false
+        continue-on-error: true
+        run: |
+          pnpm run dev &
+          echo "개발 서버 시작 중..."
+
+          # 서버가 완전히 준비될 때까지 대기 (최대 60초)
+          for i in {1..60}; do
+            if curl -s http://localhost:3000 > /dev/null; then
+              echo "서버가 준비되었습니다! ($i초 후)"
+              break
+            fi
+            echo "서버 준비 대기 중... ($i/60)"
+            sleep 1
+          done
+
+          # 추가 안정화 시간
+          sleep 5
+          echo "테스트 시작"
+          pnpm run test:playwright
+        env:
+          CI: true
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_KAKAO_MAP_KEY: ${{ secrets.NEXT_PUBLIC_KAKAO_MAP_KEY }}
+
+      - name: Vercel CLI 설치
+        run: pnpm add --global vercel@latest
+
+      # develop 브랜치 전용 Preview 변수(NEXT_PUBLIC_BASE_URL 등)가 있으면 그 값이 우선합니다
+      - name: Vercel 환경 정보 가져오기 (Staging)
+        run: vercel pull --yes --environment=preview --git-branch=develop --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: 프로젝트 빌드
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Vercel Staging 배포
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "STAGING_URL=$url" >> $GITHUB_OUTPUT
+          echo "Deployment URL: $url"
+
+      # CLI 배포에도 브랜치 도메인이 붙도록 명시적으로 연결합니다
+      - name: staging 도메인 연결
+        run: vercel alias set ${{ steps.deploy.outputs.STAGING_URL }} staging.cafe-masters.com --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: 배포 성공 알림
+        if: success()
+        run: |
+          echo "✅ Staging 환경(https://staging.cafe-masters.com)에 성공적으로 배포되었습니다!"

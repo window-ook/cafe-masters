@@ -4,10 +4,8 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
+# develop 대상 PR마다 미리보기를 만듭니다. develop에 병합된 결과는 staging.yml이 배포합니다
 on:
-  push:
-    branches:
-      - develop
   pull_request:
     branches:
       - develop
