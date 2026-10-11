@@ -6,7 +6,6 @@ import { useFilterStore, useUserStore } from '@/stores';
 import { getAllCollectionCafes } from '@/actions/supabase/collection';
 import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
 import { collectionCafeQuery } from '@/queries/supabase/collection';
-import { MOCK_COLLECTION_CAFES } from '@/tests/e2e/utils/constants';
 
 interface ICollectionCafes {
   collectionCafes: ISupabaseCollectionCafe[];
@@ -39,23 +38,10 @@ export function useCollectionCafes(
   const { selectedRegion, selectedRating, searchTermInCollectionCafe } = useFilterStore();
   const session = useUserStore(state => state.session);
 
-  // Playwright 테스트 환경에서는 mock session 사용
-  const effectiveSession = typeof window !== 'undefined' && (window as any).__MOCK_SESSION__
-    ? (window as any).__MOCK_SESSION__
-    : session;
-
   const queryData = useQuery({
-    enabled: isActive && !!effectiveSession,
-    queryKey: collectionCafeQuery.all(effectiveSession?.user?.id ?? ''),
-    queryFn: async () => {
-      const isPlaywrightTest = typeof window !== 'undefined' &&
-        (window.navigator.userAgent.includes('Playwright') || (window as any).__PLAYWRIGHT_TEST__ === true);
-
-      if (isPlaywrightTest) return { data: MOCK_COLLECTION_CAFES };
-
-      const response = await getAllCollectionCafes();
-      return response;
-    },
+    enabled: isActive && !!session,
+    queryKey: collectionCafeQuery.all(session?.user?.id ?? ''),
+    queryFn: () => getAllCollectionCafes(),
   });
 
   const paginationData = useMemo((): ICollectionCafes => {
