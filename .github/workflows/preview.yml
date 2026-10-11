@@ -10,6 +10,11 @@ on:
     branches:
       - develop
 
+# 저장소 기본 토큰은 읽기 전용이라, PR에 미리보기 주소 댓글을 남기려면 쓰기 권한을 명시합니다
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
