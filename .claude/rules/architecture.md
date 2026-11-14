@@ -33,4 +33,4 @@
 | `schema/`                      | Zod 폼 스키마 — React Hook Form에 `@hookform/resolvers`로 연결  |
 | `lib/paths.ts`                 | 내부·외부·이미지 경로 ([`code-style.md`](./code-style.md))      |
 | `utils/constants/`             | 메시지·카테고리 상수                                            |
-| `tests/e2e/`                   | Playwright E2E 테스트                                           |
+| `tests/smoke/`                 | 운영 스모크 검사 (Playwright, 운영 URL 대상)                    |

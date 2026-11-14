@@ -12,8 +12,7 @@
     "lint": "eslint .",
     "analyze": "ANALYZE=true next build",
     "generate-types": "npx supabase gen types typescript --project-id vsemazasjbizehcambul --schema public > types_db.ts",
-    "test:playwright": "playwright test",
-    "test:playwright:ui": "playwright test --ui"
+    "test:smoke": "playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.0",
