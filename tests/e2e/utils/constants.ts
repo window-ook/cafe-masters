@@ -83,6 +83,8 @@ export const TEST_SELECTORS = {
 export const MOCK_COLLECTION_CAFES = [
     {
         id: 233485062,
+        place_provider: 'kakao',
+        place_id: '233485062',
         name: "수수밀소",
         address: "대구 동구 매여로 320",
         coordX: 128.715042760351,
@@ -103,6 +105,8 @@ export const MOCK_COLLECTION_CAFES = [
     },
     {
         id: 803452801,
+        place_provider: 'kakao',
+        place_id: '803452801',
         name: "이얼즈",
         address: "대구 중구 동문동 10-4",
         coordX: 128.60039182923592,

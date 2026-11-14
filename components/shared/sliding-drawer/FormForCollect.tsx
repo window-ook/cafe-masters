@@ -9,7 +9,8 @@ import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { useUpdateCollectionCafe } from '@/hooks/supabase/collection/useUpdateCollectionCafe';
 import { useCreateCollectionCafe } from '@/hooks/supabase/collection';
-import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
+import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS, TOAST_WARN } from '@/utils/constants/messages';
+import { PLACE_PROVIDER } from '@/utils/constants/place';
 import { toast } from 'react-toastify';
 import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
@@ -177,7 +178,8 @@ export default function FormForCollect() {
 
       // 완전한 수집 데이터 생성
       const collectionData = {
-        id: targetCafeForCollect.id,
+        place_provider: PLACE_PROVIDER,
+        place_id: String(targetCafeForCollect.id),
         name: targetCafeForCollect.name,
         coordX: targetCafeForCollect.coordX,
         coordY: targetCafeForCollect.coordY,
@@ -195,8 +197,10 @@ export default function FormForCollect() {
       };
 
       try {
-        await createCollectionCafe(collectionData);
-        toast.success(TOAST_SUCCESS.CREATE_COLLECTION);
+        const isCreated = await createCollectionCafe(collectionData);
+
+        if (isCreated) toast.success(TOAST_SUCCESS.CREATE_COLLECTION);
+        else toast.warning(TOAST_WARN.DAILY_DRAW_LIMIT);
         setIsCollectFormOpen(false);
       } catch (error) {
         console.error(CONSOLE_ERROR.CREATE_COLLECTION_CAFE, error);

@@ -30,6 +30,7 @@ export const TOAST_ERROR = {
 } as const;
 
 export const TOAST_WARN = {
+    DAILY_DRAW_LIMIT: '오늘은 이 카페에서 이미 카드를 뽑았어요. 내일 다시 방문해 주세요.',
     NO_DATA_FOR_RECOMMEND: '추천할 카페 정보가 없습니다. 다시 시도해주세요.'
 } as const;
 

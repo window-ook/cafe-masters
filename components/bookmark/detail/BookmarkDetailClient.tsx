@@ -5,6 +5,7 @@ import { useCurrentCafeStore, useUserStore } from '@/stores';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation';
 import { IPageParams } from '@/types/shared/page';
+import { PLACE_PROVIDER } from '@/utils/constants/place';
 
 export default function BookmarkDetailClient({ params }: IPageParams) {
   const resolvedParams = use(params);
@@ -22,7 +23,11 @@ export default function BookmarkDetailClient({ params }: IPageParams) {
     if (!numericId) return;
 
     // 현재 상태와 비교하여 실제 변경이 있을 때만 업데이트
-    const isCollected = collectionCafes.some(cafe => cafe.id === numericId);
+    const isCollected = collectionCafes.some(
+      cafe =>
+        cafe.place_provider === PLACE_PROVIDER &&
+        cafe.place_id === String(numericId),
+    );
     const isRecommended =
       recommendationCafes?.some(cafe => cafe.id === numericId) || false;
 
