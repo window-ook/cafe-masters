@@ -11,7 +11,8 @@ on:
 
 jobs:
   Smoke:
-    runs-on: ubuntu-latest
+    # Playwright 1.57은 ubuntu-latest(26.04)를 지원하지 않아 고정합니다
+    runs-on: ubuntu-24.04
     steps:
       - name: 저장소 체크아웃
         uses: actions/checkout@v4
