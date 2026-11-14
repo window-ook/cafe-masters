@@ -51,41 +51,6 @@ jobs:
         run: pnpm run lint
         continue-on-error: true
 
-      # 리뉴얼 중에는 E2E가 화면 변경으로 깨진 상태라 실행 시간만 들고 검증하지 못하므로 끕니다.
-      # 리뉴얼이 끝나면 아래 두 단계의 if: false를 지워 다시 실행합니다.
-      - name: Playwright 브라우저 설치
-        if: false
-        run: npx playwright install --with-deps
-
-      # UI를 바꾸면 선택자가 깨지는 성격이라 배포를 막지 않습니다.
-      # UI 리뉴얼이 끝나고 선택자가 안정되면 continue-on-error를 제거해 다시 게이트로 되돌립니다.
-      - name: 테스트용 개발 서버 실행 및 테스트 실행
-        if: false
-        continue-on-error: true
-        run: |
-          pnpm run dev &
-          echo "개발 서버 시작 중..."
-
-          # 서버가 완전히 준비될 때까지 대기 (최대 60초)
-          for i in {1..60}; do
-            if curl -s http://localhost:3000 > /dev/null; then
-              echo "서버가 준비되었습니다! ($i초 후)"
-              break
-            fi
-            echo "서버 준비 대기 중... ($i/60)"
-            sleep 1
-          done
-
-          # 추가 안정화 시간
-          sleep 5
-          echo "테스트 시작"
-          pnpm run test:playwright
-        env:
-          CI: true
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-          NEXT_PUBLIC_KAKAO_MAP_KEY: ${{ secrets.NEXT_PUBLIC_KAKAO_MAP_KEY }}
-
       - name: Vercel CLI 설치
         run: pnpm add --global vercel@latest
 

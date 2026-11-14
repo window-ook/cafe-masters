@@ -1,0 +1,38 @@
+name: 운영 스모크 검사
+
+# 배포하지 않아도 외부 변화(지도 SDK 도메인 이전 등)로 운영이 깨질 수 있어 주기적으로 확인합니다.
+# schedule은 기본 브랜치에 있는 워크플로만 실행됩니다. 기본 브랜치가 develop이 아니면
+# Production 배포 직후 검사(workflow_call)와 수동 실행만 동작합니다.
+on:
+  schedule:
+    - cron: '0 0,12 * * *' # 매일 09:00, 21:00 KST
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  Smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 환경 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: pnpm 설치
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.16.1
+
+      - name: 의존성 설치
+        run: pnpm install --frozen-lockfile
+
+      - name: Chromium 설치
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: 스모크 검사
+        run: pnpm run test:smoke
+        env:
+          CI: true
