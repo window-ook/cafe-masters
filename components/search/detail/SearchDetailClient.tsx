@@ -10,6 +10,7 @@ import {
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
+import { PLACE_PROVIDER } from '@/utils/constants/place';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
@@ -126,7 +127,11 @@ export default function SearchDetailClient({
   useEffect(() => {
     if (!numericId) return;
 
-    const isCollected = collectionCafes.some(cafe => cafe.id === numericId);
+    const isCollected = collectionCafes.some(
+      cafe =>
+        cafe.place_provider === PLACE_PROVIDER &&
+        cafe.place_id === String(numericId),
+    );
     const isBookmarked = bookmarkCafes.some(cafe => cafe.id === numericId);
     const isRecommended =
       recommendationCafes?.some(cafe => cafe.id === numericId) || false;

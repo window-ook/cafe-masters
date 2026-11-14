@@ -63,7 +63,7 @@ export const OBSIDIAN_CAFE_NAMES = ['탐앤탐스 대구강북점'];
  * 마음에 들 때까지 재시도할 수 있고, 재질은 Market에서 화폐로 기능합니다.
  * 확정 재질을 먼저 판정하고, 해당되지 않을 때만 확률표를 돌립니다.
  * @param cafeName 카페 이름. 지정 카페면 재질이 확정됩니다
- * @param stackCount 같은 카페로 이미 보유한 카드 수. 임계값을 넘으면 라브라도라이트가 확정됩니다
+ * @param stackCount 같은 장소에서 이미 추첨된 카드 수(아카이브 제외). 임계값을 넘으면 라브라도라이트가 확정됩니다
  */
 export const drawMaterial = (
   cafeName?: string | null,
@@ -89,6 +89,19 @@ export const drawMaterial = (
 
   return 'mica';
 };
+
+/** 같은 사용자·장소의 추첨을 KST 하루 1회로 제한하는 DB 유니크 인덱스 */
+const DAILY_DRAW_LIMIT_KEY = 'collection_daily_draw_key';
+
+/**
+ * 하루 1회 추첨 한도에 걸린 쓰기인지 판정합니다
+ * @description 현장 수집과 개봉이 함께 집계되며, 동시 요청도 DB가 막습니다.
+ * @param error Supabase 쓰기 에러
+ */
+export const isDailyDrawLimitError = (
+  error: { code?: string; message?: string } | null,
+): boolean =>
+  error?.code === '23505' && !!error.message?.includes(DAILY_DRAW_LIMIT_KEY);
 
 /**
  * 재질에 대응하는 카드 베이스 클래스를 반환합니다
