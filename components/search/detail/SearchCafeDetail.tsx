@@ -6,13 +6,12 @@ import {
   useSearchedResultStore,
   useCurrentCafeStore,
   useUserStore,
-  useUIStore,
-  useCollectionStore,
   useRecommendationStore,
 } from '@/stores';
 import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
+import CollectButton from '@/components/opening/CollectButton';
 
 interface ISearchCafePreDetail {
   cafeId: number;
@@ -29,15 +28,10 @@ export default function SearchCafeDetail({
   const session = useUserStore(state => state.session);
   const currentCoordX = useCurrentCafeStore(state => state.currentCoordX);
   const currentCoordY = useCurrentCafeStore(state => state.currentCoordY);
-  const isCollected = useCurrentCafeStore(state => state.isCollected);
   const isRecommended = useCurrentCafeStore(state => state.isRecommended);
-  const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const searchResult = useSearchedResultStore(state => state.searchResult);
   const setTargetCafeForRecommend = useRecommendationStore(
     state => state.setTargetCafeForRecommend,
-  );
-  const setTargetCafeForCollect = useCollectionStore(
-    state => state.setTargetCafeForCollect,
   );
 
   // 즉시 렌더링: 검색 결과에 포함된 기본 정보
@@ -79,23 +73,21 @@ export default function SearchCafeDetail({
 
   const actionButtons = (
     <>
-      {session && !isCollected && (
-        <Button
-          dataTestId="button-collect"
-          onClick={() => {
-            setTargetCafeForCollect({
-              id: Number(searchDetail.id),
-              name: searchDetail.name,
-              coordX: currentCoordX,
-              coordY: currentCoordY,
-              address: searchDetail.address,
-            });
-            setIsCollectFormOpen(true);
-          }}
-          customClassName="flex-1"
-        >
-          <span>수집하기</span>
-        </Button>
+      {/* 이미 수집한 카페도 다시 수집할 수 있습니다. 수집 배지는 헤더에 그대로 남습니다 */}
+      {session && (
+        <CollectButton
+          target={
+            foundCafe && currentCoordX && currentCoordY
+              ? {
+                  placeId: searchDetail.id,
+                  name: searchDetail.name,
+                  address: searchDetail.address,
+                  coordX: currentCoordX,
+                  coordY: currentCoordY,
+                }
+              : null
+          }
+        />
       )}
 
       {isAdmin && !isRecommended && (

@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import { useBookmarkCafes } from '@/hooks/supabase/bookmark/useBookmarkCafes';
 import { useDeleteBookmarkCafe } from '@/hooks/supabase/bookmark';
-import { useCollectionStore } from '@/stores/collection';
 import { useCurrentCafeStore, useUserStore } from '@/stores';
 import { useCloseSlidingDrawer } from '@/hooks/ui/useCloseSlidingDrawer';
 import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
@@ -12,6 +11,7 @@ import { toast } from 'react-toastify';
 import { Bookmark, CircleX } from 'lucide-react';
 import Button from '@/components/shared/Button';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
+import CollectButton from '@/components/opening/CollectButton';
 import CollectedBadge from '@/components/shared/sliding-drawer/CollectedBadge';
 import RecommendedBadge from '@/components/shared/sliding-drawer/RecommendedBadge';
 
@@ -22,9 +22,6 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
   const isCollected = useCurrentCafeStore(state => state.isCollected);
   const isRecommended = useCurrentCafeStore(state => state.isRecommended);
   const setIsBookmarked = useCurrentCafeStore(state => state.setIsBookmarked);
-  const setTargetCafeForCollect = useCollectionStore(
-    state => state.setTargetCafeForCollect,
-  );
 
   const { filteredBookmarkCafes } = useBookmarkCafes(session?.user?.id ?? '');
 
@@ -53,20 +50,15 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
     <>
       {/* 로그인 상태 */}
       {session && (
-        <Button
-          onClick={() =>
-            setTargetCafeForCollect({
-              id: detail.id,
-              name: detail.name,
-              coordX: detail.coordX,
-              coordY: detail.coordY,
-              address: detail.address,
-            })
-          }
-          customClassName="flex-1"
-        >
-          수집하기
-        </Button>
+        <CollectButton
+          target={{
+            placeId: detail.id,
+            name: detail.name,
+            address: detail.address,
+            coordX: detail.coordX,
+            coordY: detail.coordY,
+          }}
+        />
       )}
 
       {/* 로그아웃 상태 */}
