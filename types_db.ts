@@ -20,13 +20,8 @@ export type Database = {
           coordX: number
           coordY: number
           created_at: string
-          extra_images: string | null
           id: number
-          image: string | null
-          menus: string | null
           name: string
-          opening_time: string | null
-          phone_number: string | null
           user_id: string
         }
         Insert: {
@@ -34,13 +29,8 @@ export type Database = {
           coordX: number
           coordY: number
           created_at?: string
-          extra_images?: string | null
           id?: number
-          image?: string | null
-          menus?: string | null
           name: string
-          opening_time?: string | null
-          phone_number?: string | null
           user_id?: string
         }
         Update: {
@@ -48,38 +38,9 @@ export type Database = {
           coordX?: number
           coordY?: number
           created_at?: string
-          extra_images?: string | null
           id?: number
-          image?: string | null
-          menus?: string | null
           name?: string
-          opening_time?: string | null
-          phone_number?: string | null
           user_id?: string
-        }
-        Relationships: []
-      }
-      cafe_detail: {
-        Row: {
-          created_at: string
-          extra_images: string | null
-          id: number
-          image: string | null
-          opening_time: string | null
-        }
-        Insert: {
-          created_at?: string
-          extra_images?: string | null
-          id?: number
-          image?: string | null
-          opening_time?: string | null
-        }
-        Update: {
-          created_at?: string
-          extra_images?: string | null
-          id?: number
-          image?: string | null
-          opening_time?: string | null
         }
         Relationships: []
       }
@@ -94,13 +55,10 @@ export type Database = {
           created_at: string
           drawn_at: string | null
           eaten_menus: string
-          extra_images: string | null
           id: number
           image: string | null
           material: string | null
           name: string
-          opening_time: string | null
-          phone_number: string | null
           place_id: string
           place_provider: string
           pros: string
@@ -118,13 +76,10 @@ export type Database = {
           created_at?: string
           drawn_at?: string | null
           eaten_menus: string
-          extra_images?: string | null
           id?: number
           image?: string | null
           material?: string | null
           name?: string
-          opening_time?: string | null
-          phone_number?: string | null
           place_id: string
           place_provider: string
           pros: string
@@ -142,13 +97,10 @@ export type Database = {
           created_at?: string
           drawn_at?: string | null
           eaten_menus?: string
-          extra_images?: string | null
           id?: number
           image?: string | null
           material?: string | null
           name?: string
-          opening_time?: string | null
-          phone_number?: string | null
           place_id?: string
           place_provider?: string
           pros?: string
@@ -165,13 +117,8 @@ export type Database = {
           coordX: number
           coordY: number
           created_at: string
-          extra_images: string | null
           id: number
-          image: string | null
-          menus: string | null
           name: string
-          opening_time: string | null
-          phone_number: string | null
         }
         Insert: {
           address: string
@@ -179,13 +126,8 @@ export type Database = {
           coordX: number
           coordY: number
           created_at?: string
-          extra_images?: string | null
           id?: number
-          image?: string | null
-          menus?: string | null
           name: string
-          opening_time?: string | null
-          phone_number?: string | null
         }
         Update: {
           address?: string
@@ -193,13 +135,8 @@ export type Database = {
           coordX?: number
           coordY?: number
           created_at?: string
-          extra_images?: string | null
           id?: number
-          image?: string | null
-          menus?: string | null
           name?: string
-          opening_time?: string | null
-          phone_number?: string | null
         }
         Relationships: []
       }
