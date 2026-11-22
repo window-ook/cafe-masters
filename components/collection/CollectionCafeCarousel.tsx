@@ -5,6 +5,7 @@ import { useUIStore, useUserStore } from '@/stores';
 import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
+import { getCardBusyKey, usePackOpening } from '@/components/opening/PackOpeningProvider';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CollectionCafe from '@/components/collection/CollectionCafe';
 
@@ -64,6 +65,8 @@ export default function CollectionCafeCarousel() {
   }, [scrollPrev, scrollNext]);
 
   const handleScroll = () => checkScrollPosition();
+
+  const { busyKey, busyLabel, openCard } = usePackOpening();
 
   const handleCollectionCafeClick = useCafeClick<ISupabaseCollectionCafe>({
     routePath: 'collection',
@@ -147,7 +150,9 @@ export default function CollectionCafeCarousel() {
                 image={cafe.image}
                 address={cafe.address}
                 created_at={cafe.created_at}
-                onClickAction={() => handleCollectionCafeClick(cafe)}
+                statusLabel={busyKey === getCardBusyKey(cafe.id) ? (busyLabel ?? undefined) : undefined}
+                /* 미개봉 카드는 상세로 가지 않고 개봉을 시작합니다 */
+                onClickAction={() => cafe.material ? handleCollectionCafeClick(cafe) : openCard(cafe)}
               />
             </div>
           ))}
