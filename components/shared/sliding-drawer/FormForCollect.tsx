@@ -8,9 +8,7 @@ import { useUIStore } from '@/stores';
 import { useCollectionStore } from '@/stores/collection';
 import { collectionFormSchema, CollectionFormData } from '@/schema/collection';
 import { useUpdateCollectionCafe } from '@/hooks/supabase/collection/useUpdateCollectionCafe';
-import { useCreateCollectionCafe } from '@/hooks/supabase/collection';
-import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS, TOAST_WARN } from '@/utils/constants/messages';
-import { PLACE_PROVIDER } from '@/utils/constants/place';
+import { CONSOLE_ERROR, TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 import { toast } from 'react-toastify';
 import InputField from '@/components/shared/InputField';
 import CategorySelector from '@/components/shared/sliding-drawer/CategorySelector';
@@ -18,19 +16,19 @@ import RatingsSelector from '@/components/shared/sliding-drawer/RatingsSelector'
 import FileUploadField from '@/components/shared/sliding-drawer/FileUploadField';
 import Button from '@/components/shared/Button';
 
+/**
+ * 수집한 카드의 기록·별점·사진 수정 폼
+ * @description 새 수집은 폼 없이 1탭으로 합니다(CollectButton). 이 폼은 컬렉션 상세의 수정에서만 열립니다.
+ */
 export default function FormForCollect() {
   const pathname = usePathname();
 
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
-  const targetCafeForCollect = useCollectionStore(
-    state => state.targetCafeForCollect,
-  );
   const editingCafe = useCollectionStore(state => state.editingCafe);
   const setIsCollectFormOpen = useUIStore(state => state.setIsCollectFormOpen);
   const clearEditingCafe = useCollectionStore(state => state.clearEditingCafe);
 
   const { updateCollectionCafe } = useUpdateCollectionCafe();
-  const { createCollectionCafe } = useCreateCollectionCafe();
 
   const [isUploading, setIsUploading] = useState(false);
 
@@ -96,8 +94,14 @@ export default function FormForCollect() {
     }
   };
 
-  // 수정/수집 핸들러
+  // 수정 핸들러
   const onFormSubmit = async (data: CollectionFormData) => {
+    /* 대상이 없으면 사진을 올리기 전에 멈춥니다. 올린 뒤에 멈추면 쓰이지 않는 파일이 남습니다 */
+    if (!isEditMode || !editingCafe) {
+      toast.error(TOAST_ERROR.NO_DATA_FOR_EDIT_COLLECTION);
+      return;
+    }
+
     // 커스텀 이미지 업로드 처리
     let uploadedImageUrl: string | null = null;
     if (data.customImage) {
@@ -105,74 +109,29 @@ export default function FormForCollect() {
       if (!uploadedImageUrl) return; // 업로드 실패시 중단
     }
 
-    if (isEditMode) {
-      if (!editingCafe) {
-        toast.error(TOAST_ERROR.NO_DATA_FOR_EDIT_COLLECTION);
-        return;
-      }
+    const updateData = {
+      ratings: data.rating,
+      categories: JSON.stringify(data.categories),
+      comment: data.comment,
+      eaten_menus: data.eaten_menus,
+      pros: data.pros || '',
+      cons: data.cons || '',
+      // 새로 올리지 않으면 기존 사진을 유지합니다
+      image: uploadedImageUrl ?? editingCafe.image,
+    };
 
-      const updateData = {
-        ratings: data.rating,
-        categories: JSON.stringify(data.categories),
-        comment: data.comment,
-        eaten_menus: data.eaten_menus,
-        pros: data.pros || '',
-        cons: data.cons || '',
-        // 새로 올리지 않으면 기존 사진을 유지합니다
-        image: uploadedImageUrl ?? editingCafe.image,
-      };
-
-      try {
-        await updateCollectionCafe(updateData);
-        toast.success(TOAST_SUCCESS.EDIT_COLLECTION);
-        clearEditingCafe();
-        setIsCollectFormOpen(false);
-      } catch (error) {
-        console.error(CONSOLE_ERROR.EDIT_COLLECTION_CAFE, error);
-        toast.error(
-          error instanceof Error
-            ? error.message
-            : TOAST_ERROR.EDIT_COLLECTION,
-        );
-      }
-    } else {
-      if (!targetCafeForCollect) {
-        toast.error(TOAST_ERROR.NO_DATA_FOR_CREATE_COLLECTION);
-        return;
-      }
-
-      // 완전한 수집 데이터 생성
-      const collectionData = {
-        place_provider: PLACE_PROVIDER,
-        place_id: String(targetCafeForCollect.id),
-        name: targetCafeForCollect.name,
-        coordX: targetCafeForCollect.coordX,
-        coordY: targetCafeForCollect.coordY,
-        address: targetCafeForCollect.address,
-        // 카드 사진은 사용자가 올린 사진뿐입니다. 없으면 사진 없는 카드가 됩니다
-        image: uploadedImageUrl,
-        ratings: data.rating,
-        categories: JSON.stringify(data.categories),
-        comment: data.comment,
-        eaten_menus: data.eaten_menus,
-        pros: data.pros || '',
-        cons: data.cons || '',
-      };
-
-      try {
-        const isCreated = await createCollectionCafe(collectionData);
-
-        if (isCreated) toast.success(TOAST_SUCCESS.CREATE_COLLECTION);
-        else toast.warning(TOAST_WARN.DAILY_DRAW_LIMIT);
-        setIsCollectFormOpen(false);
-      } catch (error) {
-        console.error(CONSOLE_ERROR.CREATE_COLLECTION_CAFE, error);
-        toast.error(
-          error instanceof Error
-            ? error.message
-            : TOAST_ERROR.CREATE_COLLECTION,
-        );
-      }
+    try {
+      await updateCollectionCafe(updateData);
+      toast.success(TOAST_SUCCESS.EDIT_COLLECTION);
+      clearEditingCafe();
+      setIsCollectFormOpen(false);
+    } catch (error) {
+      console.error(CONSOLE_ERROR.EDIT_COLLECTION_CAFE, error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : TOAST_ERROR.EDIT_COLLECTION,
+      );
     }
   };
 
@@ -183,16 +142,14 @@ export default function FormForCollect() {
     >
       <div className="flex items-center justify-between">
         <p className="text-2xl font-semibold">
-          {isEditMode ? editingCafe?.name : targetCafeForCollect?.name}
+          {editingCafe?.name}
         </p>
         <Button
           type="button"
-          aria-label={
-            isEditMode ? '카드 수정 취소 버튼' : '카드 수집 취소 버튼'
-          }
+          aria-label="카드 수정 취소 버튼"
           text="Back"
           onClick={() => {
-            if (isEditMode) clearEditingCafe();
+            clearEditingCafe();
             setIsCollectFormOpen(false);
           }}
         />
@@ -334,16 +291,14 @@ export default function FormForCollect() {
       {/* 제출 버튼 */}
       <Button
         type="submit"
-        aria-label={isEditMode ? '카드 수정 완료 버튼' : '카드 수집 완료 버튼'}
+        aria-label="카드 수정 완료 버튼"
         dataTestId="button-submit-collect"
         disabled={isSubmitting || isUploading}
         text={
           isUploading
             ? '이미지 업로드 중...'
             : isSubmitting
-              ? isEditMode
-                ? '수정 중...'
-                : '저장 중...'
+              ? '수정 중...'
               : '완료'
         }
       />

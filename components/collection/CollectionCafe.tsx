@@ -18,6 +18,8 @@ interface ICollectionCafe {
   material: string | null;
   /** 수집 시각. 카드 = 방문이므로 그 카페에 간 날입니다 */
   created_at: string;
+  /** 개봉을 진행하는 동안 미개봉 표시 대신 띄울 문구 */
+  statusLabel?: string;
   onClickAction: () => void;
 }
 
@@ -31,6 +33,7 @@ export default function CollectionCafe({
   ratings,
   material,
   created_at,
+  statusLabel,
   onClickAction,
 }: ICollectionCafe) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -174,7 +177,7 @@ export default function CollectionCafe({
                 </p>
                 {isUnopened && (
                   <span className="font-dunggeunmo ml-2 inline-flex h-6 items-center justify-center rounded-lg border border-gray-400 px-2 text-xs text-gray-300 shadow-md">
-                    미개봉
+                    {statusLabel ?? '미개봉'}
                   </span>
                 )}
               </div>

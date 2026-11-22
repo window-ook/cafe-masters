@@ -1,13 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCurrentCafeStore, useUserStore } from '@/stores';
-import { useCollectionStore } from '@/stores/collection';
+import { useUserStore } from '@/stores';
 import { useRecommendationCafes } from '@/hooks/supabase/recommendation/useRecommendationCafes';
 import { ISupabaseRecommendationCafe } from '@/types/supabase/recommendation';
 import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
+import CollectButton from '@/components/opening/CollectButton';
 
 export default function RecommendationCafeDetail({
   cafeId,
@@ -17,10 +17,6 @@ export default function RecommendationCafeDetail({
   const router = useRouter();
 
   const session = useUserStore(state => state.session);
-  const setTargetCafeForCollect = useCollectionStore(
-    state => state.setTargetCafeForCollect,
-  );
-  const isCollected = useCurrentCafeStore(state => state.isCollected);
 
   const { recommendationCafes } = useRecommendationCafes();
 
@@ -52,22 +48,17 @@ export default function RecommendationCafeDetail({
 
   const actionButtons = (
     <>
-      {/* 로그인 & 수집하지 않은 상태 */}
-      {session && !isCollected && (
-        <Button
-          onClick={() =>
-            setTargetCafeForCollect({
-              id: recommendationCafedetail.id,
-              name: recommendationCafedetail.name,
-              coordX: recommendationCafedetail.coordX,
-              coordY: recommendationCafedetail.coordY,
-              address: recommendationCafedetail.address,
-            })
-          }
-          customClassName="flex-1"
-        >
-          수집하기
-        </Button>
+      {/* 로그인 상태. 이미 수집한 카페도 다시 수집할 수 있습니다 */}
+      {session && (
+        <CollectButton
+          target={{
+            placeId: recommendationCafedetail.id,
+            name: recommendationCafedetail.name,
+            address: recommendationCafedetail.address,
+            coordX: recommendationCafedetail.coordX,
+            coordY: recommendationCafedetail.coordY,
+          }}
+        />
       )}
 
       {/* 로그아웃 상태 */}

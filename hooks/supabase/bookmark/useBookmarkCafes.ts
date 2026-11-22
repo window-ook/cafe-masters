@@ -2,7 +2,8 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useFilterStore, useUserStore } from '@/stores';
-import { getBookmarkCafes } from '@/actions/supabase/bookmark';
+import { fetchJson } from '@/utils/shared/fetchJson';
+import { INTERNAL_PATHS } from '@/lib/paths';
 import { bookmarkCafeQuery } from '@/queries/supabase/bookmark';
 import { ISupabaseBookmarkCafe } from '@/types/supabase/bookmark';
 
@@ -37,10 +38,7 @@ export function useBookmarkCafes(
   const queryData = useQuery({
     enabled: !!session,
     queryKey: bookmarkCafeQuery.all(session?.user?.id ?? ''),
-    queryFn: async () => {
-      const response = await getBookmarkCafes();
-      return response;
-    },
+    queryFn: () => fetchJson<{ data: ISupabaseBookmarkCafe[] }>(INTERNAL_PATHS.API_BOOKMARK),
   });
 
   const paginationData = useMemo((): IBookmarkCafes => {

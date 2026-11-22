@@ -22,8 +22,11 @@
 
 | 경로                           | 두는 것                                                         |
 | ------------------------------ | --------------------------------------------------------------- |
-| `actions/supabase/<domain>/`   | Supabase CRUD Server Action                                     |
-| `hooks/supabase/<domain>/`     | Server Action을 감싼 `useQuery`·`useMutation` 훅                |
+| `actions/supabase/<domain>/`   | Supabase 변경(Create·Update·Delete) Server Action               |
+| `data/supabase/<domain>/`      | Supabase 조회 함수 (서버 전용)                                  |
+| `app/api/<domain>/`            | 조회용 Route Handler                                            |
+| `app/(app)/`                   | 지도 셸을 쓰는 화면. 레이아웃이 조회를 prefetch합니다           |
+| `hooks/supabase/<domain>/`     | 조회 API·Server Action을 감싼 `useQuery`·`useMutation` 훅       |
 | `hooks/kakao-map/`             | Kakao Map 연동 훅                                               |
 | `hooks/ui/`                    | UI 상태 훅                                                      |
 | `queries/<domain>/`            | Query Key Factory                                               |

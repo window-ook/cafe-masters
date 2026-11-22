@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { uploadImageToStorage } from '@/utils/supabase/storage';
+import { createServerSupabaseClient } from '@/utils/supabase/server';
 import { CONSOLE_ERROR } from '@/utils/constants/messages';
 import sharp from 'sharp';
 
@@ -10,6 +11,12 @@ const MAX_OUTPUT_SIZE = 500 * 1024; // 500KB
 
 export async function POST(request: NextRequest) {
   try {
+    /* 로그인한 사용자만 자기 폴더에 올릴 수 있습니다. 파일을 읽기 전에 막습니다 */
+    const supabase = await createServerSupabaseClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) return NextResponse.json({ error: '로그인이 필요합니다' }, { status: 401 });
+
     const formData = await request.formData();
     const file = formData.get('file') as File;
 
@@ -57,7 +64,7 @@ export async function POST(request: NextRequest) {
     const randomString = Math.random().toString(36).substring(2, 15);
     const fileName = `${timestamp}-${randomString}.webp`;
 
-    const imageUrl = await uploadImageToStorage(optimizedBuffer, fileName);
+    const imageUrl = await uploadImageToStorage(optimizedBuffer, fileName, user.id);
 
     return NextResponse.json({ url: imageUrl }, { status: 200 });
   } catch (error) {

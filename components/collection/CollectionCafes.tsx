@@ -5,6 +5,7 @@ import { useUIStore, useUserStore } from '@/stores';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
 import { useCafeClick } from '@/hooks/ui/useCafeClick';
+import { getCardBusyKey, usePackOpening } from '@/components/opening/PackOpeningProvider';
 import CollectionCafe from '@/components/collection/CollectionCafe';
 import PageConverter from '@/components/shared/sidebar/PageConverter';
 
@@ -43,6 +44,8 @@ export default function CollectionCafes() {
   const handlePreviousPageAction = () => {
     if (hasPreviousPage) setCurrentPage(prev => prev - 1);
   };
+  const { busyKey, busyLabel, openCard } = usePackOpening();
+
   const handleCollectionCafeClick = useCafeClick<ISupabaseCollectionCafe>({
     routePath: 'collection',
   });
@@ -158,7 +161,9 @@ export default function CollectionCafes() {
               image={cafe.image}
               address={cafe.address}
               created_at={cafe.created_at}
-              onClickAction={() => handleCollectionCafeClick(cafe)}
+              statusLabel={busyKey === getCardBusyKey(cafe.id) ? (busyLabel ?? undefined) : undefined}
+              /* 미개봉 카드는 상세로 가지 않고 개봉을 시작합니다 */
+              onClickAction={() => cafe.material ? handleCollectionCafeClick(cafe) : openCard(cafe)}
             />
           ))}
         </ul>

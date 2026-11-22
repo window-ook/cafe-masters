@@ -1,5 +1,14 @@
 import type { DrawnMaterial } from '@/utils/shared/material';
 
+const INTERNAL_PATHS = {
+    API_BOOKMARK: '/api/bookmark',
+    API_BOOKMARK_COUNTS: '/api/bookmark/counts',
+    API_COLLECTION: '/api/collection',
+    API_COLLECTION_COUNTS: '/api/collection/counts',
+    API_RECOMMENDATION: '/api/recommendation',
+    API_RECOMMENDATION_COUNTS: '/api/recommendation/counts',
+} as const;
+
 const EXTERNAL_PATHS = {
     KAKAO_MAP: `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false`,
     /** 장소 ID로 카카오맵을 엽니다. 카카오 지도 Web API 가이드의 공식 URL 패턴입니다 */
@@ -36,4 +45,4 @@ const IMAGE_PATHS = {
     CARD_ART: (material: DrawnMaterial) => `https://vsemazasjbizehcambul.supabase.co/storage/v1/object/public/cafe%20masters/card_pack/card_art/${material}.webp`,
 } as const;
 
-export { EXTERNAL_PATHS, IMAGE_PATHS };
+export { INTERNAL_PATHS, EXTERNAL_PATHS, IMAGE_PATHS };

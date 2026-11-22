@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getBookmarkCafeById } from '@/actions/supabase/bookmark';
+import { getBookmarkCafeById } from '@/data/supabase/bookmark';
 import { IPageParams } from '@/types/shared/page';
 import BookmarkDetailClient from '@/components/bookmark/detail/BookmarkDetailClient';
 

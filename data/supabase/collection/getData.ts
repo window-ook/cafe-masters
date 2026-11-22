@@ -1,6 +1,6 @@
-'use server';
+import 'server-only';
 
-import { createServerSupabaseClient } from "@/utils/supabase/server";
+import { getAuthContext } from "@/data/supabase/getAuthContext";
 import { ISupabaseCollectionCafe } from "@/types/supabase/collection";
 
 /**
@@ -10,12 +10,11 @@ import { ISupabaseCollectionCafe } from "@/types/supabase/collection";
  */
 export async function getCollectionCafes(offset: number = 0, limit: number = 4)
     : Promise<{ data: ISupabaseCollectionCafe[]; nextCursor: number | null }> {
-    const supabase = await createServerSupabaseClient();
-    const user = await supabase.auth.getUser();
+    const { supabase, user } = await getAuthContext();
 
-    if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
+    if (!user) throw new Error('로그인이 필요합니다.');
 
-    const user_id = user.data.user.id;
+    const user_id = user.id;
     const { data, error } = await supabase
         .from('collection')
         .select('*')
@@ -40,12 +39,11 @@ export async function getCollectionCafes(offset: number = 0, limit: number = 4)
  * 수집한 카페 전체 목록 조회 (페이지네이션용)
  */
 export async function getAllCollectionCafes(): Promise<{ data: ISupabaseCollectionCafe[] }> {
-    const supabase = await createServerSupabaseClient();
-    const user = await supabase.auth.getUser();
+    const { supabase, user } = await getAuthContext();
 
-    if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
+    if (!user) throw new Error('로그인이 필요합니다.');
 
-    const user_id = user.data.user.id;
+    const user_id = user.id;
     const { data, error } = await supabase
         .from('collection')
         .select('*')
@@ -71,12 +69,11 @@ export async function getAllCollectionCafes(): Promise<{ data: ISupabaseCollecti
 export async function getCollectionCafeById(cafeId: number): Promise<ISupabaseCollectionCafe | null> {
     if (!cafeId) throw new Error('카페 ID가 유효하지 않습니다.');
 
-    const supabase = await createServerSupabaseClient();
-    const user = await supabase.auth.getUser();
+    const { supabase, user } = await getAuthContext();
 
-    if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
+    if (!user) throw new Error('로그인이 필요합니다.');
 
-    const user_id = user.data.user.id;
+    const user_id = user.id;
     const { data, error } = await supabase
         .from('collection')
         .select('*')

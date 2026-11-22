@@ -3,7 +3,8 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useFilterStore, useUserStore } from '@/stores';
-import { getAllCollectionCafes } from '@/actions/supabase/collection';
+import { fetchJson } from '@/utils/shared/fetchJson';
+import { INTERNAL_PATHS } from '@/lib/paths';
 import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
 import { collectionCafeQuery } from '@/queries/supabase/collection';
 
@@ -41,7 +42,7 @@ export function useCollectionCafes(
   const queryData = useQuery({
     enabled: isActive && !!session,
     queryKey: collectionCafeQuery.all(session?.user?.id ?? ''),
-    queryFn: () => getAllCollectionCafes(),
+    queryFn: () => fetchJson<{ data: ISupabaseCollectionCafe[] }>(INTERNAL_PATHS.API_COLLECTION),
   });
 
   const paginationData = useMemo((): ICollectionCafes => {
