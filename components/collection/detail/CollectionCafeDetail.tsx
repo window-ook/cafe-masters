@@ -1,20 +1,17 @@
 'use client';
 
-import { RefObject, useRef } from 'react';
 import { useUIStore, useUserStore } from '@/stores';
 import { useCollectionStore } from '@/stores/collection';
 import { useCollectionCafes } from '@/hooks/supabase/collection';
 import { ISupabaseCollectionCafe } from '@/types/supabase/collection';
-import { scrollThumbnails } from '@/utils/shared/detail';
 import Image from 'next/image';
 import Ratings from '@/components/shared/sliding-drawer/Ratings';
 import Location from '@/components/shared/sliding-drawer/Location';
-import PhoneNumber from '@/components/shared/sliding-drawer/PhoneNumber';
+import KakaoMapLink from '@/components/shared/sliding-drawer/KakaoMapLink';
 import Comment from '@/components/shared/sliding-drawer/Comment';
 import EatenMenus from '@/components/shared/sliding-drawer/EatenMenus';
 import Pros from '@/components/shared/sliding-drawer/Pros';
 import Cons from '@/components/shared/sliding-drawer/Cons';
-import OpenTime from '@/components/shared/sliding-drawer/OpenTime';
 import Categories from '@/components/shared/sliding-drawer/Categories';
 import Button from '@/components/shared/Button';
 import CollectionCafeDetailHeader from '@/components/collection/detail/CollectionCafeDetailHeader';
@@ -28,8 +25,6 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
   );
 
   const { filteredCollectionCafes } = useCollectionCafes(userId);
-
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   const collectionCafeDetail = filteredCollectionCafes.find(
     (cafe: ISupabaseCollectionCafe) => cafe.id === cafeId,
@@ -51,96 +46,20 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
       <main
         className={`flex flex-1 flex-col gap-4 overflow-x-hidden overflow-y-auto p-4 ${isDarkTheme ? 'shadow-main-shadow' : ''}`}
       >
-        <section
-          key={`${cafeId}-image-section`}
-          className="shadow-main/10 relative flex flex-col items-center gap-4 rounded-md shadow-sm"
-        >
-          <button
-            type="button"
-            aria-label="카페 이미지 슬라이드 왼쪽으로 이동"
-            onClick={() =>
-              scrollThumbnails('left', scrollRef as RefObject<HTMLDivElement>)
-            }
-            className={`left-0 ${isDarkTheme ? 'bg-paper-dark' : ''} slide-images-button`}
-          >
-            <span className={`${isDarkTheme ? '' : 'text-main'}`}>◀</span>
-          </button>
-          {/* 카페 이미지 슬라이드 */}
-          <div
-            ref={scrollRef}
-            className="scrollbar-hide flex w-full max-w-full snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden"
-          >
-            <div className="h-60 shrink-0 snap-center py-2">
-              {collectionCafeDetail?.image && (
-                <button
-                  type="button"
-                  aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
-                  className="cursor-pointer"
-                  onClick={() =>
-                    window.open(
-                      `http://place.map.kakao.com/${collectionCafeDetail?.id}`,
-                      '_blank',
-                    )
-                  }
-                >
-                  <Image
-                    key={`${cafeId}-main-image`}
-                    alt="카페 썸네일"
-                    src={collectionCafeDetail.image}
-                    width={340}
-                    height={240}
-                    priority={true}
-                    className="slide-images"
-                  />
-                </button>
-              )}
-            </div>
-            {collectionCafeDetail?.extra_images &&
-              Array.isArray(collectionCafeDetail.extra_images) &&
-              collectionCafeDetail.extra_images.length > 0 &&
-              collectionCafeDetail.extra_images.map((photo, i) => {
-                return (
-                  <div
-                    key={`${cafeId}-extra-${i}`}
-                    className="h-60 shrink-0 snap-center py-2"
-                  >
-                    <button
-                      type="button"
-                      aria-label="카페 이미지 클릭 시 카카오플레이스 이동"
-                      className="cursor-pointer"
-                      onClick={() =>
-                        window.open(
-                          `http://place.map.kakao.com/${collectionCafeDetail?.id}`,
-                          '_blank',
-                        )
-                      }
-                    >
-                      <Image
-                        key={`${cafeId}-extra-image-${i}`}
-                        alt="카페 썸네일"
-                        src={photo}
-                        width={340}
-                        height={240}
-                        priority={true}
-                        className="slide-images"
-                      />
-                    </button>
-                  </div>
-                );
-              })}
-            <button
-              className={`right-0 ${isDarkTheme ? 'bg-paper-dark' : ''} slide-images-button`}
-              onClick={() =>
-                scrollThumbnails(
-                  'right',
-                  scrollRef as RefObject<HTMLDivElement>,
-                )
-              }
-            >
-              <span className={`${isDarkTheme ? '' : 'text-main'}`}>▶</span>
-            </button>
-          </div>
-        </section>
+        {/* 사용자가 올린 사진만 보여 줍니다 */}
+        {collectionCafeDetail.image && (
+          <section className="shadow-main/10 flex justify-center rounded-md py-2 shadow-sm">
+            <Image
+              key={`${cafeId}-main-image`}
+              alt="카페 사진"
+              src={collectionCafeDetail.image}
+              width={340}
+              height={240}
+              priority={true}
+              className="slide-images"
+            />
+          </section>
+        )}
 
         <section className="space-y-4">
           <div className="flex items-center justify-between">
@@ -150,11 +69,9 @@ export default function CollectionCafeDetail({ cafeId }: { cafeId: number }) {
             <Ratings rating={collectionCafeDetail?.ratings ?? 0} />
           </div>
           <Categories categories={collectionCafeDetail?.categories} />
-          <OpenTime opening_time={collectionCafeDetail?.opening_time || null} />
           <Location address={collectionCafeDetail?.address} />
-          <PhoneNumber
-            phone_number={collectionCafeDetail?.phone_number || null}
-          />
+          {/* 카드 ID와 장소 ID가 다르므로 place_id로 엽니다 */}
+          <KakaoMapLink placeId={collectionCafeDetail.place_id} />
 
           <Comment comment={collectionCafeDetail?.comment} />
           <EatenMenus eaten={collectionCafeDetail?.eaten_menus ?? null} />

@@ -44,35 +44,9 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
     );
   }
 
-  const bookmarkData = {
-    id: detail.id,
-    name: detail.name,
-    address: detail.address,
-    phone_number: detail.phone_number || '',
-    image: detail.image || '',
-    coordX: detail.coordX,
-    coordY: detail.coordY,
-    extra_images: detail.extra_images || null,
-    opening_time: detail.opening_time || null,
-    menus: detail.menus ? JSON.parse(detail.menus) : null,
-  };
-
   const cafeData = {
     name: detail.name,
     address: detail.address,
-    phone_number: detail.phone_number || '',
-    image: detail.image || '',
-    extra_images: detail.extra_images || [],
-    opening_time: detail.opening_time || '미등록',
-    menus: detail.menus
-      ? (() => {
-          try {
-            return JSON.parse(detail.menus);
-          } catch {
-            return null;
-          }
-        })()
-      : null,
   };
 
   const actionButtons = (
@@ -87,10 +61,6 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
               coordX: detail.coordX,
               coordY: detail.coordY,
               address: detail.address,
-              image: detail.image,
-              extra_images: detail.extra_images || [],
-              phone_number: detail.phone_number,
-              opening_time: detail.opening_time,
             })
           }
           customClassName="flex-1"
@@ -110,7 +80,7 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
 
   const handleBookmarkDeletion = async () => {
     try {
-      await deleteBookmarkCafe(bookmarkData.id);
+      await deleteBookmarkCafe(detail.id);
       toast.success(TOAST_SUCCESS.DELETE_BOOKMARK);
       setIsBookmarked(false);
     } catch (error) {
@@ -145,7 +115,6 @@ export default function BookmarkCafeDetail({ cafeId }: { cafeId: number }) {
         cafeId={cafeId}
         cafeData={cafeData}
         actionButtons={actionButtons}
-        isImageWithFallback={true}
       />
     </article>
   );

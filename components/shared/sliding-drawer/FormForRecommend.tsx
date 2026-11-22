@@ -56,11 +56,6 @@ export default function FormForRecommend({
       coordX: targetCafeForRecommend.coordX,
       coordY: targetCafeForRecommend.coordY,
       categories: JSON.stringify(data.categories),
-      image: targetCafeForRecommend.image || '',
-      phone_number: targetCafeForRecommend.phone_number || null,
-      opening_time: targetCafeForRecommend.opening_time || null,
-      extra_images: JSON.stringify(targetCafeForRecommend.extra_images || []),
-      menus: null,
     };
 
     try {
@@ -101,20 +96,6 @@ export default function FormForRecommend({
           >
             {targetCafeForRecommend.address}
           </p>
-          {targetCafeForRecommend.phone_number && (
-            <p
-              className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}
-            >
-              {targetCafeForRecommend.phone_number}
-            </p>
-          )}
-          {targetCafeForRecommend.opening_time && (
-            <p
-              className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}
-            >
-              {targetCafeForRecommend.opening_time}
-            </p>
-          )}
         </div>
       )}
 

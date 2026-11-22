@@ -161,8 +161,6 @@ export default function RecommendationCafes() {
               dataTestId={`cafe-${cafe.id}`}
               name={cafe.name}
               address={cafe.address}
-              phone_number={cafe.phone_number}
-              image={cafe.image}
               onClickAction={() => handleRecommendedCafeClick(cafe)}
             />
           ))}

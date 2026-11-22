@@ -40,7 +40,6 @@ export default function FormForCollect() {
     control,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<CollectionFormData>({
     resolver: zodResolver(collectionFormSchema),
@@ -53,7 +52,6 @@ export default function FormForCollect() {
         pros: editingCafe?.pros || '',
         cons: editingCafe?.cons || '',
         customImage: undefined,
-        keepOriginalImage: false,
       }
       : {
         rating: 0,
@@ -63,11 +61,8 @@ export default function FormForCollect() {
         pros: '',
         cons: '',
         customImage: undefined,
-        keepOriginalImage: false,
       },
   });
-
-  const customImage = watch('customImage');
 
   // 이미지 업로드 핸들러
   const uploadImage = async (file: File): Promise<string | null> => {
@@ -116,21 +111,6 @@ export default function FormForCollect() {
         return;
       }
 
-      // 이미지 처리 로직
-      let finalImage = editingCafe.image;
-      let finalExtraImages = editingCafe.extra_images || [];
-
-      if (uploadedImageUrl) {
-        if (data.keepOriginalImage) {
-          // 업로드한 이미지를 메인으로, 기존 이미지를 extra_images에 추가
-          finalImage = uploadedImageUrl;
-          finalExtraImages = [...finalExtraImages, editingCafe.image];
-        } else {
-          // 업로드한 이미지만 사용
-          finalImage = uploadedImageUrl;
-        }
-      }
-
       const updateData = {
         ratings: data.rating,
         categories: JSON.stringify(data.categories),
@@ -138,8 +118,8 @@ export default function FormForCollect() {
         eaten_menus: data.eaten_menus,
         pros: data.pros || '',
         cons: data.cons || '',
-        image: finalImage,
-        extra_images: JSON.stringify(finalExtraImages),
+        // 새로 올리지 않으면 기존 사진을 유지합니다
+        image: uploadedImageUrl ?? editingCafe.image,
       };
 
       try {
@@ -161,21 +141,6 @@ export default function FormForCollect() {
         return;
       }
 
-      // 이미지 처리 로직
-      let finalImage = targetCafeForCollect.image;
-      let finalExtraImages = targetCafeForCollect.extra_images || [];
-
-      if (uploadedImageUrl) {
-        if (data.keepOriginalImage) {
-          // 업로드한 이미지를 메인으로, 기존 카카오맵 이미지를 extra_images에 추가
-          finalImage = uploadedImageUrl;
-          finalExtraImages = [targetCafeForCollect.image, ...finalExtraImages];
-        } else {
-          // 업로드한 이미지만 사용
-          finalImage = uploadedImageUrl;
-        }
-      }
-
       // 완전한 수집 데이터 생성
       const collectionData = {
         place_provider: PLACE_PROVIDER,
@@ -184,10 +149,8 @@ export default function FormForCollect() {
         coordX: targetCafeForCollect.coordX,
         coordY: targetCafeForCollect.coordY,
         address: targetCafeForCollect.address,
-        image: finalImage,
-        extra_images: JSON.stringify(finalExtraImages),
-        phone_number: targetCafeForCollect.phone_number,
-        opening_time: targetCafeForCollect.opening_time,
+        // 카드 사진은 사용자가 올린 사진뿐입니다. 없으면 사진 없는 카드가 됩니다
+        image: uploadedImageUrl,
         ratings: data.rating,
         categories: JSON.stringify(data.categories),
         comment: data.comment,
@@ -282,30 +245,6 @@ export default function FormForCollect() {
             />
           )}
         />
-
-        {/* 기본 썸네일 유지 체크박스 */}
-        {customImage && (
-          <div className="mt-2 flex items-center gap-2">
-            <Controller
-              name="keepOriginalImage"
-              control={control}
-              render={({ field }) => (
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={field.value}
-                    onChange={e => field.onChange(e.target.checked)}
-                    disabled={isSubmitting || isUploading}
-                    className="size-4 cursor-pointer"
-                  />
-                  <span className="text-sm text-gray-700">
-                    기본 썸네일도 함께 저장하기
-                  </span>
-                </label>
-              )}
-            />
-          </div>
-        )}
       </div>
 
       {/* 카테고리 선택 */}

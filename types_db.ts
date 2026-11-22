@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
@@ -22,7 +22,7 @@ export type Database = {
           created_at: string
           extra_images: string | null
           id: number
-          image: string
+          image: string | null
           menus: string | null
           name: string
           opening_time: string | null
@@ -36,7 +36,7 @@ export type Database = {
           created_at?: string
           extra_images?: string | null
           id?: number
-          image: string
+          image?: string | null
           menus?: string | null
           name: string
           opening_time?: string | null
@@ -50,7 +50,7 @@ export type Database = {
           created_at?: string
           extra_images?: string | null
           id?: number
-          image?: string
+          image?: string | null
           menus?: string | null
           name?: string
           opening_time?: string | null
@@ -96,7 +96,7 @@ export type Database = {
           eaten_menus: string
           extra_images: string | null
           id: number
-          image: string
+          image: string | null
           material: string | null
           name: string
           opening_time: string | null
@@ -120,7 +120,7 @@ export type Database = {
           eaten_menus: string
           extra_images?: string | null
           id?: number
-          image: string
+          image?: string | null
           material?: string | null
           name?: string
           opening_time?: string | null
@@ -144,7 +144,7 @@ export type Database = {
           eaten_menus?: string
           extra_images?: string | null
           id?: number
-          image?: string
+          image?: string | null
           material?: string | null
           name?: string
           opening_time?: string | null
@@ -167,7 +167,7 @@ export type Database = {
           created_at: string
           extra_images: string | null
           id: number
-          image: string
+          image: string | null
           menus: string | null
           name: string
           opening_time: string | null
@@ -181,7 +181,7 @@ export type Database = {
           created_at?: string
           extra_images?: string | null
           id?: number
-          image: string
+          image?: string | null
           menus?: string | null
           name: string
           opening_time?: string | null
@@ -195,7 +195,7 @@ export type Database = {
           created_at?: string
           extra_images?: string | null
           id?: number
-          image?: string
+          image?: string | null
           menus?: string | null
           name?: string
           opening_time?: string | null

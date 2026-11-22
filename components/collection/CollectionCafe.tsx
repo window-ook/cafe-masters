@@ -3,7 +3,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useUIStore } from '@/stores';
 import { Star } from 'lucide-react';
-import { IMAGE_PATHS } from '@/lib/paths';
 import Image from 'next/image';
 import EdgeSquare from '@/components/shared/sidebar/EdgeSquare';
 import { getHoloClass, getMaterialClass } from '@/utils/shared/material';
@@ -13,7 +12,7 @@ import '@/app/card-styles.css';
 interface ICollectionCafe {
   name: string | undefined;
   address: string;
-  phone_number: string | null;
+  /** 사용자가 올린 사진. 없으면 사진 없는 카드입니다 */
   image: string | null;
   ratings: number | null;
   material: string | null;
@@ -29,7 +28,6 @@ export default function CollectionCafe({
   name,
   image,
   address,
-  phone_number,
   ratings,
   material,
   created_at,
@@ -195,14 +193,19 @@ export default function CollectionCafe({
 
           {/* 일러스트 */}
           <div className="z-10 flex h-44 flex-col rounded-lg bg-gray-700">
-            <Image
-              src={image || IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
-              alt="카페 썸네일"
-              priority={true}
-              width={100}
-              height={50}
-              className="h-40 w-auto rounded-t-md object-contain"
-            />
+            {/* 사진이 없으면 회색 바탕만 둡니다. 모습은 디자인 작업에서 정합니다 */}
+            {image ? (
+              <Image
+                src={image}
+                alt="카페 사진"
+                priority={true}
+                width={100}
+                height={50}
+                className="h-40 w-auto rounded-t-md object-contain"
+              />
+            ) : (
+              <div className="h-40" />
+            )}
             {/* 획득일 - 흰 띠는 어느 재질에서나 같은 형태로 남고, 같은 카페 카드끼리는 날짜로 구분됩니다 */}
             <div className="flex h-4 w-full items-center justify-center rounded-b-md bg-white">
               <time dateTime={created_at} className="text-xs text-black">
@@ -211,7 +214,7 @@ export default function CollectionCafe({
             </div>
           </div>
 
-          {/* 주소와 전화번호 */}
+          {/* 주소 */}
           <div
             className={`relative z-10 border-[0.125rem] border-gray-500 px-2 ${isUnopened ? 'bg-gray-800/60' : 'bg-white/75'} flex flex-col rounded-md`}
           >
@@ -224,11 +227,6 @@ export default function CollectionCafe({
               className={`overflow-hidden text-sm font-medium text-ellipsis whitespace-nowrap ${isUnopened ? 'text-gray-300' : 'text-black'}`}
             >
               {address}
-            </p>
-            <p
-              className={`overflow-hidden font-medium text-ellipsis whitespace-nowrap ${isUnopened ? 'text-gray-300' : 'text-black'}`}
-            >
-              {phone_number}
             </p>
           </div>
         </button>

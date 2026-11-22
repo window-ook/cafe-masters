@@ -21,15 +21,7 @@ export async function getBookmarkCafes(): Promise<{ data: ISupabaseBookmarkCafe[
 
     if (error) throw new Error(error.message);
 
-    const safeData = (data ?? []).map(item => ({
-        ...item,
-        extra_images: item.extra_images ? JSON.parse(item.extra_images) : undefined,
-        opening_time: item.opening_time ?? undefined,
-        phone_number: item.phone_number ?? undefined,
-        menus: item.menus ?? undefined,
-    }));
-
-    return { data: safeData };
+    return { data: data ?? [] };
 }
 
 /**
@@ -54,11 +46,5 @@ export async function getBookmarkCafeById(cafeId: number): Promise<ISupabaseBook
 
     if (error || !data) return null;
 
-    return {
-        ...data,
-        extra_images: data.extra_images ? JSON.parse(data.extra_images) : undefined,
-        opening_time: data.opening_time ?? undefined,
-        phone_number: data.phone_number ?? undefined,
-        menus: data.menus ?? undefined,
-    };
+    return data;
 }

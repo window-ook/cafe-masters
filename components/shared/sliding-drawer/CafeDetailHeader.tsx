@@ -12,13 +12,8 @@ interface ICafeDetailHeader {
     id: number;
     name: string;
     address: string;
-    phone_number: string;
-    image: string;
     coordX: number;
     coordY: number;
-    extra_images: string[] | null;
-    opening_time: string | null;
-    menus?: { name: string; price: string }[] | null;
   };
 }
 

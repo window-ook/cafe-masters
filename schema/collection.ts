@@ -26,8 +26,6 @@ export const collectionFormSchema = z.object({
     .max(300, '아쉬운 점은 300자 이하로 입력해주세요'),
 
   customImage: z.instanceof(File).optional(),
-
-  keepOriginalImage: z.boolean(),
 });
 
 export type CollectionFormData = z.infer<typeof collectionFormSchema>;
