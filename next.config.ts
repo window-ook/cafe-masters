@@ -20,38 +20,8 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 't1.kakaocdn.net',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'img1.kakaocdn.net',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 't1.daumcdn.net',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'mts.daumcdn.net',
-        port: '',
-        pathname: '/**',
-      },
-      {
         protocol: 'https',
         hostname: 'postfiles.pstatic.net',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'blog.kakaocdn.net',
         port: '',
         pathname: '/**',
       },
