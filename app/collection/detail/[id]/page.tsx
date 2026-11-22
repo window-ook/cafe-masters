@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getCollectionCafeById } from '@/actions/supabase/collection';
+import { getCollectionCafeById } from '@/data/supabase/collection';
 import { IPageParams } from '@/types/shared/page';
 
 export async function generateMetadata({ params }: IPageParams): Promise<Metadata> {
