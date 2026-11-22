@@ -35,14 +35,8 @@ export const TOAST_WARN = {
 } as const;
 
 // 개발자 확인용 콘솔 ========================
-export const CONSOLE_LOG = {
-    IMAGE_SRC_ERROR: '이미지 src 에러, fallback src 대체',
-} as const;
-
 export const CONSOLE_ERROR = {
-    CREATE_SITE_MAP: '사이트맵 생성 중 에러:',
     CREATE_METADATA: '메타데이터 생성 중 에러:',
-    SCRAP_CAFE_DETAIL: '카페 상세 정보 스크래핑 중 에러:',
     RESET_PASSWORD: '비밀번호 재설정 중 에러:',
     SIGNOUT: '로그아웃 중 에러:',
     CREATE_BOOKMARK_CAFE: '북마크 추가 중 에러:',

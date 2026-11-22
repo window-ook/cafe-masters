@@ -5,11 +5,6 @@ export interface ISupabaseRecommendationCafe {
     coordX: number;
     coordY: number;
     name: string;
-    image: string;
-    extra_images?: string[] | null;
-    opening_time?: string | null;
     address: string;
-    phone_number?: string | null;
-    menus?: string | null;
     created_at: string;
 }

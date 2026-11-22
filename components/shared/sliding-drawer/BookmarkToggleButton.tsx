@@ -9,17 +9,13 @@ import { TOAST_ERROR, TOAST_SUCCESS } from '@/utils/constants/messages';
 import { Bookmark } from 'lucide-react';
 import { toast } from 'react-toastify';
 
+/** 북마크는 지도 마커와 목록에 필요한 이름·주소·좌표만 저장합니다 */
 interface IBookmarkData {
   id: number;
   name: string;
   address: string;
-  phone_number: string | null;
-  image: string | null;
   coordX: number;
   coordY: number;
-  extra_images?: string[] | null;
-  opening_time?: string | null;
-  menus?: { name: string; price: string }[] | null;
 }
 
 interface IBookmarkToggleButton {
@@ -54,15 +50,8 @@ export default function BookmarkToggleButton({
           id: bookmarkData.id,
           coordX: bookmarkData.coordX,
           coordY: bookmarkData.coordY,
-          image: bookmarkData.image || '',
-          extra_images: bookmarkData.extra_images
-            ? JSON.stringify(bookmarkData.extra_images)
-            : null,
           name: bookmarkData.name,
           address: bookmarkData.address,
-          phone_number: bookmarkData.phone_number || '',
-          opening_time: bookmarkData.opening_time || null,
-          menus: bookmarkData.menus ? JSON.stringify(bookmarkData.menus) : null,
         });
         toast.success(TOAST_SUCCESS.CREATE_BOOKMARK);
         setIsBookmarked(true);

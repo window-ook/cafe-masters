@@ -1,15 +1,11 @@
 'use client';
 
 import { useUIStore } from '@/stores';
-import { IMAGE_PATHS } from '@/lib/paths';
-import ImageWithFallback from '@/components/shared/ImageWithFallback';
 
 interface ICafeItem {
   dataTestId: string;
   name: string | undefined;
   address: string;
-  phone_number: string | null | undefined;
-  image: string;
   onClickAction: () => void;
 }
 
@@ -17,8 +13,6 @@ export default function CafeItem({
   dataTestId,
   name,
   address,
-  phone_number,
-  image,
   onClickAction,
 }: ICafeItem) {
   const isDarkTheme = useUIStore(state => state.isDarkTheme);
@@ -43,21 +37,7 @@ export default function CafeItem({
             <p className="overflow-hidden text-sm text-ellipsis whitespace-nowrap">
               {address}
             </p>
-            <p className="overflow-hidden text-sm text-ellipsis whitespace-nowrap">
-              {phone_number}
-            </p>
           </div>
-        </div>
-        <div className="flex h-full items-center justify-center">
-          <ImageWithFallback
-            src={image}
-            fallbackSrc={IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK}
-            alt="카페 썸네일"
-            width={100}
-            height={50}
-            priority={true}
-            className="h-16 w-auto rounded-lg object-cover"
-          />
         </div>
       </button>
     </li>
