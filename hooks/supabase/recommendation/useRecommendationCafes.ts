@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getRecommendationCafes } from '@/actions/supabase/recommendation';
+import { fetchJson } from '@/utils/shared/fetchJson';
+import { INTERNAL_PATHS } from '@/lib/paths';
+import { ISupabaseRecommendationCafe } from '@/types/supabase/recommendation';
 import { recommendationCafeQuery } from '@/queries/supabase/recommendation';
 import { CONSOLE_ERROR } from '@/utils/constants/messages';
 
@@ -13,7 +15,7 @@ export function useRecommendationCafes(selectedCategories?: string[]) {
   const { data, isError, error, isPending } = useQuery({
     queryKey: recommendationCafeQuery.all(),
     queryFn: async () => {
-      const response = await getRecommendationCafes();
+      const response = await fetchJson<{ data: ISupabaseRecommendationCafe[] }>(INTERNAL_PATHS.API_RECOMMENDATION);
       return response.data;
     },
   });
