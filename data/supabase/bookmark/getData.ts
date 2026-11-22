@@ -1,18 +1,17 @@
-'use server';
+import 'server-only';
 
-import { createServerSupabaseClient } from "@/utils/supabase/server";
+import { getAuthContext } from "@/data/supabase/getAuthContext";
 import { ISupabaseBookmarkCafe } from "@/types/supabase/bookmark";
 
 /** 
  * 모든 북마크 카페 조회
  */
 export async function getBookmarkCafes(): Promise<{ data: ISupabaseBookmarkCafe[] }> {
-    const supabase = await createServerSupabaseClient();
-    const user = await supabase.auth.getUser();
+    const { supabase, user } = await getAuthContext();
 
-    if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
+    if (!user) throw new Error('로그인이 필요합니다.');
 
-    const user_id = user.data.user.id;
+    const user_id = user.id;
     const { data, error } = await supabase
         .from('bookmark')
         .select('*')
@@ -31,12 +30,11 @@ export async function getBookmarkCafes(): Promise<{ data: ISupabaseBookmarkCafe[
 export async function getBookmarkCafeById(cafeId: number): Promise<ISupabaseBookmarkCafe | null> {
     if (!cafeId) throw new Error('카페 ID가 유효하지 않습니다.');
 
-    const supabase = await createServerSupabaseClient();
-    const user = await supabase.auth.getUser();
+    const { supabase, user } = await getAuthContext();
 
-    if (!user?.data?.user) throw new Error('로그인이 필요합니다.');
+    if (!user) throw new Error('로그인이 필요합니다.');
 
-    const user_id = user.data.user.id;
+    const user_id = user.id;
     const { data, error } = await supabase
         .from('bookmark')
         .select('*')

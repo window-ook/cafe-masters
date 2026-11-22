@@ -2,7 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { collectionCafeQuery } from "@/queries/supabase/collection";
-import { getCollectionCounts } from "@/actions/supabase/collection";
+import { fetchJson } from "@/utils/shared/fetchJson";
+import { INTERNAL_PATHS } from "@/lib/paths";
 import { useUserStore } from "@/stores";
 
 /** 모든 수집 카페 수 조회 훅
@@ -15,7 +16,7 @@ export function useCollectionCounts(userId: string) {
     const { data, isError, error, isPending, fetchStatus } = useQuery({
         enabled: !!session,
         queryKey: collectionCafeQuery.counts(session?.user?.id ?? ''),
-        queryFn: () => getCollectionCounts(),
+        queryFn: () => fetchJson<number>(INTERNAL_PATHS.API_COLLECTION_COUNTS),
     });
 
     return { collectionCounts: data, isError, error, isPending: isPending && fetchStatus !== 'idle' };
