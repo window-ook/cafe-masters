@@ -1,6 +1,8 @@
 ---
 paths:
   - "actions/**"
+  - "data/**"
+  - "app/api/**"
   - "hooks/supabase/**"
   - "queries/**"
 ---
@@ -12,7 +14,8 @@ paths:
 **Read**:
 
 ```
-Component → useQuery 커스텀 훅 → Server Action → Supabase
+최초 진입: app/(app)/layout.tsx prefetch → data 함수 → Supabase → HydrationBoundary → Query 캐시
+이후 갱신: Component → useQuery 커스텀 훅 → Route Handler(GET) → data 함수 → Supabase
 ```
 
 **Create/Update/Delete**:
@@ -21,6 +24,11 @@ Component → useQuery 커스텀 훅 → Server Action → Supabase
 Component → useMutation 커스텀 훅 → Server Action → Supabase
 ```
 
+- 조회 함수는 `data/supabase/<domain>/`에 두고 `import 'server-only'`로 시작합니다. `'use server'`를 붙이지 않습니다.
+- 로그인 사용자가 필요한 조회는 `getAuthContext()`로 클라이언트와 사용자를 받습니다.
+- Route Handler는 `app/api/<domain>/`에 두고 data 함수의 결과를 그대로 반환합니다. 경로는 `lib/paths.ts`의 `INTERNAL_PATHS`에 등록합니다.
+- 레이아웃 prefetch의 `queryFn`과 훅의 `queryFn`은 같은 query key에 같은 모양의 값을 넣어야 합니다.
+- 레이아웃은 prefetch를 기다렸다가 넘깁니다. `Suspense`로 스트리밍하면 셸의 훅이 먼저 마운트되어 같은 조회를 한 번 더 보냅니다.
 - 커스텀 훅은 `hooks/supabase/<domain>/`, Server Action은 `actions/supabase/<domain>/`에 둡니다.
 - 훅 이름은 기존 패턴을 따릅니다. (조회 `useBookmarkCafes`·`useBookmarkCounts`, 변경 `useCreateBookmarkCafe`)
 - mutation 성공 시 `invalidateQueries`로 관련 query key를 무효화합니다.
