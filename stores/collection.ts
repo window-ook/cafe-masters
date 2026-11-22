@@ -7,10 +7,6 @@ export interface IFormDataForCollect {
   coordX: number;
   coordY: number;
   address: string;
-  image: string;
-  extra_images: string[];
-  phone_number?: string | null;
-  opening_time?: string | null;
 }
 
 interface ICollectionStore {

@@ -27,10 +27,7 @@ export async function getCollectionCafes(offset: number = 0, limit: number = 4)
 
     const safeData = (data ?? []).map(item => ({
         ...item,
-        extra_images: item.extra_images ? JSON.parse(item.extra_images) : undefined,
         categories: item.categories ? JSON.parse(item.categories) : undefined,
-        opening_time: item.opening_time ?? undefined,
-        phone_number: item.phone_number ?? undefined,
         eaten_menus: item.eaten_menus ?? undefined,
     }));
 
@@ -59,10 +56,7 @@ export async function getAllCollectionCafes(): Promise<{ data: ISupabaseCollecti
 
     const safeData = (data ?? []).map(item => ({
         ...item,
-        extra_images: item.extra_images ? JSON.parse(item.extra_images) : undefined,
         categories: item.categories ? JSON.parse(item.categories) : undefined,
-        opening_time: item.opening_time ?? undefined,
-        phone_number: item.phone_number ?? undefined,
         eaten_menus: item.eaten_menus ?? undefined,
     }));
 
@@ -94,10 +88,7 @@ export async function getCollectionCafeById(cafeId: number): Promise<ISupabaseCo
 
     return {
         ...data,
-        extra_images: data.extra_images ? JSON.parse(data.extra_images) : undefined,
         categories: data.categories ? JSON.parse(data.categories) : undefined,
-        opening_time: data.opening_time ?? undefined,
-        phone_number: data.phone_number ?? undefined,
         eaten_menus: data.eaten_menus ?? undefined,
     };
 }

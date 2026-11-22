@@ -146,7 +146,6 @@ export default function CollectionCafeCarousel() {
                 material={cafe.material ?? null}
                 image={cafe.image}
                 address={cafe.address}
-                phone_number={cafe.phone_number!}
                 created_at={cafe.created_at}
                 onClickAction={() => handleCollectionCafeClick(cafe)}
               />

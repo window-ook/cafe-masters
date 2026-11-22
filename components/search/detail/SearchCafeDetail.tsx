@@ -2,7 +2,6 @@
 
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSearchCafeDetail } from '@/hooks/kakao-map/useSearchCafeDetail';
 import {
   useSearchedResultStore,
   useCurrentCafeStore,
@@ -11,8 +10,6 @@ import {
   useCollectionStore,
   useRecommendationStore,
 } from '@/stores';
-import { LoadingSpinner } from '@/components/shared/sliding-drawer/LoadingSpinner';
-import { IMAGE_PATHS } from '@/lib/paths';
 import Button from '@/components/shared/Button';
 import CafeDetailHeader from '@/components/shared/sliding-drawer/CafeDetailHeader';
 import CafeDetailBody from '@/components/shared/sliding-drawer/CafeDetailBody';
@@ -43,10 +40,6 @@ export default function SearchCafeDetail({
     state => state.setTargetCafeForCollect,
   );
 
-  const { searchCafeDetail, isPending: isDetailLoading } = useSearchCafeDetail(
-    cafeId.toString(),
-  );
-
   // 즉시 렌더링: 검색 결과에 포함된 기본 정보
   const foundCafe = useMemo(() => {
     if (!searchResult || searchResult.length === 0) return null;
@@ -54,32 +47,24 @@ export default function SearchCafeDetail({
     return cafe || null;
   }, [searchResult, cafeId]);
 
-  // 점진적 렌더링: 기본 정보 즉각 업데이트 + 카페 상세 정보 데이터 비동기 페칭 후 업데이트
+  // 검색 결과의 실시간 정보만 씁니다. 사진·메뉴·영업시간은 카카오맵 링크로 봅니다
   const getSearchDetail = () => {
     if (!foundCafe) {
       return {
         id: cafeId.toString(),
         name: '카페 정보 로딩 중...',
-        image: IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK,
         address: '',
-        phone_number: '',
         kakaoCategories: [],
-        extra_images: searchCafeDetail?.extra_images ?? [],
-        opening_time: searchCafeDetail?.opening_time ?? null,
       };
     }
 
     return {
       id: foundCafe.id,
       name: foundCafe.place_name,
-      image: searchCafeDetail?.image || IMAGE_PATHS.CAFE_THUMBNAIL_FALLBACK,
       address: foundCafe.road_address_name ?? foundCafe.address_name,
-      phone_number: foundCafe.phone ?? '',
       kakaoCategories: foundCafe.category_name
         ? foundCafe.category_name.split(' > ')
         : [],
-      extra_images: searchCafeDetail?.extra_images ?? [],
-      opening_time: searchCafeDetail?.opening_time ?? null,
     };
   };
   const searchDetail = getSearchDetail();
@@ -88,12 +73,8 @@ export default function SearchCafeDetail({
     id: Number(searchDetail.id),
     name: searchDetail.name,
     address: searchDetail.address,
-    phone_number: searchDetail.phone_number,
-    image: searchDetail.image,
     coordX: currentCoordX,
     coordY: currentCoordY,
-    extra_images: searchDetail.extra_images,
-    opening_time: searchDetail.opening_time,
   };
 
   const actionButtons = (
@@ -108,20 +89,12 @@ export default function SearchCafeDetail({
               coordX: currentCoordX,
               coordY: currentCoordY,
               address: searchDetail.address,
-              image: searchDetail.image,
-              extra_images: searchDetail.extra_images || [],
-              phone_number: searchDetail.phone_number,
-              opening_time: searchDetail.opening_time,
             });
             setIsCollectFormOpen(true);
           }}
           customClassName="flex-1"
         >
-          {isDetailLoading ? (
-            <LoadingSpinner size="sm" />
-          ) : (
-            <span>수집하기</span>
-          )}
+          <span>수집하기</span>
         </Button>
       )}
 
@@ -134,31 +107,19 @@ export default function SearchCafeDetail({
               coordX: currentCoordX,
               coordY: currentCoordY,
               address: searchDetail.address,
-              image: searchDetail.image,
-              extra_images: searchDetail.extra_images || [],
-              phone_number: searchDetail.phone_number,
-              opening_time: searchDetail.opening_time,
             });
             setIsRecommendFormOpenAction(true);
           }}
           customClassName="bg-blue-600 flex-1 hover:bg-blue-800"
         >
-          {isDetailLoading ? (
-            <LoadingSpinner size="sm" />
-          ) : (
-            <span>추천하기</span>
-          )}
+          <span>추천하기</span>
         </Button>
       )}
 
       {/* 로그아웃 상태 */}
       {!session && (
         <Button onClick={() => router.push('/signin')} customClassName="flex-1">
-          {isDetailLoading ? (
-            <LoadingSpinner size="sm" />
-          ) : (
-            <span>로그인하고 수집하기</span>
-          )}
+          <span>로그인하고 수집하기</span>
         </Button>
       )}
     </>
@@ -171,8 +132,6 @@ export default function SearchCafeDetail({
         cafeId={cafeId}
         cafeData={searchDetail}
         actionButtons={actionButtons}
-        isImageWithFallback={true}
-        isDetailLoading={isDetailLoading}
       />
     </article>
   );

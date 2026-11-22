@@ -13,13 +13,3 @@ export interface IKakaoSearchResult {
     distance: string;
     phone: string;
 }
-
-/**
- * 검색한 카페 상세 정보 인터페이스
- * @description 실제 UI와 일치하며 사용하는 데이터 형식
-*/
-export interface ISearchCafeDetail {
-    image: string;
-    extra_images: string[];
-    opening_time: string;
-}
